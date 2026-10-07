@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type Dispatch, type SetStateAction } from "react";
+import Link from "next/link";
 import {
   Columns3,
   ArrowUpDown,
@@ -318,7 +319,6 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     filteredDbSailors,
     sortedDbSailors,
     selectedSailors,
-    setSelectedSailors,
     dbSearch,
     setDbSearch,
     dbFleetFilter,
@@ -380,12 +380,12 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       : "Bulk toolbar is open above the table."}
                   </p>
                   {duplicatePairs.length > 0 ? (
-                    <a
+                    <Link
                       href="/admin?area=sailors&view=duplicates"
                       className="text-[11px] font-bold text-orange-800 hover:text-orange-900"
                     >
                       {duplicatePairs.length} possible duplicate{duplicatePairs.length === 1 ? "" : "s"}
-                    </a>
+                    </Link>
                   ) : null}
                 </div>
 

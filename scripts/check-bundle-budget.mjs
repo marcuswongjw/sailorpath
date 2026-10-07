@@ -2,8 +2,9 @@ import { readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
 const chunksDir = path.resolve(".next/static/chunks");
-// October 2026 client graph is about 3.14MB. Keep a little room for small edits.
-const maxTotalBytes = Number(process.env.MAX_CLIENT_JS_BYTES || 3_200_000);
+// Patched Next.js 16.3.6 produces a clean client graph of about 3.261MB.
+// Keep the limit close to that measured baseline while leaving room for small edits.
+const maxTotalBytes = Number(process.env.MAX_CLIENT_JS_BYTES || 3_300_000);
 const maxChunkBytes = Number(process.env.MAX_CLIENT_CHUNK_BYTES || 400_000);
 
 async function listJavaScriptFiles(directory) {

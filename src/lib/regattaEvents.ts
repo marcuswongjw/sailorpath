@@ -21,7 +21,6 @@ import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 
 import type {
   PublicationStatus,
-  EventTimingStatus,
   ResultAvailabilityStatus,
   EventScheduleOccurrence,
   EventDocument,
@@ -1170,16 +1169,7 @@ export function isRegattaLinkedToEventSlice(
   slice: RegattaEventSliceDef,
   regatta: RegattaRecord
 ): boolean {
-  const rEventSlug = String(regatta.eventSlug || "").trim().toLowerCase();
-  const canonicalREvent = rEventSlug ? (EVENT_SLUG_ALIASES[rEventSlug] || rEventSlug) : null;
-  const canonicalEvent = event.slug.toLowerCase();
-
-  const isEventLinked =
-    canonicalREvent === canonicalEvent ||
-    regatta.slug.toLowerCase().startsWith(canonicalEvent) ||
-    EVENT_SLUG_ALIASES[regatta.slug.toLowerCase()] === canonicalEvent;
-
-  if (!isEventLinked) return false;
+  if (!isRegattaAssignedToEvent(event, regatta)) return false;
 
   const boat = String(regatta.boatClass || "").trim();
   const division = String(regatta.division || "").trim().toLowerCase();
@@ -1239,6 +1229,24 @@ export function isRegattaLinkedToEventSlice(
   return false;
 }
 
+/** Saved event links are authoritative; use slug inference only for legacy rows. */
+function isRegattaAssignedToEvent(
+  event: RegattaEventDef,
+  regatta: RegattaRecord
+): boolean {
+  const canonicalEvent = event.slug.toLowerCase();
+  const assignedSlug = String(regatta.eventSlug || "").trim().toLowerCase();
+  if (assignedSlug) {
+    return (EVENT_SLUG_ALIASES[assignedSlug] || assignedSlug) === canonicalEvent;
+  }
+
+  const legacySlug = String(regatta.slug || "").toLowerCase();
+  return (
+    legacySlug.startsWith(canonicalEvent) ||
+    EVENT_SLUG_ALIASES[legacySlug] === canonicalEvent
+  );
+}
+
 function fullerResultSheet(current: RegattaRecord, next: RegattaRecord): RegattaRecord {
   const races = (next.raceCount ?? 0) - (current.raceCount ?? 0);
   if (races !== 0) return races > 0 ? next : current;
@@ -1269,6 +1277,8 @@ export function resolveEventSlices(
     }
     const matches = regattas.filter((r) => {
       if (claimed.has(r.id)) return false;
+      // A saved link takes precedence over stale naming tokens after a class move.
+      if (r.eventSlug && !isRegattaAssignedToEvent(event, r)) return false;
       if (sliceMatchesRegattaSlug(def, r.slug)) return true;
       if (isRegattaLinkedToEventSlice(event, def, r)) return true;
       return false;

@@ -3,13 +3,10 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  Calendar,
   Search,
-  ExternalLink,
   Trophy,
   MapPin,
   ChevronRight,
-  Filter,
 } from "lucide-react";
 import type { PublicClassRegattaRow } from "@/lib/publicDataLoader";
 
@@ -18,10 +15,7 @@ export type ClassRegattaListTableProps = {
   classNameTitle: string;
 };
 
-export function ClassRegattaListTable({
-  regattas,
-  classNameTitle,
-}: ClassRegattaListTableProps) {
+export function ClassRegattaListTable({ regattas }: ClassRegattaListTableProps) {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedStatus, setSelectedStatus] = useState<"all" | "upcoming" | "past">("all");
   const [searchQuery, setSearchQuery] = useState<string>("");

@@ -18,13 +18,9 @@
 
 import {
   REGATTA_EVENTS,
-  getRegattaEvent,
   resolveEventSlices,
   getStaticBoardRegatta,
   getSliceResultAvailability,
-  type RegattaEventDef,
-  type RegattaEventSliceDef,
-  type ResolvedEventSlice,
 } from "@/lib/regattaEvents";
 import {
   deriveEventTimingStatus,
@@ -32,7 +28,6 @@ import {
   type ResultAvailabilityStatus,
   type EventScheduleOccurrence,
 } from "@/lib/types/regattaEventModel";
-import type { RegattaRecord } from "@/lib/ranking";
 
 export type PublicCalendarEvent = {
   id: string;

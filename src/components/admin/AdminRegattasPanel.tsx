@@ -374,7 +374,6 @@ export function AdminRegattasPanel({
     seenSheetId.current = activeSheetId;
     appliedSheetView.current = token;
     if (sheetChanged) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedEventSlug(event ? event.slug : UNASSIGNED_EVENT_SLUG);
       setEditingRegattaId(row.id);
       const next = formFrom(row);
@@ -382,8 +381,11 @@ export function AdminRegattasPanel({
       classLabel.current = `${sheetClassLabel(row)} class settings`;
       setRegattaForm(next);
     }
-    if (eventsView === "readiness") setSheetTab("check");
-    else if (eventsView === "results") setSheetTab("results");
+    if (eventsView === "readiness" || eventsView === "results") {
+      // The selected tab mirrors the URL-driven view when opening a class sheet.
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Synchronize external route state.
+      setSheetTab(eventsView === "readiness" ? "check" : "results");
+    }
   }, [activeSheetId, eventsView, filteredRegattaList, grouped.events, setClassSnap, setEditingRegattaId, setRegattaForm]);
 
   useEffect(() => {

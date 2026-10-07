@@ -16,8 +16,9 @@ Do these steps **in order** after the rebuild deploys from GitHub `main`.
 
 In **SQL Editor**, run in order:
 
-1. Entire file: `src/db/migrations/000_wipe.sql`  
+1. Entire file: `src/db/migrations/000_wipe.sql`
 2. Entire file: `src/db/migrations/001_init.sql`
+3. Entire file: `src/db/migrations/002_sailor_school_fleet.sql`
 
 Optional: delete old users under **Authentication → Users**.
 

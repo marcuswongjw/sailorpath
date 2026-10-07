@@ -340,6 +340,22 @@ describe("resolveEventSlices", () => {
     const silver = slices.find((s) => s.def.key === "optimist-silver")!;
     expect(silver.regatta).toBeNull();
   });
+
+  it("uses the saved event link instead of a stale slug after a class move", () => {
+    const movedClass: RegattaRecord = {
+      ...regatta("snsc-gold-sep-26-2026-09-11"),
+      boatClass: "Optimist",
+      division: "Gold",
+      eventId: "event-cincapura-2026",
+      eventSlug: "cincapura-regatta-2026",
+    };
+
+    const previousEvent = resolveEventSlices(SNSC_2026_EVENT, [movedClass]);
+    const destinationEvent = resolveEventSlices(CINCAPURA_2026_EVENT, [movedClass]);
+
+    expect(previousEvent.find((slice) => slice.def.key === "optimist-gold")?.regatta).toBeNull();
+    expect(destinationEvent.find((slice) => slice.def.key === "optimist-gold")?.regatta?.id).toBe(movedClass.id);
+  });
 });
 
 describe("getStaticBoardRegatta", () => {

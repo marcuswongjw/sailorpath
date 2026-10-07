@@ -103,7 +103,7 @@ describe("import database transaction", () => {
     expect(results[0].rank).toBe(1);
   });
 
-  it("rejects two different names that resolve to the same sailor", async () => {
+  it("does not link a different name to a sailor solely by sail number", async () => {
     await testDb.insert(sailors).values({
       name: "Carol Example",
       handle: "carol-example",
@@ -116,9 +116,24 @@ describe("import database transaction", () => {
         { name: "Someone Else", rank: 2, sailNumber: "123" },
       ],
     });
-    expect(response.status).toBe(409);
-    expect(await testDb.select().from(regattas)).toHaveLength(0);
-    expect(await testDb.select().from(sailors)).toHaveLength(1);
+    expect(response.status).toBe(200);
+    const sailorRows = await testDb.select().from(sailors);
+    expect(sailorRows).toHaveLength(2);
+    const resultRows = await testDb.select().from(regattaResults);
+    expect(resultRows).toHaveLength(2);
+    expect(resultRows.find((result) => result.rank === 2)?.sailorId).not.toBe(
+      sailorRows.find((sailor) => sailor.name === "Carol Example")?.id
+    );
+    const body = await response.json();
+    expect(body.possibleDuplicates).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          importName: "Someone Else",
+          otherName: "Carol Example",
+          note: "Same sail number as an existing sailor with a different name — not linked",
+        }),
+      ])
+    );
   });
 
   it("streams NDJSON progress events when requested", async () => {
