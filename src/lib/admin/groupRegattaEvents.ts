@@ -206,7 +206,9 @@ export function groupRegattaEvents(
   for (const row of rows) {
     const shellSlug = eventShellSlug(row.slug);
     const linkedRaw = row.eventId ? eventSlugsById.get(row.eventId) : null;
-    const linkedSlug = linkedRaw ? canonicalEventSlug(linkedRaw) : null;
+    // Database events are distinct destinations, even when a legacy public
+    // alias combines their slugs into one hub (RSYC Gold/Silver 2025).
+    const linkedSlug = linkedRaw ? linkedRaw.trim().toLowerCase() : null;
     // A saved link to a different regatta moves the class, even when its slug
     // is also a calendar shell of the regatta it is leaving.
     if (linkedSlug && linkedSlug !== shellSlug) {

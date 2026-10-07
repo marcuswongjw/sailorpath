@@ -50,6 +50,23 @@ describe("missingClassesFor", () => {
 });
 
 describe("groupRegattaEvents", () => {
+  it("keeps RSYC 2025 Silver on its saved event despite the combined legacy alias", () => {
+    const silver = "rsyc-optimist-silver-fleet-knockout-championship-2025";
+    const gold = "rsyc-optimist-gold-fleet-knockout-championship-2025";
+    const sheet = {
+      ...row({ id: "silver-sheet", slug: "rsyc-silver-knockout-2025-results", division: "Silver" }),
+      eventId: "silver-event",
+    };
+    const links = new Map([["silver-event", silver], ["gold-event", gold]]);
+    const grouped = groupRegattaEvents([sheet], links);
+    expect(grouped.events.find((event) => event.slug === silver)?.sheets.map((item) => item.id)).toEqual(["silver-sheet"]);
+    expect(grouped.events.find((event) => event.slug === gold)?.sheets ?? []).toHaveLength(0);
+    expect(grouped.events.find((event) => event.slug === "rsyc-optimist-knockout-championship-2025")).toBeUndefined();
+    // Moving it back must also honor the exact Gold destination.
+    const movedBack = groupRegattaEvents([{ ...sheet, eventId: "gold-event" }], links);
+    expect(movedBack.events.find((event) => event.slug === gold)?.sheets[0]?.id).toBe(sheet.id);
+  });
+
   it("moves a calendar shell onto another regatta when that link is saved", () => {
     const silver = "rsyc-optimist-silver-fleet-knockout-championship-2026";
     const parent = "rsyc-optimist-knockout-championship-2026";
