@@ -317,7 +317,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   const [eventsView, setEventsView] = useState<AdminEventsView>(() =>
     eventsViewFrom(searchParams)
   );
-  const [menuOpen, setMenuOpen] = useState(false);
   const currentSearch = searchParams.toString();
   const acceptedSearch = useRef(currentSearch);
   const approvedSearch = useRef<string | null>(null);
@@ -647,9 +646,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
 
   return (
     <div className={`admin-canvas mx-auto flex w-full min-w-0 flex-1 flex-col gap-4 overflow-x-clip px-3 py-4 sm:gap-6 sm:px-6 sm:py-8 lg:gap-8 lg:px-8 lg:py-12 ${
-      adminShell === "sidebar"
-        ? "max-w-[90rem] md:grid md:grid-cols-[15rem_minmax(0,1fr)] md:items-start"
-        : "max-w-7xl"
+      adminShell === "sidebar" ? "max-w-[90rem]" : "max-w-7xl"
     }`}>
       {adminShell === "sidebar" && (
         <a
@@ -659,8 +656,38 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           Skip to content
         </a>
       )}
+      {adminShell === "sidebar" && (
+        <nav
+          id="admin-nav"
+          aria-label="Admin"
+          className="sticky top-14 z-30 rounded-2xl border border-slate-200 bg-white sm:top-16"
+        >
+          <AdminSidebar
+            activeArea={areaState.area}
+            sailorsView={areaState.view}
+            inboxView={areaState.view}
+            insightsView={areaState.view}
+            settingsView={areaState.view}
+            eventsView={areaState.view}
+            inboxCount={inboxNotifCount}
+            queueCounts={{
+              suggestions: suggestionsCount,
+              claims: claimsPendingCount + claimedUpdatesCount,
+              coaches: coachPendingCount,
+              support: supportNewCount,
+            }}
+            landingView={inboxLandingView}
+            onNavigate={(href) => {
+              if (!confirmAdminLeave()) return false;
+              approvedSearch.current = new URL(href, window.location.href).search.slice(1);
+              focusHeading();
+              return true;
+            }}
+          />
+        </nav>
+      )}
       {/* Context Breadcrumb & Quick Info Bar */}
-      <div className="glass-panel flex flex-col justify-between gap-3 rounded-2xl p-3 sm:p-4 md:col-span-2 md:flex-row md:items-center">
+      <div className="glass-panel flex flex-col justify-between gap-3 rounded-2xl p-3 sm:p-4 md:flex-row md:items-center">
         <nav aria-label="Admin breadcrumb" className="flex items-center gap-1.5 text-xs flex-wrap min-w-0">
           <div className="flex items-center gap-1.5 shrink-0">
             <Shield className="h-4 w-4 text-orange-500" />
@@ -730,48 +757,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         </div>
       </div>
 
-      {adminShell === "sidebar" && (
-        <>
-          <button
-            type="button"
-            className="inline-flex min-h-11 items-center rounded-xl border border-white/15 px-3 text-sm font-bold text-slate-200 md:hidden"
-            aria-expanded={menuOpen}
-            aria-controls="admin-nav"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? "Close menu" : "Open menu"}
-          </button>
-          <nav
-            id="admin-nav"
-            aria-label="Admin"
-            className={`${menuOpen ? "block" : "hidden"} rounded-2xl border border-slate-200 bg-white md:sticky md:top-4 md:block md:self-start`}
-          >
-            <AdminSidebar
-              activeArea={areaState.area}
-              sailorsView={areaState.view}
-              inboxView={areaState.view}
-              insightsView={areaState.view}
-              settingsView={areaState.view}
-              eventsView={areaState.view}
-              inboxCount={inboxNotifCount}
-              queueCounts={{
-                suggestions: suggestionsCount,
-                claims: claimsPendingCount + claimedUpdatesCount,
-                coaches: coachPendingCount,
-                support: supportNewCount,
-              }}
-              landingView={inboxLandingView}
-              onNavigate={(href) => {
-                if (!confirmAdminLeave()) return false;
-                approvedSearch.current = new URL(href, window.location.href).search.slice(1);
-                setMenuOpen(false);
-                focusHeading();
-                return true;
-              }}
-            />
-          </nav>
-        </>
-      )}
       {adminShell === "legacy" && (
       <div
         className="grid grid-cols-1 md:grid-cols-12 gap-2 w-full"

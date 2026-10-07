@@ -29,9 +29,9 @@ function areaHref(state: Parameters<typeof serializeAdminArea>[0]) {
 }
 
 const childIdle =
-  "flex min-h-11 items-center justify-between gap-2 rounded-lg px-3 text-sm font-semibold text-slate-800 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600";
+  "inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-slate-800 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600";
 const childCurrent =
-  "flex min-h-11 items-center justify-between gap-2 rounded-lg bg-[var(--sp-harbour-teal)] px-3 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600";
+  "inline-flex min-h-11 items-center gap-2 rounded-lg bg-[var(--sp-harbour-teal)] px-3 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600";
 
 export function AdminSidebar({
   activeArea,
@@ -100,39 +100,95 @@ export function AdminSidebar({
     if (!onNavigate(href)) event.preventDefault();
   };
 
-  const child = (href: string, label: string, current: boolean, count?: number) => (
-    <Link
-      href={href}
-      aria-current={current ? "page" : undefined}
-      onClick={(event) => guardLink(href, event)}
-      className={current ? childCurrent : childIdle}
-    >
-      <span>{label}</span>
-      {count != null && count > 0 ? (
-        <span
-          className={`min-w-6 rounded-full px-1.5 text-center text-[11px] font-black ${
-            current ? "bg-white/20 text-white" : "bg-rose-600 text-white"
-          }`}
-        >
-          {count > 9 ? "9+" : count}
-        </span>
-      ) : null}
-    </Link>
-  );
+  const subnav: { key: string; href: string; label: string; current: boolean; count?: number }[] =
+    activeArea === "events"
+      ? [
+          {
+            key: "import",
+            href: areaHref({ area: "events", view: "import", event: null, sheet: null }),
+            label: "Import",
+            current: eventsView === "import",
+          },
+          {
+            key: "wingfoil",
+            href: areaHref({ area: "events", view: "wingfoil", event: null, sheet: null }),
+            label: "WingFoil scoreboard",
+            current: eventsView === "wingfoil",
+          },
+          {
+            key: "techno293",
+            href: areaHref({ area: "events", view: "techno293", event: null, sheet: null }),
+            label: "Techno 293 scoreboard",
+            current: eventsView === "techno293",
+          },
+        ]
+      : activeArea === "sailors"
+        ? (
+            [
+              ["directory", "Directory"],
+              ["duplicates", "Duplicates"],
+              ["promotions", "Promotions"],
+              ["selection", "Selection"],
+              ["ilca", "ILCA 4 squad"],
+            ] as const
+          ).map(([view, label]) => ({
+            key: view,
+            href: areaHref({ area: "sailors", view, event: null, sheet: null }),
+            label,
+            current: sailorsView === view,
+          }))
+        : activeArea === "inbox"
+          ? (
+              [
+                ["suggestions", "Suggestions"],
+                ["claims", "Claims"],
+                ["coaches", "Coach access"],
+                ["support", "Support"],
+              ] as const
+            ).map(([view, label]) => ({
+              key: view,
+              href: areaHref({ area: "inbox", view, event: null, sheet: null }),
+              label,
+              current: inboxView === view,
+              count: queueCounts[view],
+            }))
+          : activeArea === "insights"
+            ? (
+                [
+                  ["optimist", "Optimist analysis"],
+                  ["metrics", "Platform metrics"],
+                ] as const
+              ).map(([view, label]) => ({
+                key: view,
+                href: areaHref({ area: "insights", view, event: null, sheet: null }),
+                label,
+                current: insightsView === view,
+              }))
+            : activeArea === "settings"
+              ? (
+                  [
+                    ["audit", "Audit log"],
+                    ["changelog", "Changelog"],
+                    ["tools", "Maintenance"],
+                  ] as const
+                ).map(([view, label]) => ({
+                  key: view,
+                  href: areaHref({ area: "settings", view, event: null, sheet: null }),
+                  label,
+                  current: settingsView === view,
+                }))
+              : [];
 
   return (
-    <div className="flex h-full flex-col gap-1 p-3">
-      <p className="px-3 pb-2 text-[11px] font-black uppercase tracking-wider text-slate-600">
-        SailorPath
-      </p>
-      <ul className="space-y-1">
+    <div className="flex flex-col gap-2 p-2 sm:px-3">
+      <ul className="flex flex-wrap items-center gap-1">
         {items.map((item) => (
           <li key={item.area}>
             <Link
               href={item.href}
               aria-current={item.active ? "page" : undefined}
               onClick={(event) => guardLink(item.href, event)}
-              className={`flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 ${
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 ${
                 item.active
                   ? "bg-[var(--sp-harbour-teal)] text-white"
                   : "text-slate-900 hover:bg-slate-100"
@@ -153,113 +209,34 @@ export function AdminSidebar({
                 </span>
               )}
             </Link>
-            {item.active && item.area === "events" && (
-              <ul className="mt-1 space-y-1 pl-3">
-                <li>
-                  {child(
-                    areaHref({ area: "events", view: "import", event: null, sheet: null }),
-                    "Import",
-                    eventsView === "import"
-                  )}
-                </li>
-                <li>
-                  {child(
-                    areaHref({ area: "events", view: "wingfoil", event: null, sheet: null }),
-                    "WingFoil scoreboard",
-                    eventsView === "wingfoil"
-                  )}
-                </li>
-                <li>
-                  {child(
-                    areaHref({ area: "events", view: "techno293", event: null, sheet: null }),
-                    "Techno 293 scoreboard",
-                    eventsView === "techno293"
-                  )}
-                </li>
-              </ul>
-            )}
-            {item.active && item.area === "sailors" && (
-              <ul className="mt-1 space-y-1 pl-3">
-                {(
-                  [
-                    ["directory", "Directory"],
-                    ["duplicates", "Duplicates"],
-                    ["promotions", "Promotions"],
-                    ["selection", "Selection"],
-                    ["ilca", "ILCA 4 squad"],
-                  ] as const
-                ).map(([view, label]) => (
-                  <li key={view}>
-                    {child(
-                      areaHref({ area: "sailors", view, event: null, sheet: null }),
-                      label,
-                      sailorsView === view
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {item.active && item.area === "inbox" && (
-              <ul className="mt-1 space-y-1 pl-3">
-                {(
-                  [
-                    ["suggestions", "Suggestions"],
-                    ["claims", "Claims"],
-                    ["coaches", "Coach access"],
-                    ["support", "Support"],
-                  ] as const
-                ).map(([view, label]) => (
-                  <li key={view}>
-                    {child(
-                      areaHref({ area: "inbox", view, event: null, sheet: null }),
-                      label,
-                      inboxView === view,
-                      queueCounts[view]
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {item.active && item.area === "insights" && (
-              <ul className="mt-1 space-y-1 pl-3">
-                {(
-                  [
-                    ["optimist", "Optimist analysis"],
-                    ["metrics", "Platform metrics"],
-                  ] as const
-                ).map(([view, label]) => (
-                  <li key={view}>
-                    {child(
-                      areaHref({ area: "insights", view, event: null, sheet: null }),
-                      label,
-                      insightsView === view
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {item.active && item.area === "settings" && (
-              <ul className="mt-1 space-y-1 pl-3">
-                {(
-                  [
-                    ["audit", "Audit log"],
-                    ["changelog", "Changelog"],
-                    ["tools", "Maintenance"],
-                  ] as const
-                ).map(([view, label]) => (
-                  <li key={view}>
-                    {child(
-                      areaHref({ area: "settings", view, event: null, sheet: null }),
-                      label,
-                      settingsView === view
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
           </li>
         ))}
       </ul>
+      {subnav.length > 0 && (
+        <ul className="flex flex-wrap items-center gap-1 border-t border-slate-200 pt-2">
+          {subnav.map((link) => (
+            <li key={link.key}>
+              <Link
+                href={link.href}
+                aria-current={link.current ? "page" : undefined}
+                onClick={(event) => guardLink(link.href, event)}
+                className={link.current ? childCurrent : childIdle}
+              >
+                <span>{link.label}</span>
+                {link.count != null && link.count > 0 ? (
+                  <span
+                    className={`min-w-6 rounded-full px-1.5 text-center text-[11px] font-black ${
+                      link.current ? "bg-white/20 text-white" : "bg-rose-600 text-white"
+                    }`}
+                  >
+                    {link.count > 9 ? "9+" : link.count}
+                  </span>
+                ) : null}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
