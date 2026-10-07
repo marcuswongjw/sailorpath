@@ -1,5 +1,25 @@
 import { z } from "zod";
 
+/** Blank weight and historical rankings stay null on a profile save. */
+function optionalCount(val: unknown): number | null | undefined {
+  if (val === undefined) return undefined;
+  if (val === null) return null;
+  if (typeof val === "string" && val.trim() === "") return null;
+  return typeof val === "number" ? val : Number(val);
+}
+
+/** sailors.club, name, handle, and sail_number are NOT NULL. A blank stays "". */
+const NOT_NULL_TEXT = new Set(["name", "handle", "sailNumber", "club"]);
+
+export function sailorPatchTextValue(field: string, value: unknown): unknown {
+  if (field === "club") {
+    const text = value == null ? "" : String(value);
+    return text.trim() === "" ? "" : text;
+  }
+  if (value === "" && !NOT_NULL_TEXT.has(field)) return null;
+  return value;
+}
+
 export const SailorCreateSchema = z.object({
   name: z.string().min(1, "Name is required"),
   handle: z.string().optional(),
@@ -14,7 +34,7 @@ export const SailorCreateSchema = z.object({
   currentFleet: z.string().optional(),
   nationalSquadStatus: z.string().optional().nullable(),
   dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)").optional().nullable(),
-  weight: z.preprocess((val) => (val === "" ? null : Number(val)), z.number().optional().nullable()),
+  weight: z.preprocess(optionalCount, z.number().optional().nullable()),
   instagram: z.string().optional().nullable(),
   avatarUrl: z.string().url("Invalid URL").optional().nullable(),
   natSquadStatusJan25: z.string().optional().nullable(),
@@ -23,11 +43,11 @@ export const SailorCreateSchema = z.object({
   natSquadStatusJul26: z.string().optional().nullable(),
   natSquadStatusJan27: z.string().optional().nullable(),
   natSquadStatusJul27: z.string().optional().nullable(),
-  histRankingJun24: z.preprocess((val) => (val === "" ? null : Number(val)), z.number().optional().nullable()),
-  histRankingDec24: z.preprocess((val) => (val === "" ? null : Number(val)), z.number().optional().nullable()),
-  histRankingJun25: z.preprocess((val) => (val === "" ? null : Number(val)), z.number().optional().nullable()),
-  histRankingDec25: z.preprocess((val) => (val === "" ? null : Number(val)), z.number().optional().nullable()),
-  histRankingJun26: z.preprocess((val) => (val === "" ? null : Number(val)), z.number().optional().nullable()),
+  histRankingJun24: z.preprocess(optionalCount, z.number().optional().nullable()),
+  histRankingDec24: z.preprocess(optionalCount, z.number().optional().nullable()),
+  histRankingJun25: z.preprocess(optionalCount, z.number().optional().nullable()),
+  histRankingDec25: z.preprocess(optionalCount, z.number().optional().nullable()),
+  histRankingJun26: z.preprocess(optionalCount, z.number().optional().nullable()),
   worlds: z.string().optional().nullable(),
   european: z.string().optional().nullable(),
   asian: z.string().optional().nullable(),

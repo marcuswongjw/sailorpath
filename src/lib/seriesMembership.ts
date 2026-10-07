@@ -331,9 +331,37 @@ export function formatYearsDisplay(v: unknown): string {
   return n || "—";
 }
 
+function errorParts(err: unknown): string[] {
+  const parts: string[] = [];
+  let cur: unknown = err;
+  for (let depth = 0; cur && depth < 6; depth += 1) {
+    if (cur instanceof Error) {
+      parts.push(cur.message);
+      cur = (cur as Error & { cause?: unknown }).cause;
+      continue;
+    }
+    if (typeof cur === "object" && cur !== null && "message" in cur) {
+      parts.push(String((cur as { message: unknown }).message));
+      cur = (cur as { cause?: unknown }).cause;
+      continue;
+    }
+    break;
+  }
+  return parts;
+}
+
+function errorText(err: unknown): string {
+  return errorParts(err).join(" ");
+}
+
 /** Map common Postgres / schema errors to actionable admin messages */
 export function sailorDbErrorHint(err: unknown): string | null {
-  const msg = err instanceof Error ? err.message : String(err ?? "");
+  const msg = errorText(err);
+  const notNull = msg.match(/null value in column "([^"]+)"/i);
+  if (notNull) {
+    const column = notNull[1].replace(/_/g, " ");
+    return `Could not save: ${column} cannot be empty.`;
+  }
   if (/nationality/i.test(msg) && /column|does not exist/i.test(msg)) {
     return "Database missing nationality column. In Supabase SQL Editor run: ALTER TABLE public.sailors ADD COLUMN IF NOT EXISTS nationality text;";
   }
@@ -356,5 +384,8 @@ export function sailorDbErrorHint(err: unknown): string | null {
   ) {
     return "Overseas years need text columns. Run migration 006_overseas_years_text.sql in Supabase.";
   }
-  return null;
+  const readable = [...errorParts(err)]
+    .reverse()
+    .find((line) => !line.startsWith("Failed query") && line.length < 240);
+  return readable ?? null;
 }

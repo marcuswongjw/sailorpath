@@ -18,7 +18,11 @@ import { runSailorAction } from "@/lib/adminSailorActions";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { optimistSailNumberForProfile } from "@/lib/normalize";
 import { extractNationalityFromSailNumber } from "@/lib/countries";
-import { SailorCreateSchema, SailorPatchSchema } from "@/lib/validations/sailor";
+import {
+  SailorCreateSchema,
+  SailorPatchSchema,
+  sailorPatchTextValue,
+} from "@/lib/validations/sailor";
 
 const RANKING_SAILOR_FIELDS = new Set([
   "goldEntryDate",
@@ -379,7 +383,7 @@ export async function PATCH(req: Request) {
       "natSquadStatusJan27",
       "natSquadStatusJul27",
     ] as const) {
-      if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+      if (body[f] !== undefined) patch[f] = sailorPatchTextValue(f, body[f]);
     }
     if (body.sailNumber !== undefined) {
       const clean = optimistSailNumberForProfile(body.sailNumber);
