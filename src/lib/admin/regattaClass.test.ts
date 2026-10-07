@@ -3,6 +3,7 @@ import {
   ilcaFleetOf,
   regattaClassFamily,
   regattaMatchesAdminClass,
+  sailorResultClassOf,
 } from "./regattaClass";
 
 describe("admin regatta classes", () => {
@@ -44,5 +45,34 @@ describe("admin regatta classes", () => {
         fleet: "ILCA 7",
       })
     ).toBe(false);
+  });
+
+  it("keeps ILCA 7 out of Optimist on a sailor result list", () => {
+    expect(sailorResultClassOf("ILCA 7")).toEqual({
+      id: "ilca7",
+      label: "ILCA 7",
+    });
+    expect(sailorResultClassOf("ILCA 6")).toEqual({
+      id: "ilca6",
+      label: "ILCA 6",
+    });
+    expect(sailorResultClassOf("Laser Radial")).toEqual({
+      id: "ilca6",
+      label: "ILCA 6",
+    });
+    expect(sailorResultClassOf("ILCA 4")).toEqual({
+      id: "ilca4",
+      label: "ILCA 4",
+    });
+    expect(sailorResultClassOf("ILCA")).toEqual({
+      id: "ilca4",
+      label: "ILCA 4",
+    });
+    expect(sailorResultClassOf("Optimist").id).toBe("optimist");
+    expect(sailorResultClassOf("").id).toBe("optimist");
+    expect(sailorResultClassOf("29er").id).toBe("29er");
+    expect(sailorResultClassOf("WingFoil").label).toBe("WingFoil");
+    expect(sailorResultClassOf("iQFOiL").id).toBe("iqfoil");
+    expect(sailorResultClassOf("Techno 293").id).toBe("techno");
   });
 });

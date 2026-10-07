@@ -63,6 +63,38 @@ export function ilcaFleetOf(boatClass: string | null | undefined): (typeof ILCA_
   return null;
 }
 
+/** Classes shown on a sailor's results list. ILCA 4, 6, and 7 are separate. */
+export const SAILOR_RESULT_CLASSES = [
+  { id: "optimist", label: "Optimist" },
+  { id: "ilca4", label: "ILCA 4" },
+  { id: "ilca6", label: "ILCA 6" },
+  { id: "ilca7", label: "ILCA 7" },
+  { id: "29er", label: "29er" },
+  { id: "wingfoil", label: "WingFoil" },
+  { id: "iqfoil", label: "iQFOiL" },
+  { id: "techno", label: "Techno 293" },
+] as const;
+
+export type SailorResultClassId =
+  | (typeof SAILOR_RESULT_CLASSES)[number]["id"]
+  | "other";
+
+/** One result's class. A blank boat class stays Optimist. Untagged ILCA stays ILCA 4. */
+export function sailorResultClassOf(boatClass: string | null | undefined): {
+  id: SailorResultClassId;
+  label: string;
+} {
+  const fleet = ilcaFleetOf(boatClass);
+  if (fleet === "ILCA 7") return { id: "ilca7", label: "ILCA 7" };
+  if (fleet === "ILCA 6") return { id: "ilca6", label: "ILCA 6" };
+  if (fleet === "ILCA 4") return { id: "ilca4", label: "ILCA 4" };
+  const family = regattaClassFamily(boatClass);
+  const known = SAILOR_RESULT_CLASSES.find((item) => item.id === family);
+  if (known) return { id: known.id, label: known.label };
+  const label = String(boatClass || "").trim();
+  return { id: "other", label: label || "Other" };
+}
+
 export function regattaMatchesAdminClass(input: {
   boatClass?: string | null;
   division?: string | null;

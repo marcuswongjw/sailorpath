@@ -6,7 +6,11 @@ import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
+import {
+  SAILOR_RESULT_CLASSES,
+  sailorResultClassOf,
+  type SailorResultClassId,
+} from "@/lib/admin/regattaClass";
 import {
   emptyResultForm,
   type ResultFormState,
@@ -27,14 +31,10 @@ export type AdminCompetitionsPanelProps = {
   handleDeleteResult: (id: string) => void | Promise<void>;
 };
 
-type ClassFilter = "all" | "optimist" | "ilca4";
+type ClassFilter = "all" | SailorResultClassId;
 
-function boatClassOf(reg: RegattaAdmin | undefined): string {
-  return String(reg?.boatClass || "Optimist").trim() || "Optimist";
-}
-
-function isIlcaRegatta(reg: RegattaAdmin | undefined): boolean {
-  return isIlcaSeriesClass(reg?.boatClass, "ILCA 4");
+function resultClass(reg: RegattaAdmin | undefined) {
+  return sailorResultClassOf(reg?.boatClass);
 }
 
 export function AdminCompetitionsPanel({
@@ -69,30 +69,42 @@ export function AdminCompetitionsPanel({
       });
   }, [resultsList, regattaList, sid]);
 
-  const optimistCount = allSailorResults.filter(
-    (r) => !isIlcaRegatta(r.regatta)
-  ).length;
-  const ilcaCount = allSailorResults.filter((r) =>
-    isIlcaRegatta(r.regatta)
-  ).length;
+  const classCounts = useMemo(() => {
+    const counts = new Map<SailorResultClassId, number>();
+    for (const row of allSailorResults) {
+      const id = resultClass(row.regatta).id;
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    }
+    return counts;
+  }, [allSailorResults]);
+
+  const classTabs = useMemo(() => {
+    const tabs: { id: ClassFilter; label: string; count: number }[] = [
+      { id: "all", label: "All", count: allSailorResults.length },
+      ...SAILOR_RESULT_CLASSES.map((item) => ({
+        id: item.id as ClassFilter,
+        label: item.label,
+        count: classCounts.get(item.id) ?? 0,
+      })),
+    ];
+    const otherCount = classCounts.get("other") ?? 0;
+    if (otherCount > 0) {
+      tabs.push({ id: "other", label: "Other", count: otherCount });
+    }
+    return tabs;
+  }, [allSailorResults.length, classCounts]);
 
   const sailorResults = allSailorResults.filter((r) => {
     if (classFilter === "all") return true;
-    if (classFilter === "ilca4") return isIlcaRegatta(r.regatta);
-    return !isIlcaRegatta(r.regatta);
+    return resultClass(r.regatta).id === classFilter;
   });
 
   const regattaOptions = useMemo(() => {
     const list = [...regattaList].sort((a, b) =>
       String(b.date || "").localeCompare(String(a.date || ""))
     );
-    if (classFilter === "ilca4") {
-      return list.filter((r) => isIlcaRegatta(r));
-    }
-    if (classFilter === "optimist") {
-      return list.filter((r) => !isIlcaRegatta(r));
-    }
-    return list;
+    if (classFilter === "all") return list;
+    return list.filter((r) => resultClass(r).id === classFilter);
   }, [regattaList, classFilter]);
 
   if (!competitionsSailorId) return null;
@@ -120,14 +132,16 @@ export function AdminCompetitionsPanel({
               All regatta results — {sailor?.name || "Sailor"}
             </h3>
             <p className="text-xs text-slate-500 mt-1">
-              Optimist and ILCA 4 events for this sailor. Edit rank / scores, or
+              Results for this sailor across every class. Edit rank / scores, or
               add a missing result.
               {competitionsLoading ? " Refreshing…" : ""}
             </p>
             <p className="text-[13px] text-slate-600 mt-1">
               {allSailorResults.length} total
-              {optimistCount > 0 ? ` · ${optimistCount} Optimist` : ""}
-              {ilcaCount > 0 ? ` · ${ilcaCount} ILCA 4` : ""}
+              {classTabs
+                .filter((tab) => tab.id !== "all" && tab.count > 0)
+                .map((tab) => ` · ${tab.count} ${tab.label}`)
+                .join("")}
               {sailor?.sailNumber ? ` · Opti ${sailor.sailNumber}` : ""}
               {sailor?.sailNumberIlca4
                 ? ` · ILCA ${sailor.sailNumberIlca4}`
@@ -140,11 +154,11 @@ export function AdminCompetitionsPanel({
               type="button"
               onClick={() => {
                 const preferred =
-                  classFilter === "ilca4"
-                    ? regattaList.find((r) => isIlcaRegatta(r))
-                    : classFilter === "optimist"
-                      ? regattaList.find((r) => !isIlcaRegatta(r))
-                      : regattaList[0];
+                  classFilter === "all"
+                    ? regattaList[0]
+                    : regattaList.find(
+                        (r) => resultClass(r).id === classFilter
+                      );
                 setEditingResultId("new");
                 setResultForm({
                   ...emptyResultForm(),
@@ -167,39 +181,33 @@ export function AdminCompetitionsPanel({
           </div>
         </div>
 
-        {/* Class filter — Optimist + ILCA 4 */}
         <div
-          className="flex gap-1 p-1 rounded-xl bg-black/40 border border-white/10 max-w-md"
+          className="flex flex-wrap gap-1 p-1 rounded-xl bg-black/40 border border-white/10"
           role="tablist"
           aria-label="Boat class"
         >
-          {(
-            [
-              ["all", "All", allSailorResults.length],
-              ["optimist", "Optimist", optimistCount],
-              ["ilca4", "ILCA 4", ilcaCount],
-            ] as const
-          ).map(([key, label, count]) => {
-            const active = classFilter === key;
+          {classTabs.map((tab) => {
+            const active = classFilter === tab.id;
+            const ilca = tab.id.startsWith("ilca");
             return (
               <button
-                key={key}
+                key={tab.id}
                 type="button"
                 role="tab"
                 aria-selected={active}
-                onClick={() => setClassFilter(key)}
-                className={`flex-1 rounded-lg px-2 py-2 text-[13px] font-bold transition-colors ${
+                onClick={() => setClassFilter(tab.id)}
+                className={`rounded-lg px-3 py-2 text-[13px] font-bold transition-colors ${
                   active
-                    ? key === "ilca4"
+                    ? ilca
                       ? "bg-sky-600 text-white"
-                      : key === "optimist"
-                        ? "bg-[var(--sp-harbour-teal)] text-white"
-                        : "bg-[var(--sp-harbour-teal)] text-white"
+                      : "bg-[var(--sp-harbour-teal)] text-white"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                {label}
-                <span className="ml-1 tabular-nums opacity-80">({count})</span>
+                {tab.label}
+                <span className="ml-1 tabular-nums opacity-80">
+                  ({tab.count})
+                </span>
               </button>
             );
           })}
@@ -229,7 +237,7 @@ export function AdminCompetitionsPanel({
                   <option value="">— Select —</option>
                   {regattaOptions.map((r) => (
                     <option key={r.id} value={r.id}>
-                      {boatClassOf(r)} · {r.name} ({regattaDateLabel(r.date)}) ·{" "}
+                      {resultClass(r).label} · {r.name} ({regattaDateLabel(r.date)}) ·{" "}
                       {r.division || "—"}
                     </option>
                   ))}
@@ -372,8 +380,8 @@ export function AdminCompetitionsPanel({
               {sailorResults.map((r) => {
                 const dns = Boolean(r.isDns || r.isDNS);
                 const overseas = Boolean(r.isOverseasCommitment);
-                const ilca = isIlcaRegatta(r.regatta);
-                const cls = boatClassOf(r.regatta);
+                const cls = resultClass(r.regatta);
+                const ilca = cls.id.startsWith("ilca");
                 return (
                   <tr
                     key={r.id || `${r.sailorId}-${r.regattaId}`}
@@ -384,10 +392,12 @@ export function AdminCompetitionsPanel({
                         className={`text-[11px] font-bold px-2 py-0.5 rounded border ${
                           ilca
                             ? "bg-sky-500/15 text-sky-300 border-sky-500/30"
-                            : "bg-orange-500/10 text-orange-300 border-orange-500/25"
+                            : cls.id === "optimist"
+                              ? "bg-orange-500/10 text-orange-300 border-orange-500/25"
+                              : "bg-emerald-500/10 text-emerald-300 border-emerald-500/25"
                         }`}
                       >
-                        {ilca ? "ILCA 4" : cls || "Optimist"}
+                        {cls.label}
                       </span>
                     </td>
                     <td className="py-3 px-4 font-bold text-white">
@@ -475,7 +485,7 @@ export function AdminCompetitionsPanel({
                   >
                     {allSailorResults.length === 0
                       ? "No competitions logged yet. Click Add result (use DNS for non-starts)."
-                      : `No ${classFilter === "ilca4" ? "ILCA 4" : "Optimist"} results in this filter.`}
+                      : `No ${classTabs.find((tab) => tab.id === classFilter)?.label || "class"} results in this filter.`}
                   </td>
                 </tr>
               )}
