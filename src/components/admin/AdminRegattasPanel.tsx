@@ -126,6 +126,7 @@ export type AdminRegattasPanelProps = {
   handleSaveRegatta: () => void | Promise<void>;
   handleDeleteRegatta: (id: string) => void | Promise<void>;
   invalidateRegattas?: () => void;
+  onRegattaMoved?: (row: RegattaAdmin) => void;
   onOpenResults?: (regattaId: string) => void;
   onOpenCheck?: (regattaId: string) => void;
   onClearSheet?: () => void;
@@ -159,6 +160,7 @@ export function AdminRegattasPanel({
   handleSaveRegatta,
   handleDeleteRegatta,
   invalidateRegattas,
+  onRegattaMoved,
   onOpenResults,
   onOpenCheck,
   onClearSheet,
@@ -291,6 +293,7 @@ export function AdminRegattasPanel({
   const handleLinkSheet = async (sheetId: string) => {
     const eventId = linkTargets[sheetId];
     if (!eventId || linkingSheetId) return;
+    if (!confirmLeave()) return;
     setLinkingSheetId(sheetId);
     try {
       const res = await fetch("/api/admin/regattas", {
@@ -301,6 +304,10 @@ export function AdminRegattasPanel({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not link the sailing class");
+      if (!data.regatta || data.regatta.id !== sheetId || data.regatta.eventId !== eventId) {
+        throw new Error("The class move could not be confirmed. Refresh and try again.");
+      }
+      onRegattaMoved?.(data.regatta as RegattaAdmin);
       const wasUnassigned = grouped.unassigned.some((sheet) => sheet.id === sheetId);
       const destination = Object.values(savedEvents).find((event) => event.id === eventId);
       toast.success(

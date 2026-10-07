@@ -109,7 +109,8 @@ export async function linkRegattaEvents(): Promise<{
     if (!eventId) continue;
     const rows = [...event.sheets, ...event.shells];
     for (const sheet of rows) {
-      if (sheet.eventId === eventId) continue;
+      // Seeding only fills missing links; an admin's saved move is authoritative.
+      if (sheet.eventId) continue;
       await db
         .update(regattas)
         .set({ eventId, updatedAt: new Date() })

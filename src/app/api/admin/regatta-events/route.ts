@@ -104,7 +104,11 @@ export async function PATCH(req: Request) {
         eventId: regattas.eventId,
       })
       .from(regattas);
-    const match = groupRegattaEvents(sheetRows).events.find(
+    const events = await db.select({ id: regattaEvents.id, slug: regattaEvents.slug }).from(regattaEvents);
+    const match = groupRegattaEvents(
+      sheetRows,
+      new Map(events.map((event) => [event.id, event.slug]))
+    ).events.find(
       (event) => event.slug === slug
     );
     let sheetsUpdated = 0;

@@ -248,6 +248,10 @@ export function useAdminRegattas({
     handleSaveRegatta,
     handleDeleteRegatta,
     invalidateRegattas,
+    onRegattaMoved: (row: RegattaAdmin) => {
+      setRegattaList((current) => current.map((item) => item.id === row.id ? row : item));
+      setSelectedRegattaIdForResultEdit(row.id);
+    },
   };
 
   return {
