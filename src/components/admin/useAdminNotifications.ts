@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 import { coachRequestsFromCache } from "@/components/admin/coachAccessCache";
+import { totalPendingAdminInboxItems } from "@/lib/admin/adminInboxCounts";
 
 type ClaimNotification = { status?: string; createdAt?: string | null };
 type DatedRow = { createdAt?: string | null; requestedAt?: string | null };
@@ -18,9 +19,7 @@ function earliest(values: Array<string | null | undefined>): number | null {
   return best;
 }
 
-/**
- * Pending claims + new support message badge counts (60s poll).
- */
+/** Actionable inbox queue counts and oldest-first landing view (60s poll). */
 export function useAdminNotifications(isSuperadmin: boolean) {
   const claimsQuery = useQuery({
     queryKey: adminQueryKeys.claims(),
@@ -75,23 +74,6 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     },
   });
 
-  const claimedUpdatesQuery = useQuery({
-    queryKey: ["admin", "claimed-profile-updates-count"],
-    enabled: isSuperadmin,
-    refetchInterval: 60_000,
-    queryFn: async () => {
-      try {
-        const res = await fetch("/api/admin/change-log?days=7&limit=50");
-        const data = await res.json();
-        if (!res.ok) return 0;
-        const changes = (data.changes || []) as Array<{ action: string }>;
-        return changes.filter((c) => c.action === "claimed_profile.updated").length;
-      } catch {
-        return 0;
-      }
-    },
-  });
-
   const claimsPendingCount = (claimsQuery.data ?? []).filter(
     (claim) => claim.status === "pending"
   ).length;
@@ -100,14 +82,13 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     (request) => request.status === "pending"
   ).length;
   const suggestionsCount = Number(suggestionsQuery.data?.count ?? 0);
-  const claimedUpdatesCount = claimedUpdatesQuery.data ?? 0;
-
-  const inboxNotifCount =
-    claimsPendingCount +
-    supportNewCount +
-    coachPendingCount +
-    suggestionsCount +
-    claimedUpdatesCount;
+  const inboxQueueCounts = {
+    suggestions: suggestionsCount,
+    claims: claimsPendingCount,
+    coaches: coachPendingCount,
+    support: supportNewCount,
+  };
+  const inboxNotifCount = totalPendingAdminInboxItems(inboxQueueCounts);
 
   const pendingClaims = (claimsQuery.data ?? []).filter(
     (claim) => claim.status === "pending"
@@ -153,7 +134,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     supportNewCount,
     coachPendingCount,
     suggestionsCount,
-    claimedUpdatesCount,
+    inboxQueueCounts,
     inboxNotifCount,
     inboxLandingView,
   };

@@ -52,13 +52,29 @@ export type AdminArea =
   | "insights"
   | "settings";
 
+export type AdminEventsQueueView =
+  | "missing-results"
+  | "ready-to-publish"
+  | "attention";
+
+const EVENTS_QUEUE_VIEWS: readonly AdminEventsQueueView[] = [
+  "missing-results",
+  "ready-to-publish",
+  "attention",
+];
+
+export function isAdminEventsQueueView(view: string): view is AdminEventsQueueView {
+  return (EVENTS_QUEUE_VIEWS as readonly string[]).includes(view);
+}
+
 export type AdminEventsView =
   | "card"
   | "results"
   | "import"
   | "readiness"
   | "wingfoil"
-  | "techno293";
+  | "techno293"
+  | AdminEventsQueueView;
 export type AdminSailorsView =
   | "directory"
   | "duplicates"
@@ -92,6 +108,9 @@ const EVENTS_VIEWS: readonly AdminEventsView[] = [
   "readiness",
   "wingfoil",
   "techno293",
+  "missing-results",
+  "ready-to-publish",
+  "attention",
 ];
 const SAILORS_VIEWS: readonly AdminSailorsView[] = [
   "directory",
@@ -325,7 +344,11 @@ function parseCanonical(params: ParamBag, area: AdminArea): AdminAreaState {
     EVENTS_VIEWS,
     sheet ? "results" : "card"
   );
-  if (view === "wingfoil" || view === "techno293") {
+  if (
+    view === "wingfoil" ||
+    view === "techno293" ||
+    isAdminEventsQueueView(view)
+  ) {
     return { area, view, event: null, sheet: null };
   }
   return { area, view, event, sheet };

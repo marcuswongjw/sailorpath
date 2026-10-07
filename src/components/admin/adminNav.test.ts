@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ADMIN_TAB_GROUPS,
+  isAdminEventsQueueView,
   parseAdminArea,
   parseAdminNav,
   reconcileEventsAddress,
@@ -294,5 +295,21 @@ describe("canonical admin areas", () => {
     expect(next.state.event).toBe("singapore-nationals-2026");
     expect(next.state.sheet).toBe("abc");
     expect(next.error).toBeNull();
+  });
+
+  it("round-trips focused Events queue views", () => {
+    for (const view of ["missing-results", "ready-to-publish", "attention"] as const) {
+      const params = new URLSearchParams(`area=events&view=${view}`);
+      const state = parseAdminArea(params);
+      expect(state).toMatchObject({ area: "events", view, sheet: null });
+      expect(isAdminEventsQueueView(state.view)).toBe(true);
+      expect(serializeAdminArea(state)).toBe(`area=events&view=${view}`);
+      expect(parseAdminNav(params).tab).toBe("regattas");
+    }
+    expect(
+      parseAdminArea(
+        new URLSearchParams("area=events&view=attention&event=old&sheet=stale")
+      )
+    ).toEqual({ area: "events", view: "attention", event: null, sheet: null });
   });
 });

@@ -32,4 +32,22 @@ describe("AdminSidebar", () => {
     expect(screen.getByRole("link", { name: "Duplicates" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: "ILCA 4 squad" })).toBeInTheDocument();
   });
+
+  it("shows focused event queues and marks the selected queue", () => {
+    render(
+      <AdminSidebar {...base} activeArea="events" eventsView="missing-results" />
+    );
+    expect(screen.getByRole("link", { name: "Missing results" })).toHaveAttribute(
+      "aria-current",
+      "page"
+    );
+    expect(screen.getByRole("link", { name: "Ready to publish" })).toHaveAttribute(
+      "href",
+      "/admin?area=events&view=ready-to-publish"
+    );
+    expect(screen.getByRole("link", { name: "Data health" })).toHaveAttribute(
+      "href",
+      "/admin?area=events&view=attention"
+    );
+  });
 });

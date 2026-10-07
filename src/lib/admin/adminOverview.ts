@@ -7,6 +7,11 @@ export type OverviewSheet = {
   id: string;
   name: string;
   event: string | null;
+  date: string;
+  boatClass: string | null;
+  division: string | null;
+  raceCount: number | null;
+  resultCount: number;
   summary: ReturnType<typeof publicationReadiness>["summary"];
   status: string | null;
 };
@@ -32,6 +37,11 @@ export function buildAdminOverview(
         id: sheet.id,
         name: sheet.name,
         event,
+        date: String(sheet.date).slice(0, 10),
+        boatClass: sheet.boatClass ?? null,
+        division: sheet.division ?? null,
+        raceCount: typeof sheet.raceCount === "number" ? sheet.raceCount : null,
+        resultCount: resultCounts.get(sheet.id) ?? 0,
         summary: readiness.summary,
         status: sheet.status ?? null,
       });
@@ -51,10 +61,9 @@ export function buildAdminOverview(
         (sheet.summary === "publishable_ranking" ||
           sheet.summary === "publishable_non_ranking")
     ),
-    missingResults: sheets.filter((sheet) => {
-      const row = regattas.find((regatta) => regatta.id === sheet.id);
-      return row?.raceCount !== 0 && (resultCounts.get(sheet.id) ?? 0) === 0;
-    }),
+    missingResults: sheets.filter(
+      (sheet) => sheet.raceCount != null && sheet.raceCount > 0 && sheet.resultCount === 0
+    ),
     blocked: sheets.filter((sheet) => sheet.summary === "blocked"),
     incomplete: sheets.filter((sheet) => sheet.summary === "incomplete"),
   };

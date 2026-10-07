@@ -29,6 +29,7 @@ import {
   ADMIN_OPS_SUB_TABS,
   ADMIN_TAB_GROUPS,
   legacyToArea,
+  isAdminEventsQueueView,
   parseAdminArea,
   parseAdminNav,
   serializeAdminNav,
@@ -54,7 +55,8 @@ function eventsViewFrom(params: { get: (key: string) => string | null }): AdminE
     area.view === "import" ||
     area.view === "readiness" ||
     area.view === "wingfoil" ||
-    area.view === "techno293"
+    area.view === "techno293" ||
+    isAdminEventsQueueView(area.view)
   ) {
     return area.view;
   }
@@ -96,6 +98,10 @@ const AdminResultsPanel = dynamic(
 );
 const AdminRegattasPanel = dynamic(
   () => import("@/components/admin/AdminRegattasPanel").then((m) => m.AdminRegattasPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminEventsQueuePanel = dynamic(
+  () => import("@/components/admin/AdminEventsQueuePanel").then((m) => m.AdminEventsQueuePanel),
   { loading: () => <PanelLoading /> }
 );
 const AdminSailorsPanel = dynamic(
@@ -255,7 +261,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     supportNewCount,
     coachPendingCount,
     suggestionsCount,
-    claimedUpdatesCount,
+    inboxQueueCounts,
     inboxNotifCount,
     inboxLandingView,
   } = useAdminNotifications(isSuperadmin);
@@ -392,6 +398,14 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   // Keep state-driven changes canonical and refresh-safe. Do not normalize a
   // bookmarked class link until its initial class selection has been applied.
   useEffect(() => {
+    const address = parseAdminArea(new URLSearchParams(currentSearch));
+    if (
+      address.area === "events" &&
+      isAdminEventsQueueView(address.view) &&
+      (activeTab !== "regattas" || eventsView !== address.view)
+    ) {
+      return;
+    }
     if (
       initialSheetPending.current &&
       data.selectedRegattaIdForResultEdit !== initialSheetPending.current
@@ -421,7 +435,9 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         event
       )
     );
-    if (activeTab === "regattas" && eventsView === "readiness" && sheet) {
+    if (activeTab === "regattas" && !sheet && isAdminEventsQueueView(eventsView)) {
+      params.set("view", eventsView);
+    } else if (activeTab === "regattas" && eventsView === "readiness" && sheet) {
       params.set("view", "readiness");
     }
     if (adminShell === "legacy") {
@@ -507,11 +523,14 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     [sailors]
   );
 
-  const areaState = legacyToArea({
+  const legacyAreaState = legacyToArea({
     tab: activeTab,
     sub: editSubTab,
     regattaId: null,
   });
+  const areaState = legacyAreaState.area === "events"
+    ? { ...legacyAreaState, view: eventsView }
+    : legacyAreaState;
   const pageTitle = adminPageTitle(areaState.area, areaState.view);
 
   const breadcrumbContext = useMemo(() => {
@@ -672,7 +691,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             inboxCount={inboxNotifCount}
             queueCounts={{
               suggestions: suggestionsCount,
-              claims: claimsPendingCount + claimedUpdatesCount,
+              claims: claimsPendingCount,
               coaches: coachPendingCount,
               support: supportNewCount,
             }}
@@ -893,61 +912,68 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             regattas={data.regattaList}
             results={data.resultsList}
             duplicateCount={sailors.panelProps.duplicatePairs.length}
-            inboxCount={inboxNotifCount}
-            inboxHref={`/admin?area=inbox&view=${inboxLandingView}`}
-            suggestionsCount={suggestionsCount}
-            claimsCount={claimsPendingCount}
+            inboxQueueCounts={inboxQueueCounts}
           />
         )}
 
         {activeTab === "regattas" && (
           <div className="w-full min-w-0">
-            {unknownSheet && (
-              <p className="mb-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-900" role="alert">
-                That class was not found. Choose an event, then a class.
-              </p>
-            )}
-            <AdminRegattasPanel
-              isSuperadmin={isSuperadmin}
-              activeSheetId={data.selectedRegattaIdForResultEdit}
-              eventsView={eventsView}
-              onOpenResults={(regattaId) => {
-                setEventsView("results");
-                setSelectedRegattaIdForResultEdit(regattaId);
-                setActiveTab("regattas");
-              }}
-              onOpenCheck={(regattaId) => {
-                setEventsView("readiness");
-                setSelectedRegattaIdForResultEdit(regattaId);
-                setActiveTab("regattas");
-              }}
-              onClearSheet={() => {
-                setEventsView("card");
-                setSelectedRegattaIdForResultEdit("");
-              }}
-              onImportClass={(sheetId) => {
-                setImportSheetId(sheetId);
-                setSelectedRegattaIdForResultEdit(sheetId);
-                setActiveTab("import");
-              }}
-              resultsEditor={
-                <AdminResultsPanel
-                  embedded
+            {isAdminEventsQueueView(eventsView) ? (
+              <AdminEventsQueuePanel
+                view={eventsView}
+                regattas={data.regattaList}
+                results={data.resultsList}
+              />
+            ) : (
+              <>
+                {unknownSheet && (
+                  <p className="mb-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-900" role="alert">
+                    That class was not found. Choose an event, then a class.
+                  </p>
+                )}
+                <AdminRegattasPanel
                   isSuperadmin={isSuperadmin}
-                  sailorList={data.sailorList}
-                  regattaList={data.regattaList}
-                  resultsList={data.resultsList}
-                  {...results.panelProps}
+                  activeSheetId={data.selectedRegattaIdForResultEdit}
+                  eventsView={eventsView}
+                  onOpenResults={(regattaId) => {
+                    setEventsView("results");
+                    setSelectedRegattaIdForResultEdit(regattaId);
+                    setActiveTab("regattas");
+                  }}
+                  onOpenCheck={(regattaId) => {
+                    setEventsView("readiness");
+                    setSelectedRegattaIdForResultEdit(regattaId);
+                    setActiveTab("regattas");
+                  }}
+                  onClearSheet={() => {
+                    setEventsView("card");
+                    setSelectedRegattaIdForResultEdit("");
+                  }}
+                  onImportClass={(sheetId) => {
+                    setImportSheetId(sheetId);
+                    setSelectedRegattaIdForResultEdit(sheetId);
+                    setActiveTab("import");
+                  }}
+                  resultsEditor={
+                    <AdminResultsPanel
+                      embedded
+                      isSuperadmin={isSuperadmin}
+                      sailorList={data.sailorList}
+                      regattaList={data.regattaList}
+                      resultsList={data.resultsList}
+                      {...results.panelProps}
+                    />
+                  }
+                  readinessRevision={JSON.stringify({
+                    sheet: selectedRegatta,
+                    results: data.resultsList.filter(
+                      (row) => row.regattaId === data.selectedRegattaIdForResultEdit
+                    ),
+                  })}
+                  {...regattas.panelProps}
                 />
-              }
-              readinessRevision={JSON.stringify({
-                sheet: selectedRegatta,
-                results: data.resultsList.filter(
-                  (row) => row.regattaId === data.selectedRegattaIdForResultEdit
-                ),
-              })}
-              {...regattas.panelProps}
-            />
+              </>
+            )}
           </div>
         )}
 
@@ -1077,7 +1103,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 <AdminRegattasPanel
                   isSuperadmin={isSuperadmin}
                   activeSheetId={data.selectedRegattaIdForResultEdit}
-                  eventsView={eventsView}
+                  eventsView={isAdminEventsQueueView(eventsView) ? "card" : eventsView}
                   onOpenResults={(regattaId) => {
                     setEventsView("results");
                     setSelectedRegattaIdForResultEdit(regattaId);
@@ -1152,12 +1178,12 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                         {suggestionsCount}
                       </span>
                     )}
-                    {id === "claims" && (claimsPendingCount > 0 || claimedUpdatesCount > 0) && (
+                    {id === "claims" && claimsPendingCount > 0 && (
                       <span
                         className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[11px] font-black text-white"
-                        title={`${claimsPendingCount} pending claims, ${claimedUpdatesCount} claimed profile updates`}
+                        title={`${claimsPendingCount} pending claims`}
                       >
-                        {claimsPendingCount + claimedUpdatesCount}
+                        {claimsPendingCount}
                       </span>
                     )}
                     {id === "coaches" && coachPendingCount > 0 && (

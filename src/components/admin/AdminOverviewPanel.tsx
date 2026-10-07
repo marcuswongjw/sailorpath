@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
+import type { AdminInboxView } from "@/components/admin/adminNav";
 import {
   AlertTriangle,
   ArrowRight,
@@ -13,6 +14,8 @@ import {
 } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
+import type { AdminInboxQueueCounts } from "@/lib/admin/adminInboxCounts";
+import { totalPendingAdminInboxItems } from "@/lib/admin/adminInboxCounts";
 import { buildAdminOverview, type OverviewSheet } from "@/lib/admin/adminOverview";
 
 function sheetHref(sheet: OverviewSheet, view: "results" | "readiness") {
@@ -32,6 +35,50 @@ type AuditRow = {
   entityType: string;
   entityId: string | null;
 };
+
+const INBOX_QUEUES: { view: AdminInboxView; label: string }[] = [
+  { view: "suggestions", label: "Suggestions" },
+  { view: "claims", label: "Claims" },
+  { view: "coaches", label: "Coach access" },
+  { view: "support", label: "Support" },
+];
+
+function InboxQueueCard({
+  queues,
+}: {
+  queues: AdminInboxQueueCounts;
+}) {
+  const total = totalPendingAdminInboxItems(queues);
+  return (
+    <div className={`rounded-2xl border p-4 text-slate-300 ${total ? "border-rose-500/25 bg-rose-500/5" : "border-emerald-500/25 bg-emerald-500/5"}`}>
+      <div className="flex items-start justify-between gap-3">
+        <Inbox className="h-5 w-5" aria-hidden={true} />
+        <span className="text-2xl font-black text-white">{total}</span>
+      </div>
+      <h2 className="mt-4 font-bold text-white">Inbox</h2>
+      <p className="mt-1 text-xs leading-relaxed text-slate-400">
+        {total === 0 ? "No items are waiting for review." : "Items awaiting a response or review."}
+      </p>
+      <ul className="mt-3 grid grid-cols-2 gap-2">
+        {INBOX_QUEUES.map(({ view, label }) => (
+          <li key={view}>
+            <Link
+              href={`/admin?area=inbox&view=${view}`}
+              aria-label={`${label}: ${queues[view]} pending`}
+              className="flex min-h-11 items-center justify-between gap-2 rounded-xl border border-white/10 px-2.5 text-xs font-semibold text-slate-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+            >
+              <span>{label}</span>
+              <span className="font-black text-white">{queues[view]}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
+        Recent profile edits are activity, not pending inbox items; see Recent changes.
+      </p>
+    </div>
+  );
+}
 
 function ActionCard({
   title,
@@ -73,23 +120,15 @@ export function AdminOverviewPanel({
   regattas,
   results,
   duplicateCount,
-  inboxCount,
-  inboxHref,
-  suggestionsCount,
-  claimsCount,
+  inboxQueueCounts,
 }: {
   regattas: RegattaAdmin[];
   results: ResultAdmin[];
   duplicateCount: number;
-  inboxCount: number;
-  inboxHref: string;
-  suggestionsCount: number;
-  claimsCount: number;
+  inboxQueueCounts: AdminInboxQueueCounts;
 }) {
   const overview = buildAdminOverview(regattas, results);
   const attention = [...overview.blocked, ...overview.incomplete].slice(0, 6);
-  const missing = overview.missingResults.slice(0, 6);
-  const ready = overview.ready.slice(0, 6);
   const recent = useQuery({
     queryKey: ["admin", "overview-changes"],
     queryFn: async () => {
@@ -108,10 +147,10 @@ export function AdminOverviewPanel({
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <ActionCard title="Inbox" count={inboxCount} description={`${suggestionsCount} suggestion${suggestionsCount === 1 ? "" : "s"} · ${claimsCount} claim${claimsCount === 1 ? "" : "s"} · coach access and support`} href={inboxHref} icon={Inbox} tone={inboxCount ? "rose" : "emerald"} />
-        <ActionCard title="Missing results" count={overview.missingResults.length} description="Classes with races recorded and no score rows." href={missing[0] ? sheetHref(missing[0], "results") : "/admin?area=events&view=card"} icon={Sailboat} tone={overview.missingResults.length ? "amber" : "emerald"} />
+        <InboxQueueCard queues={inboxQueueCounts} />
+        <ActionCard title="Missing results" count={overview.missingResults.length} description="Classes with a recorded race count but no score rows." href="/admin?area=events&view=missing-results" icon={Sailboat} tone={overview.missingResults.length ? "amber" : "emerald"} />
         <ActionCard title="Duplicate sailors" count={duplicateCount} description="Likely duplicate records waiting for review or merge." href="/admin?area=sailors&view=duplicates" icon={UserRoundSearch} tone={duplicateCount ? "amber" : "emerald"} />
-        <ActionCard title="Ready to publish" count={overview.ready.length} description="Valid, complete classes ready for a final publication review." href={ready[0] ? sheetHref(ready[0], "readiness") : "/admin?area=events&view=card"} icon={CheckCircle2} tone="emerald" />
+        <ActionCard title="Ready to publish" count={overview.ready.length} description="Valid, complete classes ready for a final publication review." href="/admin?area=events&view=ready-to-publish" icon={CheckCircle2} tone="emerald" />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(17rem,0.6fr)]">
@@ -120,6 +159,13 @@ export function AdminOverviewPanel({
             <h2 className="font-bold text-white">Event data health</h2>
             <span className="text-xs font-bold text-slate-400">{overview.blocked.length} blocked · {overview.incomplete.length} incomplete</span>
           </div>
+          <Link
+            href="/admin?area=events&view=attention"
+            className="mt-2 inline-flex min-h-11 items-center gap-1 text-xs font-bold text-orange-300 hover:text-orange-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+          >
+            View all {overview.blocked.length + overview.incomplete.length} issues
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden={true} />
+          </Link>
           {attention.length ? (
             <ul className="mt-3 divide-y divide-white/10">
               {attention.map((sheet) => (
@@ -139,6 +185,9 @@ export function AdminOverviewPanel({
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
           <History className="h-5 w-5 text-slate-400" aria-hidden={true} />
           <h2 className="mt-3 font-bold text-white">Recent changes</h2>
+          <p className="mt-1 text-xs leading-relaxed text-slate-500">
+            Recent profile edits are activity, not pending inbox work.
+          </p>
           {recent.isLoading ? (
             <p className="mt-1 text-xs leading-relaxed text-slate-600">Loading recent changes…</p>
           ) : recent.data && recent.data.length > 0 ? (

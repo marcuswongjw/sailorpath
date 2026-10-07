@@ -104,6 +104,24 @@ export function AdminSidebar({
     activeArea === "events"
       ? [
           {
+            key: "missing-results",
+            href: areaHref({ area: "events", view: "missing-results", event: null, sheet: null }),
+            label: "Missing results",
+            current: eventsView === "missing-results",
+          },
+          {
+            key: "ready-to-publish",
+            href: areaHref({ area: "events", view: "ready-to-publish", event: null, sheet: null }),
+            label: "Ready to publish",
+            current: eventsView === "ready-to-publish",
+          },
+          {
+            key: "attention",
+            href: areaHref({ area: "events", view: "attention", event: null, sheet: null }),
+            label: "Data health",
+            current: eventsView === "attention",
+          },
+          {
             key: "import",
             href: areaHref({ area: "events", view: "import", event: null, sheet: null }),
             label: "Import",
@@ -244,6 +262,9 @@ export function AdminSidebar({
 export function adminPageTitle(area: AdminArea, view: string): string {
   if (area === "events") {
     if (view === "import") return "Import";
+    if (view === "missing-results") return "Missing results";
+    if (view === "ready-to-publish") return "Ready to publish";
+    if (view === "attention") return "Event data health";
     if (view === "wingfoil") return "WingFoil";
     if (view === "techno293") return "Techno 293";
     return "Events";

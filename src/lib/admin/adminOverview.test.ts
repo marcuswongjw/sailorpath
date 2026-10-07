@@ -34,4 +34,9 @@ describe("buildAdminOverview", () => {
     expect(overview.missingResults).toHaveLength(1);
     expect(overview.incomplete).toHaveLength(1);
   });
+
+  it("does not treat an unknown race count as proof of missing results", () => {
+    const overview = buildAdminOverview([{ ...complete, raceCount: null }], []);
+    expect(overview.missingResults).toHaveLength(0);
+  });
 });
