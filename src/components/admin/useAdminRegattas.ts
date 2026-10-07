@@ -1,12 +1,21 @@
 "use client";
 
-import { useState, useMemo, type Dispatch, type SetStateAction } from "react";
+import { useState, useMemo, useRef, type Dispatch, type SetStateAction } from "react";
 import { parseApi, apiErr } from "@/components/admin/parseApi";
-import { emptyRegattaForm, regattaToClassForm } from "@/components/admin/adminForms";
+import { emptyRegattaForm, regattaToClassForm, type RegattaFormState } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { cascadeLine } from "@/lib/confirmCopy";
 import { regattaMatchesAdminClass } from "@/lib/admin/regattaClass";
+import {
+  duplicateRegattaChoice,
+  mergeRegattaIdentities,
+  planNewClassSave,
+  regattaIdentityFromApi,
+  type RegattaDuplicateDecision,
+  type RegattaIdentity,
+} from "@/lib/admin/regattaDuplicate";
+import { slugify } from "@/lib/slug";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
@@ -43,7 +52,8 @@ export function useAdminRegattas({
   invalidateRegattas,
   invalidateResults,
 }: UseAdminRegattasArgs) {
-  const { toast, confirm } = useFeedback();
+  const { toast, confirm, choose } = useFeedback();
+  const saveLock = useRef(false);
   const [regattaSearch, setRegattaSearch] = useState("");
   const [regattaDivisionFilter, setRegattaDivisionFilter] =
     useState<string>("all");
@@ -104,8 +114,27 @@ export function useAdminRegattas({
     [regattaList]
   );
 
+  const classIdentities = (): RegattaIdentity[] =>
+    (regattaList || [])
+      .map((regatta) => ({
+        id: regatta.id,
+        slug: regatta.slug || slugify(regatta.name || ""),
+        name: regatta.name || "",
+        startDate: String(regatta.date || "").slice(0, 10),
+      }))
+      .filter((regatta) => regatta.slug || regatta.name);
+
+  const duplicateClassBody = (form: RegattaFormState) => ({
+    name: form.name,
+    date: form.date,
+    endDate: form.endDate,
+    venue: form.venue,
+    boatClass: form.boatClass,
+    division: form.division,
+  });
+
   const handleSaveRegatta = async () => {
-    if (saving) return;
+    if (saving || saveLock.current) return;
     if (!isSuperadmin) {
       toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
@@ -116,55 +145,140 @@ export function useAdminRegattas({
       toast.error("Regatta Name and Date are required.");
       return;
     }
+    saveLock.current = true;
     setSaving(true);
     try {
-      if (editingRegattaId === "new") {
-        const res = await fetch("/api/admin/regattas", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(regattaForm),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(apiErr(data, "Create failed"));
-        const regatta = data.regatta as RegattaAdmin;
-        setRegattaList((prev) => [...prev, regatta]);
+      const rememberCreated = (regatta: RegattaAdmin, rankingNote?: string) => {
+        setRegattaList((prev) =>
+          prev.some((row) => row.id === regatta.id)
+            ? prev.map((row) => (row.id === regatta.id ? regatta : row))
+            : [...prev, regatta]
+        );
         setEditingRegattaId(regatta.id);
         rememberSavedClass(regatta);
         setSelectedRegattaIdForResultEdit(regatta.id);
         toast.success(
-          data.rankingNote
-            ? `Saved. ${data.rankingNote}`
-            : "Regatta created successfully!"
+          rankingNote ? `Saved. ${rankingNote}` : "Regatta created successfully!"
         );
-      } else {
-        if (!editingRegattaId) {
-          throw new Error("Select a sailing class before saving changes.");
-        }
-        const regattaId = editingRegattaId;
-        const current = regattaList.find((r) => r.id === regattaId);
-        const requestedStatus = regattaForm.status || "published";
-        if (!isRegattaLifecycleStatus(requestedStatus)) {
-          throw new Error("Select a valid publication status before saving.");
-        }
-        const desiredStatus: RegattaLifecycleStatus = requestedStatus;
-        const detailsForm = { ...regattaForm };
-        delete detailsForm.status;
+      };
+
+      const patchClass = async (
+        regattaId: string,
+        body: Record<string, unknown>,
+        desiredStatus?: RegattaLifecycleStatus
+      ) => {
+        const current = regattaList.find((row) => row.id === regattaId);
         const res = await fetch("/api/admin/regattas", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...detailsForm, id: regattaId }),
+          body: JSON.stringify({ ...body, id: regattaId }),
         });
         const data = await parseApi(res);
         if (!res.ok) throw new Error(apiErr(data, "Update failed"));
         let regatta = data.regatta as RegattaAdmin;
-        if ((current?.status || "published") !== desiredStatus) {
+        if (desiredStatus && (current?.status || "published") !== desiredStatus) {
           await setAdminRegattaStatus(regattaId, desiredStatus);
           regatta = { ...regatta, status: desiredStatus };
         }
         setRegattaList((prev) =>
-          prev.map((r) => (r.id === regattaId ? regatta : r))
+          prev.some((row) => row.id === regattaId)
+            ? prev.map((row) => (row.id === regattaId ? regatta : row))
+            : [...prev, regatta]
         );
+        setEditingRegattaId(regatta.id);
         rememberSavedClass(regatta);
+        setSelectedRegattaIdForResultEdit(regatta.id);
+        return data;
+      };
+
+      if (editingRegattaId === "new") {
+        const input = {
+          name: regattaForm.name,
+          date: regattaForm.date,
+          boatClass: regattaForm.boatClass,
+          division: regattaForm.division,
+        };
+        let known = classIdentities();
+        const ask = (existing: RegattaIdentity) =>
+          choose(
+            duplicateRegattaChoice({
+              enteredName: regattaForm.name,
+              existing,
+              noun: "class",
+            })
+          );
+        let decision: RegattaDuplicateDecision | null = null;
+        const first = planNewClassSave(input, known, null);
+        if (first.action === "needs-decision") {
+          decision = await ask(first.duplicate.existing);
+          if (!decision) return;
+        }
+        let plan = planNewClassSave(input, known, decision);
+        const updatedClassToast = (note: unknown) => {
+          toast.success(
+            typeof note === "string" && note
+              ? `Existing class updated. ${note}`
+              : "Existing class updated. Its results, race count, and fleet size were left in place."
+          );
+        };
+        if (plan.action === "update") {
+          const data = await patchClass(plan.id, duplicateClassBody(regattaForm));
+          updatedClassToast(data.rankingNote);
+        } else if (plan.action === "create") {
+          const postClass = async (slug: string) => {
+            const res = await fetch("/api/admin/regattas", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ ...regattaForm, slug }),
+            });
+            const data = await parseApi(res);
+            return { res, data };
+          };
+          let posted = await postClass(plan.slug);
+          if (posted.res.status === 409) {
+            const serverExisting = regattaIdentityFromApi(posted.data.existing);
+            if (!serverExisting?.id) {
+              throw new Error(apiErr(posted.data, "Create failed"));
+            }
+            known = mergeRegattaIdentities([known, [serverExisting]]);
+            decision = await ask(serverExisting);
+            if (!decision) return;
+            if (decision === "update") {
+              const data = await patchClass(
+                serverExisting.id,
+                duplicateClassBody(regattaForm)
+              );
+              updatedClassToast(data.rankingNote);
+              invalidateRegattas?.();
+              return;
+            }
+            plan = planNewClassSave(input, known, "separate");
+            if (plan.action !== "create") return;
+            posted = await postClass(plan.slug);
+          }
+          if (!posted.res.ok) throw new Error(apiErr(posted.data, "Create failed"));
+          rememberCreated(
+            posted.data.regatta as RegattaAdmin,
+            typeof posted.data.rankingNote === "string"
+              ? posted.data.rankingNote
+              : undefined
+          );
+        }
+      } else {
+        if (!editingRegattaId) {
+          throw new Error("Select a sailing class before saving changes.");
+        }
+        const requestedStatus = regattaForm.status || "published";
+        if (!isRegattaLifecycleStatus(requestedStatus)) {
+          throw new Error("Select a valid publication status before saving.");
+        }
+        const detailsForm = { ...regattaForm };
+        delete detailsForm.status;
+        const data = await patchClass(
+          editingRegattaId,
+          detailsForm,
+          requestedStatus
+        );
         toast.success(
           data.rankingNote
             ? `Saved. ${data.rankingNote}`
@@ -175,6 +289,7 @@ export function useAdminRegattas({
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     } finally {
+      saveLock.current = false;
       setSaving(false);
     }
   };

@@ -81,14 +81,94 @@ export async function PATCH(req: Request) {
       values.isSelectionTrial = Boolean(body.isSelectionTrial);
     }
 
-    const [saved] = await db
-      .insert(regattaEvents)
-      .values(values)
-      .onConflictDoUpdate({
-        target: regattaEvents.slug,
-        set: values,
+    const [existing] = await db
+      .select({
+        id: regattaEvents.id,
+        slug: regattaEvents.slug,
+        name: regattaEvents.name,
+        startDate: regattaEvents.startDate,
+        endDate: regattaEvents.endDate,
+        venue: regattaEvents.venue,
+        organizer: regattaEvents.organizer,
+        classes: regattaEvents.classes,
+        norUrl: regattaEvents.norUrl,
+        registrationUrl: regattaEvents.registrationUrl,
+        countsForRanking: regattaEvents.countsForRanking,
+        isSelectionTrial: regattaEvents.isSelectionTrial,
+        keyDeadlines: regattaEvents.keyDeadlines,
+        scheduleSummary: regattaEvents.scheduleSummary,
+        scoringRules: regattaEvents.scoringRules,
       })
-      .returning();
+      .from(regattaEvents)
+      .where(eq(regattaEvents.slug, slug))
+      .limit(1);
+
+    if (body.create === true && existing) {
+      return NextResponse.json(
+        {
+          error: `${existing.name} already uses this name.`,
+          existing,
+        },
+        { status: 409 }
+      );
+    }
+
+    const stored =
+      existing && body.keepUnspecified === true
+        ? {
+            ...values,
+            organizer: existing.organizer,
+            classes: existing.classes ?? [],
+            norUrl: existing.norUrl,
+            registrationUrl: existing.registrationUrl,
+            countsForRanking: existing.countsForRanking,
+            isSelectionTrial: existing.isSelectionTrial,
+            keyDeadlines: existing.keyDeadlines,
+            scheduleSummary: existing.scheduleSummary,
+            scoringRules: existing.scoringRules,
+          }
+        : values;
+
+    let saved: typeof existing | undefined;
+    if (body.create === true) {
+      const [inserted] = await db
+        .insert(regattaEvents)
+        .values(stored)
+        .onConflictDoNothing({ target: regattaEvents.slug })
+        .returning();
+      if (!inserted) {
+        const [race] = await db
+          .select({
+            id: regattaEvents.id,
+            slug: regattaEvents.slug,
+            name: regattaEvents.name,
+            startDate: regattaEvents.startDate,
+          })
+          .from(regattaEvents)
+          .where(eq(regattaEvents.slug, slug))
+          .limit(1);
+        return NextResponse.json(
+          {
+            error: race
+              ? `${race.name} already uses this name.`
+              : "A regatta with this name already exists.",
+            existing: race ?? null,
+          },
+          { status: 409 }
+        );
+      }
+      saved = inserted;
+    } else {
+      const [upserted] = await db
+        .insert(regattaEvents)
+        .values(stored)
+        .onConflictDoUpdate({
+          target: regattaEvents.slug,
+          set: stored,
+        })
+        .returning();
+      saved = upserted;
+    }
 
     const sheetRows = await db
       .select({
@@ -117,8 +197,8 @@ export async function PATCH(req: Request) {
       for (const sheet of match.sheets) {
         const tooFew =
           sheet.raceCount != null && sheet.raceCount < MIN_RACES_FOR_RANKING;
-        const nextFlag = values.countsForRanking && !tooFew;
-        if (values.countsForRanking && tooFew) sheetsKeptNonRanking += 1;
+        const nextFlag = stored.countsForRanking && !tooFew;
+        if (stored.countsForRanking && tooFew) sheetsKeptNonRanking += 1;
         if (sheet.countsForRanking === nextFlag && sheet.eventId === saved.id) {
           continue;
         }
@@ -140,10 +220,13 @@ export async function PATCH(req: Request) {
     void logAdminChange({
       actorUserId: auth.userId,
       actorEmail: auth.email,
-      action: "regatta_event_update",
+      action: body.create === true ? "regatta_event_create" : "regatta_event_update",
       entityType: "regatta_event",
       entityId: saved?.id,
-      summary: `Updated calendar card ${name}`,
+      summary:
+        body.create === true
+          ? `Created calendar card ${name}`
+          : `Updated calendar card ${name}`,
       details: { slug, sheetsUpdated, sheetsKeptNonRanking },
     });
 

@@ -15,6 +15,16 @@ import {
   Sliders,
 } from "lucide-react";
 import { slugify } from "@/lib/slug";
+import {
+  duplicateRegattaChoice,
+  mergeRegattaIdentities,
+  planNewRegattaSave,
+  regattaIdentityFromApi,
+  registryRegattaIdentities,
+  type RegattaDuplicateDecision,
+  type RegattaEventSaveBody,
+  type RegattaIdentity,
+} from "@/lib/admin/regattaDuplicate";
 import { classResultsHref } from "@/lib/calendar/calendarResultLinks";
 import {
   ADMIN_BOAT_CLASS_GROUPS,
@@ -170,7 +180,7 @@ export function AdminRegattasPanel({
   resultsEditor,
   readinessRevision,
 }: AdminRegattasPanelProps) {
-  const { toast, confirm } = useFeedback();
+  const { toast, confirm, choose } = useFeedback();
   const [selectedEventSlug, setSelectedEventSlug] = useState<string | null>(null);
   const [savedEvents, setSavedEvents] = useState<Record<string, SavedCalendarEvent>>({});
   const [calendarForm, setCalendarForm] = useState<CalendarFormState | null>(null);
@@ -562,6 +572,8 @@ export function AdminRegattasPanel({
     onClearSheet?.();
   };
 
+  const createLock = useRef(false);
+
   const createEvent = async () => {
     if (!isSuperadmin) {
       toast.error("Only a superadmin can create an event.");
@@ -569,38 +581,100 @@ export function AdminRegattasPanel({
     }
     const name = newEvent.name.trim();
     const startDate = newEvent.startDate.trim();
-    const slug = slugify(name);
-    if (!name || !startDate || !slug) {
+    if (!name || !startDate || !slugify(name)) {
       toast.error("An event needs a name and a start date.");
       return;
     }
-    setCalendarSaving(true);
-    try {
-      const res = await fetch("/api/admin/regatta-events", {
-        method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slug,
-          name,
-          startDate,
-          endDate: newEvent.endDate,
-          venue: newEvent.venue,
-          classes: "",
-          countsForRanking: true,
+    if (createLock.current) return;
+    createLock.current = true;
+    const input = {
+      name,
+      startDate,
+      endDate: newEvent.endDate,
+      venue: newEvent.venue,
+    };
+    const knownEvents = (): RegattaIdentity[] =>
+      mergeRegattaIdentities([
+        registryRegattaIdentities(),
+        grouped.events.map((event) => {
+          const saved = savedEvents[event.slug];
+          return {
+            id: saved?.id,
+            slug: event.slug,
+            name: saved?.name || event.name,
+            startDate: saved?.startDate || event.startDate,
+            classes: saved?.classes?.length ? saved.classes : event.expectedClasses,
+            countsForRanking: saved?.countsForRanking ?? event.countsForRanking,
+          };
         }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not create the event");
-      const saved = data.event as SavedCalendarEvent;
+        Object.values(savedEvents).map((event) => ({
+          id: event.id,
+          slug: event.slug,
+          name: event.name,
+          startDate: event.startDate,
+          classes: event.classes,
+          countsForRanking: event.countsForRanking,
+        })),
+      ]);
+    const ask = (existing: RegattaIdentity) =>
+      choose(
+        duplicateRegattaChoice({
+          enteredName: name,
+          existing,
+          noun: "regatta",
+        })
+      );
+    try {
+      let known = knownEvents();
+      let decision: RegattaDuplicateDecision | null = null;
+      const first = planNewRegattaSave(input, known, null);
+      if (first.action === "needs-decision") {
+        decision = await ask(first.duplicate.existing);
+        if (!decision) return;
+      }
+      let plan = planNewRegattaSave(input, known, decision);
+      if (plan.action !== "save") return;
+      setCalendarSaving(true);
+      const send = async (body: RegattaEventSaveBody) => {
+        const res = await fetch("/api/admin/regatta-events", {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json().catch(() => ({}));
+        return { res, data };
+      };
+      let sent = await send(plan.body);
+      if (sent.res.status === 409 && decision !== "update") {
+        const serverExisting = regattaIdentityFromApi(sent.data.existing);
+        if (!serverExisting) {
+          throw new Error(sent.data.error || "A regatta with this name already exists.");
+        }
+        known = mergeRegattaIdentities([known, [serverExisting]]);
+        decision = await ask(serverExisting);
+        if (!decision) return;
+        plan = planNewRegattaSave(input, known, decision);
+        if (plan.action !== "save") return;
+        sent = await send(plan.body);
+      }
+      if (!sent.res.ok) {
+        throw new Error(sent.data.error || "Could not create the event");
+      }
+      const saved = sent.data.event as SavedCalendarEvent;
       setSavedEvents((prev) => ({ ...prev, [saved.slug]: saved }));
       setCreatingEvent(false);
       setNewEvent({ name: "", startDate: "", endDate: "", venue: "" });
       setSelectedEventSlug(saved.slug);
-      toast.success("Event created. Add a class when you are ready to enter results.");
+      toast.success(
+        plan.body.create === false
+          ? "Existing regatta updated. Its classes were left in place."
+          : "Event created. Add a class when you are ready to enter results."
+      );
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Could not create the event");
     } finally {
+      createLock.current = false;
       setCalendarSaving(false);
     }
   };

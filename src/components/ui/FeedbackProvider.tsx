@@ -33,6 +33,19 @@ export type ConfirmOptions = {
   requireTypedConfirm?: string;
 };
 
+export type FeedbackChoice<T extends string = string> = {
+  value: T;
+  label: string;
+  tone?: "primary" | "default";
+};
+
+export type ChooseOptions<T extends string = string> = {
+  title: string;
+  message?: string;
+  cancelLabel?: string;
+  choices: FeedbackChoice<T>[];
+};
+
 type FeedbackApi = {
   toast: {
     success: (message: string) => void;
@@ -41,6 +54,8 @@ type FeedbackApi = {
   };
   /** Promise-based confirm — replaces window.confirm */
   confirm: (opts: ConfirmOptions) => Promise<boolean>;
+  /** Promise-based choice. Cancel, Escape, and the backdrop resolve to null. */
+  choose: <T extends string>(opts: ChooseOptions<T>) => Promise<T | null>;
 };
 
 const FeedbackContext = createContext<FeedbackApi | null>(null);
@@ -53,6 +68,10 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
   const [confirmState, setConfirmState] = useState<{
     opts: ConfirmOptions;
     resolve: (value: boolean) => void;
+  } | null>(null);
+  const [chooseState, setChooseState] = useState<{
+    opts: ChooseOptions<string>;
+    resolve: (value: string | null) => void;
   } | null>(null);
   const [typedConfirm, setTypedConfirm] = useState("");
 
@@ -80,6 +99,15 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const choose = useCallback(<T extends string>(opts: ChooseOptions<T>) => {
+    return new Promise<T | null>((resolve) => {
+      setChooseState({
+        opts,
+        resolve: (value) => resolve(value as T | null),
+      });
+    });
+  }, []);
+
   const closeConfirm = useCallback((value: boolean) => {
     setConfirmState((current) => {
       current?.resolve(value);
@@ -88,7 +116,17 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
     setTypedConfirm("");
   }, []);
 
-  const api = useMemo(() => ({ toast, confirm }), [toast, confirm]);
+  const closeChoose = useCallback((value: string | null) => {
+    setChooseState((current) => {
+      current?.resolve(value);
+      return null;
+    });
+  }, []);
+
+  const api = useMemo(
+    () => ({ toast, confirm, choose }),
+    [toast, confirm, choose]
+  );
 
   return (
     <FeedbackContext.Provider value={api}>
@@ -103,6 +141,75 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
           <ToastPill key={t.id} message={t.message} tone={t.tone} />
         ))}
       </div>
+
+      {chooseState && (
+        <div
+          className="fixed inset-0 z-[110] flex items-end justify-center bg-black/65 p-4 sm:items-center"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="sp-choose-title"
+          onClick={() => closeChoose(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") closeChoose(null);
+          }}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl border border-white/10 bg-[#131520] p-5 shadow-2xl shadow-black/50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-deep)]">
+                <AlertTriangle className="h-4 w-4" />
+              </div>
+              <div className="min-w-0 flex-1 space-y-1.5">
+                <h3
+                  id="sp-choose-title"
+                  className="text-sm font-bold text-white leading-snug"
+                >
+                  {chooseState.opts.title}
+                </h3>
+                {chooseState.opts.message && (
+                  <p className="text-[13px] text-slate-400 leading-relaxed whitespace-pre-wrap">
+                    {chooseState.opts.message}
+                  </p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => closeChoose(null)}
+                className="rounded-full p-1 text-slate-500 hover:text-white"
+                aria-label="Close"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="mt-5 flex flex-col gap-2">
+              {chooseState.opts.choices.map((choice, index) => (
+                <button
+                  key={choice.value}
+                  type="button"
+                  autoFocus={index === 0}
+                  onClick={() => closeChoose(choice.value)}
+                  className={`min-h-11 rounded-full px-4 py-2 text-[15px] font-semibold ${
+                    choice.tone === "primary"
+                      ? "bg-orange-600 text-white hover:bg-orange-500"
+                      : "border border-white/10 bg-white/5 text-slate-200 hover:text-white"
+                  }`}
+                >
+                  {choice.label}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => closeChoose(null)}
+                className="min-h-11 rounded-full px-4 py-2 text-[15px] font-semibold text-slate-400 hover:text-white"
+              >
+                {chooseState.opts.cancelLabel || "Cancel"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Confirm dialog */}
       {confirmState && (

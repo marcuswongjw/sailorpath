@@ -223,30 +223,32 @@ export async function POST(req: Request) {
         scheduleNotes,
         status,
       })
-      .onConflictDoUpdate({
-        target: regattas.slug,
-        set: {
-          eventId,
-          name: String(body.name).trim(),
-          date: String(body.date),
-          totalFleetSize,
-          division: finalDivision,
-          raceCount,
-          geography,
-          boatClass,
-          countsForRanking,
-          venue,
-          endDate,
-          norUrl,
-          registrationUrl,
-          isSelectionTrial,
-          selectionEventId: selectionLink.id,
-          organizer,
-          scheduleNotes,
-          updatedAt: new Date(),
-        },
-      })
+      .onConflictDoNothing({ target: regattas.slug })
       .returning();
+
+    if (!row) {
+      const [existingClass] = await db
+        .select({
+          id: regattas.id,
+          name: regattas.name,
+          slug: regattas.slug,
+          date: regattas.date,
+          boatClass: regattas.boatClass,
+          division: regattas.division,
+        })
+        .from(regattas)
+        .where(eq(regattas.slug, slug))
+        .limit(1);
+      return NextResponse.json(
+        {
+          error: existingClass
+            ? `${existingClass.name} already uses this name.`
+            : "A class with this name already exists.",
+          existing: existingClass ?? null,
+        },
+        { status: 409 }
+      );
+    }
 
     await syncWeekendSelectionTrial(row.eventId);
     revalidatePublicRankings(`regattas:upsert:${row.id}`);
