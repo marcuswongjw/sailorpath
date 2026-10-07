@@ -301,7 +301,12 @@ export function AdminRegattasPanel({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not link the sailing class");
-      toast.success("Class linked to the event.");
+      const wasUnassigned = grouped.unassigned.some((sheet) => sheet.id === sheetId);
+      const destination = Object.values(savedEvents).find((event) => event.id === eventId);
+      toast.success(
+        wasUnassigned ? "Class linked to the event." : "Class moved to the other regatta."
+      );
+      if (destination) setSelectedEventSlug(destination.slug);
       setLinkTargets((current) => {
         const next = { ...current };
         delete next[sheetId];
@@ -1647,6 +1652,11 @@ export function AdminRegattasPanel({
                                         }
                                         isSuperadmin={isSuperadmin}
                                         weekends={linkableWeekends}
+                                        currentEventId={
+                                          selectedEventView.slug === UNASSIGNED_EVENT_SLUG
+                                            ? ""
+                                            : savedEvents[selectedEventView.slug]?.id || ""
+                                        }
                                         linkTarget={linkTargets[sheet.id] || ""}
                                         linking={linkingSheetId === sheet.id}
                                         publishing={publishingId === sheet.id}

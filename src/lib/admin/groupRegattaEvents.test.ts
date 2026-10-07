@@ -50,6 +50,50 @@ describe("missingClassesFor", () => {
 });
 
 describe("groupRegattaEvents", () => {
+  it("moves a calendar shell onto another regatta when that link is saved", () => {
+    const silver = "rsyc-optimist-silver-fleet-knockout-championship-2026";
+    const parent = "rsyc-optimist-knockout-championship-2026";
+    const grouped = groupRegattaEvents(
+      [
+        {
+          ...row({
+            id: "silver-sheet",
+            slug: silver,
+            name: "RSYC Optimist Silver Fleet Knockout Championship 2026",
+            division: "Silver",
+            status: "published",
+          }),
+          eventId: "parent-event",
+        },
+      ],
+      new Map([
+        ["silver-event", silver],
+        ["parent-event", parent],
+      ])
+    );
+
+    expect(grouped.events.find((event) => event.slug === silver)?.shells ?? []).toHaveLength(0);
+    expect(
+      grouped.events.find((event) => event.slug === parent)?.sheets.map((item) => item.id)
+    ).toEqual(["silver-sheet"]);
+  });
+
+  it("keeps a calendar shell on its own regatta when the link points there", () => {
+    const silver = "rsyc-optimist-silver-fleet-knockout-championship-2026";
+    const grouped = groupRegattaEvents(
+      [
+        {
+          ...row({ id: "silver-sheet", slug: silver, name: "Silver" }),
+          eventId: "silver-event",
+        },
+      ],
+      new Map([["silver-event", silver]])
+    );
+    const event = grouped.events.find((item) => item.slug === silver);
+    expect(event?.shell?.id).toBe("silver-sheet");
+    expect(event?.sheets).toHaveLength(0);
+  });
+
   it("uses an explicit weekend link before trying to infer from the sheet name", () => {
     const linked = row({
       id: "linked-sheet",

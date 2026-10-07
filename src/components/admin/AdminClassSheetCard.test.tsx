@@ -51,6 +51,37 @@ describe("AdminClassSheetCard", () => {
     expect(onLinkTargetChange).toHaveBeenCalledWith("evt-1");
   });
 
+  it("moves a class onto another regatta and leaves the current one out", async () => {
+    const user = userEvent.setup();
+    const onLink = vi.fn();
+    const onLinkTargetChange = vi.fn();
+
+    render(
+      <AdminClassSheetCard
+        sheet={sheet}
+        isSuperadmin
+        currentEventId="evt-current"
+        weekends={[
+          { id: "evt-current", name: "RSYC Optimist Silver Fleet Knockout Championship 2026", startDate: "2026-09-26" },
+          { id: "evt-parent", name: "RSYC Optimist Knockout Championship 2026", startDate: "2026-09-26" },
+        ]}
+        linkTarget=""
+        onLinkTargetChange={onLinkTargetChange}
+        onLink={onLink}
+        onEditDetails={vi.fn()}
+        onOpenResults={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText("Move to another regatta")).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: /Silver Fleet/ })).not.toBeInTheDocument();
+    const move = screen.getByRole("button", { name: "Move" });
+    expect(move).toBeDisabled();
+    await user.selectOptions(screen.getByRole("combobox", { name: "Regatta for ILCA 4" }), "evt-parent");
+    expect(onLinkTargetChange).toHaveBeenCalledWith("evt-parent");
+    expect(screen.getByRole("option", { name: /Knockout Championship 2026/ })).toBeInTheDocument();
+  });
+
   it("uses the class label as the title once a sheet belongs to a weekend", () => {
     render(
       <AdminClassSheetCard

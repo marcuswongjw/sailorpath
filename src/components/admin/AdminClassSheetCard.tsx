@@ -27,6 +27,84 @@ function fleetLabel(size: number | null | undefined): string {
   return `Fleet ${size}`;
 }
 
+function EventLinkControls({
+  sheetId,
+  heading,
+  placeholder,
+  actionLabel,
+  fieldLabel,
+  destinations,
+  linkTarget,
+  linking,
+  onLinkTargetChange,
+  onLink,
+  emptyText,
+  tone = "neutral",
+}: {
+  sheetId: string;
+  heading: string;
+  placeholder: string;
+  actionLabel: string;
+  fieldLabel: string;
+  destinations: LinkableWeekend[];
+  linkTarget: string;
+  linking: boolean;
+  onLinkTargetChange?: (eventId: string) => void;
+  onLink?: () => void;
+  emptyText?: string;
+  tone?: "attention" | "neutral";
+}) {
+  const attention = tone === "attention";
+  return (
+    <div
+      className={`mt-3 rounded-lg border p-2.5 ${
+        attention
+          ? "border-dashed border-amber-200 bg-amber-50/70"
+          : "border-slate-200 bg-slate-50"
+      }`}
+    >
+      <p
+        className={`mb-1.5 text-[10px] font-bold uppercase tracking-wider ${
+          attention ? "text-amber-900" : "text-slate-700"
+        }`}
+      >
+        {heading}
+      </p>
+      {destinations.length === 0 && emptyText ? (
+        <p className="text-xs font-medium text-slate-600">{emptyText}</p>
+      ) : (
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sr-only" htmlFor={`link-event-${sheetId}`}>
+            {fieldLabel}
+          </label>
+          <select
+            id={`link-event-${sheetId}`}
+            value={linkTarget}
+            onChange={(event) => onLinkTargetChange?.(event.target.value)}
+            className="min-w-0 w-full flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800"
+          >
+            <option value="">{placeholder}</option>
+            {destinations.map((event) => (
+              <option key={event.id} value={event.id}>
+                {event.name} ({event.startDate})
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            disabled={!linkTarget || linking}
+            onClick={onLink}
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-orange-300 bg-orange-50 px-3 py-1.5 text-xs font-bold text-orange-900 hover:bg-orange-100 disabled:opacity-40"
+          >
+            {linking ? <Loader2 className="h-3 w-3 animate-spin" /> : <Link2 className="h-3 w-3" />}
+            {actionLabel}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MetaLine({ items }: { items: string[] }) {
   return (
     <p className="mt-1 flex flex-wrap gap-x-1.5 gap-y-0.5 text-xs font-medium text-slate-600">
@@ -46,6 +124,7 @@ export function AdminClassSheetCard({
   unassigned = false,
   isSuperadmin = false,
   weekends = [],
+  currentEventId = "",
   linkTarget = "",
   linking = false,
   publishing = false,
@@ -63,6 +142,8 @@ export function AdminClassSheetCard({
   unassigned?: boolean;
   isSuperadmin?: boolean;
   weekends?: LinkableWeekend[];
+  /** Regatta this class is on now. Left out of the move list. */
+  currentEventId?: string;
   linkTarget?: string;
   linking?: boolean;
   publishing?: boolean;
@@ -104,6 +185,8 @@ export function AdminClassSheetCard({
             ? "Ready, non-ranking"
             : "Ready to publish";
   const showMenu = Boolean(onDelete) || (Boolean(onTogglePublish) && published);
+  const destinations = weekends.filter((event) => event.id !== currentEventId);
+  const showMove = isSuperadmin && !unassigned && Boolean(onLink);
   const meta = [
     unassigned ? classLabel : "",
     raceLabel(sheet.raceCount),
@@ -149,38 +232,35 @@ export function AdminClassSheetCard({
       </div>
 
       {unassigned && isSuperadmin ? (
-        <div className="mt-3 rounded-lg border border-dashed border-amber-200 bg-amber-50/70 p-2.5">
-          <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-900">
-            Choose an event
-          </p>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <label className="sr-only" htmlFor={`link-event-${sheet.id}`}>
-              Event for {title}
-            </label>
-            <select
-              id={`link-event-${sheet.id}`}
-              value={linkTarget}
-              onChange={(event) => onLinkTargetChange?.(event.target.value)}
-              className="min-w-0 w-full flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800"
-            >
-              <option value="">Choose an event…</option>
-              {weekends.map((event) => (
-                <option key={event.id} value={event.id}>
-                  {event.name} ({event.startDate})
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              disabled={!linkTarget || linking}
-              onClick={onLink}
-              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-orange-300 bg-orange-50 px-3 py-1.5 text-xs font-bold text-orange-900 hover:bg-orange-100 disabled:opacity-40"
-            >
-              {linking ? <Loader2 className="h-3 w-3 animate-spin" /> : <Link2 className="h-3 w-3" />}
-              Link
-            </button>
-          </div>
-        </div>
+        <EventLinkControls
+          sheetId={sheet.id}
+          heading="Choose an event"
+          placeholder="Choose an event…"
+          actionLabel="Link"
+          fieldLabel={`Event for ${title}`}
+          destinations={destinations}
+          linkTarget={linkTarget}
+          linking={linking}
+          onLinkTargetChange={onLinkTargetChange}
+          onLink={onLink}
+          tone="attention"
+        />
+      ) : null}
+
+      {showMove ? (
+        <EventLinkControls
+          sheetId={sheet.id}
+          heading="Move to another regatta"
+          placeholder="Choose a regatta…"
+          actionLabel="Move"
+          fieldLabel={`Regatta for ${title}`}
+          destinations={destinations}
+          linkTarget={linkTarget}
+          linking={linking}
+          onLinkTargetChange={onLinkTargetChange}
+          onLink={onLink}
+          emptyText="Save another regatta before moving this class."
+        />
       ) : null}
 
       <div className="mt-3 flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 pt-3">

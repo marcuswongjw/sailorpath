@@ -205,18 +205,20 @@ export function groupRegattaEvents(
 
   for (const row of rows) {
     const shellSlug = eventShellSlug(row.slug);
+    const linkedRaw = row.eventId ? eventSlugsById.get(row.eventId) : null;
+    const linkedSlug = linkedRaw ? canonicalEventSlug(linkedRaw) : null;
+    // A saved link to a different regatta moves the class, even when its slug
+    // is also a calendar shell of the regatta it is leaving.
+    if (linkedSlug && linkedSlug !== shellSlug) {
+      const list = sheets.get(linkedSlug) ?? [];
+      list.push(row);
+      sheets.set(linkedSlug, list);
+      continue;
+    }
     if (shellSlug) {
       const list = shells.get(shellSlug) ?? [];
       list.push(row);
       shells.set(shellSlug, list);
-      continue;
-    }
-    const linkedSlug = row.eventId ? eventSlugsById.get(row.eventId) : null;
-    if (linkedSlug) {
-      const slug = canonicalEventSlug(linkedSlug);
-      const list = sheets.get(slug) ?? [];
-      list.push(row);
-      sheets.set(slug, list);
       continue;
     }
     const eventSlug = sheetEventSlug(row);
