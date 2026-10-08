@@ -7,6 +7,10 @@ import { db } from "@/db";
 import { adminChangeLog } from "@/db/schema";
 import { and, desc, gte } from "drizzle-orm";
 import { adminLog } from "@/lib/adminLog";
+import {
+  toAdminAuditJsonValue,
+  type JsonValue,
+} from "@/lib/adminAuditDetails";
 
 export type AdminChangeInput = {
   actorUserId?: string | null;
@@ -64,14 +68,7 @@ export async function logAdminChange(
   input: AdminChangeInput
 ): Promise<{ ok: boolean; skipped?: string }> {
   try {
-    let details: string | null = null;
-    if (input.details !== undefined) {
-      try {
-        details = JSON.stringify(input.details).slice(0, 8000);
-      } catch {
-        details = null;
-      }
-    }
+    const details = toAdminAuditJsonValue(input.details);
     await db.insert(adminChangeLog).values({
       actorUserId: input.actorUserId || null,
       actorEmail: input.actorEmail?.slice(0, 200) || null,
@@ -133,7 +130,7 @@ export async function listAdminChanges(opts?: {
     entityId: string | null;
     entityLabel: string | null;
     summary: string;
-    details: string | null;
+    details: JsonValue | null;
     source: string | null;
   }[]
 > {

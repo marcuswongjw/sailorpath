@@ -11,6 +11,7 @@ import {
   index,
   jsonb,
 } from "drizzle-orm/pg-core";
+import type { JsonValue } from "@/lib/adminAuditDetails";
 
 export const profiles = pgTable("profiles", {
   id: uuid("id").primaryKey().notNull(),
@@ -781,7 +782,7 @@ export const adminChangeLog = pgTable("admin_change_log", {
   entityId: uuid("entity_id"),
   entityLabel: text("entity_label"),
   summary: text("summary").notNull(),
-  details: text("details"), // JSON string for portability
+  details: jsonb("details").$type<JsonValue>(),
   source: text("source"),
 });
 

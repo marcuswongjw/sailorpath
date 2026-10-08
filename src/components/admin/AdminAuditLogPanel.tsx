@@ -11,6 +11,11 @@ import {
 } from "lucide-react";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import {
+  adminAuditRegattaId,
+  formatAdminAuditDetails,
+  type JsonValue,
+} from "@/lib/adminAuditDetails";
 
 type AuditRow = {
   id: string;
@@ -21,21 +26,9 @@ type AuditRow = {
   entityId: string | null;
   entityLabel: string | null;
   summary: string;
-  details: string | null;
+  details: JsonValue | null;
   source: string | null;
 };
-
-function regattaIdFromDetails(details: string | null): string | null {
-  if (!details) return null;
-  try {
-    const parsed = JSON.parse(details) as { regattaId?: unknown };
-    return typeof parsed.regattaId === "string" && parsed.regattaId
-      ? parsed.regattaId
-      : null;
-  } catch {
-    return null;
-  }
-}
 
 function entityHref(row: AuditRow): string | null {
   if (row.entityType === "sailor") {
@@ -47,7 +40,7 @@ function entityHref(row: AuditRow): string | null {
       : "/admin?area=events";
   }
   if (row.entityType === "result") {
-    const sheetId = regattaIdFromDetails(row.details);
+    const sheetId = adminAuditRegattaId(row.details);
     return sheetId
       ? `/admin?area=events&sheet=${encodeURIComponent(sheetId)}&view=results`
       : "/admin?area=events";
@@ -155,6 +148,7 @@ export function AdminAuditLogPanel({
               {audit.map((row) => {
                 const open = expandedId === row.id;
                 const link = entityHref(row);
+                const detailsText = formatAdminAuditDetails(row.details);
                 return (
                   <li
                     key={row.id}
@@ -208,19 +202,9 @@ export function AdminAuditLogPanel({
                         </span>
                       )}
                     </div>
-                    {open && row.details && (
+                    {open && detailsText !== null && (
                       <pre className="mt-3 max-h-48 overflow-auto rounded-lg bg-black/40 border border-white/5 p-3 text-[10px] text-slate-400 font-mono whitespace-pre-wrap break-all">
-                        {(() => {
-                          try {
-                            return JSON.stringify(
-                              JSON.parse(row.details),
-                              null,
-                              2
-                            );
-                          } catch {
-                            return row.details;
-                          }
-                        })()}
+                        {detailsText}
                       </pre>
                     )}
                   </li>
