@@ -85,16 +85,6 @@ export function SiteHeader() {
         Silver standings
       </Link>
       <Link
-        href="/calendar?class=optimist&view=past"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        Optimist regattas
-      </Link>
-      <Link
         href="/sg/optimist/selection"
         prefetch
         onClick={() => {
@@ -154,16 +144,6 @@ export function SiteHeader() {
         className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         ILCA 7 standings
-      </Link>
-      <Link
-        href="/calendar?class=ilca&view=past"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA regattas
       </Link>
       <Link
         href="/sg/ilca4/selection"
@@ -532,13 +512,6 @@ export function SiteHeader() {
               Silver standings
             </Link>
             <Link
-              href="/calendar?class=optimist&view=past"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Optimist regattas
-            </Link>
-            <Link
               href="/sg/optimist/selection"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
@@ -577,13 +550,6 @@ export function SiteHeader() {
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 7 standings
-            </Link>
-            <Link
-              href="/calendar?class=ilca&view=past"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA regattas
             </Link>
             <Link
               href="/sg/ilca4/selection"

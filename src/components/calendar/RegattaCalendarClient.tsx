@@ -399,7 +399,6 @@ export function RegattaCalendarClient({
             {[
               { id: "all", label: "All Classes" },
               { id: "optimist", label: "Optimist", icon: Sailboat },
-              { id: "ilca", label: "All ILCA", icon: Compass },
               { id: "ilca4", label: "ILCA 4", icon: Compass },
               { id: "ilca6", label: "ILCA 6", icon: Compass },
               { id: "ilca7", label: "ILCA 7", icon: Compass },

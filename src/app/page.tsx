@@ -16,7 +16,7 @@ import {
 export const metadata: Metadata = {
   title: "Singapore Sailing Standings & Athlete Records | SailorPath",
   description:
-    "Singapore Optimist, ILCA 4, ILCA 6, ILCA 7, WingFoil and Techno 293 standings, selection trials and athlete records — updated from SSF results after every scored race.",
+    "Browse sailing results, Singapore class standings, upcoming and past regattas, selection trials, and sailor profiles across Optimist, ILCA, WingFoil and Techno 293.",
 };
 
 export const revalidate = 300;
@@ -26,13 +26,13 @@ const classHubs = [
     name: "Optimist",
     href: "/sg/optimist/gold",
     tagline: "Gold and Silver fleet rankings",
-    note: "Updated after every scored regatta.",
+    note: "Standings from published, reviewed class results.",
   },
   {
     name: "ILCA 4",
     href: "/sg/ilca4",
     tagline: "Youth national ranking",
-    note: "High points from the best events, with both sail numbers.",
+    note: "Singapore ranking and race-by-race results.",
   },
   {
     name: "ILCA 6",
@@ -43,8 +43,8 @@ const classHubs = [
   {
     name: "ILCA 7",
     href: "/sg/ilca7",
-    tagline: "National high points ranking",
-    note: "Best 3 of 5 events in the current series.",
+    tagline: "Class standings and results",
+    note: "Follow fleet finishes and individual race scores.",
   },
   {
     name: "WingFoil",
@@ -63,10 +63,10 @@ const classHubs = [
 export default async function HomePage() {
   const totals = await getLandingTotals();
   const stats = [
-    { value: "6", label: "Class standings live" },
+    { value: "6", label: "Class standings available" },
     { value: totals.athletes, label: "Athletes tracked" },
     { value: totals.regattas, label: "Regatta results on record" },
-    { value: "Live", label: "Standings after each scored race" },
+    { value: "Reviewed", label: "Imported race results" },
   ] as const;
   return (
     <div className="bg-sailcloth text-charcoal">
@@ -75,7 +75,7 @@ export default async function HomePage() {
       <section className="border-b border-cool-veil">
         <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20 lg:py-24">
           <div className="mx-auto mb-6 inline-block max-w-full rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-balance text-harbour-shadow shadow-xs">
-            Official Singapore Sailing standings &amp; athlete records
+            Sailing results, class standings &amp; sailor profiles
           </div>
 
           <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.75rem] font-bold leading-[1.12] text-harbour-shadow tracking-tight">
@@ -87,21 +87,25 @@ export default async function HomePage() {
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-[15px] sm:text-lg leading-relaxed text-slate-soft">
-            If you or your child sails in Singapore &mdash; get the latest
-            results, standings, selection trial status, and relevant tools here.
+            Follow class results and Singapore standings, plan your next
+            regatta, and keep your sailing record in one place.
           </p>
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/search"
               className="sp-primary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-8 text-[15px] font-semibold"
             >
               Find your profile
             </Link>
+            <Link href="/calendar" className="sp-secondary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-6 text-[15px] font-semibold">
+              <CalendarDays className="h-4 w-4" aria-hidden />
+              Browse regattas
+            </Link>
           </div>
 
           <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13px] sm:text-sm text-slate-soft">
-            {["Free to use", "No credit card", "Data from official SSF results"].map(
+            {["Free to use", "No credit card", "Results from published race records"].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-1.5">
                   <Check className="h-4 w-4 text-harbour shrink-0" aria-hidden />
@@ -186,6 +190,24 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="bg-sailcloth px-4 py-10 sm:px-6">
+        <div className="mx-auto max-w-3xl rounded-xl border border-cool-veil bg-warm-white p-6 sm:p-8">
+          <h2 className="text-xl font-semibold text-harbour-shadow">One weekend. Every class result.</h2>
+          <p className="mt-3 text-sm leading-6 text-slate-soft">
+            Browse upcoming and past regattas together, filter by class, region or year,
+            and open the results for the fleet you follow. Singapore national ranking
+            eligibility is shown on Optimist, ILCA 4 and ILCA 6 class results.
+          </p>
+          <p className="mt-3 text-sm leading-6 text-slate-soft">
+            Results are added after review. Check the organiser&apos;s official notices
+            for entries, eligibility and final decisions.
+          </p>
+          <Link href="/about" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
+            About SailorPath <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </div>
+      </section>
+
       {/* ── Role segmentation ───────────────────────────────────────────── */}
       <section className="border-y border-cool-veil bg-sailcloth py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -194,7 +216,7 @@ export default async function HomePage() {
               Whether you race, parent, or coach
             </h2>
             <p className="mt-3 text-base leading-6 text-slate-soft">
-              There&apos;s a view built for you. One orange action per view.
+              Find the results and tools that matter to your sailing journey.
             </p>
           </div>
 
@@ -210,8 +232,8 @@ export default async function HomePage() {
                 Own your sailing journey
               </p>
               <p className="mt-2 flex-1 text-sm leading-6 text-slate-soft">
-                One continuous record across your career &mdash; ranking, history
-                and milestones.
+                Bring your published results, ranking history and sailing
+                milestones together on your profile.
               </p>
               <Link
                 href="/search"
@@ -250,7 +272,7 @@ export default async function HomePage() {
               </span>
               <h3 className="mt-5 text-base font-semibold text-charcoal">For coaches</h3>
               <p className="mt-1 text-sm font-medium text-harbour">
-                Keep your squad in one live view
+                Keep your squad in one view
               </p>
               <p className="mt-2 flex-1 text-sm leading-6 text-slate-soft">
                 Private roster, pulse indicators and side-by-side sailor
@@ -277,7 +299,7 @@ export default async function HomePage() {
               Start with what you need
             </p>
             <h2 className="mt-3 text-2xl font-semibold leading-8">
-              Find any sailor in Singapore
+              Find a sailor or regatta
             </h2>
             <p className="mt-3 max-w-md text-base leading-6 text-slate-soft">
               Search by name, sail number or club. Claiming a profile adds private
@@ -311,7 +333,7 @@ export default async function HomePage() {
                 className="sp-secondary inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold"
               >
                 <CalendarDays className="h-4 w-4" aria-hidden />
-                Race calendar
+                Regattas &amp; results
               </Link>
               <Link
                 href="/sg/optimist/selection"
