@@ -333,7 +333,7 @@ function parseCanonical(params: ParamBag, area: AdminArea): AdminAreaState {
         : area === "inbox"
           ? pickView(viewRaw, INBOX_VIEWS, "claims")
           : area === "insights"
-            ? pickView(viewRaw, INSIGHTS_VIEWS, "optimist")
+            ? pickView(viewRaw, INSIGHTS_VIEWS, "metrics")
             : area === "settings"
               ? pickView(viewRaw, SETTINGS_VIEWS, "audit")
               : "home";

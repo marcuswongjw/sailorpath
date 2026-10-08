@@ -85,7 +85,7 @@ export function AdminSidebar({
     {
       area: "insights",
       label: "Insights",
-      href: areaHref({ area: "insights", view: "optimist", event: null, sheet: null }),
+      href: areaHref({ area: "insights", view: "metrics", event: null, sheet: null }),
       active: activeArea === "insights",
     },
     {
@@ -173,7 +173,6 @@ export function AdminSidebar({
           : activeArea === "insights"
             ? (
                 [
-                  ["optimist", "Optimist analysis"],
                   ["metrics", "Platform metrics"],
                 ] as const
               ).map(([view, label]) => ({
@@ -186,8 +185,6 @@ export function AdminSidebar({
               ? (
                   [
                     ["audit", "Audit log"],
-                    ["changelog", "Changelog"],
-                    ["tools", "Maintenance"],
                   ] as const
                 ).map(([view, label]) => ({
                   key: view,
