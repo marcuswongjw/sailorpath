@@ -28,7 +28,7 @@ const saved: RegattaAdmin = {
 };
 
 describe("CalendarEventForm", () => {
-  it("does not offer the selection trial checkbox on the weekend", () => {
+  it("keeps selection trials and ranking eligibility off the weekend form", () => {
     render(
       <CalendarEventForm
         showCalendarForm
@@ -54,7 +54,12 @@ describe("CalendarEventForm", () => {
     );
 
     expect(screen.queryByText(/official selection trial/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/ranking regatta/i)).toBeInTheDocument();
+    expect(screen.queryByText(/ranking regatta/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /singapore national ranking eligibility is managed on each class results sheet/i
+      )
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Description")).toHaveValue(
       "Knockout series at the yacht club."
     );
