@@ -48,4 +48,42 @@ describe("POST /api/admin/import scoring validation", () => {
       error: "totalFleetSize must be an integer from 1 to 10000",
     });
   });
+
+  it("requires explicit iQFOiL source and lifecycle confirmation before any write", async () => {
+    const response = await POST(
+      request({
+        boatClass: "iQFoil",
+        division: "Open",
+        raceCount: 4,
+        countsForRanking: false,
+        sourceMetadataConfirmed: true,
+        publicationStatus: "in_review",
+        lifecycleConfirmed: false,
+      })
+    );
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toMatchObject({
+      error: "Select and confirm the draft, in-review, or published lifecycle before importing this class.",
+    });
+  });
+
+  it("rejects iQFOiL ranking eligibility before any write", async () => {
+    const response = await POST(
+      request({
+        boatClass: "iQFOiL",
+        division: "Open",
+        raceCount: 4,
+        countsForRanking: true,
+        sourceMetadataConfirmed: true,
+        publicationStatus: "published",
+        lifecycleConfirmed: true,
+      })
+    );
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toMatchObject({
+      error: "This class has no configured Singapore national-ranking policy and cannot be imported as ranking-eligible.",
+    });
+  });
 });

@@ -368,6 +368,9 @@ export function AdminWingfoilPanel({
             <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
               Manage Northeast &amp; Southwest Monsoon Grand Prix rounds, scores, and published status.
             </p>
+            <p className="mt-1 text-[11px] font-medium text-violet-800">
+              Source: specialist JSONB scorecard · Canonical event/class-sheet bridge: not linked by this panel
+            </p>
           </div>
         </div>
 
@@ -449,6 +452,9 @@ export function AdminWingfoilPanel({
                     {count} sailors
                   </span>
                 </div>
+                <span className="inline-flex rounded-full border border-violet-200 bg-violet-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-violet-800">
+                  Scorecard · {regatta.lifecycleStatus || "legacy published"}
+                </span>
                 <h3 className="text-sm font-bold text-[var(--sp-harbour-shadow)] line-clamp-1">
                   {regatta.name}
                 </h3>
@@ -503,6 +509,9 @@ export function AdminWingfoilPanel({
             <h3 className="text-lg sm:text-xl font-black font-display text-[var(--sp-harbour-shadow)]">
               {activeRegatta.name} ({activeRegatta.results?.length || 0} competitors)
             </h3>
+            <p className="mt-1 text-[11px] font-medium text-violet-800">
+              Specialist scorecard · lifecycle {activeRegatta.lifecycleStatus || "legacy published"} · no normalized bridge recorded
+            </p>
           </div>
 
           <div className="flex items-center gap-2">

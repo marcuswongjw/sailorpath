@@ -40,7 +40,7 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
   if (series === "ilca7") return "/sg/ilca7";
   if (series === "optimist") return "/sg/optimist/gold";
   if (series === "29er") return "/regattas";
-  if (series === "iqfoil") return "/regattas";
+  if (series === "iqfoil") return "/sg/iqfoil";
   return null;
 }
 

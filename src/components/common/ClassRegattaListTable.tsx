@@ -156,6 +156,19 @@ export function ClassRegattaListTable({ regattas }: ClassRegattaListTableProps) 
                             </span>
                           </div>
                         )}
+                        {row.source && (
+                          <span
+                            className={`inline-flex rounded-full border px-2 py-0.5 text-[10px] font-bold ${
+                              row.source.kind === "normalized_result"
+                                ? "border-sky-200 bg-sky-50 text-sky-800"
+                                : row.source.kind === "special_scorecard"
+                                  ? "border-violet-200 bg-violet-50 text-violet-800"
+                                  : "border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]"
+                            }`}
+                          >
+                            {row.source.label}
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="py-3.5 px-4 text-[var(--sp-charcoal-slate)]">

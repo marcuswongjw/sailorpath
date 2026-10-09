@@ -57,6 +57,10 @@ import {
   sailorsKeptOnAuthoritativeReplace,
 } from "@/lib/importTarget";
 import { asPositiveInteger, asRank } from "@/lib/validate";
+import {
+  canonicalBoatClass,
+  requiresExplicitImportMetadata,
+} from "@/lib/classRegistry";
 
 export type { ImportPossibleDuplicate };
 
@@ -387,6 +391,9 @@ export async function POST(req: Request) {
       geography,
       boatClass,
       countsForRanking,
+      sourceMetadataConfirmed,
+      publicationStatus,
+      lifecycleConfirmed,
       raceCount: raceCountRaw,
       rows,
       createMissing = true,
@@ -400,6 +407,9 @@ export async function POST(req: Request) {
       geography?: string;
       boatClass?: string;
       countsForRanking?: boolean;
+      sourceMetadataConfirmed?: boolean;
+      publicationStatus?: "draft" | "in_review" | "published";
+      lifecycleConfirmed?: boolean;
       raceCount?: number | null;
       rows: {
         name: string;
@@ -604,15 +614,67 @@ export async function POST(req: Request) {
         .toUpperCase()
         .slice(0, 8) ||
       "SGP";
-    const boat = String(boatClass || "Optimist").trim() || "Optimist";
+    const boat = canonicalBoatClass(boatClass || "Optimist") || "Optimist";
     const raceCount =
       raceCountRaw == null ||
       String(raceCountRaw).trim() === "" ||
-      (typeof raceCountRaw === "number" && !Number.isFinite(raceCountRaw))
+      !Number.isFinite(Number(raceCountRaw))
         ? null
         : Math.max(0, Math.round(Number(raceCountRaw)));
-    let ranking =
-      countsForRanking === false || countsForRanking === true
+    const requiresExplicitMetadata = requiresExplicitImportMetadata(boat);
+    const requestedLifecycle =
+      publicationStatus === "draft" ||
+      publicationStatus === "in_review" ||
+      publicationStatus === "published"
+        ? publicationStatus
+        : requiresExplicitMetadata
+          ? null
+          : "published";
+    if (requiresExplicitMetadata) {
+      if (!String(division || "").trim()) {
+        return NextResponse.json(
+          { error: "Enter the official fleet/division for this non-ranking class." },
+          { status: 400 }
+        );
+      }
+      if (raceCount == null) {
+        return NextResponse.json(
+          { error: "Enter the official race count for this non-ranking class." },
+          { status: 400 }
+        );
+      }
+      if (countsForRanking === true) {
+        return NextResponse.json(
+          {
+            error:
+              "This class has no configured Singapore national-ranking policy and cannot be imported as ranking-eligible.",
+          },
+          { status: 400 }
+        );
+      }
+      if (sourceMetadataConfirmed !== true) {
+        return NextResponse.json(
+          {
+            error:
+              "Confirm the official class, fleet/division, race count, and non-ranking status before importing.",
+          },
+          { status: 400 }
+        );
+      }
+      if (!requestedLifecycle || lifecycleConfirmed !== true) {
+        return NextResponse.json(
+          {
+            error:
+              "Select and confirm the draft, in-review, or published lifecycle before importing this class.",
+          },
+          { status: 400 }
+        );
+      }
+    }
+    const lifecycle = requestedLifecycle || "published";
+    let ranking = requiresExplicitMetadata
+      ? false
+      : countsForRanking === false || countsForRanking === true
         ? countsForRanking
         : true;
     if (
@@ -1560,7 +1622,7 @@ export async function POST(req: Request) {
                 countsForRanking: ranking,
                 reviewedAt: ranking === false ? new Date() : target.reviewedAt,
                 raceCount,
-                status: target.status === "draft" ? "published" : (target.status || "published"),
+                status: lifecycle,
                 eventId: target.eventId ?? createEventId,
                 updatedAt: new Date(),
               })
@@ -1604,7 +1666,7 @@ export async function POST(req: Request) {
                 countsForRanking: ranking,
                 reviewedAt: ranking === false ? new Date() : null,
                 raceCount,
-                status: "published",
+                status: lifecycle,
               })
               .returning();
             reg = upserted;

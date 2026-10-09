@@ -58,12 +58,18 @@ const classHubs = [
     tagline: "One Design series standings",
     note: "Southwest Monsoon series and race scorecards.",
   },
+  {
+    name: "iQFOiL",
+    href: "/sg/iqfoil",
+    tagline: "Published regatta results",
+    note: "Normalized class sheets, sailor results, and race scores.",
+  },
 ] as const;
 
 export default async function HomePage() {
   const totals = await getLandingTotals();
   const stats = [
-    { value: "6", label: "Class standings available" },
+    { value: "7", label: "Class standings available" },
     { value: totals.athletes, label: "Athletes tracked" },
     { value: totals.regattas, label: "Regatta results on record" },
     { value: "Reviewed", label: "Imported race results" },

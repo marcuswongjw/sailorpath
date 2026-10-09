@@ -11,19 +11,27 @@ import {
   SINGAPORE_WINGFOIL_REGATTAS,
   loadWingfoilRegattas,
   fetchServerWingfoilRegattas,
+  parseWingfoilRegattaDate,
   sortWingfoilRegattas,
   normalizeWingfoilCategory,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
-import { getClassRegattas } from "@/lib/publicDataLoader";
+import {
+  getClassRegattas,
+  getPublishedScorecardRegattas,
+} from "@/lib/publicDataLoader";
 import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { WingfoilSeriesView } from "./WingfoilSeriesView";
 
 export function WingfoilView({
   initialRegattas,
+  initialTab = "regattas",
+  initialRegattaId,
 }: {
   initialRegattas?: WingfoilRegatta[];
+  initialTab?: "regattas" | "scorecards" | "series" | "results";
+  initialRegattaId?: string;
 } = {}) {
   const [regattas, setRegattas] = useState<WingfoilRegatta[]>(
     initialRegattas && initialRegattas.length > 0
@@ -37,10 +45,16 @@ export function WingfoilView({
         : SINGAPORE_WINGFOIL_REGATTAS
     );
     const withResults = list.find((r) => r.results && r.results.length > 0);
-    return withResults ? withResults.id : list[0]?.id || SINGAPORE_WINGFOIL_REGATTAS[0].id;
+    return initialRegattaId && list.some((regatta) => regatta.id === initialRegattaId)
+      ? initialRegattaId
+      : withResults
+        ? withResults.id
+        : list[0]?.id || SINGAPORE_WINGFOIL_REGATTAS[0].id;
   });
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
-  const [activeTab, setActiveTab] = useState<"regattas" | "series" | "results">("regattas");
+  const [activeTab, setActiveTab] = useState<
+    "regattas" | "scorecards" | "series" | "results"
+  >(initialTab);
 
   // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
@@ -75,6 +89,16 @@ export function WingfoilView({
     );
   }, [regattas]);
 
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
+
+  useEffect(() => {
+    if (initialRegattaId && publishedRegattas.some((r) => r.id === initialRegattaId)) {
+      setSelectedRegattaId(initialRegattaId);
+    }
+  }, [initialRegattaId, publishedRegattas]);
+
   const activeRegatta = useMemo(
     () =>
       publishedRegattas.find((r) => r.id === selectedRegattaId) ||
@@ -91,6 +115,14 @@ export function WingfoilView({
     }
     return rows;
   }, [activeRegatta, genderFilter]);
+
+  const publishedScorecardRows = useMemo(
+    () =>
+      getPublishedScorecardRegattas("wingfoil", publishedRegattas, {
+        parseDate: parseWingfoilRegattaDate,
+      }),
+    [publishedRegattas]
+  );
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
@@ -123,6 +155,18 @@ export function WingfoilView({
           </button>
           <button
             type="button"
+            onClick={() => setActiveTab("scorecards")}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
+              activeTab === "scorecards"
+                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs font-black"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+            }`}
+          >
+            <Trophy className="h-3.5 w-3.5" />
+            All published scorecards
+          </button>
+          <button
+            type="button"
             onClick={() => setActiveTab("series")}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "series"
@@ -149,10 +193,30 @@ export function WingfoilView({
 
       {/* TAB 0: Regattas List (Default Class Page View) */}
       {activeTab === "regattas" && (
-        <ClassRegattaListTable
-          classNameTitle="WingFoil"
-          regattas={getClassRegattas("wingfoil")}
-        />
+        <div className="space-y-3">
+          <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
+            Curated event catalog. Published scorecards that are not yet linked to a
+            calendar event are available in <strong>All published scorecards</strong>.
+          </p>
+          <ClassRegattaListTable
+            classNameTitle="WingFoil"
+            regattas={getClassRegattas("wingfoil")}
+          />
+        </div>
+      )}
+
+      {activeTab === "scorecards" && (
+        <div className="space-y-3">
+          <p className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-950">
+            Every published WingFoil scorecard is listed here. A scorecard remains a
+            specialist result source until it is reconciled to a normalized event and
+            class sheet.
+          </p>
+          <ClassRegattaListTable
+            classNameTitle="WingFoil"
+            regattas={publishedScorecardRows}
+          />
+        </div>
       )}
 
       {/* TAB 1: Overall Series Championship */}

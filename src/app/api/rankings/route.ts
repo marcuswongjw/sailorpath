@@ -12,7 +12,8 @@ import { DbUnavailableError } from "@/db";
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const fleetRaw = (searchParams.get("fleet") || "Gold").trim();
+    const requestedFleet = searchParams.get("fleet");
+    const fleetRaw = (requestedFleet || "Gold").trim();
 
     const fleetLower = fleetRaw.toLowerCase().replace(/[\s._-]+/g, "");
 
@@ -54,7 +55,18 @@ export async function GET(req: Request) {
       );
     }
 
-    const fleet = fleetRaw === "Silver" ? "Silver" : "Gold";
+    const optimistFleet = fleetLower === "gold" ? "Gold" : fleetLower === "silver" ? "Silver" : null;
+    if (!optimistFleet) {
+      return NextResponse.json(
+        {
+          error: "Unsupported ranking fleet",
+          fleet: fleetRaw || null,
+          supportedFleets: ["Gold", "Silver", "ILCA4", "ILCA6", "ILCA7"],
+        },
+        { status: 400 }
+      );
+    }
+    const fleet = optimistFleet;
     const year = Number(searchParams.get("year") || new Date().getFullYear());
     const half = (
       searchParams.get("half") === "Jan-Jun" ? "Jan-Jun" : "Jul-Dec"

@@ -1,5 +1,11 @@
 /** Admin-only class families. Public sailorpath.com is unchanged. */
 
+import {
+  matchesSailingClass,
+  resolveSailingClass,
+  sailingClassKeyOf,
+} from "@/lib/classRegistry";
+
 export type RegattaClassFamily =
   | "all"
   | "optimist"
@@ -34,32 +40,26 @@ export const ADMIN_BOAT_CLASS_GROUPS: { family: string; classes: string[] }[] = 
   { family: "Techno 293", classes: ["Techno 293"] },
 ];
 
-function compact(value: string): string {
-  return value.toLowerCase().replace(/[\s._-]+/g, "");
-}
-
 export function regattaClassFamily(
   boatClass: string | null | undefined
 ): Exclude<RegattaClassFamily, "all"> | "other" {
-  const bc = String(boatClass || "").toLowerCase();
-  const a = compact(bc);
-  if (!bc || bc.includes("optimist") || a === "opti") return "optimist";
-  if (a.includes("29er")) return "29er";
-  if (a.includes("wingfoil")) return "wingfoil";
-  if (a.includes("iqfoil")) return "iqfoil";
-  if (a.includes("techno")) return "techno";
-  if (/ilca|laser|radial/.test(bc)) return "ilca";
+  if (!String(boatClass || "").trim()) return "optimist";
+  const key = sailingClassKeyOf(boatClass);
+  if (key === "optimist") return "optimist";
+  if (key === "ilca4" || key === "ilca6" || key === "ilca7") return "ilca";
+  if (key === "29er") return "29er";
+  if (key === "wingfoil") return "wingfoil";
+  if (key === "iqfoil") return "iqfoil";
+  if (key === "techno293") return "techno";
   return "other";
 }
 
 /** ILCA 4, 6, or 7. Untagged "ILCA" / "Laser" stays with ILCA 4. */
 export function ilcaFleetOf(boatClass: string | null | undefined): (typeof ILCA_FLEETS)[number] | null {
-  const raw = String(boatClass || "");
-  const a = compact(raw);
-  if (!a) return null;
-  if (a.includes("ilca7") || a.includes("laserstandard")) return "ILCA 7";
-  if (a.includes("ilca6") || a.includes("laserradial") || a === "radial") return "ILCA 6";
-  if (/ilca|laser/.test(raw.toLowerCase())) return "ILCA 4";
+  const key = sailingClassKeyOf(boatClass);
+  if (key === "ilca7") return "ILCA 7";
+  if (key === "ilca6") return "ILCA 6";
+  if (key === "ilca4") return "ILCA 4";
   return null;
 }
 
@@ -88,7 +88,9 @@ export function sailorResultClassOf(boatClass: string | null | undefined): {
   if (fleet === "ILCA 7") return { id: "ilca7", label: "ILCA 7" };
   if (fleet === "ILCA 6") return { id: "ilca6", label: "ILCA 6" };
   if (fleet === "ILCA 4") return { id: "ilca4", label: "ILCA 4" };
-  const family = regattaClassFamily(boatClass);
+  const classKey = resolveSailingClass(boatClass)?.key;
+  const family =
+    classKey === "techno293" ? "techno" : regattaClassFamily(boatClass);
   const known = SAILOR_RESULT_CLASSES.find((item) => item.id === family);
   if (known) return { id: known.id, label: known.label };
   const label = String(boatClass || "").trim();
@@ -108,6 +110,10 @@ export function regattaMatchesAdminClass(input: {
 
   if ((ILCA_FLEETS as readonly string[]).includes(input.fleet)) {
     return ilcaFleetOf(input.boatClass) === input.fleet;
+  }
+
+  if (input.family === "iqfoil") {
+    return matchesSailingClass(input.boatClass, "iqfoil");
   }
 
   return String(input.division || "Gold") === input.fleet;

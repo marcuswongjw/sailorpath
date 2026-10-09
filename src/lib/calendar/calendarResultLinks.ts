@@ -1,5 +1,6 @@
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import type { RegattaRecord } from "@/lib/ranking";
+import { sailingClassKeyOf } from "@/lib/classRegistry";
 
 /**
  * Calendar entries and published results do not share slugs.
@@ -95,20 +96,7 @@ export function publicResultClass(
   if (isIlcaSeriesClass(boatClass, "ILCA 4")) return "ilca4";
   if (isIlcaSeriesClass(boatClass, "ILCA 6")) return "ilca6";
   if (isIlcaSeriesClass(boatClass, "ILCA 7")) return "ilca7";
-  const boat = String(boatClass || "").trim().toLowerCase();
-  if (
-    boat.includes("ilca") ||
-    boat.includes("laser") ||
-    boat.includes("radial") ||
-    boat.includes("wing") ||
-    boat.includes("techno") ||
-    boat.includes("29") ||
-    boat.includes("iqfoil") ||
-    boat.includes("iq foil")
-  ) {
-    return null;
-  }
-  return "optimist";
+  return sailingClassKeyOf(boatClass) === "optimist" ? "optimist" : null;
 }
 
 export function classResultsHref(
@@ -119,7 +107,15 @@ export function classResultsHref(
   if (cls === "ilca4" || cls === "ilca6" || cls === "ilca7") {
     return `/sg/ilca/regattas/${slug}`;
   }
-  return `/sg/optimist/regattas/${slug}`;
+  if (cls === "optimist") return `/sg/optimist/regattas/${slug}`;
+
+  // Do not silently place a board/skiff result inside Optimist Gold. Dedicated
+  // class pages retain their own provenance while a normalized event hub exists.
+  const classKey = sailingClassKeyOf(regatta.boatClass);
+  if (classKey === "iqfoil") return "/sg/iqfoil";
+  if (classKey === "wingfoil") return "/sg/wingfoil";
+  if (classKey === "techno293") return "/sg/techno293";
+  return "/calendar";
 }
 
 function divisionKey(row: Pick<RegattaRecord, "division" | "name" | "slug">): string {

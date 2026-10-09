@@ -28,6 +28,13 @@ import {
   type ResultAvailabilityStatus,
   type EventScheduleOccurrence,
 } from "@/lib/types/regattaEventModel";
+import {
+  matchesSailingClass,
+  sailingClassKeyOf,
+  type SailingClassKey,
+} from "@/lib/classRegistry";
+import { hubHrefForClassSlug } from "@/lib/regattaEventGroups";
+import type { RegattaRecord } from "@/lib/ranking";
 
 export type PublicCalendarEvent = {
   id: string;
@@ -74,20 +81,17 @@ export type PublicClassRegattaRow = {
     seriesSlug: string;
     roundLabel: string;
   };
+  source?: {
+    kind: "event_catalog" | "normalized_result" | "special_scorecard";
+    label: string;
+  };
 };
 
 /**
- * Normalizes class token for comparison across Wingfoil, Techno 293, ILCA, Optimist.
+ * Normalizes class token for comparison across all supported sailing classes.
  */
 function normalizeClassToken(raw: string): string {
-  const s = raw.toLowerCase().replace(/[\s._-]+/g, "");
-  if (s.includes("wing")) return "wingfoil";
-  if (s.includes("techno")) return "techno293";
-  if (s.includes("ilca4") || s.includes("laser4")) return "ilca4";
-  if (s.includes("ilca6") || s.includes("radial")) return "ilca6";
-  if (s.includes("ilca7") || s.includes("standard")) return "ilca7";
-  if (s.includes("opti")) return "optimist";
-  return s;
+  return sailingClassKeyOf(raw) || raw.toLowerCase().replace(/[\s._-]+/g, "");
 }
 
 /**
@@ -238,7 +242,14 @@ export function getPublicCalendarEvents(options?: {
  * with the class active.
  */
 export function getClassRegattas(
-  boatClass: "wingfoil" | "techno293" | "ilca4" | "ilca6" | "ilca7" | "optimist",
+  boatClass:
+    | "wingfoil"
+    | "techno293"
+    | "iqfoil"
+    | "ilca4"
+    | "ilca6"
+    | "ilca7"
+    | "optimist",
   options?: {
     year?: number | string;
     status?: "upcoming" | "past" | "all";
@@ -316,9 +327,136 @@ export function getClassRegattas(
       format: sliceDef.resultType || board?.format,
       canonicalHref: `/regattas/${event.slug}?fleet=${encodeURIComponent(sliceDef.key)}`,
       seriesLink,
+      source: { kind: "event_catalog", label: "Event catalog" },
     });
   }
 
   // Sort descending by date (latest first)
   return rows.sort((a, b) => b.startDate.localeCompare(a.startDate));
+}
+
+type PublishedScorecard = {
+  id: string;
+  name: string;
+  shortName?: string;
+  dates: string;
+  venue?: string;
+  organizer?: string;
+  format?: string;
+  status?: string;
+  lifecycleStatus?: "draft" | "in_review" | "published" | "archived";
+  seriesName?: string;
+  seriesPart?: string;
+  results?: readonly unknown[];
+};
+
+function scorecardIsCombined(regatta: PublishedScorecard): boolean {
+  return /\bcombined\b|combined standings/i.test(
+    `${regatta.id} ${regatta.name} ${regatta.seriesPart || ""}`
+  );
+}
+
+function timestampToYmd(timestamp: number): string {
+  if (!Number.isFinite(timestamp) || timestamp <= 0) return "1970-01-01";
+  return new Date(timestamp).toISOString().slice(0, 10);
+}
+
+/**
+ * Adapter for the legacy WingFoil/Techno JSON scorecards. It is deliberately a
+ * read-only public projection: it makes published scorecards discoverable but
+ * does not claim they are sailor-linked normalized result sheets.
+ */
+export function getPublishedScorecardRegattas(
+  boatClass: "wingfoil" | "techno293",
+  regattas: readonly PublishedScorecard[],
+  options: {
+    parseDate: (dates: string | undefined | null) => number;
+    referenceDate?: Date;
+  }
+): PublicClassRegattaRow[] {
+  const referenceDate = options.referenceDate || new Date();
+  const classPath = boatClass === "wingfoil" ? "wingfoil" : "techno293";
+
+  return regattas
+    .filter(
+      (regatta) =>
+        (!regatta.lifecycleStatus || regatta.lifecycleStatus === "published") &&
+        !scorecardIsCombined(regatta)
+    )
+    .map((regatta): PublicClassRegattaRow => {
+      const startDate = timestampToYmd(options.parseDate(regatta.dates));
+      const competitorCount = regatta.results?.length || 0;
+      const hasResults = competitorCount > 0;
+      return {
+        id: `special-${boatClass}-${regatta.id}`,
+        eventSlug: regatta.id,
+        fleetKey: boatClass,
+        name: regatta.name,
+        roundLabel: regatta.seriesPart,
+        datesText: regatta.dates,
+        startDate,
+        venue: regatta.venue || "Singapore",
+        organizer: regatta.organizer,
+        timingStatus: deriveEventTimingStatus(startDate, undefined, referenceDate),
+        resultStatus: hasResults ? "final" : "unavailable",
+        resultsSummary: hasResults
+          ? `Published scorecard · ${competitorCount} competitors`
+          : "Scorecard published · results unavailable",
+        competitorCount,
+        format: regatta.format,
+        canonicalHref: `/sg/${classPath}?tab=results&regatta=${encodeURIComponent(regatta.id)}`,
+        source: { kind: "special_scorecard", label: "Published scorecard" },
+      };
+    })
+    .sort((a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name));
+}
+
+function formatDatesText(startDate: string, endDate?: string | null): string {
+  const start = String(startDate || "").slice(0, 10);
+  const end = String(endDate || "").slice(0, 10);
+  if (!start) return "Date unavailable";
+  return end && end !== start ? `${start} – ${end}` : start;
+}
+
+/**
+ * Adapter for normalized class sheets. This is the canonical path for iQFOiL
+ * and new board-class imports; it preserves the event hub/profile result model.
+ */
+export function getNormalizedClassRegattas(
+  boatClass: SailingClassKey,
+  regattas: readonly RegattaRecord[],
+  options?: { referenceDate?: Date }
+): PublicClassRegattaRow[] {
+  const referenceDate = options?.referenceDate || new Date();
+  return regattas
+    .filter((regatta) => matchesSailingClass(regatta.boatClass, boatClass))
+    .map((regatta): PublicClassRegattaRow => {
+      const startDate = String(regatta.date || "").slice(0, 10);
+      const raceCount = Number(regatta.raceCount) || 0;
+      const competitorCount = Number(regatta.totalFleetSize) || 0;
+      const href = hubHrefForClassSlug(regatta.slug, [...regattas]);
+      return {
+        id: `normalized-${regatta.id}`,
+        eventSlug: regatta.eventSlug || regatta.slug,
+        fleetKey: boatClass,
+        name: regatta.eventName || regatta.name,
+        datesText: formatDatesText(startDate, regatta.endDate),
+        startDate,
+        endDate: regatta.endDate || undefined,
+        venue: regatta.venue || "Singapore",
+        organizer: regatta.organizer || undefined,
+        timingStatus: deriveEventTimingStatus(startDate, regatta.endDate || undefined, referenceDate),
+        resultStatus: raceCount > 0 ? "final" : "provisional",
+        resultsSummary:
+          raceCount > 0
+            ? `Published normalized results · ${competitorCount} competitors`
+            : "Published normalized class sheet",
+        competitorCount,
+        canonicalHref:
+          href ||
+          `/regattas/${encodeURIComponent(regatta.eventSlug || regatta.slug)}?fleet=${encodeURIComponent(boatClass)}`,
+        source: { kind: "normalized_result", label: "Normalized result" },
+      };
+    })
+    .sort((a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name));
 }

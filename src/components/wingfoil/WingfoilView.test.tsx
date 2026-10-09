@@ -78,4 +78,32 @@ describe("WingfoilView", () => {
     expect(screen.getByRole("button", { name: /Men \/ Boys/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Women \/ Girls/i })).toBeInTheDocument();
   });
+
+  it("lists a published scorecard even when it has no event-catalog slice", () => {
+    render(
+      <WingfoilView
+        initialRegattas={[
+          {
+            id: "unregistered-wingfoil-round",
+            name: "Unregistered WingFoil Round",
+            shortName: "Unregistered Round",
+            dates: "10 October 2026",
+            venue: "Singapore",
+            organizer: "Test Club",
+            format: "Course Race",
+            status: "Completed",
+            lifecycleStatus: "published",
+            scoringSystem: "Low point",
+            rulesNotes: "Official results",
+            results: [],
+          },
+        ]}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /All published scorecards/i }));
+
+    expect(screen.getByText("Unregistered WingFoil Round")).toBeInTheDocument();
+    expect(screen.getByText("Published scorecard")).toBeInTheDocument();
+  });
 });

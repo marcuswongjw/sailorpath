@@ -1,3 +1,8 @@
+import {
+  hasFixedOpenDivision,
+  requiresExplicitImportMetadata,
+} from "@/lib/classRegistry";
+
 /**
  * ISO 3166-1 alpha-2 countries for regatta geography / event country.
  * Default for SG Optimist series: SG.
@@ -275,7 +280,8 @@ export const BOAT_CLASSES = [
   "49erFX",
   "Nacra 15",
   "Nacra 17",
-  "iQFoil",
+  "iQFOiL",
+  "WingFoil",
   "Techno 293",
   "RS Feva",
   "RS Tera",
@@ -654,20 +660,8 @@ export function geographySelectOptions(): { code: string; name: string }[] {
   return nationalitySelectOptions();
 }
 
-/** Classes with a single open fleet (no Gold/Silver split). */
-export const SINGLE_FLEET_CLASSES = new Set([
-  "ILCA 4",
-  "ILCA4",
-  "Laser 4.7",
-]);
-
 export function isSingleFleetClass(boatClass: string | null | undefined): boolean {
-  if (!boatClass) return false;
-  const n = boatClass.trim().toLowerCase().replace(/\s+/g, " ");
-  if (SINGLE_FLEET_CLASSES.has(boatClass.trim())) return true;
-  if (n === "ilca 4" || n === "ilca4") return true;
-  if (n === "laser 4.7" || n === "laser4.7") return true;
-  return false;
+  return hasFixedOpenDivision(boatClass);
 }
 
 /**
@@ -678,6 +672,9 @@ export function isSingleFleetClass(boatClass: string | null | undefined): boolea
 export const OPTIMIST_MAX_AGE = 15;
 
 export function classImportNote(boatClass: string): string | null {
+  if (requiresExplicitImportMetadata(boatClass)) {
+    return "This class has no configured Singapore national-ranking policy. Confirm the official class, fleet/division, race count, and non-ranking status before importing.";
+  }
   if (isSingleFleetClass(boatClass)) {
     return "This class has a single open fleet — no Gold/Silver division.";
   }

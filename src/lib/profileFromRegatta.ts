@@ -13,18 +13,12 @@
 import { toYmd } from "@/lib/datesSg";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { cleanOptimistSailNumber } from "@/lib/normalize";
+import { sailingClassKeyOf } from "@/lib/classRegistry";
 
 /** Techno 293, iQFOiL, and WingFoil share sailors.board_number. */
 export function isBoardSailClass(boatClass: string | null | undefined): boolean {
-  const compact = String(boatClass || "")
-    .toLowerCase()
-    .replace(/[\s._-]+/g, "");
-  if (!compact) return false;
-  return (
-    compact.includes("wingfoil") ||
-    compact.includes("iqfoil") ||
-    compact.includes("techno")
-  );
+  const key = sailingClassKeyOf(boatClass);
+  return key === "wingfoil" || key === "iqfoil" || key === "techno293";
 }
 
 export type ProfileFieldSource = {

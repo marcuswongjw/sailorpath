@@ -7,6 +7,9 @@ describe("public class results", () => {
     for (const cls of ["WingFoil", "Techno 293", "ILCA 7", "29er"]) expect(matchesRegattaClass(cls, "optimist")).toBe(false);
     expect(matchesRegattaClass("Optimist Silver", "optimist")).toBe(true);
     expect(matchesRegattaClass("ILCA 6", "ilca")).toBe(true);
+    expect(matchesRegattaClass("iQFoil", "iqfoil")).toBe(true);
+    expect(matchesRegattaClass("WingFoil", "iqfoil")).toBe(false);
+    expect(matchesRegattaClass("Windfoil", "wingfoil")).toBe(false);
   });
   it("labels Singapore eligible classes only", () => {
     expect(nationalRankingLabel(sheet)).toBe("Counts for Singapore national ranking");

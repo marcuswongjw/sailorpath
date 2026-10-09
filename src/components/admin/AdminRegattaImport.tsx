@@ -29,6 +29,10 @@ import {
   geographySelectOptions,
   isSingleFleetClass,
 } from "@/lib/countries";
+import {
+  canonicalBoatClass,
+  requiresExplicitImportMetadata,
+} from "@/lib/classRegistry";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
@@ -66,6 +70,11 @@ type RegattaImportMeta = {
   boatClass: string;
   geography: string;
   countsForRanking: boolean;
+  /** Required for classes without an approved national-ranking policy. */
+  sourceMetadataConfirmed: boolean;
+  publicationStatus: "draft" | "in_review" | "published";
+  /** Required when a class has no approved national-ranking policy. */
+  lifecycleConfirmed: boolean;
   raceCount: string | number;
 };
 
@@ -78,7 +87,38 @@ function emptyImportMeta(): RegattaImportMeta {
     boatClass: DEFAULT_BOAT_CLASS,
     geography: DEFAULT_GEOGRAPHY,
     countsForRanking: true,
+    sourceMetadataConfirmed: true,
+    publicationStatus: "published",
+    lifecycleConfirmed: true,
     raceCount: "",
+  };
+}
+
+function importDefaultsForClass(
+  boatClass: string,
+  fallbackDivision = ""
+): Pick<
+  RegattaImportMeta,
+  | "boatClass"
+  | "division"
+  | "countsForRanking"
+  | "sourceMetadataConfirmed"
+  | "publicationStatus"
+  | "lifecycleConfirmed"
+> {
+  const canonical = canonicalBoatClass(boatClass) || DEFAULT_BOAT_CLASS;
+  const requiresExplicit = requiresExplicitImportMetadata(canonical);
+  return {
+    boatClass: canonical,
+    division: isSingleFleetClass(canonical)
+      ? "Open"
+      : requiresExplicit
+        ? fallbackDivision
+        : fallbackDivision || "Gold",
+    countsForRanking: !requiresExplicit,
+    sourceMetadataConfirmed: !requiresExplicit,
+    publicationStatus: requiresExplicit ? "in_review" : "published",
+    lifecycleConfirmed: !requiresExplicit,
   };
 }
 
@@ -174,7 +214,9 @@ export function AdminRegattaImport({
   const selectResultsSheet = (candidate: ReturnType<typeof readResultsWorkbook>[number], filename: string) => {
     const fromFile = parseRegattaTitle(filename);
     const fromSheet = parseRegattaTitle(candidate.sheetName);
-    const boatClass = fromSheet.boatClass || fromFile.boatClass || DEFAULT_BOAT_CLASS;
+    const boatClass = canonicalBoatClass(
+      fromSheet.boatClass || fromFile.boatClass || DEFAULT_BOAT_CLASS
+    );
     const date = resolvedImportDate(fromFile.date, fromSheet.date, selectedClassDate);
     setSelectedSheet(candidate.sheetName);
     setFullImportRows(candidate.rows);
@@ -183,12 +225,10 @@ export function AdminRegattaImport({
     setImportMeta({
       name: fromFile.name || fromSheet.name || candidate.sheetName,
       date,
-      boatClass,
-      division: isSingleFleetClass(boatClass) ? "Open" : fromSheet.division || fromFile.division || "Gold",
+      ...importDefaultsForClass(boatClass, fromSheet.division || fromFile.division || ""),
       fleetSize: candidate.rows.length,
       raceCount: candidate.raceCount || "",
       geography: DEFAULT_GEOGRAPHY,
-      countsForRanking: true,
     });
     setImportStatus(`Parsed ${candidate.rows.length} competitors from “${candidate.sheetName}”. Review the date, class, and scores before importing.`);
   };
@@ -241,15 +281,12 @@ export function AdminRegattaImport({
       const unnamedNote = parsed.unnamedEntries
         ? ` ${parsed.unnamedEntries} published entr${parsed.unnamedEntries === 1 ? "y has" : "ies have"} no sailor name and will count toward fleet size but will not create a profile.`
         : "";
-      const boatClass = title.boatClass || DEFAULT_BOAT_CLASS;
+      const boatClass = canonicalBoatClass(title.boatClass || DEFAULT_BOAT_CLASS);
       const nextMeta = {
         ...emptyImportMeta(),
         name: title.name || title.stem,
         date: datedTitle.date || "",
-        division: isSingleFleetClass(boatClass)
-          ? "Open"
-          : title.division || "Gold",
-        boatClass,
+        ...importDefaultsForClass(boatClass, title.division || ""),
         fleetSize: parsed.entries || parsed.rows.length,
         raceCount: parsed.raceCount || "",
       };
@@ -529,6 +566,26 @@ export function AdminRegattaImport({
       toast.error("Parse a file and set regatta name + date first.");
       return;
     }
+    if (requiresExplicitImportMetadata(meta.boatClass)) {
+      if (!meta.division.trim()) {
+        toast.error("Enter the official iQFOiL/board fleet or division before importing.");
+        return;
+      }
+      if (meta.raceCount === "" || meta.raceCount == null) {
+        toast.error("Enter the official race count before importing this class.");
+        return;
+      }
+      if (
+        meta.countsForRanking ||
+        !meta.sourceMetadataConfirmed ||
+        !meta.lifecycleConfirmed
+      ) {
+        toast.error(
+          "Confirm the official class metadata, non-ranking status, and publication lifecycle before importing."
+        );
+        return;
+      }
+    }
     if (rowsToImport.length > MAX_IMPORT_ROWS) {
       toast.error(
         `Too many rows (${rowsToImport.length}). The maximum is ${MAX_IMPORT_ROWS}; do not split an existing event into replacement uploads.`
@@ -562,6 +619,9 @@ export function AdminRegattaImport({
           boatClass: meta.boatClass,
           geography: meta.geography,
           countsForRanking: meta.countsForRanking,
+          sourceMetadataConfirmed: meta.sourceMetadataConfirmed,
+          publicationStatus: meta.publicationStatus,
+          lifecycleConfirmed: meta.lifecycleConfirmed,
           raceCount:
             meta.raceCount === "" || meta.raceCount == null
               ? null
@@ -1352,16 +1412,18 @@ export function AdminRegattaImport({
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.boatClass}
                 onChange={(e) => {
-                  const boatClass = e.target.value;
+                  const boatClass = canonicalBoatClass(e.target.value);
+                  const requiresExplicit = requiresExplicitImportMetadata(boatClass);
                   setImportMeta((m) => ({
                     ...m,
-                    boatClass,
-                    // ILCA 4 etc.: single open fleet — no Gold/Silver
-                    division: isSingleFleetClass(boatClass)
-                      ? "Open"
-                      : m.division === "Open"
-                        ? "Gold"
-                        : m.division,
+                    ...importDefaultsForClass(
+                      boatClass,
+                      requiresExplicit
+                        ? ""
+                        : m.division === "Open"
+                          ? ""
+                          : m.division
+                    ),
                   }));
                 }}
               >
@@ -1402,6 +1464,9 @@ export function AdminRegattaImport({
                   setImportMeta((m) => ({
                     ...m,
                     raceCount,
+                    ...(requiresExplicitImportMetadata(m.boatClass)
+                      ? { sourceMetadataConfirmed: false }
+                      : {}),
                     ...(isIlca &&
                     raceCount !== "" &&
                     Number.isFinite(n) &&
@@ -1424,10 +1489,14 @@ export function AdminRegattaImport({
               <select
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.countsForRanking ? "ranking" : "non-ranking"}
+                disabled={requiresExplicitImportMetadata(importMeta.boatClass)}
                 onChange={(e) =>
                   setImportMeta((m) => ({
                     ...m,
                     countsForRanking: e.target.value === "ranking",
+                    sourceMetadataConfirmed: requiresExplicitImportMetadata(m.boatClass)
+                      ? false
+                      : m.sourceMetadataConfirmed,
                     // Keep division sensible when toggling non-ranking
                     division:
                       e.target.value === "non-ranking" &&
@@ -1442,40 +1511,104 @@ export function AdminRegattaImport({
                   }))
                 }
               >
-                <option value="ranking">
-                  Ranking (series / Best 3 of 5)
-                </option>
-                <option value="non-ranking">
-                  Non-ranking (logbook only / too few races)
-                </option>
-              </select>
-            </label>
-            <label className="text-xs text-slate-400">
-              Division
-              <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px] disabled:opacity-60"
-                value={
-                  isSingleFleetClass(importMeta.boatClass)
-                    ? "Open"
-                    : importMeta.division
-                }
-                disabled={isSingleFleetClass(importMeta.boatClass)}
-                onChange={(e) =>
-                  setImportMeta((m) => ({ ...m, division: e.target.value }))
-                }
-              >
-                {isSingleFleetClass(importMeta.boatClass) ? (
-                  <option value="Open">Open (single fleet)</option>
+                {requiresExplicitImportMetadata(importMeta.boatClass) ? (
+                  <option value="non-ranking">Non-ranking (policy not configured)</option>
                 ) : (
                   <>
-                    <option value="Gold">Gold</option>
-                    <option value="Silver">Silver</option>
-                    <option value="Both">Both</option>
-                    <option value="NonRanking">Non-ranking</option>
+                    <option value="ranking">
+                      Ranking (series / Best 3 of 5)
+                    </option>
+                    <option value="non-ranking">
+                      Non-ranking (logbook only / too few races)
+                    </option>
                   </>
                 )}
               </select>
             </label>
+            <label className="text-xs text-slate-400">
+              Publication lifecycle
+              <select
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
+                value={importMeta.publicationStatus}
+                onChange={(e) =>
+                  setImportMeta((m) => ({
+                    ...m,
+                    publicationStatus: e.target.value as RegattaImportMeta["publicationStatus"],
+                    lifecycleConfirmed: requiresExplicitImportMetadata(m.boatClass)
+                      ? false
+                      : true,
+                  }))
+                }
+              >
+                <option value="draft">Draft — admin only</option>
+                <option value="in_review">In review — admin only</option>
+                <option value="published">Published — visible publicly</option>
+              </select>
+            </label>
+            <label className="text-xs text-slate-400">
+              Division
+              {requiresExplicitImportMetadata(importMeta.boatClass) ? (
+                <input
+                  className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
+                  value={importMeta.division}
+                  onChange={(e) =>
+                    setImportMeta((m) => ({
+                      ...m,
+                      division: e.target.value,
+                      sourceMetadataConfirmed: false,
+                    }))
+                  }
+                  placeholder="Official fleet, e.g. Open or Youth"
+                />
+              ) : (
+                <select
+                  className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px] disabled:opacity-60"
+                  value={
+                    isSingleFleetClass(importMeta.boatClass)
+                      ? "Open"
+                      : importMeta.division
+                  }
+                  disabled={isSingleFleetClass(importMeta.boatClass)}
+                  onChange={(e) =>
+                    setImportMeta((m) => ({ ...m, division: e.target.value }))
+                  }
+                >
+                  {isSingleFleetClass(importMeta.boatClass) ? (
+                    <option value="Open">Open (single fleet)</option>
+                  ) : (
+                    <>
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
+                      <option value="Both">Both</option>
+                      <option value="NonRanking">Non-ranking</option>
+                    </>
+                  )}
+                </select>
+              )}
+            </label>
+            {requiresExplicitImportMetadata(importMeta.boatClass) && (
+              <label className="sm:col-span-2 lg:col-span-4 flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
+                <input
+                  type="checkbox"
+                  checked={importMeta.sourceMetadataConfirmed}
+                  onChange={(e) =>
+                    setImportMeta((m) => ({
+                      ...m,
+                      sourceMetadataConfirmed: e.target.checked,
+                      lifecycleConfirmed: e.target.checked,
+                    }))
+                  }
+                  className="mt-0.5 h-3.5 w-3.5 accent-orange-500"
+                />
+                <span>
+                  I confirm that the official source identifies this class as{" "}
+                  <strong>{importMeta.boatClass}</strong>, the fleet/division above,
+                  and <strong>{String(importMeta.raceCount || "0")}</strong> completed
+                  races. I also confirm the selected <strong>{importMeta.publicationStatus.replace("_", " ")}</strong>{" "}
+                  lifecycle. This result is non-ranking until a federation policy is configured.
+                </span>
+              </label>
+            )}
             <p className="sm:col-span-2 lg:col-span-4 text-[13px] text-slate-500 space-y-1">
               <span className="block">
                 Defaults: <strong className="text-slate-400">Optimist</strong>,{" "}
@@ -1496,7 +1629,12 @@ export function AdminRegattaImport({
                 !isSuperadmin ||
                 importBusy ||
                 !selectedEventSlug ||
-                !selectedTarget
+                !selectedTarget ||
+                (requiresExplicitImportMetadata(importMeta.boatClass) &&
+                  (!importMeta.sourceMetadataConfirmed ||
+                    !importMeta.lifecycleConfirmed ||
+                    !importMeta.division.trim() ||
+                    importMeta.raceCount === ""))
               }
               className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-[15px] font-semibold text-white"
             >

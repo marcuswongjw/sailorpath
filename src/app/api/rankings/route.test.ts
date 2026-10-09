@@ -43,4 +43,18 @@ describe("GET /api/rankings", () => {
       ranked: [{ dob: "2013-01-01" }],
     });
   });
+
+  it("rejects iQFOiL instead of falling back to Optimist Gold", async () => {
+    vi.clearAllMocks();
+    const response = await GET(
+      new Request("https://sailorpath.com/api/rankings?fleet=iqfoil")
+    );
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toMatchObject({
+      error: "Unsupported ranking fleet",
+      fleet: "iqfoil",
+    });
+    expect(getCachedFleetRankings).not.toHaveBeenCalled();
+  });
 });

@@ -1,4 +1,5 @@
 import { ordinal, profileBoatClassGroup } from "@/lib/profileAnalytics";
+import { sailingClassKeyOf } from "@/lib/classRegistry";
 
 /** Board classes that can lead a sailor profile. Windsurfing is not WingFoil. */
 export const BOARD_DISCIPLINES = [
@@ -52,12 +53,11 @@ export function isBoardDiscipline(value: string | null | undefined): value is Bo
 export function boardDisciplineOf(
   boatClass: string | null | undefined
 ): BoardDiscipline | null {
-  const compact = compactClass(boatClass);
-  if (!compact) return null;
-  if (compact.includes("windsurf")) return "windsurfing";
-  if (compact.includes("wingfoil") || compact.includes("wing")) return "wingfoil";
-  if (compact.includes("iqfoil")) return "iqfoil";
-  if (compact.includes("techno")) return "techno293";
+  const classKey = sailingClassKeyOf(boatClass);
+  if (classKey === "windsurfing") return "windsurfing";
+  if (classKey === "wingfoil") return "wingfoil";
+  if (classKey === "iqfoil") return "iqfoil";
+  if (classKey === "techno293") return "techno293";
   return null;
 }
 

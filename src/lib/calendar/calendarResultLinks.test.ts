@@ -124,4 +124,15 @@ describe("matchCalendarResults", () => {
     expect(classResultsHref(ilca)).toBe("/sg/ilca/regattas/pesta-sukan-ilca4-aug-26-2026-08-01");
     expect(classResultsHref(gold)).toBe("/sg/optimist/regattas/pesta-sukan-gold-aug-26-2026-08-01");
   });
+
+  it("never redirects iQFOiL to Optimist Gold", () => {
+    const iqfoil = row({
+      slug: "sysc-2026-iqfoil",
+      name: "SYSC 2026 iQFOiL",
+      boatClass: "iQFOiL",
+      division: "Open",
+    });
+
+    expect(classResultsHref(iqfoil)).toBe("/sg/iqfoil");
+  });
 });

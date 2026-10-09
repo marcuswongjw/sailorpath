@@ -56,11 +56,27 @@ async function getPublishedTechno293Regattas(): Promise<Techno293Regatta[]> {
   return sortTechno293Regattas(SINGAPORE_TECHNO293_REGATTAS);
 }
 
-export default async function Techno293Page() {
+type Techno293PageProps = {
+  searchParams?: Promise<{ tab?: string; regatta?: string }>;
+};
+
+export default async function Techno293Page({ searchParams }: Techno293PageProps) {
+  const params = searchParams ? await searchParams : {};
   const regattas = await getPublishedTechno293Regattas();
+  const initialTab =
+    params.tab === "results" ||
+    params.tab === "series" ||
+    params.tab === "scorecards" ||
+    params.tab === "specs"
+      ? params.tab
+      : "regattas";
   return (
     <ErrorBoundary>
-      <Techno293View initialRegattas={regattas} />
+      <Techno293View
+        initialRegattas={regattas}
+        initialTab={initialTab}
+        initialRegattaId={params.regatta}
+      />
     </ErrorBoundary>
   );
 }

@@ -7,6 +7,7 @@ import {
   type RegattaEventDef,
   type RegattaEventSliceDef,
 } from "@/lib/regattaEvents";
+import { sailingClassKeyOf } from "@/lib/classRegistry";
 
 const MONTHS = "jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec";
 
@@ -38,7 +39,9 @@ type Fleet =
   | "ilca4"
   | "ilca6"
   | "ilca7"
+  | "wingfoil"
   | "techno293"
+  | "iqfoil"
   | "windsurfing";
 
 function compactClass(value: string): string {
@@ -76,20 +79,21 @@ function mentionsWindsurfing(
 
 function publicFleet(row: RegattaRecord): Fleet | null {
   const boat = String(row.boatClass || "");
+  const classKey = sailingClassKeyOf(boat);
   if (isIlcaSeriesClass(boat, "ILCA 4")) return "ilca4";
   if (isIlcaSeriesClass(boat, "ILCA 6")) return "ilca6";
   if (isIlcaSeriesClass(boat, "ILCA 7")) return "ilca7";
+  if (classKey === "wingfoil") return "wingfoil";
   // Techno 293 contains "29". Classify it before the 29er exclusion.
-  if (mentionsTechno(row)) return "techno293";
-  if (mentionsWindsurfing(row)) return "windsurfing";
+  if (classKey === "techno293" || mentionsTechno(row)) return "techno293";
+  if (classKey === "iqfoil") return "iqfoil";
+  if (classKey === "windsurfing" || mentionsWindsurfing(row)) return "windsurfing";
   const lower = boat.toLowerCase();
   if (
     lower.includes("ilca") ||
     lower.includes("laser") ||
     isWingfoilBoatClass(boat) ||
-    lower.includes("29") ||
-    lower.includes("iqfoil") ||
-    lower.includes("iq foil")
+    lower.includes("29")
   ) {
     return null;
   }
@@ -185,6 +189,24 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
       prizeFleetName: "Techno 293",
     };
   }
+  if (fleet === "wingfoil") {
+    return {
+      key: "wingfoil",
+      label: "WingFoil",
+      series: "wingfoil",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: "WingFoil",
+    };
+  }
+  if (fleet === "iqfoil") {
+    return {
+      key: "iqfoil",
+      label: "iQFOiL",
+      series: "iqfoil",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: "iQFOiL",
+    };
+  }
   if (fleet === "windsurfing") {
     const blob = classBlob(row).toLowerCase();
     const compact = compactClass(blob);
@@ -216,7 +238,9 @@ const FLEET_ORDER: Fleet[] = [
   "ilca4",
   "ilca6",
   "ilca7",
+  "wingfoil",
   "techno293",
+  "iqfoil",
   "windsurfing",
 ];
 

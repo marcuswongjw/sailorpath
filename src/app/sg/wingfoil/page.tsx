@@ -56,11 +56,24 @@ async function getPublishedWingfoilRegattas(): Promise<WingfoilRegatta[]> {
   return sortWingfoilRegattas(SINGAPORE_WINGFOIL_REGATTAS);
 }
 
-export default async function WingfoilPage() {
+type WingfoilPageProps = {
+  searchParams?: Promise<{ tab?: string; regatta?: string }>;
+};
+
+export default async function WingfoilPage({ searchParams }: WingfoilPageProps) {
+  const params = searchParams ? await searchParams : {};
   const regattas = await getPublishedWingfoilRegattas();
+  const initialTab =
+    params.tab === "results" || params.tab === "series" || params.tab === "scorecards"
+      ? params.tab
+      : "regattas";
   return (
     <ErrorBoundary>
-      <WingfoilView initialRegattas={regattas} />
+      <WingfoilView
+        initialRegattas={regattas}
+        initialTab={initialTab}
+        initialRegattaId={params.regatta}
+      />
     </ErrorBoundary>
   );
 }

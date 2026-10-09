@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   getPublicCalendarEvents,
   getClassRegattas,
+  getNormalizedClassRegattas,
+  getPublishedScorecardRegattas,
 } from "./publicDataLoader";
 
 describe("publicDataLoader shared layer", () => {
@@ -65,5 +67,67 @@ describe("publicDataLoader shared layer", () => {
     });
     expect(regattas2025.length).toBeGreaterThanOrEqual(2);
     expect(regattas2025.every((r) => r.startDate.startsWith("2025"))).toBe(true);
+  });
+
+  it("surfaces published special scorecards without a catalog entry", () => {
+    const rows = getPublishedScorecardRegattas(
+      "wingfoil",
+      [
+        {
+          id: "unregistered-wingfoil-round",
+          name: "Unregistered WingFoil Round",
+          dates: "2026-10-10",
+          venue: "Singapore",
+          lifecycleStatus: "published",
+          results: [{ rank: 1 }],
+        },
+        {
+          id: "combined-wingfoil-series",
+          name: "Combined WingFoil Series",
+          dates: "2026-10-11",
+          lifecycleStatus: "published",
+          results: [{ rank: 1 }],
+        },
+      ],
+      { parseDate: (dates) => Date.parse(String(dates)) }
+    );
+
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({
+      eventSlug: "unregistered-wingfoil-round",
+      canonicalHref: "/sg/wingfoil?tab=results&regatta=unregistered-wingfoil-round",
+      source: { kind: "special_scorecard", label: "Published scorecard" },
+    });
+  });
+
+  it("projects iQFOiL from normalized sheets rather than a special scoreboard", () => {
+    const rows = getNormalizedClassRegattas("iqfoil", [
+      {
+        id: "iqfoil-sheet",
+        slug: "sample-iqfoil",
+        name: "Sample iQFoil Open",
+        date: "2026-03-14",
+        endDate: "2026-03-16",
+        totalFleetSize: 8,
+        boatClass: "iQFoil",
+        division: "Open",
+        raceCount: 5,
+      },
+      {
+        id: "wingfoil-sheet",
+        slug: "sample-wingfoil",
+        name: "Sample WingFoil Open",
+        date: "2026-03-14",
+        totalFleetSize: 8,
+        boatClass: "WingFoil",
+      },
+    ]);
+
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({
+      name: "Sample iQFoil Open",
+      fleetKey: "iqfoil",
+      source: { kind: "normalized_result", label: "Normalized result" },
+    });
   });
 });

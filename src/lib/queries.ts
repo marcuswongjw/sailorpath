@@ -290,7 +290,7 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
       : await base
           .where(
             or(
-              ne(regattas.status, "archived"),
+              eq(regattas.status, "published"),
               sql`${regattas.status} IS NULL`
             )
           )
@@ -319,7 +319,7 @@ export async function getRegattaBySlug(slug: string, options?: { allowUnpublishe
             and(
               eq(regattas.slug, slug),
               or(
-                ne(regattas.status, "archived"),
+                eq(regattas.status, "published"),
                 sql`${regattas.status} IS NULL`
               )
             )

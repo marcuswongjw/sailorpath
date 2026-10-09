@@ -279,19 +279,23 @@ describe("groupedHubForSlug", () => {
     expect(hub?.event.slices.map((slice) => slice.key)).toEqual([
       "optimist-gold",
       "optimist-silver",
+      "wingfoil",
       "techno-293",
       "windsurfing-lt",
     ]);
     expect(hub?.event.slices.map((slice) => slice.series)).toEqual([
       "optimist",
       "optimist",
+      "wingfoil",
       "techno293",
       "windsurfing",
     ]);
     expect(hub?.event.slices.find((slice) => slice.key === "windsurfing-lt")?.label).toBe(
       "Windsurfing LT"
     );
-    expect(hub?.event.slices.some((slice) => slice.series === "wingfoil")).toBe(false);
+    expect(hub?.event.slices.find((slice) => slice.key === "wingfoil")?.label).toBe(
+      "WingFoil"
+    );
 
     const resolved = resolveEventSlices(hub!.event, published);
     expect(resolved.find((slice) => slice.def.key === "techno-293")?.regatta?.slug).toBe(

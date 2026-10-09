@@ -15,20 +15,28 @@ import {
   SINGAPORE_TECHNO293_REGATTAS,
   loadTechno293Regattas,
   fetchServerTechno293Regattas,
+  parseTechno293RegattaDate,
   sortTechno293Regattas,
   TECHNO293_SPECIFICATIONS,
   type Techno293Regatta,
 } from "@/lib/techno293";
 import { EventFacts } from "@/components/EventFacts";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
-import { getClassRegattas } from "@/lib/publicDataLoader";
+import {
+  getClassRegattas,
+  getPublishedScorecardRegattas,
+} from "@/lib/publicDataLoader";
 import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
 import { Techno293SeriesView } from "./Techno293SeriesView";
 
 export function Techno293View({
   initialRegattas,
+  initialTab = "regattas",
+  initialRegattaId,
 }: {
   initialRegattas?: Techno293Regatta[];
+  initialTab?: "regattas" | "scorecards" | "series" | "results" | "specs";
+  initialRegattaId?: string;
 } = {}) {
   const [regattas, setRegattas] = useState<Techno293Regatta[]>(
     initialRegattas && initialRegattas.length > 0
@@ -43,13 +51,17 @@ export function Techno293View({
         : SINGAPORE_TECHNO293_REGATTAS
     );
     const withResults = list.find((r) => r.results && r.results.length > 0);
-    return withResults ? withResults.id : list[0]?.id || SINGAPORE_TECHNO293_REGATTAS[0].id;
+    return initialRegattaId && list.some((regatta) => regatta.id === initialRegattaId)
+      ? initialRegattaId
+      : withResults
+        ? withResults.id
+        : list[0]?.id || SINGAPORE_TECHNO293_REGATTAS[0].id;
   });
 
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<
-    "regattas" | "series" | "results" | "specs"
-  >("regattas");
+    "regattas" | "scorecards" | "series" | "results" | "specs"
+  >(initialTab);
 
   useEffect(() => {
     let cancelled = false;
@@ -82,6 +94,16 @@ export function Techno293View({
     );
   }, [regattas]);
 
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
+
+  useEffect(() => {
+    if (initialRegattaId && publishedRegattas.some((r) => r.id === initialRegattaId)) {
+      setSelectedRegattaId(initialRegattaId);
+    }
+  }, [initialRegattaId, publishedRegattas]);
+
   const activeRegatta = useMemo(
     () =>
       publishedRegattas.find((r) => r.id === selectedRegattaId) ||
@@ -103,6 +125,14 @@ export function Techno293View({
     if (!activeRegatta.results || activeRegatta.results.length === 0) return 0;
     return Math.max(...activeRegatta.results.map((r) => r.races.length), 0);
   }, [activeRegatta]);
+
+  const publishedScorecardRows = useMemo(
+    () =>
+      getPublishedScorecardRegattas("techno293", publishedRegattas, {
+        parseDate: parseTechno293RegattaDate,
+      }),
+    [publishedRegattas]
+  );
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
@@ -140,6 +170,18 @@ export function Techno293View({
           >
             <Calendar className="h-3.5 w-3.5" />
             <span>Regattas</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("scorecards")}
+            className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === "scorecards"
+                ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
+            }`}
+          >
+            <Layers className="h-3.5 w-3.5" />
+            <span>All published scorecards</span>
           </button>
           <button
             type="button"
@@ -182,10 +224,30 @@ export function Techno293View({
 
       {/* Tab 0: Regattas List (Default Class View) */}
       {activeTab === "regattas" && (
-        <ClassRegattaListTable
-          classNameTitle="Techno 293"
-          regattas={getClassRegattas("techno293")}
-        />
+        <div className="space-y-3">
+          <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
+            Curated event catalog. Published scorecards that are not yet linked to a
+            calendar event are available in <strong>All published scorecards</strong>.
+          </p>
+          <ClassRegattaListTable
+            classNameTitle="Techno 293"
+            regattas={getClassRegattas("techno293")}
+          />
+        </div>
+      )}
+
+      {activeTab === "scorecards" && (
+        <div className="space-y-3">
+          <p className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-950">
+            Every published Techno 293 scorecard is listed here. Series aggregates
+            remain on the Overall Championship tab; individual scorecards are shown
+            even when they have no calendar-catalog mapping yet.
+          </p>
+          <ClassRegattaListTable
+            classNameTitle="Techno 293"
+            regattas={publishedScorecardRows}
+          />
+        </div>
       )}
 
       {/* Tab 1: Overall Championship */}
