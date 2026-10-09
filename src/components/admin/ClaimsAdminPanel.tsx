@@ -730,7 +730,8 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                             message:
                               `Sailor: ${c.sailorName}\n` +
                               `Requester claim will stay in history as unlinked.\n\n` +
-                              `The profile becomes unclaimed — private logbook access for the current owner ends.`,
+                              `This claimant's approved link is removed; other approved accounts keep their access.\n\n` +
+                              `If this claimant is the primary owner, the earliest-created remaining approved claim becomes primary. If none remain, primary ownership is cleared. Account roles are unchanged.`,
                             confirmLabel: "Unlink owner",
                             tone: "danger",
                           });

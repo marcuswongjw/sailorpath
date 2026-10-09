@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { and, desc, eq, ne } from "drizzle-orm";
+import { and, asc, desc, eq, ne } from "drizzle-orm";
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
@@ -143,7 +143,8 @@ export async function GET() {
  *  - status?: pending | approved | rejected
  *  - relation?: parent | sailor | other  (required when approving if unknown)
  *  - setAccountRole?: boolean (default true) — update profiles.role for parent/sailor
- *  - unclaim?: boolean — clear parent_id on sailor (approved claims)
+ *  - unclaim?: boolean — reject the claim; if primary, promote the earliest-created
+ *    remaining approved claim (ID breaks ties), or clear ownership if none remain.
  */
 export async function PATCH(req: Request) {
   try {
@@ -154,12 +155,13 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
     }
 
-    const [claim] = await db
+    // Resolve the sailor before locking. Re-read the claim under the lock below.
+    const [claimRef] = await db
       .select(sailorClaimColumns)
       .from(sailorClaimsAssignable)
       .where(eq(sailorClaimsAssignable.id, id))
       .limit(1);
-    if (!claim) {
+    if (!claimRef) {
       return NextResponse.json({ error: "Claim not found" }, { status: 404 });
     }
 
@@ -175,177 +177,127 @@ export async function PATCH(req: Request) {
       );
     }
 
-    let relation: ClaimRelation | null =
-      parseClaimRelation(body.relation) ||
-      parseClaimRelation(claim.relation) ||
-      relationFromNote(claim.note);
-
-    if (statusRaw === "approved" && !relation) {
-      return NextResponse.json(
-        {
-          error:
-            "relation required to approve (parent | sailor | other). Set role in the Claims panel.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // Relation-only update (e.g. change parent ↔ sailor on approved claim)
-    if (!statusRaw && body.relation != null) {
-      relation = parseClaimRelation(body.relation);
-      if (!relation) {
-        return NextResponse.json(
-          { error: "relation must be parent|sailor|other" },
-          { status: 400 }
-        );
-      }
-    }
-
-    const nextStatus = (statusRaw || claim.status) as
-      | "pending"
-      | "approved"
-      | "rejected";
-
-    const [updated] = await db
-      .update(sailorClaimsAssignable)
-      .set({
-        status: nextStatus,
-        ...(relation ? { relation } : {}),
-        updatedAt: new Date(),
-      })
-      .where(eq(sailorClaimsAssignable.id, id))
-      .returning(sailorClaimColumns);
-
-    const setAccountRole = body.setAccountRole !== false;
-    let roleNotice: Awaited<ReturnType<typeof applyClaimAccountRole>> = null;
-
-    if (nextStatus === "approved" && relation) {
-      const [target] = await db
-        .select({ parentId: sailors.parentId })
+    const result = await db.transaction(async (tx) => {
+      // Lock the sailor first, consistently with mergeSailors. This serializes
+      // admin ownership transitions even when they touch different claims.
+      const [target] = await tx
+        .select({ parentId: sailors.parentId, name: sailors.name })
         .from(sailors)
-        .where(eq(sailors.id, claim.sailorId))
-        .limit(1);
+        .where(eq(sailors.id, claimRef.sailorId))
+        .for("update");
+      if (!target) return { error: "Sailor not found", status: 404 } as const;
 
-      // If sailor has no primary parentId yet or is already this requester, set/update it
-      if (!target?.parentId || target.parentId === claim.requesterId) {
-        await db
-          .update(sailors)
-          .set({
-            parentId: claim.requesterId,
-            ownerRelation: relation,
-            updatedAt: new Date(),
-          })
-          .where(eq(sailors.id, claim.sailorId));
-      }
-      // If sailor is already linked to another primary account, we allow it!
-      // The claim is marked approved, granting this user full management access as well.
-
-      if (setAccountRole) {
-        roleNotice = await applyClaimAccountRole(claim.requesterId, relation);
-      }
-    }
-
-    // Change relation on already-linked sailor (without re-approve)
-    if (
-      !statusRaw &&
-      relation &&
-      claim.status === "approved" &&
-      body.relation != null
-    ) {
-      const [target] = await db
-        .select({ parentId: sailors.parentId })
-        .from(sailors)
-        .where(eq(sailors.id, claim.sailorId))
-        .limit(1);
-
-      if (target?.parentId === claim.requesterId) {
-        await db
-          .update(sailors)
-          .set({ ownerRelation: relation, updatedAt: new Date() })
-          .where(eq(sailors.id, claim.sailorId));
+      const [claim] = await tx
+        .select(sailorClaimColumns)
+        .from(sailorClaimsAssignable)
+        .where(eq(sailorClaimsAssignable.id, id))
+        .for("update");
+      if (!claim) return { error: "Claim not found", status: 404 } as const;
+      if (claim.sailorId !== claimRef.sailorId) {
+        return {
+          error: "Claim moved to another sailor. Reload and retry.",
+          status: 409,
+        } as const;
       }
 
-      if (setAccountRole) {
-        roleNotice = await applyClaimAccountRole(claim.requesterId, relation);
+      // Unlink wins over an accompanying approval; never briefly approve a
+      // claim, change the account role, or send an approval email on unlink.
+      const nextStatus = (
+        body.unclaim === true ? "rejected" : statusRaw || claim.status
+      ) as "pending" | "approved" | "rejected";
+      let relation: ClaimRelation | null =
+        parseClaimRelation(body.relation) ||
+        parseClaimRelation(claim.relation) ||
+        relationFromNote(claim.note);
+
+      if (nextStatus === "approved" && !relation) {
+        return {
+          error: "relation required to approve (parent | sailor | other). Set role in the Claims panel.",
+          status: 400,
+        } as const;
       }
-    }
+      if (!statusRaw && body.relation != null) {
+        relation = parseClaimRelation(body.relation);
+        if (!relation) {
+          return {
+            error: "relation must be parent|sailor|other",
+            status: 400,
+          } as const;
+        }
+      }
 
-    if (body.unclaim === true) {
-      const [target] = await db
-        .select({ parentId: sailors.parentId })
-        .from(sailors)
-        .where(eq(sailors.id, claim.sailorId))
-        .limit(1);
+      const now = new Date();
+      const [updated] = await tx
+        .update(sailorClaimsAssignable)
+        .set({
+          status: nextStatus,
+          ...(relation ? { relation } : {}),
+          updatedAt: now,
+        })
+        .where(eq(sailorClaimsAssignable.id, id))
+        .returning(sailorClaimColumns);
 
-      await db
-        .update(sailorClaims)
-        .set({ status: "rejected", updatedAt: new Date() })
-        .where(eq(sailorClaims.id, id));
-
-      // If the unclaiming claimant was the primary parentId, promote another approved claimant if one exists
-      if (target?.parentId === claim.requesterId) {
-        const [otherClaim] = await db
-          .select({
-            requesterId: sailorClaims.requesterId,
-            relation: sailorClaims.relation,
-          })
-          .from(sailorClaims)
+      let roleNotice: Awaited<ReturnType<typeof applyClaimAccountRole>> = null;
+      if (nextStatus === "approved" && relation) {
+        // Other approved claimants keep management access; do not replace an
+        // existing primary owner when approving or editing a secondary claim.
+        if (!target.parentId || target.parentId === claim.requesterId) {
+          await tx
+            .update(sailors)
+            .set({
+              parentId: claim.requesterId,
+              ownerRelation: relation,
+              updatedAt: now,
+            })
+            .where(eq(sailors.id, claim.sailorId));
+        }
+        if (body.setAccountRole !== false) {
+          roleNotice = await applyClaimAccountRole(claim.requesterId, relation, tx);
+        }
+      } else if (target.parentId === claim.requesterId) {
+        const [otherClaim] = await tx
+          .select(sailorClaimColumns)
+          .from(sailorClaimsAssignable)
           .where(
             and(
-              eq(sailorClaims.sailorId, claim.sailorId),
-              eq(sailorClaims.status, "approved"),
-              ne(sailorClaims.id, id)
+              eq(sailorClaimsAssignable.sailorId, claim.sailorId),
+              eq(sailorClaimsAssignable.status, "approved"),
+              ne(sailorClaimsAssignable.id, id)
             )
           )
-          .limit(1);
-
-        await db
+          // Policy: earliest-created remaining approved claim, then stable ID.
+          // updatedAt is not approval time and changes on relation edits.
+          .orderBy(
+            asc(sailorClaimsAssignable.createdAt),
+            asc(sailorClaimsAssignable.id)
+          )
+          .limit(1)
+          .for("update");
+        await tx
           .update(sailors)
           .set({
-            parentId: otherClaim ? otherClaim.requesterId : null,
-            ownerRelation: otherClaim ? otherClaim.relation : null,
-            updatedAt: new Date(),
+            parentId: otherClaim?.requesterId ?? null,
+            ownerRelation: otherClaim
+              ? parseClaimRelation(otherClaim.relation) ||
+                relationFromNote(otherClaim.note)
+              : null,
+            updatedAt: now,
           })
           .where(eq(sailors.id, claim.sailorId));
       }
-    } else if (statusRaw === "rejected") {
-      const [target] = await db
-        .select({ parentId: sailors.parentId })
-        .from(sailors)
-        .where(eq(sailors.id, claim.sailorId))
-        .limit(1);
 
-      if (target?.parentId === claim.requesterId) {
-        const [otherClaim] = await db
-          .select({
-            requesterId: sailorClaims.requesterId,
-            relation: sailorClaims.relation,
-          })
-          .from(sailorClaims)
-          .where(
-            and(
-              eq(sailorClaims.sailorId, claim.sailorId),
-              eq(sailorClaims.status, "approved"),
-              ne(sailorClaims.id, id)
-            )
-          )
-          .limit(1);
-
-        await db
-          .update(sailors)
-          .set({
-            parentId: otherClaim ? otherClaim.requesterId : null,
-            ownerRelation: otherClaim ? otherClaim.relation : null,
-            updatedAt: new Date(),
-          })
-          .where(eq(sailors.id, claim.sailorId));
-      }
+      return { claim: updated, relation, roleNotice, sailorName: target.name };
+    });
+    if ("error" in result) {
+      return NextResponse.json({ error: result.error }, { status: result.status });
     }
+    const { claim: updated, relation, roleNotice, sailorName } = result;
 
-    if (statusRaw === "approved" || statusRaw === "rejected") {
+    // External effects run only after the transaction has committed.
+    if (statusRaw === "approved" || statusRaw === "rejected" || body.unclaim === true) {
       void trackUsage({
         eventType:
-          statusRaw === "approved" ? "claim_approved" : "claim_rejected",
+          updated.status === "approved" ? "claim_approved" : "claim_rejected",
         path: "/admin",
         role: "superadmin",
         meta: {
@@ -356,17 +308,6 @@ export async function PATCH(req: Request) {
     }
 
     if (roleNotice) {
-      let sailorName: string | null = null;
-      try {
-        const [s] = await db
-          .select({ name: sailors.name })
-          .from(sailors)
-          .where(eq(sailors.id, claim.sailorId))
-          .limit(1);
-        sailorName = s?.name || null;
-      } catch {
-        sailorName = null;
-      }
       await notifyAccountRoleChange({
         ...roleNotice,
         sailorName,
@@ -374,17 +315,6 @@ export async function PATCH(req: Request) {
     }
 
     if (statusRaw === "approved" || statusRaw === "rejected" || body.unclaim === true) {
-      let sailorLabel: string | null = null;
-      try {
-        const [s] = await db
-          .select({ name: sailors.name })
-          .from(sailors)
-          .where(eq(sailors.id, claim.sailorId))
-          .limit(1);
-        sailorLabel = s?.name || null;
-      } catch {
-        /* optional */
-      }
       const action = body.unclaim === true
         ? "claim.unlink"
         : statusRaw === "approved"
@@ -392,22 +322,22 @@ export async function PATCH(req: Request) {
           : "claim.reject";
       const summary =
         body.unclaim === true
-          ? `Unlinked claim on ${sailorLabel || claim.sailorId}`
+          ? `Unlinked claim on ${sailorName || updated.sailorId}`
           : statusRaw === "approved"
-            ? `Approved claim on ${sailorLabel || claim.sailorId}`
-            : `Rejected claim on ${sailorLabel || claim.sailorId}`;
+            ? `Approved claim on ${sailorName || updated.sailorId}`
+            : `Rejected claim on ${sailorName || updated.sailorId}`;
       void logAdminChange({
         actorUserId: auth.userId,
         actorEmail: auth.email,
         action,
         entityType: "claim",
         entityId: id,
-        entityLabel: sailorLabel,
+        entityLabel: sailorName,
         summary,
         details: {
-          sailorId: claim.sailorId,
-          requesterId: claim.requesterId,
-          status: body.unclaim === true ? "rejected" : statusRaw,
+          sailorId: updated.sailorId,
+          requesterId: updated.requesterId,
+          status: updated.status,
           relation: relation || null,
           unclaim: body.unclaim === true,
         },

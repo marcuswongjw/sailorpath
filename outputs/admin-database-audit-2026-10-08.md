@@ -4,13 +4,13 @@
 
 **Scope:** Active SailorPath Supabase project, core admin tables and workflows, repository schema/migrations, and selected data-quality checks.
 
-**Method:** The live database review was read-only. Finding 1 has since been fixed in the application code; no database records or ranking behavior were changed. The fix aligns the ORM with the existing production JSONB column and requires no database migration.
+**Method:** The live database review was read-only. Finding 1 has since been fixed in the application code and deployed. Finding 3 was implemented and committed locally on 9 October 2026, following the user's replacement-owner policy choice. No production database records or ranking behavior were changed, and neither fix requires a database migration.
 
 ## Executive summary
 
 1. **Audit-log JSONB bug — fix implemented:** Drizzle and the UI treated `details` as text although production stores JSONB objects. The type and rendering path now handle both JSONB objects and legacy strings; regression tests were added.
 2. **Ranking clarification:** only Optimist, ILCA 4, and ILCA 6 currently have national rankings. Six low-race-count sheets in those classes should be non-ranking. ILCA 7, iQFOiL, and Windfoil should not show either ranking/non-ranking tab. No changes to ranking UI or data were made in this turn.
-3. **Claim unlink reliability:** the endpoint can return stale status and choose a replacement primary owner nondeterministically.
+3. **Claim unlink reliability — fixed and committed locally:** admin claim state and ownership updates now use one transaction, return the final saved claim, and promote the earliest-created remaining approved claim with claim ID as a stable tie-breaker. Added database-backed rollback and regression tests; not yet deployed.
 4. **Schema/migration drift:** production is missing a regatta status constraint and the RLS policies declared for `regattas` in the repository migration. Two existing check constraints are present but remain `NOT VALID`.
 5. **Data anomaly:** one legacy result has total points below net points and no race-level scores to validate it.
 
@@ -64,13 +64,26 @@ The shared ranking rule in `src/lib/ranking.ts:124-147` requires at least three 
 
 **Follow-up:** limit ranking/non-ranking controls to Optimist, ILCA 4, and ILCA 6; set the six named sheets to non-ranking; leave unsupported classes without either tab. These changes are outside the audit-log fix and were not made here.
 
-### 3. Medium — Claim unlink can return stale state and choose an arbitrary replacement owner
+### 3. Medium — Claim unlink stale state and arbitrary replacement owner; fixed and committed locally
 
-In `src/app/api/admin/claims/route.ts:204-217`, the endpoint first updates the claim to `nextStatus` and saves the returned row. For an `unclaim` request, a later branch changes that claim to `rejected` (`:273-283`) but the response still returns the earlier `updated` value (`:418-422`). A caller can receive `approved` even though the persisted claim is rejected.
+**Original finding (8 October audit; line references refer to the pre-fix code):** in `src/app/api/admin/claims/route.ts:204-217`, the endpoint first updated the claim to `nextStatus` and saved the returned row. For an `unclaim` request, a later branch changed that claim to `rejected` (`:273-283`) but the response still returned the earlier `updated` value (`:418-422`). A caller could receive `approved` even though the persisted claim was rejected.
 
-When the unclaimed requester is the primary owner, the endpoint selects another approved claim with `.limit(1)` but no ordering (`:285-309`). Live data includes one sailor with multiple approved claims and a primary owner among them. If that owner unclaims, the replacement can be chosen arbitrarily. Multiple approved accounts appear intentionally supported; the risk is the primary-owner transition.
+When the unclaimed requester was the primary owner, the endpoint selected another approved claim with `.limit(1)` but no ordering (`:285-309`). The audit snapshot included one sailor with multiple approved claims and a primary owner among them. Multiple approved accounts are intentionally supported; the risk was the primary-owner transition.
 
-**Recommendation:** perform the state transition and owner reassignment transactionally; define an explicit replacement rule (or require an admin choice), and return the final persisted claim row. Add tests for unclaiming a primary owner when multiple approved claims remain.
+**Implemented remediation (9 October 2026, committed locally):**
+
+- The admin `PATCH /api/admin/claims` handler performs claim status, primary-owner/relation, and any approval account-role writes in one database transaction. Failures roll back all those writes.
+- It locks the sailor before locking and re-reading the claim, serializing admin ownership transitions on that sailor. A claim that moved between the initial lookup and the transaction returns 409; a vanished claim returns 404 without further mutation.
+- **User-approved replacement policy:** select the earliest-created remaining approved claim on the same sailor (`created_at ASC, id ASC`). Pending/rejected claims and other sailors' claims cannot be promoted. `updated_at` is not treated as an approval timestamp. The selected replacement is also locked.
+- If no approved claim remains, clear both `parent_id` and `owner_relation`. Unlinking a secondary claimant leaves the primary owner unchanged. Other approved accounts retain their links and access.
+- Unlink takes precedence over any accompanying approval: write `rejected` once, return that saved row, and do not change account roles or send approval emails. Explicit rejection uses the same replacement rule. Moving a primary claim to pending also removes its primary ownership rather than leaving a non-approved primary link.
+- Replacement relation is taken from the claim's structured relation, falling back to legacy `[parent]`/`[sailor]`/`[other]` note metadata; unknown relation stays null rather than overriding the chosen claimant.
+- Usage, audit logging, and role-change email effects run after commit. Relation-only updates no longer duplicate account-role notices. The unlink confirmation now describes retained access and automatic primary replacement accurately.
+- Added **27 PGlite database-backed regressions**, including saved-response consistency, replacement order/ties, legacy data, missing/moved claims, lock order, unlink/approval precedence, repeated unlink, post-commit effects, and forced owner/profile-write rollback. The test database intentionally omits `heard_about` to cover legacy compatibility.
+
+**Validation (9 October 2026):** the complete suite passed **978/978 tests across 170 files**. The dedicated claim route and transactional suites passed all **31 tests**. TypeScript, project ESLint excluding the unrelated embedded `.claude` worktree, the production build, bundle-budget check, and `git diff --check` all passed. Client JavaScript totals 3,253,179 bytes across 193 chunks; the largest chunk is 241,388 bytes. The build uses the existing no-database fallback on this desktop; no authenticated production mutation test was run.
+
+**Scope and release status:** admin claim updates only; other claim submission/invite endpoints were not refactored. No migration, production data edit, or deployment has been performed for finding 3; the implementation is committed locally.
 
 ### 4. Medium — Production schema differs from the checked-in migration intent
 

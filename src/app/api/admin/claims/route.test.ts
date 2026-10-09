@@ -16,26 +16,26 @@ vi.mock("@/lib/auth", () => ({
   },
 }));
 
-vi.mock("@/db", () => ({
-  db: {
+vi.mock("@/db", () => {
+  const rows = () => Promise.resolve([
+    {
+      id: "claim-1",
+      requesterId: "user-coach",
+      sailorId: "s-1",
+      status: "pending",
+      relation: "parent",
+      role: mocks.profileRole,
+      email: "sailor@example.com",
+      fullName: "May Tan",
+      name: "Ava Tan",
+    },
+  ]);
+  const database = {
     select: () => ({
       from: () => ({
         where: () => ({
-          limit: vi.fn().mockImplementation(() => {
-            return Promise.resolve([
-              {
-                id: "claim-1",
-                requesterId: "user-coach",
-                sailorId: "s-1",
-                status: "pending",
-                relation: "parent",
-                role: mocks.profileRole,
-                email: "sailor@example.com",
-                fullName: "May Tan",
-                name: "Ava Tan",
-              },
-            ]);
-          }),
+          limit: vi.fn().mockImplementation(rows),
+          for: vi.fn().mockImplementation(rows),
         }),
       }),
     }),
@@ -59,8 +59,14 @@ vi.mock("@/db", () => ({
         };
       },
     }),
-  },
-}));
+  };
+  return {
+    db: {
+      ...database,
+      transaction: (work: (tx: typeof database) => Promise<unknown>) => work(database),
+    },
+  };
+});
 
 vi.mock("@/lib/adminChangeLog", () => ({
   logAdminChange: vi.fn().mockResolvedValue(undefined),

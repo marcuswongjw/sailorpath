@@ -19,14 +19,16 @@ export type ClaimRoleNotice = {
  * Coach and superadmin accounts are left unchanged and are not emailed.
  * Returns the notice even when the role string was already correct, so an
  * approval still tells the user.
+ * Pass the caller's transaction to keep the profile write atomic with approval.
  */
 export async function applyClaimAccountRole(
   userId: string,
-  relation: ClaimRelation
+  relation: ClaimRelation,
+  database: Pick<typeof db, "select" | "update"> = db
 ): Promise<ClaimRoleNotice | null> {
   const targetRole = profileRoleFromRelation(relation);
   if (!targetRole) return null;
-  const [prof] = await db
+  const [prof] = await database
     .select({
       role: profiles.role,
       email: profiles.email,
@@ -37,7 +39,7 @@ export async function applyClaimAccountRole(
     .limit(1);
   if (!prof || prof.role === "superadmin" || prof.role === "coach") return null;
   if (prof.role !== targetRole) {
-    await db
+    await database
       .update(profiles)
       .set({ role: targetRole, updatedAt: new Date() })
       .where(eq(profiles.id, userId));
