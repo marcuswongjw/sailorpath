@@ -70,7 +70,7 @@ export default async function HomePage() {
   const totals = await getLandingTotals();
   const stats = [
     { value: "7", label: "Class standings available" },
-    { value: totals.athletes, label: "Athletes tracked" },
+    { value: totals.athletes, label: "sailors" },
     { value: totals.regattas, label: "Regatta results on record" },
     { value: "Reviewed", label: "Imported race results" },
   ] as const;
