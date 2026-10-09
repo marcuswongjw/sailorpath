@@ -1,0 +1,2387 @@
+[
+  {
+    "fleet": "silver",
+    "rank": 1,
+    "name": "Adriel Cheung",
+    "cells": [
+      "Adriel Cheung",
+      "Male",
+      "Constant Wind",
+      "1"
+    ],
+    "result_id": "974ab5dc-8b5a-42da-9338-3383118b87ba",
+    "sailor_id": "3ef3185d-5e0b-4035-9cb2-9cb08a51da38",
+    "existing_name": "Cheung Hei Yat Adriel",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 2,
+    "name": "Lim Rui Xuan Lavene",
+    "cells": [
+      "Lim Rui Xuan Lavene",
+      "Female",
+      "SAFYC",
+      "2"
+    ],
+    "result_id": "f468b1e3-883b-4da4-aec4-773bafa15f14",
+    "sailor_id": "59729500-d864-4394-888d-30e4adda5557",
+    "existing_name": "Lim Rui Xuan Lavene",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 3,
+    "name": "Zachary Low Zhi En",
+    "cells": [
+      "Zachary Low Zhi En",
+      "Male",
+      "SAFYC",
+      "3"
+    ],
+    "result_id": "27af2228-9be2-4fad-99ed-e48cf151aa66",
+    "sailor_id": "4a731554-00dc-4ff3-8a80-86ea66378be8",
+    "existing_name": "Zachary Low Zhi En",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 4,
+    "name": "Joel Ong Han Sheng",
+    "cells": [
+      "Joel Ong Han Sheng",
+      "Male",
+      "Constant Wind",
+      "4"
+    ],
+    "result_id": "12749d66-2e5f-4426-b932-d280923688a1",
+    "sailor_id": "bcd018f4-ae60-4aa5-a6e5-8bee9e468def",
+    "existing_name": "Joel Ong Han Sheng",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 5,
+    "name": "Kate En Rui Bateman",
+    "cells": [
+      "Kate En Rui Bateman",
+      "Female",
+      "Constant Wind",
+      "5"
+    ],
+    "result_id": "45475dd5-90e2-4d7d-88d1-ce715bc096c7",
+    "sailor_id": "86e53347-cbf0-4d9b-bd6f-d769a3a071a7",
+    "existing_name": "Kate En Rui Bateman",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 6,
+    "name": "Shin Lin Chen Rui",
+    "cells": [
+      "Shin Lin Chen Rui",
+      "Male",
+      "SAFYC",
+      "6"
+    ],
+    "result_id": "7593d469-b11b-48a4-b417-fc735eaa1131",
+    "sailor_id": "747fa344-5126-4ba1-a876-470a982620c7",
+    "existing_name": "Shin Lin Chen Rui",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 7,
+    "name": "Russell Tan Jun Quan",
+    "cells": [
+      "Russell Tan Jun Quan",
+      "Male",
+      "PA",
+      "7"
+    ],
+    "result_id": "4c41ba25-037e-4719-a394-7ba74cd5a39a",
+    "sailor_id": "3b076b0c-03cb-4f50-a9c6-70c9a8dba199",
+    "existing_name": "Russell Tan",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 8,
+    "name": "Loh Yi Jie Luke",
+    "cells": [
+      "Loh Yi Jie Luke",
+      "Male",
+      "SAFYC",
+      "8"
+    ],
+    "result_id": "734d3471-54b7-4185-a9b8-71430fec2e88",
+    "sailor_id": "590ce5d7-150a-4a35-8c4b-4516e2284ebc",
+    "existing_name": "Loh Yi Jie Luke",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 9,
+    "name": "Ryo En Hua Bateman",
+    "cells": [
+      "Ryo En Hua Bateman",
+      "Male",
+      "Constant Wind",
+      "9"
+    ],
+    "result_id": "acdfcf67-3e5c-447a-8f7f-36d2aea02e3b",
+    "sailor_id": "43e9a123-4c59-4251-aba0-e9ea5bce0fed",
+    "existing_name": "Ryo En Hua Bateman",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 10,
+    "name": "Mathias Cheow",
+    "cells": [
+      "Mathias Cheow",
+      "Male",
+      "SAFYC",
+      "10"
+    ],
+    "result_id": "368a7f2e-4afe-48ed-8479-1cea9755877a",
+    "sailor_id": "984ea286-15a1-4165-91e1-3d4620032f5c",
+    "existing_name": "Mathias Cheow",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 11,
+    "name": "Olivia Cheong",
+    "cells": [
+      "Olivia Cheong",
+      "Female",
+      "SAFYC",
+      "11"
+    ],
+    "result_id": "eb4d8d84-5d41-4546-9751-a7d4322fc731",
+    "sailor_id": "87729379-5818-422b-a299-6e934d910c63",
+    "existing_name": "Cheong Ting Jia Olivia",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 12,
+    "name": "Chan Qingxuan Joel",
+    "cells": [
+      "Chan Qingxuan Joel",
+      "Male",
+      "Constant Wind",
+      "12"
+    ],
+    "result_id": "5cabbffa-e064-4c74-9a30-6db5731089a4",
+    "sailor_id": "71144565-c5c8-4336-a610-6ad6959cb7a6",
+    "existing_name": "Chan Qingxuan Joel",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 13,
+    "name": "Isla Lee",
+    "cells": [
+      "Isla Lee",
+      "Female",
+      "SAFYC",
+      "13"
+    ],
+    "result_id": "9628a446-542b-4c00-983b-5c07618935aa",
+    "sailor_id": "30aec088-71bd-46a8-b21c-bc634cba3cc6",
+    "existing_name": "Isla Lee Zhi Xi",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 14,
+    "name": "Kai Yen-Yu",
+    "cells": [
+      "Kai Yen-Yu",
+      "Female",
+      "CSC",
+      "14"
+    ],
+    "result_id": "3cb5417f-d488-4b3e-9cff-8d1e8d6a90ec",
+    "sailor_id": "aaa54b70-9643-44b7-bf62-4828b8db3e1e",
+    "existing_name": "Kai Yen-Yu",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 15,
+    "name": "Jamiroquai Tay Kai Nuo",
+    "cells": [
+      "Jamiroquai Tay Kai Nuo",
+      "Male",
+      "Constant Wind",
+      "15"
+    ],
+    "result_id": "a476f283-df8a-4622-96e5-0e456de7f478",
+    "sailor_id": "1b7792af-d337-4ae9-a358-a736d88a8da4",
+    "existing_name": "Jamiroquai Tay Kai Nuo",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 16,
+    "name": "Wong Jing Chen Nicole",
+    "cells": [
+      "Wong Jing Chen Nicole",
+      "Female",
+      "SAFYC",
+      "16"
+    ],
+    "result_id": "59fdb638-9e04-496b-9162-64991ba4046c",
+    "sailor_id": "122fd80b-c96b-43ea-b6b1-8860bc60e3a1",
+    "existing_name": "Nicole Wong Jing Chen",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 17,
+    "name": "Kyle Jeremy Soh Zhi Jun",
+    "cells": [
+      "Kyle Jeremy Soh Zhi Jun",
+      "Male",
+      "SAFYC",
+      "17"
+    ],
+    "result_id": "b96bd411-a208-4149-9341-437052b7fc5d",
+    "sailor_id": "2e6a637e-e182-41c3-b6b9-33a89fb0090e",
+    "existing_name": "Kyle Jeremy Soh Zhi Jun",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 18,
+    "name": "Liu Yunhao",
+    "cells": [
+      "Liu Yunhao",
+      "Male",
+      "Constant Wind",
+      "18"
+    ],
+    "result_id": "2333c461-8160-46d0-ac17-5e730cc17bbe",
+    "sailor_id": "ee024ee9-2089-4ae2-8a4a-aef53b09b741",
+    "existing_name": "Yunhao Liu",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 19,
+    "name": "Kye Tang",
+    "cells": [
+      "Kye Tang",
+      "Male",
+      "Constant Wind",
+      "19"
+    ],
+    "result_id": "0bb58d41-71c5-4f6b-9447-6a1aa8fe24fe",
+    "sailor_id": "3b6b57ca-a94a-43bd-ad12-5488652f7886",
+    "existing_name": "Kye Tang",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 20,
+    "name": "Irwin Yit Kei Fung",
+    "cells": [
+      "Irwin Yit Kei Fung",
+      "Male",
+      "SAFYC",
+      "20"
+    ],
+    "result_id": "7f450dad-6f72-4182-a679-eb247a7b28e5",
+    "sailor_id": "0c460b8b-ad5a-4f07-aa48-009b4b7cb496",
+    "existing_name": "Irwin Yit Kei Fung",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 21,
+    "name": "Liao ZhiTing",
+    "cells": [
+      "Liao ZhiTing",
+      "Male",
+      "SAFYC",
+      "21"
+    ],
+    "result_id": "d5e773d2-63b7-4cbc-946c-b7312414c21f",
+    "sailor_id": "f9138c57-b669-4793-bb7e-0532eb4ad7b3",
+    "existing_name": "Liao ZhiTing",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 22,
+    "name": "Cory Loh Zhi Hang",
+    "cells": [
+      "Cory Loh Zhi Hang",
+      "Male",
+      "SAFYC",
+      "22"
+    ],
+    "result_id": "23bbfe4e-a13d-45d6-b24c-b07535f33c7d",
+    "sailor_id": "349ab29d-e6dc-4f7c-a411-405f440292df",
+    "existing_name": "Cory Loh Zhi Hang",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 23,
+    "name": "Rayson Lee Yin Yi",
+    "cells": [
+      "Rayson Lee Yin Yi",
+      "Male",
+      "SAFYC",
+      "23"
+    ],
+    "result_id": "049ed219-a065-4538-a2c4-f2f4803f1688",
+    "sailor_id": "9ab9e8c2-896a-4d8f-8049-0878e7d210ba",
+    "existing_name": "Rayson Lee Yin Yi",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 24,
+    "name": "Khoo Boo Ming Manfred",
+    "cells": [
+      "Khoo Boo Ming Manfred",
+      "Male",
+      "SAFYC",
+      "24"
+    ],
+    "result_id": "4a4ab71a-0a7b-4095-83e9-a5774898116d",
+    "sailor_id": "969b6bef-7aec-4cae-8178-603c54fb83d8",
+    "existing_name": "Khoo Boo Ming Manfred",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 25,
+    "name": "Cyrus Chiam",
+    "cells": [
+      "Cyrus Chiam",
+      "Male",
+      "SAFYC",
+      "25"
+    ],
+    "result_id": "429098f3-4da2-492e-a088-92c0849ba622",
+    "sailor_id": "b6de2150-187b-405d-bc67-7b6b2479d0c0",
+    "existing_name": "Cyrus Chiam Jing Yi",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 26,
+    "name": "Estelle Yeo Rui En",
+    "cells": [
+      "Estelle Yeo Rui En",
+      "Female",
+      "CSC",
+      "26"
+    ],
+    "result_id": "1aa5722d-85d7-46da-a097-f928a1b648ee",
+    "sailor_id": "ea3e97da-b156-48f8-95dd-8dd29101a707",
+    "existing_name": "Estelle Yeo Rui En",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 27,
+    "name": "Mason Lau (Liu Qifeng)",
+    "cells": [
+      "Mason Lau (Liu Qifeng)",
+      "Male",
+      "Constant Wind",
+      "27"
+    ],
+    "result_id": "3ccac551-2da3-4df2-9152-6b5d1c3cce96",
+    "sailor_id": "11c4de1c-e218-403e-8edc-95570b8980df",
+    "existing_name": "Mason Lau Qifeng",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 28,
+    "name": "Yeo Shi Xi",
+    "cells": [
+      "Yeo Shi Xi",
+      "Male",
+      "SAFYC",
+      "28"
+    ],
+    "result_id": "f41920c7-3ba9-4960-ad0a-78ad6d3cee87",
+    "sailor_id": "ac367a43-9ecc-4a57-a335-ce6c9f5322f5",
+    "existing_name": "Yeo Shi Xi",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 29,
+    "name": "Quintan Rupert Low",
+    "cells": [
+      "Quintan Rupert Low",
+      "Male",
+      "SAFYC",
+      "29"
+    ],
+    "result_id": "3c3f1a3c-e6ee-4238-a0ed-21eef80f4ea8",
+    "sailor_id": "82a0aead-a048-428d-b8f2-bfb2e9eb64f8",
+    "existing_name": "Quintan Rupert Low",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 30,
+    "name": "Fong Luke Tin",
+    "cells": [
+      "Fong Luke Tin",
+      "Male",
+      "Constant Wind",
+      "30"
+    ],
+    "result_id": "5a42fab6-1b89-4726-8d1c-70852a21fcf4",
+    "sailor_id": "6fcfad59-8290-463d-9575-5c28256a5f28",
+    "existing_name": "Fong Luke Tin",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 31,
+    "name": "Tan Abram Kai-Ser",
+    "cells": [
+      "Tan Abram Kai-Ser",
+      "Male",
+      "PA",
+      "31"
+    ],
+    "result_id": "3bd882af-919e-4b9d-a5bf-ea1b8aba62f2",
+    "sailor_id": "5a6902c2-6fa7-4c5a-aa09-9dde546a209a",
+    "existing_name": "Tan Abram Kai-Ser",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 32,
+    "name": "Chiang Zhiyi Aaron",
+    "cells": [
+      "Chiang Zhiyi Aaron",
+      "Male",
+      "Constant Wind",
+      "32"
+    ],
+    "result_id": "91e490f6-0161-4e7f-ac7b-71ed8396e75f",
+    "sailor_id": "165560d0-d029-4580-bc7e-5b7e46cd2b20",
+    "existing_name": "Chiang Zhiyi Aaron",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 33,
+    "name": "Teo Rui Ling",
+    "cells": [
+      "Teo Rui Ling",
+      "Female",
+      "SAFYC",
+      "33"
+    ],
+    "result_id": "b366bdf6-1032-4523-99ae-314117ae458a",
+    "sailor_id": "0210e990-5406-42dc-b0de-e9a9ac7ca272",
+    "existing_name": "Teo Rui Ling",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 34,
+    "name": "Padmaeja Rajakanth",
+    "cells": [
+      "Padmaeja Rajakanth",
+      "Female",
+      "Constant Wind",
+      "34"
+    ],
+    "result_id": "06c295ad-74b3-4558-a065-69fb7ec89004",
+    "sailor_id": "ca9d6a05-61c6-4fd1-ba51-2482ce21e2a6",
+    "existing_name": "Padmaeja Rajakanth",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 35,
+    "name": "Chow Yi Min Yvette",
+    "cells": [
+      "Chow Yi Min Yvette",
+      "Female",
+      "SAFYC",
+      "35"
+    ],
+    "result_id": "38f3e62c-5d67-438f-be71-72783341a5c8",
+    "sailor_id": "8f3409cf-5476-4d8a-89ef-4e0b8b86cfd9",
+    "existing_name": "Chow Yi Min, Yvette",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 36,
+    "name": "Alaric Naidu",
+    "cells": [
+      "Alaric Naidu",
+      "Male",
+      "SAFYC",
+      "36"
+    ],
+    "result_id": "d69d79a7-cf6e-4ca5-9676-662062fd02d2",
+    "sailor_id": "7dd9083b-126c-4574-9154-3e3aa39275f8",
+    "existing_name": "Alaric Shenthil Naidu",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 37,
+    "name": "Kyan Tan Chun Hong",
+    "cells": [
+      "Kyan Tan Chun Hong",
+      "Male",
+      "SAFYC",
+      "37"
+    ],
+    "result_id": "535a4bf6-84e0-4b5a-8146-e3aaac1ab37b",
+    "sailor_id": "60ea1195-0d40-470a-b7c9-4cfa16ac3517",
+    "existing_name": "Kyan Tan Chun Hong",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 38,
+    "name": "Lauren Lim",
+    "cells": [
+      "Lauren Lim",
+      "Female",
+      "SAFYC",
+      "38"
+    ],
+    "result_id": "cb5cc43a-9bda-47bb-9be3-a2498efbb7ad",
+    "sailor_id": "96ee16c3-fbca-4a89-858d-80d73cf078c6",
+    "existing_name": "Lauren Lim",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 39,
+    "name": "Low Xian Zhi Darien",
+    "cells": [
+      "Low Xian Zhi Darien",
+      "Male",
+      "PA",
+      "39"
+    ],
+    "result_id": "158b3ea7-3f49-4049-97b1-e4447f255e5f",
+    "sailor_id": "ec81aa69-653b-4a8d-b1d2-541cd3d04305",
+    "existing_name": "Low Xian Zhi Darien",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 40,
+    "name": "Ng Jun Meng Raynor",
+    "cells": [
+      "Ng Jun Meng Raynor",
+      "Male",
+      "SAFYC",
+      "40"
+    ],
+    "result_id": "b34c2292-db87-4d8a-b9b7-71d9a52fd503",
+    "sailor_id": "942e1755-62ac-48ac-af3f-3cdcffbcc74c",
+    "existing_name": "Ng Jun Meng Raynor",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 41,
+    "name": "Ethan Tan Jing Zhou",
+    "cells": [
+      "Ethan Tan Jing Zhou",
+      "Male",
+      "SAFYC",
+      "41"
+    ],
+    "result_id": "b446f372-93d9-4882-bdfc-bfa6472b1d29",
+    "sailor_id": "b941a8a0-a116-44c9-b339-aec45b5c831a",
+    "existing_name": "Ethan Tan Jing Zhou",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 42,
+    "name": "Joshua Tan Zhi Kai",
+    "cells": [
+      "Joshua Tan Zhi Kai",
+      "Male",
+      "NSC",
+      "42"
+    ],
+    "result_id": "cb028429-778f-4543-83ef-a8c372293e1f",
+    "sailor_id": "35ca0452-cc45-4115-846c-f47377335437",
+    "existing_name": "Joshua Zhi Kai Tan",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 43,
+    "name": "Seah Yong Zhen Denzel",
+    "cells": [
+      "Seah Yong Zhen Denzel",
+      "Male",
+      "SAFYC",
+      "43"
+    ],
+    "result_id": "2aac976f-ce1c-497d-a595-d358d4c21d54",
+    "sailor_id": "3fc96893-9b7d-4c97-9c64-3c7086f077ea",
+    "existing_name": "Seah Yong Zhen Denzel",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 44,
+    "name": "Raymon Li",
+    "cells": [
+      "Raymon Li",
+      "Male",
+      "SAFYC",
+      "44"
+    ],
+    "result_id": "7ed96f1d-4536-40ed-a4d2-fe9cff156ee4",
+    "sailor_id": "343fa243-b938-4b22-9cb4-fc984510e1a1",
+    "existing_name": "Raymon Li",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 45,
+    "name": "Ng Kai Zhe Timothy",
+    "cells": [
+      "Ng Kai Zhe Timothy",
+      "Male",
+      "Constant Wind",
+      "45"
+    ],
+    "result_id": "c7b8bdff-430c-432b-aa14-39e33d44afd6",
+    "sailor_id": "8970d5bb-30d1-48ab-88f2-3003bc0efbfd",
+    "existing_name": "Ng Kai Zhe Timothy",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 46,
+    "name": "Huang Tianyi",
+    "cells": [
+      "Huang Tianyi",
+      "Male",
+      "SAFYC",
+      "46"
+    ],
+    "result_id": "f9ae8d1a-f2a1-49d3-a6d3-9a8c71242d53",
+    "sailor_id": "a5771c8b-efd3-43f6-ba6e-af0151b1438b",
+    "existing_name": "Huang Tianyi",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 47,
+    "name": "Koh Yi Jie Zachary",
+    "cells": [
+      "Koh Yi Jie Zachary",
+      "Male",
+      "PA",
+      "47"
+    ],
+    "result_id": "ba693f67-39d9-49af-98bb-c1367dfd9239",
+    "sailor_id": "a9195d65-970c-4cf5-afcb-3f76a1cc269d",
+    "existing_name": "Koh Yi Jie Zachary",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 48,
+    "name": "Gloria Kwok",
+    "cells": [
+      "Gloria Kwok",
+      "Female",
+      "Constant Wind",
+      "48"
+    ],
+    "result_id": "6049d65f-e55a-4b13-a54c-504e84269589",
+    "sailor_id": "f019c6f2-2e77-42c8-b05d-e907c1779471",
+    "existing_name": "Gloria Kwok Yen Rui",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 49,
+    "name": "Chan Zhi Long Breyven",
+    "cells": [
+      "Chan Zhi Long Breyven",
+      "Male",
+      "SAFYC",
+      "49"
+    ],
+    "result_id": "72a7ffbb-6aa0-437f-8e10-226f93b03511",
+    "sailor_id": "6adfaf38-843b-4af4-b10c-333fa7ed897a",
+    "existing_name": "Breyven Zhi Long Chan",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 50,
+    "name": "Julian Lim",
+    "cells": [
+      "Julian Lim",
+      "Male",
+      "SAFYC",
+      "50"
+    ],
+    "result_id": "3c56d5ab-0046-4b7a-b3bb-0688a8aa6e89",
+    "sailor_id": "02d40dfa-9b2f-48fd-aefa-9d9058e1ed5a",
+    "existing_name": "Julian Lim",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 51,
+    "name": "Meera Srihari",
+    "cells": [
+      "Meera Srihari",
+      "Female",
+      "SAFYC",
+      "51"
+    ],
+    "result_id": "46689d70-542e-4478-a963-d0eb70acb7ef",
+    "sailor_id": "7d04fd25-e8e7-453b-bb27-d5936262b9fd",
+    "existing_name": "Meera Srihari",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 52,
+    "name": "Delia Finn",
+    "cells": [
+      "Delia Finn",
+      "Female",
+      "SAF",
+      "52"
+    ],
+    "result_id": "5c72b756-a50c-45ca-bfcd-fc70c854ec08",
+    "sailor_id": "201998a8-6511-4827-883d-7117e25ea9b8",
+    "existing_name": "Delia FINN",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 53,
+    "name": "Tan Yee Xuen",
+    "cells": [
+      "Tan Yee Xuen",
+      "Female",
+      "SAFYC",
+      "53"
+    ],
+    "result_id": "77548b0f-4b48-410f-91e6-029ebd3ad47e",
+    "sailor_id": "a0084e06-8de6-4b1e-bbb6-4bb5d3918150",
+    "existing_name": "Yee Xuen Tan",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 54,
+    "name": "Zhang Chenrui",
+    "cells": [
+      "Zhang Chenrui",
+      "Male",
+      "SAF",
+      "54"
+    ],
+    "result_id": "2fd25f8a-8679-4d4f-81be-1dfd50a4cd75",
+    "sailor_id": "d11c8a91-f06b-4275-b8be-47315969a68e",
+    "existing_name": "Zhang Chenrui",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 55,
+    "name": "Qi Shan",
+    "cells": [
+      "Qi Shan",
+      "Female",
+      "Constant Wind",
+      "55"
+    ],
+    "result_id": "b903cbdc-f2d0-4541-9651-c2278dc2c7a2",
+    "sailor_id": "1a7d2b71-08c8-4ff7-88ea-de5b56a90c65",
+    "existing_name": "Qi Shan",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 56,
+    "name": "Josef Beucke Moe",
+    "cells": [
+      "Josef Beucke Moe",
+      "Male",
+      "NSC",
+      "56"
+    ],
+    "result_id": "f872bea2-ba7f-4f15-ab12-ed129971e4bc",
+    "sailor_id": "1aa4ff39-e865-4aae-9292-f05c6b85be15",
+    "existing_name": "Josef Beucke Moe",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 57,
+    "name": "Chen Yan Ying (Abby)",
+    "cells": [
+      "Chen Yan Ying (Abby)",
+      "Female",
+      "PA",
+      "57"
+    ],
+    "result_id": "af2939da-b1d7-48b3-aeea-ace81e75a3fa",
+    "sailor_id": "615b7b93-cbf3-4f4f-8fe4-e5ce701ba424",
+    "existing_name": "Abby Yan Ying Chen",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 58,
+    "name": "Goh Yong Chang Hagen",
+    "cells": [
+      "Goh Yong Chang Hagen",
+      "Male",
+      "SAFYC",
+      "58"
+    ],
+    "result_id": "8a32b9e5-8214-4679-9123-7c34ac509346",
+    "sailor_id": "cf534369-41dc-4130-9092-64e6e0117f65",
+    "existing_name": "Hagen Goh Yong Chang",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 59,
+    "name": "Zeldyr Tan Xun",
+    "cells": [
+      "Zeldyr Tan Xun",
+      "Female",
+      "RSYC",
+      "59"
+    ],
+    "result_id": "a63fd16c-2a03-43fb-9d4a-fc13c0b88550",
+    "sailor_id": "5dfe09e8-4963-4999-965b-3bddb10e6a42",
+    "existing_name": "Zeldyr Tan Xun",
+    "exact_match": true
+  },
+  {
+    "fleet": "silver",
+    "rank": 60,
+    "name": "Worawit Jutahkiti",
+    "cells": [
+      "Worawit Jutahkiti",
+      "Male",
+      "Constant Wind",
+      "60"
+    ],
+    "result_id": "8e988037-27d7-4026-947f-c6460f37fc23",
+    "sailor_id": "f8ef1db2-45f8-467f-8c30-02cfe1ce494c",
+    "existing_name": "Worawit Jutahkiti",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 1,
+    "name": "Ethan Chia Han Wei",
+    "cells": [
+      "Ethan Chia Han Wei",
+      "Yellow",
+      "1",
+      "1",
+      "4",
+      "1",
+      "1",
+      "1"
+    ],
+    "result_id": "9f80d031-697a-42a9-9df6-64198918ff0f",
+    "sailor_id": "156283b1-fac6-48ba-a530-bd5a78d77114",
+    "existing_name": "Ethan Chia Han Wei",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 2,
+    "name": "Kum Kok Wei Sean",
+    "cells": [
+      "Kum Kok Wei Sean",
+      "Yellow",
+      "5",
+      "2",
+      "3",
+      "7",
+      "2",
+      "2"
+    ],
+    "result_id": "a02abc83-761f-4371-a3d4-fdb80a7b237a",
+    "sailor_id": "e84ec5f5-02aa-4b5b-889a-edf1eefdbfbf",
+    "existing_name": "Sean Kum Kok Wei",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 3,
+    "name": "Nigel Tan Xu Yuan",
+    "cells": [
+      "Nigel Tan Xu Yuan",
+      "Yellow",
+      "9",
+      "4",
+      "1",
+      "15",
+      "3",
+      "3"
+    ],
+    "result_id": "fa1eb682-9891-4f6f-be09-c8f5eae3e36c",
+    "sailor_id": "ca98c637-aebd-4f38-81c7-80345846c93a",
+    "existing_name": "Nigel Tan Xu Yuan",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 4,
+    "name": "Nia Mehry Zahedi",
+    "cells": [
+      "Nia Mehry Zahedi",
+      "Yellow",
+      "4",
+      "5",
+      "10",
+      "5",
+      "4",
+      "4"
+    ],
+    "result_id": "301e8e54-b1a7-4e59-879a-04ed7bb847bc",
+    "sailor_id": "20af3d01-7d86-4111-bad1-0c2be026e039",
+    "existing_name": "Nia Mehry Zahedi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 5,
+    "name": "Lucas Cao Zhihong",
+    "cells": [
+      "Lucas Cao Zhihong",
+      "Yellow",
+      "3",
+      "7",
+      "2",
+      "12",
+      "5",
+      "5"
+    ],
+    "result_id": "58a0f35c-34ab-4c10-803c-98f628cf26aa",
+    "sailor_id": "537e3303-85f9-4b8f-81f3-90999f53cc95",
+    "existing_name": "Lucas Cao Zhihong",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 6,
+    "name": "Cheung Lap Yan Nathaniel",
+    "cells": [
+      "Cheung Lap Yan Nathaniel",
+      "Yellow",
+      "10",
+      "9",
+      "9",
+      "3",
+      "6",
+      "6"
+    ],
+    "result_id": "0207bd93-19d8-479c-a58e-82ee19c713fe",
+    "sailor_id": "d2117784-0767-4bc7-9137-e7fc13b42df8",
+    "existing_name": "Cheung Lap Yan Nathaniel",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 7,
+    "name": "Lyric Li Yuxuan",
+    "cells": [
+      "Lyric Li Yuxuan",
+      "Yellow",
+      "13",
+      "8",
+      "8",
+      "6",
+      "7",
+      "7"
+    ],
+    "result_id": "5288c54e-effd-4149-9531-375208059007",
+    "sailor_id": "49951b17-f523-4f27-b5a1-b215d311ff3e",
+    "existing_name": "Lyric Li Yuxuan",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 8,
+    "name": "Anya Alessia Zahedi",
+    "cells": [
+      "Anya Alessia Zahedi",
+      "Yellow",
+      "8",
+      "11",
+      "5",
+      "8",
+      "8",
+      "8"
+    ],
+    "result_id": "65c4a85b-6d8a-4e56-a43c-e158b0ccc329",
+    "sailor_id": "1acfd3b9-1a1e-4312-8037-0b02e57622f5",
+    "existing_name": "Anya Alessia Zahedi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 9,
+    "name": "Pee Teck Woon",
+    "cells": [
+      "Pee Teck Woon",
+      "Yellow",
+      "7",
+      "6",
+      "OCS",
+      "4",
+      "9",
+      "9"
+    ],
+    "result_id": "8842a79d-fdf1-46c1-ac4f-21efecca5462",
+    "sailor_id": "4c24ef37-0d0c-4d89-aba8-b60b619eabf0",
+    "existing_name": "Pee Teck Woon",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 10,
+    "name": "Wai Zhi Tong",
+    "cells": [
+      "Wai Zhi Tong",
+      "Yellow",
+      "12",
+      "10",
+      "7",
+      "9",
+      "10",
+      "10"
+    ],
+    "result_id": "f16987dc-0aaa-46b6-a730-bd32d69fa9af",
+    "sailor_id": "903d2cf9-2099-4411-8cf0-e6074ac2c369",
+    "existing_name": "Wai Zhi Tong",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 11,
+    "name": "Zeph Wan",
+    "cells": [
+      "Zeph Wan",
+      "Yellow",
+      "11",
+      "3",
+      "11",
+      "14",
+      "11",
+      "11"
+    ],
+    "result_id": "58ae2bb8-82b6-4e8a-9f64-93a5c53ec50e",
+    "sailor_id": "e178e8d4-02b8-470f-9235-4a451f5eb31a",
+    "existing_name": "Zeph Wan",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 12,
+    "name": "Mikaela Rae Ng",
+    "cells": [
+      "Mikaela Rae Ng",
+      "Yellow",
+      "6",
+      "12",
+      "OCS",
+      "2",
+      "12",
+      "12"
+    ],
+    "result_id": "801b8c34-7d94-42b9-95b4-110b4bba33c4",
+    "sailor_id": "cf6ab6b5-6792-4493-b4ff-4dff86acd6df",
+    "existing_name": "Mikaela Rae Ng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 13,
+    "name": "Ethan Lee",
+    "cells": [
+      "Ethan Lee",
+      "Yellow",
+      "2",
+      "OCS",
+      "6",
+      "13",
+      "13",
+      "13"
+    ],
+    "result_id": "ec94642a-708d-4c40-b600-9bdd296c6b00",
+    "sailor_id": "c4e262cc-1d16-4e95-90a0-c168b25c2de1",
+    "existing_name": "Ethan Lee",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 14,
+    "name": "Mika Tew",
+    "cells": [
+      "Mika Tew",
+      "Yellow",
+      "14",
+      "13",
+      "12",
+      "10",
+      "14",
+      "14"
+    ],
+    "result_id": "9fc8278b-5fc2-4ea8-8c51-77f23efe46f1",
+    "sailor_id": "bf1de4cb-9dd4-426d-a9e1-a669f7e091d9",
+    "existing_name": "Mika Tew",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 15,
+    "name": "Kevin Ho Jun Yi",
+    "cells": [
+      "Kevin Ho Jun Yi",
+      "Yellow",
+      "15",
+      "OCS",
+      "13",
+      "11",
+      "15",
+      "15"
+    ],
+    "result_id": "82d5a80e-ca2c-462d-b0ee-aba9734f6332",
+    "sailor_id": "3310f5f2-8b8e-4f71-9ad7-2e03f1202cd9",
+    "existing_name": "Kevin Ho Jun Yi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 16,
+    "name": "Damien Huang",
+    "cells": [
+      "Damien Huang",
+      "Blue",
+      "8",
+      "4",
+      "16"
+    ],
+    "result_id": "172aa5b6-1867-4494-b148-cfeee1ed1501",
+    "sailor_id": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+    "existing_name": "Damien Huang",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 17,
+    "name": "Nathaniel Kaiden Ng",
+    "cells": [
+      "Nathaniel Kaiden Ng",
+      "Blue",
+      "4",
+      "5",
+      "17"
+    ],
+    "result_id": "577c220f-4209-4648-ac50-25ce21af4cc9",
+    "sailor_id": "85b13b47-1e45-462b-b214-870e38a706c9",
+    "existing_name": "Nathaniel Kaiden Ng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 18,
+    "name": "Alyssa Wong Li Lin",
+    "cells": [
+      "Alyssa Wong Li Lin",
+      "Blue",
+      "9",
+      "6",
+      "18"
+    ],
+    "result_id": "8ce3b9dd-b46a-4ba9-9973-5f1b29ffd056",
+    "sailor_id": "bd4018cd-2bd7-4a5d-bf15-5ea37f71ef21",
+    "existing_name": "Alyssa Wong Li Lin",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 19,
+    "name": "Tham Yan Shuang Ashlea",
+    "cells": [
+      "Tham Yan Shuang Ashlea",
+      "Blue",
+      "7",
+      "7",
+      "19"
+    ],
+    "result_id": "54e2e5f8-c8f2-472b-9267-1ca4c8875145",
+    "sailor_id": "90b36217-ca95-4a90-b8f3-a502537842ab",
+    "existing_name": "Ashlea Tham Yan Shuang",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 20,
+    "name": "Rahul Rajakanth",
+    "cells": [
+      "Rahul Rajakanth",
+      "Blue",
+      "2",
+      "8",
+      "20"
+    ],
+    "result_id": "3a14b309-1170-4d12-8c03-24b4f2041947",
+    "sailor_id": "bcfa511b-8ab9-427f-94b6-cad270e006a3",
+    "existing_name": "Rahul Rajakanth",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 21,
+    "name": "Germaine Sim",
+    "cells": [
+      "Germaine Sim",
+      "Blue",
+      "12",
+      "9",
+      "21"
+    ],
+    "result_id": "b1c69854-4a79-4a17-803e-61332172f3c4",
+    "sailor_id": "511e15d5-2823-47e3-b915-7e398bcc1ae8",
+    "existing_name": "Germaine Sim",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 22,
+    "name": "Jaye Low Xi En",
+    "cells": [
+      "Jaye Low Xi En",
+      "Blue",
+      "10",
+      "10",
+      "22"
+    ],
+    "result_id": "7714903f-5de4-4252-a5ab-b86a96200610",
+    "sailor_id": "0d971067-83db-4e61-b1d4-c4122e74d33b",
+    "existing_name": "Jaye Low Xi En",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 23,
+    "name": "Tham Yan Lin Ashlyn",
+    "cells": [
+      "Tham Yan Lin Ashlyn",
+      "Blue",
+      "1",
+      "11",
+      "23"
+    ],
+    "result_id": "7edf8089-2a8c-4629-8dcd-049874fe0250",
+    "sailor_id": "f6fdc628-334e-4b4c-80d0-137741381922",
+    "existing_name": "Ashlyn Tham Yan Lin",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 24,
+    "name": "Kate En Rui Bateman",
+    "cells": [
+      "Kate En Rui Bateman",
+      "Blue",
+      "11",
+      "12",
+      "24"
+    ],
+    "result_id": "bea551d4-81b0-4b06-aef6-08839dbdd85e",
+    "sailor_id": "86e53347-cbf0-4d9b-bd6f-d769a3a071a7",
+    "existing_name": "Kate En Rui Bateman",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 25,
+    "name": "Desiree Lee Yuet Chi",
+    "cells": [
+      "Desiree Lee Yuet Chi",
+      "Red",
+      "4",
+      "1",
+      "25"
+    ],
+    "result_id": "3f96b051-27cc-465c-b0c8-9f12b59e953f",
+    "sailor_id": "7a1b19c2-78a8-414c-8acf-a6dc6f7fb617",
+    "existing_name": "Desiree Lee Yuet Chi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 26,
+    "name": "Tan Herng Yee",
+    "cells": [
+      "Tan Herng Yee",
+      "Red",
+      "2",
+      "2",
+      "26"
+    ],
+    "result_id": "c9de8068-017a-46ae-98db-29c109636632",
+    "sailor_id": "2bef1064-0ac4-4ff0-80e0-c3d6e96979e7",
+    "existing_name": "Tan Herng Yee",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 27,
+    "name": "Dylan Goh Yue Teng",
+    "cells": [
+      "Dylan Goh Yue Teng",
+      "Red",
+      "3",
+      "3",
+      "27"
+    ],
+    "result_id": "29c4557e-5e22-4513-a8e1-cc07e23edd85",
+    "sailor_id": "4119a66c-a149-446c-ac98-719ce8fe1b1b",
+    "existing_name": "Dylan Yue Teng Goh",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 28,
+    "name": "Charles Kong",
+    "cells": [
+      "Charles Kong",
+      "Red",
+      "5",
+      "4",
+      "28"
+    ],
+    "result_id": "ef0f9dd7-c6e6-40bb-b288-ef875849fc65",
+    "sailor_id": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+    "existing_name": "Charles Kong Shing Chak",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 29,
+    "name": "Kayden Tan Yi Kai",
+    "cells": [
+      "Kayden Tan Yi Kai",
+      "Red",
+      "7",
+      "5",
+      "29"
+    ],
+    "result_id": "16c12763-7f22-4551-b39f-fa84082fa529",
+    "sailor_id": "920db738-dded-439f-872f-fe1327ca123d",
+    "existing_name": "Tan Yi Kai Kayden",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 30,
+    "name": "Yong Heng Yi",
+    "cells": [
+      "Yong Heng Yi",
+      "Red",
+      "6",
+      "6",
+      "30"
+    ],
+    "result_id": "b5c6fa25-93f6-40c0-8e0e-fd26d6773480",
+    "sailor_id": "6d0f89fb-9212-4992-bb80-7f5e79b6804b",
+    "existing_name": "Yong Heng Yi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 31,
+    "name": "Elliot Goh Yik Khai",
+    "cells": [
+      "Elliot Goh Yik Khai",
+      "Red",
+      "1",
+      "7",
+      "31"
+    ],
+    "result_id": "5a758d4d-f974-4e81-9091-5a0a7f238a34",
+    "sailor_id": "f5cb0571-0e18-425d-a967-fc09df6bf42d",
+    "existing_name": "Elliot Goh",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 32,
+    "name": "Chen Huan Heng (Gemma)",
+    "cells": [
+      "Chen Huan Heng (Gemma)",
+      "Red",
+      "10",
+      "8",
+      "32"
+    ],
+    "result_id": "7d165b84-acb4-4eb7-84a7-12f482f8732b",
+    "sailor_id": "688cc8ae-873e-40a3-9bc4-7d05a496994a",
+    "existing_name": "Gemma Chen Huang Heng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 33,
+    "name": "Mohamed Mikail Bin Mohamed Shahrom",
+    "cells": [
+      "Mohamed Mikail Bin Mohamed Shahrom",
+      "Red",
+      "9",
+      "9",
+      "33"
+    ],
+    "result_id": "5c916aa1-ded9-40a0-8fe2-a2fbfc65c560",
+    "sailor_id": "d5e7f064-9541-43c7-99ae-2e29f6bf61ba",
+    "existing_name": "Mohamed Mikail Bin Mohamed Shahrom",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 34,
+    "name": "Tong Xuan Ya",
+    "cells": [
+      "Tong Xuan Ya",
+      "Red",
+      "12",
+      "10",
+      "34"
+    ],
+    "result_id": "334281c2-a0b0-46ef-bcce-3b04f50c3f27",
+    "sailor_id": "f8a52951-c0d1-48ea-ab43-e6a8d02d5e71",
+    "existing_name": "Tong Xuan Ya",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 35,
+    "name": "Kaelyn Dayna Soh Zhi Yi",
+    "cells": [
+      "Kaelyn Dayna Soh Zhi Yi",
+      "Red",
+      "8",
+      "11",
+      "35"
+    ],
+    "result_id": "7651820d-0c64-4298-bf2d-63f599a07a5b",
+    "sailor_id": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+    "existing_name": "Kaelyn Dayna Soh Zhi Yi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 36,
+    "name": "Elijah Ong En Ze",
+    "cells": [
+      "Elijah Ong En Ze",
+      "Red",
+      "11",
+      "12",
+      "36"
+    ],
+    "result_id": "77ec45bf-cec9-45fc-a402-c6288d51c5f7",
+    "sailor_id": "20a011f0-320f-4c70-86e4-660de7a7438e",
+    "existing_name": "Elijah Ong",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 37,
+    "name": "Zaid Mohamed Noordeen Bin Jaffar Sadik",
+    "cells": [
+      "Zaid Mohamed Noordeen Bin Jaffar Sadik",
+      "Green",
+      "9",
+      "1",
+      "37"
+    ],
+    "result_id": "5b77e09f-90ad-43b1-8ed3-531caed66670",
+    "sailor_id": "a5abe9bf-2015-4885-b144-34a9c5d00c4e",
+    "existing_name": "Zaid Mohd Noordeen Bin Jaffar Sadik",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 38,
+    "name": "Kram Chantarawinij",
+    "cells": [
+      "Kram Chantarawinij",
+      "Green",
+      "12",
+      "2",
+      "38"
+    ],
+    "result_id": "e9cf6339-1f32-4571-b3c6-fd1db7d38575",
+    "sailor_id": "2faf8eb3-aabb-4616-bc87-cea77c033f8c",
+    "existing_name": "Kram Chantarawinij",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 39,
+    "name": "Jairus Teo Xin Jie",
+    "cells": [
+      "Jairus Teo Xin Jie",
+      "Green",
+      "8",
+      "3",
+      "39"
+    ],
+    "result_id": "779f7669-da62-4ba5-ba12-4fc9373a9dee",
+    "sailor_id": "97ef7d2f-9b92-4750-94d4-af96e3d7b3a8",
+    "existing_name": "Jairus Teo Xin Jie",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 40,
+    "name": "Gerome Sim",
+    "cells": [
+      "Gerome Sim",
+      "Green",
+      "5",
+      "4",
+      "40"
+    ],
+    "result_id": "3d62ffca-4280-480d-9722-fed1625ba5ea",
+    "sailor_id": "2ff98601-d8f0-49f2-a643-754b2a6cea8a",
+    "existing_name": "Gerome Sim",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 41,
+    "name": "Jeremiah Ong Rui Feng",
+    "cells": [
+      "Jeremiah Ong Rui Feng",
+      "Green",
+      "10",
+      "5",
+      "41"
+    ],
+    "result_id": "90a59a56-76c0-4bb0-be81-b26bd71c050c",
+    "sailor_id": "7da044cf-8d59-4547-84a7-05d5a737f8e2",
+    "existing_name": "Jeremiah Ong Rui Feng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 42,
+    "name": "Joseph Tan Kia Guan",
+    "cells": [
+      "Joseph Tan Kia Guan",
+      "Green",
+      "3",
+      "6",
+      "42"
+    ],
+    "result_id": "9d2a08f4-8746-41bd-95cc-3d2bb0a7f311",
+    "sailor_id": "8f5ac318-d957-404f-b6e4-fc6802dd7943",
+    "existing_name": "Joseph Kia Guan Tan",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 43,
+    "name": "Jonas Tan Kia Jeng",
+    "cells": [
+      "Jonas Tan Kia Jeng",
+      "Green",
+      "6",
+      "7",
+      "43"
+    ],
+    "result_id": "dfd23dbc-3384-478d-a1b9-56b3fc1c7eb0",
+    "sailor_id": "eb832e1f-2644-4453-9089-1598544bf217",
+    "existing_name": "Jonas Tan Kia Jeng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 44,
+    "name": "Julien Christian Petracco",
+    "cells": [
+      "Julien Christian Petracco",
+      "Green",
+      "1",
+      "8",
+      "44"
+    ],
+    "result_id": "6fd5838c-7ae9-4868-8524-8b117a4a054a",
+    "sailor_id": "266451eb-c8e3-4485-9e81-bcf4cff922d9",
+    "existing_name": "Julien Christian Petracco",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 45,
+    "name": "Callum Wong Joon Thang",
+    "cells": [
+      "Callum Wong Joon Thang",
+      "Green",
+      "4",
+      "9",
+      "45"
+    ],
+    "result_id": "6e955e6a-1e2d-48c6-aabd-2c7f5d87a774",
+    "sailor_id": "a80d6ed2-6009-4b3d-9589-5f7ac6414a08",
+    "existing_name": "Callum Wong Joon Thang",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 46,
+    "name": "Ethan Low Zhi Ren",
+    "cells": [
+      "Ethan Low Zhi Ren",
+      "Green",
+      "11",
+      "10",
+      "46"
+    ],
+    "result_id": "77a86bc2-66d7-4fe1-bca4-fc41a32596e7",
+    "sailor_id": "5439be9a-9c0f-455f-80e5-9ea30658aa2e",
+    "existing_name": "Ethan Low Zhi Ren",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 47,
+    "name": "Joash Tan Jing En",
+    "cells": [
+      "Joash Tan Jing En",
+      "Green",
+      "7",
+      "11",
+      "47"
+    ],
+    "result_id": "9238573b-a169-45ab-83ab-b3493cb0ade7",
+    "sailor_id": "5b7d75f5-3786-41de-81a1-76bbba1869e9",
+    "existing_name": "Joash Tan Jing En",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 48,
+    "name": "Chew Bo Le Deklen",
+    "cells": [
+      "Chew Bo Le Deklen",
+      "Green",
+      "2",
+      "12",
+      "48"
+    ],
+    "result_id": "889698db-c143-416c-a4fb-fcb646cab157",
+    "sailor_id": "763ad94d-2fe7-443f-8ed8-6be06d180d08",
+    "existing_name": "Deklen Chew",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 49,
+    "name": "Lim Yuk Jun",
+    "cells": [
+      "Lim Yuk Jun",
+      "Orange",
+      "2",
+      "1",
+      "49"
+    ],
+    "result_id": "e1b39716-b074-4ec6-8ca5-7d436d42f6dc",
+    "sailor_id": "26414c39-ffe4-417d-aabc-a577d6355fd5",
+    "existing_name": "Lim Yuk Jun",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 50,
+    "name": "Lim Rui Kai Lucas",
+    "cells": [
+      "Lim Rui Kai Lucas",
+      "Orange",
+      "5",
+      "2",
+      "50"
+    ],
+    "result_id": "34d61ea9-dc3b-4a1c-88cc-937271826068",
+    "sailor_id": "25404662-9da1-43a2-8608-9a7e82e40235",
+    "existing_name": "Lim Rui Kai, Lucas",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 51,
+    "name": "Rupert Chang",
+    "cells": [
+      "Rupert Chang",
+      "Orange",
+      "4",
+      "3",
+      "51"
+    ],
+    "result_id": "97ebaeb7-489c-4624-b8fc-bf119b44eccf",
+    "sailor_id": "43daf9fb-da6e-46d9-b1d3-5ad31f3ecde2",
+    "existing_name": "Rupert Kije Chang Shanpng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 52,
+    "name": "Edrei Ong En Xu",
+    "cells": [
+      "Edrei Ong En Xu",
+      "Orange",
+      "8",
+      "4",
+      "52"
+    ],
+    "result_id": "e5890ecc-169a-495c-9ce2-e0760d525673",
+    "sailor_id": "cc440855-238a-49c6-972b-c5dee8cc586f",
+    "existing_name": "Edrei Ong En Xu",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 53,
+    "name": "Yeh Zi Yu Jade",
+    "cells": [
+      "Yeh Zi Yu Jade",
+      "Orange",
+      "12",
+      "5",
+      "53"
+    ],
+    "result_id": "8e9ef5ad-9157-4ccc-a288-98c634eccc11",
+    "sailor_id": "b644dd47-331b-4452-be98-e4b8815c4186",
+    "existing_name": "Jade Yeh Zi Yu",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 54,
+    "name": "Ryo En Hua Bateman",
+    "cells": [
+      "Ryo En Hua Bateman",
+      "Orange",
+      "1",
+      "6",
+      "54"
+    ],
+    "result_id": "eac64aac-3858-411b-9143-63859ac36ba1",
+    "sailor_id": "43e9a123-4c59-4251-aba0-e9ea5bce0fed",
+    "existing_name": "Ryo En Hua Bateman",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 55,
+    "name": "Jared Liew Soon Kit",
+    "cells": [
+      "Jared Liew Soon Kit",
+      "Orange",
+      "9",
+      "7",
+      "55"
+    ],
+    "result_id": "832a5993-f900-4b57-b27c-635b1449b295",
+    "sailor_id": "85114e8d-2560-414e-a70d-f748a087922d",
+    "existing_name": "Jared Soon Kit Liew",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 56,
+    "name": "Liao ZhiTing",
+    "cells": [
+      "Liao ZhiTing",
+      "Orange",
+      "10",
+      "8",
+      "56"
+    ],
+    "result_id": "50e2f2f3-5534-4b36-a9fc-28acadc54ee9",
+    "sailor_id": "f9138c57-b669-4793-bb7e-0532eb4ad7b3",
+    "existing_name": "Liao ZhiTing",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 57,
+    "name": "Zephyr Tan Wen",
+    "cells": [
+      "Zephyr Tan Wen",
+      "Orange",
+      "6",
+      "9",
+      "57"
+    ],
+    "result_id": "45f60b6b-770a-4c74-a3c9-3430f8fc718f",
+    "sailor_id": "f953f351-0155-458f-b712-37349e8dba07",
+    "existing_name": "Zephyr Tan Wen",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 58,
+    "name": "Cecilia Kong",
+    "cells": [
+      "Cecilia Kong",
+      "Orange",
+      "11",
+      "10",
+      "58"
+    ],
+    "result_id": "00b2ec07-8a47-4e1c-aba8-6b84d8d674e4",
+    "sailor_id": "e4ec252a-fee9-40d0-9c1b-5145a55b800c",
+    "existing_name": "Kong Sze Sen Cecilia",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 59,
+    "name": "Joash Kok Jit Yin",
+    "cells": [
+      "Joash Kok Jit Yin",
+      "Orange",
+      "3",
+      "11",
+      "59"
+    ],
+    "result_id": "c138139b-b89e-4a8c-86b6-f010dcc43f40",
+    "sailor_id": "80935e23-2023-46f7-91a8-deabb84e5aae",
+    "existing_name": "Joash Kok Jit Yin",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 60,
+    "name": "Lin Chen Rui Shin",
+    "cells": [
+      "Lin Chen Rui Shin",
+      "Orange",
+      "7",
+      "12",
+      "60"
+    ],
+    "result_id": "774f6eb4-4b1f-4914-9218-d8302d958926",
+    "sailor_id": "747fa344-5126-4ba1-a876-470a982620c7",
+    "existing_name": "Shin Lin Chen Rui",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 61,
+    "name": "Cheung Hei Yat Adriel",
+    "cells": [
+      "Cheung Hei Yat Adriel",
+      "Pink",
+      "7",
+      "1",
+      "61"
+    ],
+    "result_id": "5accba79-896f-482c-96c2-9b8c7f281832",
+    "sailor_id": "3ef3185d-5e0b-4035-9cb2-9cb08a51da38",
+    "existing_name": "Cheung Hei Yat Adriel",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 62,
+    "name": "Yeh Zi Ning Kate",
+    "cells": [
+      "Yeh Zi Ning Kate",
+      "Pink",
+      "1",
+      "2",
+      "62"
+    ],
+    "result_id": "62dcc9d3-9fa0-44e2-b80e-e25cdb76034a",
+    "sailor_id": "fad31990-f21e-4cc5-948c-0708b8e6a4eb",
+    "existing_name": "Kate Yeh Zi Ning",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 63,
+    "name": "Darian Huang",
+    "cells": [
+      "Darian Huang",
+      "Pink",
+      "11",
+      "3",
+      "63"
+    ],
+    "result_id": "ed66d58e-5d03-4f1c-b5b8-632295238755",
+    "sailor_id": "bd38a1f4-5a06-4b4d-a92c-c73d51266b6c",
+    "existing_name": "Darian Huang",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 64,
+    "name": "Siti Raidah Binte Mohd Airudin",
+    "cells": [
+      "Siti Raidah Binte Mohd Airudin",
+      "Pink",
+      "12",
+      "4",
+      "64"
+    ],
+    "result_id": "5d2ee640-921e-4a88-9305-12076a57a278",
+    "sailor_id": "1b1b2689-e69d-4f29-84f2-71ce2b5dd7d2",
+    "existing_name": "Siti Raidah Binte Mohd Airudin",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 65,
+    "name": "Eugene Tan Yi Ze",
+    "cells": [
+      "Eugene Tan Yi Ze",
+      "Pink",
+      "5",
+      "5",
+      "65"
+    ],
+    "result_id": "14afa5ff-283b-4f76-b7dd-31ddef47b177",
+    "sailor_id": "dade0eb7-d235-412a-8d1a-3829a4849353",
+    "existing_name": "Eugene Tan Yi Ze",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 66,
+    "name": "Caleb Cao Zhixuan",
+    "cells": [
+      "Caleb Cao Zhixuan",
+      "Pink",
+      "8",
+      "6",
+      "66"
+    ],
+    "result_id": "7c07558e-b236-4893-9b37-0471412591d9",
+    "sailor_id": "1308ee47-a24a-4248-8040-427a48391187",
+    "existing_name": "Caleb Cao Zhixuan",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 67,
+    "name": "Lucien Gan Swee Iok",
+    "cells": [
+      "Lucien Gan Swee Iok",
+      "Pink",
+      "9",
+      "7",
+      "67"
+    ],
+    "result_id": "6650d88b-38af-4b54-a997-ea8a05578687",
+    "sailor_id": "c269a5f9-6b34-4ed7-a5bd-b1d956d357aa",
+    "existing_name": "Lucien Gan Swee Lok",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 68,
+    "name": "Loh Yi Jie Luke",
+    "cells": [
+      "Loh Yi Jie Luke",
+      "Pink",
+      "6",
+      "8",
+      "68"
+    ],
+    "result_id": "11ce23f9-7459-47c2-8b64-07cd487393ab",
+    "sailor_id": "590ce5d7-150a-4a35-8c4b-4516e2284ebc",
+    "existing_name": "Loh Yi Jie Luke",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 69,
+    "name": "Joshua Khoo Zhuo Xi",
+    "cells": [
+      "Joshua Khoo Zhuo Xi",
+      "Pink",
+      "10",
+      "9",
+      "69"
+    ],
+    "result_id": "eb1e2556-5741-4540-becb-b4b8c29f0a56",
+    "sailor_id": "3e820fe0-966e-4b57-b540-aaaca3b8688e",
+    "existing_name": "Joshua Khoo Zhuo Xi",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 70,
+    "name": "Ong Han Sheng Joel",
+    "cells": [
+      "Ong Han Sheng Joel",
+      "Pink",
+      "2",
+      "10",
+      "70"
+    ],
+    "result_id": "b3d40676-20d9-4dc3-8285-844954ff591b",
+    "sailor_id": "bcd018f4-ae60-4aa5-a6e5-8bee9e468def",
+    "existing_name": "Joel Ong Han Sheng",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 71,
+    "name": "Low Zhi En Zachary",
+    "cells": [
+      "Low Zhi En Zachary",
+      "Pink",
+      "4",
+      "11",
+      "71"
+    ],
+    "result_id": "1d69423a-8308-4c6e-a7bf-6f332b92bf93",
+    "sailor_id": "4a731554-00dc-4ff3-8a80-86ea66378be8",
+    "existing_name": "Zachary Low Zhi En",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 72,
+    "name": "Russell Xavier Quek",
+    "cells": [
+      "Russell Xavier Quek",
+      "Pink",
+      "3",
+      "DNC",
+      "72"
+    ],
+    "result_id": "c47990c9-3089-491d-bf28-01e03695b13f",
+    "sailor_id": "19971e93-836b-40bc-b75d-7720eb3a0ba7",
+    "existing_name": "Russell Xavier Quek",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 73,
+    "name": "Paolo Gagliardi La Gala",
+    "cells": [
+      "Paolo Gagliardi La Gala",
+      "White",
+      "1",
+      "1",
+      "73"
+    ],
+    "result_id": "7213aa35-7c54-4e03-9310-f79fd8c83e04",
+    "sailor_id": "95d69118-4278-40a6-9e2e-aa029fb4746d",
+    "existing_name": "Paolo Gagliardi La Gala",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 74,
+    "name": "Jude Nathan Wong",
+    "cells": [
+      "Jude Nathan Wong",
+      "White",
+      "4",
+      "2",
+      "74"
+    ],
+    "result_id": "1a1d33a9-de4b-4993-b1ed-ad5e80694832",
+    "sailor_id": "0ce20c93-5ef1-4f61-a6ee-a3a7eacc5d9a",
+    "existing_name": "Jude Nathan Wong",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 75,
+    "name": "Darius Goh Yue Siang",
+    "cells": [
+      "Darius Goh Yue Siang",
+      "White",
+      "2",
+      "3",
+      "75"
+    ],
+    "result_id": "590266c1-50ef-4ce4-87c9-88419268e7b6",
+    "sailor_id": "f827bb8b-4221-45d5-83f3-b8bb043e2a7d",
+    "existing_name": "Darius Goh Yue Siang",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 76,
+    "name": "Cheow Mathias",
+    "cells": [
+      "Cheow Mathias",
+      "White",
+      "6",
+      "4",
+      "76"
+    ],
+    "result_id": "d31b22a7-3fd3-4152-8fcf-dcbafd24bb1f",
+    "sailor_id": "984ea286-15a1-4165-91e1-3d4620032f5c",
+    "existing_name": "Mathias Cheow",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 77,
+    "name": "Kai Yen-Yu",
+    "cells": [
+      "Kai Yen-Yu",
+      "White",
+      "9",
+      "5",
+      "77"
+    ],
+    "result_id": "b437d895-8ff3-4a71-9387-b052f8a2820d",
+    "sailor_id": "aaa54b70-9643-44b7-bf62-4828b8db3e1e",
+    "existing_name": "Kai Yen-Yu",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 78,
+    "name": "Tan Jun Quan Russell",
+    "cells": [
+      "Tan Jun Quan Russell",
+      "White",
+      "5",
+      "6",
+      "78"
+    ],
+    "result_id": "76693052-8e98-499e-9b23-15973e2b2532",
+    "sailor_id": "3b076b0c-03cb-4f50-a9c6-70c9a8dba199",
+    "existing_name": "Russell Tan",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 79,
+    "name": "Cheong Ting Jia Olivia",
+    "cells": [
+      "Cheong Ting Jia Olivia",
+      "White",
+      "3",
+      "7",
+      "79"
+    ],
+    "result_id": "0daa2ca9-5b61-4afb-b29b-f4b444492907",
+    "sailor_id": "87729379-5818-422b-a299-6e934d910c63",
+    "existing_name": "Cheong Ting Jia Olivia",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 80,
+    "name": "Jedd Lam Zhi Hao",
+    "cells": [
+      "Jedd Lam Zhi Hao",
+      "White",
+      "8",
+      "8",
+      "80"
+    ],
+    "result_id": "b3febbb4-b963-4c60-b391-4786ea82065a",
+    "sailor_id": "c5cabcd3-8962-4c14-aa93-f8b754908fc0",
+    "existing_name": "Jedd Lam Zhi Hao",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 81,
+    "name": "Khoo Zhuo Le Joel",
+    "cells": [
+      "Khoo Zhuo Le Joel",
+      "White",
+      "12",
+      "9",
+      "81"
+    ],
+    "result_id": "294f7b9f-e441-4257-8386-5aff1a085f6f",
+    "sailor_id": "632dc3e7-4e51-4855-b14d-0454d5a09701",
+    "existing_name": "Joel Khoo Zhuo Le",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 82,
+    "name": "Tan Kai En, Joel",
+    "cells": [
+      "Tan Kai En, Joel",
+      "White",
+      "7",
+      "10",
+      "82"
+    ],
+    "result_id": "cecdfaae-cbfb-4480-a771-68670a8b4f8e",
+    "sailor_id": "79c4b615-7fb3-4c94-81f9-a962cf28d31e",
+    "existing_name": "Tan Kai En Joel",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 83,
+    "name": "Wong Jing Chen Nicole",
+    "cells": [
+      "Wong Jing Chen Nicole",
+      "White",
+      "10",
+      "11",
+      "83"
+    ],
+    "result_id": "f1e3b55f-68d4-4cac-9d28-6cfeed0db4cb",
+    "sailor_id": "122fd80b-c96b-43ea-b6b1-8860bc60e3a1",
+    "existing_name": "Nicole Wong Jing Chen",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 84,
+    "name": "John Raphael Lim",
+    "cells": [
+      "John Raphael Lim",
+      "White",
+      "11",
+      "12",
+      "84"
+    ],
+    "result_id": "ec943f8c-db1f-4160-b5ab-98d05ab43032",
+    "sailor_id": "6bc22d30-b06a-4e64-86a9-f4cb99535f33",
+    "existing_name": "John Raphael Lim",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 85,
+    "name": "Lim Yuk Pin",
+    "cells": [
+      "Lim Yuk Pin",
+      "Blue",
+      "1",
+      "1",
+      "85"
+    ],
+    "result_id": "575ea6e2-654e-462f-af91-5747133fbe98",
+    "sailor_id": "f1847f7f-73ff-44eb-8b43-c3d42eac459a",
+    "existing_name": "Lim Yuk Pin",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 86,
+    "name": "Soh Zhi Jun Jeremy Kyle",
+    "cells": [
+      "Soh Zhi Jun Jeremy Kyle",
+      "Blue",
+      "2",
+      "2",
+      "86"
+    ],
+    "result_id": "932dd278-5e6e-4f60-8268-9936f7316afc",
+    "sailor_id": "2e6a637e-e182-41c3-b6b9-33a89fb0090e",
+    "existing_name": "Kyle Jeremy Soh Zhi Jun",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 87,
+    "name": "Rachel Lim Qian Hui",
+    "cells": [
+      "Rachel Lim Qian Hui",
+      "Blue",
+      "4",
+      "3",
+      "87"
+    ],
+    "result_id": "9f5a3ecc-eece-4576-a797-a7de2f687edf",
+    "sailor_id": "122e6875-e9e7-4ea3-9989-8049f67f373e",
+    "existing_name": "Rachel Lim Qian Hui",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 88,
+    "name": "Aaron Abraham Say",
+    "cells": [
+      "Aaron Abraham Say",
+      "Blue",
+      "6",
+      "4",
+      "88"
+    ],
+    "result_id": "d5f69b38-f21e-4302-81b9-de69d1cb8676",
+    "sailor_id": "4e344e28-9a6f-4ae4-93d8-537bc03e1813",
+    "existing_name": "Aaron Abraham Say",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 89,
+    "name": "Benjamin Augenstein",
+    "cells": [
+      "Benjamin Augenstein",
+      "Blue",
+      "3",
+      "5",
+      "89"
+    ],
+    "result_id": "a2838786-3997-413b-840d-6a0f07aebe2a",
+    "sailor_id": "98e8cde1-3a43-448c-adef-85633da2239e",
+    "existing_name": "Benjamin Augenstein",
+    "exact_match": true
+  },
+  {
+    "fleet": "gold",
+    "rank": 90,
+    "name": "Nicole Ashley Quek",
+    "cells": [
+      "Nicole Ashley Quek",
+      "Blue",
+      "5",
+      "DNC",
+      "90"
+    ],
+    "result_id": "057abf67-110a-4c74-b87a-494d29360511",
+    "sailor_id": "83852500-a6d8-4363-80b4-224aa85d0af5",
+    "existing_name": "Nicole Ashley Quek",
+    "exact_match": true
+  }
+]

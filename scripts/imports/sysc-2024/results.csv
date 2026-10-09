@@ -1,0 +1,266 @@
+fleet,rank,name,sail,nationality,division,gender,school,club,total,nett,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16,source_pdf,source_page
+gold,1,Ethan Chia Han Wei,SGP 121,SGP,,Male,Raffles Institution,SAF Yacht Club,58.0,30.0,(16),1,4,1,(12),4,5,1,8,3,2,1,,,,,gold.pdf,1
+gold,2,Zeph Wan,SGP122,SGP,,Male,ACS Independent,SAF Yacht Club,116.0,54.0,5,4,1,13,6,1,15,3,2,4,(24),(38),,,,,gold.pdf,1
+gold,3,Pee Teck Woon,SGP 3146,SGP,,Male,ACS Independent,SAF Yacht Club,136.0,71.0,1,3,(40),2,1,10,16,(25),3,13,8,14,,,,,gold.pdf,1
+gold,4,Lucas Cao Zhihong,SGP 149,SGP,,Male,Raffles Institution,SAF Yacht Club,129.0,77.0,(26),8,6,4,5,6,2,5,4,19,18,(26),,,,,gold.pdf,1
+gold,5,Kum Kok Wei Sean,SGP142,SGP,,Male,ACS Independent,SAF Yacht Club,151.0,93.0,3,10,18,6,(30),18,22,2,(28),5,6,3,,,,,gold.pdf,1
+gold,6,Nigel Tan Xu Yuan,SGP4693,SGP,,Male,St. Joseph's Institution,Constant Wind SeaSports,133.0,93.0,7,9,(19),3,15,5,17,12,6,12,7,(21),,,,,gold.pdf,1
+gold,7,Ashlea Tham,SGP 175,SGP,,Female,Tanjong Katong Girls School,Raffles Marina,195.0,94.0,2,16,15,11,(66),2,4,21,10,1,12,(35),,,,,gold.pdf,1
+gold,8,Germaine Sim,SGP 3177,SGP,,Female,Tanjong Katong Girls School,SAF Yacht Club,201.0,95.0,10,21,5,5,20,13,(29),9,7,2,3,(77),,,,,gold.pdf,1
+gold,9,Mikaela Rae Ng,SGP151,SGP,,Female,Raffles Girls School,PA Water Venture,162.0,110.0,8,5,2,10,17,19,(26),14,11,(26),1,23,,,,,gold.pdf,1
+gold,10,Cheung Lap Yan Nathaniel,SGP156,SGP,,Male,Raffles Institution,Constant Wind SeaSports,199.0,113.0,4,2,17,(37),9,22,(49),19,1,16,4,19,,,,,gold.pdf,1
+gold,11,Nia Mehry Zahedi,SGP4670,SGP,,Female,Raffles Girls School,Raffles Marina,223.0,126.0,13,15,21,15,11,3,7,6,(55),9,26,(42),,,,,gold.pdf,1
+gold,12,Wai Zhi Tong,SGP 3458,SGP,,Female,CHIJ Secondary (Toa Payoh),SAF Yacht Club,185.0,133.0,11,14,3,21,22,11,14,17,14,6,(28),(24),,,,,gold.pdf,1
+gold,13,Ethan Lee,SGP 4416,SGP,,Male,Victoria School,PA Water Venture,209.0,136.0,9,18,16,(27),18,8,(46),4,19,8,19,17,,,,,gold.pdf,1
+gold,14,Desiree Lee Yuet Chi,SGP 4698,SGP,,Female,Tanjong Katong Girls School,SAF Yacht Club,259.0,147.0,(65),7,23,7,14,29,(47),8,20,24,13,2,,,,,gold.pdf,1
+gold,15,Nicole Ashley Quek,SGP 108,SGP,,Female,Raffles Girls School,SAF Yacht Club,294.0,148.0,34,(UFD 92),22,14,7,12,8,(54),27,11,9,4,,,,,gold.pdf,2
+gold,16,Ashlyn Tham,SGP 4452,SGP,12yo & U12,Female,St Hilda's Primary School,Raffles Marina,229.0,150.0,12,11,24,(45),13,33,1,11,16,21,(34),8,,,,,gold.pdf,2
+gold,17,Alyssa Wong Li Lin,SGP 3396,SGP,12yo & U12,Female,Haig Girls School,SAF Yacht Club,231.0,150.0,14,(31),28,(50),3,9,10,15,23,10,27,11,,,,,gold.pdf,2
+gold,18,Damien Huang,SGP 3300,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,226.0,160.0,21,17,7,17,(31),20,19,23,15,(35),15,6,,,,,gold.pdf,2
+gold,19,Anya,SGP4724,SGP,12yo & U12,Female,Tao Nan School,Raffles Marina,292.0,170.0,15,6,43,9,2,(52),11,33,(70),37,5,9,,,,,gold.pdf,2
+gold,20,Tan Herng Yee,SGP3000,SGP,12yo & U12,Male,ACS Primary,SAF Yacht Club,293.0,180.0,6,23,9,20,10,14,(56),34,12,(57),21,31,,,,,gold.pdf,2
+gold,21,Lyric Li Yuxuan,SGP 728,CHN,,Female,Raffles Girls School,Changi Sailing Club,382.0,237.0,17,22,(UFD 92),8,8,DNE 92,6,7,(53),33,22,22,,,,,gold.pdf,2
+gold,22,Tong Xuan Ya,SGP 4460,SGP,12yo & U12,Female,St Hilda's Primary School,SAF Yacht Club,336.0,240.0,(46),20,38,30,25,34,21,26,9,(50),32,5,,,,,gold.pdf,2
+gold,23,Yong Heng Yi,SGP755,SGP,12yo & U12,Male,Pasir Ris Primary School,Changi Sailing Club,365.0,242.0,20,12,10,28,(69),24,38,18,17,(54),30,45,,,,,gold.pdf,2
+gold,24,Charles Kong,SGP716,SGP,12yo & U12,Male,ACS Junior,Changi Sailing Club,393.0,252.0,24,40,13,25,(74),16,39,16,(67),7,62,10,,,,,gold.pdf,2
+gold,25,Elliot Goh,SGP 3103,SGP,12yo & U12,Male,Henry Park Primary School,SAF Yacht Club,449.0,298.0,18,26,11,(66),(85),39,24,35,46,20,36,43,,,,,gold.pdf,2
+gold,26,Abdulla Yahya,UAE 11,UAE,,Male,Abudhabi Sec Sch,Abu Dubai Sailing Club,460.0,299.0,(69),29,(UFD 92),31,16,57,63,20,22,14,10,37,,,,,gold.pdf,2
+gold,27,PUNTHITA WEROTJANAKUL,THA1888,THA,12yo & U12,Female,KAJONKIET INTERNATIONAL SCHOOL PHUKET,UWC,434.0,302.0,57,19,(74),44,(58),46,33,32,5,28,20,18,,,,,gold.pdf,2
+gold,28,Julien Christian,SGP 3102,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,437.0,306.0,30,37,32,38,44,43,20,(58),40,15,(73),7,,,,,gold.pdf,2
+gold,29,Caleb Peck Rui-Kai,SGP 3153,SGP,,Male,Raffles Institution,SAF Yacht Club,444.0,315.0,(56),(73),39,22,45,23,27,29,39,27,52,12,,,,,gold.pdf,2
+gold,30,Kayden Tan Yi Kai,SGP 3104,SGP,,Male,St Andrew Secondary School,SAF Yacht Club,478.0,325.0,(61),46,14,42,19,(BFD 92),23,28,51,58,16,28,,,,,gold.pdf,2
+gold,31,CHEN HUAN HENG,SGP4729,SGP,12yo & U12,Female,CHIJ St Nicholas Girls School,Constant Wind SeaSports,460.0,337.0,25,49,59,35,29,32,12,(62),18,(61),25,53,,,,,gold.pdf,2
+gold,32,Lim Yuk Jun,SGP3377,SGP,,Male,St. Joseph's Institution,SAF Yacht Club,498.0,350.0,(70),35,27,48,67,48,13,43,31,18,(78),20,,,,,gold.pdf,2
+gold,33,Kevin Ho Jun Yi,SGP3118,SGP,12yo & U12,Male,Nanyang Primary School,SAF Yacht Club,516.0,353.0,59,50,44,60,4,21,(BFD 92),10,24,(71),41,40,,,,,gold.pdf,2
+gold,34,LIEW SOON KIT JARED,SGP3198,SGP,,Male,NGEE ANN SECONDARY SCHOOL,PA Water Venture,501.0,353.0,42,28,53,(86),42,(62),57,24,37,22,35,13,,,,,gold.pdf,2
+gold,35,Cecilia Kong,SGP715,SGP,,Female,National Junior College,Changi Sailing Club,521.0,360.0,44,24,31,52,32,(78),32,13,(83),47,55,30,,,,,gold.pdf,2
+gold,36,Jairus Teo,SGP 3107,SGP,12yo & U12,Male,St Andrew's Junior School,PA Water Venture,497.0,363.0,40,51,(69),16,(65),31,44,47,57,41,11,25,,,,,gold.pdf,3
+gold,37,Mika Tew,SGP3535,SGP,,Female,Raffles Girls School,SAF Yacht Club,498.0,363.0,51,48,12,(62),(73),27,25,40,62,23,59,16,,,,,gold.pdf,3
+gold,38,Nathaniel Kaiden Ng,SGP3344,SGP,12yo & U12,Male,St Hilda's Primary School,PA Water Venture,534.0,374.0,62,(UFD 92),37,12,(68),37,43,22,30,55,49,27,,,,,gold.pdf,3
+gold,39,Abdurahman AL Bahri,UAE 97,UAE,,Male,Aimrf School,Abu Dubai Sailing Club,537.0,384.0,39,(72),30,26,(81),38,36,57,25,39,31,63,,,,,gold.pdf,3
+gold,40,Rohan Maliah,HKG545,HKG,12yo & U12,Male,Hong Kong International School,Aberdeen Boat Club,571.0,394.0,(UFD 92),52,26,33,26,45,(85),63,32,31,71,15,,,,,gold.pdf,3
+gold,41,Rupert Chang,SGP5172,SGP,12yo & U12,Male,ACS Primary,Constant Wind SeaSports,561.0,405.0,32,38,(77),19,35,30,55,42,(79),48,40,66,,,,,gold.pdf,3
+gold,42,Joash Tan Jing En,SGP3267,SGP,,Male,Victoria School,SAF Yacht Club,552.0,410.0,53,30,(72),(70),23,17,18,56,59,25,61,68,,,,,gold.pdf,3
+gold,43,Siti Ra'idah Binte Mohd Airudin,SGP3181,SGP,12yo & U12,Female,Northland Primary School,PA Water Venture,552.0,410.0,(74),57,(68),32,36,35,65,37,43,38,33,34,,,,,gold.pdf,3
+gold,44,Dylan Goh Yue Teng,SGP 3800,SGP,12yo & U12,Male,Riverside Primary School,SAF Yacht Club,572.0,418.0,71,(81),33,29,24,(73),31,39,41,36,65,49,,,,,gold.pdf,3
+gold,45,Yeh Zi Yu Jade,SGP 798,SGP,,Female,North Vista Secondary School,Changi Sailing Club,552.0,424.0,37,34,54,41,53,25,(68),45,56,42,37,(60),,,,,gold.pdf,3
+gold,46,Elijah Ong En Ze,SGP 3950,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,568.0,430.0,22,25,35,36,33,56,58,50,(64),(74),54,61,,,,,gold.pdf,3
+gold,47,Khalifa Ahmed Al Romaithi,UAE 37,UAE,12yo & U12,Male,Shiek Zayed Academy,Abu Dubai Sailing Club,618.0,434.0,33,(UFD 92),20,18,27,58,(BFD 92),60,47,UFD 92,14,65,,,,,gold.pdf,3
+gold,48,Kram Chantarawinij,SGP 73,THA,,Male,Sri Bintang Enducation,,619.0,448.0,60,(79),79,49,(DSQ 92),42,3,68,44,32,42,29,,,,,gold.pdf,3
+gold,49,"Lim Rui Kai, Lucas",SGP 3355,SGP,12yo & U12,Male,Pasir Ris Primary School,SAF Yacht Club,614.0,463.0,27,47,25,69,(78),68,(73),49,36,17,68,57,,,,,gold.pdf,3
+gold,50,ZEPHYR TAN WEN,SGP 4717,SGP,12yo & U12,Male,Henry Park Primary School,Republic of Singapore Yacht Club,613.0,467.0,28,(71),(75),58,60,28,53,52,42,52,23,71,,,,,gold.pdf,3
+gold,51,Jaye Low,SGP 3279,SGP,12yo & U12,Female,Endeavour Primary School,PA Water Venture,626.0,468.0,66,33,46,(72),40,(86),9,72,34,67,50,51,,,,,gold.pdf,3
+gold,52,Callum Wong Joon Thang,SGP3321,SGP,12yo & U12,Male,Lakeside Primary School,SAF Yacht Club,633.0,470.0,(78),42,8,59,51,41,62,(85),58,72,45,32,,,,,gold.pdf,3
+gold,53,Zaid Mohd Noordeen Bin Jaffar Sadik,SGP 3666,SGP,12yo & U12,Male,ACS Junior,SAF Yacht Club,628.0,473.0,38,44,48,57,(79),(76),52,36,60,45,17,76,,,,,gold.pdf,3
+gold,54,John Raphael Lim,SGP 788,SGP,12yo & U12,Male,St Stephens School,Changi Sailing Club,622.0,476.0,54,43,58,(73),34,47,40,64,13,(73),51,72,,,,,gold.pdf,3
+gold,55,Kaelyn Dayna Soh Zhi Yi,SGP 3113,SGP,12yo & U12,Female,Raffles Girls Primary School,SAF Yacht Club,640.0,482.0,72,39,(78),55,38,15,61,27,78,34,63,(80),,,,,gold.pdf,3
+gold,56,Jedd Lam Zhi Hao,SGP2000,SGP,12yo & U12,Male,Henry Park Primary School,Constant Wind SeaSports,635.0,490.0,41,(68),45,56,37,64,37,30,(77),66,58,56,,,,,gold.pdf,3
+gold,57,Caleb Cao Zhixuan,SGP 3193,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,653.0,495.0,67,(82),62,34,46,53,(76),44,26,56,60,47,,,,,gold.pdf,4
+gold,58,Yeh Zi Ning Kate,SGP 797,SGP,12yo & U12,Female,Punggol Cove Primary School,Changi Sailing Club,691.0,507.0,(DNC 92),(DNC 92),DNC 92,DNC 92,43,36,28,48,21,40,43,64,,,,,gold.pdf,4
+gold,59,Mohd Mikail bin Mohd Shahrom,SGP704,SGP,12yo & U12,Male,St Hilda's Primary School,Changi Sailing Club,666.0,508.0,49,(75),63,(83),50,65,59,31,48,49,46,48,,,,,gold.pdf,4
+gold,60,Gerome Sim,SGP3188,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,694.0,513.0,81,(UFD 92),57,23,28,72,82,41,50,29,(89),50,,,,,gold.pdf,4
+gold,61,PITSILIS Amandine Zoe,SGP 702,FRA,12yo & U12,Female,International French School,Changi Sailing Club,666.0,516.0,(76),36,47,(74),41,60,66,38,71,69,47,41,,,,,gold.pdf,4
+gold,62,Ethan Low Zhi Ren,SGP 3855,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,691.0,531.0,50,63,65,65,55,75,(80),(80),29,30,44,55,,,,,gold.pdf,4
+gold,63,Tara Maliah,HKG522,HKG,,Female,Hong Kong International School,Aberdeen Boat Club,722.0,538.0,29,13,64,24,71,7,54,(DNC 92),(DNC 92),DNC 92,DNC 92,DNC 92,,,,,gold.pdf,4
+gold,64,Russell Xavier Quek,SGP 3008,SGP,12yo & U12,Male,ACS Junior,SAF Yacht Club,702.0,539.0,31,56,60,(81),49,50,72,59,(82),62,56,44,,,,,gold.pdf,4
+gold,65,Akhshaya Santoz,SGP2008,SGP,12yo & U12,Female,Raffles Girls Primary School,Constant Wind SeaSports,717.0,542.0,63,27,34,78,72,55,77,(89),45,(86),39,52,,,,,gold.pdf,4
+gold,66,Gaitan Sullivan,USA22154,USA,,Male,Singapore American School,Changi Sailing Club,691.0,542.0,36,54,(76),64,56,44,41,46,69,68,64,(73),,,,,gold.pdf,4
+gold,67,Deklen Chew,SGP3131,SGP,12yo & U12,Male,Tao Nan School,SAF Yacht Club,697.0,548.0,(79),58,56,47,52,59,69,51,33,(70),69,54,,,,,gold.pdf,4
+gold,68,Lim Yuk Pin,SGP3880,SGP,12yo & U12,Male,Ai Tong School,SAF Yacht Club,721.0,550.0,58,61,41,43,(88),54,71,61,35,51,75,(83),,,,,gold.pdf,4
+gold,69,Rachel Lim Qian Hui,SGP3197,SGP,12yo & U12,Female,Haig Girls School,SAF Yacht Club,740.0,568.0,48,45,36,(85),21,77,67,(87),54,77,84,59,,,,,gold.pdf,4
+gold,70,Martha Elie Wazen,SGP 4689,USA,,Female,Hwa Chong International School,Changi Sailing Club,757.0,578.0,80,41,(UFD 92),80,59,26,81,81,68,(87),29,33,,,,,gold.pdf,4
+gold,71,Riley Sullivan,USA21745,USA,,Male,Singapore American School,Aberdeen Boat Club,749.0,581.0,(82),64,42,39,63,49,42,69,76,59,(86),78,,,,,gold.pdf,4
+gold,72,Judy Zhang Sudjana,SGP 33,SGP,,Female,Tanjong Katong Girls School,Changi Sailing Club,743.0,583.0,47,69,49,53,64,66,34,77,66,(78),(82),58,,,,,gold.pdf,4
+gold,73,Joash Kok Jit Yin,SGP3057,SGP,12yo & U12,Male,ACS Junior,SAF Yacht Club,775.0,602.0,55,59,66,54,47,81,70,(88),74,(85),57,39,,,,,gold.pdf,4
+gold,74,Rahul Rajakanth,SGP2006,SGP,12yo & U12,Male,ACS Primary,Constant Wind SeaSports,772.0,611.0,77,67,55,51,48,40,45,74,(80),80,(81),74,,,,,gold.pdf,4
+gold,75,TAN KIA JENG JONAS,SGP3888,SGP,,Male,St. Joseph's Institution,SAF Yacht Club,794.0,615.0,23,32,82,75,75,84,50,66,(89),53,(90),75,,,,,gold.pdf,4
+gold,76,Paolo Gagliardi La Gala,SGP 2015,ITA,12yo & U12,Male,Bedok Green Primary School,Constant Wind SeaSports,788.0,617.0,84,53,51,61,62,69,35,73,(86),76,53,(85),,,,,gold.pdf,4
+gold,77,Eugene Tan Yi Ze,SGP 3999,SGP,12yo & U12,Male,St Joseph Institution Junior,SAF Yacht Club,794.0,631.0,68,77,52,63,57,51,60,76,(84),60,(79),67,,,,,gold.pdf,4
+gold,78,Tan Kia Guan Joseph,SGP3688,SGP,12yo & U12,Male,St Joseph Institution Junior,SAF Yacht Club,815.0,638.0,(85),76,29,(DSQ 92),61,74,78,70,52,63,66,69,,,,,gold.pdf,5
+gold,79,Lucien Gan,SGP2007,SGP,12yo & U12,Male,Maha Bodhi Primary,Constant Wind SeaSports,812.0,638.0,64,60,71,40,(87),61,48,84,81,46,83,(87),,,,,gold.pdf,5
+gold,80,Jonathan Kwok Kum Loong,SGP 2003,SGP,12yo & U12,Male,St Stephens School,Constant Wind SeaSports,832.0,660.0,73,66,50,79,77,71,(83),75,49,43,77,(89),,,,,gold.pdf,5
+gold,81,Jeremiah Ong Rui Feng,SGP 3373,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,845.0,671.0,45,55,61,77,(86),83,51,86,72,65,76,(88),,,,,gold.pdf,5
+gold,82,Darius Goh Yue Siang,SGP 3111,SGP,12yo & U12,Male,Riverside Primary School,SAF Yacht Club,862.0,678.0,(DNC 92),(DNC 92),DNC 92,DNC 92,39,80,87,55,85,64,38,46,,,,,gold.pdf,5
+gold,83,Darian Huang,SGP 3700,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,862.0,680.0,19,(UFD 92),73,67,82,63,64,(90),65,81,87,79,,,,,gold.pdf,5
+gold,84,Jonas Tan Yi Jun,SGP 3481,SGP,12yo & U12,Male,Tao Nan School,SAF Yacht Club,870.0,686.0,(UFD 92),65,(UFD 92),76,89,79,30,53,87,75,48,84,,,,,gold.pdf,5
+gold,85,Zayed Al Hosani,UAE 31,UAE,,Male,,ASMSC,870.0,694.0,52,70,(84),46,83,DNE 92,(RET 92),82,38,83,67,81,,,,,gold.pdf,5
+gold,86,ISAIAH YAP CHOR HONG,SGP3946,SGP,12yo & U12,Male,Pasir Ris Primary School,SAF Yacht Club,878.0,704.0,43,62,80,(82),80,(BFD 92),75,71,75,82,74,62,,,,,gold.pdf,5
+gold,87,Noel Ng Jiang Wen,SGP3257,SGP,,Male,Chung Cheng High,SAF Yacht Club,880.0,706.0,35,83,81,(84),(90),67,74,67,73,84,72,70,,,,,gold.pdf,5
+gold,88,Joshua Khoo Zhuo Xi,SGP 4728,SGP,12yo & U12,Male,Nanyang Primary School,SAF Yacht Club,895.0,711.0,(DNC 92),(DNC 92),DNC 92,DNC 92,70,70,86,78,63,44,80,36,,,,,gold.pdf,5
+gold,89,Rashed Al Neyadi,UAE 17,UAE,12yo & U12,Male,,Abu Dubai Sailing Club,952.0,768.0,75,74,70,(DNF 92),76,(DNF 92),BFD 92,79,61,89,70,82,,,,,gold.pdf,5
+gold,90,Edrei Ong En Xu,SGP 3957,SGP,12yo & U12,Male,St Hilda's Primary School,SAF Yacht Club,950.0,770.0,83,78,67,68,84,82,79,65,(90),79,85,(90),,,,,gold.pdf,5
+gold,91,Jude Nathan Wong,SGP3495,SGP,12yo & U12,Male,ACS Junior,SAF Yacht Club,976.0,800.0,86,80,83,71,54,85,84,83,(88),(88),88,86,,,,,gold.pdf,5
+silver,1,Joel Khoo Zhuo Le,SGP 4730,,10 & U10,Male,Nanyang Primary School,SAF Yacht Club,90.0,59.0,(17),6,5,5,10,6,5,4,9,4,(14),5,,,,,silver.pdf,1
+silver,2,Cheung Hei Yat Adriel,SGP3611,,10 & U10,Male,ACS Junior,Constant Wind SeaSports,110.0,60.0,3,(28),7,3,5,(22),4,3,6,1,19,9,,,,,silver.pdf,1
+silver,3,Shin Lin Chen Rui,SGP 3333,,Novice,Male,Horizon Primary School,SAF Yacht Club,178.0,75.0,1,14,10,1,(UFD 84),7,6,2,11,(19),7,16,,,,,silver.pdf,1
+silver,4,Cheong Ting Jia Olivia,SGP 102,,Novice,Female,Nan Hua Primary School,SAF Yacht Club,190.0,80.0,16,10,1,(26),1,3,3,1,(UFD 84),2,18,25,,,,,silver.pdf,1
+silver,5,Roong Chantarawinij,THA 1446,,10 & U10,Female,Siam Singapore International School,Royal Thai Fleet Yacht Club,152.0,82.0,(48),3,3,16,4,11,10,13,5,(22),3,14,,,,,silver.pdf,1
+silver,6,Kai Yen-Yu,SGP758,,,Female,Raffles Girls Primary School,Changi Sailing Club,213.0,86.0,5,7,(UFD 84),2,(43),5,27,6,8,17,5,4,,,,,silver.pdf,1
+silver,7,Pattarakorn Poonpat,THA 88,,,Male,Piboonbumpen Demonstration School,ACDC,134.0,87.0,2,19,2,(23),17,10,1,9,1,6,20,(24),,,,,silver.pdf,1
+silver,8,"Tan Kai En, Joel",SGP 3223,,,Male,St Hilda's Primary School,SAF Yacht Club,195.0,94.0,10,18,15,12,2,1,2,12,4,(52),(49),18,,,,,silver.pdf,1
+silver,9,Russell Tan,SGP3172,,,Male,Tao Nan School,PA Water Venture,229.0,132.0,(54),30,34,15,3,8,11,14,3,(43),11,3,,,,,silver.pdf,1
+silver,10,Kyle Jeremy Soh Zhi Jun,SGP 3183,,10 & U10; Novice,Male,ACS Junior,SAF Yacht Club,249.0,136.0,(29),5,14,9,15,(UFD 84),8,17,19,10,24,15,,,,,silver.pdf,1
+silver,11,Loh Yi Jie Luke,SGP 3322,,10 & U10,Male,Tao Nan School,SAF Yacht Club,209.0,136.0,6,12,13,6,21,23,(40),10,15,23,(33),7,,,,,silver.pdf,1
+silver,12,Joel Han Sheng Ong,SGP 2014,,10 & U10; Novice,Male,Tao Nan School,Constant Wind SeaSports,215.0,137.0,(44),17,12,21,25,4,12,8,7,(34),9,22,,,,,silver.pdf,1
+silver,13,Zachary Low Zhi En,SGP 3369,,,Male,St Hilda's Primary School,SAF Yacht Club,279.0,144.0,13,1,11,45,(UFD 84),(51),17,7,2,30,10,8,,,,,silver.pdf,1
+silver,14,Wong Jing Chen Nicole,SGP 3006,,10 & U10,Female,CHIJ The Lady Queen of Peace,Republic of Singapore Yacht Club,329.0,161.0,43,(BFD 84),8,19,7,2,13,18,(RET 84),15,15,21,,,,,silver.pdf,1
+silver,15,Liao Zhi Ting,SGP 3988,,,Male,Maris Stella High School,SAF Yacht Club,288.0,163.0,12,2,6,34,16,19,21,26,21,(41),6,(UFD 84),,,,,silver.pdf,2
+silver,16,Cyrus Chiam Jing Yi,SGP3343,,Novice,Male,St Gabriel Primary School,SAF Yacht Club,337.0,169.0,(UFD 84),(BFD 84),4,18,12,25,24,43,28,13,1,1,,,,,silver.pdf,2
+silver,17,Mathias Cheow,SGP 3307,,,Male,ACS Primary,SAF Yacht Club,350.0,182.0,27,8,(UFD 84),47,(UFD 84),9,9,5,10,42,2,23,,,,,silver.pdf,2
+silver,18,Quintan Rupert Low,SGP4681,,"10 & U10, Novice",Male,ACS Junior,SAF Yacht Club,335.0,194.0,7,13,23,22,(UFD 84),15,34,35,17,9,(57),19,,,,,silver.pdf,2
+silver,19,Liu Yunhao,SGP 2005,,,Male,First Toa Payoh Primary School,Constant Wind SeaSports,283.0,208.0,(34),24,33,24,9,16,25,19,31,11,16,(41),,,,,silver.pdf,2
+silver,20,Yeo Shi Xi,SGP 3618,,,Male,Endeavour Primary School,SAF Yacht Club,360.0,212.0,31,(BFD 84),28,4,8,13,23,42,(64),24,22,17,,,,,silver.pdf,2
+silver,21,Yeh Fang Yu Sage,SGP 796,,10 & U10,Female,Punggol Cove Primary School,Changi Sailing Club,327.0,220.0,4,16,16,20,26,32,(57),22,45,7,32,(50),,,,,silver.pdf,2
+silver,22,Cory Loh Zhi Hang,SGP3881,,10 & U10; Novice,Male,Admiralty Primary School,SAF Yacht Club,365.0,221.0,(TLE 60),11,18,17,(UFD 84),24,26,20,30,39,30,6,,,,,silver.pdf,2
+silver,23,Spencer Isaac Quek,SGP 3108,,10 & U10,Male,ACS Junior,SAF Yacht Club,366.0,222.0,(TLE 60),4,(UFD 84),32,11,21,28,36,16,26,17,31,,,,,silver.pdf,2
+silver,24,Khoo Boo Ming Manfred,SGP3288,,,Male,Nanyang Primary School,SAF Yacht Club,327.0,229.0,23,20,17,13,(40),37,16,25,26,12,(58),40,,,,,silver.pdf,2
+silver,25,Rayson Lee Yin Yi,SGP3828,,,Male,Ai Tong School,SAF Yacht Club,350.0,239.0,14,26,(59),8,20,33,(52),15,14,51,31,27,,,,,silver.pdf,2
+silver,26,Tan Yee Xuen,SGP3001,,10 & U10,Female,Singapore Chinese Girls School,SAF Yacht Club,397.0,246.0,(UFD 84),9,9,27,18,50,14,28,(67),27,27,37,,,,,silver.pdf,2
+silver,27,"Lim Rui Xuan, Lavene",SGP 3553,,10 & U10,Female,Pasir Ris Primary School,SAF Yacht Club,380.0,247.0,15,48,(UFD 84),48,14,26,18,(49),22,5,21,30,,,,,silver.pdf,2
+silver,28,Tan Abram Kai- Ser,SGP 4705,,,Male,Tao Nan School,PA Water Venture,387.0,250.0,18,34,24,33,(UFD 84),20,22,21,27,(53),13,38,,,,,silver.pdf,2
+silver,29,Aiden Wong Kang Jun,SGP 2018,,,Male,Pei Chun Public School,Constant Wind SeaSports,398.0,251.0,35,(BFD 84),39,25,13,14,38,11,24,(63),26,26,,,,,silver.pdf,2
+silver,30,Kye Tang,SGP 2002,,Novice,Male,Tao Nan School,Constant Wind SeaSports,411.0,273.0,(UFD 84),33,26,40,6,17,36,37,23,(54),35,20,,,,,silver.pdf,2
+silver,31,Koh Yi Jie Zachary,SGP 4731,,10 & U10,Male,Tao Nan School,PA Water Venture,370.0,275.0,11,15,20,11,38,(43),43,34,39,31,(52),33,,,,,silver.pdf,2
+silver,32,Isla Lee Zhi Xi,SGP 3303,,Novice,Female,Endeavour Primary School,SAF Yacht Club,447.0,279.0,TLE 60,TLE 59,22,(DNC 84),(DNC 84),30,7,27,25,8,39,2,,,,,silver.pdf,2
+silver,33,Alaric Shenthil naidu,97,,,Male,ACS Barker,SAF Yacht Club,434.0,281.0,(UFD 84),43,29,14,19,12,20,16,(69),57,59,12,,,,,silver.pdf,2
+silver,34,Ng Jun Meng Raynor,SGP 3911,,,Male,ACS Junior,SAF Yacht Club,402.0,287.0,33,35,(60),10,36,(TLE 55),15,38,55,3,34,28,,,,,silver.pdf,2
+silver,35,Tan Li Ying Kayler,SGP 3787,,,Female,Methodist Girls School (Primary),SAF Yacht Club,443.0,293.0,36,22,19,44,27,(UFD 84),(66),24,18,21,50,32,,,,,silver.pdf,2
+silver,36,Yak Yun Zhong Joseph,SGP 4739,,,Male,Tanjong Katong Primary School,PA Water Venture,411.0,295.0,9,29,50,(52),23,47,32,23,29,(64),42,11,,,,,silver.pdf,2
+silver,37,Worawit Jutahkiti,2025,,,Male,Catholic High School,Constant Wind SeaSports,458.0,315.0,40,23,32,41,54,(RET 84),41,29,41,(59),4,10,,,,,silver.pdf,3
+silver,38,Merelle Tay Xuanying,SGP3511,,,Female,St Hilda's Primary School,SAF Yacht Club,477.0,320.0,(UFD 84),25,(TLE 73),37,34,28,29,31,12,58,37,29,,,,,silver.pdf,3
+silver,39,Alessia Talpo,SGP3105,,10 & U10,Female,Marymount Primary School,SAF Yacht Club,507.0,339.0,20,(BFD 84),46,36,28,(RET 84),19,62,13,48,25,42,,,,,silver.pdf,3
+silver,40,Jamiroquai Tay Kai Nuo,SGP 2013,,Novice,Male,Tao Nan School,Constant Wind SeaSports,487.0,347.0,(56),(BFD 84),51,28,39,35,45,50,36,14,36,13,,,,,silver.pdf,3
+silver,41,"Tan En Ting, Kirsten",SGP 3663,,"10 & U10, 8 & U8, Novice",Female,St Hilda's Primary School,SAF Yacht Club,498.0,354.0,41,(BFD 84),43,7,47,18,44,(60),20,40,60,34,,,,,silver.pdf,3
+silver,42,Lauren Lim,SGP3939,,Novice,Female,Rosyth Primary School,SAF Yacht Club,493.0,361.0,TLE 60,38,30,(62),22,34,(70),30,59,32,8,48,,,,,silver.pdf,3
+silver,43,TEO RUI LING,SGP 3820,,"10 & U10, Novice",Female,CHIJ (KATONG),SAF Yacht Club,491.0,377.0,51,32,(57),29,53,29,39,45,33,20,46,(57),,,,,silver.pdf,3
+silver,44,Xie Si Duo Kiz,SGP 3928,,Novice,Female,River Valley Primary School,SAF Yacht Club,511.0,394.0,22,42,38,(63),24,40,47,53,42,33,53,(54),,,,,silver.pdf,3
+silver,45,Dylan Wee Yong Jun,SGP3878,,Novice,Male,ACS Junior,SAF Yacht Club,546.0,419.0,45,41,42,(71),50,TLE 55,(56),44,38,37,12,55,,,,,silver.pdf,3
+silver,46,Charlene Yong Heng Ning,SGP766,,10 & U10,Female,Pasir Ris Primary School,Changi Sailing Club,568.0,419.0,28,(BFD 84),53,42,33,45,54,(65),57,28,28,51,,,,,silver.pdf,3
+silver,47,Chan Qingxuan Joel,SGP2021,,Novice,Male,Tao Nan School,Constant Wind SeaSports,543.0,428.0,46,(TLE 59),41,35,31,44,50,40,35,(56),54,52,,,,,silver.pdf,3
+silver,48,Fong Luke Tin,SGP 2019,,10 & U10,Male,Tao Nan School,Constant Wind SeaSports,604.0,436.0,(DNC 84),(DNC 84),DNC 84,31,51,TLE 55,30,39,44,25,38,39,,,,,silver.pdf,3
+silver,49,Alisha Shireen Ali,SGP 3101,,,Female,St Hilda's Primary School,SAF Yacht Club,587.0,437.0,37,44,55,39,30,(UFD 84),49,48,32,(66),56,47,,,,,silver.pdf,3
+silver,50,Aidan Yeo See Hett,SIN 112,,10 & U10,Male,Kuo Chuan Presbyterian Primary School,SAF Yacht Club,618.0,450.0,8,(BFD 84),21,57,(UFD 84),42,46,72,34,60,43,67,,,,,silver.pdf,3
+silver,51,Gloria Kwok Yen Rui,SGP 2004,,10 & U10,Female,CHIJ (KATONG),Constant Wind SeaSports,609.0,456.0,47,(BFD 84),27,67,45,39,37,47,37,55,55,(69),,,,,silver.pdf,3
+silver,52,Ng Kai Zhe Timothy,SGP 2023,,10 & U10; Novice,Male,Tao Nan School,Constant Wind SeaSports,627.0,459.0,(UFD 84),37,45,(NSC 84),42,48,42,63,56,36,47,43,,,,,silver.pdf,3
+silver,53,Auwin Leow Zhao Hong,SGP318,,10 & U10; Novice,Male,St Andrew's Junior School,SAF Yacht Club,606.0,465.0,52,31,40,49,TLE 57,TLE 55,31,54,(72),(69),51,45,,,,,silver.pdf,3
+silver,54,Seah Yong Zhen Denzel,SGP 3925,,"10 & U10, Novice",Male,St Hilda's Primary School,SAF Yacht Club,599.0,466.0,38,50,(68),61,TLE 57,31,58,33,48,(65),44,46,,,,,silver.pdf,3
+silver,55,Ethan Jacob Cirulli,SGP 2034,,Novice,Male,Tanjong Katong Primary School,Constant Wind SeaSports,604.0,468.0,TLE 60,27,31,64,55,36,33,61,52,(67),(69),49,,,,,silver.pdf,3
+silver,56,Kyan Tan Chun Hong,SGP4712,,10 & U10; Novice,Male,Tao Nan School,SAF Yacht Club,630.0,472.0,25,(BFD 84),37,70,TLE 57,53,63,67,(TLE 74),18,23,59,,,,,silver.pdf,3
+silver,57,Matthew Chiam Qin Hao,SGP 3606,,10 & U10; Novice,Male,Ai Tong School,SAF Yacht Club,618.0,475.0,32,49,52,56,32,38,(71),58,47,45,(72),66,,,,,silver.pdf,3
+silver,58,Tan Michael Jorge,SGP 2029,,Novice,Male,Maha Bodhi Primary,Constant Wind SeaSports,645.0,482.0,30,(BFD 84),35,51,37,TLE 55,67,52,51,46,(79),58,,,,,silver.pdf,4
+silver,59,Estelle Yeo Rui En,SGP 773,,10 & U10,Female,St Hilda's Primary School,Changi Sailing Club,673.0,505.0,26,(BFD 84),47,68,(UFD 84),UFD 84,51,41,UFD 84,29,40,35,,,,,silver.pdf,4
+silver,60,Helena Mishel Cole,SGP 789,,Novice,Female,Tanjong Katong Girls School,Changi Sailing Club,658.0,513.0,19,47,69,(72),41,41,(73),55,53,62,63,63,,,,,silver.pdf,4
+silver,61,Goh Yong Chang Hagen,SGP 600,,10 & U10; Novice,Male,Dover Court,SAF Yacht Club,667.0,516.0,42,(BFD 84),(67),58,35,TLE 55,53,46,54,47,62,64,,,,,silver.pdf,4
+silver,62,Dani Sherif Ahmed Khalil,SGP4457,,,Male,Canberra Primary School,SAF Yacht Club,687.0,519.0,TLE 60,36,61,(RET 84),(DNC 84),DNC 84,35,57,49,16,68,53,,,,,silver.pdf,4
+silver,63,Mason Lau ( Liu Qifeng),SGP 2031,,"10 & U10, 8 & U8; Novice",Male,Tao Nan School,Constant Wind SeaSports,702.0,534.0,53,(BFD 84),58,59,46,46,48,(UFD 84),UFD 84,49,29,62,,,,,silver.pdf,4
+silver,64,Raymon Li,SGP 3737,,Novice,Male,United World College South East Asia,SAF Yacht Club,704.0,536.0,55,(BFD 84),62,30,(UFD 84),UFD 84,55,51,46,35,41,77,,,,,silver.pdf,4
+silver,65,Julian Lim,SGP3739,,Novice,Male,Rosyth Primary School,SAF Yacht Club,687.0,537.0,58,54,54,53,(DNF 84),TLE 55,62,59,(66),61,45,36,,,,,silver.pdf,4
+silver,66,Jayson Yap Jin Cheng,SGP 2028,,Novice,Male,Temasek Primary School,Constant Wind SeaSports,698.0,544.0,(UFD 84),57,48,54,49,52,64,32,62,(70),61,65,,,,,silver.pdf,4
+silver,67,Low Xian Zhi Darien,SGP 900,,10 & U10; Novice,Male,Tao Nan School,SAF Yacht Club,731.0,571.0,39,53,(UFD 84),66,29,TLE 55,69,73,68,(76),75,44,,,,,silver.pdf,4
+silver,68,Yeo Teng Ern Isaac,SGP 738,,10 & U10; Novice,Male,St Hilda's Primary School,Changi Sailing Club,739.0,571.0,TLE 60,52,36,46,(UFD 84),TLE 55,75,70,(UFD 84),38,65,74,,,,,silver.pdf,4
+silver,69,Chen Wang Sun,SGP3454,,,Male,United World College South East Asia,SAF Yacht Club,748.0,580.0,21,21,25,38,(UFD 84),TLE 55,(DNC 84),DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,,,,,silver.pdf,4
+silver,70,Ouyang Hanyue,SGP3173,,10 & U10; Novice,Male,Nanyang Primary School,One?15 Marina,751.0,583.0,TLE 60,46,(UFD 84),65,TLE 57,(NSC 84),68,66,43,44,74,60,,,,,silver.pdf,4
+silver,71,Leyla Sherif Ahmed Khalil,SGP177,,,Female,Canberra Primary School,SAF Yacht Club,762.0,604.0,(UFD 84),56,71,50,48,49,(74),71,60,71,67,61,,,,,silver.pdf,4
+silver,72,Low Wen Xuan Gwyneth,SGP 3018,,Novice,Female,CHIJ Primary (Toa Payoh),Constant Wind SeaSports,783.0,615.0,24,55,49,43,(UFD 84),TLE 55,(NSC 84),NSC 84,70,79,80,76,,,,,silver.pdf,4
+silver,73,Zachary Mateen Cole,SGP 791,,"10 & U10, Novice",Male,Tanjong Katong Primary School,Changi Sailing Club,772.0,616.0,49,TLE 59,72,(TLE 75),52,TLE 55,72,74,65,(TLE 81),48,70,,,,,silver.pdf,4
+silver,74,Padmaeja Rajakanth,SGP2022,,10 & U10; Novice,Female,Raffles Girls Primary School,Constant Wind SeaSports,786.0,618.0,TLE 60,40,(UFD 84),69,(DNC 84),TLE 55,60,56,40,RET 84,70,UFD 84,,,,,silver.pdf,4
+silver,75,Wai Yong Le,SGP 3488,,"10 & U10, Novice",Male,First Toa Payoh Primary School,SAF Yacht Club,788.0,620.0,57,(BFD 84),44,55,(UFD 84),TLE 55,65,69,50,68,77,TLE 80,,,,,silver.pdf,4
+silver,76,Poh Hao Xuan Euan,SGP2030,,"10 & U10, 8 & U8; Novice",Male,St Stephens School,Constant Wind SeaSports,800.0,632.0,(UFD 84),51,63,(NSC 84),44,27,NSC 84,UFD 84,63,77,71,68,,,,,silver.pdf,4
+silver,77,Owen Fun Kaii Meng,SGP2024,,10 & U10; Novice,Male,Temasek Primary School,Constant Wind SeaSports,801.0,633.0,(UFD 84),45,64,60,(NSC 84),NSC 84,61,64,61,50,73,71,,,,,silver.pdf,4
+silver,78,Qi Shan,SGP 99,,10 & U10; Novice,Female,Tao Nan School,Constant Wind SeaSports,856.0,688.0,TLE 60,(BFD 84),(UFD 84),TLE 75,NSC 84,NSC 84,59,68,58,78,66,56,,,,,silver.pdf,4
+silver,79,Jan Welzl,SGP 2033,,10 & U10; Novice,Male,Tao Nan School,Constant Wind SeaSports,864.0,696.0,50,TLE 59,70,(UFD 84),(UFD 84),TLE 55,NSC 84,UFD 84,71,74,76,73,,,,,silver.pdf,5
+silver,80,"Chow Yi Min, Yvette",SIN351,,10 & U10; Novice,Female,Pei Hwa Presbyterian Primary School,SAF Yacht Club,865.0,697.0,TLE 60,39,65,73,(UFD 84),(RET 84),NSC 84,NSC 84,DNS 84,72,64,72,,,,,silver.pdf,5
+silver,81,Nigel Ng Jiang Long,SGP 3152,,10 & U10; Novice,Male,Endeavour Primary School,SAF Yacht Club,892.0,724.0,TLE 60,(BFD 84),56,(NSC 84),UFD 84,TLE 55,NSC 84,75,NSC 84,73,78,75,,,,,silver.pdf,5
+silver,82,XU JIAYAN,SGP466,,,Male,St Gabriel Primary School,SAF Yacht Club,993.0,825.0,(DNC 84),(DNC 84),DNC 84,NSC 84,RET 84,RET 84,NSC 84,NSC 84,UFD 84,75,RET 84,78,,,,,silver.pdf,5
+silver,83,Janelle Tan Yi Han,SGP 3517,,,Female,CHIJ Our lady of good counsel,SAF Yacht Club,1008.0,840.0,(DNC 84),(DNC 84),DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,DNC 84,,,,,silver.pdf,5
+29er,1,Nicole Ng & Ezann Sephira Tan,SGP 2467,SGP,,Female,Raffles Girls School,Constant Wind SeaSports,16.0,12.0,1,1,(2),1,1,1,(2),2,1,1,2,1,,,,,classes.pdf,1
+29er,2,Seth Low Yu Herng & Amos Tham,SGP,SGP,,Male,ACS Independent & Victoria School,SAF Yacht Club & RM,22.0,16.0,2,(3),1,2,2,2,1,1,2,(3),1,2,,,,,classes.pdf,1
+29er,3,Cheryl Yong Heng Xi & Febe Wong,SGP 153,SGP,,Female,Pasir Ris Crest Sec & CHJI,CSC & SAFYC,34.0,28.0,(3),2,(3),3,3,3,3,3,3,2,3,3,,,,,classes.pdf,1
+29er,4,Cheryl Ho & Hayley Fang,2869,SGP,,Female,Raffles Girls School & Raffles Institution,Constant Wind SeaSports & SAFYC,49.0,40.0,(4),4,4,(RET 5),4,4,4,4,4,4,4,4,,,,,classes.pdf,1
+ilca4,1,Ian Goh,SGP 222713,SGP,"15 & u15, 17 & u17",Male,Raffles Institution,SAF Yacht Club,70.0,38.0,8,4,1,2,1,5,2,(21),(11),4,9,2,,,,,classes.pdf,1
+ilca4,2,Aurick Leow You Shun,SGP 95,SGP,17 & u17,Male,Raffles Institution,SAF Yacht Club,56.0,39.0,5,6,3,6,(8),1,1,4,1,(9),5,7,,,,,classes.pdf,1
+ilca4,3,Eitan Oh,SGP 96,SGP,17 & u17,Male,Raffles Institution,SAF Yacht Club,65.0,44.0,(7),1,4,3,6,6,4,7,2,5,(14),6,,,,,classes.pdf,1
+ilca4,4,Tiago Cheng De Villemor Salgado,HKG 222437,HKG,"15 & u15, 17 & u17",Male,United World College South East Asia,Changi Sailing Club,87.0,51.0,(13),5,2,5,2,8,8,2,12,1,6,(23),,,,,classes.pdf,1
+ilca4,5,Austin Yeo Jia Yu,SGP 221062,SGP,"15 & u15, 17 & u17",Male,ACS Independent,SAF Yacht Club,105.0,59.0,12,2,14,10,3,2,7,1,7,(16),(30),1,,,,,classes.pdf,1
+ilca4,6,Sarah Yong,214438,SGP,17 & u17,Female,St Hilda's Secondary School,PA Water Venture,95.0,60.0,2,9,(11),7,11,4,5,3,10,7,2,(24),,,,,classes.pdf,1
+ilca4,7,Mori Ikuto,SGP 221687,JPN,"15 & u15, 17 & u17",Male,Victoria School,Changi Sailing Club,96.0,62.0,3,(13),8,1,10,12,10,6,3,6,(21),3,,,,,classes.pdf,1
+ilca4,8,Gordon Allan,221058,SGP,"15 & u15, 17 & u17",Male,ACS Independent,Constant Wind,132.0,79.0,9,3,12,14,(16),11,9,5,8,3,(37),5,,,,,classes.pdf,1
+ilca4,9,Gabi Oh,SGP 224717,SGP,"15 & u15, 17 & u17",Female,St Hilda's Secondary School,SAF Yacht Club,128.0,80.0,10,10,13,8,4,9,6,(19),6,2,(29),12,,,,,classes.pdf,2
+ilca4,10,Wong Weikai Zachary,SGP 221061,SGP,"15 & u15, 17 & u17",Male,Raffles Institution,SAF Yacht Club,170.0,117.0,(29),(24),5,4,7,13,15,22,4,20,18,9,,,,,classes.pdf,2
+ilca4,11,Lukas Kiesselbach,GER 221597,GER,"15 & u15, 17 & u17",Male,United World College South East Asia,Changi Sailing Club,172.0,122.0,(24),(26),6,12,5,17,23,17,13,8,10,11,,,,,classes.pdf,2
+ilca4,12,Isaac Poon Weng Yew,SGP 214841,SGP,"15 & u15, 17 & u17",Male,ACS Independent,PA Water Venture,191.0,132.0,6,12,15,15,13,7,12,10,19,23,(33),(26),,,,,classes.pdf,2
+ilca4,13,Asher-James Nair,SGP 11,SGP,17 & u17,Male,ACS Independent,SAF Yacht Club,206.0,136.0,1,(37),9,18,15,(33),21,20,23,10,15,4,,,,,classes.pdf,2
+ilca4,14,Danielle Lai,SGP 222257,SGP,"15 & u15, 17 & u17",Female,Tanjong Katong Girls School,PA Water Venture,198.0,140.0,22,17,10,17,12,18,14,(35),5,11,(23),14,,,,,classes.pdf,2
+ilca4,15,Caden Tan,SGP 213191,SGP,17 & u17,Male,ACS Independent,PA Water Venture,204.0,142.0,(31),7,21,25,14,24,3,8,26,(31),4,10,,,,,classes.pdf,2
+ilca4,16,Nicholette Lee Wee Wen,SGP 197833,SGP,"15 & u15, 17 & u17",Female,Tanjong Katong Girls School,SAF Yacht Club,221.0,159.0,26,8,23,23,9,(31),18,16,9,14,(31),13,,,,,classes.pdf,2
+ilca4,17,Abdulla Almarzooki,UAE 1,UAE,17 & u17,Male,,,268.0,162.0,11,14,28,9,27,3,(UFD 53),18,(DSQ 53),15,16,21,,,,,classes.pdf,2
+ilca4,18,Samuel Tan Hsien Ern,SGP 223134,SGP,17 & u17,Male,St. Joseph's Institution,One?15 Marina,256.0,167.0,17,27,18,16,24,10,(RET 53),(36),15,29,3,8,,,,,classes.pdf,2
+ilca4,19,Foo Yuei Jit,SGP 221686,SGP,"15 & u15, 17 & u17",Male,St. Joseph's Institution,PA Water Venture,250.0,174.0,14,11,29,11,28,23,19,14,24,(33),1,(43),,,,,classes.pdf,2
+ilca4,20,Jayden Khor,SGP 203110,SGP,17 & u17,Male,St Hilda's Secondary School,SAF Yacht Club,247.0,182.0,4,23,16,22,(32),28,20,(33),29,12,11,17,,,,,classes.pdf,2
+ilca4,21,Jemima Chang,SGP 138,SGP,"15 & u15, 17 & u17",Female,Dunman High School,Constant Wind SeaSports,268.0,185.0,20,16,20,20,(30),20,(RET 53),9,20,25,8,27,,,,,classes.pdf,2
+ilca4,22,Wong Yu Da Mathias,SGP 222255,SGP,"15 & u15, 17 & u17",Male,Raffles Institution,SAF Yacht Club,261.0,190.0,19,15,(27),(44),20,21,16,23,14,18,25,19,,,,,classes.pdf,2
+ilca4,23,Lo Jin Keith,SGP 214849,SGP,17 & u17,Male,Victoria School,Constant Wind SeaSports,275.0,208.0,(33),(34),7,29,21,22,28,12,28,30,13,18,,,,,classes.pdf,2
+ilca4,24,Josiah Tan Zhi En,SGP1978,SGP,"15 & u15, 17 & u17",Male,Victoria School,,273.0,212.0,(30),21,19,27,(31),30,13,26,25,17,19,15,,,,,classes.pdf,2
+ilca4,25,Wong Li Xuan Mildred,SGP 223200,SGP,"15 & u15, 17 & u17",Female,Raffles Girls School,SAF Yacht Club,297.0,216.0,16,29,17,19,17,25,24,29,21,19,(47),(34),,,,,classes.pdf,2
+ilca4,26,Wong Kai Lun,SGP 214779,SGP,"15 & u15, 17 & u17",Male,Bowen Sec Sch,PA Water Venture,309.0,227.0,28,32,(43),13,23,36,(39),28,16,24,7,20,,,,,classes.pdf,2
+ilca4,27,Elizabeth Victoria Say,SGP 214873,SGP,"15 & u15, 17 & u17",Female,Dunman High Secondary School,PA Water Venture,307.0,229.0,18,22,33,31,25,16,30,11,(39),(39),27,16,,,,,classes.pdf,2
+ilca4,28,Maia Kiran Lim Laurie,223201,USA,"15 & u15, 17 & u17",Female,Singapore American School,Changi Sailing Club,302.0,229.0,27,31,(37),26,26,14,22,13,17,28,(36),25,,,,,classes.pdf,2
+ilca4,29,Marwa Alhammadi,UAE 2,UAE,"15 & u15, 17 & u17",Female,MBM cycle 2,ADMSC,345.0,255.0,15,36,32,28,(BFD 53),15,11,32,31,(37),24,31,,,,,classes.pdf,3
+ilca4,30,Seah En Rui Cleo,SGP 204286,SGP,"15 & u15, 17 & u17",Female,Canberra Secondary School,SAF Yacht Club,341.0,265.0,32,25,26,33,18,26,(38),(38),18,27,32,28,,,,,classes.pdf,3
+ilca4,31,Eunice Tan Yi Ning,SGP 147875,SGP,"15 & u15, 17 & u17",Female,Dunman High Secondary School,SAF Yacht Club,343.0,271.0,34,20,31,24,34,(37),27,24,34,13,(35),30,,,,,classes.pdf,3
+ilca4,32,Misa Kien Lim Laurie,223202,USA,"15 & u15, 17 & u17",Female,Singapore American School,Changi Sailing Club,356.0,276.0,(40),30,30,39,19,29,17,(40),30,34,12,36,,,,,classes.pdf,3
+ilca4,33,"Ho Jian Yi, Jonathan",SGP 214848,SGP,"15 & u15, 17 & u17",Male,ACS Independent,SAF Yacht Club,360.0,279.0,25,28,36,30,33,27,(41),27,32,21,20,(40),,,,,classes.pdf,3
+ilca4,34,Bu Ruiqiao,SGP 214814,SGP,"15 & u15, 17 & u17",Male,Raffles Institution,SAF Yacht Club,423.0,324.0,37,18,39,36,35,32,(DSQ 53),15,22,44,(46),46,,,,,classes.pdf,3
+ilca4,35,Darren Lai,SGP 222256,SGP,"15 & u15, 17 & u17",Male,St. Joseph's Institution,PA Water Venture,423.0,336.0,21,(42),40,35,22,35,26,41,36,38,(45),42,,,,,classes.pdf,3
+ilca4,36,TRAVIS Yeo Jia Le,SGP 223728,SGP,"15 & u15, 17 & u17",Male,ACS Junior,SAF Yacht Club,447.0,341.0,46,33,22,21,(RET 53),(RET 53),42,31,38,36,40,32,,,,,classes.pdf,3
+ilca4,37,Aaron Abraham Say,SGP 203846,SGP,"15 & u15, 17 & u17",Male,St Stephens School,PA Water Venture,435.0,343.0,23,38,(47),37,(45),45,32,25,45,42,34,22,,,,,classes.pdf,3
+ilca4,38,Reyes Tan Jit Eng,SGP 214251,SGP,"15 & u15, 17 & u17",Male,Dunman High Secondary School,SAF Yacht Club,437.0,344.0,39,19,25,34,36,34,34,(46),46,(47),42,35,,,,,classes.pdf,3
+ilca4,39,Sky Neo Chok Jun,SGP 214254,SGP,17 & u17,Male,Victoria School,,445.0,348.0,42,39,38,43,40,38,25,34,(RET 53),32,17,(44),,,,,classes.pdf,3
+ilca4,40,Brandon Lee,SGP 214248,SGP,"15 & u15, 17 & u17",Male,Victoria School,PA Water Venture,444.0,355.0,38,35,(42),42,39,41,33,42,37,22,26,(47),,,,,classes.pdf,3
+ilca4,41,Ong Yong Jun Josh,SGP 189662,SGP,"15 & u15, 17 & u17",Male,St Joseph Institution Junior,SAF Yacht Club,456.0,363.0,35,41,24,(48),42,39,31,37,41,35,38,(45),,,,,classes.pdf,3
+ilca4,42,Lu Zixi,SGP 27,CHN,"15 & u15, 17 & u17",Male,Stamford American International School,Changi Sailing Club,463.0,364.0,41,(DNC 53),44,38,(46),40,35,30,27,43,28,38,,,,,classes.pdf,3
+ilca4,43,Wanzhi Elva Li,HKG 220859,HKG,"15 & u15, 17 & u17",Female,Concordia International School Shanghai,,462.0,367.0,43,43,46,(47),37,19,29,43,33,45,(48),29,,,,,classes.pdf,3
+ilca4,44,Cheong Ting Rui Magdalene,SGP 22106,SGP,"15 & u15, 17 & u17",Female,Raffles Girls School,SAF Yacht Club,499.0,393.0,36,44,41,41,38,(RET 53),(RET 53),39,35,41,41,37,,,,,classes.pdf,3
+ilca4,45,Nicholas Ng Jiang En,SGP 43,SGP,"15 & u15, 17 & u17",Male,Yishun Town Secondary School,SAF Yacht Club,500.0,398.0,(49),(BFD 53),48,45,44,43,36,44,40,26,39,33,,,,,classes.pdf,3
+ilca4,46,Low Xian Rui Darius,SGP 38,SGP,"15 & u15, 17 & u17",Male,St. Joseph's Institution,SAF Yacht Club,496.0,402.0,45,45,45,32,41,(46),43,45,43,(48),22,41,,,,,classes.pdf,3
+ilca4,47,Sun Weichen,SGP21915,CHN,18 & u18,Male,Yuhua primary school,SAF Yacht Club,503.0,402.0,(DNC 53),40,34,46,29,42,40,(48),42,46,44,39,,,,,classes.pdf,3
+ilca4,48,Gan Ha Joon,SGP 14,SGP,"15 & u15, 17 & u17",Male,Hillgrove Secondary,PA Water Venture,535.0,433.0,48,46,(49),40,43,44,37,(DSQ 53),44,40,43,48,,,,,classes.pdf,3
+ilca4,49,Ethan Wong Yi Chen,SGP 221059,SGP,"15 & u15, 17 & u17",Male,St Joseph Institution,SAF Yacht Club,606.0,500.0,47,47,35,(DNC 53),(DNC 53),DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,,,,,classes.pdf,3
+ilca4,50,Bai Zi Xi Jayden,SGP 312,SGP,"15 & u15, 17 & u17",Male,St. Joseph's Institution,SAF Yacht Club,617.0,511.0,44,(BFD 53),(DSQ 53),DSQ 53,DNC 53,DNC 53,RET 53,47,RET 53,49,DNC 53,DNC 53,,,,,classes.pdf,4
+ilca4,51,Yang Ruiyang,316,CHN,"15 & u15, 17 & u17",Male,UWCSEA DOVER,SAF Yacht Club,621.0,515.0,50,48,50,49,(DNC 53),(DNC 53),DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,,,,,classes.pdf,4
+ilca4,52,Samuel Tan- Hardy,HKG 221934,HKG,17 & u17,Male,United World College South East Asia,Changi Sailing Club,636.0,530.0,(DNC 53),(DNC 53),DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,DNC 53,,,,,classes.pdf,4
+techno293,1,Mark Wong,SGP 34,SGP,,Male,ACS Independent,Constant Wind SeaSports,18.0,11.0,1,(2),1,1,1,(5),2,1,1,1,1,1,,,,,classes.pdf,4
+techno293,2,Trevor Ng Zong Yang,SGP 45,SGP,,Male,Victoria School,Republic of Singapore Yacht Club,24.0,18.0,2,1,2,(3),(3),1,1,2,2,2,3,2,,,,,classes.pdf,4
+techno293,3,Tan Yi En Axl,SGP 82,SGP,,Male,ACS Barker,Constant Wind SeaSports,48.0,37.0,4,(UFD 6),4,4,4,2,(5),3,4,4,4,4,,,,,classes.pdf,4
+techno293,4,Jonas Haris Knick,SGP 39,SGP,,Male,School of Science and Technology,Constant Wind SeaSports,50.0,38.0,3,3,3,2,2,3,4,(DNC 6),(DNC 6),DNC 6,DNC 6,DNC 6,,,,,classes.pdf,4
+techno293,5,Lukas Hadi Knick,SGP 31,SGP,,Male,Tanjong Katong Secondary School,Constant Wind SeaSports,51.0,39.0,(DNC 6),(DNC 6),DNC 6,DNC 6,5,4,3,4,3,3,2,3,,,,,classes.pdf,4
+ilca6,1,Isaac Goh,SGP 219158,SGP,18 & u18,Male,Raffles Institution,Changi Sailing Club,22.0,14.0,(3),2,1,1,1,1,3,2,1,1,(5),1,,,,,classes.pdf,4
+ilca6,2,Kenan Tan,SGP221060,SGP,18 & u18,Male,St. Joseph's Institution,Royal Varuna Yacht Club,40.0,23.0,1,1,2,2,5,2,5,(11),2,2,1,(6),,,,,classes.pdf,4
+ilca6,3,Jarrod Toh,SGP 214748,SGP,18 & u18,Male,ACS Independent,Royal Varuna Yacht Club,65.0,42.0,(12),(11),3,3,4,3,1,1,4,11,8,4,,,,,classes.pdf,4
+ilca6,4,Keira Marie Carlyle,SGP212216,SGP,"Wu20, 18 & u18",Female,Nanyang Polytechnic,Republic of Singapore Yacht Club,99.0,68.0,5,3,(15),(16),11,9,8,14,5,4,2,7,,,,,classes.pdf,4
+ilca6,5,Abigail Koh,SGP 214246,SGP,"Wu20, 18 & u18",Female,Singapore Polytechnic,Constant Wind SeaSports,96.0,70.0,7,10,5,4,(13),5,(13),5,11,8,10,5,,,,,classes.pdf,4
+ilca6,6,Lee Wee Shuen Charlotte,SGP 214235,SGP,"Wu20, 18 & u18",Female,Singapore Polytechnic,Constant Wind SeaSports,98.0,71.0,4,8,(13),(14),3,13,11,4,6,5,9,8,,,,,classes.pdf,4
+ilca6,7,Sarah Seow Hui Yan,SGP 18,SGP,"Wu20, 18 & u18",Female,ACS Independent,Royal Varuna Yacht Club,112.0,79.0,6,7,9,15,12,12,(16),3,9,(17),4,2,,,,,classes.pdf,5
+ilca6,8,Caio Sullivan,USA 221931,USA,"18 & u18, 16 & u16",Male,Singapore American School,Changi Sailing Club,122.0,85.0,13,(17),16,6,8,8,6,9,3,3,(20),13,,,,,classes.pdf,5
+ilca6,9,Wing Yan Paul Chan,SGP 221692,HKG,18 & u18,Male,United World College South East Asia,Constant Wind SeaSports,129.0,85.0,8,12,(19),9,10,11,4,10,8,(DNF 25),3,10,,,,,classes.pdf,5
+ilca6,10,Lim YuTing Elisha,SGP214808,SGP,"Wu20, 18 & u18",Female,Raffles Institution,Constant Wind SeaSports,121.0,87.0,2,14,14,7,7,(19),9,13,(15),6,6,9,,,,,classes.pdf,5
+ilca6,11,"Chow Yi Jun, Ian",SGP203535,SGP,18 & u18,Male,Raffles Institution,SAF Yacht Club,129.0,94.0,(19),(16),11,8,6,10,7,15,13,9,12,3,,,,,classes.pdf,5
+ilca6,12,Ang Jania,SGP 222727,SGP,"Wu20, 18 & u18",Female,Nanyang Technological University,Constant Wind SeaSports,156.0,106.0,10,5,4,5,2,4,2,24,(DNC 25),(DNC 25),DNC 25,DNC 25,,,,,classes.pdf,5
+ilca6,13,Aidan Ang,SGP 209051,SGP,18 & u18,Male,Temasek Polytechnic,PA Water Venture,153.0,109.0,17,(19),12,11,17,6,10,6,7,(DNF 25),7,16,,,,,classes.pdf,5
+ilca6,14,Lim Yi Xuan,SGP214860,SGP,18 & u18,Male,Singapore Polytechnic,SAF Yacht Club,146.0,114.0,14,4,8,13,(16),(16),12,8,16,14,13,12,,,,,classes.pdf,5
+ilca6,15,Mohamed Alhosani,UAE 208904,UAE,18 & u18,Male,,,176.0,126.0,11,6,18,12,15,17,15,7,(DSQ 25),(DSQ 25),14,11,,,,,classes.pdf,5
+ilca6,16,Ou Xin Ying,214760,SGP,"Wu20, 18 & u18",Female,,SAF Yacht Club,177.0,132.0,(20),13,6,19,9,18,(RET 25),12,10,12,16,17,,,,,classes.pdf,5
+ilca6,17,Seah Wei Jun Clive,SGP 214240,SGP,18 & u18,Male,Catholic Junior College,SAF Yacht Club,181.0,144.0,9,(18),17,17,14,7,17,17,17,15,(19),14,,,,,classes.pdf,5
+ilca6,18,Ling Jia En Abigail,SGP 2179,SGP,"Wu20, 18 & u18, 16 & u16",Female,Dunman High Secondary School,Constant Wind SeaSports,194.0,149.0,15,9,10,18,(DNC 25),(20),18,18,18,10,15,18,,,,,classes.pdf,5
+ilca6,19,Zachary Zhang Hong Yi,197834,SGP,"18 & u18, 16 & u16",Male,St. Joseph's Institution,SAF Yacht Club,207.0,165.0,(21),15,7,20,19,15,19,19,19,13,(21),19,,,,,classes.pdf,5
+ilca6,20,Ethan Quek Heok Hwee,SGP121113,SGP,,Male,ACS Independent,SAF Yacht Club,216.0,166.0,(DNC 25),(DNC 25),DNC 25,10,18,14,14,16,12,7,DNC 25,DNC 25,,,,,classes.pdf,5
+ilca6,21,Scott William Van Der Chijs,223199,SGP,18 & u18,Male,United World College South East Asia,Changi Sailing Club,244.0,200.0,16,21,20,21,20,(22),(22),22,20,18,22,20,,,,,classes.pdf,5
+ilca6,22,John Gabriel Lim,SGP 206799,SGP,"18 & u18, 16 & u16",Male,St. Joseph's Institution,Changi Sailing Club,252.0,202.0,(DNC 25),(DNC 25),DNC 25,DNC 25,DNC 25,DNC 25,DNC 25,21,14,16,11,15,,,,,classes.pdf,5
+ilca6,23,Tan En Xi Arabelle,SGP 221690,SGP,"Wu20, 18 & u18, 16 & u16",Female,Tanjong Katong Girls School,Constant Wind SeaSports,254.0,206.0,22,20,(UFD 25),(23),21,21,21,20,21,20,18,22,,,,,classes.pdf,5
+ilca6,24,Alyazia Alhammadi,UAE 201811,UAE,"Wu20, 18 & u18, 16 & u16",Female,,,257.0,207.0,18,22,(UFD 25),22,(UFD 25),23,20,23,22,19,17,21,,,,,classes.pdf,5
+iqfoil,1,John Wong Tze Xiang,SGP 36,SGP,,Male,ACS Independent,,25.0,19.0,2,1,1,1,1,2,1,1,(3),2,2,1,(3),2,1,1,classes.pdf,6
+iqfoil,2,Jayson TAN Jian Sen,SGP 9,SGP,,Male,,Windsurfing Association Singapore,40.0,28.0,1,2,(DSQ 7),2,3,1,2,2,1,1,1,2,(5),4,2,4,classes.pdf,6
+iqfoil,3,Angyal Chew,1,SGP,,Female,Home School,,54.0,44.0,3,3,2,3,4,4,(5),4,2,3,(5),5,1,3,4,3,classes.pdf,6
+iqfoil,4,Jonathan Chan,SGP 29,SGP,,Male,ACS Independent,Aloha SeaSport Centre,56.0,46.0,(5),(5),3,5,2,3,3,5,4,4,4,3,4,1,3,2,classes.pdf,6
+iqfoil,5,Muhammad Razin Bin Mohd Airudin,SGP 152,SGP,,Male,ACS Independent,Constant Wind SeaSports,68.0,57.0,4,4,4,4,(5),5,4,3,5,(6),3,4,2,5,5,5,classes.pdf,6
+iqfoil,6,Lucas Quek Heok Kiat,SGP18,SGP,,Male,ACS Independent,SAF Yacht Club,102.0,88.0,(DNC 7),6,5,6,(DNS 7),DNC 7,6,DNS 7,DNC 7,5,6,RET 7,DNF 7,DNF 7,6,6,classes.pdf,6

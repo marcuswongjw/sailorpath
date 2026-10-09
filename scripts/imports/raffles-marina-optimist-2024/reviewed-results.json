@@ -1,0 +1,8696 @@
+[
+  {
+    "ordinal": 1,
+    "fleet": "gold",
+    "rank": 1,
+    "name": "Ethan Chia Han Wei",
+    "sail": "121",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(21)"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      }
+    ],
+    "total": 36.0,
+    "nett": 15.0,
+    "sailor_id": "156283b1-fac6-48ba-a530-bd5a78d77114",
+    "existing_name": "Ethan Chia Han Wei",
+    "match_method": "existing_gold_row",
+    "handle": "ethan-chia-han-wei"
+  },
+  {
+    "ordinal": 2,
+    "fleet": "gold",
+    "rank": 2,
+    "name": "Nigel Tan Xu Yuan",
+    "sail": "4693",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(23)"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      }
+    ],
+    "total": 47.0,
+    "nett": 24.0,
+    "sailor_id": "ca98c637-aebd-4f38-81c7-80345846c93a",
+    "existing_name": "Nigel Tan Xu Yuan",
+    "match_method": "existing_gold_row",
+    "handle": "nigel-tan-xu-yuan"
+  },
+  {
+    "ordinal": 3,
+    "fleet": "gold",
+    "rank": 3,
+    "name": "Lucas Cao Zhihong",
+    "sail": "149",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(19)"
+      }
+    ],
+    "total": 45.0,
+    "nett": 26.0,
+    "sailor_id": "537e3303-85f9-4b8f-81f3-90999f53cc95",
+    "existing_name": "Lucas Cao Zhihong",
+    "match_method": "existing_gold_row",
+    "handle": "lucas-cao-zhihong"
+  },
+  {
+    "ordinal": 4,
+    "fleet": "gold",
+    "rank": 4,
+    "name": "Mikaela Ng",
+    "sail": "151",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(13)"
+      }
+    ],
+    "total": 39.0,
+    "nett": 26.0,
+    "sailor_id": "cf6ab6b5-6792-4493-b4ff-4dff86acd6df",
+    "existing_name": "Mikaela Rae Ng",
+    "match_method": "existing_gold_row",
+    "handle": "mikaela-rae-ng"
+  },
+  {
+    "ordinal": 5,
+    "fleet": "gold",
+    "rank": 5,
+    "name": "Pee Teck Woon",
+    "sail": "3146",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(17)"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      }
+    ],
+    "total": 47.0,
+    "nett": 30.0,
+    "sailor_id": "4c24ef37-0d0c-4d89-aba8-b60b619eabf0",
+    "existing_name": "Pee Teck Woon",
+    "match_method": "existing_gold_row",
+    "handle": "pee-teck-woon"
+  },
+  {
+    "ordinal": 6,
+    "fleet": "gold",
+    "rank": 6,
+    "name": "Margaux Nguyen-Minh",
+    "sail": "535",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(24)"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      }
+    ],
+    "total": 56.0,
+    "nett": 32.0,
+    "sailor_id": "fe5ee948-1f18-4783-bd9d-80c1d0310ade",
+    "existing_name": "Margaux Nguyen-Minh",
+    "match_method": "existing_gold_row",
+    "handle": "margaux-nguyen-minh-fcs112q"
+  },
+  {
+    "ordinal": 7,
+    "fleet": "gold",
+    "rank": 7,
+    "name": "Kum Kok Wei Sean",
+    "sail": "142",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(22)"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      }
+    ],
+    "total": 59.0,
+    "nett": 37.0,
+    "sailor_id": "e84ec5f5-02aa-4b5b-889a-edf1eefdbfbf",
+    "existing_name": "Sean Kum Kok Wei",
+    "match_method": "existing_gold_row",
+    "handle": "sean-kum-kok-wei"
+  },
+  {
+    "ordinal": 8,
+    "fleet": "gold",
+    "rank": 8,
+    "name": "Zeph Wan",
+    "sail": "122",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(26)"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      }
+    ],
+    "total": 73.0,
+    "nett": 47.0,
+    "sailor_id": "e178e8d4-02b8-470f-9235-4a451f5eb31a",
+    "existing_name": "Zeph Wan",
+    "match_method": "existing_gold_row",
+    "handle": "zeph-wan"
+  },
+  {
+    "ordinal": 9,
+    "fleet": "gold",
+    "rank": 9,
+    "name": "Desiree lee",
+    "sail": "4698",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(32)"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      }
+    ],
+    "total": 84.0,
+    "nett": 52.0,
+    "sailor_id": "7a1b19c2-78a8-414c-8acf-a6dc6f7fb617",
+    "existing_name": "Desiree Lee Yuet Chi",
+    "match_method": "existing_gold_row",
+    "handle": "desiree-lee-yuet-chi"
+  },
+  {
+    "ordinal": 10,
+    "fleet": "gold",
+    "rank": 10,
+    "name": "Lyric Li Yuxuan",
+    "sail": "728",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(37)"
+      }
+    ],
+    "total": 104.0,
+    "nett": 67.0,
+    "sailor_id": "49951b17-f523-4f27-b5a1-b215d311ff3e",
+    "existing_name": "Lyric Li Yuxuan",
+    "match_method": "existing_gold_row",
+    "handle": "lyric-li-yuxuan"
+  },
+  {
+    "ordinal": 11,
+    "fleet": "gold",
+    "rank": 11,
+    "name": "Tong Xuan Ya",
+    "sail": "4460",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(35)"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      }
+    ],
+    "total": 102.0,
+    "nett": 67.0,
+    "sailor_id": "f8a52951-c0d1-48ea-ab43-e6a8d02d5e71",
+    "existing_name": "Tong Xuan Ya",
+    "match_method": "existing_gold_row",
+    "handle": "tong-xuan-ya"
+  },
+  {
+    "ordinal": 12,
+    "fleet": "gold",
+    "rank": 12,
+    "name": "Ashlea Tham",
+    "sail": "175",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(35)"
+      }
+    ],
+    "total": 104.0,
+    "nett": 69.0,
+    "sailor_id": "90b36217-ca95-4a90-b8f3-a502537842ab",
+    "existing_name": "Ashlea Tham Yan Shuang",
+    "match_method": "existing_gold_row",
+    "handle": "tham-yan-shuang-ashlea"
+  },
+  {
+    "ordinal": 13,
+    "fleet": "gold",
+    "rank": 13,
+    "name": "Nia Zahedi",
+    "sail": "144",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(37)"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      }
+    ],
+    "total": 106.0,
+    "nett": 69.0,
+    "sailor_id": "20af3d01-7d86-4111-bad1-0c2be026e039",
+    "existing_name": "Nia Mehry Zahedi",
+    "match_method": "existing_gold_row",
+    "handle": "nia-mehry-zahedi-04ev2zf"
+  },
+  {
+    "ordinal": 14,
+    "fleet": "gold",
+    "rank": 14,
+    "name": "Julien Christian Petracco",
+    "sail": "3102",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(33)"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      }
+    ],
+    "total": 117.0,
+    "nett": 84.0,
+    "sailor_id": "266451eb-c8e3-4485-9e81-bcf4cff922d9",
+    "existing_name": "Julien Christian Petracco",
+    "match_method": "existing_gold_row",
+    "handle": "julien-christian-petracco"
+  },
+  {
+    "ordinal": 15,
+    "fleet": "gold",
+    "rank": 15,
+    "name": "Anya Zahedi",
+    "sail": "4724",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(42)"
+      }
+    ],
+    "total": 128.0,
+    "nett": 86.0,
+    "sailor_id": "1acfd3b9-1a1e-4312-8037-0b02e57622f5",
+    "existing_name": "Anya Alessia Zahedi",
+    "match_method": "existing_gold_row",
+    "handle": "anya-alessia-zahedi"
+  },
+  {
+    "ordinal": 16,
+    "fleet": "gold",
+    "rank": 16,
+    "name": "Germaine Sim",
+    "sail": "3177",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(38)"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      }
+    ],
+    "total": 128.0,
+    "nett": 90.0,
+    "sailor_id": "511e15d5-2823-47e3-b915-7e398bcc1ae8",
+    "existing_name": "Germaine Sim",
+    "match_method": "existing_gold_row",
+    "handle": "germaine-sim"
+  },
+  {
+    "ordinal": 17,
+    "fleet": "gold",
+    "rank": 17,
+    "name": "Alyssa Wong",
+    "sail": "3396",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(47)"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      }
+    ],
+    "total": 138.0,
+    "nett": 91.0,
+    "sailor_id": "bd4018cd-2bd7-4a5d-bf15-5ea37f71ef21",
+    "existing_name": "Alyssa Wong Li Lin",
+    "match_method": "existing_gold_row",
+    "handle": "alyssa-wong-li-lin"
+  },
+  {
+    "ordinal": 18,
+    "fleet": "gold",
+    "rank": 18,
+    "name": "Ashlyn Tham",
+    "sail": "4452",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(53)"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      }
+    ],
+    "total": 144.0,
+    "nett": 91.0,
+    "sailor_id": "f6fdc628-334e-4b4c-80d0-137741381922",
+    "existing_name": "Ashlyn Tham Yan Lin",
+    "match_method": "existing_gold_row",
+    "handle": "tham-yan-lin-ashlyn"
+  },
+  {
+    "ordinal": 19,
+    "fleet": "gold",
+    "rank": 19,
+    "name": "Nathaniel Kaiden Ng",
+    "sail": "3344",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(26)"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      }
+    ],
+    "total": 120.0,
+    "nett": 94.0,
+    "sailor_id": "85b13b47-1e45-462b-b214-870e38a706c9",
+    "existing_name": "Nathaniel Kaiden Ng",
+    "match_method": "existing_gold_row",
+    "handle": "nathaniel-kaiden-ng"
+  },
+  {
+    "ordinal": 20,
+    "fleet": "gold",
+    "rank": 20,
+    "name": "Damien Huang",
+    "sail": "3300",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(35)"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      }
+    ],
+    "total": 130.0,
+    "nett": 95.0,
+    "sailor_id": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+    "existing_name": "Damien Huang",
+    "match_method": "existing_gold_row",
+    "handle": "damien-huang"
+  },
+  {
+    "ordinal": 21,
+    "fleet": "gold",
+    "rank": 21,
+    "name": "Cheung Lap Yan Nathaniel",
+    "sail": "156",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(36)"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      }
+    ],
+    "total": 132.0,
+    "nett": 96.0,
+    "sailor_id": "d2117784-0767-4bc7-9137-e7fc13b42df8",
+    "existing_name": "Cheung Lap Yan Nathaniel",
+    "match_method": "existing_gold_row",
+    "handle": "cheung-lap-yan-nathaniel"
+  },
+  {
+    "ordinal": 22,
+    "fleet": "gold",
+    "rank": 22,
+    "name": "Wai Zhi Tong",
+    "sail": "3458",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(45)"
+      }
+    ],
+    "total": 144.0,
+    "nett": 99.0,
+    "sailor_id": "903d2cf9-2099-4411-8cf0-e6074ac2c369",
+    "existing_name": "Wai Zhi Tong",
+    "match_method": "existing_gold_row",
+    "handle": "wai-zhi-tong"
+  },
+  {
+    "ordinal": 23,
+    "fleet": "gold",
+    "rank": 23,
+    "name": "Kevin Ho",
+    "sail": "3118",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(48)"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      }
+    ],
+    "total": 148.0,
+    "nett": 100.0,
+    "sailor_id": "3310f5f2-8b8e-4f71-9ad7-2e03f1202cd9",
+    "existing_name": "Kevin Ho Jun Yi",
+    "match_method": "existing_gold_row",
+    "handle": "kevin-ho-jun-yi"
+  },
+  {
+    "ordinal": 24,
+    "fleet": "gold",
+    "rank": 24,
+    "name": "Ethan Lee",
+    "sail": "83",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(31)"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      }
+    ],
+    "total": 139.0,
+    "nett": 108.0,
+    "sailor_id": "c4e262cc-1d16-4e95-90a0-c168b25c2de1",
+    "existing_name": "Ethan Lee",
+    "match_method": "existing_gold_row",
+    "handle": "ethan-lee"
+  },
+  {
+    "ordinal": 25,
+    "fleet": "gold",
+    "rank": 25,
+    "name": "Nicole Ashley Quek",
+    "sail": "108",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(50)"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      }
+    ],
+    "total": 168.0,
+    "nett": 118.0,
+    "sailor_id": "83852500-a6d8-4363-80b4-224aa85d0af5",
+    "existing_name": "Nicole Ashley Quek",
+    "match_method": "existing_gold_row",
+    "handle": "nicole-ashley-quek-isd5qm3"
+  },
+  {
+    "ordinal": 26,
+    "fleet": "gold",
+    "rank": 26,
+    "name": "Jairus Teo",
+    "sail": "3107",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(35)"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      }
+    ],
+    "total": 172.0,
+    "nett": 137.0,
+    "sailor_id": "97ef7d2f-9b92-4750-94d4-af96e3d7b3a8",
+    "existing_name": "Jairus Teo Xin Jie",
+    "match_method": "existing_gold_row",
+    "handle": "jairus-teo-xin-jie"
+  },
+  {
+    "ordinal": 27,
+    "fleet": "gold",
+    "rank": 27,
+    "name": "Caleb Peck",
+    "sail": "3153",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(51)"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      }
+    ],
+    "total": 197.0,
+    "nett": 146.0,
+    "sailor_id": "4ddc7a93-d74c-4679-bc2f-ba7d95e8f76f",
+    "existing_name": "Caleb Peck Rui Kai",
+    "match_method": "existing_gold_row",
+    "handle": "caleb-peck-rui-kai-053ej52"
+  },
+  {
+    "ordinal": 28,
+    "fleet": "gold",
+    "rank": 28,
+    "name": "Russell Xavier Quek",
+    "sail": "3008",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(71)"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      }
+    ],
+    "total": 221.0,
+    "nett": 150.0,
+    "sailor_id": "19971e93-836b-40bc-b75d-7720eb3a0ba7",
+    "existing_name": "Russell Xavier Quek",
+    "match_method": "existing_gold_row",
+    "handle": "russell-xavier-quek"
+  },
+  {
+    "ordinal": 29,
+    "fleet": "gold",
+    "rank": 29,
+    "name": "Tan Herng Yee",
+    "sail": "3000",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(65)"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      }
+    ],
+    "total": 220.0,
+    "nett": 155.0,
+    "sailor_id": "2bef1064-0ac4-4ff0-80e0-c3d6e96979e7",
+    "existing_name": "Tan Herng Yee",
+    "match_method": "existing_gold_row",
+    "handle": "tan-herng-yee"
+  },
+  {
+    "ordinal": 30,
+    "fleet": "gold",
+    "rank": 30,
+    "name": "Alix Nguyen-Minh",
+    "sail": "537",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(59)"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      }
+    ],
+    "total": 223.0,
+    "nett": 164.0,
+    "sailor_id": "6eacd878-8c53-4133-93fa-898d196bdf18",
+    "existing_name": "Alix Nguyen-Minh",
+    "match_method": "existing_gold_row",
+    "handle": "alix-nguyen-minh"
+  },
+  {
+    "ordinal": 31,
+    "fleet": "gold",
+    "rank": 31,
+    "name": "Jared Liew Soon Kit",
+    "sail": "3425",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(72)"
+      }
+    ],
+    "total": 237.0,
+    "nett": 165.0,
+    "sailor_id": "85114e8d-2560-414e-a70d-f748a087922d",
+    "existing_name": "Jared Soon Kit Liew",
+    "match_method": "existing_gold_row",
+    "handle": "jared-soon-kit-liew"
+  },
+  {
+    "ordinal": 32,
+    "fleet": "gold",
+    "rank": 32,
+    "name": "Jaye Low",
+    "sail": "3279",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(61)"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      }
+    ],
+    "total": 232.0,
+    "nett": 171.0,
+    "sailor_id": "0d971067-83db-4e61-b1d4-c4122e74d33b",
+    "existing_name": "Jaye Low Xi En",
+    "match_method": "existing_gold_row",
+    "handle": "jaye-low-xi-en"
+  },
+  {
+    "ordinal": 33,
+    "fleet": "gold",
+    "rank": 33,
+    "name": "Yong Heng Yi",
+    "sail": "755",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(56)"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      }
+    ],
+    "total": 241.0,
+    "nett": 185.0,
+    "sailor_id": "6d0f89fb-9212-4992-bb80-7f5e79b6804b",
+    "existing_name": "Yong Heng Yi",
+    "match_method": "existing_gold_row",
+    "handle": "yong-heng-yi"
+  },
+  {
+    "ordinal": 34,
+    "fleet": "gold",
+    "rank": 34,
+    "name": "Zaid Mohamed Noordeen Bin Jaffar Sadik",
+    "sail": "3666",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(51)"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      }
+    ],
+    "total": 246.0,
+    "nett": 195.0,
+    "sailor_id": "a5abe9bf-2015-4885-b144-34a9c5d00c4e",
+    "existing_name": "Zaid Mohd Noordeen Bin Jaffar Sadik",
+    "match_method": "existing_gold_row",
+    "handle": "zaid-mohd-noordeen-bin-jaffar-sadik-09520dc"
+  },
+  {
+    "ordinal": 35,
+    "fleet": "gold",
+    "rank": 35,
+    "name": "Chen Huan Heng Gemma",
+    "sail": "4729",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(59)"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      }
+    ],
+    "total": 255.0,
+    "nett": 196.0,
+    "sailor_id": "688cc8ae-873e-40a3-9bc4-7d05a496994a",
+    "existing_name": "Gemma Chen Huang Heng",
+    "match_method": "existing_gold_row",
+    "handle": "gemma-chen-huang-heng"
+  },
+  {
+    "ordinal": 36,
+    "fleet": "gold",
+    "rank": 36,
+    "name": "Elijah Ong",
+    "sail": "3950",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(69)"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      }
+    ],
+    "total": 271.0,
+    "nett": 202.0,
+    "sailor_id": "20a011f0-320f-4c70-86e4-660de7a7438e",
+    "existing_name": "Elijah Ong",
+    "match_method": "existing_gold_row",
+    "handle": "elijah-ong"
+  },
+  {
+    "ordinal": 37,
+    "fleet": "gold",
+    "rank": 37,
+    "name": "Kayden Tan Yi Kai",
+    "sail": "3104",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(80)"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      }
+    ],
+    "total": 287.0,
+    "nett": 207.0,
+    "sailor_id": "920db738-dded-439f-872f-fe1327ca123d",
+    "existing_name": "Tan Yi Kai Kayden",
+    "match_method": "existing_gold_row",
+    "handle": "tan-yi-kai-kayden"
+  },
+  {
+    "ordinal": 38,
+    "fleet": "gold",
+    "rank": 38,
+    "name": "Lim Yuk Pin",
+    "sail": "3880",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 86.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(86)"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": false,
+        "raw": "75"
+      }
+    ],
+    "total": 293.0,
+    "nett": 207.0,
+    "sailor_id": "f1847f7f-73ff-44eb-8b43-c3d42eac459a",
+    "existing_name": "Lim Yuk Pin",
+    "match_method": "existing_gold_row",
+    "handle": "lim-yuk-pin"
+  },
+  {
+    "ordinal": 39,
+    "fleet": "gold",
+    "rank": 39,
+    "name": "Rahul Rajakanth",
+    "sail": "2006",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(62)"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      }
+    ],
+    "total": 271.0,
+    "nett": 209.0,
+    "sailor_id": "bcfa511b-8ab9-427f-94b6-cad270e006a3",
+    "existing_name": "Rahul Rajakanth",
+    "match_method": "existing_gold_row",
+    "handle": "rahul-rajakanth"
+  },
+  {
+    "ordinal": 40,
+    "fleet": "gold",
+    "rank": 40,
+    "name": "Jedd Lam Zhi Hao",
+    "sail": "2000",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(66)"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      }
+    ],
+    "total": 277.0,
+    "nett": 211.0,
+    "sailor_id": "c5cabcd3-8962-4c14-aa93-f8b754908fc0",
+    "existing_name": "Jedd Lam Zhi Hao",
+    "match_method": "existing_gold_row",
+    "handle": "jedd-lam-zhi-hao"
+  },
+  {
+    "ordinal": 41,
+    "fleet": "gold",
+    "rank": 41,
+    "name": "Rupert Chang",
+    "sail": "5172",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(63)"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      }
+    ],
+    "total": 275.0,
+    "nett": 212.0,
+    "sailor_id": "43daf9fb-da6e-46d9-b1d3-5ad31f3ecde2",
+    "existing_name": "Rupert Kije Chang Shanpng",
+    "match_method": "existing_gold_row",
+    "handle": "rupert-kije-chang-shanpng"
+  },
+  {
+    "ordinal": 42,
+    "fleet": "gold",
+    "rank": 42,
+    "name": "Dylan Goh Yue Teng",
+    "sail": "3800",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(52)"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      }
+    ],
+    "total": 264.0,
+    "nett": 212.0,
+    "sailor_id": "4119a66c-a149-446c-ac98-719ce8fe1b1b",
+    "existing_name": "Dylan Yue Teng Goh",
+    "match_method": "existing_gold_row",
+    "handle": "dylan-yue-teng-goh"
+  },
+  {
+    "ordinal": 43,
+    "fleet": "gold",
+    "rank": 43,
+    "name": "Gerome Sim",
+    "sail": "3188",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(85)"
+      }
+    ],
+    "total": 298.0,
+    "nett": 213.0,
+    "sailor_id": "2ff98601-d8f0-49f2-a643-754b2a6cea8a",
+    "existing_name": "Gerome Sim",
+    "match_method": "existing_gold_row",
+    "handle": "gerome-sim"
+  },
+  {
+    "ordinal": 44,
+    "fleet": "gold",
+    "rank": 44,
+    "name": "Yeh Zi Ning Kate",
+    "sail": "797",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(66)"
+      }
+    ],
+    "total": 282.0,
+    "nett": 216.0,
+    "sailor_id": "fad31990-f21e-4cc5-948c-0708b8e6a4eb",
+    "existing_name": "Kate Yeh Zi Ning",
+    "match_method": "existing_gold_row",
+    "handle": "kate-yeh-zi-ning"
+  },
+  {
+    "ordinal": 45,
+    "fleet": "gold",
+    "rank": 45,
+    "name": "Lim Yuk Jun",
+    "sail": "3377",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(54)"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      }
+    ],
+    "total": 272.0,
+    "nett": 218.0,
+    "sailor_id": "26414c39-ffe4-417d-aabc-a577d6355fd5",
+    "existing_name": "Lim Yuk Jun",
+    "match_method": "existing_gold_row",
+    "handle": "lim-yuk-jun"
+  },
+  {
+    "ordinal": 46,
+    "fleet": "gold",
+    "rank": 46,
+    "name": "Callum Wong Joon Thang",
+    "sail": "3321",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      }
+    ],
+    "total": 305.0,
+    "nett": 221.0,
+    "sailor_id": "a80d6ed2-6009-4b3d-9589-5f7ac6414a08",
+    "existing_name": "Callum Wong Joon Thang",
+    "match_method": "existing_gold_row",
+    "handle": "callum-wong-joon-thang"
+  },
+  {
+    "ordinal": 47,
+    "fleet": "gold",
+    "rank": 47,
+    "name": "Siti Ra'idah Binte Mohd Airudin",
+    "sail": "3181",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(71)"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      }
+    ],
+    "total": 292.0,
+    "nett": 221.0,
+    "sailor_id": "1b1b2689-e69d-4f29-84f2-71ce2b5dd7d2",
+    "existing_name": "Siti Raidah Binte Mohd Airudin",
+    "match_method": "existing_gold_row",
+    "handle": "siti-ra-idah-binte-mohd-airudin"
+  },
+  {
+    "ordinal": 48,
+    "fleet": "gold",
+    "rank": 48,
+    "name": "Lucien Cohen-Addad",
+    "sail": "563",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(65)"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      }
+    ],
+    "total": 289.0,
+    "nett": 224.0,
+    "sailor_id": "ce7e5859-af89-452a-9d74-7855e9d30bc1",
+    "existing_name": "Lucien Cohen-Addad",
+    "match_method": "existing_gold_row",
+    "handle": "lucien-cohen-addad-4jgl4ox"
+  },
+  {
+    "ordinal": 49,
+    "fleet": "gold",
+    "rank": 49,
+    "name": "Gaitan Sullivan",
+    "sail": "22154",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 73.5,
+        "code": null,
+        "discarded": false,
+        "raw": "73.5"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(85)"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      }
+    ],
+    "total": 312.5,
+    "nett": 227.5,
+    "sailor_id": "ea9482d1-dd48-4140-b17e-da9affef197d",
+    "existing_name": "Gaitan Sullivan",
+    "match_method": "existing_gold_row",
+    "handle": "gaitan-sullivan-0dhtabn"
+  },
+  {
+    "ordinal": 50,
+    "fleet": "gold",
+    "rank": 50,
+    "name": "Lim Rui Kai, Lucas",
+    "sail": "3355",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(83)"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      }
+    ],
+    "total": 312.0,
+    "nett": 229.0,
+    "sailor_id": "25404662-9da1-43a2-8608-9a7e82e40235",
+    "existing_name": "Lim Rui Kai, Lucas",
+    "match_method": "existing_gold_row",
+    "handle": "lim-rui-kai-lucas"
+  },
+  {
+    "ordinal": 51,
+    "fleet": "gold",
+    "rank": 51,
+    "name": "Ethan Low",
+    "sail": "3855",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 77.5,
+        "code": null,
+        "discarded": false,
+        "raw": "77.5"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(83)"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      }
+    ],
+    "total": 312.5,
+    "nett": 229.5,
+    "sailor_id": "5439be9a-9c0f-455f-80e5-9ea30658aa2e",
+    "existing_name": "Ethan Low Zhi Ren",
+    "match_method": "existing_gold_row",
+    "handle": "ethan-low-zhi-ren"
+  },
+  {
+    "ordinal": 52,
+    "fleet": "gold",
+    "rank": 52,
+    "name": "Elliot Goh",
+    "sail": "3103",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(62)"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      }
+    ],
+    "total": 295.0,
+    "nett": 233.0,
+    "sailor_id": "f5cb0571-0e18-425d-a967-fc09df6bf42d",
+    "existing_name": "Elliot Goh",
+    "match_method": "existing_gold_row",
+    "handle": "elliot-goh"
+  },
+  {
+    "ordinal": 53,
+    "fleet": "gold",
+    "rank": 53,
+    "name": "John Raphael Lim",
+    "sail": "788",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      },
+      {
+        "score": 86.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(86)"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      }
+    ],
+    "total": 325.0,
+    "nett": 239.0,
+    "sailor_id": "6bc22d30-b06a-4e64-86a9-f4cb99535f33",
+    "existing_name": "John Raphael Lim",
+    "match_method": "existing_gold_row",
+    "handle": "john-raphael-lim-0h6gqjh"
+  },
+  {
+    "ordinal": 54,
+    "fleet": "gold",
+    "rank": 54,
+    "name": "Zephyr Tan Wen",
+    "sail": "4717",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(79)"
+      }
+    ],
+    "total": 321.0,
+    "nett": 242.0,
+    "sailor_id": "f953f351-0155-458f-b712-37349e8dba07",
+    "existing_name": "Zephyr Tan Wen",
+    "match_method": "existing_gold_row",
+    "handle": "zephyr-tan-wen"
+  },
+  {
+    "ordinal": 55,
+    "fleet": "gold",
+    "rank": 55,
+    "name": "Akhshaya Santoz",
+    "sail": "2008",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(83)"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      }
+    ],
+    "total": 327.0,
+    "nett": 244.0,
+    "sailor_id": "61fea959-614c-4a68-abfd-1ff8305d6eba",
+    "existing_name": "Akhshaya Santoz",
+    "match_method": "existing_gold_row",
+    "handle": "akhshaya-santoz"
+  },
+  {
+    "ordinal": 56,
+    "fleet": "gold",
+    "rank": 56,
+    "name": "Jeremiah Ong",
+    "sail": "3373",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(81)"
+      }
+    ],
+    "total": 327.0,
+    "nett": 246.0,
+    "sailor_id": "7da044cf-8d59-4547-84a7-05d5a737f8e2",
+    "existing_name": "Jeremiah Ong Rui Feng",
+    "match_method": "existing_gold_row",
+    "handle": "jeremiah-ong-rui-feng"
+  },
+  {
+    "ordinal": 57,
+    "fleet": "gold",
+    "rank": 57,
+    "name": "Edrei Ong",
+    "sail": "3957",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(82)"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      }
+    ],
+    "total": 335.0,
+    "nett": 253.0,
+    "sailor_id": "cc440855-238a-49c6-972b-c5dee8cc586f",
+    "existing_name": "Edrei Ong En Xu",
+    "match_method": "existing_gold_row",
+    "handle": "edrei-ong-en-xu"
+  },
+  {
+    "ordinal": 58,
+    "fleet": "gold",
+    "rank": 58,
+    "name": "Jude Nathan Wong",
+    "sail": "3495",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(75)"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      }
+    ],
+    "total": 331.0,
+    "nett": 256.0,
+    "sailor_id": "0ce20c93-5ef1-4f61-a6ee-a3a7eacc5d9a",
+    "existing_name": "Jude Nathan Wong",
+    "match_method": "existing_gold_row",
+    "handle": "jude-nathan-wong"
+  },
+  {
+    "ordinal": 59,
+    "fleet": "gold",
+    "rank": 59,
+    "name": "Joshua Khoo Zhuo Xi",
+    "sail": "4728",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      }
+    ],
+    "total": 342.0,
+    "nett": 258.0,
+    "sailor_id": "3e820fe0-966e-4b57-b540-aaaca3b8688e",
+    "existing_name": "Joshua Khoo Zhuo Xi",
+    "match_method": "existing_gold_row",
+    "handle": "joshua-khoo-zhuo-xi"
+  },
+  {
+    "ordinal": 60,
+    "fleet": "gold",
+    "rank": 60,
+    "name": "Jonas Tan Yi Jun",
+    "sail": "3481",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(77)"
+      }
+    ],
+    "total": 338.0,
+    "nett": 261.0,
+    "sailor_id": "c8f5d2b3-7e69-401b-8d44-2b7f9a1e5c32",
+    "existing_name": "Jonas Tan Yi Jun",
+    "match_method": "existing_gold_row",
+    "handle": "jonas-tan-yi-jun-nsc24"
+  },
+  {
+    "ordinal": 61,
+    "fleet": "gold",
+    "rank": 61,
+    "name": "Yap Swee Wayne",
+    "sail": "3128",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      }
+    ],
+    "total": 342.0,
+    "nett": 266.0,
+    "sailor_id": "fb679bba-d2d2-483b-aa2c-34262239cf91",
+    "existing_name": "Wayne Yap Swee",
+    "match_method": "existing_gold_row",
+    "handle": "wayne-yap-swee-0n7y2pu"
+  },
+  {
+    "ordinal": 62,
+    "fleet": "gold",
+    "rank": 62,
+    "name": "Kaelyn Dayna Soh Zhi Yi",
+    "sail": "3113",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(69)"
+      }
+    ],
+    "total": 336.0,
+    "nett": 267.0,
+    "sailor_id": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+    "existing_name": "Kaelyn Dayna Soh Zhi Yi",
+    "match_method": "existing_gold_row",
+    "handle": "kaelyn-dayna-soh-zhi-yi"
+  },
+  {
+    "ordinal": 63,
+    "fleet": "gold",
+    "rank": 63,
+    "name": "Joash Kok Jit Yin",
+    "sail": "3057",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(80)"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      }
+    ],
+    "total": 349.0,
+    "nett": 269.0,
+    "sailor_id": "80935e23-2023-46f7-91a8-deabb84e5aae",
+    "existing_name": "Joash Kok Jit Yin",
+    "match_method": "existing_gold_row",
+    "handle": "joash-kok-jit-yin"
+  },
+  {
+    "ordinal": 64,
+    "fleet": "gold",
+    "rank": 64,
+    "name": "Yeh Zi Yu Jade",
+    "sail": "798",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(75)"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      }
+    ],
+    "total": 345.0,
+    "nett": 270.0,
+    "sailor_id": "b644dd47-331b-4452-be98-e4b8815c4186",
+    "existing_name": "Jade Yeh Zi Yu",
+    "match_method": "existing_gold_row",
+    "handle": "jade-yeh-zi-yu"
+  },
+  {
+    "ordinal": 65,
+    "fleet": "gold",
+    "rank": 65,
+    "name": "Eugene Tan Yi Ze",
+    "sail": "3999",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(81)"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      }
+    ],
+    "total": 352.0,
+    "nett": 271.0,
+    "sailor_id": "dade0eb7-d235-412a-8d1a-3829a4849353",
+    "existing_name": "Eugene Tan Yi Ze",
+    "match_method": "existing_gold_row",
+    "handle": "eugene-tan-yi-ze-0juuhnv"
+  },
+  {
+    "ordinal": 66,
+    "fleet": "gold",
+    "rank": 66,
+    "name": "Charles Kong",
+    "sail": "716",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": false,
+        "raw": "75"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      }
+    ],
+    "total": 348.0,
+    "nett": 272.0,
+    "sailor_id": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+    "existing_name": "Charles Kong Shing Chak",
+    "match_method": "existing_gold_row",
+    "handle": "charles-kong-shing-chak"
+  },
+  {
+    "ordinal": 67,
+    "fleet": "gold",
+    "rank": 67,
+    "name": "Caleb Cao Zhixuan",
+    "sail": "3193",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(85)"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      }
+    ],
+    "total": 361.0,
+    "nett": 276.0,
+    "sailor_id": "1308ee47-a24a-4248-8040-427a48391187",
+    "existing_name": "Caleb Cao Zhixuan",
+    "match_method": "existing_gold_row",
+    "handle": "caleb-cao-zhixuan"
+  },
+  {
+    "ordinal": 68,
+    "fleet": "gold",
+    "rank": 68,
+    "name": "Lucien Gan Swee iok",
+    "sail": "2007",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      }
+    ],
+    "total": 359.0,
+    "nett": 283.0,
+    "sailor_id": "c269a5f9-6b34-4ed7-a5bd-b1d956d357aa",
+    "existing_name": "Lucien Gan Swee Lok",
+    "match_method": "existing_gold_row",
+    "handle": "lucien-gan-swee-lok"
+  },
+  {
+    "ordinal": 69,
+    "fleet": "gold",
+    "rank": 69,
+    "name": "Darian Huang",
+    "sail": "3700",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      }
+    ],
+    "total": 359.0,
+    "nett": 283.0,
+    "sailor_id": "bd38a1f4-5a06-4b4d-a92c-c73d51266b6c",
+    "existing_name": "Darian Huang",
+    "match_method": "existing_gold_row",
+    "handle": "darian-huang"
+  },
+  {
+    "ordinal": 70,
+    "fleet": "gold",
+    "rank": 70,
+    "name": "Mika Tew",
+    "sail": "3535",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(81)"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      }
+    ],
+    "total": 365.0,
+    "nett": 284.0,
+    "sailor_id": "bf1de4cb-9dd4-426d-a9e1-a669f7e091d9",
+    "existing_name": "Mika Tew",
+    "match_method": "existing_gold_row",
+    "handle": "mika-tew-0741h6l"
+  },
+  {
+    "ordinal": 71,
+    "fleet": "gold",
+    "rank": 71,
+    "name": "Mohamed Mikail Bin Mohamed Shahrom",
+    "sail": "704",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(72)"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      }
+    ],
+    "total": 361.0,
+    "nett": 289.0,
+    "sailor_id": "d5e7f064-9541-43c7-99ae-2e29f6bf61ba",
+    "existing_name": "Mohamed Mikail Bin Mohamed Shahrom",
+    "match_method": "existing_gold_row",
+    "handle": "mohamed-mikail-bin-mohamed-shahrom"
+  },
+  {
+    "ordinal": 72,
+    "fleet": "gold",
+    "rank": 72,
+    "name": "Cecilia Kong",
+    "sail": "715",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(82)"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": false,
+        "raw": "82"
+      }
+    ],
+    "total": 372.0,
+    "nett": 290.0,
+    "sailor_id": "e4ec252a-fee9-40d0-9c1b-5145a55b800c",
+    "existing_name": "Kong Sze Sen Cecilia",
+    "match_method": "existing_gold_row",
+    "handle": "kong-sze-sen-cecilia"
+  },
+  {
+    "ordinal": 73,
+    "fleet": "gold",
+    "rank": 73,
+    "name": "Jonas Tan Kia Jeng",
+    "sail": "3888",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(85)"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      }
+    ],
+    "total": 380.0,
+    "nett": 295.0,
+    "sailor_id": "eb832e1f-2644-4453-9089-1598544bf217",
+    "existing_name": "Jonas Tan Kia Jeng",
+    "match_method": "existing_gold_row",
+    "handle": "jonas-tan-kia-jeng"
+  },
+  {
+    "ordinal": 74,
+    "fleet": "gold",
+    "rank": 74,
+    "name": "Benjamin Augenstein",
+    "sail": "3123",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(75)"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      }
+    ],
+    "total": 372.0,
+    "nett": 297.0,
+    "sailor_id": "98e8cde1-3a43-448c-adef-85633da2239e",
+    "existing_name": "Benjamin Augenstein",
+    "match_method": "existing_gold_row",
+    "handle": "benjamin-augenstein-0kj0gm0"
+  },
+  {
+    "ordinal": 75,
+    "fleet": "gold",
+    "rank": 75,
+    "name": "Amandine Zoé Pitsilis",
+    "sail": "702",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(79)"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      }
+    ],
+    "total": 387.0,
+    "nett": 308.0,
+    "sailor_id": "328bdcaa-1773-4bb8-801d-c845c11f2667",
+    "existing_name": "Amandine Zoe Pitsilis",
+    "match_method": "existing_gold_row",
+    "handle": "amandine-zoe-pitsilis"
+  },
+  {
+    "ordinal": 76,
+    "fleet": "gold",
+    "rank": 76,
+    "name": "Isaiah Yap Chor Hong",
+    "sail": "3946",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 73.5,
+        "code": null,
+        "discarded": false,
+        "raw": "73.5"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(80)"
+      }
+    ],
+    "total": 395.5,
+    "nett": 315.5,
+    "sailor_id": "263ef930-f0ec-4d7a-8ca9-cb19b1cc52d1",
+    "existing_name": "Isaiah Yap Chor Hong",
+    "match_method": "existing_gold_row",
+    "handle": "isaiah-yap-chor-hong"
+  },
+  {
+    "ordinal": 77,
+    "fleet": "gold",
+    "rank": 77,
+    "name": "Deklen Chew",
+    "sail": "3131",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(77)"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      }
+    ],
+    "total": 402.0,
+    "nett": 325.0,
+    "sailor_id": "763ad94d-2fe7-443f-8ed8-6be06d180d08",
+    "existing_name": "Deklen Chew",
+    "match_method": "existing_gold_row",
+    "handle": "deklen-chew-0ate62c"
+  },
+  {
+    "ordinal": 78,
+    "fleet": "gold",
+    "rank": 78,
+    "name": "Paolo Gagliardi La Gala",
+    "sail": "2015",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": false,
+        "raw": "76"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      }
+    ],
+    "total": 417.0,
+    "nett": 333.0,
+    "sailor_id": "95d69118-4278-40a6-9e2e-aa029fb4746d",
+    "existing_name": "Paolo Gagliardi La Gala",
+    "match_method": "existing_gold_row",
+    "handle": "paolo-gagliard-la-gala"
+  },
+  {
+    "ordinal": 79,
+    "fleet": "gold",
+    "rank": 79,
+    "name": "Darius Goh Yue Siang",
+    "sail": "3111",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 86.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(86)"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": false,
+        "raw": "82"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": false,
+        "raw": "75"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      }
+    ],
+    "total": 422.0,
+    "nett": 336.0,
+    "sailor_id": "f827bb8b-4221-45d5-83f3-b8bb043e2a7d",
+    "existing_name": "Darius Goh Yue Siang",
+    "match_method": "existing_gold_row",
+    "handle": "darius-goh-yue-siang"
+  },
+  {
+    "ordinal": 80,
+    "fleet": "gold",
+    "rank": 80,
+    "name": "Jonathan Kwok",
+    "sail": "2003",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(82)"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": false,
+        "raw": "81"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      }
+    ],
+    "total": 419.0,
+    "nett": 337.0,
+    "sailor_id": "9850df41-2b48-4891-b2aa-c9453aa2051c",
+    "existing_name": "Jonathan Kwok Kum Loong",
+    "match_method": "existing_gold_row",
+    "handle": "jonathan-kwok-kum-loong-0iin67q"
+  },
+  {
+    "ordinal": 81,
+    "fleet": "gold",
+    "rank": 81,
+    "name": "Joseph Tan Kia Guan",
+    "sail": "3688",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": false,
+        "raw": "81"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(83)"
+      }
+    ],
+    "total": 420.0,
+    "nett": 337.0,
+    "sailor_id": "8f5ac318-d957-404f-b6e4-fc6802dd7943",
+    "existing_name": "Joseph Kia Guan Tan",
+    "match_method": "existing_gold_row",
+    "handle": "joseph-kia-guan-tan"
+  },
+  {
+    "ordinal": 82,
+    "fleet": "gold",
+    "rank": 82,
+    "name": "Rayson Ng Yee Meng",
+    "sail": "3793",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 87.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(87 DNF)"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": false,
+        "raw": "85"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": false,
+        "raw": "81"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      }
+    ],
+    "total": 428.0,
+    "nett": 341.0,
+    "sailor_id": "ca2bb998-81d7-422c-8603-e37a38d0e518",
+    "existing_name": "Rayson Ng Yee Meng",
+    "match_method": "existing_gold_row",
+    "handle": "rayson-ng-yee-meng-0hujvsd"
+  },
+  {
+    "ordinal": 83,
+    "fleet": "gold",
+    "rank": 83,
+    "name": "Riley Sullivan",
+    "sail": "22139",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 77.5,
+        "code": null,
+        "discarded": false,
+        "raw": "77.5"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": false,
+        "raw": "84"
+      },
+      {
+        "score": 87.0,
+        "code": "DSQ",
+        "discarded": true,
+        "raw": "(87 DSQ)"
+      }
+    ],
+    "total": 440.5,
+    "nett": 353.5,
+    "sailor_id": "f1293134-c948-4eef-b57f-8e8851feab28",
+    "existing_name": "Riley Sullivan",
+    "match_method": "existing_gold_row",
+    "handle": "riley-sullivan-08glscv"
+  },
+  {
+    "ordinal": 84,
+    "fleet": "gold",
+    "rank": 84,
+    "name": "Rachel Lim Qian Hui",
+    "sail": "3197",
+    "gender": "F",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      }
+    ],
+    "total": 439.0,
+    "nett": 355.0,
+    "sailor_id": "122e6875-e9e7-4ea3-9989-8049f67f373e",
+    "existing_name": "Rachel Lim Qian Hui",
+    "match_method": "existing_gold_row",
+    "handle": "rachel-lim-qian-hui"
+  },
+  {
+    "ordinal": 85,
+    "fleet": "gold",
+    "rank": 85,
+    "name": "Aaron Abraham Say",
+    "sail": "4669",
+    "gender": "M",
+    "age_division": "U12",
+    "races": [
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": false,
+        "raw": "82"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": false,
+        "raw": "83"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      }
+    ],
+    "total": 461.0,
+    "nett": 377.0,
+    "sailor_id": "4e344e28-9a6f-4ae4-93d8-537bc03e1813",
+    "existing_name": "Aaron Abraham Say",
+    "match_method": "existing_gold_row",
+    "handle": "aaron-abraham-say-0chj8nt"
+  },
+  {
+    "ordinal": 86,
+    "fleet": "gold",
+    "rank": 86,
+    "name": "Martha Wazen",
+    "sail": "4689",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": false,
+        "raw": "85"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": false,
+        "raw": "76"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": false,
+        "raw": "83"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      },
+      {
+        "score": 86.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(86)"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      }
+    ],
+    "total": 480.0,
+    "nett": 394.0,
+    "sailor_id": "716daf0c-0b95-4405-b4f4-beef2f1e9131",
+    "existing_name": "Martha Wazen",
+    "match_method": "existing_gold_row",
+    "handle": "martha-wazen-0bhii2d"
+  },
+  {
+    "ordinal": 1,
+    "fleet": "silver",
+    "rank": 1,
+    "name": "Tan Kai En Joel",
+    "sail": "3223",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(9)"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      }
+    ],
+    "total": 18.0,
+    "nett": 9.0,
+    "sailor_id": "79c4b615-7fb3-4c94-81f9-a962cf28d31e",
+    "existing_name": "Tan Kai En Joel",
+    "match_method": "name_or_alias",
+    "handle": "tan-kai-en-joel"
+  },
+  {
+    "ordinal": 2,
+    "fleet": "silver",
+    "rank": 2,
+    "name": "Mathias Cheow",
+    "sail": "3307",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(10)"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      }
+    ],
+    "total": 29.0,
+    "nett": 19.0,
+    "sailor_id": "984ea286-15a1-4165-91e1-3d4620032f5c",
+    "existing_name": "Mathias Cheow",
+    "match_method": "name_or_alias",
+    "handle": "mathias-cheow-og2sfe8"
+  },
+  {
+    "ordinal": 3,
+    "fleet": "silver",
+    "rank": 3,
+    "name": "Kyle Jeremy Soh Zhi Jun",
+    "sail": "3183",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(37)"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      }
+    ],
+    "total": 56.0,
+    "nett": 19.0,
+    "sailor_id": "2e6a637e-e182-41c3-b6b9-33a89fb0090e",
+    "existing_name": "Kyle Jeremy Soh Zhi Jun",
+    "match_method": "name_or_alias",
+    "handle": "kyle-jeremy-soh-zhi-jun"
+  },
+  {
+    "ordinal": 4,
+    "fleet": "silver",
+    "rank": 4,
+    "name": "Liao zhiting",
+    "sail": "3988",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(17)"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      }
+    ],
+    "total": 47.0,
+    "nett": 30.0,
+    "sailor_id": "f9138c57-b669-4793-bb7e-0532eb4ad7b3",
+    "existing_name": "Liao ZhiTing",
+    "match_method": "name_or_alias",
+    "handle": "liao-zhiting"
+  },
+  {
+    "ordinal": 5,
+    "fleet": "silver",
+    "rank": 5,
+    "name": "Olivia Cheong",
+    "sail": "3002",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(16)"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      }
+    ],
+    "total": 46.0,
+    "nett": 30.0,
+    "sailor_id": "87729379-5818-422b-a299-6e934d910c63",
+    "existing_name": "Cheong Ting Jia Olivia",
+    "match_method": "name_or_alias",
+    "handle": "cheong-ting-jia-olivia"
+  },
+  {
+    "ordinal": 6,
+    "fleet": "silver",
+    "rank": 6,
+    "name": "Ryo En Hua Bateman",
+    "sail": "119",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(27)"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      }
+    ],
+    "total": 59.0,
+    "nett": 32.0,
+    "sailor_id": "43e9a123-4c59-4251-aba0-e9ea5bce0fed",
+    "existing_name": "Ryo En Hua Bateman",
+    "match_method": "name_or_alias",
+    "handle": "ryo-en-hua-bateman-xu2s8en"
+  },
+  {
+    "ordinal": 7,
+    "fleet": "silver",
+    "rank": 7,
+    "name": "Zachary Low Zhi En",
+    "sail": "3369",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(32)"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      }
+    ],
+    "total": 65.0,
+    "nett": 33.0,
+    "sailor_id": "4a731554-00dc-4ff3-8a80-86ea66378be8",
+    "existing_name": "Zachary Low Zhi En",
+    "match_method": "name_or_alias",
+    "handle": "zachary-low-zhi-en"
+  },
+  {
+    "ordinal": 8,
+    "fleet": "silver",
+    "rank": 8,
+    "name": "Kate En Rui Bateman",
+    "sail": "117",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(20)"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      }
+    ],
+    "total": 58.0,
+    "nett": 38.0,
+    "sailor_id": "86e53347-cbf0-4d9b-bd6f-d769a3a071a7",
+    "existing_name": "Kate En Rui Bateman",
+    "match_method": "name_or_alias",
+    "handle": "kate-en-rui-bateman-xus6rlx"
+  },
+  {
+    "ordinal": 9,
+    "fleet": "silver",
+    "rank": 9,
+    "name": "Kai Yen-Yu",
+    "sail": "758",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(26)"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      }
+    ],
+    "total": 66.0,
+    "nett": 40.0,
+    "sailor_id": "aaa54b70-9643-44b7-bf62-4828b8db3e1e",
+    "existing_name": "Kai Yen-Yu",
+    "match_method": "name_or_alias",
+    "handle": "kai-yen-yu"
+  },
+  {
+    "ordinal": 10,
+    "fleet": "silver",
+    "rank": 10,
+    "name": "Loh Yi Jie Luke",
+    "sail": "3322",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(15)"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4"
+      }
+    ],
+    "total": 58.0,
+    "nett": 43.0,
+    "sailor_id": "590ce5d7-150a-4a35-8c4b-4516e2284ebc",
+    "existing_name": "Loh Yi Jie Luke",
+    "match_method": "name_or_alias",
+    "handle": "loh-yi-jie-luke"
+  },
+  {
+    "ordinal": 11,
+    "fleet": "silver",
+    "rank": 11,
+    "name": "Shin Lin Chen Rui",
+    "sail": "3333",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(18)"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      }
+    ],
+    "total": 62.0,
+    "nett": 44.0,
+    "sailor_id": "747fa344-5126-4ba1-a876-470a982620c7",
+    "existing_name": "Shin Lin Chen Rui",
+    "match_method": "name_or_alias",
+    "handle": "shin-lin-chen-rui"
+  },
+  {
+    "ordinal": 12,
+    "fleet": "silver",
+    "rank": 12,
+    "name": "Joel Khoo Zhuo Le",
+    "sail": "4730",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(24)"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      }
+    ],
+    "total": 74.0,
+    "nett": 50.0,
+    "sailor_id": "632dc3e7-4e51-4855-b14d-0454d5a09701",
+    "existing_name": "Joel Khoo Zhuo Le",
+    "match_method": "name_or_alias",
+    "handle": "joel-khoo-zhuo-le"
+  },
+  {
+    "ordinal": 13,
+    "fleet": "silver",
+    "rank": 13,
+    "name": "Nicole Wong Jing Chen",
+    "sail": "3006",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(19)"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      }
+    ],
+    "total": 75.0,
+    "nett": 56.0,
+    "sailor_id": "122fd80b-c96b-43ea-b6b1-8860bc60e3a1",
+    "existing_name": "Nicole Wong Jing Chen",
+    "match_method": "name_or_alias",
+    "handle": "nicole-wong-jing-chen"
+  },
+  {
+    "ordinal": 14,
+    "fleet": "silver",
+    "rank": 14,
+    "name": "Russell Tan Jun Quan",
+    "sail": "3172",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(50)"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      }
+    ],
+    "total": 109.0,
+    "nett": 59.0,
+    "sailor_id": "3b076b0c-03cb-4f50-a9c6-70c9a8dba199",
+    "existing_name": "Russell Tan",
+    "match_method": "name_or_alias",
+    "handle": "russell-tan-oerohip"
+  },
+  {
+    "ordinal": 15,
+    "fleet": "silver",
+    "rank": 15,
+    "name": "Tan Li Ying Kayler",
+    "sail": "3787",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(27)"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      }
+    ],
+    "total": 93.0,
+    "nett": 66.0,
+    "sailor_id": "e973857f-189c-4730-9732-7222bd1e6ee7",
+    "existing_name": "Tan Li Ying Kayler",
+    "match_method": "name_or_alias",
+    "handle": "tan-li-ying-kayler-oknv50k"
+  },
+  {
+    "ordinal": 16,
+    "fleet": "silver",
+    "rank": 16,
+    "name": "Joel Ong Han Sheng",
+    "sail": "2014",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(34)"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      }
+    ],
+    "total": 103.0,
+    "nett": 69.0,
+    "sailor_id": "bcd018f4-ae60-4aa5-a6e5-8bee9e468def",
+    "existing_name": "Joel Ong Han Sheng",
+    "match_method": "name_or_alias",
+    "handle": "joel-ong-han-sheng"
+  },
+  {
+    "ordinal": 17,
+    "fleet": "silver",
+    "rank": 17,
+    "name": "Cheung Hei Yat Adriel",
+    "sail": "3611",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 89.0,
+        "code": "DSQ",
+        "discarded": true,
+        "raw": "(89 DSQ)"
+      }
+    ],
+    "total": 159.0,
+    "nett": 70.0,
+    "sailor_id": "3ef3185d-5e0b-4035-9cb2-9cb08a51da38",
+    "existing_name": "Cheung Hei Yat Adriel",
+    "match_method": "name_or_alias",
+    "handle": "cheung-hei-yat-adriel"
+  },
+  {
+    "ordinal": 18,
+    "fleet": "silver",
+    "rank": 18,
+    "name": "Tan En Ting Kirsten",
+    "sail": "3663",
+    "gender": "F",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(41)"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      }
+    ],
+    "total": 115.0,
+    "nett": 74.0,
+    "sailor_id": "8c1ef4d7-ccc9-422e-b921-8f5b30125329",
+    "existing_name": "Tan En Ting, Kirsten",
+    "match_method": "name_or_alias",
+    "handle": "tan-en-ting-kirsten"
+  },
+  {
+    "ordinal": 19,
+    "fleet": "silver",
+    "rank": 19,
+    "name": "Alessia Talpo",
+    "sail": "3105",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(25)"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      }
+    ],
+    "total": 99.0,
+    "nett": 74.0,
+    "sailor_id": "5579ed15-cd52-4775-92f2-0c76f7b98956",
+    "existing_name": "Alessia Talpo",
+    "match_method": "name_or_alias",
+    "handle": "alessia-talpo-olz6k47"
+  },
+  {
+    "ordinal": 20,
+    "fleet": "silver",
+    "rank": 20,
+    "name": "Spencer Isaac Quek",
+    "sail": "3108",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8"
+      },
+      {
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(69)"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      }
+    ],
+    "total": 149.0,
+    "nett": 80.0,
+    "sailor_id": "60ca9f0e-65a3-46bf-a5af-c561c1b193aa",
+    "existing_name": "Spencer Quek",
+    "match_method": "name_or_alias",
+    "handle": "spencer-quek-jbv2nf2"
+  },
+  {
+    "ordinal": 21,
+    "fleet": "silver",
+    "rank": 21,
+    "name": "Lee Gentaro Noah",
+    "sail": "4471",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(30)"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      }
+    ],
+    "total": 114.0,
+    "nett": 84.0,
+    "sailor_id": "15b343a6-5f67-407e-bdda-b75d7d64533a",
+    "existing_name": "Lee Gentaro Noah",
+    "match_method": "name_or_alias",
+    "handle": "lee-gentaro-noah"
+  },
+  {
+    "ordinal": 22,
+    "fleet": "silver",
+    "rank": 22,
+    "name": "Chen Wang Sun",
+    "sail": "3454",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(47)"
+      },
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      }
+    ],
+    "total": 137.0,
+    "nett": 90.0,
+    "sailor_id": "e0d61d81-9b7f-45d3-a6fb-b78ff25b39dc",
+    "existing_name": "Chen Wang Sun",
+    "match_method": "name_or_alias",
+    "handle": "chen-wang-sun"
+  },
+  {
+    "ordinal": 23,
+    "fleet": "silver",
+    "rank": 23,
+    "name": "Khoo Boo Ming Manfred",
+    "sail": "3288",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(62)"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      }
+    ],
+    "total": 154.0,
+    "nett": 92.0,
+    "sailor_id": "969b6bef-7aec-4cae-8178-603c54fb83d8",
+    "existing_name": "Khoo Boo Ming Manfred",
+    "match_method": "name_or_alias",
+    "handle": "khoo-boo-ming-manfred-ohe1kb1"
+  },
+  {
+    "ordinal": 24,
+    "fleet": "silver",
+    "rank": 24,
+    "name": "Cory Loh Zhi Hang",
+    "sail": "3881",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(46)"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      }
+    ],
+    "total": 140.0,
+    "nett": 94.0,
+    "sailor_id": "349ab29d-e6dc-4f7c-a411-405f440292df",
+    "existing_name": "Cory Loh Zhi Hang",
+    "match_method": "name_or_alias",
+    "handle": "cory-loh-zhi-hang"
+  },
+  {
+    "ordinal": 25,
+    "fleet": "silver",
+    "rank": 25,
+    "name": "Cyrus Chiam Jing Yi",
+    "sail": "3343",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(53)"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      }
+    ],
+    "total": 148.0,
+    "nett": 95.0,
+    "sailor_id": "b6de2150-187b-405d-bc67-7b6b2479d0c0",
+    "existing_name": "Cyrus Chiam Jing Yi",
+    "match_method": "name_or_alias",
+    "handle": "cyrus-chiam-jing-yi"
+  },
+  {
+    "ordinal": 26,
+    "fleet": "silver",
+    "rank": 26,
+    "name": "Yeo Shixi",
+    "sail": "3618",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(49)"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      }
+    ],
+    "total": 151.0,
+    "nett": 102.0,
+    "sailor_id": "ac367a43-9ecc-4a57-a335-ce6c9f5322f5",
+    "existing_name": "Yeo Shi Xi",
+    "match_method": "name_or_alias",
+    "handle": "yeo-shi-xi-ogqbk07"
+  },
+  {
+    "ordinal": 27,
+    "fleet": "silver",
+    "rank": 27,
+    "name": "Lim Rui Xuan, Lavene",
+    "sail": "3553",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(43)"
+      },
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      }
+    ],
+    "total": 146.0,
+    "nett": 103.0,
+    "sailor_id": "59729500-d864-4394-888d-30e4adda5557",
+    "existing_name": "Lim Rui Xuan Lavene",
+    "match_method": "name_or_alias",
+    "handle": "lim-rui-xuan-lavene"
+  },
+  {
+    "ordinal": 28,
+    "fleet": "silver",
+    "rank": 28,
+    "name": "Lauren Lim",
+    "sail": "3939",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(81)"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      }
+    ],
+    "total": 190.0,
+    "nett": 109.0,
+    "sailor_id": "96ee16c3-fbca-4a89-858d-80d73cf078c6",
+    "existing_name": "Lauren Lim",
+    "match_method": "name_or_alias",
+    "handle": "lauren-lim-ommq6jo"
+  },
+  {
+    "ordinal": 29,
+    "fleet": "silver",
+    "rank": 29,
+    "name": "Chow Yi Min Yvette",
+    "sail": "351",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(51)"
+      },
+      {
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      }
+    ],
+    "total": 160.0,
+    "nett": 109.0,
+    "sailor_id": "8f3409cf-5476-4d8a-89ef-4e0b8b86cfd9",
+    "existing_name": "Chow Yi Min, Yvette",
+    "match_method": "name_or_alias",
+    "handle": "chow-yi-min-yvette"
+  },
+  {
+    "ordinal": 30,
+    "fleet": "silver",
+    "rank": 30,
+    "name": "Alaric Naidu",
+    "sail": "3470",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(60)"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      }
+    ],
+    "total": 177.0,
+    "nett": 117.0,
+    "sailor_id": "7dd9083b-126c-4574-9154-3e3aa39275f8",
+    "existing_name": "Alaric Shenthil Naidu",
+    "match_method": "name_or_alias",
+    "handle": "alaric-shenthil-naidu"
+  },
+  {
+    "ordinal": 31,
+    "fleet": "silver",
+    "rank": 31,
+    "name": "Teo Rui Ling",
+    "sail": "3820",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(34)"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      }
+    ],
+    "total": 155.0,
+    "nett": 121.0,
+    "sailor_id": "0210e990-5406-42dc-b0de-e9a9ac7ca272",
+    "existing_name": "Teo Rui Ling",
+    "match_method": "name_or_alias",
+    "handle": "teo-rui-ling"
+  },
+  {
+    "ordinal": 32,
+    "fleet": "silver",
+    "rank": 32,
+    "name": "Jamiroquai Tay Kai Nuo",
+    "sail": "2013",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(45)"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      }
+    ],
+    "total": 171.0,
+    "nett": 126.0,
+    "sailor_id": "1b7792af-d337-4ae9-a358-a736d88a8da4",
+    "existing_name": "Jamiroquai Tay Kai Nuo",
+    "match_method": "name_or_alias",
+    "handle": "jamiroquai-tay-kai-nuo"
+  },
+  {
+    "ordinal": 33,
+    "fleet": "silver",
+    "rank": 33,
+    "name": "Merelle Tay Xuanying",
+    "sail": "3511",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 89.0,
+        "code": "DSQ",
+        "discarded": true,
+        "raw": "(89 DSQ)"
+      },
+      {
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28"
+      }
+    ],
+    "total": 221.0,
+    "nett": 132.0,
+    "sailor_id": "dcd324f6-84c3-4016-a2b3-29c3e485c27d",
+    "existing_name": "Merelle Xuanying Tay",
+    "match_method": "name_or_alias",
+    "handle": "merelle-xuanying-tay-hyk1nrz"
+  },
+  {
+    "ordinal": 34,
+    "fleet": "silver",
+    "rank": 34,
+    "name": "Huang Tianyi",
+    "sail": "3438",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(56)"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      }
+    ],
+    "total": 192.0,
+    "nett": 136.0,
+    "sailor_id": "a5771c8b-efd3-43f6-ba6e-af0151b1438b",
+    "existing_name": "Huang Tianyi",
+    "match_method": "name_or_alias",
+    "handle": "huang-tianyi"
+  },
+  {
+    "ordinal": 35,
+    "fleet": "silver",
+    "rank": 35,
+    "name": "Worawit Jutahkiti",
+    "sail": "2025",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(63)"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      }
+    ],
+    "total": 204.0,
+    "nett": 141.0,
+    "sailor_id": "f8ef1db2-45f8-467f-8c30-02cfe1ce494c",
+    "existing_name": "Worawit Jutahkiti",
+    "match_method": "name_or_alias",
+    "handle": "worawit-jutahkiti"
+  },
+  {
+    "ordinal": 36,
+    "fleet": "silver",
+    "rank": 36,
+    "name": "Rayson Lee Yin Yi",
+    "sail": "3828",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(56)"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      }
+    ],
+    "total": 197.0,
+    "nett": 141.0,
+    "sailor_id": "9ab9e8c2-896a-4d8f-8049-0878e7d210ba",
+    "existing_name": "Rayson Lee Yin Yi",
+    "match_method": "name_or_alias",
+    "handle": "rayson-lee-yin-yi-oi1kvmm"
+  },
+  {
+    "ordinal": 37,
+    "fleet": "silver",
+    "rank": 37,
+    "name": "Kye Tang",
+    "sail": "2002",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(64)"
+      }
+    ],
+    "total": 206.0,
+    "nett": 142.0,
+    "sailor_id": "3b6b57ca-a94a-43bd-ad12-5488652f7886",
+    "existing_name": "Kye Tang",
+    "match_method": "name_or_alias",
+    "handle": "kye-tang-ojcorzh"
+  },
+  {
+    "ordinal": 38,
+    "fleet": "silver",
+    "rank": 38,
+    "name": "Isla Lee Zhi Xi",
+    "sail": "3303",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      },
+      {
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(57)"
+      }
+    ],
+    "total": 199.0,
+    "nett": 142.0,
+    "sailor_id": "30aec088-71bd-46a8-b21c-bc634cba3cc6",
+    "existing_name": "Isla Lee Zhi Xi",
+    "match_method": "name_or_alias",
+    "handle": "isla-lee-zhi-xi"
+  },
+  {
+    "ordinal": 39,
+    "fleet": "silver",
+    "rank": 39,
+    "name": "Chan QingXuan Joel",
+    "sail": "2021",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13"
+      },
+      {
+        "score": 89.0,
+        "code": "DSQ",
+        "discarded": true,
+        "raw": "(89 DSQ)"
+      }
+    ],
+    "total": 234.0,
+    "nett": 145.0,
+    "sailor_id": "71144565-c5c8-4336-a610-6ad6959cb7a6",
+    "existing_name": "Chan Qingxuan Joel",
+    "match_method": "name_or_alias",
+    "handle": "chan-qingxuan-joel"
+  },
+  {
+    "ordinal": 40,
+    "fleet": "silver",
+    "rank": 40,
+    "name": "Seah Yong Zhen Denzel",
+    "sail": "3925",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      }
+    ],
+    "total": 222.0,
+    "nett": 146.0,
+    "sailor_id": "3fc96893-9b7d-4c97-9c64-3c7086f077ea",
+    "existing_name": "Seah Yong Zhen Denzel",
+    "match_method": "name_or_alias",
+    "handle": "seah-yong-zhen-denzel"
+  },
+  {
+    "ordinal": 41,
+    "fleet": "silver",
+    "rank": 41,
+    "name": "Quintan Rupert Low",
+    "sail": "4681",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(68)"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      }
+    ],
+    "total": 221.0,
+    "nett": 153.0,
+    "sailor_id": "82a0aead-a048-428d-b8f2-bfb2e9eb64f8",
+    "existing_name": "Quintan Rupert Low",
+    "match_method": "name_or_alias",
+    "handle": "quintan-rupert-low"
+  },
+  {
+    "ordinal": 42,
+    "fleet": "silver",
+    "rank": 42,
+    "name": "Padmaeja Rajakanth",
+    "sail": "2022",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(57)"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      }
+    ],
+    "total": 212.0,
+    "nett": 155.0,
+    "sailor_id": "ca9d6a05-61c6-4fd1-ba51-2482ce21e2a6",
+    "existing_name": "Padmaeja Rajakanth",
+    "match_method": "name_or_alias",
+    "handle": "padmaeja-rajakanth"
+  },
+  {
+    "ordinal": 43,
+    "fleet": "silver",
+    "rank": 43,
+    "name": "Aidan Yeo See Hett",
+    "sail": "112",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(56)"
+      },
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      }
+    ],
+    "total": 211.0,
+    "nett": 155.0,
+    "sailor_id": "700f7337-4ff6-424a-97f7-bd551d2d152c",
+    "existing_name": "Aidan See Hett Yeo",
+    "match_method": "name_or_alias",
+    "handle": "aidan-see-hett-yeo"
+  },
+  {
+    "ordinal": 44,
+    "fleet": "silver",
+    "rank": 44,
+    "name": "Xie Si Duo Kiz",
+    "sail": "3928",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(61)"
+      }
+    ],
+    "total": 218.0,
+    "nett": 157.0,
+    "sailor_id": "dff90e5e-470f-4cc4-b50f-ac5b3db05899",
+    "existing_name": "Xie Si Duo Kiz",
+    "match_method": "name_or_alias",
+    "handle": "xie-si-duo-kiz"
+  },
+  {
+    "ordinal": 45,
+    "fleet": "silver",
+    "rank": 45,
+    "name": "Yak Yun Zhong Joseph",
+    "sail": "4739",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(63)"
+      },
+      {
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      }
+    ],
+    "total": 221.0,
+    "nett": 158.0,
+    "sailor_id": "7cb5e6d8-00dd-4e7b-8b8c-c917441a83d5",
+    "existing_name": "Yak Yun Zhong Joseph",
+    "match_method": "name_or_alias",
+    "handle": "yak-yun-zhong-joseph-olbfwq7"
+  },
+  {
+    "ordinal": 46,
+    "fleet": "silver",
+    "rank": 46,
+    "name": "Ouyang Hanyue",
+    "sail": "3173",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(78)"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      }
+    ],
+    "total": 240.0,
+    "nett": 162.0,
+    "sailor_id": "466962ea-ea09-494b-8d5b-5e5fa706c7f6",
+    "existing_name": "Hanyue Ouyang",
+    "match_method": "name_or_alias",
+    "handle": "hanyue-ouyang"
+  },
+  {
+    "ordinal": 47,
+    "fleet": "silver",
+    "rank": 47,
+    "name": "Estelle Yeo",
+    "sail": "773",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(69)"
+      }
+    ],
+    "total": 231.0,
+    "nett": 162.0,
+    "sailor_id": "ea3e97da-b156-48f8-95dd-8dd29101a707",
+    "existing_name": "Estelle Yeo Rui En",
+    "match_method": "name_or_alias",
+    "handle": "estelle-yeo-rui-en"
+  },
+  {
+    "ordinal": 48,
+    "fleet": "silver",
+    "rank": 48,
+    "name": "Kyan Tan Chun Hong",
+    "sail": "4712",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(60)"
+      }
+    ],
+    "total": 227.0,
+    "nett": 167.0,
+    "sailor_id": "60ea1195-0d40-470a-b7c9-4cfa16ac3517",
+    "existing_name": "Kyan Tan Chun Hong",
+    "match_method": "name_or_alias",
+    "handle": "kyan-tan-chun-hong"
+  },
+  {
+    "ordinal": 49,
+    "fleet": "silver",
+    "rank": 49,
+    "name": "Aiden Wong Kang Jun",
+    "sail": "2018",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(80)"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      }
+    ],
+    "total": 252.0,
+    "nett": 172.0,
+    "sailor_id": "05c0f205-cb0d-4da6-aad5-610f1c4f229c",
+    "existing_name": "Aiden Wong Kang Jun",
+    "match_method": "name_or_alias",
+    "handle": "aiden-wong-kang-jun"
+  },
+  {
+    "ordinal": 50,
+    "fleet": "silver",
+    "rank": 50,
+    "name": "Charlene Yong Heng Ning",
+    "sail": "766",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(60)"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      }
+    ],
+    "total": 234.0,
+    "nett": 174.0,
+    "sailor_id": "a15ffd27-312c-4d13-8602-d64c589a201f",
+    "existing_name": "Charlene Yong Heng Ning",
+    "match_method": "name_or_alias",
+    "handle": "charlene-yong-heng-ning"
+  },
+  {
+    "ordinal": 51,
+    "fleet": "silver",
+    "rank": 51,
+    "name": "Goh Yong Chang Hagen",
+    "sail": "600",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(58)"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      }
+    ],
+    "total": 238.0,
+    "nett": 180.0,
+    "sailor_id": "cf534369-41dc-4130-9092-64e6e0117f65",
+    "existing_name": "Hagen Goh Yong Chang",
+    "match_method": "name_or_alias",
+    "handle": "hagen-goh-yong-chang"
+  },
+  {
+    "ordinal": 52,
+    "fleet": "silver",
+    "rank": 52,
+    "name": "Alisha Shireen",
+    "sail": "3101",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(64)"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      }
+    ],
+    "total": 245.0,
+    "nett": 181.0,
+    "sailor_id": "c4502788-1176-494f-b655-27b1b3c2c72b",
+    "existing_name": "Alisha Shireen",
+    "match_method": "name_or_alias",
+    "handle": "alisha-shireen-iy140kj"
+  },
+  {
+    "ordinal": 53,
+    "fleet": "silver",
+    "rank": 53,
+    "name": "Wai Yong Le",
+    "sail": "3488",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(72)"
+      }
+    ],
+    "total": 258.0,
+    "nett": 186.0,
+    "sailor_id": "d47ce6f3-3597-4e3e-a1d1-de4752793afd",
+    "existing_name": "Wai Yong Le",
+    "match_method": "name_or_alias",
+    "handle": "wai-yong-le"
+  },
+  {
+    "ordinal": 54,
+    "fleet": "silver",
+    "rank": 54,
+    "name": "Irwin Yit Kei Fung",
+    "sail": "3217",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "score": 45.0,
+        "code": null,
+        "discarded": false,
+        "raw": "45"
+      }
+    ],
+    "total": 262.0,
+    "nett": 186.0,
+    "sailor_id": "0c460b8b-ad5a-4f07-aa48-009b4b7cb496",
+    "existing_name": "Irwin Yit Kei Fung",
+    "match_method": "name_or_alias",
+    "handle": "irwin-yit-kei-fung"
+  },
+  {
+    "ordinal": 55,
+    "fleet": "silver",
+    "rank": 55,
+    "name": "Yeh Fang Yu Sage",
+    "sail": "796",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(65)"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      },
+      {
+        "score": 36.0,
+        "code": null,
+        "discarded": false,
+        "raw": "36"
+      }
+    ],
+    "total": 253.0,
+    "nett": 188.0,
+    "sailor_id": "26bb4c63-4c3b-4bdf-ae5d-3cac2fe95c53",
+    "existing_name": "Yeh Fang Yu Sage",
+    "match_method": "name_or_alias",
+    "handle": "yeh-fang-yu-sage"
+  },
+  {
+    "ordinal": 56,
+    "fleet": "silver",
+    "rank": 56,
+    "name": "Gloria Kwok",
+    "sail": "200",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(71)"
+      },
+      {
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35"
+      },
+      {
+        "score": 56.0,
+        "code": null,
+        "discarded": false,
+        "raw": "56"
+      }
+    ],
+    "total": 260.0,
+    "nett": 189.0,
+    "sailor_id": "f019c6f2-2e77-42c8-b05d-e907c1779471",
+    "existing_name": "Gloria Kwok Yen Rui",
+    "match_method": "name_or_alias",
+    "handle": "gloria-kwok-yen-rui"
+  },
+  {
+    "ordinal": 57,
+    "fleet": "silver",
+    "rank": 57,
+    "name": "Fong Luke Tin",
+    "sail": "2019",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31"
+      },
+      {
+        "score": 43.0,
+        "code": null,
+        "discarded": false,
+        "raw": "43"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(67)"
+      }
+    ],
+    "total": 260.0,
+    "nett": 193.0,
+    "sailor_id": "6fcfad59-8290-463d-9575-5c28256a5f28",
+    "existing_name": "Fong Luke Tin",
+    "match_method": "name_or_alias",
+    "handle": "fong-luke-tin"
+  },
+  {
+    "ordinal": 58,
+    "fleet": "silver",
+    "rank": 58,
+    "name": "Koh Yi Jie Zachary",
+    "sail": "4731",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(67)"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      }
+    ],
+    "total": 263.0,
+    "nett": 196.0,
+    "sailor_id": "a9195d65-970c-4cf5-afcb-3f76a1cc269d",
+    "existing_name": "Koh Yi Jie Zachary",
+    "match_method": "name_or_alias",
+    "handle": "koh-yi-jie-zachary-i60fulb"
+  },
+  {
+    "ordinal": 59,
+    "fleet": "silver",
+    "rank": 59,
+    "name": "Mason Lau Qifeng",
+    "sail": "2031",
+    "gender": "M",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(78)"
+      },
+      {
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      },
+      {
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33"
+      }
+    ],
+    "total": 276.0,
+    "nett": 198.0,
+    "sailor_id": "11c4de1c-e218-403e-8edc-95570b8980df",
+    "existing_name": "Mason Lau Qifeng",
+    "match_method": "name_or_alias",
+    "handle": "mason-lau-liu-qifeng-oqk8wt9"
+  },
+  {
+    "ordinal": 60,
+    "fleet": "silver",
+    "rank": 60,
+    "name": "Ng Kai Zhe Timothy",
+    "sail": "2023",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(82)"
+      },
+      {
+        "score": 46.0,
+        "code": null,
+        "discarded": false,
+        "raw": "46"
+      }
+    ],
+    "total": 281.0,
+    "nett": 199.0,
+    "sailor_id": "8970d5bb-30d1-48ab-88f2-3003bc0efbfd",
+    "existing_name": "Ng Kai Zhe Timothy",
+    "match_method": "name_or_alias",
+    "handle": "ng-kai-zhe-timothy"
+  },
+  {
+    "ordinal": 61,
+    "fleet": "silver",
+    "rank": 61,
+    "name": "Catherine Maiden",
+    "sail": "3191",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 48.0,
+        "code": null,
+        "discarded": false,
+        "raw": "48"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(62)"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      },
+      {
+        "score": 38.0,
+        "code": null,
+        "discarded": false,
+        "raw": "38"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      }
+    ],
+    "total": 263.0,
+    "nett": 201.0,
+    "sailor_id": "867f8d47-e58f-4e20-90c4-06ed0b1bf450",
+    "existing_name": "Catherine Maiden",
+    "match_method": "name_or_alias",
+    "handle": "catherine-maiden-xyxid6m"
+  },
+  {
+    "ordinal": 62,
+    "fleet": "silver",
+    "rank": 62,
+    "name": "Jayson Yap Jin Cheng",
+    "sail": "2028",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      },
+      {
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      }
+    ],
+    "total": 281.0,
+    "nett": 205.0,
+    "sailor_id": "37d27aa0-d266-43bf-a8bb-96e1dbe6bac6",
+    "existing_name": "Jayson Jin Cheng Yap",
+    "match_method": "name_or_alias",
+    "handle": "jayson-jin-cheng-yap-gu7pinz"
+  },
+  {
+    "ordinal": 63,
+    "fleet": "silver",
+    "rank": 63,
+    "name": "Poh Hao Xuan Euan",
+    "sail": "2030",
+    "gender": "M",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(70)"
+      }
+    ],
+    "total": 280.0,
+    "nett": 210.0,
+    "sailor_id": "f7ba11d8-a9b5-46f4-9631-0ee14da57c90",
+    "existing_name": "Poh Hao Xuan Euan",
+    "match_method": "name_or_alias",
+    "handle": "poh-hao-xuan-euan"
+  },
+  {
+    "ordinal": 64,
+    "fleet": "silver",
+    "rank": 64,
+    "name": "Tan Abram kai-ser",
+    "sail": "4705",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(75)"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      },
+      {
+        "score": 58.0,
+        "code": null,
+        "discarded": false,
+        "raw": "58"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 40.0,
+        "code": null,
+        "discarded": false,
+        "raw": "40"
+      }
+    ],
+    "total": 287.0,
+    "nett": 212.0,
+    "sailor_id": "5a6902c2-6fa7-4c5a-aa09-9dde546a209a",
+    "existing_name": "Tan Abram Kai-Ser",
+    "match_method": "name_or_alias",
+    "handle": "tan-abram-kai-ser-oip5ueo"
+  },
+  {
+    "ordinal": 65,
+    "fleet": "silver",
+    "rank": 65,
+    "name": "Yeo Teng Ern Isaac",
+    "sail": "760",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(77)"
+      },
+      {
+        "score": 53.0,
+        "code": null,
+        "discarded": false,
+        "raw": "53"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      }
+    ],
+    "total": 290.0,
+    "nett": 213.0,
+    "sailor_id": "1c01ab2a-a41d-40c8-8402-d52c46a284e2",
+    "existing_name": "Yeo Teng Ern Isaac",
+    "match_method": "name_or_alias",
+    "handle": "yeo-teng-ern-isaac-osiw6b7"
+  },
+  {
+    "ordinal": 66,
+    "fleet": "silver",
+    "rank": 66,
+    "name": "Raynor Ng Jun Meng",
+    "sail": "3911",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(76)"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 39.0,
+        "code": null,
+        "discarded": false,
+        "raw": "39"
+      },
+      {
+        "score": 62.0,
+        "code": null,
+        "discarded": false,
+        "raw": "62"
+      }
+    ],
+    "total": 290.0,
+    "nett": 214.0,
+    "sailor_id": "942e1755-62ac-48ac-af3f-3cdcffbcc74c",
+    "existing_name": "Ng Jun Meng Raynor",
+    "match_method": "name_or_alias",
+    "handle": "ng-jun-meng-raynor-ok0bvfb"
+  },
+  {
+    "ordinal": 67,
+    "fleet": "silver",
+    "rank": 67,
+    "name": "Auwin Leow Zhao Hong",
+    "sail": "318",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(60)"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      }
+    ],
+    "total": 278.0,
+    "nett": 218.0,
+    "sailor_id": "28b31f24-95ed-4604-8daf-100ca4ffc318",
+    "existing_name": "Auwin Zhao Hong Leow",
+    "match_method": "name_or_alias",
+    "handle": "auwin-zhao-hong-leow"
+  },
+  {
+    "ordinal": 68,
+    "fleet": "silver",
+    "rank": 68,
+    "name": "Raymon Li",
+    "sail": "3737",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(79)"
+      },
+      {
+        "score": 61.0,
+        "code": null,
+        "discarded": false,
+        "raw": "61"
+      },
+      {
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      }
+    ],
+    "total": 298.0,
+    "nett": 219.0,
+    "sailor_id": "343fa243-b938-4b22-9cb4-fc984510e1a1",
+    "existing_name": "Raymon Li",
+    "match_method": "name_or_alias",
+    "handle": "raymon-li-a4mn4i8"
+  },
+  {
+    "ordinal": 69,
+    "fleet": "silver",
+    "rank": 69,
+    "name": "Qi Shan",
+    "sail": "2026",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(73)"
+      },
+      {
+        "score": 50.0,
+        "code": null,
+        "discarded": false,
+        "raw": "50"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      }
+    ],
+    "total": 300.0,
+    "nett": 227.0,
+    "sailor_id": "1a7d2b71-08c8-4ff7-88ea-de5b56a90c65",
+    "existing_name": "Qi Shan",
+    "match_method": "name_or_alias",
+    "handle": "qi-shan-ou62r9l"
+  },
+  {
+    "ordinal": 70,
+    "fleet": "silver",
+    "rank": 70,
+    "name": "Nigel Ng Jiang Long",
+    "sail": "3363",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 37.0,
+        "code": null,
+        "discarded": false,
+        "raw": "37"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 59.0,
+        "code": null,
+        "discarded": false,
+        "raw": "59"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(75)"
+      }
+    ],
+    "total": 312.0,
+    "nett": 237.0,
+    "sailor_id": "6254db50-1037-4f87-a9c1-b9fba7f01b6b",
+    "existing_name": "Nigel Jiang Long Ng",
+    "match_method": "name_or_alias",
+    "handle": "nigel-jiang-long-ng"
+  },
+  {
+    "ordinal": 71,
+    "fleet": "silver",
+    "rank": 71,
+    "name": "Oisin Maiden",
+    "sail": "3141",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(82)"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      },
+      {
+        "score": 41.0,
+        "code": null,
+        "discarded": false,
+        "raw": "41"
+      }
+    ],
+    "total": 323.0,
+    "nett": 241.0,
+    "sailor_id": "60f9340f-b587-42a0-8e62-c08d25871abd",
+    "existing_name": "Oisin Maiden",
+    "match_method": "name_or_alias",
+    "handle": "oisin-maiden-ij8oqxz"
+  },
+  {
+    "ordinal": 72,
+    "fleet": "silver",
+    "rank": 72,
+    "name": "Ian Teo Yi Ming",
+    "sail": "325",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      },
+      {
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(82)"
+      }
+    ],
+    "total": 332.0,
+    "nett": 250.0,
+    "sailor_id": "657b129c-ef57-4082-9bab-ba692bb14a82",
+    "existing_name": "Ian Teo Yi Ming",
+    "match_method": "name_or_alias",
+    "handle": "ian-teo-yi-ming-jr3j90w"
+  },
+  {
+    "ordinal": 73,
+    "fleet": "silver",
+    "rank": 73,
+    "name": "Meera Shrihari",
+    "sail": "3264",
+    "gender": "F",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": false,
+        "raw": "73"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(74)"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 51.0,
+        "code": null,
+        "discarded": false,
+        "raw": "51"
+      }
+    ],
+    "total": 335.0,
+    "nett": 261.0,
+    "sailor_id": "7d04fd25-e8e7-453b-bb27-d5936262b9fd",
+    "existing_name": "Meera Srihari",
+    "match_method": "name_or_alias",
+    "handle": "meera-srihari"
+  },
+  {
+    "ordinal": 74,
+    "fleet": "silver",
+    "rank": 74,
+    "name": "Kabir Daryanani",
+    "sail": "99",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 60.0,
+        "code": null,
+        "discarded": false,
+        "raw": "60"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 73.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(73)"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      }
+    ],
+    "total": 338.0,
+    "nett": 265.0,
+    "sailor_id": "a7ed7eef-6234-410a-8e41-90033c42db44",
+    "existing_name": "Kabir Manoj Daryanani",
+    "match_method": "name_or_alias",
+    "handle": "kabir-manoj-daryanani-y0n7p3o"
+  },
+  {
+    "ordinal": 75,
+    "fleet": "silver",
+    "rank": 75,
+    "name": "Cordelia Elif Ames",
+    "sail": "4737",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(72)"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      }
+    ],
+    "total": 339.0,
+    "nett": 267.0,
+    "sailor_id": "b3b496c2-3dc3-4d46-905e-01646f2e29b7",
+    "existing_name": "Cordelia Elif Ames",
+    "match_method": "name_or_alias",
+    "handle": "cordelia-elif-ames-xw5zsw1"
+  },
+  {
+    "ordinal": 76,
+    "fleet": "silver",
+    "rank": 76,
+    "name": "Zhang Chenrui",
+    "sail": "4686",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 69.0,
+        "code": null,
+        "discarded": false,
+        "raw": "69"
+      },
+      {
+        "score": 67.0,
+        "code": null,
+        "discarded": false,
+        "raw": "67"
+      },
+      {
+        "score": 55.0,
+        "code": null,
+        "discarded": false,
+        "raw": "55"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": false,
+        "raw": "83"
+      }
+    ],
+    "total": 363.0,
+    "nett": 274.0,
+    "sailor_id": "d11c8a91-f06b-4275-b8be-47315969a68e",
+    "existing_name": "Zhang Chenrui",
+    "match_method": "name_or_alias",
+    "handle": "zhang-chenrui-jj4x9un"
+  },
+  {
+    "ordinal": 77,
+    "fleet": "silver",
+    "rank": 77,
+    "name": "Owen Fun Kaii Meng",
+    "sail": "2024",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      },
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 64.0,
+        "code": null,
+        "discarded": false,
+        "raw": "64"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": false,
+        "raw": "83"
+      },
+      {
+        "score": 52.0,
+        "code": null,
+        "discarded": false,
+        "raw": "52"
+      }
+    ],
+    "total": 366.0,
+    "nett": 277.0,
+    "sailor_id": "92e72088-92fb-4900-9a06-780a194d739b",
+    "existing_name": "Owen Fun",
+    "match_method": "name_or_alias",
+    "handle": "owen-fun-h5awbny"
+  },
+  {
+    "ordinal": 78,
+    "fleet": "silver",
+    "rank": 78,
+    "name": "Julian Lim",
+    "sail": "3739",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      },
+      {
+        "score": 66.0,
+        "code": null,
+        "discarded": false,
+        "raw": "66"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 74.0,
+        "code": null,
+        "discarded": false,
+        "raw": "74"
+      }
+    ],
+    "total": 379.0,
+    "nett": 290.0,
+    "sailor_id": "02d40dfa-9b2f-48fd-aefa-9d9058e1ed5a",
+    "existing_name": "Julian Lim",
+    "match_method": "name_or_alias",
+    "handle": "julian-lim-or7r3ta"
+  },
+  {
+    "ordinal": 79,
+    "fleet": "silver",
+    "rank": 79,
+    "name": "Chiang Zhiyi Aaron",
+    "sail": "4518",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": false,
+        "raw": "75"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": false,
+        "raw": "84"
+      },
+      {
+        "score": 70.0,
+        "code": null,
+        "discarded": false,
+        "raw": "70"
+      },
+      {
+        "score": 63.0,
+        "code": null,
+        "discarded": false,
+        "raw": "63"
+      }
+    ],
+    "total": 381.0,
+    "nett": 292.0,
+    "sailor_id": "165560d0-d029-4580-bc7e-5b7e46cd2b20",
+    "existing_name": "Chiang Zhiyi Aaron",
+    "match_method": "name_or_alias",
+    "handle": "chiang-zhiyi-aaron"
+  },
+  {
+    "ordinal": 80,
+    "fleet": "silver",
+    "rank": 80,
+    "name": "Delia Finn",
+    "sail": "360",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 65.0,
+        "code": null,
+        "discarded": false,
+        "raw": "65"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(81)"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": false,
+        "raw": "75"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": false,
+        "raw": "81"
+      }
+    ],
+    "total": 379.0,
+    "nett": 298.0,
+    "sailor_id": "201998a8-6511-4827-883d-7117e25ea9b8",
+    "existing_name": "Delia FINN",
+    "match_method": "name_or_alias",
+    "handle": "delia-finn-y3erzid"
+  },
+  {
+    "ordinal": 81,
+    "fleet": "silver",
+    "rank": 81,
+    "name": "Dani Sherif Ahmed Khalil",
+    "sail": "4457",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      },
+      {
+        "score": 72.0,
+        "code": null,
+        "discarded": false,
+        "raw": "72"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      },
+      {
+        "score": 78.0,
+        "code": null,
+        "discarded": false,
+        "raw": "78"
+      }
+    ],
+    "total": 388.0,
+    "nett": 304.0,
+    "sailor_id": "74501028-cfd4-4679-9884-184fac8e44e6",
+    "existing_name": "Dani Sherif Ahmed Khalil",
+    "match_method": "name_or_alias",
+    "handle": "dani-sherif-ahmed-khalil-opwouuw"
+  },
+  {
+    "ordinal": 82,
+    "fleet": "silver",
+    "rank": 82,
+    "name": "Helo Kaya Ames",
+    "sail": "4706",
+    "gender": "M",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 68.0,
+        "code": null,
+        "discarded": false,
+        "raw": "68"
+      },
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      }
+    ],
+    "total": 396.0,
+    "nett": 307.0,
+    "sailor_id": "c224d69d-3e1a-4051-801b-9dbfecb784a7",
+    "existing_name": "Helo Kaya Ames",
+    "match_method": "name_or_alias",
+    "handle": "helo-kaya-ames-ig6dino"
+  },
+  {
+    "ordinal": 83,
+    "fleet": "silver",
+    "rank": 83,
+    "name": "Radha Shrihari",
+    "sail": "466",
+    "gender": "F",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 80.0,
+        "code": null,
+        "discarded": false,
+        "raw": "80"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(85)"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": false,
+        "raw": "85"
+      },
+      {
+        "score": 71.0,
+        "code": null,
+        "discarded": false,
+        "raw": "71"
+      },
+      {
+        "score": 77.0,
+        "code": null,
+        "discarded": false,
+        "raw": "77"
+      }
+    ],
+    "total": 398.0,
+    "nett": 313.0,
+    "sailor_id": "000ae501-452f-48de-887a-24c340b7dac6",
+    "existing_name": "Radha Srihari",
+    "match_method": "name_or_alias",
+    "handle": "radha-srihari-6onfesd"
+  },
+  {
+    "ordinal": 84,
+    "fleet": "silver",
+    "rank": 84,
+    "name": "Isabelle Zhang Xinyi",
+    "sail": "2035",
+    "gender": "F",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(84)"
+      },
+      {
+        "score": 81.0,
+        "code": null,
+        "discarded": false,
+        "raw": "81"
+      },
+      {
+        "score": 75.0,
+        "code": null,
+        "discarded": false,
+        "raw": "75"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      }
+    ],
+    "total": 398.0,
+    "nett": 314.0,
+    "sailor_id": "394bdb84-8078-4bb9-bf18-17cd87039838",
+    "existing_name": "Isabelle Xinyi Zhang",
+    "match_method": "name_or_alias",
+    "handle": "isabelle-xinyi-zhang"
+  },
+  {
+    "ordinal": 85,
+    "fleet": "silver",
+    "rank": 85,
+    "name": "Leyla Sherif Ahmed Khalil",
+    "sail": "177",
+    "gender": "F",
+    "age_division": null,
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 82.0,
+        "code": null,
+        "discarded": false,
+        "raw": "82"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": false,
+        "raw": "83"
+      },
+      {
+        "score": 79.0,
+        "code": null,
+        "discarded": false,
+        "raw": "79"
+      },
+      {
+        "score": 76.0,
+        "code": null,
+        "discarded": false,
+        "raw": "76"
+      }
+    ],
+    "total": 409.0,
+    "nett": 320.0,
+    "sailor_id": null,
+    "existing_name": null,
+    "match_method": "new_distinct_source_sailor",
+    "handle": "leyla-sherif-ahmed-khalil"
+  },
+  {
+    "ordinal": 86,
+    "fleet": "silver",
+    "rank": 86,
+    "name": "Owen Teo Yi Sheng",
+    "sail": "16",
+    "gender": "M",
+    "age_division": "U8",
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 83.0,
+        "code": null,
+        "discarded": false,
+        "raw": "83"
+      },
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "89 DNF"
+      },
+      {
+        "score": 85.0,
+        "code": null,
+        "discarded": false,
+        "raw": "85"
+      },
+      {
+        "score": 84.0,
+        "code": null,
+        "discarded": false,
+        "raw": "84"
+      }
+    ],
+    "total": 430.0,
+    "nett": 341.0,
+    "sailor_id": "2f4b5ae9-f8db-430b-890e-da8acf8ef2af",
+    "existing_name": "Owen Teo Yi Sheng",
+    "match_method": "name_or_alias",
+    "handle": "owen-teo-yi-sheng-k1tucp4"
+  },
+  {
+    "ordinal": 87,
+    "fleet": "silver",
+    "rank": 87,
+    "name": "Tan Yee Xuen",
+    "sail": "3001",
+    "gender": "F",
+    "age_division": "U10",
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(89 DNF)"
+      },
+      {
+        "score": 89.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "89 DNF"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      }
+    ],
+    "total": 445.0,
+    "nett": 356.0,
+    "sailor_id": "a0084e06-8de6-4b1e-bbb6-4bb5d3918150",
+    "existing_name": "Yee Xuen Tan",
+    "match_method": "name_or_alias",
+    "handle": "yee-xuen-tan-nsc25"
+  },
+  {
+    "ordinal": 88,
+    "fleet": "silver",
+    "rank": 87,
+    "name": "Ethan Tan Jing Zhou",
+    "sail": "3772",
+    "gender": "M",
+    "age_division": null,
+    "races": [
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": true,
+        "raw": "(89 DNC)"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      },
+      {
+        "score": 89.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "89 DNC"
+      }
+    ],
+    "total": 445.0,
+    "nett": 356.0,
+    "sailor_id": "b941a8a0-a116-44c9-b339-aec45b5c831a",
+    "existing_name": "Ethan Tan Jing Zhou",
+    "match_method": "name_or_alias",
+    "handle": "ethan-tan-jing-zhou"
+  }
+]
