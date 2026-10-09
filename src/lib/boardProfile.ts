@@ -36,12 +36,6 @@ export type BoardClassSummary = {
   sharedDivision: string | null;
 };
 
-function compactClass(value: string | null | undefined): string {
-  return String(value || "")
-    .toLowerCase()
-    .replace(/[\s._-]+/g, "");
-}
-
 export function isBoardDiscipline(value: string | null | undefined): value is BoardDiscipline {
   return (BOARD_DISCIPLINES as readonly string[]).includes(String(value || ""));
 }

@@ -94,16 +94,6 @@ export function Techno293View({
     );
   }, [regattas]);
 
-  useEffect(() => {
-    setActiveTab(initialTab);
-  }, [initialTab]);
-
-  useEffect(() => {
-    if (initialRegattaId && publishedRegattas.some((r) => r.id === initialRegattaId)) {
-      setSelectedRegattaId(initialRegattaId);
-    }
-  }, [initialRegattaId, publishedRegattas]);
-
   const activeRegatta = useMemo(
     () =>
       publishedRegattas.find((r) => r.id === selectedRegattaId) ||
