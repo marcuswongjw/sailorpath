@@ -25,6 +25,22 @@ The official final **Optimist Selection Trials** score sheet was rendered and vi
 
 Official source: [Optimist Selection Trials final results, 30 August 2026](https://www.racingrulesofsailing.org/documents/204023)
 
+### Follow-up: final Selection Trials rows and Justiin Ang
+
+Migration `complete_selection_trials_tail_scores` (ledger version `20261010152644`) completed the seven scorecards after Kai Yen-Yu from the supplied final-result table. Each now has all 12 individual race rows and reconciles to its published totals.
+
+| Rank | Sailor | Total / nett |
+|---:|---|---:|
+| 45 | Quintan Rupert Low | `492` / `439` |
+| 46 | Chen-Yi Kai | `496` / `443` |
+| 47 | Xavier Yang Zheng Puah | `498` / `445` |
+| 48 | Euan Hao Xuan Poh | `500` / `450` |
+| 49 | Kyan Chun Hong Tan | `500` / `450` |
+| 50 | Zachary Zhi En Low | `541` / `488` |
+| 51 | Christopher Soh | `542` / `489` |
+
+The official [NSC Cup I 2024 ILCA 4/6/7 result sheet](https://drive.google.com/file/d/1NbB8_efuTWbgaizk5vCyo_NSbeX8tm1j/view) was rendered and visually checked for Justiin Ang. His ILCA 7 row is now recorded exactly as `1, (2), 1, 2, 1, 1, 1`, with R2 as the sole discard and totals `9` / `7`.
+
 ## Outstanding work
 
 ### 1. One live row-level reconciliation exception
@@ -41,10 +57,6 @@ There are **12 published sheets** with declared race counts but no individual sc
 
 There are **9 older published sheets** without both race counts and individual score rows, representing **789** competitor summaries. Official source material is required before their individual results can be reconstructed.
 
-### 4. One notation-only review item
-
-**NSC 1 ILCA 7 (Dec 2024) — Justiin Ang, R1** has raw value `(1)` while `discarded = false`. The current totals are mathematically correct only when R1 counts and R2 `(2)` is the discard. The source sheet should be visually checked before changing the notation; it is not an active score-reconciliation mismatch.
-
 ## Scope safeguard
 
-No result data was changed for the unresolved Wingfoil entry, scoreless historical sheets, or the ILCA 7 notation item.
+No result data was changed for the unresolved Wingfoil entry or the scoreless historical sheets.
