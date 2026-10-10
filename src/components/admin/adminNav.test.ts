@@ -190,6 +190,17 @@ describe("canonical admin areas", () => {
     ).toMatchObject({ area: "events", sheet: "abc" });
   });
 
+  it("opens the board and foil workspace without carrying a class-sheet address", () => {
+    expect(
+      parseAdminArea(new URLSearchParams("area=events&view=board&event=old&sheet=old"))
+    ).toEqual({
+      area: "events",
+      view: "board",
+      event: null,
+      sheet: null,
+    });
+  });
+
   it("ignores a class id on an unrelated destination", () => {
     expect(
       parseAdminArea(new URLSearchParams("tab=stats&sheet=abc"))

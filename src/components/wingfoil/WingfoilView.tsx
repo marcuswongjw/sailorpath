@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect } from "react";
 import {
-  Wind,
   Trophy,
   Calendar,
 } from "lucide-react";
@@ -19,19 +18,31 @@ import {
 import {
   getClassRegattas,
   getPublishedScorecardRegattas,
+  type PublicClassRegattaRow,
 } from "@/lib/publicDataLoader";
 import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { BoardClassHeader } from "@/components/board/BoardClassHeader";
+import {
+  boardClassSourceCounts,
+  type BoardClassSourceCounts,
+} from "@/lib/boardClassHub";
 import { WingfoilSeriesView } from "./WingfoilSeriesView";
 
 export function WingfoilView({
   initialRegattas,
   initialTab = "regattas",
   initialRegattaId,
+  initialPublishedRows,
+  initialCalendarRows,
+  sourceCounts,
 }: {
   initialRegattas?: WingfoilRegatta[];
   initialTab?: "regattas" | "scorecards" | "series" | "results";
   initialRegattaId?: string;
+  initialPublishedRows?: PublicClassRegattaRow[];
+  initialCalendarRows?: PublicClassRegattaRow[];
+  sourceCounts?: BoardClassSourceCounts;
 } = {}) {
   const [regattas, setRegattas] = useState<WingfoilRegatta[]>(
     initialRegattas && initialRegattas.length > 0
@@ -113,24 +124,19 @@ export function WingfoilView({
       }),
     [publishedRegattas]
   );
+  const publishedResultRows = initialPublishedRows || publishedScorecardRows;
+  const publishedSourceCounts = sourceCounts || boardClassSourceCounts(publishedResultRows);
+  const calendarRows = initialCalendarRows || getClassRegattas("wingfoil");
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
-      {/* Hero Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-[var(--sp-cool-veil)] pb-5">
-        <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)]/15 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/25">
-            <Wind className="h-5 w-5 sm:h-6 sm:w-6" />
-          </span>
-          <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
-              WingFoil Racing
-            </h1>
-          </div>
-        </div>
+      <BoardClassHeader
+        classKey="wingfoil"
+        publishedRecordCount={publishedResultRows.length}
+        sourceCounts={publishedSourceCounts}
+      />
 
-        {/* View mode tabs */}
-        <div className="flex items-center gap-1.5 rounded-xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] p-1 self-start lg:self-auto overflow-x-auto max-w-full shadow-xs">
+      <nav aria-label="WingFoil sections" className="flex items-center gap-1.5 rounded-xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] p-1 overflow-x-auto max-w-full shadow-xs">
           <button
             type="button"
             onClick={() => setActiveTab("regattas")}
@@ -141,7 +147,7 @@ export function WingfoilView({
             }`}
           >
             <Calendar className="h-3.5 w-3.5" />
-            Regattas
+            Event calendar
           </button>
           <button
             type="button"
@@ -153,7 +159,7 @@ export function WingfoilView({
             }`}
           >
             <Trophy className="h-3.5 w-3.5" />
-            All published scorecards
+            Published results
           </button>
           <button
             type="button"
@@ -176,21 +182,20 @@ export function WingfoilView({
                 : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             }`}
           >
-            Regatta Standings
+            Scorecard
           </button>
-        </div>
-      </div>
+      </nav>
 
-      {/* TAB 0: Regattas List (Default Class Page View) */}
+      {/* Curated schedule/event catalog. */}
       {activeTab === "regattas" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
-            Curated event catalog. Published scorecards that are not yet linked to a
-            calendar event are available in <strong>All published scorecards</strong>.
+            The event calendar is a schedule and discovery list. Use <strong>Published results</strong>
+            to browse every record currently visible on this class page.
           </p>
           <ClassRegattaListTable
             classNameTitle="WingFoil"
-            regattas={getClassRegattas("wingfoil")}
+            regattas={calendarRows}
           />
         </div>
       )}
@@ -198,13 +203,13 @@ export function WingfoilView({
       {activeTab === "scorecards" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-950">
-            Every published WingFoil scorecard is listed here. A scorecard remains a
-            specialist result source until it is reconciled to a normalized event and
-            class sheet.
+            Every published WingFoil result record is listed here. Each row identifies whether it
+            comes from a canonical class sheet or a specialist scorecard that is still awaiting
+            reconciliation.
           </p>
           <ClassRegattaListTable
             classNameTitle="WingFoil"
-            regattas={publishedScorecardRows}
+            regattas={publishedResultRows}
           />
         </div>
       )}

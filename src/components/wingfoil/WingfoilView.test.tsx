@@ -1,5 +1,5 @@
 /** @vitest-environment jsdom */
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { WingfoilView } from "./WingfoilView";
 
@@ -19,14 +19,23 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+beforeEach(() => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 describe("WingfoilView", () => {
-  it("renders WingFoil hub header and Regattas list by default", () => {
+  it("renders the shared WingFoil header and event calendar by default", () => {
     render(<WingfoilView />);
 
-    expect(screen.getByText("WingFoil Racing")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Regattas/i })).toBeInTheDocument();
+    expect(screen.getByText("WingFoil")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Event calendar/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Published results/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Scorecard$/i })).toBeInTheDocument();
 
     // Default tab is Regattas table
     expect(screen.getByText("2025 Northeast Monsoon Grand Prix Series 2")).toBeInTheDocument();
@@ -35,9 +44,10 @@ describe("WingfoilView", () => {
   it("verifies Singapore Series and Rules & Format tabs are dropped", () => {
     render(<WingfoilView />);
 
-    expect(screen.getByRole("button", { name: /Regattas/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Event calendar/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Published results/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Scorecard$/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
     expect(screen.queryByRole("button", { name: /Rules & Format/i })).toBeNull();
   });
@@ -65,10 +75,10 @@ describe("WingfoilView", () => {
     ).toBeGreaterThanOrEqual(1);
   });
 
-  it("switches to Regatta Standings tab and renders regatta select dropdown & gender pills", () => {
+  it("switches to Scorecard and renders regatta select dropdown & gender pills", () => {
     render(<WingfoilView />);
 
-    const resultsTab = screen.getByRole("button", { name: /Regatta Standings/i });
+    const resultsTab = screen.getByRole("button", { name: /^Scorecard$/i });
     fireEvent.click(resultsTab);
 
     // Regatta dropdown
@@ -101,9 +111,9 @@ describe("WingfoilView", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /All published scorecards/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Published results/i }));
 
     expect(screen.getByText("Unregistered WingFoil Round")).toBeInTheDocument();
-    expect(screen.getByText("Published scorecard")).toBeInTheDocument();
+    expect(screen.getByText("Specialist scorecard")).toBeInTheDocument();
   });
 });

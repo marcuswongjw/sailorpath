@@ -51,6 +51,7 @@ function eventsViewFrom(params: { get: (key: string) => string | null }): AdminE
   if (area.area !== "events") return "card";
   if (
     area.view === "card" ||
+    area.view === "board" ||
     area.view === "results" ||
     area.view === "import" ||
     area.view === "readiness" ||
@@ -104,6 +105,13 @@ const AdminResultsPanel = dynamic(
 );
 const AdminRegattasPanel = dynamic(
   () => import("@/components/admin/AdminRegattasPanel").then((m) => m.AdminRegattasPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminBoardClassesPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminBoardClassesPanel").then(
+      (m) => m.AdminBoardClassesPanel
+    ),
   { loading: () => <PanelLoading /> }
 );
 const AdminEventsQueuePanel = dynamic(
@@ -924,7 +932,21 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
 
         {activeTab === "regattas" && (
           <div className="w-full min-w-0">
-            {isAdminEventsQueueView(eventsView) ? (
+            {eventsView === "board" ? (
+              <AdminBoardClassesPanel
+                regattas={data.regattaList}
+                results={data.resultsList}
+                onOpenClass={(key) => {
+                  regattas.panelProps.setRegattaSearch("");
+                  regattas.panelProps.setRegattaDivisionFilter("all");
+                  regattas.panelProps.setRegattaClassFilter?.(
+                    key === "techno293" ? "techno" : key
+                  );
+                  setEventsView("card");
+                  setActiveTab("regattas");
+                }}
+              />
+            ) : isAdminEventsQueueView(eventsView) ? (
               <AdminEventsQueuePanel
                 view={eventsView}
                 regattas={data.regattaList}
@@ -1113,7 +1135,11 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 <AdminRegattasPanel
                   isSuperadmin={isSuperadmin}
                   activeSheetId={data.selectedRegattaIdForResultEdit}
-                  eventsView={isAdminEventsQueueView(eventsView) ? "card" : eventsView}
+                  eventsView={
+                    eventsView === "board" || isAdminEventsQueueView(eventsView)
+                      ? "card"
+                      : eventsView
+                  }
                   onOpenResults={(regattaId) => {
                     setEventsView("results");
                     setSelectedRegattaIdForResultEdit(regattaId);

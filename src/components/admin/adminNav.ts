@@ -70,6 +70,7 @@ export function isAdminEventsQueueView(view: string): view is AdminEventsQueueVi
 
 export type AdminEventsView =
   | "card"
+  | "board"
   | "results"
   | "import"
   | "readiness"
@@ -104,6 +105,7 @@ const AREAS: readonly AdminArea[] = [
 
 const EVENTS_VIEWS: readonly AdminEventsView[] = [
   "card",
+  "board",
   "results",
   "import",
   "readiness",
@@ -353,6 +355,7 @@ function parseCanonical(params: ParamBag, area: AdminArea): AdminAreaState {
     sheet ? "results" : "card"
   );
   if (
+    view === "board" ||
     view === "wingfoil" ||
     view === "techno293" ||
     isAdminEventsQueueView(view)

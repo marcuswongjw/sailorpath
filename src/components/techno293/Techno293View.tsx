@@ -6,10 +6,8 @@ import {
   Calendar,
   Trophy,
   ExternalLink,
-  Sparkles,
   Layers,
   FileText,
-  Compass,
 } from "lucide-react";
 import {
   SINGAPORE_TECHNO293_REGATTAS,
@@ -25,18 +23,30 @@ import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import {
   getClassRegattas,
   getPublishedScorecardRegattas,
+  type PublicClassRegattaRow,
 } from "@/lib/publicDataLoader";
 import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
+import { BoardClassHeader } from "@/components/board/BoardClassHeader";
+import {
+  boardClassSourceCounts,
+  type BoardClassSourceCounts,
+} from "@/lib/boardClassHub";
 import { Techno293SeriesView } from "./Techno293SeriesView";
 
 export function Techno293View({
   initialRegattas,
   initialTab = "regattas",
   initialRegattaId,
+  initialPublishedRows,
+  initialCalendarRows,
+  sourceCounts,
 }: {
   initialRegattas?: Techno293Regatta[];
   initialTab?: "regattas" | "scorecards" | "series" | "results" | "specs";
   initialRegattaId?: string;
+  initialPublishedRows?: PublicClassRegattaRow[];
+  initialCalendarRows?: PublicClassRegattaRow[];
+  sourceCounts?: BoardClassSourceCounts;
 } = {}) {
   const [regattas, setRegattas] = useState<Techno293Regatta[]>(
     initialRegattas && initialRegattas.length > 0
@@ -123,32 +133,19 @@ export function Techno293View({
       }),
     [publishedRegattas]
   );
+  const publishedResultRows = initialPublishedRows || publishedScorecardRows;
+  const publishedSourceCounts = sourceCounts || boardClassSourceCounts(publishedResultRows);
+  const calendarRows = initialCalendarRows || getClassRegattas("techno293");
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
-      {/* Hero Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-[var(--sp-cool-veil)] pb-5">
-        <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)]/15 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/25 shadow-xs">
-            <Compass className="h-5 w-5 sm:h-6 sm:w-6" />
-          </span>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[var(--sp-harbour-teal)]">
-                World Sailing International Class
-              </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
-                <Sparkles className="h-3 w-3" /> One Design
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
-              Singapore Techno 293
-            </h1>
-          </div>
-        </div>
+      <BoardClassHeader
+        classKey="techno293"
+        publishedRecordCount={publishedResultRows.length}
+        sourceCounts={publishedSourceCounts}
+      />
 
-        {/* View Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shrink-0 shadow-xs">
+      <nav aria-label="Techno 293 sections" className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shadow-xs">
           <button
             type="button"
             onClick={() => setActiveTab("regattas")}
@@ -159,7 +156,7 @@ export function Techno293View({
             }`}
           >
             <Calendar className="h-3.5 w-3.5" />
-            <span>Regattas</span>
+            <span>Event calendar</span>
           </button>
           <button
             type="button"
@@ -171,7 +168,7 @@ export function Techno293View({
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
-            <span>All published scorecards</span>
+            <span>Published results</span>
           </button>
           <button
             type="button"
@@ -195,7 +192,7 @@ export function Techno293View({
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
-            <span>Regatta Standings</span>
+            <span>Scorecard</span>
           </button>
           <button
             type="button"
@@ -209,19 +206,18 @@ export function Techno293View({
             <FileText className="h-3.5 w-3.5" />
             <span>Class Specs</span>
           </button>
-        </div>
-      </div>
+      </nav>
 
-      {/* Tab 0: Regattas List (Default Class View) */}
+      {/* Curated schedule/event catalog. */}
       {activeTab === "regattas" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
-            Curated event catalog. Published scorecards that are not yet linked to a
-            calendar event are available in <strong>All published scorecards</strong>.
+            The event calendar is a schedule and discovery list. Use <strong>Published results</strong>
+            to browse every record currently visible on this class page.
           </p>
           <ClassRegattaListTable
             classNameTitle="Techno 293"
-            regattas={getClassRegattas("techno293")}
+            regattas={calendarRows}
           />
         </div>
       )}
@@ -229,13 +225,13 @@ export function Techno293View({
       {activeTab === "scorecards" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-950">
-            Every published Techno 293 scorecard is listed here. Series aggregates
-            remain on the Overall Championship tab; individual scorecards are shown
-            even when they have no calendar-catalog mapping yet.
+            Every published Techno 293 result record is listed here. Each row identifies whether
+            it comes from a canonical class sheet or a specialist scorecard that is still awaiting
+            reconciliation. Series aggregates remain on the Overall Championship tab.
           </p>
           <ClassRegattaListTable
             classNameTitle="Techno 293"
-            regattas={publishedScorecardRows}
+            regattas={publishedResultRows}
           />
         </div>
       )}

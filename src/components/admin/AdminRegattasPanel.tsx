@@ -30,6 +30,7 @@ import {
   ADMIN_BOAT_CLASS_GROUPS,
   regattaClassFamily,
 } from "@/lib/admin/regattaClass";
+import { requiresExplicitImportMetadata } from "@/lib/classRegistry";
 import type { RegattaAdmin } from "@/types/regatta";
 import { setAdminRegattaStatus } from "@/components/admin/adminRegattaLifecycle";
 import { GeographySelect } from "@/components/CountrySelect";
@@ -696,9 +697,12 @@ export function AdminRegattasPanel({
                 : regattaClassFilter === "ilca"
                   ? "ILCA 4"
                   : "Optimist";
+    const requiresExplicitMetadata = requiresExplicitImportMetadata(boatClass);
     const division =
       regattaClassFilter === "ilca" || regattaDivisionFilter.startsWith("ILCA")
         ? "Open"
+        : requiresExplicitMetadata
+          ? "Open"
         : regattaDivisionFilter === "Gold" || regattaDivisionFilter === "Silver"
           ? regattaDivisionFilter
           : "Gold";
@@ -713,7 +717,7 @@ export function AdminRegattasPanel({
       organizer: selectedEventView.organizer || "",
       boatClass,
       division,
-      countsForRanking: true,
+      countsForRanking: !requiresExplicitMetadata,
       status: "draft",
     });
   };

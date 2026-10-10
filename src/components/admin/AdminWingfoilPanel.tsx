@@ -363,13 +363,14 @@ export function AdminWingfoilPanel({
           </div>
           <div>
             <h2 className="text-xl font-black font-display text-[var(--sp-harbour-shadow)] flex items-center gap-2">
-              <span>Wingfoil Regattas &amp; Results Manager</span>
+              <span>Legacy WingFoil Scorecards</span>
             </h2>
             <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
-              Manage Northeast &amp; Southwest Monsoon Grand Prix rounds, scores, and published status.
+              Specialist scorecard workspace for historical rounds and series calculations.
             </p>
             <p className="mt-1 text-[11px] font-medium text-violet-800">
-              Source: specialist JSONB scorecard · Canonical event/class-sheet bridge: not linked by this panel
+              These records are labelled separately in public results. Create and publish new canonical
+              event/class sheets from Board &amp; foil classes.
             </p>
           </div>
         </div>
@@ -409,6 +410,13 @@ export function AdminWingfoilPanel({
             />
             <span>{isSyncingServer ? "Syncing…" : "Sync DB"}</span>
           </button>
+
+          <Link
+            href="/admin?area=events&view=board"
+            className="rounded-xl border border-[var(--sp-harbour-teal)]/30 bg-[var(--sp-harbour-teal)]/10 hover:bg-[var(--sp-harbour-teal)]/20 text-[var(--sp-harbour-teal)] px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
+          >
+            <span>Canonical workflow</span>
+          </Link>
 
           <Link
             href="/sg/wingfoil"

@@ -400,12 +400,12 @@ export function getPublishedScorecardRegattas(
         timingStatus: deriveEventTimingStatus(startDate, undefined, referenceDate),
         resultStatus: hasResults ? "final" : "unavailable",
         resultsSummary: hasResults
-          ? `Published scorecard · ${competitorCount} competitors`
-          : "Scorecard published · results unavailable",
+          ? `Specialist scorecard · ${competitorCount} competitors`
+          : "Specialist scorecard · results unavailable",
         competitorCount,
         format: regatta.format,
         canonicalHref: `/sg/${classPath}?tab=results&regatta=${encodeURIComponent(regatta.id)}`,
-        source: { kind: "special_scorecard", label: "Published scorecard" },
+        source: { kind: "special_scorecard", label: "Specialist scorecard" },
       };
     })
     .sort((a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name));
@@ -449,13 +449,13 @@ export function getNormalizedClassRegattas(
         resultStatus: raceCount > 0 ? "final" : "provisional",
         resultsSummary:
           raceCount > 0
-            ? `Published normalized results · ${competitorCount} competitors`
-            : "Published normalized class sheet",
+            ? `Canonical class sheet · ${competitorCount} competitors`
+            : "Canonical class sheet",
         competitorCount,
         canonicalHref:
           href ||
           `/regattas/${encodeURIComponent(regatta.eventSlug || regatta.slug)}?fleet=${encodeURIComponent(boatClass)}`,
-        source: { kind: "normalized_result", label: "Normalized result" },
+        source: { kind: "normalized_result", label: "Canonical class sheet" },
       };
     })
     .sort((a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name));

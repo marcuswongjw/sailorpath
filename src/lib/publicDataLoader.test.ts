@@ -96,7 +96,7 @@ describe("publicDataLoader shared layer", () => {
     expect(rows[0]).toMatchObject({
       eventSlug: "unregistered-wingfoil-round",
       canonicalHref: "/sg/wingfoil?tab=results&regatta=unregistered-wingfoil-round",
-      source: { kind: "special_scorecard", label: "Published scorecard" },
+      source: { kind: "special_scorecard", label: "Specialist scorecard" },
     });
   });
 
@@ -127,7 +127,7 @@ describe("publicDataLoader shared layer", () => {
     expect(rows[0]).toMatchObject({
       name: "Sample iQFoil Open",
       fleetKey: "iqfoil",
-      source: { kind: "normalized_result", label: "Normalized result" },
+      source: { kind: "normalized_result", label: "Canonical class sheet" },
     });
   });
 });
