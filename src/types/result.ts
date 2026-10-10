@@ -5,6 +5,11 @@ export type ResultAdmin = {
   id: string;
   sailorId: string;
   regattaId: string;
+  entryLabel?: string | null;
+  entrySailNumber?: string | null;
+  entryBoardNumber?: string | null;
+  entryType?: "individual" | "crew" | null;
+  participants?: ResultParticipantAdmin[];
   rank: number;
   nettScore?: number | null;
   totalScore?: number | null;
@@ -20,3 +25,15 @@ export type ResultAdmin = {
   raceResults?: OfficialRaceResultInput[];
 };
 import type { OfficialRaceResultInput } from "@/types/raceResult";
+
+export type ResultParticipantAdmin = {
+  id?: string;
+  sailorId: string | null;
+  sailorName?: string | null;
+  sailorHandle?: string | null;
+  sourceName: string;
+  displayOrder: number;
+  role: "solo" | "helm" | "crew" | "member" | "unknown";
+  matchStatus?: "matched" | "needs_review" | "unresolved";
+  rankingCredit?: boolean;
+};

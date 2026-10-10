@@ -1305,6 +1305,31 @@ export function AdminRegattasPanel({
 
                                 <div>
                                   <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                    Result Entry Format
+                                  </label>
+                                  <select
+                                    value={regattaForm.entryType || "individual"}
+                                    onChange={(e) => {
+                                      const entryType = e.target.value as "individual" | "crew";
+                                      setRegattaForm({
+                                        ...regattaForm,
+                                        entryType,
+                                        minParticipants: entryType === "crew" ? 2 : 1,
+                                        maxParticipants: entryType === "crew" ? 2 : 1,
+                                      });
+                                    }}
+                                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500/50"
+                                  >
+                                    <option value="individual">Individual sailor</option>
+                                    <option value="crew">Crewed boat</option>
+                                  </select>
+                                  <p className="mt-1 text-[11px] leading-snug text-slate-400">
+                                    Crewed entries link each athlete to one shared result and race-score set.
+                                  </p>
+                                </div>
+
+                                <div>
+                                  <label className="text-[11px] font-bold text-slate-400 uppercase">
                                     Geography (NOC)
                                   </label>
                                   <div className="mt-1">

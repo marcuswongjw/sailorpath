@@ -174,6 +174,9 @@ export type RegattaFormState = {
   raceCount: string | number;
   geography: string;
   boatClass: string;
+  entryType?: "individual" | "crew";
+  minParticipants?: number | string;
+  maxParticipants?: number | string;
   countsForRanking: boolean;
   slug?: string;
   status?: string;
@@ -197,6 +200,9 @@ export function emptyRegattaForm(): RegattaFormState {
     raceCount: "",
     geography: "SGP",
     boatClass: "Optimist",
+    entryType: "individual",
+    minParticipants: 1,
+    maxParticipants: 1,
     countsForRanking: true,
     status: "published",
   };
@@ -214,6 +220,9 @@ export function regattaToClassForm(r: {
   totalFleetSize?: number | string | null;
   geography?: string | null;
   boatClass?: string | null;
+  entryType?: "individual" | "crew" | null;
+  minParticipants?: number | string | null;
+  maxParticipants?: number | string | null;
   countsForRanking?: boolean | null;
   endDate?: string | Date | null;
   venue?: string | null;
@@ -240,6 +249,9 @@ export function regattaToClassForm(r: {
         : "",
     geography: r.geography || "SGP",
     boatClass: r.boatClass || "Optimist",
+    entryType: r.entryType || "individual",
+    minParticipants: r.minParticipants ?? 1,
+    maxParticipants: r.maxParticipants ?? 1,
     countsForRanking: r.countsForRanking !== false,
     endDate: r.endDate ? String(r.endDate).slice(0, 10) : "",
     venue: r.venue || "",
@@ -257,6 +269,13 @@ export type ResultFormState = {
   id: string;
   regattaId: string;
   sailorId: string;
+  /** Second crew member when the selected regatta sheet is a crew entry. */
+  crewSailorId?: string;
+  firstParticipantRole?: "solo" | "helm" | "crew" | "member" | "unknown";
+  secondParticipantRole?: "solo" | "helm" | "crew" | "member" | "unknown";
+  entryLabel?: string;
+  entrySailNumber?: string;
+  entryBoardNumber?: string;
   rank: number | string;
   nettScore: string | number;
   totalScore: string | number;
@@ -270,6 +289,12 @@ export function emptyResultForm(): ResultFormState {
     id: "",
     regattaId: "",
     sailorId: "",
+    crewSailorId: "",
+    firstParticipantRole: "unknown",
+    secondParticipantRole: "unknown",
+    entryLabel: "",
+    entrySailNumber: "",
+    entryBoardNumber: "",
     rank: 1,
     nettScore: "",
     totalScore: "",
