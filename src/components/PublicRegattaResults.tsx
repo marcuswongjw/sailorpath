@@ -54,6 +54,19 @@ function raceValueClass(race: OfficialRaceResultInput | undefined) {
   return "text-[var(--sp-charcoal-slate)]";
 }
 
+function crewSummary(result: PublicRegattaResult): string | null {
+  const members = (result.participants || [])
+    .slice()
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+  if (members.length < 2) return null;
+  return members
+    .map((member) => {
+      const name = member.sailorName || member.sourceName;
+      return member.role === "unknown" ? name : `${name} (${member.role})`;
+    })
+    .join(" / ");
+}
+
 function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
   if (races.length === 0) return null;
   return (
@@ -160,6 +173,7 @@ export function PublicRegattaResults({
         const overseas = Boolean(result.isOverseasCommitment);
         const dns = Boolean(result.isDns) && !overseas;
         const races = result.raceResults.slice().sort((a, b) => a.raceNumber - b.raceNumber);
+        const crew = crewSummary(result);
         return (
           <article
             key={`${result.sailorId}-${result.regattaId}`}
@@ -180,6 +194,12 @@ export function PublicRegattaResults({
                   >
                     {result.sailorName}
                   </Link>
+                  {crew && (
+                    <p className="mt-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)]">
+                      Crew · {crew}
+                      {result.entrySailNumber ? ` · Sail ${result.entrySailNumber}` : ""}
+                    </p>
+                  )}
                 </div>
                 <p className="mt-1 text-[11px] text-[var(--sp-charcoal)]">
                   {[
@@ -277,6 +297,7 @@ export function PublicRegattaResults({
             const dns = Boolean(result.isDns) && !overseas;
             const races = new Map(result.raceResults.map((race) => [race.raceNumber, race]));
             const podiumTint = podiumRowClass(result.rank);
+            const crew = crewSummary(result);
             return (
               <tr
                 key={`${result.sailorId}-${result.regattaId}`}
@@ -297,6 +318,12 @@ export function PublicRegattaResults({
                   >
                     {result.sailorName}
                   </Link>
+                  {crew && (
+                    <p className="mt-0.5 text-[11px] font-semibold text-[var(--sp-harbour-teal)]">
+                      Crew · {crew}
+                      {result.entrySailNumber ? ` · Sail ${result.entrySailNumber}` : ""}
+                    </p>
+                  )}
                 </td>
                 <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
                   {result.nationality || "—"}

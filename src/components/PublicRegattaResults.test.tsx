@@ -98,4 +98,60 @@ describe("PublicRegattaResults", () => {
     expect(html).toContain("Total");
     expect(html).toContain("Nett");
   });
+
+  it("labels a crewed boat entry without duplicating its score row", () => {
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults
+        accent="orange"
+        totalFleetSize={12}
+        results={[
+          {
+            resultId: "crew-result",
+            sailorId: "sailor-1",
+            regattaId: "regatta-crew",
+            rank: 1,
+            nettScore: 8,
+            totalScore: 11,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Seth Low / Amos Tham",
+            sailNumber: "SGP 29",
+            handle: "seth-low",
+            raceResults: [],
+            entryType: "crew",
+            entrySailNumber: "SGP 29",
+            participants: [
+              {
+                id: "participant-1",
+                resultId: "crew-result",
+                sailorId: "sailor-1",
+                sailorName: "Seth Low",
+                handle: "seth-low",
+                sourceName: "Seth Low",
+                displayOrder: 1,
+                role: "helm",
+                matchStatus: "matched",
+                rankingCredit: false,
+              },
+              {
+                id: "participant-2",
+                resultId: "crew-result",
+                sailorId: "sailor-2",
+                sailorName: "Amos Tham",
+                handle: "amos-tham",
+                sourceName: "Amos Tham",
+                displayOrder: 2,
+                role: "crew",
+                matchStatus: "matched",
+                rankingCredit: false,
+              },
+            ],
+          },
+        ]}
+      />
+    );
+
+    expect(html).toContain("Crew · Seth Low (helm) / Amos Tham (crew) · Sail SGP 29");
+    expect((html.match(/Seth Low \/ Amos Tham/g) || []).length).toBeGreaterThan(0);
+  });
 });

@@ -156,6 +156,18 @@ export function ProfileRegattaRow({
     fleetSize != null &&
     Number(fleetSize) > 0 &&
     leftValue !== "—";
+  const crewMembers = (res.participants || [])
+    .slice()
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+  const crewLabel =
+    crewMembers.length > 1
+      ? crewMembers
+          .map((member) => {
+            const name = member.sailorName || member.sourceName;
+            return member.role === "unknown" ? name : `${name} (${member.role})`;
+          })
+          .join(" / ")
+      : null;
 
   return (
     <div key={regattaId + String(idx)}>
@@ -253,6 +265,12 @@ export function ProfileRegattaRow({
               .filter(Boolean)
               .join(" · ")}
           </p>
+          {crewLabel && (
+            <p className="mt-1 text-[11px] font-semibold text-harbour">
+              Crew entry · {crewLabel}
+              {res.entrySailNumber ? ` · Sail ${res.entrySailNumber}` : ""}
+            </p>
+          )}
           {/* Mobile: complementary score only */}
           {(() => {
             const mobileSecondary = isIlcaRow

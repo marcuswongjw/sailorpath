@@ -61,6 +61,7 @@ import {
   canonicalBoatClass,
   requiresExplicitImportMetadata,
 } from "@/lib/classRegistry";
+import { isKnownCrewBoatClass } from "@/lib/regattaParticipants";
 
 export type { ImportPossibleDuplicate };
 
@@ -615,6 +616,16 @@ export async function POST(req: Request) {
         .slice(0, 8) ||
       "SGP";
     const boat = canonicalBoatClass(boatClass || "Optimist") || "Optimist";
+    if (isKnownCrewBoatClass(boat)) {
+      return NextResponse.json(
+        {
+          error:
+            "Crewed-boat imports require an individual participant mapping for every boat entry. Use the crew result editor until the reviewed crew-import mapper is available; no combined team sailor profile was created.",
+          code: "crew_participant_mapping_required",
+        },
+        { status: 422 }
+      );
+    }
     const raceCount =
       raceCountRaw == null ||
       String(raceCountRaw).trim() === "" ||

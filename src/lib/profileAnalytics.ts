@@ -24,6 +24,18 @@ export type ProfileResult = {
   raceCount?: number | null;
   countsForRanking?: boolean;
   boatClass?: string | null;
+  entryLabel?: string | null;
+  entrySailNumber?: string | null;
+  entryBoardNumber?: string | null;
+  entryType?: "individual" | "crew" | null;
+  participants?: Array<{
+    sailorId?: string | null;
+    sailorName?: string | null;
+    handle?: string | null;
+    sourceName: string;
+    displayOrder: number;
+    role: "solo" | "helm" | "crew" | "member" | "unknown";
+  }>;
   evidenceUrl?: string | null;
   evidenceName?: string | null;
   evidenceType?: "pdf" | "image" | "link" | null;

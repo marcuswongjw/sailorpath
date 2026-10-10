@@ -27,6 +27,37 @@ function selectionEventIdFrom(body: {
   return { id };
 }
 
+function participantConfigFrom(body: Record<string, unknown>):
+  | { entryType: "individual" | "crew"; minParticipants: number; maxParticipants: number }
+  | { error: string } {
+  const entryType = body.entryType === "crew" ? "crew" : "individual";
+  if (body.entryType !== undefined && body.entryType !== "crew" && body.entryType !== "individual") {
+    return { error: "entryType must be individual or crew" };
+  }
+  const defaultCount = entryType === "crew" ? 2 : 1;
+  const min = asPositiveInteger(
+    body.minParticipants == null || body.minParticipants === ""
+      ? defaultCount
+      : body.minParticipants,
+    "minParticipants"
+  );
+  const max = asPositiveInteger(
+    body.maxParticipants == null || body.maxParticipants === ""
+      ? defaultCount
+      : body.maxParticipants,
+    "maxParticipants"
+  );
+  if (!min.ok) return { error: min.error };
+  if (!max.ok) return { error: max.error };
+  if (max.value < min.value) {
+    return { error: "maxParticipants must be greater than or equal to minParticipants" };
+  }
+  if (entryType === "individual" && (min.value !== 1 || max.value !== 1)) {
+    return { error: "Individual regattas must have exactly one participant per entry" };
+  }
+  return { entryType, minParticipants: min.value, maxParticipants: max.value };
+}
+
 async function syncWeekendSelectionTrial(eventId: string | null | undefined) {
   if (!eventId) return;
   const sheets = await db
@@ -148,6 +179,10 @@ export async function POST(req: Request) {
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
         : "Optimist";
+    const participantConfig = participantConfigFrom(body);
+    if ("error" in participantConfig) {
+      return NextResponse.json({ error: participantConfig.error }, { status: 400 });
+    }
     let eventId: string | null = null;
     if (body.eventId) {
       const [event] = await db
@@ -212,6 +247,9 @@ export async function POST(req: Request) {
         raceCount,
         geography,
         boatClass,
+        entryType: participantConfig.entryType,
+        minParticipants: participantConfig.minParticipants,
+        maxParticipants: participantConfig.maxParticipants,
         countsForRanking,
         venue,
         endDate,
@@ -340,6 +378,32 @@ export async function PATCH(req: Request) {
         body.boatClass === "" || body.boatClass == null
           ? "Optimist"
           : String(body.boatClass).trim().slice(0, 40);
+    }
+    if (
+      body.entryType !== undefined ||
+      body.minParticipants !== undefined ||
+      body.maxParticipants !== undefined
+    ) {
+      const [current] = await db
+        .select({
+          entryType: regattas.entryType,
+          minParticipants: regattas.minParticipants,
+          maxParticipants: regattas.maxParticipants,
+        })
+        .from(regattas)
+        .where(eq(regattas.id, String(body.id)))
+        .limit(1);
+      const participantConfig = participantConfigFrom({
+        entryType: body.entryType ?? current?.entryType,
+        minParticipants: body.minParticipants ?? current?.minParticipants,
+        maxParticipants: body.maxParticipants ?? current?.maxParticipants,
+      });
+      if ("error" in participantConfig) {
+        return NextResponse.json({ error: participantConfig.error }, { status: 400 });
+      }
+      patch.entryType = participantConfig.entryType;
+      patch.minParticipants = participantConfig.minParticipants;
+      patch.maxParticipants = participantConfig.maxParticipants;
     }
     if (body.slug !== undefined && body.slug) {
       const slugVal = slugify(String(body.slug));

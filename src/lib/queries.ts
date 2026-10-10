@@ -13,6 +13,7 @@ import {
   regattaEvents,
   regattaResults,
   regattaRaceResults,
+  regattaResultParticipants,
   profiles,
   raceObservations,
   equipmentLogs,
@@ -63,6 +64,7 @@ import {
   getStatic29erResults,
   matchesCsc29erStaticSlug,
 } from "@/lib/results29erData";
+import type { OfficialRaceResultInput } from "@/types/raceResult";
 import {
   asc,
   desc,
@@ -90,6 +92,47 @@ export type SailorMapped = SailorRecord & {
   mastIlca4?: string | null;
   equipmentNotesIlca4?: string | null;
   nationalityFromSail?: boolean | null;
+};
+
+export type RegattaResultParticipantView = {
+  id: string;
+  resultId: string;
+  sailorId: string | null;
+  sailorName: string | null;
+  handle: string | null;
+  sourceName: string;
+  displayOrder: number;
+  role: "solo" | "helm" | "crew" | "member" | "unknown";
+  matchStatus: "matched" | "needs_review" | "unresolved";
+  rankingCredit: boolean;
+};
+
+/** Public result row, keeping entry metadata additive for existing consumers. */
+export type PublicRegattaResult = {
+  resultId: string;
+  sailorId: string;
+  regattaId: string;
+  rank: number;
+  nettScore: number | null;
+  totalScore: number | null;
+  isDns: boolean;
+  isOverseasCommitment: boolean;
+  sailorName: string;
+  sailNumber: string;
+  handle: string;
+  school?: string | null;
+  gender?: string | null;
+  sailorGender?: string | null;
+  birthYear?: number | null;
+  dob?: string | null;
+  nationality?: string | null;
+  sailorNationality?: string | null;
+  entryLabel?: string | null;
+  entrySailNumber?: string | null;
+  entryBoardNumber?: string | null;
+  entryType?: "individual" | "crew" | null;
+  participants?: RegattaResultParticipantView[];
+  raceResults: Array<OfficialRaceResultInput & { regattaResultId?: string }>;
 };
 
 function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
@@ -385,7 +428,9 @@ export async function listSailorsFull() {
   });
 }
 
-export async function getResultsForRegatta(regattaId: string) {
+export async function getResultsForRegatta(
+  regattaId: string
+): Promise<PublicRegattaResult[]> {
   try {
     const results = await withDb(async () => {
       const rowsPromise = db
@@ -393,6 +438,10 @@ export async function getResultsForRegatta(regattaId: string) {
           resultId: regattaResults.id,
           sailorId: regattaResults.sailorId,
           regattaId: regattaResults.regattaId,
+          entryLabel: regattaResults.entryLabel,
+          entrySailNumber: regattaResults.entrySailNumber,
+          entryBoardNumber: regattaResults.entryBoardNumber,
+          entryType: regattaResults.entryType,
           rank: regattaResults.rank,
           nettScore: regattaResults.nettScore,
           totalScore: regattaResults.totalScore,
@@ -413,6 +462,31 @@ export async function getResultsForRegatta(regattaId: string) {
         .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
         .where(eq(regattaResults.regattaId, regattaId))
         .orderBy(asc(regattaResults.rank));
+
+      const participantsPromise = db
+        .select({
+          resultId: regattaResultParticipants.regattaResultId,
+          id: regattaResultParticipants.id,
+          sailorId: regattaResultParticipants.sailorId,
+          sailorName: sailors.name,
+          handle: sailors.handle,
+          sourceName: regattaResultParticipants.sourceName,
+          displayOrder: regattaResultParticipants.displayOrder,
+          role: regattaResultParticipants.role,
+          matchStatus: regattaResultParticipants.matchStatus,
+          rankingCredit: regattaResultParticipants.rankingCredit,
+        })
+        .from(regattaResultParticipants)
+        .innerJoin(
+          regattaResults,
+          eq(regattaResultParticipants.regattaResultId, regattaResults.id)
+        )
+        .leftJoin(sailors, eq(regattaResultParticipants.sailorId, sailors.id))
+        .where(eq(regattaResults.regattaId, regattaId))
+        .orderBy(
+          asc(regattaResultParticipants.regattaResultId),
+          asc(regattaResultParticipants.displayOrder)
+        );
 
       const raceRowsPromise = db
         .select({
@@ -441,16 +515,34 @@ export async function getResultsForRegatta(regattaId: string) {
           throw error;
         });
 
-      const [rows, raceRows] = await Promise.all([rowsPromise, raceRowsPromise]);
+      const [rows, raceRows, participantRows] = await Promise.all([
+        rowsPromise,
+        raceRowsPromise,
+        participantsPromise,
+      ]);
       const racesByResult = new Map<string, typeof raceRows>();
       for (const race of raceRows) {
         const list = racesByResult.get(race.regattaResultId) || [];
         list.push(race);
         racesByResult.set(race.regattaResultId, list);
       }
+      const participantsByResult = new Map<string, typeof participantRows>();
+      for (const participant of participantRows) {
+        const list = participantsByResult.get(participant.resultId) || [];
+        list.push(participant);
+        participantsByResult.set(participant.resultId, list);
+      }
       return restoreBestNettHiddenAsDns(
         rows.map((r) => ({
           ...r,
+          sailorName:
+            r.entryLabel ||
+            (participantsByResult.get(r.resultId) || [])
+              .map((participant) => participant.sailorName || participant.sourceName)
+              .join(" / ") ||
+            r.sailorName,
+          sailNumber: r.entrySailNumber || r.sailNumber,
+          participants: participantsByResult.get(r.resultId) || [],
           gender: r.gender || r.sailorGender || null,
           nationality: r.nationality || r.sailorNationality || null,
           raceResults: racesByResult.get(r.resultId) || [],
@@ -464,7 +556,7 @@ export async function getResultsForRegatta(regattaId: string) {
         getStaticIlca7Results(regattaId) ||
         getStatic29erResults(regattaId);
       if (staticResults && staticResults.length > 0) {
-        return staticResults;
+        return staticResults as PublicRegattaResult[];
       }
     }
     return results;
@@ -474,7 +566,7 @@ export async function getResultsForRegatta(regattaId: string) {
       getStaticIlca7Results(regattaId) ||
       getStatic29erResults(regattaId);
     if (staticResults && staticResults.length > 0) {
-      return staticResults;
+        return staticResults as PublicRegattaResult[];
     }
     throw error;
   }
@@ -485,6 +577,10 @@ export async function getResultsForSailor(sailorId: string) {
     const results = await db
       .select({
         resultId: regattaResults.id,
+        entryLabel: regattaResults.entryLabel,
+        entrySailNumber: regattaResults.entrySailNumber,
+        entryBoardNumber: regattaResults.entryBoardNumber,
+        entryType: regattaResults.entryType,
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
         totalScore: regattaResults.totalScore,
@@ -508,16 +604,25 @@ export async function getResultsForSailor(sailorId: string) {
         verificationStatus: regattaResults.verificationStatus,
         verifiedAt: regattaResults.verifiedAt,
       })
-      .from(regattaResults)
+      .from(regattaResultParticipants)
+      .innerJoin(
+        regattaResults,
+        eq(regattaResultParticipants.regattaResultId, regattaResults.id)
+      )
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .where(eq(regattaResults.sailorId, sailorId))
+      .where(eq(regattaResultParticipants.sailorId, sailorId))
       .orderBy(desc(regattas.date));
 
     if (!results.length) {
-      return results.map((result) => ({ ...result, raceResults: [] }));
+      return results.map((result) => ({
+        ...result,
+        participants: [],
+        raceResults: [],
+      }));
     }
     try {
-      const raceRows = await db
+      const [raceRows, participantRows] = await Promise.all([
+        db
         .select({
           regattaResultId: regattaRaceResults.regattaResultId,
           raceNumber: regattaRaceResults.raceNumber,
@@ -533,12 +638,44 @@ export async function getResultsForSailor(sailorId: string) {
             results.map((result) => result.resultId)
           )
         )
-        .orderBy(asc(regattaRaceResults.raceNumber));
+        .orderBy(asc(regattaRaceResults.raceNumber)),
+        db
+          .select({
+            resultId: regattaResultParticipants.regattaResultId,
+            id: regattaResultParticipants.id,
+            sailorId: regattaResultParticipants.sailorId,
+            sailorName: sailors.name,
+            handle: sailors.handle,
+            sourceName: regattaResultParticipants.sourceName,
+            displayOrder: regattaResultParticipants.displayOrder,
+            role: regattaResultParticipants.role,
+            matchStatus: regattaResultParticipants.matchStatus,
+            rankingCredit: regattaResultParticipants.rankingCredit,
+          })
+          .from(regattaResultParticipants)
+          .leftJoin(sailors, eq(regattaResultParticipants.sailorId, sailors.id))
+          .where(
+            inArray(
+              regattaResultParticipants.regattaResultId,
+              results.map((result) => result.resultId)
+            )
+          )
+          .orderBy(
+            asc(regattaResultParticipants.regattaResultId),
+            asc(regattaResultParticipants.displayOrder)
+          ),
+      ]);
       const racesByResult = new Map<string, typeof raceRows>();
       for (const race of raceRows) {
         const list = racesByResult.get(race.regattaResultId) || [];
         list.push(race);
         racesByResult.set(race.regattaResultId, list);
+      }
+      const participantsByResult = new Map<string, typeof participantRows>();
+      for (const participant of participantRows) {
+        const list = participantsByResult.get(participant.resultId) || [];
+        list.push(participant);
+        participantsByResult.set(participant.resultId, list);
       }
       return results.map((result) => {
         const isOfficial =
@@ -550,6 +687,7 @@ export async function getResultsForSailor(sailorId: string) {
             ? "verified"
             : result.verificationStatus || "self_reported",
           raceResults: racesByResult.get(result.resultId) || [],
+          participants: participantsByResult.get(result.resultId) || [],
         };
       });
     } catch (error) {
@@ -563,7 +701,8 @@ export async function getResultsForSailor(sailorId: string) {
             ...result,
             verificationStatus: isOfficial
               ? "verified"
-              : result.verificationStatus || "self_reported",
+            : result.verificationStatus || "self_reported",
+            participants: [],
             raceResults: [],
           };
         });

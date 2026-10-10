@@ -137,6 +137,7 @@ export function AdminResultsPanel({
     () => regattaList.find((r) => r.id === selectedRegattaIdForResultEdit),
     [regattaList, selectedRegattaIdForResultEdit]
   );
+  const selectedRegattaIsCrew = selectedRegatta?.entryType === "crew";
 
   const recentRegattas = useMemo(() => {
     return [...regattaList]
@@ -548,7 +549,7 @@ export function AdminResultsPanel({
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
-                Sailor Name
+                {selectedRegattaIsCrew ? "Crew Member 1" : "Sailor Name"}
               </label>
               <select
                 value={resultForm.sailorId}
@@ -567,6 +568,98 @@ export function AdminResultsPanel({
                 ))}
               </select>
             </div>
+            {selectedRegattaIsCrew && (
+              <>
+                <div>
+                  <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
+                    Crew Member 2
+                  </label>
+                  <select
+                    value={resultForm.crewSailorId || ""}
+                    onChange={(e) =>
+                      setResultForm({ ...resultForm, crewSailorId: e.target.value })
+                    }
+                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-medium focus:outline-none focus:border-orange-500"
+                  >
+                    <option value="" disabled>
+                      -- Select Second Sailor --
+                    </option>
+                    {sailorList
+                      .filter((s) => s.id !== resultForm.sailorId)
+                      .map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name} ({s.sailNumber})
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
+                    Roles (optional)
+                  </label>
+                  <div className="mt-1 grid grid-cols-2 gap-2">
+                    <select
+                      value={resultForm.firstParticipantRole || "unknown"}
+                      onChange={(e) =>
+                        setResultForm({
+                          ...resultForm,
+                          firstParticipantRole: e.target.value as ResultFormState["firstParticipantRole"],
+                        })
+                      }
+                      className="rounded-xl border border-slate-300 bg-white px-2 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500"
+                      aria-label="Crew member 1 role"
+                    >
+                      <option value="unknown">Member 1 role</option>
+                      <option value="helm">Helm</option>
+                      <option value="crew">Crew</option>
+                      <option value="member">Member</option>
+                    </select>
+                    <select
+                      value={resultForm.secondParticipantRole || "unknown"}
+                      onChange={(e) =>
+                        setResultForm({
+                          ...resultForm,
+                          secondParticipantRole: e.target.value as ResultFormState["secondParticipantRole"],
+                        })
+                      }
+                      className="rounded-xl border border-slate-300 bg-white px-2 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500"
+                      aria-label="Crew member 2 role"
+                    >
+                      <option value="unknown">Member 2 role</option>
+                      <option value="helm">Helm</option>
+                      <option value="crew">Crew</option>
+                      <option value="member">Member</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
+                    Entry Sail Number
+                  </label>
+                  <input
+                    value={resultForm.entrySailNumber || ""}
+                    onChange={(e) =>
+                      setResultForm({ ...resultForm, entrySailNumber: e.target.value })
+                    }
+                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-medium focus:outline-none focus:border-orange-500"
+                    placeholder="Official boat / sail number"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
+                    Official Entry Label
+                  </label>
+                  <input
+                    value={resultForm.entryLabel || ""}
+                    onChange={(e) =>
+                      setResultForm({ ...resultForm, entryLabel: e.target.value })
+                    }
+                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-medium focus:outline-none focus:border-orange-500"
+                    placeholder="Optional source wording; defaults to the two selected names"
+                  />
+                </div>
+              </>
+            )}
             <div>
               <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                 Total Score

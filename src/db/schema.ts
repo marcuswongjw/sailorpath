@@ -399,6 +399,13 @@ export const regattas = pgTable("regattas", {
   geography: text("geography").default("SGP").notNull(),
   /** Boat class tag (e.g. Optimist, ILCA 6) */
   boatClass: text("boat_class").default("Optimist").notNull(),
+  /** Whether this class sheet scores individual people or a crewed boat entry. */
+  entryType: text("entry_type", { enum: ["individual", "crew"] })
+    .default("individual")
+    .notNull(),
+  /** Published entry roster bounds; 29er is 2–2. */
+  minParticipants: integer("min_participants").default(1).notNull(),
+  maxParticipants: integer("max_participants").default(1).notNull(),
   /**
    * When false, event is logbook-only (e.g. overseas / training) and is
    * excluded from Best 3 of 5 series rankings.
@@ -442,6 +449,16 @@ export const regattaResults = pgTable(
     id: uuid("id").primaryKey().defaultRandom().notNull(),
     sailorId: uuid("sailor_id")
       .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    /** Organiser-published boat-entry label; may contain more than one sailor. */
+    entryLabel: text("entry_label"),
+    /** Sail / boat number used for this entry, separate from an athlete profile. */
+    entrySailNumber: text("entry_sail_number"),
+    /** Board number used for this entry, separate from an athlete profile. */
+    entryBoardNumber: text("entry_board_number"),
+    /** Snapshot from the regatta sheet; participant rows are the source of truth. */
+    entryType: text("entry_type", { enum: ["individual", "crew"] })
+      .default("individual")
       .notNull(),
     regattaId: uuid("regatta_id")
       .references(() => regattas.id, { onDelete: "cascade" })
@@ -515,6 +532,54 @@ export const regattaResults = pgTable(
     regattaIdIdx: index("regatta_results_regatta_id_idx").on(table.regattaId),
     verificationStatusIdx: index("regatta_results_verification_status_idx").on(
       table.verificationStatus
+    ),
+  })
+);
+
+/**
+ * People who sailed a scored boat entry. One result owns one score/race set;
+ * individual profiles are linked here instead of making synthetic team sailors.
+ */
+export const regattaResultParticipants = pgTable(
+  "regatta_result_participants",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    regattaResultId: uuid("regatta_result_id")
+      .references(() => regattaResults.id, { onDelete: "cascade" })
+      .notNull(),
+    /** Nullable only while a historical / import identity still needs review. */
+    sailorId: uuid("sailor_id").references(() => sailors.id, {
+      onDelete: "set null",
+    }),
+    sourceName: text("source_name").notNull(),
+    displayOrder: integer("display_order").notNull(),
+    role: text("role", {
+      enum: ["solo", "helm", "crew", "member", "unknown"],
+    })
+      .default("unknown")
+      .notNull(),
+    matchStatus: text("match_status", {
+      enum: ["matched", "needs_review", "unresolved"],
+    })
+      .default("matched")
+      .notNull(),
+    /** Explicit future ranking policy; crew rows default to false. */
+    rankingCredit: boolean("ranking_credit").default(false).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    resultOrderUnq: unique("regatta_result_participants_result_order_unq").on(
+      table.regattaResultId,
+      table.displayOrder
+    ),
+    sailorResultIdx: index("regatta_result_participants_sailor_result_idx").on(
+      table.sailorId,
+      table.regattaResultId
+    ),
+    resultIdx: index("regatta_result_participants_result_idx").on(
+      table.regattaResultId,
+      table.displayOrder
     ),
   })
 );

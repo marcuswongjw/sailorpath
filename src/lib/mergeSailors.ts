@@ -13,6 +13,7 @@ import {
   parentNotes,
   raceObservations,
   regattaRaceResults,
+  regattaResultParticipants,
   regattaResults,
   sailorAliases,
   sailorClaims,
@@ -26,6 +27,7 @@ import {
  */
 export const SAILOR_RELATIONSHIP_MERGE_PLAN = [
   { table: "regattaResults", strategy: "reconcile-regatta" },
+  { table: "regattaResultParticipants", strategy: "repoint-entry-membership" },
   { table: "regattaRaceResults", strategy: "reconcile-through-result" },
   { table: "sailorAliases", strategy: "repoint" },
   { table: "sailorClaims", strategy: "repoint" },
@@ -288,6 +290,46 @@ export async function mergeSailors({
       await tx
         .delete(regattaResults)
         .where(eq(regattaResults.id, sourceResult.id));
+    }
+
+    // A duplicate can also be the second sailor in a crew entry. Repoint that
+    // membership without duplicating the boat result; if both duplicate
+    // profiles were listed on the same entry, retain the canonical member only.
+    const [sourceParticipants, targetParticipants] = await Promise.all([
+      tx
+        .select({
+          id: regattaResultParticipants.id,
+          regattaResultId: regattaResultParticipants.regattaResultId,
+        })
+        .from(regattaResultParticipants)
+        .where(eq(regattaResultParticipants.sailorId, mergeId)),
+      tx
+        .select({
+          id: regattaResultParticipants.id,
+          regattaResultId: regattaResultParticipants.regattaResultId,
+        })
+        .from(regattaResultParticipants)
+        .where(eq(regattaResultParticipants.sailorId, keepId)),
+    ]);
+    const targetEntryIds = new Set(
+      targetParticipants.map((participant) => participant.regattaResultId)
+    );
+    const duplicateParticipantIds = sourceParticipants
+      .filter((participant) => targetEntryIds.has(participant.regattaResultId))
+      .map((participant) => participant.id);
+    const movedParticipantIds = sourceParticipants
+      .filter((participant) => !targetEntryIds.has(participant.regattaResultId))
+      .map((participant) => participant.id);
+    if (duplicateParticipantIds.length > 0) {
+      await tx
+        .delete(regattaResultParticipants)
+        .where(inArray(regattaResultParticipants.id, duplicateParticipantIds));
+    }
+    if (movedParticipantIds.length > 0) {
+      await tx
+        .update(regattaResultParticipants)
+        .set({ sailorId: keepId, updatedAt: now })
+        .where(inArray(regattaResultParticipants.id, movedParticipantIds));
     }
 
     // Alias names are globally unique, so changing sailor_id cannot conflict.

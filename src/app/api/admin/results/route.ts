@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
-import { regattaRaceResults, regattaResults, regattas, sailors } from "@/db/schema";
-import { asc, eq, inArray } from "drizzle-orm";
+import {
+  regattaRaceResults,
+  regattaResultParticipants,
+  regattaResults,
+  regattas,
+  sailors,
+} from "@/db/schema";
+import { and, asc, eq, inArray } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import {
   asOptionalNumber,
@@ -10,6 +16,11 @@ import {
   asUuid,
 } from "@/lib/validate";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import {
+  crewRuleFromRegatta,
+  normalizeResultParticipants,
+  validateParticipantCount,
+} from "@/lib/regattaParticipants";
 
 function parseBool(v: unknown): boolean {
   return (
@@ -33,10 +44,50 @@ function parseOverseas(body: Record<string, unknown>): boolean {
   );
 }
 
+async function attachParticipants<T extends { id: string }>(rows: T[]) {
+  if (!rows.length) return rows.map((row) => ({ ...row, participants: [] }));
+  const participants = await db
+    .select({
+      id: regattaResultParticipants.id,
+      resultId: regattaResultParticipants.regattaResultId,
+      sailorId: regattaResultParticipants.sailorId,
+      sailorName: sailors.name,
+      sailorHandle: sailors.handle,
+      sourceName: regattaResultParticipants.sourceName,
+      displayOrder: regattaResultParticipants.displayOrder,
+      role: regattaResultParticipants.role,
+      matchStatus: regattaResultParticipants.matchStatus,
+      rankingCredit: regattaResultParticipants.rankingCredit,
+    })
+    .from(regattaResultParticipants)
+    .leftJoin(sailors, eq(regattaResultParticipants.sailorId, sailors.id))
+    .where(
+      inArray(
+        regattaResultParticipants.regattaResultId,
+        rows.map((row) => row.id)
+      )
+    )
+    .orderBy(
+      asc(regattaResultParticipants.regattaResultId),
+      asc(regattaResultParticipants.displayOrder)
+    );
+  const byResult = new Map<string, typeof participants>();
+  for (const participant of participants) {
+    const list = byResult.get(participant.resultId) || [];
+    list.push(participant);
+    byResult.set(participant.resultId, list);
+  }
+  return rows.map((row) => ({
+    ...row,
+    participants: byResult.get(row.id) || [],
+  }));
+}
+
 async function attachOfficialRaces<
   T extends { id: string; isDns: boolean | null; isOverseasCommitment: boolean | null },
 >(rows: T[]) {
   if (!rows.length) return [];
+  const rowsWithParticipants = await attachParticipants(rows);
   const raceRows = await db
     .select({
       regattaResultId: regattaRaceResults.regattaResultId,
@@ -55,7 +106,7 @@ async function attachOfficialRaces<
     list.push(race);
     racesByResult.set(race.regattaResultId, list);
   }
-  return rows.map((row) => ({
+  return rowsWithParticipants.map((row) => ({
     ...row,
     isDNS: row.isDns,
     isOverseasCommitment: row.isOverseasCommitment,
@@ -96,7 +147,7 @@ export async function GET(req: Request) {
         .where(eq(regattaResults.regattaId, idCheck.value));
       const results = includeRaces
         ? await attachOfficialRaces(rows)
-        : rows.map((r) => ({
+        : (await attachParticipants(rows)).map((r) => ({
             ...r,
             isDNS: r.isDns,
             isOverseasCommitment: r.isOverseasCommitment,
@@ -130,7 +181,7 @@ export async function GET(req: Request) {
     ]);
 
     return NextResponse.json({
-      results: rows.map((r) => ({
+      results: (await attachParticipants(rows)).map((r) => ({
         ...r,
         isDNS: r.isDns,
         isOverseasCommitment: r.isOverseasCommitment,
@@ -187,19 +238,28 @@ export async function POST(req: Request) {
       );
     }
 
-    const sailorIdR = asUuid(body.sailorId, "sailorId");
     const regattaIdR = asUuid(body.regattaId, "regattaId");
-    if (!sailorIdR.ok || !regattaIdR.ok) {
+    if (!regattaIdR.ok) {
       return NextResponse.json(
         {
-          error: !sailorIdR.ok
-            ? sailorIdR.error
-            : regattaIdR.ok
-              ? "sailorId and regattaId are required"
-              : regattaIdR.error,
+          error: regattaIdR.error,
         },
         { status: 400 }
       );
+    }
+    const normalizedParticipants = normalizeResultParticipants(
+      body.participants,
+      body.sailorId
+    );
+    if (!normalizedParticipants.ok) {
+      return NextResponse.json({ error: normalizedParticipants.error }, { status: 400 });
+    }
+    for (const participant of normalizedParticipants.participants) {
+      const sailorId = asUuid(participant.sailorId, "participant.sailorId");
+      if (!sailorId.ok) {
+        return NextResponse.json({ error: sailorId.error }, { status: 400 });
+      }
+      participant.sailorId = sailorId.value;
     }
     const isOverseasCommitment = parseOverseas(body);
     // Overseas commitment is not generic DNS (different scoring rule)
@@ -207,10 +267,45 @@ export async function POST(req: Request) {
     if (isOverseasCommitment) isDns = false;
 
     const [regMeta] = await db
-      .select({ totalFleetSize: regattas.totalFleetSize })
+      .select({
+        totalFleetSize: regattas.totalFleetSize,
+        entryType: regattas.entryType,
+        minParticipants: regattas.minParticipants,
+        maxParticipants: regattas.maxParticipants,
+      })
       .from(regattas)
       .where(eq(regattas.id, regattaIdR.value))
       .limit(1);
+    if (!regMeta) {
+      return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
+    }
+    const participantRule = crewRuleFromRegatta(regMeta);
+    const participantCountError = validateParticipantCount(
+      participantRule,
+      normalizedParticipants.participants
+    );
+    if (participantCountError) {
+      return NextResponse.json({ error: participantCountError }, { status: 400 });
+    }
+    const profiles = await db
+      .select({ id: sailors.id, name: sailors.name })
+      .from(sailors)
+      .where(inArray(sailors.id, normalizedParticipants.participants.map((p) => p.sailorId)));
+    if (profiles.length !== normalizedParticipants.participants.length) {
+      return NextResponse.json(
+        { error: "One or more selected sailor profiles no longer exist" },
+        { status: 400 }
+      );
+    }
+    const profilesById = new Map(profiles.map((profile) => [profile.id, profile]));
+    const participants = normalizedParticipants.participants.map((participant) => ({
+      ...participant,
+      sourceName: participant.sourceName || profilesById.get(participant.sailorId)?.name || "Unknown sailor",
+      role: participantRule.entryType === "individual" ? "solo" : participant.role,
+      rankingCredit:
+        participantRule.entryType === "individual" || participant.rankingCredit === true,
+    }));
+    const primarySailorId = participants[0].sailorId;
     const dnsPoints = Math.max(1, (regMeta?.totalFleetSize || 50) + 1);
 
     let rank: number;
@@ -250,29 +345,87 @@ export async function POST(req: Request) {
     const nettScore = nettR.value;
     const totalScore = totalR.value;
 
-    const [row] = await db
-      .insert(regattaResults)
-      .values({
-        sailorId: sailorIdR.value,
-        regattaId: regattaIdR.value,
-        rank,
-        nettScore,
-        totalScore,
-        isDns,
-        isOverseasCommitment,
-      })
-      .onConflictDoUpdate({
-        target: [regattaResults.sailorId, regattaResults.regattaId],
-        set: {
+    const existingForPrimary = await db
+      .select({ id: regattaResults.id })
+      .from(regattaResults)
+      .where(
+        and(
+          eq(regattaResults.sailorId, primarySailorId),
+          eq(regattaResults.regattaId, regattaIdR.value)
+        )
+      )
+      .limit(1);
+    const occupiedEntries = await db
+      .select({ resultId: regattaResultParticipants.regattaResultId })
+      .from(regattaResultParticipants)
+      .innerJoin(
+        regattaResults,
+        eq(regattaResultParticipants.regattaResultId, regattaResults.id)
+      )
+      .where(
+        and(
+          eq(regattaResults.regattaId, regattaIdR.value),
+          inArray(regattaResultParticipants.sailorId, participants.map((p) => p.sailorId))
+        )
+      );
+    const conflict = occupiedEntries.find(
+      (entry) => entry.resultId !== existingForPrimary[0]?.id
+    );
+    if (conflict) {
+      return NextResponse.json(
+        { error: "A selected sailor already has a result entry at this regatta" },
+        { status: 409 }
+      );
+    }
+
+    const [row] = await db.transaction(async (tx) => {
+      const [saved] = await tx
+        .insert(regattaResults)
+        .values({
+          sailorId: primarySailorId,
+          regattaId: regattaIdR.value,
+          entryLabel: String(body.entryLabel || "").trim().slice(0, 500) || participants.map((p) => p.sourceName).join(" / "),
+          entrySailNumber: String(body.entrySailNumber || "").trim().slice(0, 100) || null,
+          entryBoardNumber: String(body.entryBoardNumber || "").trim().slice(0, 100) || null,
+          entryType: participantRule.entryType,
           rank,
           nettScore,
           totalScore,
           isDns,
           isOverseasCommitment,
-          updatedAt: new Date(),
-        },
-      })
-      .returning();
+        })
+        .onConflictDoUpdate({
+          target: [regattaResults.sailorId, regattaResults.regattaId],
+          set: {
+            entryLabel: String(body.entryLabel || "").trim().slice(0, 500) || participants.map((p) => p.sourceName).join(" / "),
+            entrySailNumber: String(body.entrySailNumber || "").trim().slice(0, 100) || null,
+            entryBoardNumber: String(body.entryBoardNumber || "").trim().slice(0, 100) || null,
+            entryType: participantRule.entryType,
+            rank,
+            nettScore,
+            totalScore,
+            isDns,
+            isOverseasCommitment,
+            updatedAt: new Date(),
+          },
+        })
+        .returning();
+      await tx
+        .delete(regattaResultParticipants)
+        .where(eq(regattaResultParticipants.regattaResultId, saved.id));
+      await tx.insert(regattaResultParticipants).values(
+        participants.map((participant) => ({
+          regattaResultId: saved.id,
+          sailorId: participant.sailorId,
+          sourceName: participant.sourceName,
+          displayOrder: participant.displayOrder,
+          role: participant.role,
+          matchStatus: "matched" as const,
+          rankingCredit: participant.rankingCredit,
+        }))
+      );
+      return [saved];
+    });
 
     revalidatePublicRankings(`results:upsert:${row.id}`);
     let sailorLabel: string | null = null;
@@ -317,9 +470,10 @@ export async function POST(req: Request) {
       },
       source: "/api/admin/results",
     });
+    const [resultWithParticipants] = await attachParticipants([row]);
     return NextResponse.json({
       result: {
-        ...row,
+        ...resultWithParticipants,
         isDNS: row.isDns,
         isOverseasCommitment: row.isOverseasCommitment,
       },

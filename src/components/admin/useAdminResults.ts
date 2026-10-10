@@ -56,6 +56,18 @@ export function useAdminResults({
       toast.error("Sailor and Regatta must be selected.");
       return;
     }
+    const selectedRegatta = regattaList.find(
+      (regatta) => regatta.id === resultForm.regattaId
+    );
+    const isCrewEntry = selectedRegatta?.entryType === "crew";
+    if (isCrewEntry && !resultForm.crewSailorId) {
+      toast.error("Crew entries need a second sailor.");
+      return;
+    }
+    if (isCrewEntry && resultForm.crewSailorId === resultForm.sailorId) {
+      toast.error("Choose two different sailors for a crew entry.");
+      return;
+    }
     const overseas = Boolean(resultForm.isOverseasCommitment);
     const rankNum = Number(resultForm.rank);
     const isDns = overseas
@@ -67,6 +79,20 @@ export function useAdminResults({
       isDns,
       isDNS: isDns,
       isOverseasCommitment: overseas,
+      participants: isCrewEntry
+        ? [
+            {
+              sailorId: resultForm.sailorId,
+              role: resultForm.firstParticipantRole || "unknown",
+              displayOrder: 1,
+            },
+            {
+              sailorId: resultForm.crewSailorId,
+              role: resultForm.secondParticipantRole || "unknown",
+              displayOrder: 2,
+            },
+          ]
+        : undefined,
     };
     setSaving(true);
     try {
