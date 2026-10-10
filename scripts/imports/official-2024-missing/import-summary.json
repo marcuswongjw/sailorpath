@@ -1,0 +1,172 @@
+[
+  {
+    "id": "csc-ilca4",
+    "output": "scripts/imports/official-2024-missing/sql/csc-ilca4.sql",
+    "eventSlug": "csc-ilca-29er-championships-2024",
+    "sheetSlug": "csc-ilca4-jan-2024",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "results": 46,
+    "raceScores": 276
+  },
+  {
+    "id": "csc-ilca6",
+    "output": "scripts/imports/official-2024-missing/sql/csc-ilca6.sql",
+    "eventSlug": "csc-ilca-29er-championships-2024",
+    "sheetSlug": "csc-ilca6-jan-2024",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "results": 19,
+    "raceScores": 133
+  },
+  {
+    "id": "csc-29er",
+    "output": "scripts/imports/official-2024-missing/sql/csc-29er.sql",
+    "eventSlug": "csc-ilca-29er-championships-2024",
+    "sheetSlug": "csc-29er-jan-2024",
+    "boatClass": "29er",
+    "division": "Open",
+    "results": 4,
+    "raceScores": 28
+  },
+  {
+    "id": "rm-ilca4",
+    "output": "scripts/imports/official-2024-missing/sql/rm-ilca4.sql",
+    "eventSlug": "raffles-marina-ilca-championship-2024",
+    "sheetSlug": "raffles-marina-ilca4-mar-2024",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "results": 41,
+    "raceScores": 205
+  },
+  {
+    "id": "rm-ilca6",
+    "output": "scripts/imports/official-2024-missing/sql/rm-ilca6.sql",
+    "eventSlug": "raffles-marina-ilca-championship-2024",
+    "sheetSlug": "raffles-marina-ilca6-mar-2024",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "results": 15,
+    "raceScores": 105
+  },
+  {
+    "id": "ilca-open-ilca4",
+    "output": "scripts/imports/official-2024-missing/sql/ilca-open-ilca4.sql",
+    "eventSlug": "47th-singapore-ilca-open-2024",
+    "sheetSlug": "47th-singapore-ilca-open-ilca4-2024",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "results": 49,
+    "raceScores": 392
+  },
+  {
+    "id": "ilca-open-ilca6",
+    "output": "scripts/imports/official-2024-missing/sql/ilca-open-ilca6.sql",
+    "eventSlug": "47th-singapore-ilca-open-2024",
+    "sheetSlug": "47th-singapore-ilca-open-ilca6-2024",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "results": 10,
+    "raceScores": 80
+  },
+  {
+    "id": "ilca-open-ilca7",
+    "output": "scripts/imports/official-2024-missing/sql/ilca-open-ilca7.sql",
+    "eventSlug": "47th-singapore-ilca-open-2024",
+    "sheetSlug": "47th-singapore-ilca-open-ilca7-2024",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "results": 7,
+    "raceScores": 56
+  },
+  {
+    "id": "ne-monsoon-techno293",
+    "output": "scripts/imports/official-2024-missing/sql/ne-monsoon-techno293.sql",
+    "eventSlug": "northeast-monsoon-grand-prix-2024",
+    "sheetSlug": "northeast-monsoon-techno293-2024",
+    "boatClass": "Techno 293",
+    "division": "Open",
+    "results": 10,
+    "raceScores": 370
+  },
+  {
+    "id": "ne-monsoon-windfoil",
+    "output": "scripts/imports/official-2024-missing/sql/ne-monsoon-windfoil.sql",
+    "eventSlug": "northeast-monsoon-grand-prix-2024",
+    "sheetSlug": "northeast-monsoon-windfoil-2024",
+    "boatClass": "WindFoil",
+    "division": "Open",
+    "results": 13,
+    "raceScores": 624
+  },
+  {
+    "id": "ne-monsoon-wingfoil",
+    "output": "scripts/imports/official-2024-missing/sql/ne-monsoon-wingfoil.sql",
+    "eventSlug": "northeast-monsoon-grand-prix-2024",
+    "sheetSlug": "northeast-monsoon-wingfoil-2024",
+    "boatClass": "WingFoil",
+    "division": "Open",
+    "results": 12,
+    "raceScores": 492
+  },
+  {
+    "id": "national-slalom",
+    "output": "scripts/imports/official-2024-missing/sql/national-slalom.sql",
+    "eventSlug": "national-slalom-2024",
+    "sheetSlug": "national-slalom-windsurfing-2024",
+    "boatClass": "Windsurfing",
+    "division": "Slalom",
+    "results": 12,
+    "raceScores": 192
+  },
+  {
+    "id": "national-wingfoil",
+    "output": "scripts/imports/official-2024-missing/sql/national-wingfoil.sql",
+    "eventSlug": "national-slalom-2024",
+    "sheetSlug": "national-slalom-wingfoil-2024",
+    "boatClass": "WingFoil",
+    "division": "Open",
+    "results": 12,
+    "raceScores": 180
+  },
+  {
+    "id": "national-techno293",
+    "output": "scripts/imports/official-2024-missing/sql/national-techno293.sql",
+    "eventSlug": "national-slalom-2024",
+    "sheetSlug": "national-slalom-techno293-2024",
+    "boatClass": "Techno 293",
+    "division": "Open",
+    "results": 4,
+    "raceScores": 44
+  },
+  {
+    "id": "sg-foil-techno293",
+    "output": "scripts/imports/official-2024-missing/sql/sg-foil-techno293.sql",
+    "eventSlug": "sg-foil-grand-prix-2024",
+    "sheetSlug": "sg-foil-grand-prix-techno293-2024",
+    "boatClass": "Techno 293",
+    "division": "Open",
+    "results": 5,
+    "raceScores": 150
+  },
+  {
+    "id": "sg-foil-windfoil",
+    "output": "scripts/imports/official-2024-missing/sql/sg-foil-windfoil.sql",
+    "eventSlug": "sg-foil-grand-prix-2024",
+    "sheetSlug": "sg-foil-grand-prix-windfoil-2024",
+    "boatClass": "WindFoil",
+    "division": "Open",
+    "results": 13,
+    "raceScores": 455
+  },
+  {
+    "id": "sg-foil-wingfoil",
+    "output": "scripts/imports/official-2024-missing/sql/sg-foil-wingfoil.sql",
+    "eventSlug": "sg-foil-grand-prix-2024",
+    "sheetSlug": "sg-foil-grand-prix-wingfoil-2024",
+    "boatClass": "WingFoil",
+    "division": "Open",
+    "results": 12,
+    "raceScores": 432
+  }
+]
