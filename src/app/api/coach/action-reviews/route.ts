@@ -1,10 +1,11 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { coachActionReviews } from "@/db/schema";
 import { jsonError, requireCoach } from "@/lib/auth";
 import { canAccessCoachSailor, getCoachSquadDashboard } from "@/lib/coachDashboard";
 
-export async function PUT(request: Request) {
+async function handlePUT(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -19,3 +20,5 @@ export async function PUT(request: Request) {
     return NextResponse.json(await getCoachSquadDashboard(auth.userId));
   } catch (error) { return jsonError(error); }
 }
+
+export const PUT = withUserChangeTracking("coach_reviews", handlePUT);

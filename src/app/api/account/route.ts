@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -109,7 +110,7 @@ export async function GET() {
   }
 }
 
-export async function PATCH(req: Request) {
+async function handlePATCH(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -211,3 +212,5 @@ export async function PATCH(req: Request) {
     return jsonError(e);
   }
 }
+
+export const PATCH = withUserChangeTracking("account", handlePATCH);

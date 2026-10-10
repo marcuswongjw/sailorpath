@@ -74,6 +74,7 @@ const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string
   import: FileSpreadsheet,
   ops: ClipboardList,
   stats: Activity,
+  "user-changes": ClipboardList,
   changelog: Activity,
 };
 import { useAdminNotifications } from "@/components/admin/useAdminNotifications";
@@ -91,6 +92,11 @@ function PanelLoading() {
     </div>
   );
 }
+
+const AdminUserChangesPanel = dynamic(
+  () => import("@/components/admin/AdminUserChangesPanel").then((m) => m.AdminUserChangesPanel),
+  { loading: () => <PanelLoading /> }
+);
 
 const AdminResultsPanel = dynamic(
   () => import("@/components/admin/AdminResultsPanel").then((m) => m.AdminResultsPanel),
@@ -979,6 +985,10 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
 
         {activeTab === "stats" && (
           <AdminStatsPanel isSuperadmin={isSuperadmin} />
+        )}
+
+        {activeTab === "user-changes" && (
+          <AdminUserChangesPanel isSuperadmin={isSuperadmin} />
         )}
 
         {activeTab === "import" && (

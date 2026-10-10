@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -134,7 +135,7 @@ export async function GET(req: Request) {
  * Owner-added non-ranking logbook result (overseas / training / non-series).
  * Creates a personal regatta (counts_for_ranking=false) + one result row.
  */
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -327,7 +328,7 @@ export async function POST(req: Request) {
 }
 
 /** Update personal non-ranking result or attach/update evidence. */
-export async function PATCH(req: Request) {
+async function handlePATCH(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -568,7 +569,7 @@ export async function PATCH(req: Request) {
  * when it is an empty personal log (slug log-…). Shared non-ranking events
  * stay, including their race observations.
  */
-export async function DELETE(req: Request) {
+async function handleDELETE(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -639,3 +640,7 @@ export async function DELETE(req: Request) {
     return jsonError(e);
   }
 }
+
+export const POST = withUserChangeTracking("results", handlePOST);
+export const PATCH = withUserChangeTracking("results", handlePATCH);
+export const DELETE = withUserChangeTracking("results", handleDELETE);

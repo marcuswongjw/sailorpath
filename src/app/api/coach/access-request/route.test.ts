@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+vi.mock("@/lib/userChanges", () => ({ recordUserChange: vi.fn().mockResolvedValue(undefined) }));
+
 const mocks = vi.hoisted(() => ({
   getAuthContext: vi.fn(),
   existing: null as null | {

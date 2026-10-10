@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { and, desc, eq, inArray, isNull, or } from "drizzle-orm";
+import { and, desc, eq, inArray, isNull, like, or } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
@@ -9,8 +9,9 @@ import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
 
 /**
  * GET /api/admin/regatta-suggestions
- * Non-ranking regattas not yet reviewed, or any regattas containing
- * pending-review evidence results (queue for verify / promote / dismiss).
+ * User-created logbook regattas not yet reviewed, or user-created regattas
+ * containing pending-review evidence (queue for verify / promote / dismiss).
+ * The account results API reserves the `log-` prefix for personal entries.
  */
 export async function GET() {
   try {
@@ -54,7 +55,7 @@ export async function GET() {
         createdAt: regattas.createdAt,
       })
       .from(regattas)
-      .where(or(...conditions))
+      .where(and(like(regattas.slug, "log-%"), or(...conditions)))
       .orderBy(desc(regattas.createdAt));
 
     const withSailors = await Promise.all(

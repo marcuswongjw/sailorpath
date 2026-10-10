@@ -3,6 +3,7 @@ import { and, eq, or } from "drizzle-orm";
 import { db } from "@/db";
 import { coachAccessRequests } from "@/db/schema";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { recordUserChange } from "@/lib/userChanges";
 
 type AccessRequestRow = {
   id: string;
@@ -58,6 +59,7 @@ export async function POST() {
         .onConflictDoNothing({ target: coachAccessRequests.requesterId })
         .returning({ status: coachAccessRequests.status });
       if (inserted[0]) {
+        await recordUserChange(auth, { area: "coach_access", operation: "requested", source: "/api/coach/access-request" });
         return NextResponse.json({ status: inserted[0].status });
       }
       existing = await loadRequest(auth.userId);
@@ -97,6 +99,7 @@ export async function POST() {
       .returning({ status: coachAccessRequests.status });
 
     if (updated) {
+      await recordUserChange(auth, { area: "coach_access", operation: "requested", source: "/api/coach/access-request" });
       return NextResponse.json({ status: updated.status });
     }
 

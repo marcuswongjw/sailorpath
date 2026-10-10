@@ -16,6 +16,11 @@ const base = {
 };
 
 describe("AdminSidebar", () => {
+  it("links to user changes under Insights", () => {
+    render(<AdminSidebar {...base} activeArea="insights" insightsView="user-changes" />);
+    expect(screen.getByRole("link", { name: "User changes" })).toHaveAttribute("href", "/admin?area=insights&view=user-changes");
+    expect(screen.getByRole("link", { name: "User changes" })).toHaveAttribute("aria-current", "page");
+  });
   it("puts the areas on one row and the open section on the next", () => {
     const { container } = render(<AdminSidebar {...base} activeArea="events" />);
     expect(screen.getByRole("link", { name: "Events" })).toHaveAttribute("aria-current", "page");

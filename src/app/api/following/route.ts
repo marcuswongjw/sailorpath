@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import {
@@ -21,7 +22,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+async function handleDELETE(request: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -61,3 +62,6 @@ export async function DELETE(request: Request) {
     return jsonError(error);
   }
 }
+
+export const POST = withUserChangeTracking("following", handlePOST);
+export const DELETE = withUserChangeTracking("following", handleDELETE);

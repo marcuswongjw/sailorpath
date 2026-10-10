@@ -10,6 +10,12 @@ import {
 } from "./adminNav";
 
 describe("parseAdminNav", () => {
+  it("preserves the user changes destination through URL and dashboard state", () => {
+    const params = new URLSearchParams("area=insights&view=user-changes");
+    const nav = parseAdminNav(params);
+    expect(nav.tab).toBe("user-changes");
+    expect(serializeAdminNav(nav)).toBe("area=insights&view=user-changes");
+  });
   it("defaults to Overview", () => {
     expect(parseAdminNav(new URLSearchParams())).toEqual({
       tab: "overview",
@@ -156,9 +162,9 @@ describe("serializeAdminNav", () => {
 });
 
 describe("platform navigation", () => {
-  it("keeps Stats and does not offer a Log tab", () => {
+  it("offers user changes alongside Stats", () => {
     const platform = ADMIN_TAB_GROUPS.find((group) => group.groupTitle === "Platform");
-    expect(platform?.tabs.map((tab) => tab.shortLabel)).toEqual(["Stats"]);
+    expect(platform?.tabs.map((tab) => tab.shortLabel)).toEqual(["User changes", "Stats"]);
   });
 });
 

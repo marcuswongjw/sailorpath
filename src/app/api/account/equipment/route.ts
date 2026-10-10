@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -338,7 +339,7 @@ export async function GET(req: Request) {
   }
 }
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -483,7 +484,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function PATCH(req: Request) {
+async function handlePATCH(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -745,7 +746,7 @@ export async function PATCH(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
+async function handleDELETE(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -781,3 +782,7 @@ export async function DELETE(req: Request) {
 }
 
 export { PATCH as PUT };
+
+export const POST = withUserChangeTracking("equipment", handlePOST);
+export const PATCH = withUserChangeTracking("equipment", handlePATCH);
+export const DELETE = withUserChangeTracking("equipment", handleDELETE);

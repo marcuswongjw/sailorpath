@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq, getTableColumns } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -21,7 +22,7 @@ import { asBoundedText, asUuid } from "@/lib/validate";
 const claimColumns = getTableColumns(sailorClaimsWithoutReferral);
 
 /** Logged-in user requests to claim a sailor profile */
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -249,3 +250,5 @@ export async function GET() {
     return jsonError(e);
   }
 }
+
+export const POST = withUserChangeTracking("claims", handlePOST);

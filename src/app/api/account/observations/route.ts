@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -28,7 +29,7 @@ async function assertOwner(sailorId: string, userId: string, isAdmin: boolean) {
 }
 
 /** Create or update a race observation */
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -105,7 +106,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
+async function handleDELETE(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -149,3 +150,6 @@ export async function DELETE(req: Request) {
     return jsonError(e);
   }
 }
+
+export const POST = withUserChangeTracking("race_observations", handlePOST);
+export const DELETE = withUserChangeTracking("race_observations", handleDELETE);

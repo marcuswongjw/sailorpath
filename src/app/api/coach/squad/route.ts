@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
@@ -19,7 +20,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function PATCH(request: Request) {
+async function handlePATCH(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -72,7 +73,7 @@ export async function PATCH(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+async function handleDELETE(request: Request) {
   try {
     const auth = await requireCoach();
     const url = new URL(request.url);
@@ -110,3 +111,7 @@ export async function DELETE(request: Request) {
     return jsonError(error);
   }
 }
+
+export const POST = withUserChangeTracking("coach_squad", handlePOST);
+export const PATCH = withUserChangeTracking("coach_squad", handlePATCH);
+export const DELETE = withUserChangeTracking("coach_squad", handleDELETE);

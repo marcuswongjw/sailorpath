@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
@@ -9,7 +10,7 @@ const TYPES = new Set(["observation", "goal", "attendance"]);
 const STATUSES = new Set(["active", "completed", "present", "absent", "planned"]);
 const isDate = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value);
 
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
   } catch (error) { return jsonError(error); }
 }
 
-export async function PATCH(request: Request) {
+async function handlePATCH(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -58,7 +59,7 @@ export async function PATCH(request: Request) {
   } catch (error) { return jsonError(error); }
 }
 
-export async function DELETE(request: Request) {
+async function handleDELETE(request: Request) {
   try {
     const auth = await requireCoach();
     const id = new URL(request.url).searchParams.get("id")?.trim();
@@ -67,3 +68,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(await getCoachSquadDashboard(auth.userId));
   } catch (error) { return jsonError(error); }
 }
+
+export const POST = withUserChangeTracking("coach_development", handlePOST);
+export const PATCH = withUserChangeTracking("coach_development", handlePATCH);
+export const DELETE = withUserChangeTracking("coach_development", handleDELETE);

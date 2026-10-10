@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
@@ -5,7 +6,7 @@ import { coachSailorNotes } from "@/db/schema";
 import { jsonError, requireCoach } from "@/lib/auth";
 import { canAccessCoachSailor } from "@/lib/coachDashboard";
 
-export async function PUT(request: Request) {
+async function handlePUT(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -34,3 +35,5 @@ export async function PUT(request: Request) {
     return jsonError(error);
   }
 }
+
+export const PUT = withUserChangeTracking("coach_notes", handlePUT);

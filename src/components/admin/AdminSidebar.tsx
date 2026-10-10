@@ -174,6 +174,7 @@ export function AdminSidebar({
             ? (
                 [
                   ["metrics", "Platform metrics"],
+                  ["user-changes", "User changes"],
                 ] as const
               ).map(([view, label]) => ({
                 key: view,
@@ -280,6 +281,7 @@ export function adminPageTitle(area: AdminArea, view: string): string {
     return "Claims";
   }
   if (area === "insights") {
+    if (view === "user-changes") return "User changes";
     if (view === "metrics") return "Platform metrics";
     return "Optimist analysis";
   }

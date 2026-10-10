@@ -1,10 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { PGlite } from "@electric-sql/pglite";
+import { PgDialect } from "drizzle-orm/pg-core";
 
 const mocks = vi.hoisted(() => ({
   requireSuperadmin: vi.fn(),
   updateResultSpy: vi.fn(),
   updateRegattaSpy: vi.fn(),
   regattaRowLimit: vi.fn(),
+  suggestionWhere: vi.fn(),
+  pendingRegattaIds: vi.fn(),
 }));
 
 vi.mock("@/lib/auth", () => ({
@@ -27,12 +31,14 @@ vi.mock("@/db", () => ({
   db: {
     selectDistinct: () => ({
       from: () => ({
-        where: () => Promise.resolve([{ regattaId: "regatta-1" }]),
+        where: () => mocks.pendingRegattaIds(),
       }),
     }),
     select: () => ({
       from: () => ({
-        where: () => ({
+        where: (condition: unknown) => {
+          mocks.suggestionWhere(condition);
+          return ({
           limit: () => mocks.regattaRowLimit(),
           orderBy: () =>
             Promise.resolve([
@@ -50,7 +56,8 @@ vi.mock("@/db", () => ({
                 createdAt: new Date(),
               },
             ]),
-        }),
+          });
+        },
         innerJoin: () => ({
           where: () =>
             Promise.resolve([
@@ -115,6 +122,9 @@ describe("/api/admin/regatta-suggestions", () => {
     mocks.updateResultSpy.mockReset();
     mocks.updateRegattaSpy.mockReset();
     mocks.regattaRowLimit.mockReset();
+    mocks.suggestionWhere.mockReset();
+    mocks.pendingRegattaIds.mockReset();
+    mocks.pendingRegattaIds.mockResolvedValue([{ regattaId: "regatta-1" }]);
     mocks.regattaRowLimit.mockResolvedValue([
       { countsForRanking: false, totalFleetSize: 60 },
     ]);
@@ -126,6 +136,38 @@ describe("/api/admin/regatta-suggestions", () => {
   });
 
   describe("GET", () => {
+    it("queues only user logs and preserves review rules, excluding admin imports", async () => {
+      mocks.pendingRegattaIds.mockResolvedValue([
+        { regattaId: "admin-pending" },
+        { regattaId: "user-ranking-pending" },
+        { regattaId: "user-dismissed" },
+      ]);
+      await GET();
+      const predicate = new PgDialect().sqlToQuery(mocks.suggestionWhere.mock.calls[0][0]);
+      const database = new PGlite();
+      try {
+        await database.exec(`
+          CREATE TABLE regattas (id text, slug text, counts_for_ranking boolean, reviewed_at timestamptz);
+          INSERT INTO regattas VALUES
+            ('admin-import', 'overseas-cup', false, NULL),
+            ('admin-pending', 'admin-evidence', true, NULL),
+            ('user-new', 'log-user-new', false, NULL),
+            ('user-dismissed', 'log-user-dismissed', false, now()),
+            ('user-ranking-pending', 'log-user-ranking-pending', true, now()),
+            ('user-ranking-reviewed', 'log-user-ranking-reviewed', true, now());
+        `);
+        const result = await database.query<{ id: string }>(
+          `SELECT id FROM regattas WHERE ${predicate.sql} ORDER BY id`,
+          predicate.params
+        );
+        expect(result.rows.map((row) => row.id)).toEqual([
+          "user-new", "user-ranking-pending",
+        ]);
+      } finally {
+        await database.close();
+      }
+    });
+
     it("returns suggestions with evidence fields", async () => {
       const res = await GET();
       expect(res.status).toBe(200);

@@ -7,6 +7,7 @@ export type AdminActiveTab =
   | "overview"
   | "regattas"
   | "stats"
+  | "user-changes"
   | "import"
   | "edit"
   | "ops"
@@ -82,7 +83,7 @@ export type AdminSailorsView =
   | "selection"
   | "ilca";
 export type AdminInboxView = "suggestions" | "claims" | "coaches" | "support";
-export type AdminInsightsView = "optimist" | "ilca" | "wingfoil" | "techno293" | "metrics";
+export type AdminInsightsView = "optimist" | "ilca" | "wingfoil" | "techno293" | "metrics" | "user-changes";
 export type AdminSettingsView = "audit" | "changelog" | "tools";
 
 export type AdminAreaState = {
@@ -126,6 +127,7 @@ const INBOX_VIEWS: readonly AdminInboxView[] = [
   "support",
 ];
 const INSIGHTS_VIEWS: readonly AdminInsightsView[] = [
+  "user-changes",
   "optimist",
   "ilca",
   "wingfoil",
@@ -147,6 +149,7 @@ function pickView(raw: string | null, allowed: readonly string[], fallback: stri
 }
 
 const PRIMARY_TABS: readonly AdminActiveTab[] = [
+  "user-changes",
   "overview",
   "regattas",
   "stats",
@@ -250,6 +253,8 @@ export function legacyToArea(state: AdminNavState): AdminAreaState {
       return { area: "events", view: "techno293", event: null, sheet: null };
     case "stats":
       return blankArea("insights", "metrics");
+    case "user-changes":
+      return blankArea("insights", "user-changes");
     case "changelog":
       return blankArea("settings", "changelog");
     default:
@@ -301,6 +306,9 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       }
       if (state.view === "techno293") {
         return { tab: "techno293", sub: "sailors", regattaId: null };
+      }
+      if (state.view === "user-changes") {
+        return { tab: "user-changes", sub: "sailors", regattaId: null };
       }
       if (state.view === "metrics") {
         return { tab: "stats", sub: "sailors", regattaId: null };
@@ -574,6 +582,12 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
   {
     groupTitle: "Platform",
     tabs: [
+      {
+        key: "user-changes",
+        shortLabel: "User changes",
+        label: "User changes",
+        sublabel: "Registered user activity",
+      },
       {
         key: "stats",
         shortLabel: "Stats",

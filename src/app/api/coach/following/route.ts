@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
@@ -5,7 +6,7 @@ import { coachFollowedSailors, coachSquadMembers, coachSquads, sailors } from "@
 import { jsonError, requireCoach } from "@/lib/auth";
 import { getCoachSquadDashboard } from "@/lib/coachDashboard";
 
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   try {
     const auth = await requireCoach();
     const body = await request.json();
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+async function handleDELETE(request: Request) {
   try {
     const auth = await requireCoach();
     const sailorId = new URL(request.url).searchParams.get("sailorId")?.trim();
@@ -40,3 +41,6 @@ export async function DELETE(request: Request) {
     return jsonError(error);
   }
 }
+
+export const POST = withUserChangeTracking("coach_following", handlePOST);
+export const DELETE = withUserChangeTracking("coach_following", handleDELETE);

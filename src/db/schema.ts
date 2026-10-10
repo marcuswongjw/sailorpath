@@ -406,7 +406,8 @@ export const regattas = pgTable("regattas", {
   countsForRanking: boolean("counts_for_ranking").default(true).notNull(),
   /**
    * When set, admin has dismissed or promoted a non-ranking (owner) suggestion.
-   * NULL + countsForRanking=false → still in admin Suggestions queue.
+   * Personal logbook entries (slug log-*) with NULL + countsForRanking=false
+   * remain in the admin Suggestions queue; admin-created sheets do not.
    */
   reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
   /** Host venue / sailing club (e.g. National Sailing Centre, Changi Sailing Club) */

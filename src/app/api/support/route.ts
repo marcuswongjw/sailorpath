@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { desc, eq } from "drizzle-orm";
 import { getAuthContext, jsonError, requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
@@ -28,7 +29,7 @@ function isSupportStatus(value: string): value is SupportStatus {
 }
 
 /** Public: submit a support message */
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   try {
     const ip = clientIpFromRequest(req);
     const rl = await rateLimitAsync(`support:${ip}`, 5, 15 * 60 * 1000);
@@ -106,6 +107,8 @@ export async function POST(req: Request) {
     return jsonError(e);
   }
 }
+
+export const POST = withUserChangeTracking("support", handlePOST);
 
 /** Superadmin: list support messages */
 export async function GET(req: Request) {

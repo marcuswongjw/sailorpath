@@ -1,3 +1,4 @@
+import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -64,7 +65,7 @@ export async function GET(req: Request) {
 }
 
 /** POST { sailorId, body } */
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -114,7 +115,7 @@ export async function POST(req: Request) {
 }
 
 /** DELETE ?id= */
-export async function DELETE(req: Request) {
+async function handleDELETE(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
@@ -141,3 +142,6 @@ export async function DELETE(req: Request) {
     return jsonError(e);
   }
 }
+
+export const POST = withUserChangeTracking("parent_notes", handlePOST);
+export const DELETE = withUserChangeTracking("parent_notes", handleDELETE);
