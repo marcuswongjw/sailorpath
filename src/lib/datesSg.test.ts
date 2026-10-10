@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   compareYmd,
   currentPeriodFromSgToday,
+  formatRankingMonthYear,
   halfBoundaryOptions,
   isHalfBoundaryYmd,
   periodHalfFromYmd,
@@ -15,6 +16,13 @@ describe("datesSg", () => {
   it("toYmd keeps ISO date-only", () => {
     expect(toYmd("2026-06-30")).toBe("2026-06-30");
     expect(toYmd("2026-07-01T00:00:00.000Z")?.startsWith("2026-0")).toBe(true);
+  });
+
+  it("formats ranking regatta dates as abbreviated month and year", () => {
+    expect(formatRankingMonthYear("2026-04-19")).toBe("Apr 26");
+    expect(formatRankingMonthYear("2026-11-01T00:00:00.000Z")).toBe("Nov 26");
+    expect(formatRankingMonthYear("2026-13-01")).toBeNull();
+    expect(formatRankingMonthYear(null)).toBeNull();
   });
 
   it("compareYmd is lexicographic", () => {

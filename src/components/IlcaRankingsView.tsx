@@ -13,6 +13,7 @@ import {
 import { Trophy, Calendar, RefreshCw, Filter, RotateCcw, Lock } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
+import { formatRankingMonthYear } from "@/lib/datesSg";
 import { mobileRegattaBadge } from "@/components/FleetRankingsView";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { useAccountOptional } from "@/components/AccountProvider";
@@ -439,6 +440,7 @@ export function IlcaRankingsView({
                 {eventSlots.map((ev, idx) => {
                   const off = excluded.has(ev.regattaId);
                   const badge = mobileRegattaBadge(ev.regattaName, idx);
+                  const monthYear = formatRankingMonthYear(ev.date);
                   return (
                     <button
                       key={ev.regattaId}
@@ -459,6 +461,11 @@ export function IlcaRankingsView({
                       <p className="text-[10px] font-bold truncate leading-tight mt-0.5 text-charcoal">
                         {badge}
                       </p>
+                      {monthYear && (
+                        <p className="text-[9px] font-semibold leading-none text-slate-700 mt-0.5">
+                          {monthYear}
+                        </p>
+                      )}
                       {off && (
                         <p className="text-[8px] font-extrabold text-rose-600 uppercase tracking-tighter mt-0.5 no-underline">
                           EXCL
@@ -474,6 +481,7 @@ export function IlcaRankingsView({
             <div className="hidden md:grid grid-cols-5 gap-2">
               {eventSlots.map((ev, idx) => {
                 const off = excluded.has(ev.regattaId);
+                const monthYear = formatRankingMonthYear(ev.date);
                 return (
                   <label
                     key={ev.regattaId}
@@ -500,7 +508,7 @@ export function IlcaRankingsView({
                       {regattaDisplayName(ev.regattaName, idx)}
                     </p>
                     <p className="text-[10px] sm:text-[11px] font-bold text-slate-700 tabular-nums">
-                      {ev.date.slice(5)} · n={ev.fleetSize}
+                      {monthYear ? `${monthYear} · ` : ""}n={ev.fleetSize}
                     </p>
                   </label>
                 );
@@ -717,6 +725,7 @@ export function IlcaRankingsView({
                 {Array.from({ length: 5 }).map((_, idx) => {
                   const ev = eventSlots[idx];
                   const off = ev ? excluded.has(ev.regattaId) : false;
+                  const monthYear = ev ? formatRankingMonthYear(ev.date) : null;
                   return (
                     <th
                       key={ev?.regattaId || `r${idx}`}
@@ -733,6 +742,11 @@ export function IlcaRankingsView({
                       <span className="block text-[10px] font-bold text-charcoal normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
                         {ev ? regattaDisplayName(ev.regattaName, idx) : "—"}
                       </span>
+                      {monthYear && (
+                        <span className="block text-[9px] font-bold text-slate-700 normal-case tracking-normal mt-0.5">
+                          {monthYear}
+                        </span>
+                      )}
                     </th>
                   );
                 })}

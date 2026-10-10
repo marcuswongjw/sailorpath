@@ -5,6 +5,21 @@
 
 export const SG_TIMEZONE = "Asia/Singapore";
 
+const SHORT_MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+] as const;
+
 /** Extract YYYY-MM-DD from Date/string; null if invalid. */
 export function toYmd(v: unknown): string | null {
   if (v == null || v === "") return null;
@@ -17,6 +32,18 @@ export function toYmd(v: unknown): string | null {
   const t = Date.parse(s);
   if (!Number.isNaN(t)) return formatYmdInSg(new Date(t));
   return null;
+}
+
+/** Compact ranking label for a date-only value, e.g. "Apr 26". */
+export function formatRankingMonthYear(v: unknown): string | null {
+  const value = toYmd(v);
+  if (!value) return null;
+  const month = Number(value.slice(5, 7));
+  const year = value.slice(2, 4);
+  if (!Number.isInteger(month) || month < 1 || month > 12 || !/^\d{2}$/.test(year)) {
+    return null;
+  }
+  return `${SHORT_MONTH_NAMES[month - 1]} ${year}`;
 }
 
 /** Calendar date in Asia/Singapore as YYYY-MM-DD. */

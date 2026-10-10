@@ -6,6 +6,7 @@ import type { RankedSailor, Period } from "@/lib/ranking";
 import { reRankWithExcluded, sharedOverallRanks } from "@/lib/ranking";
 import {
   currentPeriodFromSgToday,
+  formatRankingMonthYear,
   rankingPeriodOptions,
 } from "@/lib/datesSg";
 import {
@@ -144,6 +145,7 @@ export function mobileRegattaBadge(name: string | undefined | null, idx: number)
 type Slot = {
   regattaId: string;
   regattaName: string;
+  regattaDate?: string | null;
   isCarryForward?: boolean;
   periodLabel?: string;
 };
@@ -257,6 +259,7 @@ export function FleetRankingsView({
     for (let i = 0; i < 5; i++) {
       let name = "";
       let id = `slot-${i}`;
+      let date: string | null = null;
       let isCarryForward = false;
       let periodLabel: string | undefined;
       for (const s of ranked) {
@@ -264,12 +267,19 @@ export function FleetRankingsView({
         if (rs?.regattaName || rs?.regattaId) {
           name = rs.regattaName || "";
           id = rs.regattaId || id;
+          date = rs.regattaDate || null;
           isCarryForward = Boolean(rs.isCarryForward);
           periodLabel = rs.periodLabel;
           break;
         }
       }
-      slots.push({ regattaId: id, regattaName: name, isCarryForward, periodLabel });
+      slots.push({
+        regattaId: id,
+        regattaName: name,
+        regattaDate: date,
+        isCarryForward,
+        periodLabel,
+      });
     }
     return slots;
   }, [ranked]);
@@ -580,6 +590,7 @@ export function FleetRankingsView({
                   Boolean(ev.regattaName) &&
                   !ev.regattaId.startsWith("slot-");
                 const badge = mobileRegattaBadge(ev.regattaName, idx);
+                const monthYear = formatRankingMonthYear(ev.regattaDate);
                 return (
                   <button
                     key={ev.regattaId + idx}
@@ -609,6 +620,11 @@ export function FleetRankingsView({
                     <span className={`mt-0.5 block truncate text-[10px] font-bold leading-tight ${off ? "line-through" : ""}`}>
                       {badge}
                     </span>
+                    {monthYear && (
+                      <span className="mt-0.5 block text-[9px] font-semibold leading-none text-slate-500">
+                        {monthYear}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -648,6 +664,7 @@ export function FleetRankingsView({
               {eventSlots.map((ev, idx) => {
                 const off = excluded.has(ev.regattaId);
                 const canToggle = Boolean(ev.regattaName) && !ev.regattaId.startsWith("slot-");
+                const monthYear = formatRankingMonthYear(ev.regattaDate);
                 return (
                   <label
                     key={ev.regattaId + idx}
@@ -677,6 +694,11 @@ export function FleetRankingsView({
                     >
                       {ev.regattaName || "— (no event yet)"}
                     </p>
+                    {monthYear && (
+                      <p className="text-[10px] font-bold text-slate-500 tabular-nums">
+                        {monthYear}
+                      </p>
+                    )}
                     {ev.isCarryForward && (
                       <p className="text-[9px] font-bold text-sky-400">
                         Carry · {ev.periodLabel || "previous"}
@@ -864,6 +886,7 @@ export function FleetRankingsView({
                 )}
                 {eventSlots.map((ev, idx) => {
                   const off = excluded.has(ev.regattaId);
+                  const monthYear = formatRankingMonthYear(ev.regattaDate);
                   return (
                     <th
                       key={ev.regattaId + idx}
@@ -887,6 +910,11 @@ export function FleetRankingsView({
                       <span className="block text-[9px] font-semibold text-slate-400 normal-case tracking-normal leading-tight mt-0.5 line-clamp-2">
                         {shortRegattaName(ev.regattaName, idx)}
                       </span>
+                      {monthYear && (
+                        <span className="block text-[9px] font-bold text-slate-500 normal-case tracking-normal mt-0.5">
+                          {monthYear}
+                        </span>
+                      )}
                       {ev.isCarryForward && (
                         <span className="block text-[8px] font-bold text-sky-400 normal-case mt-0.5">
                           prev

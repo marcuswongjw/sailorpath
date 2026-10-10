@@ -41,6 +41,7 @@ const alyssa: RankedSailor = {
     {
       regattaId: "temasek",
       regattaName: "Temasek Regatta 2026",
+      regattaDate: "2026-06-20",
       score: 9,
       isDNS: false,
       isCarryForward: true,
@@ -48,24 +49,28 @@ const alyssa: RankedSailor = {
     {
       regattaId: "safyc",
       regattaName: "SAFYC Optimist 2026",
+      regattaDate: "2026-07-04",
       score: 1,
       isDNS: false,
     },
     {
       regattaId: "cincap",
       regattaName: "Cincapura Regatta 2026",
+      regattaDate: "2026-07-11",
       score: 2,
       isDNS: false,
     },
     {
       regattaId: "pesta",
       regattaName: "Pesta Sukan 2026",
+      regattaDate: "2026-08-01",
       score: 1,
       isDNS: false,
     },
     {
       regattaId: "snsc",
       regattaName: "Singapore National Sailing Championships 2026",
+      regattaDate: "2026-09-11",
       score: 1,
       isDNS: false,
     },
@@ -85,6 +90,8 @@ describe("FleetRankingsView mobile board", () => {
 
     expect(screen.getAllByText("Temasek")).toHaveLength(1);
     expect(screen.getAllByText("SNSC")).toHaveLength(1);
+    expect(screen.getAllByText("Jun 26").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Sep 26").length).toBeGreaterThan(0);
     expect(screen.getAllByText("prev").length).toBeGreaterThan(0);
     expect(screen.getByText("Nat A", { selector: ".leading-none" })).toHaveClass(
       "bg-amber-100"
