@@ -366,6 +366,20 @@ describe("getStaticBoardRegatta", () => {
     expect(getStaticBoardRegatta(techno)?.id).toBe("techno-snsc-2026");
     expect(getStaticBoardRegatta(SNSC_2026_EVENT.slices[0])).toBeNull();
   });
+
+  it("excludes an archived specialist scorecard in favor of its canonical result sheet", () => {
+    const event = getRegattaEvent("ne-monsoon-grand-prix-2025-combined")!;
+    const wingfoil = event.slices.find((slice) => slice.key === "wingfoil")!;
+    const canonical = {
+      ...regatta("ne-monsoon-grand-prix-2025-combined-wingfoil"),
+      raceCount: 37,
+      totalFleetSize: 17,
+    };
+
+    expect(getStaticBoardRegatta(wingfoil)).toBeNull();
+    expect(resolveEventSlices(event, [canonical]).find((slice) => slice.def.key === "wingfoil")?.regatta)
+      .toMatchObject({ id: canonical.id, raceCount: 37, totalFleetSize: 17 });
+  });
 });
 
 describe("findEventSliceForRegattaSlug", () => {

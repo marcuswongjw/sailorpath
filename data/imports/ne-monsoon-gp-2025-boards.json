@@ -1705,9 +1705,9 @@
     "organizer": "Singapore Sailing Federation",
     "format": "Slalom / Course / Marathon",
     "status": "Completed",
-    "lifecycleStatus": "published",
+    "lifecycleStatus": "archived",
     "scoringSystem": "WCR B8 / Appendix A low points; published discards retained",
-    "rulesNotes": "Published combined standings for Series 1, Series 2 and Series 3 GPS Speed Challenge. Provisional March 7, 2025. Combined Windfoil PDF incorrectly headed Series 1; 41 race columns represent the combined series. Jackson Ho Wingfoil totals do not agree with displayed race sums; preserved as published. NoR: 1\u20134 races: 0 discards; 5\u20138: 1; 9\u201312: 2; 13\u201316: 3; 17\u201320: 4; 21\u201325: 5; 26\u201330: 6; 31\u201338: 7; 39\u201346: 8; 47\u201354: 9. Source-specific discard counts retained.",
+    "rulesNotes": "Archived specialist snapshot. Superseded by the verified canonical 37-race 2025 Northeast Monsoon Grand Prix Combined Wingfoil result, rebuilt from GP1, GP2, and GP3 source score tables under the official Notice of Race.",
     "websiteUrl": "https://www.sailing.org.sg/events/263406",
     "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/10645/event",
     "results": [

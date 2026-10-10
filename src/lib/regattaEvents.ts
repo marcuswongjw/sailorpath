@@ -1028,6 +1028,7 @@ const NE_MONSOON_2025_EVENTS: RegattaEventDef[] = [
         key: "wingfoil",
         label: "Wingfoil",
         series: "wingfoil",
+        slugIncludes: ["ne-monsoon-grand-prix-2025-combined-wingfoil"],
         staticId: "ne-monsoon-grand-prix-2025-combined-wingfoil",
         resultStatus: "final",
         resultType: "Combined Standings",
@@ -1298,14 +1299,16 @@ export function getStaticBoardRegatta(
 ): WingfoilRegatta | Techno293Regatta | null {
   if (!slice.staticId) return null;
   if (slice.series === "wingfoil") {
-    return (
-      SINGAPORE_WINGFOIL_REGATTAS.find((r) => r.id === slice.staticId) ?? null
-    );
+    const board = SINGAPORE_WINGFOIL_REGATTAS.find((r) => r.id === slice.staticId);
+    return board && (!board.lifecycleStatus || board.lifecycleStatus === "published")
+      ? board
+      : null;
   }
   if (slice.series === "techno293") {
-    return (
-      SINGAPORE_TECHNO293_REGATTAS.find((r) => r.id === slice.staticId) ?? null
-    );
+    const board = SINGAPORE_TECHNO293_REGATTAS.find((r) => r.id === slice.staticId);
+    return board && (!board.lifecycleStatus || board.lifecycleStatus === "published")
+      ? board
+      : null;
   }
   return null;
 }
