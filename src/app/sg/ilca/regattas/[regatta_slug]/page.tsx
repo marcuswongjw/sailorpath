@@ -74,6 +74,8 @@ export default async function IlcaRegattaDetailPage({
         geography={regatta.geography}
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
+        officialResultsUrl={regatta.officialResultsUrl}
+        officialResultsSourceName={regatta.officialResultsSourceName}
       />
       {prizeWinners && (
         <RegattaPrizeWinners

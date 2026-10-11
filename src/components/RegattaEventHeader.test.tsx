@@ -50,4 +50,28 @@ describe("RegattaEventHeader", () => {
     expect(onbLink).toHaveAttribute("href", "https://www.racingrulesofsailing.org/documents/14487/event");
     expect(onbLink).toHaveAttribute("target", "_blank");
   });
+
+  it("renders an official result-source link when it is verified", () => {
+    render(
+      <RegattaEventHeader
+        name="Malaysia Optimist Open 2026"
+        date="2026-09-11"
+        division="Open"
+        totalFleetSize={130}
+        raceCount={8}
+        series="optimist"
+        countsForRanking={false}
+        officialResultsUrl="https://example.com/official-results"
+        officialResultsSourceName="Malaysia Optimist Open final results"
+      />
+    );
+
+    const resultsLink = screen.getByRole("link", { name: /official results/i });
+    expect(resultsLink).toHaveAttribute("href", "https://example.com/official-results");
+    expect(resultsLink).toHaveAttribute("target", "_blank");
+    expect(resultsLink).toHaveAttribute(
+      "title",
+      "Malaysia Optimist Open final results"
+    );
+  });
 });

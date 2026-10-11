@@ -12,6 +12,9 @@ const mocks = vi.hoisted(() => ({
     division: "Gold",
     raceCount: 6 as number | null,
     countsForRanking: true,
+    geography: "SGP" as string | null,
+    officialResultsUrl: null as string | null,
+    officialResultsSourceName: null as string | null,
   },
   resultCount: 50,
 }));
@@ -115,6 +118,39 @@ describe("POST /api/admin/regattas/:id/publish", () => {
       expect(data.readiness.summary).toBe("incomplete");
     } finally {
       mocks.regatta.raceCount = previousRaceCount;
+    }
+  });
+
+  it("rejects a legacy external result that is still ranking-eligible", async () => {
+    const previous = {
+      geography: mocks.regatta.geography,
+      officialResultsUrl: mocks.regatta.officialResultsUrl,
+      officialResultsSourceName: mocks.regatta.officialResultsSourceName,
+      countsForRanking: mocks.regatta.countsForRanking,
+    };
+    Object.assign(mocks.regatta, {
+      geography: "MAS",
+      officialResultsUrl: "https://example.com/results",
+      officialResultsSourceName: "Official results",
+      countsForRanking: true,
+    });
+    try {
+      const req = new Request("http://localhost/api/admin/regattas/regatta-uuid-1/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetStatus: "published" }),
+      });
+      const res = await POST(req, { params: Promise.resolve({ id: "regatta-uuid-1" }) });
+      expect(res.status).toBe(422);
+      const data = await res.json();
+      expect(data.readiness.summary).toBe("blocked");
+      expect(
+        data.readiness.checks.some(
+          (check: { code: string }) => check.code === "external-ranking-blocked"
+        )
+      ).toBe(true);
+    } finally {
+      Object.assign(mocks.regatta, previous);
     }
   });
 });

@@ -40,6 +40,11 @@ import { parseCsv } from "@/lib/excel/parseTabularFile";
 import { readNdjsonStream } from "@/lib/readNdjsonStream";
 import { readResultsWorkbook, type ResultsSheet } from "@/lib/excel/readResultsWorkbook";
 import { NEW_IMPORT_TARGET } from "@/lib/importTarget";
+import {
+  externalRegattaImportPolicy,
+  normalizeOfficialResultsSourceName,
+  normalizeOfficialResultsUrl,
+} from "@/lib/externalRegattaImport";
 
 type Props = {
   isSuperadmin: boolean;
@@ -75,6 +80,8 @@ type RegattaImportMeta = {
   publicationStatus: "draft" | "in_review" | "published";
   /** Required when a class has no approved national-ranking policy. */
   lifecycleConfirmed: boolean;
+  officialResultsUrl: string;
+  officialResultsSourceName: string;
   raceCount: string | number;
 };
 
@@ -90,13 +97,16 @@ function emptyImportMeta(): RegattaImportMeta {
     sourceMetadataConfirmed: true,
     publicationStatus: "published",
     lifecycleConfirmed: true,
+    officialResultsUrl: "",
+    officialResultsSourceName: "",
     raceCount: "",
   };
 }
 
 function importDefaultsForClass(
   boatClass: string,
-  fallbackDivision = ""
+  fallbackDivision = "",
+  geography = DEFAULT_GEOGRAPHY
 ): Pick<
   RegattaImportMeta,
   | "boatClass"
@@ -108,6 +118,7 @@ function importDefaultsForClass(
 > {
   const canonical = canonicalBoatClass(boatClass) || DEFAULT_BOAT_CLASS;
   const requiresExplicit = requiresExplicitImportMetadata(canonical);
+  const external = externalRegattaImportPolicy(geography).isExternal;
   return {
     boatClass: canonical,
     division: isSingleFleetClass(canonical)
@@ -115,10 +126,10 @@ function importDefaultsForClass(
       : requiresExplicit
         ? fallbackDivision
         : fallbackDivision || "Gold",
-    countsForRanking: !requiresExplicit,
-    sourceMetadataConfirmed: !requiresExplicit,
-    publicationStatus: requiresExplicit ? "in_review" : "published",
-    lifecycleConfirmed: !requiresExplicit,
+    countsForRanking: external ? false : !requiresExplicit,
+    sourceMetadataConfirmed: external ? false : !requiresExplicit,
+    publicationStatus: external || requiresExplicit ? "in_review" : "published",
+    lifecycleConfirmed: external ? false : !requiresExplicit,
   };
 }
 
@@ -210,6 +221,9 @@ export function AdminRegattaImport({
     targetEvents
       .flatMap((event) => event.sheets)
       .find((sheet) => sheet.id === selectedTarget)?.date || "";
+  const externalImport = externalRegattaImportPolicy(importMeta.geography).isExternal;
+  const requiresReviewMetadata =
+    externalImport || requiresExplicitImportMetadata(importMeta.boatClass);
 
   const selectResultsSheet = (candidate: ReturnType<typeof readResultsWorkbook>[number], filename: string) => {
     const fromFile = parseRegattaTitle(filename);
@@ -229,6 +243,8 @@ export function AdminRegattaImport({
       fleetSize: candidate.rows.length,
       raceCount: candidate.raceCount || "",
       geography: DEFAULT_GEOGRAPHY,
+      officialResultsUrl: "",
+      officialResultsSourceName: filename,
     });
     setImportStatus(`Parsed ${candidate.rows.length} competitors from “${candidate.sheetName}”. Review the date, class, and scores before importing.`);
   };
@@ -289,6 +305,7 @@ export function AdminRegattaImport({
         ...importDefaultsForClass(boatClass, title.division || ""),
         fleetSize: parsed.entries || parsed.rows.length,
         raceCount: parsed.raceCount || "",
+        officialResultsSourceName: file.name,
       };
       setFullImportRows(parsed.rows);
       setPdfScreenshots(parsed.screenshots);
@@ -324,10 +341,10 @@ export function AdminRegattaImport({
         );
         return;
       }
+      setImportProgress(100);
       setImportStatus(
-        `${parsed.usedOcr ? "OCR extracted" : "Extracted"} ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Uploading directly to SailorPath…`
+        `${parsed.usedOcr ? "OCR extracted" : "Extracted"} ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Review the source, host country, and scores below before importing.`
       );
-      await handleImportToDb(parsed.rows, nextMeta);
     } catch (error) {
       setImportProgress(0);
       setImportStatus(null);
@@ -566,8 +583,11 @@ export function AdminRegattaImport({
       toast.error("Parse a file and set regatta name + date first.");
       return;
     }
-    if (requiresExplicitImportMetadata(meta.boatClass)) {
-      if (!meta.division.trim()) {
+    const externalPolicy = externalRegattaImportPolicy(meta.geography);
+    const requiresReview =
+      externalPolicy.isExternal || requiresExplicitImportMetadata(meta.boatClass);
+    if (requiresReview) {
+      if (requiresExplicitImportMetadata(meta.boatClass) && !meta.division.trim()) {
         toast.error("Enter the official iQFOiL/board fleet or division before importing.");
         return;
       }
@@ -575,14 +595,26 @@ export function AdminRegattaImport({
         toast.error("Enter the official race count before importing this class.");
         return;
       }
-      if (
-        meta.countsForRanking ||
-        !meta.sourceMetadataConfirmed ||
-        !meta.lifecycleConfirmed
-      ) {
+      if (externalPolicy.forcesNonRanking && meta.countsForRanking) {
+        toast.error("Non-Singapore results are always non-ranking for Singapore leaderboards.");
+        return;
+      }
+      if (externalPolicy.requiresOfficialResultsSource && !normalizeOfficialResultsUrl(meta.officialResultsUrl)) {
+        toast.error("Add a valid official results URL before importing a non-Singapore result.");
+        return;
+      }
+      if (externalPolicy.requiresOfficialResultsSource && !normalizeOfficialResultsSourceName(meta.officialResultsSourceName)) {
+        toast.error("Add the official result filename or source label before importing a non-Singapore result.");
+        return;
+      }
+      if (!meta.sourceMetadataConfirmed || !meta.lifecycleConfirmed) {
         toast.error(
-          "Confirm the official class metadata, non-ranking status, and publication lifecycle before importing."
+          "Confirm the official source, class metadata, non-ranking status, and publication lifecycle before importing."
         );
+        return;
+      }
+      if (externalPolicy.isExternal && meta.publicationStatus === "published") {
+        toast.error("Non-Singapore results must start as draft or in review.");
         return;
       }
     }
@@ -622,6 +654,8 @@ export function AdminRegattaImport({
           sourceMetadataConfirmed: meta.sourceMetadataConfirmed,
           publicationStatus: meta.publicationStatus,
           lifecycleConfirmed: meta.lifecycleConfirmed,
+          officialResultsUrl: meta.officialResultsUrl,
+          officialResultsSourceName: meta.officialResultsSourceName,
           raceCount:
             meta.raceCount === "" || meta.raceCount == null
               ? null
@@ -1422,7 +1456,8 @@ export function AdminRegattaImport({
                         ? ""
                         : m.division === "Open"
                           ? ""
-                          : m.division
+                          : m.division,
+                      m.geography
                     ),
                   }));
                 }}
@@ -1440,7 +1475,25 @@ export function AdminRegattaImport({
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.geography}
                 onChange={(e) =>
-                  setImportMeta((m) => ({ ...m, geography: e.target.value }))
+                  setImportMeta((m) => {
+                    const geography = e.target.value;
+                    const external = externalRegattaImportPolicy(geography).isExternal;
+                    return {
+                      ...m,
+                      geography,
+                      ...(external
+                        ? {
+                            countsForRanking: false,
+                            sourceMetadataConfirmed: false,
+                            publicationStatus:
+                              m.publicationStatus === "published"
+                                ? "in_review"
+                                : m.publicationStatus,
+                            lifecycleConfirmed: false,
+                          }
+                        : {}),
+                    };
+                  })
                 }
               >
                 {geographySelectOptions().map((c) => (
@@ -1448,7 +1501,38 @@ export function AdminRegattaImport({
                     {c.code} — {c.name}
                   </option>
                 ))}
-              </select>
+                </select>
+            </label>
+            <label className="text-xs text-slate-400 sm:col-span-2">
+              Official result source label
+              <input
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
+                value={importMeta.officialResultsSourceName}
+                onChange={(e) =>
+                  setImportMeta((m) => ({
+                    ...m,
+                    officialResultsSourceName: e.target.value,
+                    sourceMetadataConfirmed: requiresReviewMetadata ? false : m.sourceMetadataConfirmed,
+                  }))
+                }
+                placeholder="e.g. THE 5TH LYSC 2026 _ Optimist.pdf"
+              />
+            </label>
+            <label className="text-xs text-slate-400 sm:col-span-2 lg:col-span-2">
+              Official result source URL {externalImport ? "(required)" : "(optional)"}
+              <input
+                type="url"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
+                value={importMeta.officialResultsUrl}
+                onChange={(e) =>
+                  setImportMeta((m) => ({
+                    ...m,
+                    officialResultsUrl: e.target.value,
+                    sourceMetadataConfirmed: requiresReviewMetadata ? false : m.sourceMetadataConfirmed,
+                  }))
+                }
+                placeholder="https://drive.google.com/..."
+              />
             </label>
             <label className="text-xs text-slate-400">
               Races completed
@@ -1464,7 +1548,8 @@ export function AdminRegattaImport({
                   setImportMeta((m) => ({
                     ...m,
                     raceCount,
-                    ...(requiresExplicitImportMetadata(m.boatClass)
+                    ...(externalRegattaImportPolicy(m.geography).isExternal ||
+                    requiresExplicitImportMetadata(m.boatClass)
                       ? { sourceMetadataConfirmed: false }
                       : {}),
                     ...(isIlca &&
@@ -1489,12 +1574,13 @@ export function AdminRegattaImport({
               <select
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.countsForRanking ? "ranking" : "non-ranking"}
-                disabled={requiresExplicitImportMetadata(importMeta.boatClass)}
+                disabled={requiresReviewMetadata}
                 onChange={(e) =>
                   setImportMeta((m) => ({
                     ...m,
                     countsForRanking: e.target.value === "ranking",
-                    sourceMetadataConfirmed: requiresExplicitImportMetadata(m.boatClass)
+                    sourceMetadataConfirmed: externalRegattaImportPolicy(m.geography).isExternal ||
+                    requiresExplicitImportMetadata(m.boatClass)
                       ? false
                       : m.sourceMetadataConfirmed,
                     // Keep division sensible when toggling non-ranking
@@ -1513,6 +1599,8 @@ export function AdminRegattaImport({
               >
                 {requiresExplicitImportMetadata(importMeta.boatClass) ? (
                   <option value="non-ranking">Non-ranking (policy not configured)</option>
+                ) : externalImport ? (
+                  <option value="non-ranking">Non-ranking (outside Singapore)</option>
                 ) : (
                   <>
                     <option value="ranking">
@@ -1534,7 +1622,8 @@ export function AdminRegattaImport({
                   setImportMeta((m) => ({
                     ...m,
                     publicationStatus: e.target.value as RegattaImportMeta["publicationStatus"],
-                    lifecycleConfirmed: requiresExplicitImportMetadata(m.boatClass)
+                    lifecycleConfirmed: externalRegattaImportPolicy(m.geography).isExternal ||
+                    requiresExplicitImportMetadata(m.boatClass)
                       ? false
                       : true,
                   }))
@@ -1542,7 +1631,7 @@ export function AdminRegattaImport({
               >
                 <option value="draft">Draft — admin only</option>
                 <option value="in_review">In review — admin only</option>
-                <option value="published">Published — visible publicly</option>
+                <option value="published" disabled={externalImport}>Published — visible publicly</option>
               </select>
             </label>
             <label className="text-xs text-slate-400">
@@ -1586,7 +1675,7 @@ export function AdminRegattaImport({
                 </select>
               )}
             </label>
-            {requiresExplicitImportMetadata(importMeta.boatClass) && (
+            {requiresReviewMetadata && (
               <label className="sm:col-span-2 lg:col-span-4 flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
                 <input
                   type="checkbox"
@@ -1601,11 +1690,24 @@ export function AdminRegattaImport({
                   className="mt-0.5 h-3.5 w-3.5 accent-orange-500"
                 />
                 <span>
-                  I confirm that the official source identifies this class as{" "}
-                  <strong>{importMeta.boatClass}</strong>, the fleet/division above,
-                  and <strong>{String(importMeta.raceCount || "0")}</strong> completed
-                  races. I also confirm the selected <strong>{importMeta.publicationStatus.replace("_", " ")}</strong>{" "}
-                  lifecycle. This result is non-ranking until a federation policy is configured.
+                  {externalImport ? (
+                    <>
+                      I confirm that this official source identifies a result hosted outside
+                      Singapore in <strong>{importMeta.geography}</strong>, for{" "}
+                      <strong>{importMeta.boatClass}</strong>, with{" "}
+                      <strong>{String(importMeta.raceCount || "0")}</strong> completed races.
+                      This result remains non-ranking for Singapore leaderboards and enters{" "}
+                      <strong>{importMeta.publicationStatus.replace("_", " ")}</strong> for review.
+                    </>
+                  ) : (
+                    <>
+                      I confirm that the official source identifies this class as{" "}
+                      <strong>{importMeta.boatClass}</strong>, the fleet/division above,
+                      and <strong>{String(importMeta.raceCount || "0")}</strong> completed
+                      races. I also confirm the selected <strong>{importMeta.publicationStatus.replace("_", " ")}</strong>{" "}
+                      lifecycle. This result is non-ranking until a federation policy is configured.
+                    </>
+                  )}
                 </span>
               </label>
             )}
@@ -1616,6 +1718,11 @@ export function AdminRegattaImport({
                 <strong className="text-slate-400">Ranking</strong>. Non-ranking
                 events do not affect Best 3 of 5 series scores.
               </span>
+              {externalImport && (
+                <span className="block text-amber-900/90">
+                  Outside-Singapore results require an official source and cannot affect Singapore rankings.
+                </span>
+              )}
               {classImportNote(importMeta.boatClass) && (
                 <span className="block text-amber-900/90">
                   {classImportNote(importMeta.boatClass)}
@@ -1630,11 +1737,16 @@ export function AdminRegattaImport({
                 importBusy ||
                 !selectedEventSlug ||
                 !selectedTarget ||
-                (requiresExplicitImportMetadata(importMeta.boatClass) &&
+                (requiresReviewMetadata &&
                   (!importMeta.sourceMetadataConfirmed ||
                     !importMeta.lifecycleConfirmed ||
-                    !importMeta.division.trim() ||
-                    importMeta.raceCount === ""))
+                    importMeta.raceCount === "" ||
+                    (requiresExplicitImportMetadata(importMeta.boatClass) &&
+                      !importMeta.division.trim()) ||
+                    (externalImport &&
+                      (!normalizeOfficialResultsUrl(importMeta.officialResultsUrl) ||
+                        !normalizeOfficialResultsSourceName(importMeta.officialResultsSourceName) ||
+                        importMeta.publicationStatus === "published"))))
               }
               className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-[15px] font-semibold text-white"
             >

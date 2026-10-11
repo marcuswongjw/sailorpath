@@ -60,4 +60,41 @@ describe("publicationReadiness", () => {
       true
     );
   });
+
+  it("requires an official source and non-ranking status for external results", () => {
+    const missingSource = publicationReadiness({
+      ...complete,
+      geography: "MAS",
+      countsForRanking: false,
+    });
+    expect(missingSource.summary).toBe("incomplete");
+    expect(
+      missingSource.checks.some((check) => check.code === "official-results-url-missing")
+    ).toBe(true);
+    expect(
+      missingSource.checks.some((check) => check.code === "official-results-source-missing")
+    ).toBe(true);
+
+    const rankingExternal = publicationReadiness({
+      ...complete,
+      geography: "MAS",
+      officialResultsUrl: "https://example.com/results",
+      officialResultsSourceName: "Official results",
+      countsForRanking: true,
+    });
+    expect(rankingExternal.summary).toBe("blocked");
+    expect(
+      rankingExternal.checks.some((check) => check.code === "external-ranking-blocked")
+    ).toBe(true);
+
+    expect(
+      publicationReadiness({
+        ...complete,
+        geography: "MAS",
+        officialResultsUrl: "https://example.com/results",
+        officialResultsSourceName: "Official results",
+        countsForRanking: false,
+      }).summary
+    ).toBe("publishable_non_ranking");
+  });
 });

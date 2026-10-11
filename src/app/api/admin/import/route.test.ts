@@ -86,4 +86,25 @@ describe("POST /api/admin/import scoring validation", () => {
       error: "This class has no configured Singapore national-ranking policy and cannot be imported as ranking-eligible.",
     });
   });
+
+  it("requires an official source before a Malaysian result can be imported", async () => {
+    const response = await POST(
+      request({
+        geography: "MAS",
+        boatClass: "Optimist",
+        division: "Open",
+        raceCount: 5,
+        countsForRanking: false,
+        sourceMetadataConfirmed: true,
+        publicationStatus: "in_review",
+        lifecycleConfirmed: true,
+      })
+    );
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toMatchObject({
+      error:
+        "Add a valid http(s) organiser or official results source URL before importing a non-Singapore result.",
+    });
+  });
 });

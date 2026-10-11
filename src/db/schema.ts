@@ -425,6 +425,10 @@ export const regattas = pgTable("regattas", {
   norUrl: text("nor_url"),
   /** Official entry registration portal URL */
   registrationUrl: text("registration_url"),
+  /** Organiser-published final results URL, separate from the Notice of Race. */
+  officialResultsUrl: text("official_results_url"),
+  /** Human-readable title for the organiser-published result source. */
+  officialResultsSourceName: text("official_results_source_name"),
   /** Highlights official Asian Games / Perth Camp / Worlds selection trials */
   isSelectionTrial: boolean("is_selection_trial").default(false).notNull(),
   /** Catalog id from selection events, set on the class sheet. */

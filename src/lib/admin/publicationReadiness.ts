@@ -2,6 +2,11 @@ import {
   MIN_RACES_FOR_RANKING,
   regattaCountsForRanking,
 } from "@/lib/ranking";
+import {
+  externalRegattaImportPolicy,
+  normalizeOfficialResultsSourceName,
+  normalizeOfficialResultsUrl,
+} from "@/lib/externalRegattaImport";
 
 export type ReadinessSummary =
   | "blocked"
@@ -51,6 +56,9 @@ export function publicationReadiness(input: {
   totalFleetSize?: number | null;
   raceCount?: number | null;
   countsForRanking?: boolean | null;
+  geography?: string | null;
+  officialResultsUrl?: string | null;
+  officialResultsSourceName?: string | null;
   resultCount?: number | null;
   status?: string | null;
 }): PublicationReadiness {
@@ -59,6 +67,7 @@ export function publicationReadiness(input: {
   const date = String(input.date || "").slice(0, 10);
   const boatClass = String(input.boatClass || "").trim();
   const division = String(input.division || "").trim();
+  const externalPolicy = externalRegattaImportPolicy(input.geography);
 
   if (input.status === "archived") {
     checks.push({
@@ -136,12 +145,49 @@ export function publicationReadiness(input: {
       field: "results",
     });
   }
+  if (
+    externalPolicy.requiresOfficialResultsSource &&
+    !normalizeOfficialResultsUrl(input.officialResultsUrl)
+  ) {
+    checks.push({
+      code: "official-results-url-missing",
+      label: "Add the organiser or official results URL before publishing this non-Singapore result.",
+      severity: "incomplete",
+      field: "officialResultsUrl",
+    });
+  }
+  if (
+    externalPolicy.requiresOfficialResultsSource &&
+    !normalizeOfficialResultsSourceName(input.officialResultsSourceName)
+  ) {
+    checks.push({
+      code: "official-results-source-missing",
+      label: "Add the official results filename or source label before publishing this non-Singapore result.",
+      severity: "incomplete",
+      field: "officialResultsSourceName",
+    });
+  }
 
-  const ranks = regattaCountsForRanking({
+  const requestedRanking = regattaCountsForRanking({
     countsForRanking: input.countsForRanking,
     raceCount: input.raceCount,
   });
-  if (!ranks) {
+  if (externalPolicy.forcesNonRanking && requestedRanking) {
+    checks.push({
+      code: "external-ranking-blocked",
+      label:
+        "Non-Singapore results must be marked non-ranking before they can be published.",
+      severity: "blocked",
+      field: "countsForRanking",
+    });
+  } else if (externalPolicy.forcesNonRanking) {
+    checks.push({
+      code: "ranking-excluded",
+      label: "This non-Singapore result is excluded from Singapore rankings.",
+      severity: "warning",
+      field: "countsForRanking",
+    });
+  } else if (!requestedRanking) {
     const few =
       input.raceCount != null && input.raceCount < MIN_RACES_FOR_RANKING;
     checks.push({

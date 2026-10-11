@@ -15,6 +15,11 @@ import {
   REGATTA_LIFECYCLE_STATUSES,
 } from "@/lib/regattaStatus";
 import { isKnownSelectionEventId } from "@/lib/selectionEventCatalog";
+import {
+  externalRegattaImportPolicy,
+  normalizeOfficialResultsSourceName,
+  normalizeOfficialResultsUrl,
+} from "@/lib/externalRegattaImport";
 
 function selectionEventIdFrom(body: {
   isSelectionTrial?: unknown;
@@ -171,10 +176,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: raceCountResult.error }, { status: 400 });
     }
     const raceCount = raceCountResult.value;
-    const geography =
+    const geographyInput =
       body.geography != null && String(body.geography).trim()
         ? String(body.geography).trim().toUpperCase().slice(0, 12)
         : "SGP";
+    const externalPolicy = externalRegattaImportPolicy(geographyInput);
+    const geography = externalPolicy.geography;
+    const officialResultsUrl = normalizeOfficialResultsUrl(body.officialResultsUrl);
+    const officialResultsSourceName = normalizeOfficialResultsSourceName(
+      body.officialResultsSourceName
+    );
     const boatClass =
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
@@ -202,6 +213,9 @@ export async function POST(req: Request) {
     if (division === "NonRanking") {
       countsForRanking = false;
       finalDivision = "NonRanking";
+    } else if (externalPolicy.forcesNonRanking) {
+      // Preserve the organiser's official fleet label, but never score it on an SG board.
+      countsForRanking = false;
     } else if (body.countsForRanking === false) {
       countsForRanking = false;
     }
@@ -225,7 +239,7 @@ export async function POST(req: Request) {
     }
     const organizer = body.organizer ? String(body.organizer).trim() : null;
     const scheduleNotes = body.scheduleNotes ? String(body.scheduleNotes).trim() : null;
-    const status = body.status || "published";
+    let status = body.status || "published";
     if (!isRegattaLifecycleStatus(status)) {
       return NextResponse.json(
         {
@@ -233,6 +247,19 @@ export async function POST(req: Request) {
         },
         { status: 400 }
       );
+    }
+    if (externalPolicy.requiresOfficialResultsSource) {
+      if (!officialResultsUrl || !officialResultsSourceName) {
+        return NextResponse.json(
+          {
+            error:
+              "Non-Singapore regattas require an official results URL and source label.",
+          },
+          { status: 400 }
+        );
+      }
+      // A new external result needs the same review step as an imported PDF.
+      if (status === "published") status = "in_review";
     }
 
     const [row] = await db
@@ -255,6 +282,8 @@ export async function POST(req: Request) {
         endDate,
         norUrl,
         registrationUrl,
+        officialResultsUrl,
+        officialResultsSourceName,
         isSelectionTrial,
         selectionEventId: selectionLink.id,
         organizer,
@@ -368,10 +397,11 @@ export async function PATCH(req: Request) {
       patch.raceCount = raceCountResult.value;
     }
     if (body.geography !== undefined) {
-      patch.geography =
+      const geographyInput =
         body.geography === "" || body.geography == null
           ? "SGP"
           : String(body.geography).trim().toUpperCase().slice(0, 12);
+      patch.geography = externalRegattaImportPolicy(geographyInput).geography;
     }
     if (body.boatClass !== undefined) {
       patch.boatClass =
@@ -443,6 +473,21 @@ export async function PATCH(req: Request) {
     if (body.registrationUrl !== undefined) {
       patch.registrationUrl = body.registrationUrl === "" || body.registrationUrl == null ? null : String(body.registrationUrl).trim();
     }
+    if (body.officialResultsUrl !== undefined) {
+      const value = normalizeOfficialResultsUrl(body.officialResultsUrl);
+      if (body.officialResultsUrl && !value) {
+        return NextResponse.json(
+          { error: "officialResultsUrl must be a valid http(s) URL" },
+          { status: 400 }
+        );
+      }
+      patch.officialResultsUrl = value;
+    }
+    if (body.officialResultsSourceName !== undefined) {
+      patch.officialResultsSourceName = normalizeOfficialResultsSourceName(
+        body.officialResultsSourceName
+      );
+    }
     if (body.isSelectionTrial !== undefined || body.selectionEventId !== undefined) {
       const selectionLink = selectionEventIdFrom({
         isSelectionTrial:
@@ -473,10 +518,11 @@ export async function PATCH(req: Request) {
       patch.reviewedAt = new Date();
       if (body.division) patch.division = body.division;
       if (body.geography !== undefined) {
-        patch.geography = String(body.geography || "SGP")
+        const geographyInput = String(body.geography || "SGP")
           .trim()
           .toUpperCase()
           .slice(0, 12);
+        patch.geography = externalRegattaImportPolicy(geographyInput).geography;
       }
       if (body.boatClass !== undefined) {
         patch.boatClass = String(body.boatClass || "Optimist").slice(0, 40);
@@ -499,6 +545,9 @@ export async function PATCH(req: Request) {
         boatClass: regattas.boatClass,
         raceCount: regattas.raceCount,
         countsForRanking: regattas.countsForRanking,
+        geography: regattas.geography,
+        officialResultsUrl: regattas.officialResultsUrl,
+        officialResultsSourceName: regattas.officialResultsSourceName,
         eventId: regattas.eventId,
       })
       .from(regattas)
@@ -509,6 +558,33 @@ export async function PATCH(req: Request) {
       patch.raceCount !== undefined
         ? (patch.raceCount as number | null)
         : existing?.raceCount ?? null;
+    const effectiveExternalPolicy = externalRegattaImportPolicy(
+      patch.geography ?? existing?.geography
+    );
+    if (effectiveExternalPolicy.isExternal) {
+      patch.countsForRanking = false;
+      const sourceUrl =
+        (patch.officialResultsUrl as string | null | undefined) ??
+        existing?.officialResultsUrl;
+      const sourceName =
+        (patch.officialResultsSourceName as string | null | undefined) ??
+        existing?.officialResultsSourceName;
+      if (!sourceUrl || !sourceName) {
+        return NextResponse.json(
+          {
+            error:
+              "Non-Singapore regattas require an official results URL and source label.",
+          },
+          { status: 400 }
+        );
+      }
+      if (body.action === "promote") {
+        return NextResponse.json(
+          { error: "Non-Singapore regattas cannot be promoted into Singapore rankings." },
+          { status: 400 }
+        );
+      }
+    }
 
     // Promoting an already-ranking regatta would clobber its division /
     // geography / fleet size with suggestion defaults — refuse instead.

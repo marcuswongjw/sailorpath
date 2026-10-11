@@ -19,6 +19,8 @@ export type RegattaAdmin = {
   organizer?: string | null;
   norUrl?: string | null;
   registrationUrl?: string | null;
+  officialResultsUrl?: string | null;
+  officialResultsSourceName?: string | null;
   isSelectionTrial?: boolean | null;
   selectionEventId?: string | null;
   eventId?: string | null;

@@ -80,7 +80,11 @@ export interface RegattaRecord {
   norUrl?: string | null;
   /** Entry portal registration URL */
   registrationUrl?: string | null;
-  /** Highlights official Asian Games / Perth Camp trials */
+  /** Organiser-published final results URL. */
+  officialResultsUrl?: string | null;
+  /** Display title for the organiser-published result source. */
+  officialResultsSourceName?: string | null;
+  /** Highlights official Asian Games / Perth Camp / Worlds selection trials */
   isSelectionTrial?: boolean | null;
   /** Explicit selection-event catalog id for this class sheet. */
   selectionEventId?: string | null;

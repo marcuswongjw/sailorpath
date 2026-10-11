@@ -62,6 +62,9 @@ export async function POST(
           totalFleetSize: existingDinghy.totalFleetSize,
           raceCount: existingDinghy.raceCount,
           countsForRanking: existingDinghy.countsForRanking,
+          geography: existingDinghy.geography,
+          officialResultsUrl: existingDinghy.officialResultsUrl,
+          officialResultsSourceName: existingDinghy.officialResultsSourceName,
           resultCount: countRow?.n ?? 0,
           status: existingDinghy.status,
         });

@@ -307,6 +307,8 @@ function mapRegattaRow(
     endDate: r.endDate,
     norUrl: r.norUrl,
     registrationUrl: r.registrationUrl,
+    officialResultsUrl: r.officialResultsUrl,
+    officialResultsSourceName: r.officialResultsSourceName,
     isSelectionTrial: r.isSelectionTrial ?? false,
     selectionEventId: r.selectionEventId,
     eventId: r.eventId,

@@ -15,6 +15,8 @@ export type RegattaEventHeaderProps = {
   countsForRanking?: boolean;
   geography?: string | null;
   norUrl?: string | null;
+  officialResultsUrl?: string | null;
+  officialResultsSourceName?: string | null;
   endDate?: string | null;
   venue?: string | null;
   organiser?: string | null;
@@ -33,6 +35,8 @@ export function RegattaEventHeader({
   countsForRanking = true,
   geography,
   norUrl,
+  officialResultsUrl,
+  officialResultsSourceName,
   endDate,
   venue,
   organiser,
@@ -111,6 +115,19 @@ export function RegattaEventHeader({
             >
               <FileText className="h-3 w-3" />
               Official Notice Board
+              <ExternalLink className="h-2.5 w-2.5" />
+            </a>
+          )}
+          {officialResultsUrl && (
+            <a
+              href={officialResultsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={officialResultsSourceName || "Official results source"}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-harbour-teal)] bg-[var(--sp-aqua-mist)] px-3 py-1 text-xs font-bold text-[var(--sp-harbour-teal)] hover:bg-[var(--sp-sailcloth)] transition-colors"
+            >
+              <FileText className="h-3 w-3" />
+              Official Results
               <ExternalLink className="h-2.5 w-2.5" />
             </a>
           )}

@@ -62,6 +62,11 @@ import {
   requiresExplicitImportMetadata,
 } from "@/lib/classRegistry";
 import { isKnownCrewBoatClass } from "@/lib/regattaParticipants";
+import {
+  externalRegattaImportPolicy,
+  normalizeOfficialResultsSourceName,
+  normalizeOfficialResultsUrl,
+} from "@/lib/externalRegattaImport";
 
 export type { ImportPossibleDuplicate };
 
@@ -143,6 +148,8 @@ async function buildExistingRegattaReview(args: {
   geography: string;
   ranking: boolean;
   raceCount: number | null;
+  officialResultsUrl: string | null;
+  officialResultsSourceName: string | null;
   rows: ReviewUploadRow[];
 }, connection: Pick<typeof db, "select"> = db): Promise<RegattaImportReview> {
   const db = connection;
@@ -220,6 +227,8 @@ async function buildExistingRegattaReview(args: {
     ["Geography", args.existing.geography, args.geography],
     ["Ranking status", args.existing.countsForRanking, args.ranking],
     ["Race count", args.existing.raceCount, args.raceCount],
+    ["Official results URL", args.existing.officialResultsUrl, args.officialResultsUrl],
+    ["Official results source", args.existing.officialResultsSourceName, args.officialResultsSourceName],
   ] as const;
   for (const [field, before, after] of metadata) {
     if (sameImportValue(before, after)) continue;
@@ -430,6 +439,8 @@ export async function POST(req: Request) {
       createMissing?: boolean;
       confirmedRegattaId?: string | null;
       confirmedReviewToken?: string | null;
+      officialResultsUrl?: string | null;
+      officialResultsSourceName?: string | null;
       sheetId?: string | null;
       eventSlug?: string | null;
       createInEvent?: boolean;
@@ -615,6 +626,11 @@ export async function POST(req: Request) {
         .toUpperCase()
         .slice(0, 8) ||
       "SGP";
+    const externalPolicy = externalRegattaImportPolicy(geo);
+    const officialResultsUrl = normalizeOfficialResultsUrl(body.officialResultsUrl);
+    const officialResultsSourceName = normalizeOfficialResultsSourceName(
+      body.officialResultsSourceName
+    );
     const boat = canonicalBoatClass(boatClass || "Optimist") || "Optimist";
     if (isKnownCrewBoatClass(boat)) {
       return NextResponse.json(
@@ -633,16 +649,18 @@ export async function POST(req: Request) {
         ? null
         : Math.max(0, Math.round(Number(raceCountRaw)));
     const requiresExplicitMetadata = requiresExplicitImportMetadata(boat);
+    const requiresReviewMetadata =
+      requiresExplicitMetadata || externalPolicy.requiresOfficialResultsSource;
     const requestedLifecycle =
       publicationStatus === "draft" ||
       publicationStatus === "in_review" ||
       publicationStatus === "published"
         ? publicationStatus
-        : requiresExplicitMetadata
+        : requiresReviewMetadata
           ? null
           : "published";
-    if (requiresExplicitMetadata) {
-      if (!String(division || "").trim()) {
+    if (requiresReviewMetadata) {
+      if (requiresExplicitMetadata && !String(division || "").trim()) {
         return NextResponse.json(
           { error: "Enter the official fleet/division for this non-ranking class." },
           { status: 400 }
@@ -654,7 +672,7 @@ export async function POST(req: Request) {
           { status: 400 }
         );
       }
-      if (countsForRanking === true) {
+      if (requiresExplicitMetadata && countsForRanking === true) {
         return NextResponse.json(
           {
             error:
@@ -663,27 +681,66 @@ export async function POST(req: Request) {
           { status: 400 }
         );
       }
-      if (sourceMetadataConfirmed !== true) {
+      if (externalPolicy.forcesNonRanking && countsForRanking === true) {
         return NextResponse.json(
           {
             error:
-              "Confirm the official class, fleet/division, race count, and non-ranking status before importing.",
+              "A non-Singapore result cannot be imported as Singapore ranking-eligible.",
           },
           { status: 400 }
         );
       }
-      if (!requestedLifecycle || lifecycleConfirmed !== true) {
+      if (
+        externalPolicy.requiresOfficialResultsSource &&
+        !officialResultsUrl
+      ) {
         return NextResponse.json(
           {
             error:
-              "Select and confirm the draft, in-review, or published lifecycle before importing this class.",
+              "Add a valid http(s) organiser or official results source URL before importing a non-Singapore result.",
+          },
+          { status: 400 }
+        );
+      }
+      if (
+        externalPolicy.requiresOfficialResultsSource &&
+        !officialResultsSourceName
+      ) {
+        return NextResponse.json(
+          {
+            error:
+              "Add the official results filename or source label before importing a non-Singapore result.",
+          },
+          { status: 400 }
+        );
+      }
+      if (sourceMetadataConfirmed !== true) {
+        return NextResponse.json(
+          {
+            error:
+              "Confirm the official source, class, fleet/division, race count, and non-ranking status before importing.",
+          },
+          { status: 400 }
+        );
+      }
+      if (
+        !requestedLifecycle ||
+        lifecycleConfirmed !== true ||
+        (externalPolicy.isExternal && requestedLifecycle === "published")
+      ) {
+        return NextResponse.json(
+          {
+            error:
+              externalPolicy.isExternal
+                ? "Non-Singapore results must enter draft or in-review. Publish only after the source and result review are complete."
+                : "Select and confirm the draft, in-review, or published lifecycle before importing this class.",
           },
           { status: 400 }
         );
       }
     }
     const lifecycle = requestedLifecycle || "published";
-    let ranking = requiresExplicitMetadata
+    let ranking = requiresExplicitMetadata || externalPolicy.forcesNonRanking
       ? false
       : countsForRanking === false || countsForRanking === true
         ? countsForRanking
@@ -767,6 +824,10 @@ export async function POST(req: Request) {
       : targetResolution.kind === "target"
         ? targetResolution.target
         : null;
+    const officialResultsUrlForImport =
+      officialResultsUrl ?? existingTarget?.officialResultsUrl ?? null;
+    const officialResultsSourceNameForImport =
+      officialResultsSourceName ?? existingTarget?.officialResultsSourceName ?? null;
 
     if (
       confirmedRegattaId &&
@@ -790,6 +851,8 @@ export async function POST(req: Request) {
         geography: geo,
         ranking,
         raceCount,
+        officialResultsUrl: officialResultsUrlForImport,
+        officialResultsSourceName: officialResultsSourceNameForImport,
         rows: cleanRows,
       });
       if (
@@ -1593,6 +1656,8 @@ export async function POST(req: Request) {
                 geography: geo,
                 ranking,
                 raceCount,
+                officialResultsUrl: officialResultsUrlForImport,
+                officialResultsSourceName: officialResultsSourceNameForImport,
                 rows: cleanRows,
               },
               tx
@@ -1634,6 +1699,8 @@ export async function POST(req: Request) {
                 reviewedAt: ranking === false ? new Date() : target.reviewedAt,
                 raceCount,
                 status: lifecycle,
+                officialResultsUrl: officialResultsUrlForImport,
+                officialResultsSourceName: officialResultsSourceNameForImport,
                 eventId: target.eventId ?? createEventId,
                 updatedAt: new Date(),
               })
@@ -1678,6 +1745,8 @@ export async function POST(req: Request) {
                 reviewedAt: ranking === false ? new Date() : null,
                 raceCount,
                 status: lifecycle,
+                officialResultsUrl: officialResultsUrlForImport,
+                officialResultsSourceName: officialResultsSourceNameForImport,
               })
               .returning();
             reg = upserted;
