@@ -1,4 +1,4 @@
-# 2023 production import — identity resolution required
+# 2023 production import — identity resolution record
 
 **Preflight date:** 12 October 2026
 **Production project:** SailorPath (`fdziuyexczkngvugvsbu`)
