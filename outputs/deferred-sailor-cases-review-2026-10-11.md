@@ -37,14 +37,19 @@ The six historical source profiles are absent.
 
 ### Subsequent removal of the 2024 SG Foil WingFoil results
 
-At the user's request, all results from `sg-foil-grand-prix-wingfoil-2024` were then removed. The event record remains as metadata, but it now has no published results.
+At the user's request, all results from `sg-foil-grand-prix-wingfoil-2024` were removed. After confirming that the event then had no results, race results, participant links, observations, or equipment dependencies, the event record itself was also deleted.
 
 - **Result rows removed:** 12
 - **Race-result rows removed by cascade:** 432
 - **Participant links removed by cascade:** 12
 - **Event-only sailor profiles removed:** 4 — Calvin Ng, Fam Mei Ling, and the two 2024 Ryan Lo placeholders (boards 12 and 55)
+- **Empty event record removed:** 1
 
 The retained 2025 Ryan Lo profile, `ryan-lo-ae5d31`, remains with its three 2025 results. No Ryan reconciliation is now needed because both ambiguous 2024 entries were intentionally removed with their source event.
+
+### Final empty-profile cleanup
+
+Jayden Ting Wong was confirmed to have **zero** primary results and **zero** participant links. The profile, its sole alias, and its sole follower link were deleted as instructed. The final post-cleanup scan found no sailor profile without results or participation.
 
 ### Confirmed Lu Zixi identity and 29er participant conversion
 
