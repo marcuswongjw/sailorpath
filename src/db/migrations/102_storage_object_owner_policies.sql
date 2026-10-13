@@ -12,8 +12,15 @@
 -- working. Writes and listing are limited to the uploader's own folder, or a
 -- superadmin. A known public URL can still be opened. The bucket cannot be listed
 -- by other users when storage.allow_any_operation is available.
+--
+-- Helpers live in private, which PostgREST does not expose. Storage policies
+-- run as authenticated and need EXECUTE; anon must not have it.
 
-CREATE OR REPLACE FUNCTION public.can_manage_sailor_storage_folder(folder text)
+CREATE SCHEMA IF NOT EXISTS private;
+REVOKE ALL ON SCHEMA private FROM PUBLIC;
+GRANT USAGE ON SCHEMA private TO authenticated, service_role;
+
+CREATE OR REPLACE FUNCTION private.can_manage_sailor_storage_folder(folder text)
 RETURNS boolean
 LANGUAGE sql
 STABLE
@@ -47,7 +54,7 @@ AS $$
     );
 $$;
 
-CREATE OR REPLACE FUNCTION public.can_manage_evidence_object(object_name text)
+CREATE OR REPLACE FUNCTION private.can_manage_evidence_object(object_name text)
 RETURNS boolean
 LANGUAGE sql
 STABLE
@@ -71,10 +78,10 @@ AS $$
     );
 $$;
 
-REVOKE ALL ON FUNCTION public.can_manage_sailor_storage_folder(text) FROM PUBLIC;
-REVOKE ALL ON FUNCTION public.can_manage_evidence_object(text) FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION public.can_manage_sailor_storage_folder(text) TO authenticated;
-GRANT EXECUTE ON FUNCTION public.can_manage_evidence_object(text) TO authenticated;
+REVOKE ALL ON FUNCTION private.can_manage_sailor_storage_folder(text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION private.can_manage_evidence_object(text) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION private.can_manage_sailor_storage_folder(text) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION private.can_manage_evidence_object(text) TO authenticated, service_role;
 
 DO $policy$
 BEGIN
@@ -164,7 +171,7 @@ BEGIN
     WITH CHECK (
       bucket_id = 'avatars'
       AND strpos(name, '..') = 0
-      AND public.can_manage_sailor_storage_folder((storage.foldername(name))[1])
+      AND private.can_manage_sailor_storage_folder((storage.foldername(name))[1])
     );
 
   CREATE POLICY "Avatar authenticated update"
@@ -173,12 +180,12 @@ BEGIN
     USING (
       bucket_id = 'avatars'
       AND strpos(name, '..') = 0
-      AND public.can_manage_sailor_storage_folder((storage.foldername(name))[1])
+      AND private.can_manage_sailor_storage_folder((storage.foldername(name))[1])
     )
     WITH CHECK (
       bucket_id = 'avatars'
       AND strpos(name, '..') = 0
-      AND public.can_manage_sailor_storage_folder((storage.foldername(name))[1])
+      AND private.can_manage_sailor_storage_folder((storage.foldername(name))[1])
     );
 
   CREATE POLICY "Avatar authenticated delete"
@@ -187,7 +194,7 @@ BEGIN
     USING (
       bucket_id = 'avatars'
       AND strpos(name, '..') = 0
-      AND public.can_manage_sailor_storage_folder((storage.foldername(name))[1])
+      AND private.can_manage_sailor_storage_folder((storage.foldername(name))[1])
     );
 
   CREATE POLICY "Regatta evidence owner read"
@@ -195,7 +202,7 @@ BEGIN
     TO authenticated
     USING (
       bucket_id = 'regatta-evidence'
-      AND public.can_manage_evidence_object(name)
+      AND private.can_manage_evidence_object(name)
     );
 
   CREATE POLICY "Regatta evidence authenticated upload"
@@ -203,7 +210,7 @@ BEGIN
     TO authenticated
     WITH CHECK (
       bucket_id = 'regatta-evidence'
-      AND public.can_manage_evidence_object(name)
+      AND private.can_manage_evidence_object(name)
     );
 
   CREATE POLICY "Regatta evidence authenticated update"
@@ -211,11 +218,11 @@ BEGIN
     TO authenticated
     USING (
       bucket_id = 'regatta-evidence'
-      AND public.can_manage_evidence_object(name)
+      AND private.can_manage_evidence_object(name)
     )
     WITH CHECK (
       bucket_id = 'regatta-evidence'
-      AND public.can_manage_evidence_object(name)
+      AND private.can_manage_evidence_object(name)
     );
 
   CREATE POLICY "Regatta evidence authenticated delete"
@@ -223,7 +230,12 @@ BEGIN
     TO authenticated
     USING (
       bucket_id = 'regatta-evidence'
-      AND public.can_manage_evidence_object(name)
+      AND private.can_manage_evidence_object(name)
     );
 END
 $policy$;
+
+-- Policies now call private.can_manage_*. Remove the exposed public copies
+-- left by the original version of this migration.
+DROP FUNCTION IF EXISTS public.can_manage_sailor_storage_folder(text);
+DROP FUNCTION IF EXISTS public.can_manage_evidence_object(text);

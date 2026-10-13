@@ -57,8 +57,11 @@ CREATE INDEX IF NOT EXISTS regattas_status_boat_class_date_idx
 CREATE INDEX IF NOT EXISTS wingfoil_regattas_status_idx
   ON public.wingfoil_regattas (status);
 
--- 4. Database-level Secure View for Public Queries
-CREATE OR REPLACE VIEW public.published_regattas AS
+-- 4. Database-level Secure View for Public Queries.
+-- security_invoker makes the view run as the caller, so regattas RLS applies.
+-- CREATE OR REPLACE without this option clears security_invoker on Postgres 15+.
+CREATE OR REPLACE VIEW public.published_regattas
+WITH (security_invoker = true) AS
   SELECT * FROM public.regattas
   WHERE status = 'published';
 

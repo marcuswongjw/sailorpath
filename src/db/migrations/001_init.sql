@@ -1,6 +1,10 @@
 -- SailorPath v1 schema — run once in Supabase SQL Editor after wipe.
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+-- pg_trgm must not live in public: that schema is exposed through the Data API.
+-- The extensions schema is already on the postgres search_path, so similarity()
+-- and gin_trgm_ops keep resolving after the move in 113.
+CREATE SCHEMA IF NOT EXISTS extensions;
+CREATE EXTENSION IF NOT EXISTS "pg_trgm" WITH SCHEMA extensions;
 
 CREATE TABLE IF NOT EXISTS public.profiles (
   id uuid PRIMARY KEY,
