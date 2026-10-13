@@ -12,8 +12,20 @@ describe("storage owner policies", () => {
     expect(sql).toContain(
       'DROP POLICY IF EXISTS "Regatta evidence authenticated upload"'
     );
-    expect(sql).toContain("can_manage_sailor_storage_folder");
-    expect(sql).toContain("can_manage_evidence_object");
+    expect(sql).toContain("private.can_manage_sailor_storage_folder");
+    expect(sql).toContain("private.can_manage_evidence_object");
+    expect(sql).toContain(
+      "REVOKE ALL ON FUNCTION private.can_manage_evidence_object(text) FROM PUBLIC, anon"
+    );
+    expect(sql).toContain(
+      "REVOKE ALL ON FUNCTION private.can_manage_sailor_storage_folder(text) FROM PUBLIC, anon"
+    );
+    expect(sql).not.toMatch(/FUNCTION public\.can_manage_/);
+    expect(sql).not.toMatch(/AND public\.can_manage_/);
+    expect(sql).toContain("DROP FUNCTION IF EXISTS public.can_manage_evidence_object(text)");
+    expect(sql).toContain(
+      "DROP FUNCTION IF EXISTS public.can_manage_sailor_storage_folder(text)"
+    );
     expect(sql).toContain("parent_id = auth.uid()");
     expect(sql).toContain("status = 'approved'");
     expect(sql).toContain("role = 'superadmin'");

@@ -1,5 +1,7 @@
+import { eq } from "drizzle-orm";
 import {
   pgTable,
+  pgView,
   uuid,
   text,
   timestamp,
@@ -35,7 +37,7 @@ export const profiles = pgTable("profiles", {
   notifyFollowedResults: boolean("notify_followed_results")
     .default(true)
     .notNull(),
-});
+}).enableRLS();
 
 /** A coach may request access, but only a superadmin may grant the coach role. */
 export const coachAccessRequests = pgTable(
@@ -82,7 +84,7 @@ export const coachAccessRequests = pgTable(
       table.requestedAt
     ),
   })
-);
+).enableRLS();
 
 export const sailors = pgTable("sailors", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
@@ -196,7 +198,7 @@ export const sailors = pgTable("sailors", {
   (table) => ({
     parentIdIdx: index("sailors_parent_id_idx").on(table.parentId),
   })
-);
+).enableRLS();
 
 /** Coach-owned groups. Athlete membership is private and never exposed publicly. */
 export const coachSquads = pgTable(
@@ -217,7 +219,7 @@ export const coachSquads = pgTable(
       table.name
     ),
   })
-);
+).enableRLS();
 
 export const coachSquadMembers = pgTable(
   "coach_squad_members",
@@ -239,7 +241,7 @@ export const coachSquadMembers = pgTable(
       table.sailorId
     ),
   })
-);
+).enableRLS();
 
 /** Coach-owned watchlist, separate from sailors actively managed in a squad. */
 export const coachFollowedSailors = pgTable(
@@ -261,7 +263,7 @@ export const coachFollowedSailors = pgTable(
     ),
     sailorIdIdx: index("coach_followed_sailors_sailor_id_idx").on(table.sailorId),
   })
-);
+).enableRLS();
 
 /**
  * Any signed-in profile can follow a sailor. Separate from the coach watchlist
@@ -286,7 +288,7 @@ export const followedSailors = pgTable(
     ),
     sailorIdIdx: index("followed_sailors_sailor_id_idx").on(table.sailorId),
   })
-);
+).enableRLS();
 
 /** Notes written by coach with selective sharing (coach_only vs shared). */
 export const coachSailorNotes = pgTable(
@@ -311,7 +313,7 @@ export const coachSailorNotes = pgTable(
     ),
     sailorIdIdx: index("coach_sailor_notes_sailor_id_idx").on(table.sailorId),
   })
-);
+).enableRLS();
 
 /** Structured coaching history: observations, goals, and attendance with selective sharing. */
 export const coachDevelopmentRecords = pgTable(
@@ -336,7 +338,7 @@ export const coachDevelopmentRecords = pgTable(
     coachSailorDateIdx: index("coach_development_records_coach_sailor_date_idx").on(table.coachId, table.sailorId, table.recordDate),
     sailorIdIdx: index("coach_development_records_sailor_id_idx").on(table.sailorId),
   })
-);
+).enableRLS();
 
 /** Per-coach acknowledgement state for generated dashboard actions. */
 export const coachActionReviews = pgTable(
@@ -353,7 +355,7 @@ export const coachActionReviews = pgTable(
     coachActionUnq: unique("coach_action_reviews_coach_action_unq").on(table.coachId, table.actionKey),
     sailorIdIdx: index("coach_action_reviews_sailor_id_idx").on(table.sailorId),
   })
-);
+).enableRLS();
 
 /** One sailing weekend. Class sheets in `regattas` point at it. */
 export const regattaEvents = pgTable("regatta_events", {
@@ -377,7 +379,7 @@ export const regattaEvents = pgTable("regatta_events", {
   scoringRules: text("scoring_rules"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
-});
+}).enableRLS();
 
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
@@ -445,7 +447,18 @@ export const regattas = pgTable("regattas", {
     .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}).enableRLS();
+
+/**
+ * Published regatta rows for API roles. securityInvoker keeps
+ * regattas_public_read in force. Replacing this view without that option
+ * clears it on Postgres 15+.
+ */
+export const publishedRegattas = pgView("published_regattas")
+  .with({ securityInvoker: true })
+  .as((qb) =>
+    qb.select().from(regattas).where(eq(regattas.status, "published"))
+  );
 
 export const regattaResults = pgTable(
   "regatta_results",
@@ -538,7 +551,7 @@ export const regattaResults = pgTable(
       table.verificationStatus
     ),
   })
-);
+).enableRLS();
 
 /**
  * People who sailed a scored boat entry. One result owns one score/race set;
@@ -586,7 +599,7 @@ export const regattaResultParticipants = pgTable(
       table.displayOrder
     ),
   })
-);
+).enableRLS();
 
 /** Official race scores published by the event organiser. */
 export const regattaRaceResults = pgTable(
@@ -608,7 +621,7 @@ export const regattaRaceResults = pgTable(
     unq: unique().on(table.regattaResultId, table.raceNumber),
     resultIdIdx: index("regatta_race_results_result_id_idx").on(table.regattaResultId),
   })
-);
+).enableRLS();
 
 export const sailorAliases = pgTable("sailor_aliases", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
@@ -617,7 +630,7 @@ export const sailorAliases = pgTable("sailor_aliases", {
     .notNull(),
   aliasName: text("alias_name").unique().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /** Parent/sailor requests to claim a public athlete profile */
 export const sailorClaims = pgTable("sailor_claims", {
@@ -646,7 +659,7 @@ export const sailorClaims = pgTable("sailor_claims", {
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /**
  * Race-by-race observations (owner / parent).
@@ -673,7 +686,7 @@ export const raceObservations = pgTable(
   (table) => ({
     unq: unique().on(table.sailorId, table.regattaId, table.raceNumber),
   })
-);
+).enableRLS();
 
 /**
  * Equipment change log — optional dated snapshots (legacy; prefer equipment_items).
@@ -693,7 +706,7 @@ export const equipmentLogs = pgTable("equipment_logs", {
     onDelete: "set null",
   }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /**
  * Multi-item equipment inventory (Optimist / ILCA 4).
@@ -745,7 +758,7 @@ export const equipmentItems = pgTable("equipment_items", {
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /**
  * Private parent notes on a linked sailor (owner only).
@@ -761,7 +774,7 @@ export const parentNotes = pgTable("parent_notes", {
   body: text("body").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /** Individual session/use events for equipment items */
 export const equipmentUsages = pgTable("equipment_usages", {
@@ -786,7 +799,7 @@ export const equipmentUsages = pgTable("equipment_usages", {
   wind: text("wind"),
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /** User-submitted support / help requests */
 export const supportMessages = pgTable("support_messages", {
@@ -806,7 +819,7 @@ export const supportMessages = pgTable("support_messages", {
     .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}).enableRLS();
 
 /**
  * Privacy-light product usage events (page views, key actions).
@@ -834,7 +847,7 @@ export const usageEvents = pgTable(
       table.eventType
     ),
   })
-);
+).enableRLS();
 
 /**
  * Admin/data audit trail — may include sailor names (superadmin UI only).
@@ -854,7 +867,7 @@ export const adminChangeLog = pgTable("admin_change_log", {
   summary: text("summary").notNull(),
   details: jsonb("details").$type<JsonValue>(),
   source: text("source"),
-});
+}).enableRLS();
 
 /**
  * Singapore WingFoil Regatta events, rankings, and scorecards.
@@ -872,7 +885,7 @@ export const wingfoilRegattas = pgTable("wingfoil_regattas", {
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
-});
+}).enableRLS();
 
 /**
  * Singapore Techno 293 Regatta events, rankings, and scorecards.
@@ -890,4 +903,4 @@ export const techno293Regattas = pgTable("techno293_regattas", {
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
-});
+}).enableRLS();

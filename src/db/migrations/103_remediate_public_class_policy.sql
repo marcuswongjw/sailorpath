@@ -41,7 +41,9 @@ END
 $policy$;
 
 -- Restore the database-level public lifecycle projection.
-CREATE OR REPLACE VIEW public.published_regattas AS
+-- security_invoker is required: replacing the view without it turns the option off.
+CREATE OR REPLACE VIEW public.published_regattas
+WITH (security_invoker = true) AS
   SELECT *
   FROM public.regattas
   WHERE status = 'published';
