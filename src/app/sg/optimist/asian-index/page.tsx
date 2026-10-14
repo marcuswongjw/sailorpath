@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { connection } from "next/server";
 import { AsianOptimistIndexView } from "@/components/AsianOptimistIndexView";
 import { createAsianOptimistIndexProvisionalEntries } from "@/lib/asianOptimistIndexScoring";
-import { getAsianOptimistIndexSnapshot } from "@/lib/asianOptimistIndexProfiles";
+import { ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS } from "@/lib/asianOptimistIndexQualifiers";
 
 export const metadata: Metadata = {
   title: "Asian Optimist Index | SailorPath",
@@ -10,17 +9,14 @@ export const metadata: Metadata = {
     "A transparent provisional Asian Optimist Index based on the 2025 championship cohort and verified 2026 regional form.",
 };
 
-export default async function AsianOptimistIndexPage() {
-  // Defer the read until an incoming request so deployment builds remain
-  // independent of the database. The data loader retains its verified source
-  // fallback if a later database request is unavailable.
-  await connection();
-  const { entries: baseline, qualifiers } = await getAsianOptimistIndexSnapshot();
-
+export default function AsianOptimistIndexPage() {
+  // The scored release is a verified, versioned snapshot. It must remain fast
+  // and readable even when optional profile enrichment or ledger queries are
+  // slow; a later source refresh will regenerate the next Index release.
   return (
     <AsianOptimistIndexView
-      entries={createAsianOptimistIndexProvisionalEntries(baseline)}
-      qualifiers={qualifiers}
+      entries={createAsianOptimistIndexProvisionalEntries()}
+      qualifiers={[...ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS]}
     />
   );
 }
