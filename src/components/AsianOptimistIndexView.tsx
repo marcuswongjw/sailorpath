@@ -15,8 +15,8 @@ import {
   type AsianOptimistIndexQualifierSource,
 } from "@/lib/asianOptimistIndexQualifiers";
 
-function genderLabel(gender: AsianOptimistIndexProvisionalEntry["gender"]): string {
-  return gender === "W" ? "Girl" : "Boy";
+function genderCode(gender: AsianOptimistIndexProvisionalEntry["gender"]): string {
+  return gender === "W" ? "F" : "M";
 }
 
 function rankClass(rank: number): string {
@@ -97,7 +97,7 @@ export function AsianOptimistIndexView({
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Verified 2026 form</p>
             <p className="mt-1 text-lg font-extrabold text-harbour">{sailorsWithQualifiers} sailors · {totalStarts} starts</p>
-            <p className="mt-1 text-xs text-slate-soft">Across four verified qualifying events today</p>
+            <p className="mt-1 text-xs text-slate-soft">Across {INDEX_QUALIFIER_COLUMNS.length} verified qualifying events today</p>
           </div>
         </div>
       </section>
@@ -135,16 +135,16 @@ export function AsianOptimistIndexView({
                 <p className="mt-4 text-lg font-extrabold text-harbour">
                   {sailor.profileHref ? (
                     <Link href={sailor.profileHref} className="hover:text-racing-deep hover:underline">
-                      {sailor.name}
+                      {sailor.displayName}
                     </Link>
-                  ) : sailor.name}
+                  ) : sailor.displayName}
                 </p>
                 {sailor.profileReview ? (
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-amber-800">
                     Profile review
                   </p>
                 ) : null}
-                <p className="mt-1 text-sm text-slate-soft">{sailor.country} · {sailor.sailNumber}</p>
+                <p className="mt-1 text-sm text-slate-soft">{sailor.nationality} · {sailor.sailNumber}</p>
                 <p className="mt-4 text-sm font-semibold text-charcoal">
                   Index score <span className="font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</span>
                   <span className="px-1.5 text-cool-mist">·</span>
@@ -201,9 +201,9 @@ export function AsianOptimistIndexView({
                       <div className="font-bold text-harbour">
                         {sailor.profileHref ? (
                           <Link href={sailor.profileHref} className="hover:text-racing-deep hover:underline">
-                            {sailor.name}
+                            {sailor.displayName}
                           </Link>
-                        ) : sailor.name}
+                        ) : sailor.displayName}
                       </div>
                       <div className="mt-0.5 text-xs text-slate-soft">
                         {sailor.nationality} · {sailor.sailNumber}
@@ -218,10 +218,10 @@ export function AsianOptimistIndexView({
                       ) : null}
                     </td>
                     <td className="px-4 py-3 text-xs font-semibold text-charcoal">
-                      {sailor.country}
+                      {sailor.nationality}
                     </td>
                     <td className="px-4 py-3 text-xs font-semibold text-charcoal">
-                      {genderLabel(sailor.gender)}
+                      {genderCode(sailor.gender)}
                     </td>
                     <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">
                       {sailor.birthYear ?? "—"}

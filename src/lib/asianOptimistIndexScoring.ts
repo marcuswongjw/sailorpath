@@ -42,6 +42,14 @@ export type AsianOptimistIndexScoredQualifier = {
  * a 2025 cohort sailor by exact normalised name + NOC match only.
  */
 export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
+  "lysc-2026-optimist-gold": {
+    id: "lysc-2026-optimist-gold",
+    shortName: "LYSC",
+    hostCountry: "Malaysia",
+    fleetSize: 50,
+    tier: "international",
+    scoreCap: 100,
+  },
   "langkawi-international-regatta-perdana-2026": {
     id: "langkawi-international-regatta-perdana-2026",
     shortName: "LIRP",
@@ -91,6 +99,36 @@ export type AsianOptimistIndexQualifierResultInput = {
  * young sailors across events.
  */
 export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
+  {
+    qualifierId: "lysc-2026-optimist-gold",
+    name: "Yaasin Syahrizan",
+    nationality: "MAS",
+    rank: 1,
+  },
+  {
+    qualifierId: "lysc-2026-optimist-gold",
+    name: "Sitt May Chit Po",
+    nationality: "MYA",
+    rank: 4,
+  },
+  {
+    qualifierId: "lysc-2026-optimist-gold",
+    name: "Khairulilzani Afendy",
+    nationality: "MAS",
+    rank: 9,
+  },
+  {
+    qualifierId: "lysc-2026-optimist-gold",
+    name: "Mia Azrania",
+    nationality: "MAS",
+    rank: 10,
+  },
+  {
+    qualifierId: "lysc-2026-optimist-gold",
+    name: "Gon Yee Zaw",
+    nationality: "MYA",
+    rank: 34,
+  },
   {
     qualifierId: "langkawi-international-regatta-perdana-2026",
     name: "Suthinan Nakpasom",

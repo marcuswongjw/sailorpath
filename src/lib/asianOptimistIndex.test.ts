@@ -42,10 +42,15 @@ describe("Asian Optimist Index baseline", () => {
     expect(baseline.find((entry) => entry.name === "Ethan Chia")).toMatchObject({
       profileHref: "/ethan-chia-han-wei",
       profileReview: null,
+      displayName: "Ethan Chia Han Wei",
+      nationality: "SGP",
+      gender: "M",
+      birthYear: 2010,
     });
     expect(baseline.find((entry) => entry.name === "Lin Shi")).toMatchObject({
       profileHref: "/shi-lin-vysogv7",
       profileReview: null,
+      displayName: "Shi Lin",
     });
     expect(baseline.find((entry) => entry.name === "Suthinan Nakpasom")).toMatchObject({
       birthYear: 2012,

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { DbOffline } from "@/components/DbOffline";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SailorProfileView } from "@/components/SailorProfileView";
@@ -24,6 +25,19 @@ import { canManageSailor } from "@/lib/claimAccess";
 import { getProfileFollowState } from "@/lib/followedSailorsQuery";
 
 export const dynamic = "force-dynamic";
+
+function requestMayHaveSession(cookieNames: string[]): boolean {
+  // Avoid a remote Supabase `getUser()` round trip for the normal anonymous
+  // profile visit. The profile is public; authentication only changes private
+  // fields, edit controls, and the follow button.
+  return cookieNames.some(
+    (name) =>
+      name.startsWith("sailorpath-public-auth") ||
+      name.startsWith("sailorpath-admin-auth") ||
+      name.startsWith("sb-") ||
+      name.includes("supabase-auth-token")
+  );
+}
 
 export default async function SailorProfilePage({
   params,
@@ -51,9 +65,13 @@ export default async function SailorProfilePage({
   } | null = null;
 
   try {
+    const cookieStore = await cookies();
+    const mayHaveSession = requestMayHaveSession(
+      cookieStore.getAll().map((cookie) => cookie.name)
+    );
     const [sailorResult, authResult] = await Promise.all([
       getCachedSailorByHandle(sailor_handle),
-      getAuthContext().catch(() => null),
+      mayHaveSession ? getAuthContext().catch(() => null) : Promise.resolve(null),
     ]);
     sailor = sailorResult;
     auth = authResult;
@@ -85,12 +103,19 @@ export default async function SailorProfilePage({
       const mayHaveIlca = Boolean(
         sailor.sailNumberIlca4 || sailor.ilca4NationalList
       );
+      const mayHaveSingaporeSeries =
+        sailor.nationality === "SGP" &&
+        Boolean(
+          sailor.currentFleet || sailor.goldEntryDate || sailor.silverEntryDate
+        );
 
       const [res, sStand, iStand, obs, equipHist] = await Promise.all([
         access.canSeePrivate
           ? getResultsForSailor(sailor.id)
           : getCachedResultsForSailor(sailor.id),
-        getSailorSeriesStanding(sailor.id).catch(() => null),
+        mayHaveSingaporeSeries
+          ? getSailorSeriesStanding(sailor.id).catch(() => null)
+          : Promise.resolve(null),
         mayHaveIlca
           ? getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null)
           : Promise.resolve(null),

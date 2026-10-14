@@ -25,6 +25,22 @@ export type AsianOptimistIndexQualifierSource = {
  */
 export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
   {
+    id: "lysc-2026-optimist-gold",
+    name: "5th Langkawi International Youth Sailing Championship — Optimist Gold",
+    hostCountry: "Malaysia",
+    startDate: "2026-06-24",
+    endDate: "2026-06-28",
+    officialResultsUrl:
+      "https://sailorpath.com/results/the-5th-lysc-2026-optimist-final.pdf",
+    officialResultsSourceName:
+      "THE 5TH LYSC 2026 _ Optimist.pdf — final results issued 28 June 2026",
+    sailorPathRegattaSlug:
+      "langkawi-international-youth-sailing-championship-2026-optimist-gold",
+    usesSailorPathResults: true,
+    resultCount: 50,
+    resultStatus: "verified",
+  },
+  {
     id: "langkawi-international-regatta-perdana-2026",
     name: "22nd Langkawi International Regatta Perdana — Optimist Gold",
     hostCountry: "Malaysia",

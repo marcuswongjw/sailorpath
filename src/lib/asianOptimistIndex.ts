@@ -36,6 +36,8 @@ export type AsianOptimistIndexEntry = AsianOptimistIndexSourceEntry & {
   identityKey: string;
   /** Rank inside the Asian-only first-release baseline. */
   baselineRank: number;
+  /** SailorPath profile name when it is more complete than the source sheet. */
+  displayName: string;
   /** Present only when a matching SailorPath profile explicitly permits it. */
   birthYear: number | null;
   /** Existing SailorPath public profile, if a high-confidence match exists. */
@@ -1426,6 +1428,7 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
       ...entry,
       identityKey,
       baselineRank: index + 1,
+      displayName: profile?.displayName ?? entry.name,
       birthYear: profile?.birthYear ?? null,
       // Every source-cohort identity has an existing SailorPath profile or a
       // deterministic import handle created by migration 115. Keeping this

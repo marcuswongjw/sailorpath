@@ -17,17 +17,17 @@ describe("Asian Optimist Index provisional scoring", () => {
 
     expect(entries).toHaveLength(122);
     expect(entries.slice(0, 6).map((entry) => entry.name)).toEqual([
+      "Yaasin Syahrizan",
       "Sorawit Naksuk",
       "Suthinan Nakpasom",
       "Rohan Maliah",
+      "Sitt May Chit Po",
       "Youjia Xu",
-      "Wenyu Cheng",
-      "Ethan Chia",
     ]);
 
     const sorawit = entries.find((entry) => entry.name === "Sorawit Naksuk")!;
     expect(sorawit).toMatchObject({
-      provisionalRank: 1,
+      provisionalRank: 2,
       provisionalScore: 79.6,
       championshipScore: 100,
       championshipPoints: 60,
@@ -38,7 +38,7 @@ describe("Asian Optimist Index provisional scoring", () => {
 
     const suthinan = entries.find((entry) => entry.name === "Suthinan Nakpasom")!;
     expect(suthinan).toMatchObject({
-      provisionalRank: 2,
+      provisionalRank: 3,
       provisionalScore: 77,
       eligibleStarts: 2,
       hostCountryCount: 2,
@@ -54,6 +54,16 @@ describe("Asian Optimist Index provisional scoring", () => {
     expect(suthinan.scoredQualifiers[0].pointsContribution).toBeCloseTo(28, 8);
     expect(suthinan.scoredQualifiers[1].pointsContribution).toBeCloseTo(7.8621, 4);
 
+    const yaasin = entries.find((entry) => entry.name === "Yaasin Syahrizan")!;
+    expect(yaasin).toMatchObject({
+      provisionalRank: 1,
+      eligibleStarts: 1,
+      hostCountryCount: 1,
+    });
+    expect(yaasin.qualifierResults).toMatchObject([
+      { rank: 1, qualifier: { shortName: "LYSC", hostCountry: "Malaysia" } },
+    ]);
+
     const wenyu = entries.find((entry) => entry.name === "Wenyu Cheng")!;
     expect(wenyu).toMatchObject({
       eligibleStarts: 2,
@@ -68,7 +78,6 @@ describe("Asian Optimist Index provisional scoring", () => {
 
     const ethan = entries.find((entry) => entry.name === "Ethan Chia")!;
     expect(ethan).toMatchObject({
-      provisionalRank: 6,
       provisionalScore: 59.6,
       eligibleStarts: 0,
       hostCountryCount: 0,

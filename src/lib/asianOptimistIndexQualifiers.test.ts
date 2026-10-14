@@ -5,8 +5,8 @@ import {
 } from "@/lib/asianOptimistIndexQualifiers";
 
 describe("Asian Optimist Index 2026 qualifier ledger", () => {
-  it("contains the two verified external sources and two direct Singapore sources", () => {
-    expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(4);
+  it("contains three external sources and two direct SailorPath sources", () => {
+    expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(5);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => !qualifier.usesSailorPathResults
@@ -16,12 +16,12 @@ describe("Asian Optimist Index 2026 qualifier ledger", () => {
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => qualifier.usesSailorPathResults
       )
-    ).toHaveLength(2);
+    ).toHaveLength(3);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.map(
         (qualifier) => qualifier.resultCount
       )
-    ).toEqual([59, 106, 65, 83]);
+    ).toEqual([50, 59, 106, 65, 83]);
   });
 
   it("renders inclusive source dates in a stable, timezone-safe form", () => {
