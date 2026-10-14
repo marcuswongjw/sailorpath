@@ -1,5 +1,10 @@
 import { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { getCachedPublicRegattas } from "@/lib/queries";
+import {
+  CACHE_TAG_PUBLIC_REGATTAS,
+  PUBLIC_DATA_REVALIDATE_SECONDS,
+} from "@/lib/cacheTags";
 import { RegattaCalendarClient } from "@/components/calendar/RegattaCalendarClient";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 import {
@@ -12,7 +17,33 @@ import { db } from "@/db";
 import { regattaEvents } from "@/db/schema";
 import type { RegattaRecord } from "@/lib/ranking";
 
-export const revalidate = 120;
+export const revalidate = 3600;
+
+const getCachedCalendarEvents = unstable_cache(
+  async () =>
+    db
+      .select({
+        id: regattaEvents.id,
+        slug: regattaEvents.slug,
+        name: regattaEvents.name,
+        startDate: regattaEvents.startDate,
+        endDate: regattaEvents.endDate,
+        venue: regattaEvents.venue,
+        organizer: regattaEvents.organizer,
+        classes: regattaEvents.classes,
+        norUrl: regattaEvents.norUrl,
+        registrationUrl: regattaEvents.registrationUrl,
+        countsForRanking: regattaEvents.countsForRanking,
+        isSelectionTrial: regattaEvents.isSelectionTrial,
+        keyDeadlines: regattaEvents.keyDeadlines,
+      })
+      .from(regattaEvents),
+  ["calendar-events-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_PUBLIC_REGATTAS],
+  }
+);
 
 export const metadata: Metadata = {
   title: "Regattas and results | SailorPath",
@@ -46,7 +77,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
     dbRegattas = [];
   }
   try {
-    const rows = await db.select().from(regattaEvents);
+    const rows = await getCachedCalendarEvents();
     eventSlugsById = new Map(rows.map((row) => [row.id, row.slug]));
     savedEvents = rows.map((row) => ({
       slug: row.slug,

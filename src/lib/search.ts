@@ -1,5 +1,10 @@
+import { unstable_cache } from "next/cache";
 import { sql, ilike, or, and, eq, ne, desc, asc, type SQL } from "drizzle-orm";
 import { db } from "@/db";
+import {
+  CACHE_TAG_FLEET_RANKINGS,
+  PUBLIC_DATA_REVALIDATE_SECONDS,
+} from "@/lib/cacheTags";
 import { sailors, regattas } from "@/db/schema";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { resolveSailorFleet, type SailorRecord, type RegattaRecord } from "@/lib/ranking";
@@ -181,6 +186,45 @@ export type UnifiedSearchResult = {
   total: number;
 };
 
+/** Columns the search scorer reads. Omits journey, equipment, and history text. */
+const searchSailorColumns = {
+  id: sailors.id,
+  name: sailors.name,
+  handle: sailors.handle,
+  sailNumber: sailors.sailNumber,
+  sailNumberIlca4: sailors.sailNumberIlca4,
+  boardNumber: sailors.boardNumber,
+  ilca4NationalList: sailors.ilca4NationalList,
+  club: sailors.club,
+  school: sailors.school,
+  nationality: sailors.nationality,
+  avatarUrl: sailors.avatarUrl,
+  parentId: sailors.parentId,
+  goldEntryDate: sailors.goldEntryDate,
+  silverEntryDate: sailors.silverEntryDate,
+  dropDate: sailors.dropDate,
+  currentFleet: sailors.currentFleet,
+  dob: sailors.dob,
+  weight: sailors.weight,
+  bio: sailors.bio,
+  gender: sailors.gender,
+  nationalSquadStatus: sailors.nationalSquadStatus,
+};
+
+/**
+ * Unfiltered directory (the /search page and empty /api/search). Filtered
+ * queries stay in SQL so they do not pull the whole roster.
+ */
+const getCachedSearchSailorDirectory = unstable_cache(
+  async () =>
+    db.select(searchSailorColumns).from(sailors).orderBy(asc(sailors.name)),
+  ["public-sailor-search-directory-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_FLEET_RANKINGS],
+  }
+);
+
 /**
  * Searches sailors with token parsing, synonym expansions, and relevance scoring.
  */
@@ -333,10 +377,14 @@ export async function searchSailorsEnhanced(
   }
 
   const dbLimit = f.limit ? Math.max(f.limit * 2, 500) : 1500;
-  const queryBuilder = db.select().from(sailors);
-  const rows = conditions.length > 0
-    ? await queryBuilder.where(and(...conditions)).limit(dbLimit)
-    : await queryBuilder.orderBy(asc(sailors.name)).limit(dbLimit);
+  const rows =
+    conditions.length > 0
+      ? await db
+          .select(searchSailorColumns)
+          .from(sailors)
+          .where(and(...conditions))
+          .limit(dbLimit)
+      : (await getCachedSearchSailorDirectory()).slice(0, dbLimit);
 
   // Map and score
   const scored: SailorSearchResult[] = [];

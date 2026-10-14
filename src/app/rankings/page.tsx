@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "View current Singapore Optimist (Gold/Silver), ILCA (ILCA 4, ILCA 6, ILCA 7), WingFoil, and Techno 293 standings.",
 };
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export default function RankingsHubPage() {
   return (

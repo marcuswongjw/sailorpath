@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Singapore WingFoil Sprint Slalom regattas, event standings, heat results, and class specifications.",
 };
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 type WingfoilPageProps = {
   searchParams?: Promise<{ tab?: string; regatta?: string }>;

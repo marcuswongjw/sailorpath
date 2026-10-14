@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     "Official Singapore Optimist multi-event selection trials, combined series scores, and provisional team rosters for Asian & Oceania 2026 and Perth Camp.",
 };
 
-/** ISR — revalidate selection scores every 60 seconds */
-export const revalidate = 60;
+/** Selection scores refresh when results are published; hourly backstop. */
+export const revalidate = 3600;
 // Selection data is database-backed. Render it on a real request instead of
 // making production builds wait for an external database connection.
 export const dynamic = "force-dynamic";

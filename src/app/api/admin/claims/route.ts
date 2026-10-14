@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { and, asc, desc, eq, ne } from "drizzle-orm";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
@@ -345,6 +346,7 @@ export async function PATCH(req: Request) {
       });
     }
 
+    revalidatePublicRankings(`claim:${updated.sailorId}`);
     return NextResponse.json({
       ok: true,
       claim: updated,

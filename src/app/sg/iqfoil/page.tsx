@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Published Singapore iQFOiL regatta results, linked event pages, and sailor result history.",
 };
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export default async function IQFoilPage() {
   const data = await loadPublicBoardClassData("iqfoil");

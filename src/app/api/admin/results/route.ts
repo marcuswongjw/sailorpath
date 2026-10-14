@@ -38,6 +38,31 @@ function parseDns(body: Record<string, unknown>): boolean {
   return parseBool(body.isDns ?? body.isDNS);
 }
 
+/** List shape used by the results editor. Skips evidence blobs and audit ids. */
+const adminResultColumns = {
+  id: regattaResults.id,
+  sailorId: regattaResults.sailorId,
+  regattaId: regattaResults.regattaId,
+  entryLabel: regattaResults.entryLabel,
+  entrySailNumber: regattaResults.entrySailNumber,
+  entryBoardNumber: regattaResults.entryBoardNumber,
+  entryType: regattaResults.entryType,
+  rank: regattaResults.rank,
+  nettScore: regattaResults.nettScore,
+  totalScore: regattaResults.totalScore,
+  isDns: regattaResults.isDns,
+  isOverseasCommitment: regattaResults.isOverseasCommitment,
+  gender: regattaResults.gender,
+  birthYear: regattaResults.birthYear,
+  nationality: regattaResults.nationality,
+  createdAt: regattaResults.createdAt,
+  updatedAt: regattaResults.updatedAt,
+};
+
+function adminResultRows() {
+  return db.select(adminResultColumns).from(regattaResults);
+}
+
 function parseOverseas(body: Record<string, unknown>): boolean {
   return parseBool(
     body.isOverseasCommitment ?? body.overseasCommitment ?? body.overseas
@@ -141,10 +166,9 @@ export async function GET(req: Request) {
       if (!idCheck.ok) {
         return NextResponse.json({ error: idCheck.error }, { status: 400 });
       }
-      const rows = await db
-        .select()
-        .from(regattaResults)
-        .where(eq(regattaResults.regattaId, idCheck.value));
+      const rows = await adminResultRows().where(
+        eq(regattaResults.regattaId, idCheck.value)
+      );
       const results = includeRaces
         ? await attachOfficialRaces(rows)
         : (await attachParticipants(rows)).map((r) => ({
@@ -176,7 +200,7 @@ export async function GET(req: Request) {
     const offset = Math.max(0, Number.isFinite(offsetRaw) ? offsetRaw : 0);
 
     const [rows, totalRow] = await Promise.all([
-      db.select().from(regattaResults).limit(limit).offset(offset),
+      adminResultRows().limit(limit).offset(offset),
       db.select({ n: count() }).from(regattaResults),
     ]);
 

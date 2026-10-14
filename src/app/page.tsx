@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Browse sailing results, Singapore class standings, upcoming and past regattas, selection trials, and sailor profiles across Optimist, ILCA, WingFoil and Techno 293.",
 };
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 const classHubs = [
   {

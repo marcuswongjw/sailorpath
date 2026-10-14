@@ -3,6 +3,9 @@ import { DbOffline } from "@/components/DbOffline";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import {
+  getCachedPublicObservations,
+  getCachedResultsForSailor,
+  getCachedSailorByHandle,
   getSailorByHandle,
   getResultsForSailor,
   getSailorSeriesStanding,
@@ -49,7 +52,7 @@ export default async function SailorProfilePage({
 
   try {
     const [sailorResult, authResult] = await Promise.all([
-      getSailorByHandle(sailor_handle),
+      getCachedSailorByHandle(sailor_handle),
       getAuthContext().catch(() => null),
     ]);
     sailor = sailorResult;
@@ -73,19 +76,29 @@ export default async function SailorProfilePage({
         hasApprovedClaim,
       });
 
+      // Owners and admins read this sailor fresh so an edit is visible
+      // immediately. Everyone else uses the shared public cache.
+      if (access.canSeePrivate) {
+        sailor = (await getSailorByHandle(sailor_handle)) ?? sailor;
+      }
+
       const mayHaveIlca = Boolean(
         sailor.sailNumberIlca4 || sailor.ilca4NationalList
       );
 
       const [res, sStand, iStand, obs, equipHist] = await Promise.all([
-        getResultsForSailor(sailor.id),
+        access.canSeePrivate
+          ? getResultsForSailor(sailor.id)
+          : getCachedResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
         mayHaveIlca
           ? getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null)
           : Promise.resolve(null),
-        getRaceObservationsForSailor(sailor.id, {
-          includePrivate: access.canSeePrivate,
-        }).catch(() => []),
+        access.canSeePrivate
+          ? getRaceObservationsForSailor(sailor.id, {
+              includePrivate: true,
+            }).catch(() => [])
+          : getCachedPublicObservations(sailor.id).catch(() => []),
         access.canSeePrivate
           ? getEquipmentLogsForSailor(sailor.id).catch(() => [])
           : Promise.resolve([]),

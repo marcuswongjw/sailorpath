@@ -1,6 +1,11 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import { eq, or, sql } from "drizzle-orm";
+import {
+  CACHE_TAG_PUBLIC_REGATTAS,
+  PUBLIC_DATA_REVALIDATE_SECONDS,
+} from "@/lib/cacheTags";
 import { db, ensureCoreSchema } from "@/db";
 import { techno293Regattas, wingfoilRegattas } from "@/db/schema";
 import {
@@ -119,7 +124,7 @@ export type PublicBoardClassData<K extends BoardClassKey = BoardClassKey> = {
  * retain historical specialist scorecards until an explicit reconciliation has
  * linked them to canonical sheets. Both sources are shown with provenance.
  */
-export async function loadPublicBoardClassData<K extends BoardClassKey>(
+async function loadPublicBoardClassDataUncached<K extends BoardClassKey>(
   key: K
 ): Promise<PublicBoardClassData<K>> {
   if (!BOARD_CLASS_KEYS.includes(key)) {
@@ -158,4 +163,19 @@ export async function loadPublicBoardClassData<K extends BoardClassKey>(
     sourceCounts: boardClassSourceCounts(publishedRows),
     specialistRegattas: specialistRegattas as BoardClassSpecialistRegattas[K],
   };
+}
+
+const loadCachedBoardClassData = unstable_cache(
+  async (key: BoardClassKey) => loadPublicBoardClassDataUncached(key),
+  ["board-class-public-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_PUBLIC_REGATTAS, "public-wingfoil", "public-techno293"],
+  }
+);
+
+export async function loadPublicBoardClassData<K extends BoardClassKey>(
+  key: K
+): Promise<PublicBoardClassData<K>> {
+  return loadCachedBoardClassData(key) as Promise<PublicBoardClassData<K>>;
 }

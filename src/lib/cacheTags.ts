@@ -8,6 +8,13 @@ export const CACHE_TAG_FLEET_RANKINGS = "fleet-rankings";
 export const CACHE_TAG_ILCA_RANKINGS = "ilca-rankings";
 export const CACHE_TAG_PUBLIC_REGATTAS = "public-regattas";
 
+/**
+ * Backstop for public data caches. Admin imports and owner edits call
+ * `revalidatePublicRankings()`, so visitors normally see changes immediately.
+ * This TTL only applies when a write path does not invalidate tags.
+ */
+export const PUBLIC_DATA_REVALIDATE_SECONDS = 60 * 60;
+
 /** All tags invalidated when results / fleet membership / imports change. */
 export const PUBLIC_RANKING_CACHE_TAGS = [
   CACHE_TAG_FLEET_RANKINGS,

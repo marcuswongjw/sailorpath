@@ -8,11 +8,19 @@ import { PUBLIC_RANKING_CACHE_TAGS } from "@/lib/cacheTags";
 const PUBLIC_RANKING_PATHS = [
   "/",
   "/rankings",
+  "/search",
+  "/calendar",
   "/sg/optimist/gold",
   "/sg/optimist/silver",
   "/sg/optimist/regattas",
+  "/sg/optimist/selection",
   "/sg/ilca4",
   "/sg/ilca4/regattas",
+  "/sg/ilca6",
+  "/sg/ilca7",
+  "/sg/wingfoil",
+  "/sg/techno293",
+  "/sg/iqfoil",
   "/api/rankings",
 ] as const;
 

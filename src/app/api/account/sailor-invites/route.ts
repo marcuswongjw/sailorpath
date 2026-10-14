@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailorClaims, sailors } from "@/db/schema";
@@ -120,6 +121,7 @@ export async function POST(req: Request) {
       });
     }
 
+    revalidatePublicRankings(`claim-accept:${claim.sailorId}`);
     return NextResponse.json({ ok: true, status: "approved" });
   } catch (e) {
     console.error("sailor invite response", e);

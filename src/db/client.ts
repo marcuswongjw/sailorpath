@@ -93,12 +93,39 @@ export function resolveConnectionString(): string | null {
   return null;
 }
 
+/**
+ * Serverless connection options.
+ *
+ * `fetch_types: false` skips postgres.js catalog introspection
+ * (`select b.oid, b.typarray from pg_catalog.pg_type ...`) that otherwise
+ * runs on every new connection. Built-in types still parse; this schema
+ * does not use custom array types.
+ *
+ * `prepare: false` is required for Supabase transaction-mode pooler (6543).
+ * `max: 1` keeps one connection per isolate so warm invocations reuse it
+ * instead of opening a pool that each fetches types and holds pooler slots.
+ */
+export function postgresJsOptions(connectionString: string) {
+  const isSupabase =
+    connectionString.includes("supabase") ||
+    connectionString.includes("pooler.supabase.com");
+  return {
+    max: 1,
+    idle_timeout: 20,
+    connect_timeout: 10,
+    prepare: false,
+    fetch_types: false,
+    ssl: isSupabase ? ("require" as const) : undefined,
+  };
+}
+
 function makeDeadClient() {
   // Valid URL that fails fast at query time (never throws at construct)
   return postgres("postgres://postgres:postgres@127.0.0.1:1/sailorpath", {
     max: 1,
     connect_timeout: 1,
     prepare: false,
+    fetch_types: false,
   });
 }
 
@@ -126,27 +153,17 @@ function buildSql() {
       );
     }
 
-    const isSupabase =
-      connectionString.includes("supabase") ||
-      connectionString.includes("pooler.supabase.com");
-
-    return postgres(connectionString, {
-      max: 5,
-      idle_timeout: 20,
-      connect_timeout: 10,
-      prepare: false,
-      ssl: isSupabase ? "require" : undefined,
-    });
+    return postgres(connectionString, postgresJsOptions(connectionString));
   } catch (e) {
     console.error("[sailorpath] DB client init failed; using dead client.", e);
     return makeDeadClient();
   }
 }
 
+// Reuse one client per isolate, including production. Next can evaluate this
+// module from more than one server bundle; globalThis is the shared slot.
 const sql = globalForDb.sql ?? buildSql();
-if (process.env.NODE_ENV !== "production") {
-  globalForDb.sql = sql;
-}
+globalForDb.sql = sql;
 
 export const db = drizzle(sql, { schema });
 export { sql as pgSql };

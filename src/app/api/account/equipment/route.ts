@@ -1,6 +1,7 @@
 import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray } from "drizzle-orm";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
@@ -123,6 +124,7 @@ async function syncLegacyPrimaries(sailorId: string) {
 
   if (Object.keys(patch).length > 1) {
     await db.update(sailors).set(patch).where(eq(sailors.id, sailorId));
+    revalidatePublicRankings(`account-equipment:${sailorId}`);
   }
 }
 

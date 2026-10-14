@@ -3,6 +3,7 @@ import {
   CACHE_TAG_FLEET_RANKINGS,
   CACHE_TAG_ILCA_RANKINGS,
   CACHE_TAG_PUBLIC_REGATTAS,
+  PUBLIC_DATA_REVALIDATE_SECONDS,
 } from "@/lib/cacheTags";
 import { PUBLIC_RANKING_REGATTA_STATUS } from "@/lib/regattaStatus";
 import { db, DbUnavailableError, formatDbError, ensureCoreSchema } from "@/db";
@@ -288,6 +289,16 @@ export async function getSailorByHandle(handle: string) {
   });
 }
 
+/** Public profile lookup. Owners and admins bypass this and read fresh. */
+export const getCachedSailorByHandle = unstable_cache(
+  async (handle: string) => getSailorByHandle(handle),
+  ["sailor-by-handle-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_FLEET_RANKINGS],
+  }
+);
+
 function mapRegattaRow(
   r: typeof regattas.$inferSelect,
   event?: { slug: string | null; name: string | null }
@@ -424,13 +435,43 @@ export async function listRegattasFull() {
   });
 }
 
+/**
+ * Sailors for selection scoring. Only the columns that scorer reads —
+ * not bio, journey, or equipment text.
+ */
 export async function listSailorsFull() {
   return withDb(async () => {
-    return db.select().from(sailors).orderBy(asc(sailors.name));
+    return db
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        handle: sailors.handle,
+        sailNumber: sailors.sailNumber,
+        sailNumberIlca4: sailors.sailNumberIlca4,
+        club: sailors.club,
+        school: sailors.school,
+        nationality: sailors.nationality,
+        avatarUrl: sailors.avatarUrl,
+        goldEntryDate: sailors.goldEntryDate,
+        silverEntryDate: sailors.silverEntryDate,
+        dropDate: sailors.dropDate,
+        currentFleet: sailors.currentFleet,
+        dob: sailors.dob,
+        gender: sailors.gender,
+        nationalSquadStatus: sailors.nationalSquadStatus,
+        natSquadStatusJan25: sailors.natSquadStatusJan25,
+        natSquadStatusJul25: sailors.natSquadStatusJul25,
+        natSquadStatusJan26: sailors.natSquadStatusJan26,
+        natSquadStatusJul26: sailors.natSquadStatusJul26,
+        natSquadStatusJan27: sailors.natSquadStatusJan27,
+        natSquadStatusJul27: sailors.natSquadStatusJul27,
+      })
+      .from(sailors)
+      .orderBy(asc(sailors.name));
   });
 }
 
-export async function getResultsForRegatta(
+async function loadResultsForRegatta(
   regattaId: string
 ): Promise<PublicRegattaResult[]> {
   try {
@@ -574,6 +615,21 @@ export async function getResultsForRegatta(
   }
 }
 
+const getCachedResultsForRegatta = unstable_cache(
+  loadResultsForRegatta,
+  ["public-regatta-results-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS],
+  }
+);
+
+export async function getResultsForRegatta(
+  regattaId: string
+): Promise<PublicRegattaResult[]> {
+  return getCachedResultsForRegatta(regattaId);
+}
+
 export async function getResultsForSailor(sailorId: string) {
   return withDb(async () => {
     const results = await db
@@ -714,6 +770,15 @@ export async function getResultsForSailor(sailorId: string) {
   });
 }
 
+export const getCachedResultsForSailor = unstable_cache(
+  async (sailorId: string) => getResultsForSailor(sailorId),
+  ["public-sailor-results-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
+  }
+);
+
 /**
  * Live Best 3 of 5 strip for a single sailor.
  *
@@ -824,7 +889,7 @@ export const getCachedIlcaRankings = unstable_cache(
     };
   },
   ["ilca-rankings-board-v9"],
-  { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
+  { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
 import { defaultIlcaIntake } from "@/lib/ilcaRanking";
@@ -1239,6 +1304,16 @@ export async function getRaceObservationsForSailor(
   });
 }
 
+export const getCachedPublicObservations = unstable_cache(
+  async (sailorId: string) =>
+    getRaceObservationsForSailor(sailorId, { includePrivate: false }),
+  ["public-race-observations-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_FLEET_RANKINGS],
+  }
+);
+
 export async function getEquipmentLogsForSailor(sailorId: string) {
   return withDb(async () => {
     return db
@@ -1366,23 +1441,22 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
   });
 }
 
-let buildOptimistSnapshot: Promise<OptimistRankingSnapshot> | null = null;
-let optimistSnapshotPending: Promise<OptimistRankingSnapshot> | null = null;
+/**
+ * One published-Optimist snapshot for every Gold/Silver board in the
+ * revalidation window. Rankings are computed from this payload, not by
+ * scanning sailors + results again per fleet or per request.
+ */
+const getCachedPublishedOptimistSnapshot = unstable_cache(
+  queryPublishedOptimistSnapshot,
+  ["published-optimist-snapshot-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_FLEET_RANKINGS],
+  }
+);
 
-/** One published-Optimist load per production build, and one in flight otherwise. */
 function loadPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
-  if (process.env.NEXT_PHASE === "phase-production-build" && buildOptimistSnapshot) {
-    return buildOptimistSnapshot;
-  }
-  if (optimistSnapshotPending) return optimistSnapshotPending;
-  const pending = queryPublishedOptimistSnapshot().finally(() => {
-    if (optimistSnapshotPending === pending) optimistSnapshotPending = null;
-  });
-  optimistSnapshotPending = pending;
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    buildOptimistSnapshot = pending;
-  }
-  return pending;
+  return getCachedPublishedOptimistSnapshot();
 }
 
 /**
@@ -1440,7 +1514,7 @@ export const getCachedFleetRankings = unstable_cache(
     return computeFleetRankings(fleet, { year, half });
   },
   ["fleet-rankings-v8"],
-  { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
+  { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
 /** Previous published series shape: recompute the board before its latest ranking event. */
@@ -1448,7 +1522,7 @@ export const getCachedPreviousFleetRankings = unstable_cache(
   async (fleet: "Gold" | "Silver", year: number, half: Period["half"]): Promise<RankedSailor[]> =>
     computeFleetRankings(fleet, { year, half }, true),
   ["previous-fleet-rankings-v3"],
-  { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
+  { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
 export function latestRankingRegattaIdForFleet(
@@ -1483,7 +1557,7 @@ export const getCachedPublicRegattas = unstable_cache(
     }
   },
   ["public-regattas-list-v4"],
-  { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
+  { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
 export async function getUpcomingRegattas(

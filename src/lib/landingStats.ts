@@ -1,6 +1,12 @@
+import { unstable_cache } from "next/cache";
 import { count } from "drizzle-orm";
 import { db } from "@/db";
 import { regattas, sailors } from "@/db/schema";
+import {
+  CACHE_TAG_FLEET_RANKINGS,
+  CACHE_TAG_PUBLIC_REGATTAS,
+  PUBLIC_DATA_REVALIDATE_SECONDS,
+} from "@/lib/cacheTags";
 
 /** Shown when the database is unavailable. Public sailor total, floored to the hundred. */
 const FALLBACK_ATHLETES = "800+";
@@ -22,19 +28,35 @@ export function formatRegattaCount(countValue: number): string {
   return String(Math.floor(countValue));
 }
 
+async function queryLandingTotals(): Promise<{
+  athletes: string;
+  regattas: string;
+}> {
+  const [sailorRow, regattaRow] = await Promise.all([
+    db.select({ value: count() }).from(sailors).then((rows) => rows[0]),
+    db.select({ value: count() }).from(regattas).then((rows) => rows[0]),
+  ]);
+  return {
+    athletes: formatAthleteCount(Number(sailorRow?.value)),
+    regattas: formatRegattaCount(Number(regattaRow?.value)),
+  };
+}
+
+const getCachedLandingTotals = unstable_cache(
+  queryLandingTotals,
+  ["landing-totals-v1"],
+  {
+    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
+  }
+);
+
 export async function getLandingTotals(): Promise<{
   athletes: string;
   regattas: string;
 }> {
   try {
-    const [sailorRow, regattaRow] = await Promise.all([
-      db.select({ value: count() }).from(sailors).then((rows) => rows[0]),
-      db.select({ value: count() }).from(regattas).then((rows) => rows[0]),
-    ]);
-    return {
-      athletes: formatAthleteCount(Number(sailorRow?.value)),
-      regattas: formatRegattaCount(Number(regattaRow?.value)),
-    };
+    return await getCachedLandingTotals();
   } catch {
     return { athletes: FALLBACK_ATHLETES, regattas: FALLBACK_REGATTAS };
   }

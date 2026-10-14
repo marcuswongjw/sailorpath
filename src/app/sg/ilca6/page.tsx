@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Current Singapore ILCA 6 national standings using high ranking points and the best 3 of 5 events.",
 };
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export default async function Ilca6StandingsPage() {
   const { kind, year } = defaultIlcaIntake();

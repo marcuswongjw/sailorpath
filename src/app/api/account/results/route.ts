@@ -8,6 +8,7 @@ import { regattaResults, regattas, sailors } from "@/db/schema";
 import { slugify } from "@/lib/slug";
 import { normalizeDob } from "@/lib/normalize";
 import { trackUsage } from "@/lib/usage";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 async function assertOwner(sailorId: string, userId: string, isAdmin: boolean) {
   const [sailor] = await db
@@ -285,6 +286,7 @@ async function handlePOST(req: Request) {
       role: auth.role,
       meta: { geography, hasEvidence: Boolean(evidenceUrl || officialUrl) },
     });
+    revalidatePublicRankings(`account-result:${sailorId}`);
 
     return NextResponse.json({
       ok: true,
@@ -525,6 +527,7 @@ async function handlePATCH(req: Request) {
       boatClass: row.regattaBoatClass,
     };
 
+    revalidatePublicRankings(`account-result:${row.sailorId}`);
     return NextResponse.json({
       ok: true,
       entry: {
@@ -635,6 +638,7 @@ async function handleDELETE(req: Request) {
       }
     }
 
+    revalidatePublicRankings(`account-result:${row.sailorId}`);
     return NextResponse.json({ ok: true });
   } catch (e) {
     return jsonError(e);

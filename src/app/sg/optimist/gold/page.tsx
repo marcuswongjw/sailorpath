@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: "Current Singapore Optimist Gold Fleet best-3-of-5 series standings.",
 };
 
-/** ISR — first paint includes rankings (no client waterfall). */
-export const revalidate = 60;
+/** ISR — rankings are cached and busted when an admin publishes results. */
+export const revalidate = 3600;
 
 export default async function GoldPage() {
   const period = currentPeriodFromSgToday();

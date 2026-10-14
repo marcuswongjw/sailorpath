@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 /** ISR — shared with getCachedIlcaRankings (tagged; busted after import). */
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export default async function Ilca4StandingsPage() {
   const { kind, year } = defaultIlcaIntake();

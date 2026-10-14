@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Singapore Techno 293 One Design windsurfing regattas, Southwest Monsoon Grand Prix Series standings, race scorecards, and class specifications.",
 };
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 type Techno293PageProps = {
   searchParams?: Promise<{ tab?: string; regatta?: string }>;
