@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { DbOffline } from "@/components/DbOffline";
@@ -46,6 +47,47 @@ export default async function SailorProfilePage({
 }) {
   const { sailor_handle } = await params;
   let sailor;
+  try {
+    sailor = await getCachedSailorByHandle(sailor_handle);
+  } catch (error) {
+    return <DbOffline message={error instanceof DbUnavailableError ? error.message : "DB error"} />;
+  }
+  if (!sailor) notFound();
+
+  // Only public-safe fields may appear before account permissions resolve.
+  const publicSailor = toPublicSailorProps(sailor, { canSeePrivate: false });
+  return (
+    <Suspense key={sailor.id} fallback={
+      <div className="mx-auto max-w-5xl px-3 sm:px-6 py-6 sm:py-10 w-full space-y-5 bg-sailcloth text-charcoal">
+        <section aria-label="Sailor profile" className="rounded-2xl border border-harbour/15 bg-warm-white p-6 sm:p-8 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-wider text-harbour">Sailor profile</p>
+          <h1 className="mt-2 text-3xl font-black text-harbour-shadow">{publicSailor.name}</h1>
+          <p className="mt-3 text-sm text-slate-soft">
+            {[publicSailor.nationality, publicSailor.club, publicSailor.school].filter(Boolean).join(" · ")}
+          </p>
+          {(publicSailor.sailNumber || publicSailor.sailNumberIlca4 || publicSailor.boardNumber) && (
+            <p className="mt-2 text-sm font-semibold">
+              {[publicSailor.sailNumber && `Sail ${publicSailor.sailNumber}`, publicSailor.sailNumberIlca4 && `ILCA ${publicSailor.sailNumberIlca4}`, publicSailor.boardNumber && `Board ${publicSailor.boardNumber}`].filter(Boolean).join(" · ")}
+            </p>
+          )}
+          {publicSailor.bio && <p className="mt-4 whitespace-pre-line text-sm">{publicSailor.bio}</p>}
+        </section>
+        <section aria-busy="true" aria-label="Results and rankings" className="rounded-2xl border border-harbour/15 bg-warm-white p-6">
+          <p role="status" className="text-sm text-slate-soft">Loading results and rankings…</p>
+          <div aria-hidden="true" className="mt-4 h-40 animate-pulse rounded-xl bg-harbour/5" />
+        </section>
+      </div>
+    }>
+      <SailorProfileDetails sailor_handle={sailor_handle} initialSailor={sailor} />
+    </Suspense>
+  );
+}
+
+async function SailorProfileDetails({ sailor_handle, initialSailor }: {
+  sailor_handle: string;
+  initialSailor: NonNullable<Awaited<ReturnType<typeof getCachedSailorByHandle>>>;
+}) {
+  let sailor;
   let auth;
   let results;
   let seriesStanding;
@@ -70,7 +112,7 @@ export default async function SailorProfilePage({
       cookieStore.getAll().map((cookie) => cookie.name)
     );
     const [sailorResult, authResult] = await Promise.all([
-      getCachedSailorByHandle(sailor_handle),
+      Promise.resolve(initialSailor),
       mayHaveSession ? getAuthContext().catch(() => null) : Promise.resolve(null),
     ]);
     sailor = sailorResult;
