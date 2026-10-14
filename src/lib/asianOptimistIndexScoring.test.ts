@@ -47,6 +47,10 @@ describe("Asian Optimist Index provisional scoring", () => {
       "Thailand",
       "Malaysia",
     ]);
+    expect(suthinan.qualifierResults.map((score) => score.qualifier.shortName)).toEqual([
+      "LIRP",
+      "Thailand International",
+    ]);
     expect(suthinan.scoredQualifiers[0].pointsContribution).toBeCloseTo(28, 8);
     expect(suthinan.scoredQualifiers[1].pointsContribution).toBeCloseTo(7.8621, 4);
 
@@ -77,6 +81,8 @@ describe("Asian Optimist Index provisional scoring", () => {
       version: "Provisional v1.0",
       cohortSize: 122,
       anchorWeight: 0.6,
+      qualifierEventCap: 5,
+      qualifyingResultLimit: 3,
       qualifierWeights: [0.28, 0.08, 0.04],
     });
   });

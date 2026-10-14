@@ -31,4 +31,16 @@ describe("Asian Optimist Index baseline", () => {
     expect(baseline[2]).toMatchObject({ baselineRank: 3, overallPlace: 4 });
     expect(baseline.at(-1)).toMatchObject({ baselineRank: 122, overallPlace: 170 });
   });
+
+  it("links every founding sailor to a stable SailorPath profile handle", () => {
+    const baseline = createAsianOptimistIndexBaseline();
+
+    expect(baseline.every((entry) => entry.profileHref?.startsWith("/"))).toBe(true);
+    expect(baseline.find((entry) => entry.name === "Sorawit Naksuk")).toMatchObject({
+      profileHref: "/sorawit-naksuk-812d4t4",
+    });
+    expect(baseline.find((entry) => entry.name === "Suthinan Nakpasom")).toMatchObject({
+      birthYear: 2012,
+    });
+  });
 });

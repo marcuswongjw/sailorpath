@@ -6,6 +6,7 @@ import {
   ASIAN_OPTIMIST_INDEX_SOURCE_URL,
 } from "@/lib/asianOptimistIndex";
 import {
+  ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS,
   ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE,
   type AsianOptimistIndexProvisionalEntry,
 } from "@/lib/asianOptimistIndexScoring";
@@ -25,22 +26,18 @@ function rankClass(rank: number): string {
   return "bg-sailcloth text-harbour";
 }
 
-function qualifierSummary(entry: AsianOptimistIndexProvisionalEntry): string {
-  if (!entry.scoredQualifiers.length) return "No verified qualifier yet";
+const INDEX_QUALIFIER_COLUMNS = Object.values(
+  ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS
+);
 
-  return entry.scoredQualifiers
-    .map(
-      (score) =>
-        `${score.qualifier.shortName} #${score.rank}/${score.qualifier.fleetSize}`
-    )
-    .join(" · ");
-}
-
-function coverageLabel(entry: AsianOptimistIndexProvisionalEntry): string {
-  if (!entry.eligibleStarts) return "2025 anchor only";
-  const startLabel = `${entry.eligibleStarts} verified ${entry.eligibleStarts === 1 ? "start" : "starts"}`;
-  const countryLabel = `${entry.hostCountryCount} ${entry.hostCountryCount === 1 ? "host country" : "host countries"}`;
-  return `${startLabel} · ${countryLabel}`;
+function qualifierRank(
+  entry: AsianOptimistIndexProvisionalEntry,
+  qualifierId: string
+): string {
+  const result = entry.qualifierResults.find(
+    (qualifier) => qualifier.qualifier.id === qualifierId
+  );
+  return result ? `${result.rank}/${result.qualifier.fleetSize}` : "—";
 }
 
 export function AsianOptimistIndexView({
@@ -95,12 +92,12 @@ export function AsianOptimistIndexView({
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Score formula</p>
             <p className="mt-1 text-lg font-extrabold text-harbour">60% championship · 40% form</p>
-            <p className="mt-1 text-xs text-slate-soft">Best three distinct host-country results</p>
+            <p className="mt-1 text-xs text-slate-soft">Up to five events · best three host-country results</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Verified 2026 form</p>
             <p className="mt-1 text-lg font-extrabold text-harbour">{sailorsWithQualifiers} sailors · {totalStarts} starts</p>
-            <p className="mt-1 text-xs text-slate-soft">Across four source-backed qualifying events</p>
+            <p className="mt-1 text-xs text-slate-soft">Across four verified qualifying events today</p>
           </div>
         </div>
       </section>
@@ -160,23 +157,31 @@ export function AsianOptimistIndexView({
             <div>
               <h2 className="text-xl font-extrabold text-harbour">Provisional standings</h2>
               <p className="mt-1 text-sm text-slate-soft">
-                Ordered by the calculated 0–100 Index score. A blank form field means no verified 2026 qualifier result is currently available for that 2025 cohort sailor.
+                Ordered by the calculated 0–100 Index score. Regatta cells show final rank / fleet; a dash means no verified finish is available for that sailor.
               </p>
             </div>
             <p className="text-xs font-semibold text-slate-soft">Calculated through {ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf}</p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1040px] border-collapse text-left text-sm">
+            <table className="w-full min-w-[1320px] border-collapse text-left text-sm">
               <thead className="bg-sailcloth text-xs uppercase tracking-wide text-slate-soft">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-extrabold">Index</th>
                   <th scope="col" className="px-4 py-3 font-extrabold">Sailor</th>
+                  <th scope="col" className="px-4 py-3 font-extrabold">Country</th>
+                  <th scope="col" className="px-4 py-3 font-extrabold">Gender</th>
+                  <th scope="col" className="px-4 py-3 text-center font-extrabold">Birth year</th>
                   <th scope="col" className="px-4 py-3 text-right font-extrabold">Score</th>
                   <th scope="col" className="px-4 py-3 text-center font-extrabold">2025 Asians</th>
-                  <th scope="col" className="px-4 py-3 text-right font-extrabold">2025 points</th>
-                  <th scope="col" className="px-4 py-3 font-extrabold">2026 verified form</th>
-                  <th scope="col" className="px-4 py-3 text-right font-extrabold">2026 points</th>
-                  <th scope="col" className="px-4 py-3 font-extrabold">Coverage</th>
+                  {INDEX_QUALIFIER_COLUMNS.map((qualifier) => (
+                    <th
+                      key={qualifier.id}
+                      scope="col"
+                      className="px-4 py-3 text-center font-extrabold"
+                    >
+                      {qualifier.shortName}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-cool-veil">
@@ -196,16 +201,28 @@ export function AsianOptimistIndexView({
                         ) : sailor.name}
                       </div>
                       <div className="mt-0.5 text-xs text-slate-soft">
-                        {sailor.nationality} · {sailor.country} · {genderLabel(sailor.gender)}
-                        {sailor.birthYear ? ` · ${sailor.birthYear}` : ""}
+                        {sailor.nationality} · {sailor.sailNumber}
                       </div>
+                    </td>
+                    <td className="px-4 py-3 text-xs font-semibold text-charcoal">
+                      {sailor.country}
+                    </td>
+                    <td className="px-4 py-3 text-xs font-semibold text-charcoal">
+                      {genderLabel(sailor.gender)}
+                    </td>
+                    <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">
+                      {sailor.birthYear ?? "—"}
                     </td>
                     <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</td>
                     <td className="px-4 py-3 text-center font-bold text-harbour">{sailor.overallPlace}/{ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}</td>
-                    <td className="px-4 py-3 text-right font-semibold text-charcoal">{sailor.championshipPoints.toFixed(1)} / 60</td>
-                    <td className="px-4 py-3 text-xs font-semibold text-charcoal">{qualifierSummary(sailor)}</td>
-                    <td className="px-4 py-3 text-right font-semibold text-charcoal">{sailor.qualifierPoints.toFixed(1)} / 40</td>
-                    <td className="px-4 py-3 text-xs text-slate-soft">{coverageLabel(sailor)}</td>
+                    {INDEX_QUALIFIER_COLUMNS.map((qualifier) => (
+                      <td
+                        key={qualifier.id}
+                        className="px-4 py-3 text-center text-xs font-semibold text-charcoal"
+                      >
+                        {qualifierRank(sailor, qualifier.id)}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -220,7 +237,7 @@ export function AsianOptimistIndexView({
             <div>
               <h2 className="text-xl font-extrabold text-harbour">2026 qualifying events</h2>
               <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
-                These final classifications are the verified form inputs. A sailor can use only their strongest result from each host country; Singapore national-event scores are capped at 70 out of 100.
+                These final classifications are published on SailorPath and are the verified form inputs. The provisional slate can include up to five events; a sailor can use only their strongest result from each host country, and Singapore national-event scores are capped at 70 out of 100.
               </p>
             </div>
             <p className="text-xs font-semibold text-slate-soft">
@@ -258,6 +275,12 @@ export function AsianOptimistIndexView({
                     Source
                     <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                   </a>
+                  <Link
+                    href={`/sg/optimist/regattas/${qualifier.sailorPathRegattaSlug}`}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-harbour px-3 py-2 text-sm font-bold text-white transition-colors hover:bg-harbour-mid"
+                  >
+                    Results
+                  </Link>
                 </div>
               </article>
             ))}
@@ -277,7 +300,7 @@ export function AsianOptimistIndexView({
             <div className="mt-4 space-y-4 text-sm leading-6 text-charcoal">
               <p><strong>Who is ranked:</strong> the fixed 122-sailor Asian cohort from the official 2025 Asian &amp; Oceanian final classification. A new qualifier participant is not added to this provisional table until the 2026 championship refresh.</p>
               <p><strong>2025 championship points (60):</strong> the official overall finish is fleet-normalised: <code>100 × (170 − finish) ÷ 169</code>, then multiplied by 60%. First in the 170-sailor fleet earns 60 points; last earns 0.</p>
-              <p><strong>2026 form points (40):</strong> each final qualifier finish is fleet-normalised the same way. The best result from one host country contributes up to 28 points, a second country up to 8, and a third up to 4. Missing country slots are zero; there are no attendance bonuses.</p>
+              <p><strong>2026 form points (40):</strong> the season can nominate up to five verified regional events. Each final qualifier finish is fleet-normalised the same way; the strongest result from one host country contributes up to 28 points, a second country up to 8, and a third up to 4. A fifth event can replace a weaker result but never creates an attendance bonus. Missing country slots are zero.</p>
               <p><strong>National-event safeguard:</strong> Singapore national-event result scores are capped at 70 out of 100 before the 28% / 8% / 4% weights are applied. This prevents domestic-only form from outweighing the common championship anchor.</p>
               <p><strong>Refresh at Colombo:</strong> after the official 2026 Asian &amp; Oceanian Championship final is checked, SailorPath will refresh the cohort, replace the temporary 2025 anchor, add eligible sailors from the new championship, and recalculate the index.</p>
             </div>

@@ -17,6 +17,10 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE = {
   cohortEvent: "2025 Optimist Asian & Oceanian Championship",
   cohortSize: 122,
   anchorWeight: 0.6,
+  /** The published season can nominate up to five verified regional events. */
+  qualifierEventCap: 5,
+  /** Scoring uses up to three best results from distinct host countries. */
+  qualifyingResultLimit: 3,
   qualifierWeights: [0.28, 0.08, 0.04],
   asOf: "13 September 2026",
 } as const;
@@ -160,6 +164,9 @@ export type AsianOptimistIndexProvisionalEntry = AsianOptimistIndexEntry & {
   qualifierPoints: number;
   eligibleStarts: number;
   hostCountryCount: number;
+  /** Every verified qualifying finish, shown as a rank in the public table. */
+  qualifierResults: AsianOptimistIndexQualifierScore[];
+  /** The subset of qualifierResults that contributes to the current score. */
   scoredQualifiers: AsianOptimistIndexQualifierScore[];
 };
 
@@ -270,6 +277,11 @@ export function createAsianOptimistIndexProvisionalEntries(
       qualifierPoints: roundScore(qualifierPoints),
       eligibleStarts: allQualifierScores.length,
       hostCountryCount: countryScores.length,
+      qualifierResults: [...allQualifierScores].sort(
+        (a, b) =>
+          a.qualifier.id.localeCompare(b.qualifier.id) ||
+          a.rank - b.rank
+      ),
       scoredQualifiers: countryScores,
       preciseScore,
     };

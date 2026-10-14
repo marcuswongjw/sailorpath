@@ -6,6 +6,8 @@ export type AsianOptimistIndexQualifierSource = {
   endDate: string;
   officialResultsUrl: string;
   officialResultsSourceName: string;
+  /** Public SailorPath result page after the sheet has been imported. */
+  sailorPathRegattaSlug: string;
   /** `true` means results are queried from SailorPath's primary result tables. */
   usesSailorPathResults: boolean;
   /** Published fleet size, before the primary data store is available. */
@@ -32,6 +34,8 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
       "https://drive.google.com/drive/folders/1jmJ5HWFMrOFPxcnMNhN_j-_lyzNJ-0Km?usp=sharing",
     officialResultsSourceName:
       "OPTIMIST.pdf — final results issued 13 February 2026",
+    sailorPathRegattaSlug:
+      "langkawi-international-regatta-perdana-2026-optimist-gold",
     usesSailorPathResults: false,
     resultCount: 59,
     resultStatus: "verified",
@@ -44,6 +48,7 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     endDate: "2026-03-17",
     officialResultsUrl: "https://www.racingrulesofsailing.org/documents/179732",
     officialResultsSourceName: "Official Optimist Gold final result sheet",
+    sailorPathRegattaSlug: "sysc-2026-gold",
     usesSailorPathResults: true,
     resultCount: 106,
     resultStatus: "verified",
@@ -57,6 +62,8 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     officialResultsUrl: "https://www.racingrulesofsailing.org/documents/184140",
     officialResultsSourceName:
       "Optimist Result FinalDay — final results issued 19 April 2026",
+    sailorPathRegattaSlug:
+      "thailand-international-sailing-championships-2026-optimist",
     usesSailorPathResults: false,
     resultCount: 65,
     resultStatus: "verified",
@@ -69,6 +76,7 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     endDate: "2026-09-13",
     officialResultsUrl: "https://www.racingrulesofsailing.org/documents/206850",
     officialResultsSourceName: "Official Optimist Gold final result sheet",
+    sailorPathRegattaSlug: "singapore-national-sailing-championships-2026-gold",
     usesSailorPathResults: true,
     resultCount: 83,
     resultStatus: "verified",

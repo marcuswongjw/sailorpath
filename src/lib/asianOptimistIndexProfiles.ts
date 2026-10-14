@@ -202,6 +202,12 @@ export async function getAsianOptimistIndexQualifierSources(): Promise<
       endDate: entry.endDate,
       officialResultsUrl: entry.officialResultsUrl,
       officialResultsSourceName: entry.officialResultsSourceName,
+      sailorPathRegattaSlug:
+        entry.sailorpathRegattaSlug ??
+        ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.find(
+          (qualifier) => qualifier.id === entry.id
+        )?.sailorPathRegattaSlug ??
+        entry.id,
       usesSailorPathResults: entry.sourceKind === "sailorpath_regatta",
       resultCount:
         entry.sourceKind === "sailorpath_regatta"

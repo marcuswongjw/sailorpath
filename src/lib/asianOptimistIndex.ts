@@ -1,3 +1,8 @@
+import {
+  ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST,
+  type AsianOptimistIndexProfileManifestEntry,
+} from "@/lib/asianOptimistIndexProfileManifest";
+
 /**
  * First-release source data for the Asian Optimist Index.
  *
@@ -1393,11 +1398,26 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
   }
 ] as const satisfies readonly AsianOptimistIndexSourceEntry[];
 
+function indexIdentityKey(name: string, nationality: string): string {
+  return `${nationality.toUpperCase()}:${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
+}
+
 export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
-  return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.map((entry, index) => ({
-    ...entry,
-    baselineRank: index + 1,
-    birthYear: null,
-    profileHref: null,
-  }));
+  return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.map((entry, index) => {
+    const profile: AsianOptimistIndexProfileManifestEntry | undefined =
+      ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST[
+      indexIdentityKey(entry.name, entry.nationality) as keyof typeof ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST
+      ];
+
+    return {
+      ...entry,
+      baselineRank: index + 1,
+      birthYear: profile?.birthYear ?? null,
+      // Every source-cohort identity has an existing SailorPath profile or a
+      // deterministic import handle created by migration 115. Keeping this
+      // manifest static prevents the public Index page from blocking on a DB
+      // lookup merely to render profile links.
+      profileHref: profile ? `/${profile.handle}` : null,
+    };
+  });
 }
