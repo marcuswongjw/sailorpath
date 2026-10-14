@@ -1,6 +1,7 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import {
+  asianOptimistIndexSailors,
   coachActionReviews,
   coachDevelopmentRecords,
   coachFollowedSailors,
@@ -29,6 +30,7 @@ export const SAILOR_RELATIONSHIP_MERGE_PLAN = [
   { table: "regattaResults", strategy: "reconcile-regatta" },
   { table: "regattaResultParticipants", strategy: "repoint-entry-membership" },
   { table: "regattaRaceResults", strategy: "reconcile-through-result" },
+  { table: "asianOptimistIndexSailors", strategy: "repoint" },
   { table: "sailorAliases", strategy: "repoint" },
   { table: "sailorClaims", strategy: "repoint" },
   { table: "raceObservations", strategy: "target-wins-conflict" },
@@ -583,6 +585,14 @@ export async function mergeSailors({
       .set({ sailorId: keepId, updatedAt: now })
       .where(eq(sailorClaims.sailorId, mergeId))
       .returning({ id: sailorClaims.id });
+    // Index identities are independent of the source result rows. Repointing
+    // them preserves the public profile link even when an imported profile is
+    // merged into an established SailorPath sailor.
+    const indexSailorsMoved = await tx
+      .update(asianOptimistIndexSailors)
+      .set({ sailorId: keepId, matchStatus: "matched", updatedAt: now })
+      .where(eq(asianOptimistIndexSailors.sailorId, mergeId))
+      .returning({ id: asianOptimistIndexSailors.id });
 
     // Fill blank profile fields on the target from the duplicate.
     const fill: Record<string, unknown> = { updatedAt: now };
@@ -720,6 +730,7 @@ export async function mergeSailors({
       equipmentLogsMoved: equipmentLogsMoved.length,
       notesMoved: notesMoved.length,
       claimsMoved: claimsMoved.length,
+      indexSailorsMoved: indexSailorsMoved.length,
       observationsMoved: observationPlan.moveIds.length,
       observationsDropped: observationPlan.conflictIds.length,
       squadMembershipsMoved: squadPlan.moveIds.length,
