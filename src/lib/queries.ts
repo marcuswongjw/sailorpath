@@ -3,6 +3,7 @@ import {
   CACHE_TAG_FLEET_RANKINGS,
   CACHE_TAG_ILCA_RANKINGS,
   CACHE_TAG_PUBLIC_REGATTAS,
+  PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
   PUBLIC_DATA_REVALIDATE_SECONDS,
 } from "@/lib/cacheTags";
 import { PUBLIC_RANKING_REGATTA_STATUS } from "@/lib/regattaStatus";
@@ -889,7 +890,10 @@ export const getCachedIlcaRankings = unstable_cache(
     };
   },
   ["ilca-rankings-board-v9"],
-  { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_ILCA_RANKINGS] }
+  {
+    revalidate: PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
+    tags: [CACHE_TAG_ILCA_RANKINGS],
+  }
 );
 
 import { defaultIlcaIntake } from "@/lib/ilcaRanking";
@@ -1450,7 +1454,7 @@ const getCachedPublishedOptimistSnapshot = unstable_cache(
   queryPublishedOptimistSnapshot,
   ["published-optimist-snapshot-v1"],
   {
-    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    revalidate: PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS],
   }
 );

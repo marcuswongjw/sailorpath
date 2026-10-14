@@ -15,6 +15,13 @@ export const CACHE_TAG_PUBLIC_REGATTAS = "public-regattas";
  */
 export const PUBLIC_DATA_REVALIDATE_SECONDS = 60 * 60;
 
+/**
+ * Ranking and selection snapshots move thousands of database rows per refresh.
+ * Their tags are invalidated on every relevant write, so this longer interval is
+ * only a fallback for out-of-band changes and limits pooler egress otherwise.
+ */
+export const PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS = 6 * 60 * 60;
+
 /** All tags invalidated when results / fleet membership / imports change. */
 export const PUBLIC_RANKING_CACHE_TAGS = [
   CACHE_TAG_FLEET_RANKINGS,

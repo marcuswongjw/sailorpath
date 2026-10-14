@@ -2,7 +2,7 @@ import { unstable_cache } from "next/cache";
 import {
   CACHE_TAG_FLEET_RANKINGS,
   CACHE_TAG_PUBLIC_REGATTAS,
-  PUBLIC_DATA_REVALIDATE_SECONDS,
+  PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
 } from "@/lib/cacheTags";
 import {
   ASIAN_OCEANIA_2026,
@@ -162,7 +162,7 @@ const cachedOptimistSelectionData = unstable_cache(
   ["optimist-selection-2026"],
   {
     tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
-    revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
+    revalidate: PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
   }
 );
 
