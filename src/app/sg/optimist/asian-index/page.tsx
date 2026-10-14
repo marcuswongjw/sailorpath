@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AsianOptimistIndexView } from "@/components/AsianOptimistIndexView";
-import { getAsianOptimistIndexEntries } from "@/lib/asianOptimistIndexProfiles";
+import { getAsianOptimistIndexSnapshot } from "@/lib/asianOptimistIndexProfiles";
 
 export const metadata: Metadata = {
   title: "Asian Optimist Index | SailorPath",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export const revalidate = 300;
 
 export default async function AsianOptimistIndexPage() {
-  const entries = await getAsianOptimistIndexEntries();
+  const { entries, qualifiers } = await getAsianOptimistIndexSnapshot();
 
-  return <AsianOptimistIndexView entries={entries} />;
+  return <AsianOptimistIndexView entries={entries} qualifiers={qualifiers} />;
 }

@@ -623,6 +623,143 @@ export const regattaRaceResults = pgTable(
   })
 ).enableRLS();
 
+/**
+ * Auditable event ledger for the Asian Optimist Index.
+ *
+ * This is deliberately separate from the Singapore fleet-ranking tables. It
+ * records both first-party SailorPath regattas and externally verified Asian
+ * results without making an overseas result count for a local ranking.
+ */
+export const asianOptimistIndexEvents = pgTable(
+  "asian_optimist_index_events",
+  {
+    /** Stable, human-readable import key; for example `sysc-2026-gold`. */
+    id: text("id").primaryKey().notNull(),
+    name: text("name").notNull(),
+    indexRole: text("index_role", {
+      enum: ["championship_anchor", "regional_qualifier"],
+    }).notNull(),
+    sourceKind: text("source_kind", {
+      enum: ["official_result", "sailorpath_regatta"],
+    }).notNull(),
+    hostCountry: text("host_country").notNull(),
+    hostNoc: text("host_noc"),
+    startDate: date("start_date").notNull(),
+    endDate: date("end_date").notNull(),
+    venue: text("venue"),
+    /** Organiser-hosted result or evidence URL shown on the public ledger. */
+    officialResultsUrl: text("official_results_url").notNull(),
+    officialResultsSourceName: text("official_results_source_name").notNull(),
+    /** Present only when this source is read directly from SailorPath tables. */
+    sailorpathRegattaSlug: text("sailorpath_regatta_slug"),
+    resultStatus: text("result_status", {
+      enum: ["verified", "awaiting_final"],
+    })
+      .default("awaiting_final")
+      .notNull(),
+    fleetSize: integer("fleet_size"),
+    raceCount: integer("race_count"),
+    discardCount: integer("discard_count"),
+    isEligible: boolean("is_eligible").default(true).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    seasonDateIdx: index("asian_optimist_index_events_season_date_idx").on(
+      table.indexRole,
+      table.startDate
+    ),
+    sailorpathRegattaIdx: index("asian_optimist_index_events_regatta_idx").on(
+      table.sailorpathRegattaSlug
+    ),
+  })
+).enableRLS();
+
+/**
+ * A conservative cross-event identity used only by the Index.
+ *
+ * `sailorId` is nullable: an overseas official result must remain visible even
+ * before it can be safely matched to a SailorPath profile. Imports use exact
+ * normalized name + NOC matching only; sail number by itself never merges two
+ * young sailors.
+ */
+export const asianOptimistIndexSailors = pgTable(
+  "asian_optimist_index_sailors",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    identityKey: text("identity_key").unique().notNull(),
+    canonicalName: text("canonical_name").notNull(),
+    nationality: text("nationality"),
+    latestSailNumber: text("latest_sail_number"),
+    gender: text("gender"),
+    birthYear: integer("birth_year"),
+    sailorId: uuid("sailor_id").references(() => sailors.id, {
+      onDelete: "set null",
+    }),
+    matchStatus: text("match_status", {
+      enum: ["matched", "unmatched", "needs_review"],
+    })
+      .default("unmatched")
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    sailorIdIdx: index("asian_optimist_index_sailors_sailor_idx").on(table.sailorId),
+    nationalityNameIdx: index("asian_optimist_index_sailors_name_noc_idx").on(
+      table.nationality,
+      table.canonicalName
+    ),
+  })
+).enableRLS();
+
+/**
+ * One verified event classification for one Index identity.
+ * `raceScores` preserves the organiser's race-by-race values (including
+ * penalties and discard markers) for audit; Index scoring uses the official
+ * overall rank rather than recalculating an event score.
+ */
+export const asianOptimistIndexResults = pgTable(
+  "asian_optimist_index_results",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    eventId: text("event_id")
+      .references(() => asianOptimistIndexEvents.id, { onDelete: "cascade" })
+      .notNull(),
+    indexSailorId: uuid("index_sailor_id")
+      .references(() => asianOptimistIndexSailors.id, { onDelete: "cascade" })
+      .notNull(),
+    sourceRank: integer("source_rank").notNull(),
+    sourceName: text("source_name").notNull(),
+    sourceSailNumber: text("source_sail_number").notNull(),
+    sourceNationality: text("source_nationality"),
+    sourceGender: text("source_gender"),
+    sourceBirthYear: integer("source_birth_year"),
+    totalScore: real("total_score"),
+    nettScore: real("nett_score"),
+    raceScores: jsonb("race_scores").$type<JsonValue>(),
+    sourcePage: integer("source_page"),
+    verificationStatus: text("verification_status", {
+      enum: ["verified", "pending_review", "rejected"],
+    })
+      .default("pending_review")
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    eventSailorUnq: unique("asian_optimist_index_results_event_sailor_unq").on(
+      table.eventId,
+      table.indexSailorId
+    ),
+    eventRankIdx: index("asian_optimist_index_results_event_rank_idx").on(
+      table.eventId,
+      table.sourceRank
+    ),
+    sailorIdx: index("asian_optimist_index_results_sailor_idx").on(table.indexSailorId),
+  })
+).enableRLS();
+
 export const sailorAliases = pgTable("sailor_aliases", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   sailorId: uuid("sailor_id")

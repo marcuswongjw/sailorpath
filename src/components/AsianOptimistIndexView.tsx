@@ -6,6 +6,10 @@ import {
   ASIAN_OPTIMIST_INDEX_SOURCE_URL,
   type AsianOptimistIndexEntry,
 } from "@/lib/asianOptimistIndex";
+import {
+  formatAsianIndexDateRange,
+  type AsianOptimistIndexQualifierSource,
+} from "@/lib/asianOptimistIndexQualifiers";
 
 function genderLabel(gender: AsianOptimistIndexEntry["gender"]): string {
   return gender === "W" ? "Girl" : "Boy";
@@ -20,8 +24,10 @@ function rankClass(rank: number): string {
 
 export function AsianOptimistIndexView({
   entries,
+  qualifiers,
 }: {
   entries: AsianOptimistIndexEntry[];
+  qualifiers: AsianOptimistIndexQualifierSource[];
 }) {
   const leaders = entries.slice(0, 3);
 
@@ -40,7 +46,8 @@ export function AsianOptimistIndexView({
               <p className="mt-4 max-w-2xl text-base leading-7 text-sailcloth sm:text-lg">
                 The first release is a source-backed baseline from the final overall
                 standings at the 2025 Optimist Asian &amp; Oceanian Championship.
-                Verified 2026 results will add to this board as they are imported.
+                Verified 2026 regional results are recorded below, ready for the
+                next season calculation after the Colombo championship anchor.
               </p>
             </div>
             <a
@@ -180,6 +187,59 @@ export function AsianOptimistIndexView({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
+          <div className="flex flex-col gap-3 border-b border-cool-veil px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+            <div>
+              <h2 className="text-xl font-extrabold text-harbour">2026 regional qualifier ledger</h2>
+              <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
+                These final classifications are retained with their source. They do not
+                retroactively change the 2025 baseline; they are the verified regional
+                inputs prepared for the 2026 Index once Colombo is complete.
+              </p>
+            </div>
+            <p className="text-xs font-semibold text-slate-soft">
+              {qualifiers.reduce((total, qualifier) => total + (qualifier.resultCount ?? 0), 0)} source rows tracked
+            </p>
+          </div>
+          <div className="divide-y divide-cool-veil">
+            {qualifiers.map((qualifier) => (
+              <article key={qualifier.id} className="grid gap-4 px-5 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:px-6">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="font-extrabold text-harbour">{qualifier.name}</h3>
+                    <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-harbour">
+                      {qualifier.usesSailorPathResults ? "SailorPath result" : "Imported official result"}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-slate-soft">
+                    {qualifier.hostCountry} · {formatAsianIndexDateRange(qualifier.startDate, qualifier.endDate)}
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-slate-soft">
+                    {qualifier.officialResultsSourceName}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 sm:justify-end">
+                  <div className="text-right">
+                    <p className="text-lg font-extrabold text-harbour">{qualifier.resultCount ?? "—"}</p>
+                    <p className="text-xs font-semibold text-slate-soft">final rows</p>
+                  </div>
+                  <a
+                    href={qualifier.officialResultsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-cool-veil px-3 py-2 text-sm font-bold text-harbour transition-colors hover:border-aqua hover:bg-sailcloth"
+                  >
+                    Source
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
         <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
           <article className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-sm sm:p-6">
             <div className="flex items-center gap-3">
@@ -192,7 +252,7 @@ export function AsianOptimistIndexView({
               <p><strong>Index rank</strong> is the Asian-only ordering of sailors in the official 2025 final overall result. <strong>Official finish</strong> keeps the sailor’s actual place in the complete 170-sailor championship field.</p>
               <p><strong>Net points</strong> are the organiser’s final low-point total after one discard. Lower is better. Girls, boys, fleet prizes and other subcategories do not create duplicate entries.</p>
               <p><strong>Birth year</strong> is not published in the official IODA result or entry list. It appears here only when SailorPath can match the sailor to a profile whose birth date is marked public; otherwise it remains blank.</p>
-              <p><strong>Next phase:</strong> once source-verified 2026 results are imported, Colombo will become the championship anchor and approved regional qualifiers will add current-season form. Each counted result will link back to its official source.</p>
+              <p><strong>2026 qualifier ledger:</strong> final regional classifications are preserved now, but do not revise the legacy baseline. Colombo will become the championship anchor; only then will the published 2026 formula combine it with the eligible qualifier results. Each counted result will link back to its official source.</p>
             </div>
           </article>
           <aside className="rounded-2xl bg-harbour p-5 text-white shadow-sm sm:p-6">

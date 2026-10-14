@@ -1,11 +1,22 @@
 import "server-only";
 
+import { and, asc, count, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
-import { sailors } from "@/db/schema";
+import {
+  asianOptimistIndexEvents,
+  asianOptimistIndexResults,
+  regattaResults,
+  regattas,
+  sailors,
+} from "@/db/schema";
 import {
   createAsianOptimistIndexBaseline,
   type AsianOptimistIndexEntry,
 } from "@/lib/asianOptimistIndex";
+import {
+  ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS,
+  type AsianOptimistIndexQualifierSource,
+} from "@/lib/asianOptimistIndexQualifiers";
 
 const NOC_BY_NATIONALITY: Record<string, string> = {
   azerbaijan: "AZE",
@@ -55,10 +66,6 @@ function toNoc(value: string | null): string | null {
   return NOC_BY_NATIONALITY[normalized] ?? null;
 }
 
-function sailDigits(value: string): string {
-  return (value.match(/\d+/g) ?? []).join("");
-}
-
 function publicBirthYear(dob: string | null): number | null {
   if (!dob) return null;
   const match = /^(\d{4})-/.exec(dob);
@@ -87,15 +94,14 @@ export async function getAsianOptimistIndexEntries(): Promise<
       .from(sailors);
 
     return baseline.map((entry) => {
-      const entrySailDigits = sailDigits(entry.sailNumber);
       const entryName = normalizeName(entry.name);
       const match = profiles.find((profile) => {
         const profileNoc = toNoc(profile.nationality);
         if (profileNoc !== entry.nationality) return false;
-        return (
-          sailDigits(profile.sailNumber) === entrySailDigits ||
-          normalizeName(profile.name) === entryName
-        );
+        // Sail numbers can be reissued or transcribed inconsistently across
+        // countries and seasons. Never link a public profile on sail number
+        // alone; a precise normalized-name match is the safe minimum.
+        return normalizeName(profile.name) === entryName;
       });
 
       if (!match) return entry;
@@ -110,4 +116,114 @@ export async function getAsianOptimistIndexEntries(): Promise<
     // The official baseline remains useful during static builds or DB outages.
     return baseline;
   }
+}
+
+/**
+ * Loads the 2026 qualifier ledger from the Index tables. Singapore sources are
+ * counted from SailorPath's original verified regatta result rows, so no second
+ * copy of their scores is created just for the Index.
+ */
+export async function getAsianOptimistIndexQualifierSources(): Promise<
+  AsianOptimistIndexQualifierSource[]
+> {
+  try {
+    const ledger = await db
+      .select({
+        id: asianOptimistIndexEvents.id,
+        name: asianOptimistIndexEvents.name,
+        hostCountry: asianOptimistIndexEvents.hostCountry,
+        startDate: asianOptimistIndexEvents.startDate,
+        endDate: asianOptimistIndexEvents.endDate,
+        officialResultsUrl: asianOptimistIndexEvents.officialResultsUrl,
+        officialResultsSourceName:
+          asianOptimistIndexEvents.officialResultsSourceName,
+        sourceKind: asianOptimistIndexEvents.sourceKind,
+        sailorpathRegattaSlug: asianOptimistIndexEvents.sailorpathRegattaSlug,
+        resultStatus: asianOptimistIndexEvents.resultStatus,
+      })
+      .from(asianOptimistIndexEvents)
+      .where(eq(asianOptimistIndexEvents.indexRole, "regional_qualifier"))
+      .orderBy(asc(asianOptimistIndexEvents.startDate));
+
+    const importedRows = await db
+      .select({
+        eventId: asianOptimistIndexResults.eventId,
+        resultCount: count(),
+      })
+      .from(asianOptimistIndexResults)
+      .groupBy(asianOptimistIndexResults.eventId);
+    const importedCounts = new Map(
+      importedRows.map((row) => [row.eventId, Number(row.resultCount)])
+    );
+
+    const directSlugs = ledger.flatMap((entry) =>
+      entry.sourceKind === "sailorpath_regatta" && entry.sailorpathRegattaSlug
+        ? [entry.sailorpathRegattaSlug]
+        : []
+    );
+    const directRegattas = directSlugs.length
+      ? await db
+          .select({ id: regattas.id, slug: regattas.slug })
+          .from(regattas)
+          .where(inArray(regattas.slug, directSlugs))
+      : [];
+    const directCounts = directRegattas.length
+      ? await db
+          .select({
+            regattaId: regattaResults.regattaId,
+            resultCount: count(),
+          })
+          .from(regattaResults)
+          .where(
+            and(
+              inArray(
+                regattaResults.regattaId,
+                directRegattas.map((regatta) => regatta.id)
+              ),
+              eq(regattaResults.verificationStatus, "verified")
+            )
+          )
+          .groupBy(regattaResults.regattaId)
+      : [];
+    const directCountBySlug = new Map(
+      directRegattas.map((regatta) => {
+        const countRow = directCounts.find(
+          (row) => row.regattaId === regatta.id
+        );
+        return [regatta.slug, Number(countRow?.resultCount ?? 0)];
+      })
+    );
+
+    return ledger.map((entry) => ({
+      id: entry.id,
+      name: entry.name,
+      hostCountry: entry.hostCountry,
+      startDate: entry.startDate,
+      endDate: entry.endDate,
+      officialResultsUrl: entry.officialResultsUrl,
+      officialResultsSourceName: entry.officialResultsSourceName,
+      usesSailorPathResults: entry.sourceKind === "sailorpath_regatta",
+      resultCount:
+        entry.sourceKind === "sailorpath_regatta"
+          ? directCountBySlug.get(entry.sailorpathRegattaSlug ?? "") ?? 0
+          : importedCounts.get(entry.id) ?? 0,
+      resultStatus: entry.resultStatus,
+    }));
+  } catch {
+    // The page continues to explain source scope during static builds and
+    // before a database migration has been applied.
+    return [...ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS];
+  }
+}
+
+export async function getAsianOptimistIndexSnapshot(): Promise<{
+  entries: AsianOptimistIndexEntry[];
+  qualifiers: AsianOptimistIndexQualifierSource[];
+}> {
+  const [entries, qualifiers] = await Promise.all([
+    getAsianOptimistIndexEntries(),
+    getAsianOptimistIndexQualifierSources(),
+  ]);
+
+  return { entries, qualifiers };
 }
