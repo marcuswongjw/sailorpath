@@ -4,7 +4,8 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
-import { regattaResults, regattas, sailors } from "@/db/schema";
+import { regattaResultParticipants, regattaResults, regattas, sailors } from "@/db/schema";
+import { displayedResultVerificationStatus } from "@/lib/resultVerification";
 import { slugify } from "@/lib/slug";
 import { normalizeDob } from "@/lib/normalize";
 import { trackUsage } from "@/lib/usage";
@@ -12,7 +13,7 @@ import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 async function assertOwner(sailorId: string, userId: string, isAdmin: boolean) {
   const [sailor] = await db
-    .select({ id: sailors.id, parentId: sailors.parentId })
+    .select({ id: sailors.id, parentId: sailors.parentId, name: sailors.name })
     .from(sailors)
     .where(eq(sailors.id, sailorId))
     .limit(1);
@@ -116,15 +117,14 @@ export async function GET(req: Request) {
       .where(eq(regattaResults.sailorId, sailorId))
       .orderBy(desc(regattas.date));
 
-    const mappedRows = rows.map((r) => {
-      const isOfficial = !r.slug?.startsWith("log-") || Boolean(r.countsForRanking);
-      return {
-        ...r,
-        verificationStatus: isOfficial
-          ? "verified"
-          : r.verificationStatus || "self_reported",
-      };
-    });
+    const mappedRows = rows.map((r) => ({
+      ...r,
+      verificationStatus: displayedResultVerificationStatus({
+        slug: r.slug,
+        countsForRanking: r.countsForRanking,
+        verificationStatus: r.verificationStatus,
+      }),
+    }));
 
     return NextResponse.json({ results: mappedRows });
   } catch (e) {
@@ -166,6 +166,7 @@ async function handlePOST(req: Request) {
     if ("error" in gate && gate.error) {
       return NextResponse.json({ error: gate.error }, { status: gate.status });
     }
+    const sailorName = ("sailor" in gate && gate.sailor?.name) || name;
 
     const rank = Math.max(1, Math.round(Number(body.rank) || 1));
     const totalFleetSize = Math.max(
@@ -279,6 +280,16 @@ async function handlePOST(req: Request) {
         verificationStatus,
       })
       .returning();
+
+    await db.insert(regattaResultParticipants).values({
+      regattaResultId: result.id,
+      sailorId,
+      sourceName: sailorName.trim().slice(0, 200) || "Sailor",
+      displayOrder: 1,
+      role: "solo",
+      matchStatus: "matched",
+      rankingCredit: false,
+    });
 
     void trackUsage({
       eventType: "personal_result",

@@ -74,6 +74,7 @@ vi.mock("@/db", () => ({
             {
               id: "sailor-1",
               parentId: "parent-1",
+              name: "Ada Sailor",
             },
           ]),
           orderBy: () =>
@@ -262,6 +263,16 @@ describe("/api/account/results", () => {
       expect(mocks.insertResultSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           verificationStatus: "self_reported",
+        })
+      );
+      expect(mocks.insertResultSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          regattaResultId: "result-new",
+          sailorId: "sailor-1",
+          sourceName: "Ada Sailor",
+          displayOrder: 1,
+          role: "solo",
+          rankingCredit: false,
         })
       );
     });

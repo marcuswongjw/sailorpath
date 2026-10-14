@@ -29,6 +29,7 @@ import {
 import { EquipmentInventory } from "@/components/equipment/EquipmentInventory";
 import { GeographySelect } from "@/components/CountrySelect";
 import { ProfileIdentityFields } from "@/components/sailor-profile/ProfileIdentityFields";
+import { resultCountsAsVerified } from "@/lib/resultVerification";
 
 export type AthleteProfile = {
   id: string;
@@ -246,9 +247,11 @@ function AthleteWorkspace({
   };
 
   const isResultVerified = (r: RegattaResultItem) =>
-    r.verificationStatus === "verified" ||
-    Boolean(r.countsForRanking) ||
-    (r.regattaSlug ? !r.regattaSlug.startsWith("log-") : false);
+    resultCountsAsVerified({
+      slug: r.regattaSlug,
+      countsForRanking: r.countsForRanking,
+      verificationStatus: r.verificationStatus,
+    });
 
   const verifiedCount = results.filter(isResultVerified).length;
   const underReviewCount = results.filter(

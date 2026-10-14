@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { regattaResults, sailorAliases, sailors } from "@/db/schema";
+import { regattaResultParticipants, regattaResults, sailorAliases, sailors } from "@/db/schema";
 
 export async function POST(req: Request) {
   try {
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     if (sailorId && regattaId) {
       const r = Number(rank) || 999;
       const n = Number(nett) || r;
-      await db
+      const [saved] = await db
         .insert(regattaResults)
         .values({
           regattaId,
@@ -62,7 +62,27 @@ export async function POST(req: Request) {
         .onConflictDoUpdate({
           target: [regattaResults.sailorId, regattaResults.regattaId],
           set: { rank: r, nettScore: n, updatedAt: new Date() },
-        });
+        })
+        .returning({ id: regattaResults.id });
+      if (saved) {
+        await db
+          .insert(regattaResultParticipants)
+          .values({
+            regattaResultId: saved.id,
+            sailorId,
+            sourceName: String(rawName || "Sailor").trim().slice(0, 200) || "Sailor",
+            displayOrder: 1,
+            role: "solo",
+            matchStatus: "matched",
+            rankingCredit: true,
+          })
+          .onConflictDoNothing({
+            target: [
+              regattaResultParticipants.regattaResultId,
+              regattaResultParticipants.displayOrder,
+            ],
+          });
+      }
     }
 
     return NextResponse.json({ ok: true, sailorId });
