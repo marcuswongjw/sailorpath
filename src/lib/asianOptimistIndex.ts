@@ -2,6 +2,10 @@ import {
   ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST,
   type AsianOptimistIndexProfileManifestEntry,
 } from "@/lib/asianOptimistIndexProfileManifest";
+import {
+  ASIAN_OPTIMIST_INDEX_DUPLICATE_REVIEWS,
+  type AsianOptimistIndexDuplicateReview,
+} from "@/lib/asianOptimistIndexDuplicateReviews";
 
 /**
  * First-release source data for the Asian Optimist Index.
@@ -28,12 +32,16 @@ export type AsianOptimistIndexSourceEntry = {
 };
 
 export type AsianOptimistIndexEntry = AsianOptimistIndexSourceEntry & {
+  /** Stable 2025 cohort identity key used for profile and review linkage. */
+  identityKey: string;
   /** Rank inside the Asian-only first-release baseline. */
   baselineRank: number;
   /** Present only when a matching SailorPath profile explicitly permits it. */
   birthYear: number | null;
   /** Existing SailorPath public profile, if a high-confidence match exists. */
   profileHref: string | null;
+  /** Conservative profile-data review flag; it never changes results or rank. */
+  profileReview: AsianOptimistIndexDuplicateReview | null;
 };
 
 export const ASIAN_OPTIMIST_INDEX_SOURCE_URL =
@@ -1398,19 +1406,25 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
   }
 ] as const satisfies readonly AsianOptimistIndexSourceEntry[];
 
-function indexIdentityKey(name: string, nationality: string): string {
+export function asianOptimistIndexIdentityKey(name: string, nationality: string): string {
   return `${nationality.toUpperCase()}:${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
 }
 
 export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
   return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.map((entry, index) => {
+    const identityKey = asianOptimistIndexIdentityKey(entry.name, entry.nationality);
     const profile: AsianOptimistIndexProfileManifestEntry | undefined =
       ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST[
-      indexIdentityKey(entry.name, entry.nationality) as keyof typeof ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST
+      identityKey as keyof typeof ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST
+      ];
+    const profileReview: AsianOptimistIndexDuplicateReview | undefined =
+      ASIAN_OPTIMIST_INDEX_DUPLICATE_REVIEWS[
+        identityKey as keyof typeof ASIAN_OPTIMIST_INDEX_DUPLICATE_REVIEWS
       ];
 
     return {
       ...entry,
+      identityKey,
       baselineRank: index + 1,
       birthYear: profile?.birthYear ?? null,
       // Every source-cohort identity has an existing SailorPath profile or a
@@ -1418,6 +1432,7 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
       // manifest static prevents the public Index page from blocking on a DB
       // lookup merely to render profile links.
       profileHref: profile ? `/${profile.handle}` : null,
+      profileReview: profileReview ?? null,
     };
   });
 }

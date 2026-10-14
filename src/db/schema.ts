@@ -714,6 +714,46 @@ export const asianOptimistIndexSailors = pgTable(
 ).enableRLS();
 
 /**
+ * Conservative cross-profile candidates identified during Index imports.
+ * A row is an auditable review prompt only: resolving it must be an explicit
+ * admin decision, never an automatic merger of young sailor records.
+ */
+export const asianOptimistIndexDuplicateReviews = pgTable(
+  "asian_optimist_index_duplicate_reviews",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    indexSailorId: uuid("index_sailor_id")
+      .references(() => asianOptimistIndexSailors.id, { onDelete: "cascade" })
+      .notNull(),
+    candidateSailorId: uuid("candidate_sailor_id")
+      .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    confidence: text("confidence", { enum: ["high", "review"] }).notNull(),
+    reason: text("reason").notNull(),
+    status: text("status", {
+      enum: ["open", "dismissed", "resolved"],
+    })
+      .default("open")
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    indexCandidateUnq: unique("asian_optimist_index_duplicate_reviews_unq").on(
+      table.indexSailorId,
+      table.candidateSailorId
+    ),
+    statusIdx: index("asian_optimist_index_duplicate_reviews_status_idx").on(
+      table.status,
+      table.confidence
+    ),
+    candidateIdx: index("asian_optimist_index_duplicate_reviews_candidate_idx").on(
+      table.candidateSailorId
+    ),
+  })
+).enableRLS();
+
+/**
  * One verified event classification for one Index identity.
  * `raceScores` is an ordered JSON array of the organiser's raw race tokens.
  * It retains penalties and parenthesised discard markers for audit; Index

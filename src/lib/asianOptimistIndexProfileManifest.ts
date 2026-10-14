@@ -12,118 +12,118 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "sorawit-naksuk-812d4t4"
   },
   "SGP:ethanchia": {
-    "handle": "asian-sgp-ethan-chia-426245"
+    "handle": "asian-sgp-ethan-chia-8a5d58"
   },
   "SGP:anyazahedi": {
-    "handle": "asian-sgp-anya-zahed-eeacb1"
+    "handle": "asian-sgp-anya-zahed-7b0a76"
   },
   "UAE:jeanlucherve": {
-    "handle": "asian-uae-jean-luc-h-78fbc5"
+    "handle": "asian-uae-jean-luc-h-56a2b9"
   },
   "CHN:yuxuanli": {
-    "handle": "asian-chn-yuxuan-li-29d1f0"
+    "handle": "asian-chn-yuxuan-li-c0807f"
   },
   "UAE:khalifaalromaithi": {
-    "handle": "asian-uae-khalifa-al-7323b9"
+    "handle": "asian-uae-khalifa-al-e89126"
   },
   "IND:shreyalakshminarayanan": {
-    "handle": "asian-ind-shreya-lak-ad4b60"
+    "handle": "asian-ind-shreya-lak-6d42ea"
   },
   "HKG:margauxnguyenminh": {
     "handle": "margaux-nguyen-minh-fcs112q"
   },
   "SGP:desireelee": {
-    "handle": "asian-sgp-desiree-le-82cd60"
+    "handle": "asian-sgp-desiree-le-658ad6"
   },
   "HKG:alixnguyenminh": {
     "handle": "alix-nguyen-minh"
   },
   "JPN:rikomuranaka": {
-    "handle": "asian-jpn-riko-muran-782123"
+    "handle": "asian-jpn-riko-muran-26f981"
   },
   "THA:adisonein": {
-    "handle": "asian-tha-adison-ein-10c72e"
+    "handle": "asian-tha-adison-ein-8501c5"
   },
   "THA:rachatasadtrakulwattana": {
-    "handle": "asian-tha-rachata-sa-1c612e"
+    "handle": "asian-tha-rachata-sa-bbceda"
   },
   "HKG:rohanmaliah": {
     "handle": "rohan-maliah-ivt1lz6"
   },
   "SGP:mikaelang": {
-    "handle": "asian-sgp-mikaela-ng-664815"
+    "handle": "asian-sgp-mikaela-ng-152f39"
   },
   "SGP:seankum": {
-    "handle": "asian-sgp-sean-kum-9a4d6c"
+    "handle": "asian-sgp-sean-kum-3cf9c2"
   },
   "SGP:alyssawong": {
-    "handle": "asian-sgp-alyssa-won-6bf1ee"
+    "handle": "asian-sgp-alyssa-won-43c6cf"
   },
   "MAS:muazazwan": {
-    "handle": "asian-mas-muaz-azwan-c79903"
+    "handle": "asian-mas-muaz-azwan-3130fd"
   },
   "CHN:bochengzhang": {
-    "handle": "asian-chn-bocheng-zh-c168f0"
+    "handle": "asian-chn-bocheng-zh-213db3"
   },
   "MAS:yaasinsyahrizan": {
-    "handle": "asian-mas-yaasin-sya-0851a2"
+    "handle": "asian-mas-yaasin-sya-8110ee"
   },
   "HKG:taramaliah": {
     "handle": "tara-maliah-j0xd6t3"
   },
   "SGP:lucascao": {
-    "handle": "asian-sgp-lucas-cao-8feb82"
+    "handle": "asian-sgp-lucas-cao-575e71"
   },
   "CHN:shitenghuang": {
-    "handle": "asian-chn-shiteng-hu-fbeabe"
+    "handle": "asian-chn-shiteng-hu-6ffa51"
   },
   "KSA:xuanyatong": {
-    "handle": "asian-ksa-xuan-ya-to-0c86a6"
+    "handle": "asian-ksa-xuan-ya-to-3286a6"
   },
   "SGP:ethanlow": {
-    "handle": "asian-sgp-ethan-low-d6a7d9"
+    "handle": "asian-sgp-ethan-low-539807"
   },
   "CHN:youjiaxu": {
     "handle": "youjia-xu-8018w7v"
   },
   "THA:pailinjareonpon": {
-    "handle": "asian-tha-pailin-jar-8e900f"
+    "handle": "asian-tha-pailin-jar-d420ae"
   },
   "SGP:zephwan": {
     "handle": "zeph-wan"
   },
   "CHN:yijiani": {
-    "handle": "asian-chn-yijia-ni-cbfe1d"
+    "handle": "asian-chn-yijia-ni-a95941"
   },
   "SGP:teckwoonpee": {
-    "handle": "asian-sgp-teckwoon-p-0c5921"
+    "handle": "asian-sgp-teckwoon-p-4190df"
   },
   "OMA:mohammedalqasmi": {
-    "handle": "asian-oma-mohammed-a-a62bf1"
+    "handle": "asian-oma-mohammed-a-cc8f92"
   },
   "OMA:khalidalsarihi": {
-    "handle": "asian-oma-khalid-al-2f27a2"
+    "handle": "asian-oma-khalid-al-9a29ab"
   },
   "MYA:sittmaychitpo": {
-    "handle": "asian-mya-sitt-may-c-2a9202"
+    "handle": "asian-mya-sitt-may-c-de19ca"
   },
   "MYA:aungsittmaung": {
-    "handle": "asian-mya-aung-sitt-4c8ed4"
+    "handle": "asian-mya-aung-sitt-8599fa"
   },
   "SGP:zhitongwai": {
-    "handle": "asian-sgp-zhi-tong-w-b5fce5"
+    "handle": "asian-sgp-zhi-tong-w-f989b8"
   },
   "OMA:khamisalmeshaikhi": {
-    "handle": "asian-oma-khamis-al-f97221"
+    "handle": "asian-oma-khamis-al-d98d6b"
   },
   "JPN:nagisakawakami": {
-    "handle": "asian-jpn-nagisa-kaw-106fcd"
+    "handle": "asian-jpn-nagisa-kaw-f1a02d"
   },
   "JPN:kentokahara": {
-    "handle": "asian-jpn-kento-kaha-8bdf44"
+    "handle": "asian-jpn-kento-kaha-2ffd85"
   },
   "JPN:kotaromatsunaga": {
-    "handle": "asian-jpn-kotaro-mat-ad7d57"
+    "handle": "asian-jpn-kotaro-mat-4fa65f"
   },
   "CHN:wenyucheng": {
     "handle": "wenyu-cheng-7x9ov2o"
@@ -133,246 +133,246 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2012
   },
   "JPN:kaitohirasawa": {
-    "handle": "asian-jpn-kaito-hira-f3bb1a"
+    "handle": "asian-jpn-kaito-hira-c15fa2"
   },
   "HKG:xinranliu": {
-    "handle": "asian-hkg-xinran-liu-b21dad"
+    "handle": "asian-hkg-xinran-liu-918682"
   },
   "UAE:korneliapajak": {
-    "handle": "asian-uae-kornelia-p-572b7c"
+    "handle": "asian-uae-kornelia-p-748bbf"
   },
   "JPN:masahirokamijo": {
-    "handle": "asian-jpn-masahiro-k-ef9f41"
+    "handle": "asian-jpn-masahiro-k-b3b588"
   },
   "HKG:kiananderson": {
     "handle": "kian-anderson-z370pjz"
   },
   "QAT:erykkazimierczyk": {
-    "handle": "asian-qat-eryk-kazim-37deea"
+    "handle": "asian-qat-eryk-kazim-df1f84"
   },
   "MAC:wangsunchen": {
-    "handle": "asian-mac-wang-sun-c-99740d"
+    "handle": "asian-mac-wang-sun-c-d06bfb"
   },
   "CHN:guanghaozhang": {
-    "handle": "asian-chn-guanghao-z-ae79a6"
+    "handle": "asian-chn-guanghao-z-b01c86"
   },
   "MAS:khairulilzaniafendy": {
-    "handle": "asian-mas-khairulilz-e18765"
+    "handle": "asian-mas-khairulilz-f9de8a"
   },
   "UAE:zayedalhosani": {
     "handle": "zayed-al-hosani-j60tt5c"
   },
   "KUW:hamadalmasoud": {
-    "handle": "asian-kuw-hamad-alma-c3d81e"
+    "handle": "asian-kuw-hamad-alma-79dd24"
   },
   "IND:ravikumarbenneollu": {
-    "handle": "asian-ind-ravi-kumar-923ff4"
+    "handle": "asian-ind-ravi-kumar-9828d9"
   },
   "SRI:harenwickramatillake": {
-    "handle": "asian-sri-haren-wick-8e5c4d"
+    "handle": "asian-sri-haren-wick-1b1716"
   },
   "IND:krishnaramakrishnan": {
-    "handle": "asian-ind-krishna-ra-7586d3"
+    "handle": "asian-ind-krishna-ra-ae190d"
   },
   "MAS:lydialukman": {
-    "handle": "asian-mas-lydia-lukm-3dbe84"
+    "handle": "asian-mas-lydia-lukm-00e117"
   },
   "CHN:linshi": {
-    "handle": "asian-chn-lin-shi-745fd5"
+    "handle": "asian-chn-lin-shi-54fcbf"
   },
   "UAE:hamadalmheiri": {
-    "handle": "asian-uae-hamad-almh-90ad87"
+    "handle": "asian-uae-hamad-almh-5cd126"
   },
   "AZE:furkanmustafayev": {
-    "handle": "asian-aze-furkan-mus-b58051"
+    "handle": "asian-aze-furkan-mus-1235bb"
   },
   "OMA:alkhailialfoori": {
-    "handle": "asian-oma-al-khaili-0a9717"
+    "handle": "asian-oma-al-khaili-a9bf9c"
   },
   "MAS:miaazrania": {
-    "handle": "asian-mas-mia-azrani-961336"
+    "handle": "asian-mas-mia-azrani-b0c822"
   },
   "KSA:ahmedalshammari": {
-    "handle": "asian-ksa-ahmed-al-s-89bb49"
+    "handle": "asian-ksa-ahmed-al-s-4b7ffb"
   },
   "AZE:kamalbasirli": {
-    "handle": "asian-aze-kamal-basi-b22f0e"
+    "handle": "asian-aze-kamal-basi-260847"
   },
   "IND:bannybongur": {
-    "handle": "asian-ind-banny-bong-d44e59"
+    "handle": "asian-ind-banny-bong-6b2c18"
   },
   "MAS:zahirismail": {
-    "handle": "asian-mas-zahir-isma-a4d8b8"
+    "handle": "asian-mas-zahir-isma-a18d7d"
   },
   "OMA:hadeelalmushaifri": {
-    "handle": "asian-oma-hadeel-al-6eb862"
+    "handle": "asian-oma-hadeel-al-4654b6"
   },
   "JPN:natsumikubota": {
-    "handle": "asian-jpn-natsumi-ku-51a0f4"
+    "handle": "asian-jpn-natsumi-ku-112120"
   },
   "HKG:scarletttao": {
-    "handle": "asian-hkg-scarlett-t-57e0e7"
+    "handle": "asian-hkg-scarlett-t-d02b01"
   },
   "UAE:konstancjapajak": {
-    "handle": "asian-uae-konstancja-50fdaf"
+    "handle": "asian-uae-konstancja-caf67f"
   },
   "THA:pattarakornpoonpat": {
     "handle": "pattarakorn-poonpat-oe44pao"
   },
   "HKG:keiracaitlinhwang": {
-    "handle": "asian-hkg-keira-cait-edb1c5"
+    "handle": "asian-hkg-keira-cait-c8ae9f"
   },
   "HKG:luciencohenaddad": {
     "handle": "lucien-cohen-addad-4jgl4ox"
   },
   "MYA:gonyeezaw": {
-    "handle": "asian-mya-gon-yee-za-3d0d21"
+    "handle": "asian-mya-gon-yee-za-2c3f16"
   },
   "KUW:zakareyabohamad": {
-    "handle": "asian-kuw-zakareya-b-f71ceb"
+    "handle": "asian-kuw-zakareya-b-13b125"
   },
   "JPN:sokihiguchi": {
-    "handle": "asian-jpn-soki-higuc-ca89f4"
+    "handle": "asian-jpn-soki-higuc-fb3822"
   },
   "JPN:kaitonakamura": {
-    "handle": "asian-jpn-kaito-naka-ef08ef"
+    "handle": "asian-jpn-kaito-naka-a602cf"
   },
   "OMA:tarteelalhasani": {
-    "handle": "asian-oma-tarteel-al-658e64"
+    "handle": "asian-oma-tarteel-al-05a14c"
   },
   "MAC:muyulu": {
-    "handle": "asian-mac-muyu-lu-8afc94"
+    "handle": "asian-mac-muyu-lu-b0340c"
   },
   "UAE:theyabalmheiri": {
-    "handle": "asian-uae-theyab-alm-912b2a"
+    "handle": "asian-uae-theyab-alm-83690c"
   },
   "MAC:yunxijin": {
-    "handle": "asian-mac-yunxi-jin-fafb86"
+    "handle": "asian-mac-yunxi-jin-d5a1b5"
   },
   "CHN:yuntiandong": {
-    "handle": "asian-chn-yuntian-do-1488a6"
+    "handle": "asian-chn-yuntian-do-ba74e4"
   },
   "MYA:nainglinnaung": {
-    "handle": "asian-mya-naing-linn-0f643b"
+    "handle": "asian-mya-naing-linn-89dd99"
   },
   "MYA:aungkaungmyat": {
-    "handle": "asian-mya-aung-kaung-0f1c7d"
+    "handle": "asian-mya-aung-kaung-888824"
   },
   "AZE:yagmurhasanli": {
-    "handle": "asian-aze-yagmur-has-90adad"
+    "handle": "asian-aze-yagmur-has-47ebee"
   },
   "IND:shringhariroy": {
     "handle": "shringhari-roy-9060nk6"
   },
   "JPN:tadanaomatsuoka": {
-    "handle": "asian-jpn-tadanao-ma-ad802f"
+    "handle": "asian-jpn-tadanao-ma-28a7ef"
   },
   "OMA:mohammedalbalushi": {
-    "handle": "asian-oma-mohammed-a-833519"
+    "handle": "asian-oma-mohammed-a-93c7e8"
   },
   "OMA:hoodalnofli": {
-    "handle": "asian-oma-hood-al-no-03ba72"
+    "handle": "asian-oma-hood-al-no-403b7f"
   },
   "QAT:tameemshams": {
-    "handle": "asian-qat-tameem-sha-65270f"
+    "handle": "asian-qat-tameem-sha-656a42"
   },
   "KUW:abdulazizalmansour": {
-    "handle": "asian-kuw-abdulaziz-e0ad6a"
+    "handle": "asian-kuw-abdulaziz-d30ffd"
   },
   "AZE:mikayilmammadzada": {
-    "handle": "asian-aze-mikayil-ma-1cf403"
+    "handle": "asian-aze-mikayil-ma-830ebe"
   },
   "HKG:decimuschan": {
-    "handle": "asian-hkg-decimus-ch-4937e1"
+    "handle": "asian-hkg-decimus-ch-2f4e59"
   },
   "IND:karthiktelugu": {
-    "handle": "asian-ind-karthik-te-0da854"
+    "handle": "asian-ind-karthik-te-0255ce"
   },
   "KOR:hyunwoojeon": {
-    "handle": "asian-kor-hyunwoo-je-fb7509"
+    "handle": "asian-kor-hyunwoo-je-6ae6db"
   },
   "IND:siddhitandon": {
     "handle": "siddhi-tandon-aajk9q8"
   },
   "KSA:mohammedalhwail": {
-    "handle": "asian-ksa-mohammed-a-e88705"
+    "handle": "asian-ksa-mohammed-a-6cc1bb"
   },
   "IND:chandralekhatattari": {
-    "handle": "asian-ind-chandralek-a79431"
+    "handle": "asian-ind-chandralek-4ae157"
   },
   "OMA:habibalhussaini": {
-    "handle": "asian-oma-habib-al-h-262cb3"
+    "handle": "asian-oma-habib-al-h-9b54f3"
   },
   "AZE:kamillahasanova": {
-    "handle": "asian-aze-kamilla-ha-b46b29"
+    "handle": "asian-aze-kamilla-ha-c231b9"
   },
   "MYA:khantzinthaw": {
-    "handle": "asian-mya-khant-zin-2194ca"
+    "handle": "asian-mya-khant-zin-f9357f"
   },
   "MAC:chiinjaspertang": {
-    "handle": "asian-mac-chi-in-jas-44d7f4"
+    "handle": "asian-mac-chi-in-jas-dd3094"
   },
   "QAT:abdulazizalmahmoud": {
-    "handle": "asian-qat-abdulaziz-150a1b"
+    "handle": "asian-qat-abdulaziz-628d50"
   },
   "SRI:dhirenavenperera": {
-    "handle": "asian-sri-dhiren-ave-dc6a2f"
+    "handle": "asian-sri-dhiren-ave-ffdd8f"
   },
   "IND:badrinathnirudu": {
-    "handle": "asian-ind-badrinath-a1c070"
+    "handle": "asian-ind-badrinath-9f76c8"
   },
   "SRI:luqmaananeeq": {
-    "handle": "asian-sri-luqmaan-an-9545ab"
+    "handle": "asian-sri-luqmaan-an-a43375"
   },
   "KOR:unhochoi": {
-    "handle": "asian-kor-unho-choi-33c34b"
+    "handle": "asian-kor-unho-choi-b23ac2"
   },
   "SRI:binalperera": {
-    "handle": "asian-sri-binal-pere-ed6f66"
+    "handle": "asian-sri-binal-pere-cd428a"
   },
   "SRI:mckaellakarunaratne": {
-    "handle": "asian-sri-mckaella-k-8233cd"
+    "handle": "asian-sri-mckaella-k-2f2840"
   },
   "KOR:hyeonsolkim": {
-    "handle": "asian-kor-hyeonsol-k-a595fd"
+    "handle": "asian-kor-hyeonsol-k-125b2b"
   },
   "KOR:daolpark": {
-    "handle": "asian-kor-daol-park-27832c"
+    "handle": "asian-kor-daol-park-30a849"
   },
   "IND:rameezabhsk": {
-    "handle": "asian-ind-rameeza-bh-d754a3"
+    "handle": "asian-ind-rameeza-bh-37bc8f"
   },
   "KOR:siyeonan": {
-    "handle": "asian-kor-siyeon-an-61bb9f"
+    "handle": "asian-kor-siyeon-an-08a833"
   },
   "SRI:akaineubayasiri": {
-    "handle": "asian-sri-akaine-uba-5f8a00"
+    "handle": "asian-sri-akaine-uba-a597d3"
   },
   "SRI:shemfernando": {
-    "handle": "asian-sri-shem-ferna-6bf6fd"
+    "handle": "asian-sri-shem-ferna-6f4627"
   },
   "OMA:layanalruzaiqi": {
-    "handle": "asian-oma-layan-al-r-cc089e"
+    "handle": "asian-oma-layan-al-r-5c23e1"
   },
   "KOR:minkwanchang": {
-    "handle": "asian-kor-minkwan-ch-7adacd"
+    "handle": "asian-kor-minkwan-ch-cdc86a"
   },
   "QAT:khalifaalyafei": {
-    "handle": "asian-qat-khalifa-al-8a3746"
+    "handle": "asian-qat-khalifa-al-bd674d"
   },
   "SRI:lailahazari": {
-    "handle": "asian-sri-laila-haza-c5430d"
+    "handle": "asian-sri-laila-haza-4e4769"
   },
   "KOR:jihookim": {
-    "handle": "asian-kor-jihoo-kim-c7398f"
+    "handle": "asian-kor-jihoo-kim-263754"
   },
   "KSA:abdulazizalforaih": {
-    "handle": "asian-ksa-abdulaziz-4d177b"
+    "handle": "asian-ksa-abdulaziz-27213a"
   },
   "KOR:seoyian": {
-    "handle": "asian-kor-seoyi-an-94e49a"
+    "handle": "asian-kor-seoyi-an-4eb55a"
   },
   "SRI:ruwanekarajapaksa": {
-    "handle": "asian-sri-ruwaneka-r-6d6590"
+    "handle": "asian-sri-ruwaneka-r-03d984"
   }
 } as const satisfies Record<string, AsianOptimistIndexProfileManifestEntry>;

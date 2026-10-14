@@ -32,12 +32,25 @@ describe("Asian Optimist Index baseline", () => {
     expect(baseline.at(-1)).toMatchObject({ baselineRank: 122, overallPlace: 170 });
   });
 
-  it("links every founding sailor to a stable SailorPath profile handle", () => {
+  it("links every founding sailor to the persisted SailorPath profile handle", () => {
     const baseline = createAsianOptimistIndexBaseline();
 
     expect(baseline.every((entry) => entry.profileHref?.startsWith("/"))).toBe(true);
     expect(baseline.find((entry) => entry.name === "Sorawit Naksuk")).toMatchObject({
       profileHref: "/sorawit-naksuk-812d4t4",
+    });
+    expect(baseline.find((entry) => entry.name === "Ethan Chia")).toMatchObject({
+      profileHref: "/asian-sgp-ethan-chia-8a5d58",
+      profileReview: {
+        confidence: "high",
+        candidateHandle: "ethan-chia-han-wei",
+      },
+    });
+    expect(baseline.find((entry) => entry.name === "Lin Shi")).toMatchObject({
+      profileReview: {
+        confidence: "review",
+        candidateHandle: "shi-lin-vysogv7",
+      },
     });
     expect(baseline.find((entry) => entry.name === "Suthinan Nakpasom")).toMatchObject({
       birthYear: 2012,
