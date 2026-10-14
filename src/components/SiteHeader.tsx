@@ -85,6 +85,17 @@ export function SiteHeader() {
         Silver standings
       </Link>
       <Link
+        href="/sg/optimist/asian-index"
+        prefetch
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        Asian Optimist Index
+      </Link>
+      <Link
         href="/sg/optimist/selection"
         prefetch
         onClick={() => {
@@ -524,6 +535,13 @@ export function SiteHeader() {
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Silver standings
+            </Link>
+            <Link
+              href="/sg/optimist/asian-index"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              Asian Optimist Index
             </Link>
             <Link
               href="/sg/optimist/selection"
