@@ -1,6 +1,7 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import {
+  asianOptimistIndexDuplicateReviews,
   asianOptimistIndexSailors,
   coachActionReviews,
   coachDevelopmentRecords,
@@ -31,6 +32,7 @@ export const SAILOR_RELATIONSHIP_MERGE_PLAN = [
   { table: "regattaResultParticipants", strategy: "repoint-entry-membership" },
   { table: "regattaRaceResults", strategy: "reconcile-through-result" },
   { table: "asianOptimistIndexSailors", strategy: "repoint" },
+  { table: "asianOptimistIndexDuplicateReviews", strategy: "target-wins-conflict" },
   { table: "sailorAliases", strategy: "repoint" },
   { table: "sailorClaims", strategy: "repoint" },
   { table: "raceObservations", strategy: "target-wins-conflict" },
@@ -594,6 +596,42 @@ export async function mergeSailors({
       .where(eq(asianOptimistIndexSailors.sailorId, mergeId))
       .returning({ id: asianOptimistIndexSailors.id });
 
+    // An Index duplicate-review row names a candidate SailorPath profile. If
+    // that candidate is merged, retain the survivor's review on collision so
+    // its administrator decision and audit trail stay canonical.
+    const [sourceIndexReviews, targetIndexReviews] = await Promise.all([
+      tx
+        .select({
+          id: asianOptimistIndexDuplicateReviews.id,
+          indexSailorId: asianOptimistIndexDuplicateReviews.indexSailorId,
+        })
+        .from(asianOptimistIndexDuplicateReviews)
+        .where(eq(asianOptimistIndexDuplicateReviews.candidateSailorId, mergeId)),
+      tx
+        .select({
+          id: asianOptimistIndexDuplicateReviews.id,
+          indexSailorId: asianOptimistIndexDuplicateReviews.indexSailorId,
+        })
+        .from(asianOptimistIndexDuplicateReviews)
+        .where(eq(asianOptimistIndexDuplicateReviews.candidateSailorId, keepId)),
+    ]);
+    const indexReviewPlan = splitSourceRowsByTargetConflict(
+      sourceIndexReviews,
+      targetIndexReviews,
+      (row) => row.indexSailorId
+    );
+    if (indexReviewPlan.conflictIds.length > 0) {
+      await tx
+        .delete(asianOptimistIndexDuplicateReviews)
+        .where(inArray(asianOptimistIndexDuplicateReviews.id, indexReviewPlan.conflictIds));
+    }
+    if (indexReviewPlan.moveIds.length > 0) {
+      await tx
+        .update(asianOptimistIndexDuplicateReviews)
+        .set({ candidateSailorId: keepId, updatedAt: now })
+        .where(inArray(asianOptimistIndexDuplicateReviews.id, indexReviewPlan.moveIds));
+    }
+
     // Fill blank profile fields on the target from the duplicate.
     const fill: Record<string, unknown> = { updatedAt: now };
     const textFields = [
@@ -731,6 +769,8 @@ export async function mergeSailors({
       notesMoved: notesMoved.length,
       claimsMoved: claimsMoved.length,
       indexSailorsMoved: indexSailorsMoved.length,
+      indexDuplicateReviewsMoved: indexReviewPlan.moveIds.length,
+      indexDuplicateReviewsDroppedConflict: indexReviewPlan.conflictIds.length,
       observationsMoved: observationPlan.moveIds.length,
       observationsDropped: observationPlan.conflictIds.length,
       squadMembershipsMoved: squadPlan.moveIds.length,
