@@ -12,10 +12,10 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "sorawit-naksuk-812d4t4"
   },
   "SGP:ethanchia": {
-    "handle": "asian-sgp-ethan-chia-8a5d58"
+    "handle": "ethan-chia-han-wei"
   },
   "SGP:anyazahedi": {
-    "handle": "asian-sgp-anya-zahed-7b0a76"
+    "handle": "anya-alessia-zahedi"
   },
   "UAE:jeanlucherve": {
     "handle": "asian-uae-jean-luc-h-56a2b9"
@@ -27,13 +27,13 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-uae-khalifa-al-e89126"
   },
   "IND:shreyalakshminarayanan": {
-    "handle": "asian-ind-shreya-lak-6d42ea"
+    "handle": "shreya-krishna-lakshminarayanan-yvqywlz"
   },
   "HKG:margauxnguyenminh": {
     "handle": "margaux-nguyen-minh-fcs112q"
   },
   "SGP:desireelee": {
-    "handle": "asian-sgp-desiree-le-658ad6"
+    "handle": "desiree-lee-yuet-chi"
   },
   "HKG:alixnguyenminh": {
     "handle": "alix-nguyen-minh"
@@ -45,19 +45,19 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-tha-adison-ein-8501c5"
   },
   "THA:rachatasadtrakulwattana": {
-    "handle": "asian-tha-rachata-sa-bbceda"
+    "handle": "rachata-sadtrakulwatanna-823ho68"
   },
   "HKG:rohanmaliah": {
     "handle": "rohan-maliah-ivt1lz6"
   },
   "SGP:mikaelang": {
-    "handle": "asian-sgp-mikaela-ng-152f39"
+    "handle": "mikaela-rae-ng"
   },
   "SGP:seankum": {
     "handle": "asian-sgp-sean-kum-3cf9c2"
   },
   "SGP:alyssawong": {
-    "handle": "asian-sgp-alyssa-won-43c6cf"
+    "handle": "alyssa-wong-li-lin"
   },
   "MAS:muazazwan": {
     "handle": "asian-mas-muaz-azwan-3130fd"
@@ -81,7 +81,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-ksa-xuan-ya-to-3286a6"
   },
   "SGP:ethanlow": {
-    "handle": "asian-sgp-ethan-low-539807"
+    "handle": "ethan-low-zhi-ren"
   },
   "CHN:youjiaxu": {
     "handle": "youjia-xu-8018w7v"
@@ -96,7 +96,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-chn-yijia-ni-a95941"
   },
   "SGP:teckwoonpee": {
-    "handle": "asian-sgp-teckwoon-p-4190df"
+    "handle": "pee-teck-woon"
   },
   "OMA:mohammedalqasmi": {
     "handle": "asian-oma-mohammed-a-cc8f92"
@@ -111,7 +111,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-mya-aung-sitt-8599fa"
   },
   "SGP:zhitongwai": {
-    "handle": "asian-sgp-zhi-tong-w-f989b8"
+    "handle": "wai-zhi-tong"
   },
   "OMA:khamisalmeshaikhi": {
     "handle": "asian-oma-khamis-al-d98d6b"
@@ -178,7 +178,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-mas-lydia-lukm-00e117"
   },
   "CHN:linshi": {
-    "handle": "asian-chn-lin-shi-54fcbf"
+    "handle": "shi-lin-vysogv7"
   },
   "UAE:hamadalmheiri": {
     "handle": "asian-uae-hamad-almh-5cd126"
@@ -199,7 +199,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-aze-kamal-basi-260847"
   },
   "IND:bannybongur": {
-    "handle": "asian-ind-banny-bong-6b2c18"
+    "handle": "bongur-banny-zicv5kk"
   },
   "MAS:zahirismail": {
     "handle": "asian-mas-zahir-isma-a18d7d"
@@ -211,7 +211,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-jpn-natsumi-ku-112120"
   },
   "HKG:scarletttao": {
-    "handle": "asian-hkg-scarlett-t-d02b01"
+    "handle": "scarlett-tao-xinran-zn8iz60"
   },
   "UAE:konstancjapajak": {
     "handle": "asian-uae-konstancja-caf67f"

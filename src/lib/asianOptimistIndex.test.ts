@@ -40,17 +40,12 @@ describe("Asian Optimist Index baseline", () => {
       profileHref: "/sorawit-naksuk-812d4t4",
     });
     expect(baseline.find((entry) => entry.name === "Ethan Chia")).toMatchObject({
-      profileHref: "/asian-sgp-ethan-chia-8a5d58",
-      profileReview: {
-        confidence: "high",
-        candidateHandle: "ethan-chia-han-wei",
-      },
+      profileHref: "/ethan-chia-han-wei",
+      profileReview: null,
     });
     expect(baseline.find((entry) => entry.name === "Lin Shi")).toMatchObject({
-      profileReview: {
-        confidence: "review",
-        candidateHandle: "shi-lin-vysogv7",
-      },
+      profileHref: "/shi-lin-vysogv7",
+      profileReview: null,
     });
     expect(baseline.find((entry) => entry.name === "Suthinan Nakpasom")).toMatchObject({
       birthYear: 2012,
