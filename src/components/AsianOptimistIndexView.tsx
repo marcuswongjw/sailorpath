@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BookOpen, ExternalLink, Medal, Trophy } from "lucide-react";
+import { AsianOptimistIndexStandings } from "@/components/AsianOptimistIndexStandings";
 import {
   ASIAN_OPTIMIST_INDEX_EVENT,
   ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL,
@@ -15,10 +16,6 @@ import {
   type AsianOptimistIndexQualifierSource,
 } from "@/lib/asianOptimistIndexQualifiers";
 
-function genderCode(gender: AsianOptimistIndexProvisionalEntry["gender"]): string {
-  return gender === "W" ? "F" : "M";
-}
-
 function rankClass(rank: number): string {
   if (rank === 1) return "bg-racing-orange text-white";
   if (rank === 2) return "bg-harbour-mid text-white";
@@ -29,16 +26,6 @@ function rankClass(rank: number): string {
 const INDEX_QUALIFIER_COLUMNS = Object.values(
   ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS
 );
-
-function qualifierRank(
-  entry: AsianOptimistIndexProvisionalEntry,
-  qualifierId: string
-): string {
-  const result = entry.qualifierResults.find(
-    (qualifier) => qualifier.qualifier.id === qualifierId
-  );
-  return result ? `${result.rank}/${result.qualifier.fleetSize}` : "—";
-}
 
 export function AsianOptimistIndexView({
   entries,
@@ -157,91 +144,11 @@ export function AsianOptimistIndexView({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
-          <div className="flex flex-col gap-2 border-b border-cool-veil px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
-            <div>
-              <h2 className="text-xl font-extrabold text-harbour">Provisional standings</h2>
-              <p className="mt-1 text-sm text-slate-soft">
-                Ordered by the calculated 0–100 Index score. Regatta cells show final rank / fleet; a dash means no verified finish is available for that sailor.
-              </p>
-            </div>
-            <p className="text-xs font-semibold text-slate-soft">Calculated through {ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf}</p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[1320px] border-collapse text-left text-sm">
-              <thead className="bg-sailcloth text-xs uppercase tracking-wide text-slate-soft">
-                <tr>
-                  <th scope="col" className="px-4 py-3 font-extrabold">Index</th>
-                  <th scope="col" className="px-4 py-3 font-extrabold">Sailor</th>
-                  <th scope="col" className="px-4 py-3 font-extrabold">Country</th>
-                  <th scope="col" className="px-4 py-3 font-extrabold">Gender</th>
-                  <th scope="col" className="px-4 py-3 text-center font-extrabold">Birth year</th>
-                  <th scope="col" className="px-4 py-3 text-right font-extrabold">Score</th>
-                  <th scope="col" className="px-4 py-3 text-center font-extrabold">2025 Asians</th>
-                  {INDEX_QUALIFIER_COLUMNS.map((qualifier) => (
-                    <th
-                      key={qualifier.id}
-                      scope="col"
-                      className="px-4 py-3 text-center font-extrabold"
-                    >
-                      {qualifier.shortName}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-cool-veil">
-                {entries.map((sailor) => (
-                  <tr key={sailor.sailNumber} className="transition-colors hover:bg-sailcloth/70">
-                    <td className="px-4 py-3">
-                      <span className={`inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(sailor.provisionalRank)}`}>
-                        {sailor.provisionalRank}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="font-bold text-harbour">
-                        {sailor.profileHref ? (
-                          <Link href={sailor.profileHref} className="hover:text-racing-deep hover:underline">
-                            {sailor.displayName}
-                          </Link>
-                        ) : sailor.displayName}
-                      </div>
-                      <div className="mt-0.5 text-xs text-slate-soft">
-                        {sailor.nationality} · {sailor.sailNumber}
-                      </div>
-                      {sailor.profileReview ? (
-                        <span
-                          title={sailor.profileReview.reason}
-                          className="mt-1 inline-flex rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-amber-900"
-                        >
-                          Profile review
-                        </span>
-                      ) : null}
-                    </td>
-                    <td className="px-4 py-3 text-xs font-semibold text-charcoal">
-                      {sailor.nationality}
-                    </td>
-                    <td className="px-4 py-3 text-xs font-semibold text-charcoal">
-                      {genderCode(sailor.gender)}
-                    </td>
-                    <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">
-                      {sailor.birthYear ?? "—"}
-                    </td>
-                    <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</td>
-                    <td className="px-4 py-3 text-center font-bold text-harbour">{sailor.overallPlace}/{ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}</td>
-                    {INDEX_QUALIFIER_COLUMNS.map((qualifier) => (
-                      <td
-                        key={qualifier.id}
-                        className="px-4 py-3 text-center text-xs font-semibold text-charcoal"
-                      >
-                        {qualifierRank(sailor, qualifier.id)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <AsianOptimistIndexStandings
+          entries={entries}
+          qualifierColumns={INDEX_QUALIFIER_COLUMNS}
+          asOf={ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf}
+        />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
@@ -250,7 +157,7 @@ export function AsianOptimistIndexView({
             <div>
               <h2 className="text-xl font-extrabold text-harbour">2026 qualifying events</h2>
               <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
-                These final classifications are published on SailorPath and are the verified form inputs. The provisional slate can include up to five events; a sailor can use only their strongest result from each host country, and Singapore national-event scores are capped at 70 out of 100.
+                Verified final classifications are published on SailorPath and are the active form inputs. Eastern Seaboard is listed as the next Thai candidate and will be reviewed only after its final classification is published. The provisional slate can include up to five scored events; a sailor can use only their strongest result from each host country, and Singapore national-event scores are capped at 70 out of 100.
               </p>
             </div>
             <p className="text-xs font-semibold text-slate-soft">
@@ -264,7 +171,11 @@ export function AsianOptimistIndexView({
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-extrabold text-harbour">{qualifier.name}</h3>
                     <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-harbour">
-                      {qualifier.usesSailorPathResults ? "SailorPath result" : "Imported official result"}
+                      {qualifier.resultStatus === "scheduled"
+                        ? "Scheduled candidate"
+                        : qualifier.usesSailorPathResults
+                          ? "SailorPath result"
+                          : "Imported official result"}
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-slate-soft">
@@ -277,7 +188,9 @@ export function AsianOptimistIndexView({
                 <div className="flex items-center gap-4 sm:justify-end">
                   <div className="text-right">
                     <p className="text-lg font-extrabold text-harbour">{qualifier.resultCount ?? "—"}</p>
-                    <p className="text-xs font-semibold text-slate-soft">final rows</p>
+                    <p className="text-xs font-semibold text-slate-soft">
+                      {qualifier.resultStatus === "scheduled" ? "results pending" : "final rows"}
+                    </p>
                   </div>
                   <a
                     href={qualifier.officialResultsUrl}
@@ -285,15 +198,17 @@ export function AsianOptimistIndexView({
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-lg border border-cool-veil px-3 py-2 text-sm font-bold text-harbour transition-colors hover:border-aqua hover:bg-sailcloth"
                   >
-                    Source
+                    {qualifier.resultStatus === "scheduled" ? "Notice" : "Source"}
                     <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                   </a>
-                  <Link
-                    href={`/sg/optimist/regattas/${qualifier.sailorPathRegattaSlug}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-harbour px-3 py-2 text-sm font-bold text-white transition-colors hover:bg-harbour-mid"
-                  >
-                    Results
-                  </Link>
+                  {qualifier.sailorPathRegattaSlug ? (
+                    <Link
+                      href={`/sg/optimist/regattas/${qualifier.sailorPathRegattaSlug}`}
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-harbour px-3 py-2 text-sm font-bold text-white transition-colors hover:bg-harbour-mid"
+                    >
+                      Results
+                    </Link>
+                  ) : null}
                 </div>
               </article>
             ))}

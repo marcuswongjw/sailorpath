@@ -7,12 +7,12 @@ export type AsianOptimistIndexQualifierSource = {
   officialResultsUrl: string;
   officialResultsSourceName: string;
   /** Public SailorPath result page after the sheet has been imported. */
-  sailorPathRegattaSlug: string;
+  sailorPathRegattaSlug: string | null;
   /** `true` means results are queried from SailorPath's primary result tables. */
   usesSailorPathResults: boolean;
   /** Published fleet size, before the primary data store is available. */
   resultCount: number | null;
-  resultStatus: "verified" | "awaiting_final";
+  resultStatus: "verified" | "awaiting_final" | "scheduled";
 };
 
 /**
@@ -96,6 +96,20 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     usesSailorPathResults: true,
     resultCount: 83,
     resultStatus: "verified",
+  },
+  {
+    id: "eastern-seaboard-regatta-2026",
+    name: "Eastern Seaboard Regatta — Optimist",
+    hostCountry: "Thailand",
+    startDate: "2026-10-29",
+    endDate: "2026-10-31",
+    officialResultsUrl: "https://www.racingrulesofsailing.org/documents/198658",
+    officialResultsSourceName:
+      "18th Eastern Seaboard Regatta Notice of Race — final classification pending",
+    sailorPathRegattaSlug: null,
+    usesSailorPathResults: false,
+    resultCount: null,
+    resultStatus: "scheduled",
   },
 ] as const satisfies readonly AsianOptimistIndexQualifierSource[];
 

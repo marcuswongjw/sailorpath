@@ -39,7 +39,7 @@ export type AsianOptimistIndexScoredQualifier = {
 
 /**
  * This is a source-verified input table, not a directory. Each entry identifies
- * a 2025 cohort sailor by exact normalised name + NOC match only.
+ * a 2025 cohort sailor through the verified SailorPath profile link and NOC.
  */
 export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   "lysc-2026-optimist-gold": {
@@ -143,6 +143,12 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   },
   {
     qualifierId: "sysc-2026-gold",
+    name: "Anya Zahedi",
+    nationality: "SGP",
+    rank: 3,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
     name: "Youjia Xu",
     nationality: "CHN",
     rank: 4,
@@ -152,6 +158,24 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     name: "Sorawit Naksuk",
     nationality: "THA",
     rank: 5,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Rachata Sadtrakulwattana",
+    nationality: "THA",
+    rank: 6,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Alyssa Wong",
+    nationality: "SGP",
+    rank: 9,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Ethan Low",
+    nationality: "SGP",
+    rank: 20,
   },
   {
     qualifierId: "sysc-2026-gold",
@@ -173,6 +197,18 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   },
   {
     qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Alyssa Wong",
+    nationality: "SGP",
+    rank: 1,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Anya Zahedi",
+    nationality: "SGP",
+    rank: 7,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
     name: "Rohan Maliah",
     nationality: "HKG",
     rank: 8,
@@ -182,6 +218,12 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     name: "Wenyu Cheng",
     nationality: "CHN",
     rank: 18,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Ethan Low",
+    nationality: "SGP",
+    rank: 22,
   },
 ] as const satisfies readonly AsianOptimistIndexQualifierResultInput[];
 

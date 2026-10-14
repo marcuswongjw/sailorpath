@@ -5,13 +5,13 @@ import {
 } from "@/lib/asianOptimistIndexQualifiers";
 
 describe("Asian Optimist Index 2026 qualifier ledger", () => {
-  it("contains three external sources and two direct SailorPath sources", () => {
-    expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(5);
+  it("keeps five verified inputs and one scheduled Thai candidate", () => {
+    expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(6);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => !qualifier.usesSailorPathResults
       )
-    ).toHaveLength(2);
+    ).toHaveLength(3);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => qualifier.usesSailorPathResults
@@ -21,7 +21,18 @@ describe("Asian Optimist Index 2026 qualifier ledger", () => {
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.map(
         (qualifier) => qualifier.resultCount
       )
-    ).toEqual([50, 59, 106, 65, 83]);
+    ).toEqual([50, 59, 106, 65, 83, null]);
+    expect(
+      ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.find(
+        (qualifier) => qualifier.id === "eastern-seaboard-regatta-2026"
+      )
+    ).toMatchObject({
+      hostCountry: "Thailand",
+      resultStatus: "scheduled",
+      sailorPathRegattaSlug: null,
+      startDate: "2026-10-29",
+      endDate: "2026-10-31",
+    });
   });
 
   it("renders inclusive source dates in a stable, timezone-safe form", () => {
