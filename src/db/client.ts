@@ -44,6 +44,44 @@ function tryParse(connectionString: string) {
   }
 }
 
+/**
+ * Supabase direct `db.<ref>.supabase.co` hosts are commonly IPv6-only on the
+ * Free tier. Convert only that explicit direct form to the transaction pooler
+ * while retaining the already-configured user and password at runtime.
+ */
+export function toSupabaseTransactionPooler(
+  connectionString: string,
+  region: string | undefined
+): string | null {
+  const poolerRegion = region?.trim();
+  if (!poolerRegion) return null;
+
+  try {
+    const normalized = connectionString
+      .replace(/^postgresql:/i, "http:")
+      .replace(/^postgres:/i, "http:");
+    const source = new URL(normalized);
+    const match = /^db\.([a-z0-9-]+)\.supabase\.co$/i.exec(source.hostname);
+    if (!match) return null;
+
+    const projectRef = match[1];
+    const sourceUser = decodeURIComponent(source.username);
+    const sourcePassword = decodeURIComponent(source.password);
+    if (!sourceUser || !sourcePassword) return null;
+
+    const poolerUser = sourceUser.includes(".")
+      ? sourceUser
+      : `${sourceUser}.${projectRef}`;
+    const databaseName = source.pathname || "/postgres";
+    const params = new URLSearchParams(source.search);
+    params.set("sslmode", "require");
+
+    return `postgresql://${encodeURIComponent(poolerUser)}:${encodeURIComponent(sourcePassword)}@aws-0-${poolerRegion}.pooler.supabase.com:6543${databaseName}?${params.toString()}`;
+  } catch {
+    return null;
+  }
+}
+
 export function describeDatabaseUrl(connectionString: string) {
   return (
     tryParse(connectionString) || {
@@ -74,6 +112,11 @@ export function resolveConnectionString(): string | null {
     if (raw.includes("[SENSITIVE]") || raw.includes("YOUR_PASSWORD")) continue;
     const cleaned = cleanUrl(raw);
     if (!cleaned.startsWith("postgres")) continue;
+    const poolerConnection = toSupabaseTransactionPooler(
+      cleaned,
+      process.env.SUPABASE_POOLER_REGION
+    );
+    if (poolerConnection) return poolerConnection;
     if (tryParse(cleaned)) return cleaned;
     // Password may have unencoded special chars — attempt rebuild from pieces
   }
@@ -87,6 +130,11 @@ export function resolveConnectionString(): string | null {
     const encUser = encodeURIComponent(user);
     const encPass = encodeURIComponent(pass);
     const rebuilt = `postgresql://${encUser}:${encPass}@${host}:5432/postgres`;
+    const poolerConnection = toSupabaseTransactionPooler(
+      rebuilt,
+      process.env.SUPABASE_POOLER_REGION
+    );
+    if (poolerConnection) return poolerConnection;
     if (tryParse(rebuilt)) return rebuilt;
   }
 
@@ -146,12 +194,6 @@ function buildSql() {
       meta.port,
       meta.isPooler
     );
-
-    if (meta.host?.startsWith("db.") && meta.host.includes("supabase.co")) {
-      console.warn(
-        "[sailorpath] Direct db.* host is often IPv6-only on free tier. Prefer …pooler.supabase.com:6543"
-      );
-    }
 
     return postgres(connectionString, postgresJsOptions(connectionString));
   } catch (e) {
