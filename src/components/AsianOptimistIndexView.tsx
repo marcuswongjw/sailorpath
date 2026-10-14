@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { BookOpen, ExternalLink, Medal, Trophy } from "lucide-react";
-import { AsianOptimistIndexStandings } from "@/components/AsianOptimistIndexStandings";
+import {
+  AsianOptimistIndexStandings,
+  type AsianOptimistIndexFilterState,
+} from "@/components/AsianOptimistIndexStandings";
 import {
   ASIAN_OPTIMIST_INDEX_EVENT,
   ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL,
@@ -30,9 +33,11 @@ const INDEX_QUALIFIER_COLUMNS = Object.values(
 export function AsianOptimistIndexView({
   entries,
   qualifiers,
+  filters,
 }: {
   entries: AsianOptimistIndexProvisionalEntry[];
   qualifiers: AsianOptimistIndexQualifierSource[];
+  filters?: AsianOptimistIndexFilterState;
 }) {
   const leaders = entries.slice(0, 3);
   const sailorsWithQualifiers = entries.filter((entry) => entry.eligibleStarts > 0).length;
@@ -148,6 +153,8 @@ export function AsianOptimistIndexView({
           entries={entries}
           qualifierColumns={INDEX_QUALIFIER_COLUMNS}
           asOf={ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf}
+          totalFleetSize={ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}
+          filters={filters}
         />
       </section>
 

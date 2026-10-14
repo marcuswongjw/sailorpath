@@ -1,16 +1,14 @@
-"use client";
-
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import type {
   AsianOptimistIndexProvisionalEntry,
   AsianOptimistIndexScoredQualifier,
 } from "@/lib/asianOptimistIndexScoring";
-import { ASIAN_OPTIMIST_INDEX_EVENT } from "@/lib/asianOptimistIndex";
 
-type CountryFilter = "all" | string;
-type GenderFilter = "all" | "M" | "F";
-type BirthYearFilter = "all" | string;
+export type AsianOptimistIndexFilterState = {
+  country?: string;
+  gender?: string;
+  birthYear?: string;
+};
 
 type QualifierColumn = Pick<AsianOptimistIndexScoredQualifier, "id" | "shortName">;
 
@@ -37,9 +35,9 @@ function qualifierRank(
 
 export function filterAsianOptimistIndexEntries(
   entries: AsianOptimistIndexProvisionalEntry[],
-  country: CountryFilter,
-  gender: GenderFilter,
-  birthYear: BirthYearFilter
+  country: string,
+  gender: string,
+  birthYear: string
 ): AsianOptimistIndexProvisionalEntry[] {
   return entries.filter((entry) => {
     const countryMatches = country === "all" || entry.nationality === country;
@@ -55,29 +53,30 @@ export function AsianOptimistIndexStandings({
   entries,
   qualifierColumns,
   asOf,
+  totalFleetSize,
+  filters = {},
 }: {
   entries: AsianOptimistIndexProvisionalEntry[];
   qualifierColumns: QualifierColumn[];
   asOf: string;
+  totalFleetSize: number;
+  filters?: AsianOptimistIndexFilterState;
 }) {
-  const [country, setCountry] = useState<CountryFilter>("all");
-  const [gender, setGender] = useState<GenderFilter>("all");
-  const [birthYear, setBirthYear] = useState<BirthYearFilter>("all");
+  const countries = [...new Set(entries.map((entry) => entry.nationality))].sort((a, b) =>
+    a.localeCompare(b)
+  );
+  const birthYears = [
+    ...new Set(entries.map((entry) => entry.birthYear).filter((year): year is number => year != null)),
+  ].sort((a, b) => b - a);
 
-  const countries = useMemo(
-    () => [...new Set(entries.map((entry) => entry.nationality))].sort((a, b) => a.localeCompare(b)),
-    [entries]
-  );
-  const birthYears = useMemo(
-    () =>
-      [...new Set(entries.map((entry) => entry.birthYear).filter((year): year is number => year != null))]
-        .sort((a, b) => b - a),
-    [entries]
-  );
-  const filteredEntries = useMemo(
-    () => filterAsianOptimistIndexEntries(entries, country, gender, birthYear),
-    [birthYear, country, entries, gender]
-  );
+  const country = countries.includes(filters.country ?? "") ? filters.country! : "all";
+  const gender = filters.gender === "M" || filters.gender === "F" ? filters.gender : "all";
+  const birthYear =
+    filters.birthYear === "unknown" || birthYears.includes(Number(filters.birthYear))
+      ? filters.birthYear!
+      : "all";
+  const filteredEntries = filterAsianOptimistIndexEntries(entries, country, gender, birthYear);
+  const filtersActive = country !== "all" || gender !== "all" || birthYear !== "all";
 
   return (
     <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
@@ -89,17 +88,20 @@ export function AsianOptimistIndexStandings({
               Ordered by the calculated 0–100 Index score. Regatta cells show final rank / fleet; a dash means no verified finish is available for that sailor.
             </p>
           </div>
-          <p className="text-xs font-semibold text-slate-soft">
-            Calculated through {asOf}
-          </p>
+          <p className="text-xs font-semibold text-slate-soft">Calculated through {asOf}</p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3" aria-label="Filter provisional standings">
+        <form
+          action="/sg/optimist/asian-index"
+          method="get"
+          className="grid gap-3 sm:grid-cols-3"
+          aria-label="Filter provisional standings"
+        >
           <label className="grid gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-soft">
             Country
             <select
-              value={country}
-              onChange={(event) => setCountry(event.target.value)}
+              name="country"
+              defaultValue={country}
               className="min-h-10 rounded-lg border border-cool-veil bg-white px-3 text-sm font-semibold normal-case tracking-normal text-harbour outline-none transition focus:border-aqua focus:ring-2 focus:ring-aqua/25"
             >
               <option value="all">All countries</option>
@@ -111,8 +113,8 @@ export function AsianOptimistIndexStandings({
           <label className="grid gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-soft">
             Gender
             <select
-              value={gender}
-              onChange={(event) => setGender(event.target.value as GenderFilter)}
+              name="gender"
+              defaultValue={gender}
               className="min-h-10 rounded-lg border border-cool-veil bg-white px-3 text-sm font-semibold normal-case tracking-normal text-harbour outline-none transition focus:border-aqua focus:ring-2 focus:ring-aqua/25"
             >
               <option value="all">All genders</option>
@@ -123,8 +125,8 @@ export function AsianOptimistIndexStandings({
           <label className="grid gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-soft">
             Birth year
             <select
-              value={birthYear}
-              onChange={(event) => setBirthYear(event.target.value)}
+              name="birthYear"
+              defaultValue={birthYear}
               className="min-h-10 rounded-lg border border-cool-veil bg-white px-3 text-sm font-semibold normal-case tracking-normal text-harbour outline-none transition focus:border-aqua focus:ring-2 focus:ring-aqua/25"
             >
               <option value="all">All birth years</option>
@@ -134,7 +136,20 @@ export function AsianOptimistIndexStandings({
               <option value="unknown">Not recorded</option>
             </select>
           </label>
-        </div>
+          <div className="flex flex-wrap items-center gap-3 sm:col-span-3">
+            <button
+              type="submit"
+              className="rounded-lg bg-harbour px-4 py-2.5 text-sm font-extrabold text-white transition-colors hover:bg-harbour-mid"
+            >
+              Apply filters
+            </button>
+            {filtersActive ? (
+              <Link href="/sg/optimist/asian-index" className="text-sm font-bold text-harbour underline underline-offset-4 hover:text-racing-deep">
+                Clear filters
+              </Link>
+            ) : null}
+          </div>
+        </form>
 
         <p className="text-sm font-semibold text-slate-soft">
           Showing <span className="font-extrabold text-harbour">{filteredEntries.length}</span> of {entries.length} sailors
@@ -191,7 +206,7 @@ export function AsianOptimistIndexStandings({
                 <td className="px-4 py-3 text-xs font-semibold text-charcoal">{genderCode(sailor.gender)}</td>
                 <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">{sailor.birthYear ?? "—"}</td>
                 <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</td>
-                <td className="px-4 py-3 text-center font-bold text-harbour">{sailor.overallPlace}/{ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}</td>
+                <td className="px-4 py-3 text-center font-bold text-harbour">{sailor.overallPlace}/{totalFleetSize}</td>
                 {qualifierColumns.map((qualifier) => (
                   <td key={qualifier.id} className="px-4 py-3 text-center text-xs font-semibold text-charcoal">
                     {qualifierRank(sailor, qualifier.id)}
