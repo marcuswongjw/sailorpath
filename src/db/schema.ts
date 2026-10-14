@@ -715,9 +715,9 @@ export const asianOptimistIndexSailors = pgTable(
 
 /**
  * One verified event classification for one Index identity.
- * `raceScores` preserves the organiser's race-by-race values (including
- * penalties and discard markers) for audit; Index scoring uses the official
- * overall rank rather than recalculating an event score.
+ * `raceScores` is an ordered JSON array of the organiser's raw race tokens.
+ * It retains penalties and parenthesised discard markers for audit; Index
+ * scoring uses the official overall rank rather than recalculating an event score.
  */
 export const asianOptimistIndexResults = pgTable(
   "asian_optimist_index_results",
