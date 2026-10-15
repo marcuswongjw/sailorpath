@@ -29,7 +29,6 @@ import {
 import { EquipmentInventory } from "@/components/equipment/EquipmentInventory";
 import { GeographySelect } from "@/components/CountrySelect";
 import { ProfileIdentityFields } from "@/components/sailor-profile/ProfileIdentityFields";
-import { resultCountsAsVerified } from "@/lib/resultVerification";
 
 export type AthleteProfile = {
   id: string;
@@ -246,12 +245,22 @@ function AthleteWorkspace({
     }
   };
 
-  const isResultVerified = (r: RegattaResultItem) =>
-    resultCountsAsVerified({
-      slug: r.regattaSlug,
-      countsForRanking: r.countsForRanking,
-      verificationStatus: r.verificationStatus,
-    });
+  const isResultVerified = (r: RegattaResultItem) => {
+    // Same rule as displayedResultVerificationStatus. Kept inline so the
+    // athlete hub does not pull another module into the client bundle.
+    if (r.countsForRanking) return true;
+    const slug = r.regattaSlug ?? "";
+    const stored = r.verificationStatus;
+    if (slug.startsWith("log-")) return stored === "verified";
+    if (
+      stored === "pending_review" ||
+      stored === "self_reported" ||
+      stored === "rejected"
+    ) {
+      return false;
+    }
+    return stored === "verified" || stored == null;
+  };
 
   const verifiedCount = results.filter(isResultVerified).length;
   const underReviewCount = results.filter(
