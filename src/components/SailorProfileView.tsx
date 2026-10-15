@@ -64,10 +64,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     demoRole,
     onDemoClaim,
     profileVerified,
-    isPublicWeight,
-    setIsPublicWeight,
-    isPublicDob,
-    setIsPublicDob,
     publicVisibility,
     setPublicVisibility,
     claimStatus,
@@ -324,10 +320,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         <ProfileOwnerEditor
           form={form}
           setForm={setForm}
-          isPublicWeight={isPublicWeight}
-          setIsPublicWeight={setIsPublicWeight}
-          isPublicDob={isPublicDob}
-          setIsPublicDob={setIsPublicDob}
           publicVisibility={publicVisibility}
           setPublicVisibility={setPublicVisibility}
           saveBusy={saveBusy}
