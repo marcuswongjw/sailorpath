@@ -3,6 +3,7 @@ export {
   db,
   pgSql,
   recycleDatabaseClient,
+  ensureDatabaseLiveness,
   getDatabaseUrlMeta,
   formatDbError,
   DbUnavailableError,

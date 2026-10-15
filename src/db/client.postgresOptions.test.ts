@@ -15,6 +15,8 @@ describe("postgres.js serverless options", () => {
     expect(pooler.fetch_types).toBe(false);
     expect(pooler.prepare).toBe(false);
     expect(pooler.max).toBe(1);
+    expect(pooler.idle_timeout).toBe(5);
+    expect(pooler.connect_timeout).toBe(5);
     expect(pooler.ssl).toBe("require");
 
     const local = postgresJsOptions("postgresql://postgres:postgres@127.0.0.1:5432/sailorpath");
@@ -54,5 +56,14 @@ describe("postgres.js serverless options", () => {
     recycleDatabaseClient();
 
     expect(pgSql).not.toBe(previousClient);
+  });
+
+  it("uses a short, coalesced liveness preflight before reusing a warm socket", () => {
+    const src = readFileSync(new URL("./client.ts", import.meta.url), "utf8");
+
+    expect(src).toContain("DATABASE_PREFLIGHT_TIMEOUT_MS = 3_000");
+    expect(src).toContain("client`select 1 as ok`");
+    expect(src).toContain("recycleDatabaseClient(client)");
+    expect(src).toContain("databaseLivenessCheck");
   });
 });
