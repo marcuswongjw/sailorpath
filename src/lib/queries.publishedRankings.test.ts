@@ -36,6 +36,17 @@ describe("public ranking published-regatta guard (source)", () => {
     expect(body).toMatch(/eq\(\s*regattas\.status\s*,\s*PUBLIC_RANKING_REGATTA_STATUS\s*\)/);
   });
 
+  it("does not bind static ILCA record IDs to the UUID results column", () => {
+    const body = fnBody(
+      "async function computeIlcaRankingsBoard",
+      "export async function getSailorIlcaStanding"
+    );
+
+    expect(body).toContain("const databaseScoringIds = scoringIds.filter(isDatabaseUuid);");
+    expect(body).toContain("databaseScoringIds.length === 0");
+    expect(body).toContain("inArray(regattaResults.regattaId, databaseScoringIds)");
+  });
+
   it("recycles only retryable serverless connection failures", () => {
     const body = fnBody("export function isRetryableDbConnectionError", "export async function listSailors");
 

@@ -256,6 +256,12 @@ export function isRetryableDbConnectionError(errorMessage: string): boolean {
   return isRetryableDatabaseConnectionError(errorMessage);
 }
 
+function isDatabaseUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    value
+  );
+}
+
 async function withDb<T>(fn: () => Promise<T>): Promise<T> {
   try {
     return await withDatabaseRetry(fn);
@@ -1105,17 +1111,24 @@ async function computeIlcaRankingsBoard(
       if (!window.length) return { ranked: [], asOf };
 
       const scoringIds = window.map((r) => r.id);
-      const resultRows = await db
-        .select({
-          sailorId: regattaResults.sailorId,
-          regattaId: regattaResults.regattaId,
-          rank: regattaResults.rank,
-          nettScore: regattaResults.nettScore,
-          isDns: regattaResults.isDns,
-          isOverseasCommitment: regattaResults.isOverseasCommitment,
-        })
-        .from(regattaResults)
-        .where(inArray(regattaResults.regattaId, scoringIds));
+      // ILCA 6 and 7 merge verified database events with historical static
+      // records. Static record IDs are not database UUIDs, so querying them
+      // against regatta_results.regatta_id would fail the whole ranking load.
+      const databaseScoringIds = scoringIds.filter(isDatabaseUuid);
+      const resultRows =
+        databaseScoringIds.length === 0
+          ? []
+          : await db
+              .select({
+                sailorId: regattaResults.sailorId,
+                regattaId: regattaResults.regattaId,
+                rank: regattaResults.rank,
+                nettScore: regattaResults.nettScore,
+                isDns: regattaResults.isDns,
+                isOverseasCommitment: regattaResults.isOverseasCommitment,
+              })
+              .from(regattaResults)
+              .where(inArray(regattaResults.regattaId, databaseScoringIds));
 
       const ilcaResults = restoreBestNettHiddenAsDnsByRegatta(resultRows).map((row) => ({
         sailorId: row.sailorId,
