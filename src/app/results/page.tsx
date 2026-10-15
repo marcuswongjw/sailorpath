@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DbOffline } from "@/components/DbOffline";
 import { getCachedPublicRegattas } from "@/lib/queries";
 import { findEventSliceForRegattaSlug } from "@/lib/regattaEvents";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
@@ -21,7 +22,11 @@ export default async function ResultsPage({ searchParams }: Props) {
   const filters = await searchParams;
   const today = new Date().toISOString().slice(0, 10);
   let rows: Awaited<ReturnType<typeof getCachedPublicRegattas>> = [];
-  try { rows = await getCachedPublicRegattas(); } catch { rows = []; }
+  try {
+    rows = await getCachedPublicRegattas();
+  } catch {
+    return <DbOffline />;
+  }
   const q = (filters.q || "").toLowerCase().trim();
   const visible = rows.filter((row) => {
     if (String(row.endDate || row.date).slice(0, 10) >= today) return false;
