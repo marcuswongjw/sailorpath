@@ -69,7 +69,7 @@ export function ParentDashboard({
           <Link href="/following" className={SECONDARY_BTN}>
             Following
           </Link>
-          <Link href="/search" className={SECONDARY_BTN}>
+          <Link href="/sailors" className={SECONDARY_BTN}>
             <Search className="h-3.5 w-3.5" />
             Find a sailor
           </Link>
@@ -101,7 +101,7 @@ export function ParentDashboard({
             <strong className={INK}>Sailor</strong>. Once verified, their dashboard will appear here.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center pt-2">
-            <Link href="/search" className="sp-btn-primary">
+            <Link href="/sailors" className="sp-btn-primary">
               Search sailors
             </Link>
             <Link href="/claim-profile" className={SECONDARY_BTN}>
@@ -241,7 +241,7 @@ export function ParentDashboard({
           Account Settings
         </Link>
         {" · "}
-        <Link href="/search" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
+        <Link href="/sailors" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
           Find Sailors
         </Link>
         {" · "}

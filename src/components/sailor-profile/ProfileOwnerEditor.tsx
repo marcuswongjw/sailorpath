@@ -36,6 +36,20 @@ type Props = {
   setIsPublicWeight: (v: boolean) => void;
   isPublicDob: boolean;
   setIsPublicDob: (v: boolean) => void;
+  publicVisibility: {
+    showSchoolOnPublicProfile: boolean;
+    showEquipmentOnPublicProfile: boolean;
+    showProfilePhotoOnPublicProfile: boolean;
+    showSocialLinksOnPublicProfile: boolean;
+    showSailingMilestonesOnPublicProfile: boolean;
+  };
+  setPublicVisibility: React.Dispatch<React.SetStateAction<{
+    showSchoolOnPublicProfile: boolean;
+    showEquipmentOnPublicProfile: boolean;
+    showProfilePhotoOnPublicProfile: boolean;
+    showSocialLinksOnPublicProfile: boolean;
+    showSailingMilestonesOnPublicProfile: boolean;
+  }>>;
   saveBusy: boolean;
   saveMsg: string | null;
   onSave: () => void;
@@ -52,6 +66,8 @@ export function ProfileOwnerEditor({
   setIsPublicWeight,
   isPublicDob,
   setIsPublicDob,
+  publicVisibility,
+  setPublicVisibility,
   saveBusy,
   saveMsg,
   onSave,
@@ -103,9 +119,8 @@ export function ProfileOwnerEditor({
           }
           dobHint={
             <p className="mt-1 text-[13px] text-slate-soft leading-snug">
-              Public profiles show the birth year only (e.g. Born 2013). Turn on
-              “Also share month &amp; day” under Privacy if you want the full
-              date visible.
+              Date of birth stays private. Public profiles may show a birth year
+              only when that information is part of a verified result record.
             </p>
           }
         />
@@ -129,41 +144,24 @@ export function ProfileOwnerEditor({
             Privacy controls
           </p>
           <p className="text-[13px] text-slate-soft leading-snug">
-            Birth year is always shown on the public profile when set. Month and
-            day stay private unless you share them. Weight stays private unless
-            shared. Equipment is always private (sailor and linked parents only).
+            Date of birth and weight are private. Optional public details are
+            managed below and remain off until an authorised adult opts in.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-            {(
-              [
-                {
-                  label: "Share weight",
-                  checked: isPublicWeight,
-                  set: setIsPublicWeight,
-                },
-                {
-                  label: "Also share month & day",
-                  checked: isPublicDob,
-                  set: setIsPublicDob,
-                },
-              ] as const
-            ).map((row) => (
-              <label
-                key={row.label}
-                className="flex items-center justify-between gap-2 rounded-lg border border-cool-veil bg-warm-white px-3 py-2 cursor-pointer shadow-2xs"
-              >
-                <span className="text-xs font-bold text-charcoal">
-                  {row.label}
-                </span>
-                <input
-                  type="checkbox"
-                  checked={row.checked}
-                  onChange={(e) => row.set(e.target.checked)}
-                  className="rounded border-cool-veil text-harbour focus:ring-harbour"
-                />
+          <div className="grid grid-cols-1 gap-2 pt-1 sm:grid-cols-2">
+            {([
+              ["showSchoolOnPublicProfile", "Show school name"],
+              ["showEquipmentOnPublicProfile", "Show equipment brands/models"],
+              ["showProfilePhotoOnPublicProfile", "Show profile photo"],
+              ["showSocialLinksOnPublicProfile", "Show social links"],
+              ["showSailingMilestonesOnPublicProfile", "Show owner-written milestones"],
+            ] as const).map(([key, label]) => (
+              <label key={key} className="flex items-center justify-between gap-2 rounded-lg border border-cool-veil bg-warm-white px-3 py-2 text-xs font-bold text-charcoal">
+                <span>{label}</span>
+                <input type="checkbox" checked={publicVisibility[key]} onChange={(event) => setPublicVisibility((current) => ({ ...current, [key]: event.target.checked }))} className="rounded border-cool-veil text-harbour focus:ring-harbour" />
               </label>
             ))}
           </div>
+          <p className="text-xs leading-5 text-slate-soft">Equipment notes, history, exact date of birth and weight are never public. For sailors under 18, a parent or guardian manages these switches.</p>
         </div>
       </div>
       <div className="flex items-center gap-3 pt-2">

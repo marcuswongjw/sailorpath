@@ -47,7 +47,7 @@ export function FollowingHome({
           </p>
         </div>
         <Link
-          href="/search"
+          href="/sailors"
           className="inline-flex items-center justify-center rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)]"
         >
           Find a sailor
@@ -68,7 +68,7 @@ export function FollowingHome({
           <p className="text-sm text-[var(--sp-charcoal-slate)] max-w-md mx-auto">
             Open a public sailor profile and choose Follow. Your own claimed sailor stays on the parent dashboard.
           </p>
-          <Link href="/search" className="sp-btn-primary inline-flex">
+          <Link href="/sailors" className="sp-btn-primary inline-flex">
             Search sailors
           </Link>
         </div>
@@ -79,7 +79,7 @@ export function FollowingHome({
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-sm text-[var(--sp-charcoal-slate)]">
                   <Link
-                    href={`/${sailor.handle}`}
+                    href={`/sailors/${sailor.handle}`}
                     className="font-bold text-[var(--sp-harbour-teal)] hover:underline"
                   >
                     {sailor.name}

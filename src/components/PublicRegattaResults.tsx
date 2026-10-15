@@ -188,7 +188,7 @@ export function PublicRegattaResults({
                     nonPodiumClassName={`${colors.rank} shrink-0 font-black tabular-nums`}
                   />
                   <Link
-                    href={`/${result.handle}`}
+                    href={`/sailors/${result.handle}`}
                     prefetch
                     className={`${colors.link} break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
                   >
@@ -312,7 +312,7 @@ export function PublicRegattaResults({
                 </td>
                 <td className="px-3 py-3">
                   <Link
-                    href={`/${result.handle}`}
+                    href={`/sailors/${result.handle}`}
                     prefetch
                     className={`${colors.link} font-bold text-[var(--sp-harbour-shadow)]`}
                   >

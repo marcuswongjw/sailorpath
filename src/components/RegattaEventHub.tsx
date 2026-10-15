@@ -10,7 +10,6 @@ import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { DbUnavailableError } from "@/db";
 import {
   defaultEventFleetKey,
-  eventHubHref,
   getSliceResultAvailability,
   getStaticBoardRegatta,
   resolveEventSlices,
@@ -430,11 +429,7 @@ export async function RegattaEventHub({ event, activeFleet, calendarView }: Prop
           return (
             <Link
               key={slice.def.key}
-              href={eventHubHref(
-                event.slug,
-                slice.def.key,
-                calendarView === "past" ? "past" : undefined
-              )}
+              href={`/regattas/${encodeURIComponent(event.slug)}/results/${encodeURIComponent(slice.def.key)}`}
               role="tab"
               aria-current={isActive ? "page" : undefined}
               aria-selected={isActive}

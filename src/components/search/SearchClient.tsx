@@ -19,30 +19,29 @@ import type { SailorSearchResult, RegattaSearchResult } from "@/lib/search";
 export type SearchClientProps = {
   initialQuery?: string;
   initialFleet?: string;
-  initialSquad?: string;
   initialClub?: string;
-  initialSchool?: string;
+  initialNationality?: string;
   initialSailors: SailorSearchResult[];
   initialRegattas: RegattaSearchResult[];
+  sailorsOnly?: boolean;
 };
 
 export function SearchClient({
   initialQuery = "",
   initialFleet = "all",
-  initialSquad = "all",
   initialClub = "",
-  initialSchool = "",
+  initialNationality = "",
   initialSailors = [],
   initialRegattas = [],
+  sailorsOnly = false,
 }: SearchClientProps) {
   const [query, setQuery] = useState(initialQuery);
   const [fleet, setFleet] = useState(initialFleet);
-  const [squad, setSquad] = useState(initialSquad);
   const [club, setClub] = useState(initialClub);
-  const [school, setSchool] = useState(initialSchool);
+  const [nationality, setNationality] = useState(initialNationality);
   const [activeTab, setActiveTab] = useState<"all" | "sailors" | "regattas">("all");
   const [showAdvanced, setShowAdvanced] = useState(
-    Boolean(initialSquad !== "all" || initialClub || initialSchool)
+    Boolean(initialClub || initialNationality)
   );
 
   const [sailors, setSailors] = useState<SailorSearchResult[]>(initialSailors);
@@ -97,12 +96,12 @@ export function SearchClient({
       const params = new URLSearchParams();
       if (query.trim()) params.set("q", query.trim());
       if (fleet !== "all") params.set("fleet", fleet);
-      if (squad !== "all") params.set("squad", squad);
       if (club.trim()) params.set("club", club.trim());
-      if (school.trim()) params.set("school", school.trim());
+      if (nationality.trim()) params.set("nationality", nationality.trim());
+      if (sailorsOnly) params.set("type", "sailors");
 
       // Update URL silently without full navigation
-      const newUrl = params.toString() ? `/search?${params.toString()}` : "/search";
+      const newUrl = params.toString() ? `/sailors?${params.toString()}` : "/sailors";
       window.history.replaceState(null, "", newUrl);
 
       try {
@@ -128,25 +127,24 @@ export function SearchClient({
       clearTimeout(timer);
       controller.abort();
     };
-  }, [query, fleet, squad, club, school]);
+  }, [query, fleet, club, nationality, sailorsOnly]);
 
   const handleClearAll = () => {
     setQuery("");
     setFleet("all");
-    setSquad("all");
     setClub("");
-    setSchool("");
+    setNationality("");
     setActiveTab("all");
     setVisibleSailorsCount(PAGE_SIZE);
     inputRef.current?.focus();
   };
 
   const hasActiveFilters =
-    fleet !== "all" || squad !== "all" || Boolean(club.trim()) || Boolean(school.trim());
+    fleet !== "all" || Boolean(club.trim()) || Boolean(nationality.trim());
 
   // Filtered views
   const displaySailors = activeTab === "regattas" ? [] : sailors;
-  const displayRegattas = activeTab === "sailors" ? [] : regattas;
+  const displayRegattas = sailorsOnly || activeTab === "sailors" ? [] : regattas;
   const totalResults = sailors.length + regattas.length;
 
   return (
@@ -236,7 +234,7 @@ export function SearchClient({
               Sailors ({sailors.length})
             </button>
 
-            {regattas.length > 0 && (
+            {!sailorsOnly && regattas.length > 0 && (
               <button
                 type="button"
                 onClick={() => {
@@ -327,23 +325,7 @@ export function SearchClient({
 
         {/* ── Advanced Filters Drawer ─────────────────────────────────── */}
         {showAdvanced && (
-          <div className="pt-3 mt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
-                National Squad
-              </label>
-              <select
-                value={squad}
-                onChange={(e) => setSquad(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-800 focus:outline-none focus:border-orange-500"
-              >
-                <option value="all">All squads</option>
-                <option value="Nat A">National Squad A (Nat A)</option>
-                <option value="Nat B">National Squad B (Nat B)</option>
-                <option value="DS">Development Squad (DS)</option>
-              </select>
-            </div>
-
+          <div className="pt-3 mt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
                 Club / Organization
@@ -359,19 +341,19 @@ export function SearchClient({
 
             <div>
               <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
-                School
+                Nationality
               </label>
               <input
                 type="text"
-                value={school}
-                onChange={(e) => setSchool(e.target.value)}
-                placeholder="e.g. RI, ACSI, RGS, SJI"
+                value={nationality}
+                onChange={(e) => setNationality(e.target.value)}
+                placeholder="e.g. Singapore, SGP"
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-orange-500"
               />
             </div>
 
             {hasActiveFilters && (
-              <div className="sm:col-span-3 flex justify-end">
+              <div className="sm:col-span-2 flex justify-end">
                 <button
                   type="button"
                   onClick={handleClearAll}
@@ -470,24 +452,13 @@ export function SearchClient({
               return (
                 <Link
                   key={s.id}
-                  href={`/${s.handle}`}
+                  href={`/sailors/${s.handle}`}
                   className="group relative flex min-w-0 items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-xs hover:border-orange-500/50 hover:shadow-md hover:shadow-orange-500/5 transition-all"
                 >
                   <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
-                    {/* Sailor Avatar or Initial Monogram */}
-                    {s.avatarUrl ? (
-                      // Avatars can be any host, so this stays a plain image.
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={s.avatarUrl}
-                        alt=""
-                        className="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover border border-slate-200 shrink-0"
-                      />
-                    ) : (
-                      <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-xs sm:text-sm text-slate-700 shrink-0 group-hover:bg-orange-50 group-hover:text-orange-700 transition-colors">
-                        {initials || "S"}
-                      </div>
-                    )}
+                    <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-xs sm:text-sm text-slate-700 shrink-0 group-hover:bg-orange-50 group-hover:text-orange-700 transition-colors">
+                      {initials || "S"}
+                    </div>
 
                     <div className="min-w-0 space-y-0.5">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -536,28 +507,7 @@ export function SearchClient({
                         <span className="hidden sm:inline">Silver Fleet</span>
                       </span>
                     )}
-                    {s.ilca4NationalList && (
-                      <span className="inline-flex items-center rounded-full bg-teal-50 border border-teal-200 px-2.5 py-1 text-[11px] font-black text-teal-800">
-                        ILCA 4
-                      </span>
-                    )}
 
-                    {/* National Squad Status */}
-                    {s.nationalSquadStatus === "Nat A" && (
-                      <span className="rounded-full bg-rose-50 border border-rose-200 px-2 py-0.5 text-[10px] font-black text-rose-700">
-                        Nat A
-                      </span>
-                    )}
-                    {s.nationalSquadStatus === "Nat B" && (
-                      <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-black text-amber-700">
-                        Nat B
-                      </span>
-                    )}
-                    {s.nationalSquadStatus === "DS" && (
-                      <span className="rounded-full bg-sky-50 border border-sky-200 px-2 py-0.5 text-[10px] font-black text-sky-700">
-                        DS
-                      </span>
-                    )}
 
                     <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all" />
                   </div>
@@ -612,7 +562,6 @@ export function SearchClient({
             <p className="font-bold text-slate-800">Search tips:</p>
             <ul className="list-disc list-inside space-y-1 text-slate-500">
               <li>Try searching just the digits of the sail number (e.g. <code className="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">4652</code> instead of <code className="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">SGP 4652</code>)</li>
-              <li>Try school abbreviations like <strong className="text-slate-700">RI</strong>, <strong className="text-slate-700">ACSI</strong>, <strong className="text-slate-700">RGS</strong>, or <strong className="text-slate-700">SJI</strong></li>
               <li>Try club acronyms like <strong className="text-slate-700">CSC</strong> (Changi), <strong className="text-slate-700">SAFYC</strong>, or <strong className="text-slate-700">NSC</strong></li>
               <li>Try searching by last name only</li>
             </ul>

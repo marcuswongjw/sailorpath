@@ -2,678 +2,102 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Menu, X, ChevronDown, Search } from "lucide-react";
+import { Menu, Search, X, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
-import { isAdminHost, shouldShowDemoNavigation } from "@/lib/adminHost";
 
 const QuickSearchModal = dynamic(() =>
   import("@/components/search/QuickSearchModal").then((mod) => mod.QuickSearchModal)
 );
 
-type OpenMenu = "optimist" | "ilca" | "classes" | "account" | null;
+const publicLinks = [
+  ["Results", "/results"],
+  ["Rankings", "/rankings"],
+  ["Sailors", "/sailors"],
+  ["Calendar", "/calendar"],
+] as const;
 
-const subscribeToHost = () => () => {};
-const getBrowserHost = () => window.location.hostname;
-const getServerHost = () => "";
-
+/** The public navigation is intentionally identical before and after sign-in. */
 export function SiteHeader() {
-  const { email, role, isSuperadmin, owned, ready, signOut } = useAccount();
+  const { email, owned, ready, signOut } = useAccount();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [quickSearchOpen, setQuickSearchOpen] = useState(false);
-  const host = useSyncExternalStore(
-    subscribeToHost,
-    getBrowserHost,
-    getServerHost
-  );
-  const navRef = useRef<HTMLDivElement>(null);
-
-  const primaryProfile = owned[0] || null;
-  const showClaimCta = ready && !email;
 
   useEffect(() => {
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setQuickSearchOpen((prev) => !prev);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setQuickSearchOpen((open) => !open);
+      }
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        setAccountOpen(false);
       }
     };
-    window.addEventListener("keydown", handleGlobalKeyDown);
-    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  useEffect(() => {
-    if (!openMenu) return;
-    const onDoc = (e: MouseEvent) => {
-      if (!navRef.current?.contains(e.target as Node)) setOpenMenu(null);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenMenu(null);
-    };
-    document.addEventListener("mousedown", onDoc);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDoc);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [openMenu]);
-
-  const optimistLinks = (
-    <>
-      <Link
-        href="/sg/optimist/gold"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        Gold standings
-      </Link>
-      <Link
-        href="/sg/optimist/silver"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        Silver standings
-      </Link>
-      <Link
-        href="/sg/optimist/asian-index"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        Asian Optimist Index
-      </Link>
-      <Link
-        href="/sg/optimist/selection"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
-      >
-        Selection trials 2026
-      </Link>
-      {isSuperadmin && (
-        <Link
-          href="/sg/optimist/goldsailors"
-          onClick={() => {
-            setMobileOpen(false);
-            setOpenMenu(null);
-          }}
-          className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-slate-soft hover:bg-sailcloth hover:text-harbour transition-colors"
-        >
-          All Gold Fleet sailors
-        </Link>
-      )}
-    </>
-  );
-
-  const ilcaLinks = (
-    <>
-      <Link
-        href="/sg/ilca4"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 4 standings
-      </Link>
-      <Link
-        href="/sg/ilca6"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 6 standings
-      </Link>
-      <Link
-        href="/sg/ilca7"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 7 standings
-      </Link>
-      <Link
-        href="/sg/ilca4/selection"
-        prefetch
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
-      >
-        Selection trials &amp; policies
-      </Link>
-    </>
-  );
-
-  const classesLinks = (
-    <>
-      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        WingFoil
-      </p>
-      <Link
-        href="/sg/wingfoil"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        WingFoil standings
-      </Link>
-      <Link
-        href="/sg/wingfoil/selection"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
-      >
-        Funding &amp; selection policy
-      </Link>
-      <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        Techno 293
-      </p>
-      <Link
-        href="/sg/techno293"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        Techno 293 standings
-      </Link>
-      <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        iQFOiL
-      </p>
-      <Link
-        href="/sg/iqfoil"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        iQFOiL regatta results
-      </Link>
-    </>
-  );
-
-
-  const showDirectoryLinks = isAdminHost(host) || Boolean(email);
-
-  const navLinks = (
-    <>
-      {showDirectoryLinks && (
-        <Link
-          href="/calendar"
-          prefetch
-          className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors"
-        >
-          Regattas
-        </Link>
-      )}
-      <div className="relative">
-        <button
-          type="button"
-          aria-expanded={openMenu === "optimist"}
-          aria-haspopup="menu"
-          onClick={() =>
-            setOpenMenu((m) => (m === "optimist" ? null : "optimist"))
-          }
-          className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 focus:outline-none focus-visible:text-white cursor-pointer"
-        >
-          Optimist
-          <ChevronDown
-            className={`h-4 w-4 text-sailcloth transition-transform ${
-              openMenu === "optimist" ? "rotate-180 text-white" : ""
-            }`}
-          />
-        </button>
-        {openMenu === "optimist" && (
-          <div
-            role="menu"
-            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
-          >
-            {optimistLinks}
-          </div>
-        )}
-      </div>
-      <div className="relative">
-        <button
-          type="button"
-          aria-expanded={openMenu === "ilca"}
-          aria-haspopup="menu"
-          onClick={() =>
-            setOpenMenu((m) => (m === "ilca" ? null : "ilca"))
-          }
-          className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 focus:outline-none focus-visible:text-white cursor-pointer"
-        >
-          ILCA
-          <ChevronDown
-            className={`h-4 w-4 text-sailcloth transition-transform ${
-              openMenu === "ilca" ? "rotate-180 text-white" : ""
-            }`}
-          />
-        </button>
-        {openMenu === "ilca" && (
-          <div
-            role="menu"
-            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
-          >
-            {ilcaLinks}
-          </div>
-        )}
-      </div>
-      <div className="relative">
-        <button
-          type="button"
-          aria-expanded={openMenu === "classes"}
-          aria-haspopup="menu"
-          onClick={() => setOpenMenu((m) => (m === "classes" ? null : "classes"))}
-          className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 focus:outline-none focus-visible:text-white cursor-pointer"
-        >
-          Classes
-          <ChevronDown
-            className={`h-4 w-4 text-sailcloth transition-transform ${
-              openMenu === "classes" ? "rotate-180 text-white" : ""
-            }`}
-          />
-        </button>
-        {openMenu === "classes" && (
-          <div
-            role="menu"
-            className="absolute left-0 top-[52px] w-52 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
-          >
-            {classesLinks}
-          </div>
-        )}
-      </div>
-
-      {showDirectoryLinks && (
-        <button
-          type="button"
-          onClick={() => {
-            setMobileOpen(false);
-            setQuickSearchOpen(true);
-          }}
-          className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
-          title="Search sailors and regattas (⌘K)"
-        >
-          <Search className="h-3.5 w-3.5" />
-          <span>Search</span>
-          <kbd className="hidden lg:inline-flex px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-[10px] font-mono text-sailcloth/80 leading-none">
-            ⌘K
-          </kbd>
-        </button>
-      )}
-      {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
-        <Link
-          href="/sample"
-          onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-racing-mist hover:text-white py-2 md:py-0 transition-colors"
-        >
-          Explore demo
-        </Link>
-      )}
-    </>
-  );
-
-  const closeMenus = () => {
-    setMobileOpen(false);
-    setOpenMenu(null);
-  };
-  const showParentDashboard =
-    owned.some((o) => String(o.ownerRelation || "").toLowerCase() === "parent") ||
-    String(role || "").toLowerCase() === "parent";
-  const adminHref =
-    host &&
-    (host.includes("localhost") ||
-      host.includes("127.0.0.1") ||
-      host.includes("vercel.app"))
-      ? "/admin"
-      : "https://admin.sailorpath.com/";
-  const accountMenuItems = (onDark: boolean) => {
-    const itemClass = onDark
-      ? "block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-sailcloth hover:bg-harbour-mid hover:text-white"
-      : "block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour";
-    return (
-      <>
-        <p className={`px-3.5 py-2 text-xs truncate ${onDark ? "text-soft-aqua" : "text-slate-soft"}`}>
-          {email}
-        </p>
-        {primaryProfile && (
-          <Link
-            href={owned.length === 1 ? `/${primaryProfile.handle}` : "/athlete"}
-            onClick={closeMenus}
-            className={itemClass}
-          >
-            My profile
-          </Link>
-        )}
-        {owned.length > 0 && (
-          <Link href="/athlete" onClick={closeMenus} className={itemClass}>
-            Athlete Hub
-          </Link>
-        )}
-        {showParentDashboard && owned.length > 0 && (
-          <Link href="/parent" onClick={closeMenus} className={itemClass}>
-            Parent Dashboard
-          </Link>
-        )}
-        <Link href="/following" onClick={closeMenus} className={itemClass}>
-          Following
-        </Link>
-        {role === "coach" && (
-          <Link href="/coach-tools" onClick={closeMenus} className={itemClass}>
-            Coach Dashboard
-          </Link>
-        )}
-        <Link href="/account" onClick={closeMenus} className={itemClass}>
-          My account
-        </Link>
-        {isSuperadmin && (
-          <a href={adminHref} onClick={closeMenus} className={itemClass}>
-            Admin console
-          </a>
-        )}
-        <button
-          type="button"
-          onClick={() => void signOut()}
-          className={`${itemClass} w-full text-left cursor-pointer`}
-        >
-          Log out
-        </button>
-      </>
-    );
-  };
-
-  const authButtons = !ready ? (
-    <span className="text-xs text-sailcloth">…</span>
-  ) : email ? (
-    <div className="relative">
-      <button
-        type="button"
-        aria-expanded={openMenu === "account"}
-        aria-haspopup="menu"
-        onClick={() => setOpenMenu((m) => (m === "account" ? null : "account"))}
-        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 cursor-pointer"
-      >
-        Account
-        <ChevronDown
-          className={`h-4 w-4 transition-transform ${openMenu === "account" ? "rotate-180 text-white" : ""}`}
-        />
-      </button>
-      {openMenu === "account" && (
-        <div
-          role="menu"
-          className="absolute right-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
-        >
-          {accountMenuItems(false)}
-        </div>
-      )}
-    </div>
-  ) : (
-    <>
-      <Link
-        href="/search"
-        onClick={() => setMobileOpen(false)}
-        className="rounded-lg bg-racing-orange hover:bg-racing-deep px-4 py-2 text-[15px] font-semibold text-white min-h-[40px] inline-flex items-center justify-center transition-colors shadow-sm"
-      >
-        Find and claim a profile
-      </Link>
-      <Link
-        href="/login"
-        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
-      >
-        Log in
-      </Link>
-      <Link
-        href="/register"
-        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
-      >
-        Create account
-      </Link>
-    </>
-  );
+  const closeMobile = () => setMobileOpen(false);
+  const primaryProfile = owned[0];
 
   return (
-    <header className="sticky top-0 z-[60] w-full max-w-[100vw] border-b border-harbour-shadow bg-harbour text-sailcloth overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
-      <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
-        <div ref={navRef} className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
-          <div className="flex items-center gap-3 lg:gap-8 min-w-0 flex-1">
-            <BrandLogoLink variant="reversed" />
-            <nav
-              className="hidden md:flex items-center gap-5 lg:gap-6"
-            >
-              {navLinks}
-            </nav>
-          </div>
-
-          <div className="hidden md:flex items-center gap-3 justify-end shrink-0">
-            {authButtons}
-          </div>
-
-          <button
-            type="button"
-            className="md:hidden rounded-lg border border-soft-aqua/30 p-2 text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.5rem] min-w-[2.5rem] inline-flex items-center justify-center"
-            aria-label="Toggle menu"
-            aria-expanded={mobileOpen}
-            onClick={() => {
-              setOpenMenu(null);
-              setMobileOpen((o) => !o);
-            }}
-          >
-            {mobileOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-          </button>
+    <header className="sticky top-0 z-[60] w-full border-b border-harbour-shadow bg-harbour text-sailcloth">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-3 sm:h-16 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-6">
+          <BrandLogoLink variant="reversed" />
+          <nav aria-label="Public" className="hidden items-center gap-5 lg:flex">
+            {publicLinks.map(([label, href]) => (
+              <Link key={href} href={href} className="text-sm font-semibold text-sailcloth hover:text-white hover:underline underline-offset-4">
+                {label}
+              </Link>
+            ))}
+          </nav>
         </div>
 
-        {mobileOpen && (
-          <div className="md:hidden border-t border-harbour-shadow bg-harbour py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto px-2">
-            {showDirectoryLinks && (
-              <Link
-                href="/calendar"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-              >
-                Regattas
-              </Link>
-            )}
-            {showClaimCta && (
-              <Link
-                href="/search"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-white bg-racing-orange hover:bg-racing-deep touch-manipulation min-h-[2.75rem] flex items-center justify-center shadow-sm"
-              >
-                Find and claim a profile
-              </Link>
-            )}
-            <p className="px-3 pt-2 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              Optimist
-            </p>
-            <Link
-              href="/sg/optimist/gold"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Gold standings
-            </Link>
-            <Link
-              href="/sg/optimist/silver"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Silver standings
-            </Link>
-            <Link
-              href="/sg/optimist/asian-index"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Asian Optimist Index
-            </Link>
-            <Link
-              href="/sg/optimist/selection"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Selection trials 2026
-            </Link>
-            {isSuperadmin && (
-              <Link
-                href="/sg/optimist/goldsailors"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-soft-aqua hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-              >
-                All Gold Fleet sailors
-              </Link>
-            )}
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              ILCA
-            </p>
-            <Link
-              href="/sg/ilca4"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 4 standings
-            </Link>
-            <Link
-              href="/sg/ilca6"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 6 standings
-            </Link>
-            <Link
-              href="/sg/ilca7"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 7 standings
-            </Link>
-            <Link
-              href="/sg/ilca4/selection"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Selection trials &amp; policies
-            </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              WingFoil
-            </p>
-            <Link
-              href="/sg/wingfoil"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              WingFoil standings
-            </Link>
-            <Link
-              href="/sg/wingfoil/selection"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Funding &amp; selection policy
-            </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              Techno 293
-            </p>
-            <Link
-              href="/sg/techno293"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Techno 293 Racing
-            </Link>
-            {showDirectoryLinks && (
-              <Link
-                href="/search"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-              >
-                Search
-              </Link>
-            )}
-            {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
-              <Link
-                href="/sample"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-              >
-                Explore demo
-              </Link>
-            )}
-            <Link
-              href="/support"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Help &amp; support
-            </Link>
-            <div className="mt-3 pt-3 border-t border-harbour-shadow flex flex-col gap-1.5">
-              {email ? (
-                <div className="flex flex-col gap-1 px-1">{accountMenuItems(true)}</div>
-              ) : (
-                <div className="grid grid-cols-2 gap-2 pt-1">
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileOpen(false)}
-                    className="rounded-lg border border-soft-aqua/50 px-3 py-2.5 text-center text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation flex items-center justify-center min-h-[2.75rem] transition-colors"
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    href="/register"
-                    onClick={() => setMobileOpen(false)}
-                    className="rounded-lg bg-racing-orange hover:bg-racing-deep px-3 py-2.5 text-center text-sm font-semibold text-white touch-manipulation flex items-center justify-center min-h-[2.75rem] transition-colors shadow-sm"
-                  >
-                    Create account
-                  </Link>
+        <div className="hidden items-center gap-3 lg:flex">
+          <button type="button" aria-label="Search SailorPath" onClick={() => setQuickSearchOpen(true)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid hover:text-white" title="Search (⌘K)">
+            <Search className="h-5 w-5" />
+          </button>
+          {!ready ? <span className="text-sm text-soft-aqua">…</span> : email ? (
+            <div className="relative">
+              <button type="button" onClick={() => setAccountOpen((open) => !open)} aria-expanded={accountOpen} className="inline-flex items-center gap-1 text-sm font-semibold text-sailcloth hover:text-white">
+                Account <ChevronDown className={`h-4 w-4 transition-transform ${accountOpen ? "rotate-180" : ""}`} />
+              </button>
+              {accountOpen && (
+                <div className="absolute right-0 top-8 w-56 rounded-xl border border-cool-veil bg-warm-white p-2 text-charcoal shadow-xl">
+                  <p className="truncate px-3 py-2 text-xs text-slate-soft">{email}</p>
+                  <Link href="/account" onClick={() => setAccountOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth">My account</Link>
+                  {primaryProfile && <Link href={`/sailors/${primaryProfile.handle}`} onClick={() => setAccountOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth">My profile</Link>}
+                  <Link href="/account/parent" onClick={() => setAccountOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth">Parent workspace</Link>
+                  <Link href="/account/coach" onClick={() => setAccountOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth">Coach workspace</Link>
+                  <button type="button" onClick={() => void signOut()} className="block w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-rose-700 hover:bg-rose-50">Log out</button>
                 </div>
               )}
             </div>
-          </div>
-        )}
+          ) : <>
+            <Link href="/login" className="text-sm font-semibold text-sailcloth hover:text-white">Log in</Link>
+            <Link href="/register" className="rounded-lg border border-soft-aqua/50 px-3 py-1.5 text-sm font-semibold text-sailcloth hover:bg-harbour-mid hover:text-white">Create account</Link>
+          </>}
+        </div>
+
+        <div className="flex items-center gap-1 lg:hidden">
+          <button type="button" aria-label="Search SailorPath" onClick={() => setQuickSearchOpen(true)} className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid"><Search className="h-5 w-5" /></button>
+          <button type="button" aria-label="Toggle menu" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)} className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid">{mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
+        </div>
       </div>
 
-      {quickSearchOpen ? (
-        <QuickSearchModal
-          isOpen
-          onClose={() => setQuickSearchOpen(false)}
-        />
-      ) : null}
+      {mobileOpen && <div className="border-t border-harbour-shadow bg-harbour px-3 py-3 lg:hidden">
+        <nav aria-label="Mobile public" className="grid gap-1">
+          {publicLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMobile} className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid">{label}</Link>)}
+        </nav>
+        <div className="mt-3 border-t border-harbour-shadow pt-3">
+          {email ? <div className="grid gap-1"><Link href="/account" onClick={closeMobile} className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid">Account</Link><Link href="/account/parent" onClick={closeMobile} className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid">Parent workspace</Link><Link href="/account/coach" onClick={closeMobile} className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid">Coach workspace</Link></div> : <div className="grid grid-cols-2 gap-2"><Link href="/login" onClick={closeMobile} className="rounded-lg border border-soft-aqua/50 px-3 py-2.5 text-center text-sm font-semibold">Log in</Link><Link href="/register" onClick={closeMobile} className="rounded-lg bg-racing-orange px-3 py-2.5 text-center text-sm font-semibold text-white">Create account</Link></div>}
+        </div>
+      </div>}
+      {quickSearchOpen && <QuickSearchModal isOpen onClose={() => setQuickSearchOpen(false)} />}
     </header>
   );
 }

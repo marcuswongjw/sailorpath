@@ -33,18 +33,9 @@ describe("parseSearchQuery", () => {
     expect(resSaf.clubExpansions).toContain("SAF Yacht Club");
   });
 
-  it("expands school abbreviations for RI, ACSI, RGS, SJI", () => {
+  it("does not add private-field expansions", () => {
     const resRi = parseSearchQuery("RI");
-    expect(resRi.schoolExpansions).toContain("Raffles Institution");
-
-    const resAcsi = parseSearchQuery("ACSI");
-    expect(resAcsi.schoolExpansions).toContain("Anglo-Chinese School (Independent)");
-
-    const resRgs = parseSearchQuery("RGS");
-    expect(resRgs.schoolExpansions).toContain("Raffles Girls' School");
-
-    const resSji = parseSearchQuery("SJI");
-    expect(resSji.schoolExpansions).toContain("St. Joseph's Institution");
+    expect(resRi.clubExpansions).toEqual([]);
   });
 
   it("handles complex multi-term queries cleanly", () => {

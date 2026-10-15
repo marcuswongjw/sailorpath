@@ -6,9 +6,12 @@ import type { MetadataRoute } from "next";
  */
 const PATHS = [
   "/",
+  "/results",
   "/rankings",
   "/calendar",
-  "/search",
+  "/sailors",
+  "/classes/x-15",
+  "/news",
   "/sg/optimist/gold",
   "/sg/optimist/silver",
   "/sg/optimist/selection",

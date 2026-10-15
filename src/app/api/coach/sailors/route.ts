@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         handle: sailor.handle,
         sailNumber: sailor.sailNumber,
         club: sailor.club,
-        avatarUrl: sailor.avatarUrl || null,
+        avatarUrl: null,
       })),
     }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {

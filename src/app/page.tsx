@@ -99,7 +99,7 @@ export default async function HomePage() {
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="/search"
+              href="/sailors"
               className="sp-primary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-8 text-[15px] font-semibold"
             >
               Find your profile
@@ -121,7 +121,7 @@ export default async function HomePage() {
             )}
           </div>
 
-          <form action="/search" className="relative mx-auto mt-6 max-w-lg w-full">
+          <form action="/sailors" className="relative mx-auto mt-6 max-w-lg w-full">
             <input
               type="search"
               name="query"
@@ -242,7 +242,7 @@ export default async function HomePage() {
                 milestones together on your profile.
               </p>
               <Link
-                href="/search"
+                href="/sailors"
                 className="sp-primary mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 px-4 text-sm font-semibold"
               >
                 Find and claim your profile
@@ -313,7 +313,7 @@ export default async function HomePage() {
             </p>
           </div>
           <div className="sp-card p-5 sm:p-7">
-            <form action="/search" className="relative">
+            <form action="/sailors" className="relative">
               <Search
                 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-harbour"
                 aria-hidden

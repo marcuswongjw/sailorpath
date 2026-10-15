@@ -73,6 +73,13 @@ export function useSailorProfileState({
   const [isPublicDob, setIsPublicDob] = useState<boolean>(
     Boolean(initialSailor.isPublicDob)
   );
+  const [publicVisibility, setPublicVisibility] = useState({
+    showSchoolOnPublicProfile: Boolean(initialSailor.showSchoolOnPublicProfile),
+    showEquipmentOnPublicProfile: Boolean(initialSailor.showEquipmentOnPublicProfile),
+    showProfilePhotoOnPublicProfile: Boolean(initialSailor.showProfilePhotoOnPublicProfile),
+    showSocialLinksOnPublicProfile: Boolean(initialSailor.showSocialLinksOnPublicProfile),
+    showSailingMilestonesOnPublicProfile: Boolean(initialSailor.showSailingMilestonesOnPublicProfile),
+  });
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [claimPanelOpen, setClaimPanelOpen] = useState(false);
@@ -244,10 +251,13 @@ export function useSailorProfileState({
   /** When owner enables Preview public, hide private/owner-only surfaces. */
   const ownerView = isOwner && !previewPublic;
   const hasPrivateAccess = canSeePrivate && !previewPublic;
-  const showWeight =
-    isPublicWeight || hasPrivateAccess || (isOwner && !previewPublic);
-  // Equipment is always private — owner / private access only (never public)
-  const showEquipment = hasPrivateAccess || ownerView;
+  // Legacy public DOB/weight flags are intentionally ignored. Exact DOB and
+  // weight remain private even in a public-preview owner view.
+  const showWeight = hasPrivateAccess || ownerView;
+  const showEquipment =
+    hasPrivateAccess ||
+    ownerView ||
+    Boolean(displaySailor.showEquipmentOnPublicProfile);
 
   const saveProfile = async () => {
     if (demoMode) {
@@ -277,6 +287,7 @@ export function useSailorProfileState({
           isPublicWeight,
           isPublicDob,
           isPublicEquipment: false,
+          ...publicVisibility,
           hullBrand: form.hullBrand,
           sailMake: form.sailMake,
           foilBrand: form.foilBrand,
@@ -298,6 +309,13 @@ export function useSailorProfileState({
       }));
       setIsPublicWeight(Boolean(data.sailor.isPublicWeight));
       setIsPublicDob(Boolean(data.sailor.isPublicDob));
+      setPublicVisibility({
+        showSchoolOnPublicProfile: Boolean(data.sailor.showSchoolOnPublicProfile),
+        showEquipmentOnPublicProfile: Boolean(data.sailor.showEquipmentOnPublicProfile),
+        showProfilePhotoOnPublicProfile: Boolean(data.sailor.showProfilePhotoOnPublicProfile),
+        showSocialLinksOnPublicProfile: Boolean(data.sailor.showSocialLinksOnPublicProfile),
+        showSailingMilestonesOnPublicProfile: Boolean(data.sailor.showSailingMilestonesOnPublicProfile),
+      });
       setForm((f) => ({
         ...f,
         handle: data.sailor.handle || f.handle,
@@ -315,7 +333,7 @@ export function useSailorProfileState({
       setSaveMsg("Saved");
       setEditing(false);
       if (data.handleChanged && data.sailor?.handle) {
-        router.replace(`/${encodeURIComponent(data.sailor.handle)}`);
+        router.replace(`/sailors/${encodeURIComponent(data.sailor.handle)}`);
         return;
       }
       setTimeout(() => setSaveMsg(null), 2500);
@@ -750,9 +768,13 @@ export function useSailorProfileState({
     ? String(displaySailor.dob).slice(0, 10)
     : "";
   const bornYear =
-    /^\d{4}-\d{2}-\d{2}$/.test(dobYmd) ? dobYmd.slice(0, 4) : null;
+    displaySailor.birthYear != null
+      ? String(displaySailor.birthYear)
+      : /^\d{4}-\d{2}-\d{2}$/.test(dobYmd)
+        ? dobYmd.slice(0, 4)
+        : null;
   const showFullDob =
-    Boolean(bornYear) && (isPublicDob || hasPrivateAccess || ownerView);
+    Boolean(dobYmd) && (hasPrivateAccess || ownerView);
   const fullDobLabel =
     showFullDob && dobYmd ? formatFullDob(dobYmd) : null;
 
@@ -1216,6 +1238,8 @@ export function useSailorProfileState({
     setIsPublicWeight,
     isPublicDob,
     setIsPublicDob,
+    publicVisibility,
+    setPublicVisibility,
     claimStatus,
     setClaimStatus,
     claimMsg,

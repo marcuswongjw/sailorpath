@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { unstable_doesMiddlewareMatch } from "next/experimental/testing/server";
-import { config, shouldRefreshSession } from "@/proxy";
+import { config, hasUsableSupabaseUrl, shouldRefreshSession } from "@/proxy";
 
 describe("proxy routing", () => {
   it("only matches auth-sensitive route shapes", () => {
@@ -33,5 +33,12 @@ describe("proxy routing", () => {
     expect(shouldRefreshSession("/alice-tan", false)).toBe(true);
     expect(shouldRefreshSession("/robots.txt", false)).toBe(false);
     expect(shouldRefreshSession("/", true)).toBe(true);
+  });
+
+  it("skips session refresh for malformed local Supabase URLs", () => {
+    expect(hasUsableSupabaseUrl("https://example.supabase.co")).toBe(true);
+    expect(hasUsableSupabaseUrl("http://localhost:54321")).toBe(true);
+    expect(hasUsableSupabaseUrl("placeholder")).toBe(false);
+    expect(hasUsableSupabaseUrl("not-a-url")).toBe(false);
   });
 });

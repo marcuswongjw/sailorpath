@@ -29,43 +29,6 @@ export const CLUB_ABBREVIATIONS: Record<string, string[]> = {
   tbsa: ["Tracey Boating Sailing Association", "TBSA"],
 };
 
-/**
- * Common Singapore school abbreviations to full school names.
- */
-export const SCHOOL_ABBREVIATIONS: Record<string, string[]> = {
-  ri: ["Raffles Institution", "RI"],
-  rgs: ["Raffles Girls' School", "RGS", "Raffles Girls"],
-  rgps: ["Raffles Girls' Primary School", "RGPS"],
-  acs: ["Anglo-Chinese", "ACS"],
-  acsi: ["Anglo-Chinese School (Independent)", "ACS(I)", "ACSI", "Anglo-Chinese"],
-  acsp: ["Anglo-Chinese School (Primary)", "ACS(P)", "ACSP"],
-  acsj: ["Anglo-Chinese School (Junior)", "ACS(J)", "ACSJ"],
-  sji: ["St. Joseph's Institution", "St Joseph's Institution", "SJI", "St. Joseph"],
-  sjij: ["St. Joseph's Institution Junior", "SJIJ", "SJI Junior"],
-  tkgs: ["Tanjong Katong Girls' School", "TKGS"],
-  tkps: ["Tanjong Katong Primary School", "TKPS"],
-  ssp: ["Singapore Sports School", "Sports School", "SSP"],
-  sst: ["School of Science and Technology", "SST"],
-  nygh: ["Nanyang Girls' High School", "NYGH", "Nanyang Girls"],
-  nyps: ["Nanyang Primary School", "NYPS"],
-  mgs: ["Methodist Girls' School", "MGS"],
-  scgs: ["Singapore Chinese Girls' School", "SCGS"],
-  vs: ["Victoria School", "VS"],
-  vjc: ["Victoria Junior College", "VJC"],
-  dhs: ["Dunman High School", "Dunman High", "DHS"],
-  hci: ["Hwa Chong Institution", "Hwa Chong", "HCI"],
-  tns: ["Tao Nan School", "Tao Nan", "TNS"],
-  chs: ["Catholic High School", "Catholic High", "CHS"],
-  hihs: ["Holy Innocents' High School", "HIHS"],
-  bgps: ["Bedok Green Primary School", "BGPS"],
-  bgss: ["Bedok Green Secondary School", "BGSS"],
-  uwc: ["United World College", "UWC", "UWCSEA"],
-  uwcsea: ["United World College", "UWCSEA"],
-  tts: ["Tanglin Trust School", "Tanglin Trust", "TTS"],
-  sajs: ["St. Andrew's Junior School", "SAJS"],
-  sass: ["St. Andrew's Secondary School", "SASS"],
-};
-
 export type ParsedSearchQuery = {
   raw: string;
   cleaned: string;
@@ -74,13 +37,12 @@ export type ParsedSearchQuery = {
   extractedSailNumber: string | null;
   /** Country code prefix if present, e.g. 'SGP', 'SIN', 'HKG' */
   countryPrefix: string | null;
-  /** Synonyms or expansions for clubs/schools */
+  /** Synonyms or expansions for public club fields only. */
   clubExpansions: string[];
-  schoolExpansions: string[];
 };
 
 /**
- * Parses user search query to detect sail numbers, country codes, and club/school abbreviations.
+ * Parses user search query to detect sail numbers, country codes and club abbreviations.
  */
 export function parseSearchQuery(query: string): ParsedSearchQuery {
   const raw = String(query || "").trim();
@@ -90,7 +52,6 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
   let extractedSailNumber: string | null = null;
   let countryPrefix: string | null = null;
   const clubExpansions: string[] = [];
-  const schoolExpansions: string[] = [];
 
   // Check combined patterns like "SGP4652" or "SGP 4652" or "SIN-3133"
   const combinedMatch = raw.match(/(SGP|SIN|HKG|MAS|THA|AUS|USA|GBR|CAN|NZL|JPN|IND|MYA)[-_\s]*([0-9]{1,7})/i);
@@ -99,7 +60,7 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
     extractedSailNumber = combinedMatch[2];
   }
   // Check individual tokens as well so a combined sail number does not hide
-  // other terms such as a club or school abbreviation.
+  // other terms such as a club abbreviation.
   for (const token of tokens) {
     const lower = token.toLowerCase();
     if (!combinedMatch) {
@@ -116,10 +77,6 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
     if (CLUB_ABBREVIATIONS[lower]) {
       clubExpansions.push(...CLUB_ABBREVIATIONS[lower]);
     }
-    // School abbreviation
-    if (SCHOOL_ABBREVIATIONS[lower]) {
-      schoolExpansions.push(...SCHOOL_ABBREVIATIONS[lower]);
-    }
   }
 
   return {
@@ -129,19 +86,14 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
     extractedSailNumber,
     countryPrefix,
     clubExpansions: Array.from(new Set(clubExpansions)),
-    schoolExpansions: Array.from(new Set(schoolExpansions)),
   };
 }
 
 export type SearchFilters = {
   query?: string;
   fleet?: "all" | "gold" | "silver" | "ilca" | "ilca4" | "guest" | string;
-  squad?: "all" | "Nat A" | "Nat B" | "DS" | string;
   nationality?: string;
   club?: string;
-  school?: string;
-  birthYearFrom?: number;
-  birthYearTo?: number;
   type?: "all" | "sailors" | "regattas";
   limit?: number;
 };
@@ -154,14 +106,8 @@ export type SailorSearchResult = {
   sailNumberIlca4: string | null;
   boardNumber: string | null;
   club: string;
-  school: string | null;
   nationality: string | null;
-  avatarUrl: string | null;
-  gender: string | null;
-  nationalSquadStatus: string | null;
-  currentFleet: string | null;
   activeFleet: "Gold" | "Silver" | null;
-  ilca4NationalList: boolean;
   score: number;
 };
 
@@ -196,19 +142,11 @@ const searchSailorColumns = {
   boardNumber: sailors.boardNumber,
   ilca4NationalList: sailors.ilca4NationalList,
   club: sailors.club,
-  school: sailors.school,
   nationality: sailors.nationality,
-  avatarUrl: sailors.avatarUrl,
-  parentId: sailors.parentId,
   goldEntryDate: sailors.goldEntryDate,
   silverEntryDate: sailors.silverEntryDate,
   dropDate: sailors.dropDate,
   currentFleet: sailors.currentFleet,
-  dob: sailors.dob,
-  weight: sailors.weight,
-  bio: sailors.bio,
-  gender: sailors.gender,
-  nationalSquadStatus: sailors.nationalSquadStatus,
 };
 
 /**
@@ -252,7 +190,6 @@ export async function searchSailorsEnhanced(
         ilike(sailors.sailNumber, tokenPattern),
         ilike(sailors.club, tokenPattern),
         ilike(sailors.handle, tokenPattern),
-        ilike(sailors.school, tokenPattern),
         ilike(sailors.nationality, tokenPattern),
       ];
 
@@ -281,12 +218,6 @@ export async function searchSailorsEnhanced(
         }
       }
 
-      if (SCHOOL_ABBREVIATIONS[lower]) {
-        for (const schoolName of SCHOOL_ABBREVIATIONS[lower]) {
-          tokenOrs.push(ilike(sailors.school, `%${schoolName}%`));
-        }
-      }
-
       conditions.push(or(...tokenOrs)!);
     }
 
@@ -306,10 +237,8 @@ export async function searchSailorsEnhanced(
     }
   }
 
-  // Explicit filter options - Pushed to SQL to avoid truncation bug
-  if (f.squad && f.squad !== "all") {
-    conditions.push(eq(sailors.nationalSquadStatus, f.squad));
-  }
+  // Public directory filters; schools, squads, DOB and other private fields
+  // intentionally have no query path here.
   if (f.nationality?.trim()) {
     conditions.push(ilike(sailors.nationality, `%${f.nationality.trim()}%`));
   }
@@ -317,19 +246,6 @@ export async function searchSailorsEnhanced(
     const clubLower = f.club.trim().toLowerCase();
     const clubExp = CLUB_ABBREVIATIONS[clubLower] || [f.club.trim()];
     conditions.push(or(...clubExp.map((c) => ilike(sailors.club, `%${c}%`)))!);
-  }
-  if (f.school?.trim()) {
-    const schoolLower = f.school.trim().toLowerCase();
-    const schoolExp = SCHOOL_ABBREVIATIONS[schoolLower] || [f.school.trim()];
-    conditions.push(or(...schoolExp.map((s) => ilike(sailors.school, `%${s}%`)))!);
-  }
-  if (f.birthYearFrom || f.birthYearTo) {
-    if (f.birthYearFrom) {
-      conditions.push(sql`extract(year from ${sailors.dob}) >= ${f.birthYearFrom}`);
-    }
-    if (f.birthYearTo) {
-      conditions.push(sql`extract(year from ${sailors.dob}) <= ${f.birthYearTo}`);
-    }
   }
 
   // Fleet filtering in SQL
@@ -401,19 +317,19 @@ export async function searchSailorsEnhanced(
       boardNumber: row.boardNumber,
       ilca4NationalList: row.ilca4NationalList,
       club: row.club,
-      school: row.school,
+      school: null,
       nationality: row.nationality,
-      avatarUrl: row.avatarUrl,
-      parentId: row.parentId,
+      avatarUrl: null,
+      parentId: null,
       goldEntryDate: row.goldEntryDate,
       silverEntryDate: row.silverEntryDate,
       dropDate: row.dropDate,
       currentFleet: row.currentFleet,
-      dob: row.dob,
-      weight: row.weight,
-      bio: row.bio,
-      gender: row.gender,
-      nationalSquadStatus: row.nationalSquadStatus,
+      dob: null,
+      weight: null,
+      bio: null,
+      gender: null,
+      nationalSquadStatus: null,
     };
 
     const resolved = resolveSailorFleet(s, period);
@@ -429,15 +345,6 @@ export async function searchSailorsEnhanced(
       continue;
     }
     if (fleetFilterCheck === "guest" && (isInSgSeries(s) && activeFleet != null)) continue;
-
-    // Birth year filter already in SQL, but keeping for safety
-    if (f.birthYearFrom || f.birthYearTo) {
-      if (!row.dob) continue;
-      const y = new Date(row.dob).getFullYear();
-      if (!Number.isFinite(y)) continue;
-      if (f.birthYearFrom && y < f.birthYearFrom) continue;
-      if (f.birthYearTo && y > f.birthYearTo) continue;
-    }
 
     // Calculate Relevance Score
     let score = 0;
@@ -479,19 +386,14 @@ export async function searchSailorsEnhanced(
       }
 
       const clubLower = (row.club || "").toLowerCase();
-      const schoolLower = (row.school || "").toLowerCase();
 
       for (const t of parsed.tokens) {
         const tLow = t.toLowerCase();
         if (clubLower.includes(tLow)) score += 60;
-        if (schoolLower.includes(tLow)) score += 60;
       }
 
       for (const exp of parsed.clubExpansions) {
         if (clubLower.includes(exp.toLowerCase())) score += 120;
-      }
-      for (const exp of parsed.schoolExpansions) {
-        if (schoolLower.includes(exp.toLowerCase())) score += 120;
       }
     } else {
       score = 10;
@@ -500,7 +402,6 @@ export async function searchSailorsEnhanced(
     if (activeFleet === "Gold") score += 50;
     else if (activeFleet === "Silver") score += 30;
     if (row.ilca4NationalList) score += 40;
-    if (row.nationalSquadStatus) score += 25;
 
     scored.push({
       id: row.id,
@@ -510,14 +411,8 @@ export async function searchSailorsEnhanced(
       sailNumberIlca4: row.sailNumberIlca4,
       boardNumber: row.boardNumber,
       club: row.club,
-      school: row.school,
       nationality: row.nationality,
-      avatarUrl: row.avatarUrl,
-      gender: row.gender,
-      nationalSquadStatus: row.nationalSquadStatus,
-      currentFleet: row.currentFleet,
       activeFleet,
-      ilca4NationalList: row.ilca4NationalList,
       score,
     });
   }

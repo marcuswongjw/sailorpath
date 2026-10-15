@@ -57,6 +57,12 @@ export async function PATCH(req: Request) {
         weight: sailors.weight,
         isPublicWeight: sailors.isPublicWeight,
         isPublicDob: sailors.isPublicDob,
+        showSchoolOnPublicProfile: sailors.showSchoolOnPublicProfile,
+        showEquipmentOnPublicProfile: sailors.showEquipmentOnPublicProfile,
+        showProfilePhotoOnPublicProfile: sailors.showProfilePhotoOnPublicProfile,
+        showSocialLinksOnPublicProfile: sailors.showSocialLinksOnPublicProfile,
+        showSailingMilestonesOnPublicProfile:
+          sailors.showSailingMilestonesOnPublicProfile,
         sailingJourney: sailors.sailingJourney,
         hullBrand: sailors.hullBrand,
         sailMake: sailors.sailMake,
@@ -216,14 +222,37 @@ export async function PATCH(req: Request) {
       patch.weight =
         wR.value == null ? null : Math.round(wR.value);
     }
-    if (typeof body.isPublicWeight === "boolean") {
-      patch.isPublicWeight = body.isPublicWeight;
-    }
-    if (typeof body.isPublicDob === "boolean") {
-      patch.isPublicDob = body.isPublicDob;
-    }
-    // Equipment is always private for now — ignore client attempts to share
+    // Legacy per-field flags cannot override the new privacy policy.
+    patch.isPublicWeight = false;
+    patch.isPublicDob = false;
     patch.isPublicEquipment = false;
+    const publicVisibilityKeys = [
+      "showSchoolOnPublicProfile",
+      "showEquipmentOnPublicProfile",
+      "showProfilePhotoOnPublicProfile",
+      "showSocialLinksOnPublicProfile",
+      "showSailingMilestonesOnPublicProfile",
+    ] as const;
+    const isMinor = sailor.dob
+      ? new Date().getFullYear() - Number(String(sailor.dob).slice(0, 4)) < 18
+      : false;
+    const changingPublicVisibility = publicVisibilityKeys.some(
+      (key) => typeof body[key] === "boolean" && body[key] !== sailor[key]
+    );
+    if (
+      changingPublicVisibility &&
+      isMinor &&
+      sailor.ownerRelation !== "parent" &&
+      auth.role !== "superadmin"
+    ) {
+      return NextResponse.json(
+        { error: "A parent or guardian must manage public profile visibility" },
+        { status: 403 }
+      );
+    }
+    for (const key of publicVisibilityKeys) {
+      if (typeof body[key] === "boolean") patch[key] = body[key];
+    }
 
     let equipmentChanged = false;
     for (const [key, max] of [
@@ -265,6 +294,12 @@ export async function PATCH(req: Request) {
         isPublicWeight: sailors.isPublicWeight,
         isPublicDob: sailors.isPublicDob,
         isPublicEquipment: sailors.isPublicEquipment,
+        showSchoolOnPublicProfile: sailors.showSchoolOnPublicProfile,
+        showEquipmentOnPublicProfile: sailors.showEquipmentOnPublicProfile,
+        showProfilePhotoOnPublicProfile: sailors.showProfilePhotoOnPublicProfile,
+        showSocialLinksOnPublicProfile: sailors.showSocialLinksOnPublicProfile,
+        showSailingMilestonesOnPublicProfile:
+          sailors.showSailingMilestonesOnPublicProfile,
         sailingJourney: sailors.sailingJourney,
         hullBrand: sailors.hullBrand,
         sailMake: sailors.sailMake,
@@ -337,6 +372,11 @@ export async function PATCH(req: Request) {
         "weight",
         "isPublicWeight",
         "isPublicDob",
+        "showSchoolOnPublicProfile",
+        "showEquipmentOnPublicProfile",
+        "showProfilePhotoOnPublicProfile",
+        "showSocialLinksOnPublicProfile",
+        "showSailingMilestonesOnPublicProfile",
         "sailingJourney",
         "hullBrand",
         "sailMake",

@@ -778,7 +778,7 @@ export function FleetRankingsView({
                   />
                   <div className="min-w-0 flex-1">
                     <Link
-                      href={`/${s.handle}`}
+                      href={`/sailors/${s.handle}`}
                       prefetch
                       className="font-bold text-charcoal hover:text-racing-orange text-[14px] leading-snug truncate block"
                     >
@@ -953,7 +953,7 @@ export function FleetRankingsView({
                     </td>
                     <td className="sticky left-12 z-10 px-4 lg:px-5 py-3.5 bg-warm-white">
                       <Link
-                        href={`/${s.handle}`}
+                        href={`/sailors/${s.handle}`}
                         prefetch
                         className="font-bold text-charcoal hover:text-racing-orange"
                       >

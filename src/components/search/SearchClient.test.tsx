@@ -12,19 +12,13 @@ const sailor: SailorSearchResult = {
   sailNumberIlca4: "227676",
   boardNumber: null,
   club: "Changi Sailing Club",
-  school: "ANGLO-CHINESE SCHOOL (INDEPENDENT)",
   nationality: "Singapore",
-  avatarUrl: null,
-  gender: null,
-  nationalSquadStatus: null,
-  currentFleet: "Gold",
   activeFleet: "Gold",
-  ilca4NationalList: true,
   score: 1,
 };
 
 describe("SearchClient mobile layout", () => {
-  it("wraps filters and hides quick searches, club, and school", () => {
+  it("wraps filters and keeps private school data out of results", () => {
     render(<SearchClient initialSailors={[sailor]} initialRegattas={[]} />);
 
     const filters = screen.getByRole("group", { name: "Search filters" });

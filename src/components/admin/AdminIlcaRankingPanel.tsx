@@ -717,7 +717,7 @@ export function AdminIlcaRankingPanel({
                         <td className="px-3 py-2">
                           {sailor.handle ? (
                             <Link
-                              href={`/${sailor.handle}`}
+                              href={`/sailors/${sailor.handle}`}
                               className="font-semibold text-[var(--sp-charcoal)] hover:text-sky-700"
                               target="_blank"
                             >
