@@ -7,6 +7,7 @@
 export const CACHE_TAG_FLEET_RANKINGS = "fleet-rankings";
 export const CACHE_TAG_ILCA_RANKINGS = "ilca-rankings";
 export const CACHE_TAG_PUBLIC_REGATTAS = "public-regattas";
+export const CACHE_TAG_NEWS_ARTICLES = "news-articles";
 
 /**
  * Backstop for public data caches. Admin imports and owner edits call
