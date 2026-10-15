@@ -603,6 +603,7 @@ export const RSYC_OPTIMIST_GOLD_2026_EVENT: RegattaEventDef = {
       label: "Optimist Gold",
       series: "optimist",
       slugIncludes: ["rsyc", "knockout", "2026", "gold"],
+      alternateSlugIncludes: [["rsyc-2026-gold"]],
       prizeFleetName: "Optimist Gold Fleet",
     },
   ],
@@ -1072,6 +1073,7 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
 const EVENT_SLUG_ALIASES: Record<string, string> = {
   "rsyc-optimist-knockout-2026": "rsyc-optimist-silver-fleet-knockout-championship-2026",
   "rsyc-knockout-2026": "rsyc-optimist-silver-fleet-knockout-championship-2026",
+  "rsyc-2026-gold": "rsyc-optimist-gold-fleet-knockout-championship-2026",
   "rsyc-optimist-knockout-2025": "rsyc-optimist-knockout-championship-2025",
   "rsyc-knockout-2025": "rsyc-optimist-knockout-championship-2025",
   "rsyc-optimist-silver-fleet-knockout-championship-2025": "rsyc-optimist-knockout-championship-2025",
