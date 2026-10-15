@@ -5,8 +5,6 @@ import { DbOffline } from "@/components/DbOffline";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import {
-  getCachedPublicObservations,
-  getCachedResultsForSailor,
   getCachedSailorByHandle,
   getSailorByHandle,
   getResultsForSailor,
@@ -150,23 +148,26 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
         Boolean(
           sailor.currentFleet || sailor.goldEntryDate || sailor.silverEntryDate
         );
+      // A public profile must never wait on a full national-board calculation.
+      // That calculation can miss its shared cache and scan the entire result
+      // history, whereas this sailor's own official result history is a small,
+      // indexed lookup. Owners still receive live private standings and notes.
+      const shouldLoadPrivateProfileExtras = access.canSeePrivate;
 
       const [res, sStand, iStand, obs, equipHist] = await Promise.all([
-        access.canSeePrivate
-          ? getResultsForSailor(sailor.id)
-          : getCachedResultsForSailor(sailor.id),
-        mayHaveSingaporeSeries
+        getResultsForSailor(sailor.id),
+        shouldLoadPrivateProfileExtras && mayHaveSingaporeSeries
           ? getSailorSeriesStanding(sailor.id).catch(() => null)
           : Promise.resolve(null),
-        mayHaveIlca
+        shouldLoadPrivateProfileExtras && mayHaveIlca
           ? getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null)
           : Promise.resolve(null),
-        access.canSeePrivate
+        shouldLoadPrivateProfileExtras
           ? getRaceObservationsForSailor(sailor.id, {
               includePrivate: true,
             }).catch(() => [])
-          : getCachedPublicObservations(sailor.id).catch(() => []),
-        access.canSeePrivate
+          : Promise.resolve([]),
+        shouldLoadPrivateProfileExtras
           ? getEquipmentLogsForSailor(sailor.id).catch(() => [])
           : Promise.resolve([]),
       ]);
@@ -192,7 +193,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
         }
       }
 
-      if (!ilcaStanding && !mayHaveIlca) {
+      if (shouldLoadPrivateProfileExtras && !ilcaStanding && !mayHaveIlca) {
         const hasIlcaResults = (results || []).some((r) => {
           const bc = String(r.boatClass || "").toLowerCase();
           return bc.includes("ilca");
