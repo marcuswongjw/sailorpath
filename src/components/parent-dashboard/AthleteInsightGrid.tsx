@@ -174,7 +174,7 @@ export function AthleteInsightGrid({ athlete }: { athlete: Athlete }) {
                 <Sailboat className="h-3.5 w-3.5" />
                 Recent Results
               </span>
-              <Link href={`/${athlete.handle}`} className={LINK_TEAL}>
+              <Link href={`/sailors/${athlete.handle}`} className={LINK_TEAL}>
                 All →
               </Link>
             </div>
@@ -209,7 +209,7 @@ export function AthleteInsightGrid({ athlete }: { athlete: Athlete }) {
           </div>
           <div className="pt-2">
             <Link
-              href={`/${athlete.handle}`}
+              href={`/sailors/${athlete.handle}`}
               className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-1"
             >
               View Full Profile →

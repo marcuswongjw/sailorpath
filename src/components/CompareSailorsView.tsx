@@ -164,12 +164,12 @@ export function CompareSailorsView({
               <tr>
                 <th className="px-4 py-3">Metric</th>
                 <th className="px-4 py-3">
-                  <Link href={`/${a.handle}`} className="text-[var(--sp-harbour-shadow)] font-bold hover:text-[var(--sp-racing-orange)] normal-case text-sm">
+                  <Link href={`/sailors/${a.handle}`} className="text-[var(--sp-harbour-shadow)] font-bold hover:text-[var(--sp-racing-orange)] normal-case text-sm">
                     {a.name}
                   </Link>
                 </th>
                 <th className="px-4 py-3">
-                  <Link href={`/${b.handle}`} className="text-[var(--sp-harbour-shadow)] font-bold hover:text-[var(--sp-racing-orange)] normal-case text-sm">
+                  <Link href={`/sailors/${b.handle}`} className="text-[var(--sp-harbour-shadow)] font-bold hover:text-[var(--sp-racing-orange)] normal-case text-sm">
                     {b.name}
                   </Link>
                 </th>

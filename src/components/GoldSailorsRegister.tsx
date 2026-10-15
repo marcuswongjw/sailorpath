@@ -423,7 +423,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     >
                       <td className="py-3 px-2 text-left font-bold text-white truncate">
                         <Link
-                          href={`/${sailor.handle}`}
+                          href={`/sailors/${sailor.handle}`}
                           className="hover:text-[var(--sp-racing-deep)] transition-colors"
                           title={sailor.name}
                         >
@@ -493,7 +493,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
 
                       <td className="py-3 px-2 text-center">
                         <Link
-                          href={`/${sailor.handle}`}
+                          href={`/sailors/${sailor.handle}`}
                           className="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 hover:border-[var(--sp-racing-orange)]/40 px-2.5 py-1 text-[13px] font-bold text-slate-400 hover:text-[var(--sp-harbour-teal)] transition-all"
                         >
                           Profile

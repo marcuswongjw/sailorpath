@@ -5,9 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q") || searchParams.get("query") || "";
   const fleet = searchParams.get("fleet") || "all";
-  const squad = searchParams.get("squad") || "all";
   const club = searchParams.get("club") || undefined;
-  const school = searchParams.get("school") || undefined;
   const nationality = searchParams.get("nationality") || undefined;
   const type = (searchParams.get("type") as "all" | "sailors" | "regattas") || "all";
   const limitParam = searchParams.get("limit");
@@ -16,9 +14,7 @@ export async function GET(request: Request) {
   try {
     const results = await unifiedSearch(q, {
       fleet,
-      squad,
       club,
-      school,
       nationality,
       type,
       limit,

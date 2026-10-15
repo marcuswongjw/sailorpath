@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
+import { calendarPastResultsHref } from "@/lib/publicRouteRedirects";
 import { unstable_cache } from "next/cache";
 import { getCachedPublicRegattas } from "@/lib/queries";
 import {
@@ -65,6 +67,9 @@ type CalendarPageProps = {
 
 export default async function CalendarPage(props: CalendarPageProps) {
   const searchParams = props.searchParams ? await props.searchParams : undefined;
+  if (searchParams?.view === "past") {
+    permanentRedirect(calendarPastResultsHref(searchParams));
+  }
   const initialClass = searchParams?.class || "all";
   const initialTimelineTab = searchParams?.view === "past" ? "past" : "upcoming";
 

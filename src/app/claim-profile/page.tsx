@@ -36,7 +36,7 @@ export default function ClaimProfilePage() {
               Search by name or sail number. Open your public profile.
             </p>
             <Link
-              href="/search"
+              href="/sailors"
               className="inline-flex mt-3 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[15px] font-semibold text-white"
             >
               Search sailors

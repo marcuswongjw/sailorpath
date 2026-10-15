@@ -15,6 +15,8 @@ export interface SailorRecordProps {
   school?: string | null;
   nationality?: string | null;
   dob?: string | null;
+  /** Year-only public DOB projection. Exact DOB remains private. */
+  birthYear?: number | null;
   goldEntryDate?: string | null;
   silverEntryDate?: string | null;
   dropDate?: string | null;
@@ -26,6 +28,11 @@ export interface SailorRecordProps {
   boatSpars?: string | null;
   boatFoil?: string | null;
   avatarUrl?: string | null;
+  showSchoolOnPublicProfile?: boolean;
+  showEquipmentOnPublicProfile?: boolean;
+  showProfilePhotoOnPublicProfile?: boolean;
+  showSocialLinksOnPublicProfile?: boolean;
+  showSailingMilestonesOnPublicProfile?: boolean;
   [key: string]: unknown;
 }
 

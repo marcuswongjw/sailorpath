@@ -235,7 +235,7 @@ export function AthleteDevelopmentDrawer({
               {sailor.sailNumber} · {sailor.club}
             </p>
             <Link
-              href={`/${sailor.handle}`}
+              href={`/sailors/${sailor.handle}`}
               className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-racing-orange)] transition"
             >
               View public profile &rarr;

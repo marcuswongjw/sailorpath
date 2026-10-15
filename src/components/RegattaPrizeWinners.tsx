@@ -330,7 +330,7 @@ function PrizeSailorName({ name, handle }: { name: string; handle?: string }) {
   }
   return (
     <Link
-      href={`/${handle}`}
+      href={`/sailors/${handle}`}
       className="font-black text-harbour hover:text-harbour-deep hover:underline text-[13px] sm:text-sm leading-snug break-words"
     >
       {name}

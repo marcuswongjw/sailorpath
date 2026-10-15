@@ -84,6 +84,11 @@ export type SailorMapped = SailorRecord & {
   isPublicWeight?: boolean;
   isPublicDob?: boolean;
   isPublicEquipment?: boolean;
+  showSchoolOnPublicProfile?: boolean;
+  showEquipmentOnPublicProfile?: boolean;
+  showProfilePhotoOnPublicProfile?: boolean;
+  showSocialLinksOnPublicProfile?: boolean;
+  showSailingMilestonesOnPublicProfile?: boolean;
   sailingJourney?: string | null;
   ilca4NationalList?: boolean | null;
   hullBrand?: string | null;
@@ -193,6 +198,12 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     isPublicWeight: row.isPublicWeight,
     isPublicDob: row.isPublicDob,
     isPublicEquipment: row.isPublicEquipment,
+    showSchoolOnPublicProfile: row.showSchoolOnPublicProfile,
+    showEquipmentOnPublicProfile: row.showEquipmentOnPublicProfile,
+    showProfilePhotoOnPublicProfile: row.showProfilePhotoOnPublicProfile,
+    showSocialLinksOnPublicProfile: row.showSocialLinksOnPublicProfile,
+    showSailingMilestonesOnPublicProfile:
+      row.showSailingMilestonesOnPublicProfile,
     sailingJourney: (row as { sailingJourney?: string | null }).sailingJourney,
     hullBrand: row.hullBrand,
     sailMake: row.sailMake,

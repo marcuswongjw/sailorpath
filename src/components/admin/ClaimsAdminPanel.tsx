@@ -557,7 +557,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   Sailor profile
                 </p>
                 <Link
-                  href={`/${c.sailorHandle}`}
+                  href={`/sailors/${c.sailorHandle}`}
                   className="font-bold text-white hover:text-orange-400"
                 >
                   {c.sailorName}

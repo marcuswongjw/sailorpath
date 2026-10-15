@@ -102,7 +102,7 @@ export function AthleteHeroCard({ athlete }: { athlete: Athlete }) {
             <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
             Log Score & Evidence ↗
           </Link>
-          <Link href={`/${athlete.handle}`} className={SECONDARY_BTN}>
+          <Link href={`/sailors/${athlete.handle}`} className={SECONDARY_BTN}>
             Public Profile
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>

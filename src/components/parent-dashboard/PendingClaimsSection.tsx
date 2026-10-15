@@ -66,7 +66,7 @@ export function PendingClaimsSection({
             >
               <div>
                 <Link
-                  href={`/${c.sailorHandle}`}
+                  href={`/sailors/${c.sailorHandle}`}
                   className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)]`}
                 >
                   {c.sailorName}

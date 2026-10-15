@@ -34,6 +34,10 @@ export function SiteFooter() {
           <p className="text-soft-aqua">© {new Date().getFullYear()} SailorPath</p>
         </div>
         <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sailcloth/90">
+          <Link href="/results" className="hover:text-white hover:underline transition-colors">Results</Link>
+          <Link href="/sailors" className="hover:text-white hover:underline transition-colors">Sailors</Link>
+          <Link href="/classes/x-15" className="hover:text-white hover:underline transition-colors">X-15</Link>
+          <Link href="/news" className="hover:text-white hover:underline transition-colors">Updates</Link>
           <Link href="/about" className="hover:text-white hover:underline transition-colors">About</Link>
           <Link
             href="/support"

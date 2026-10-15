@@ -127,7 +127,7 @@ export function EquipmentInPlacePanel({
               Add Equipment
             </button>
             <Link
-              href={`/${activeAthlete.handle}#profile-equipment`}
+              href={`/sailors/${activeAthlete.handle}#profile-equipment`}
               className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
             >
               Full Profile →

@@ -570,7 +570,7 @@ export function IlcaRankingsView({
                     />
                     {handle ? (
                       <Link
-                        href={`/${handle}`}
+                        href={`/sailors/${handle}`}
                         className="font-black text-charcoal hover:text-harbour text-[15px] leading-snug break-words min-w-0"
                       >
                         {s.name}
@@ -791,7 +791,7 @@ export function IlcaRankingsView({
                     <td className="px-4 lg:px-5 py-3.5">
                       {handle ? (
                         <Link
-                          href={`/${handle}`}
+                          href={`/sailors/${handle}`}
                           className="font-bold text-charcoal hover:text-harbour"
                         >
                           {s.name}

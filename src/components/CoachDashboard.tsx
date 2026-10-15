@@ -708,7 +708,7 @@ export function CoachDashboard({
                     aria-label={`Select ${member.name} for comparison`} className="h-4 w-4 accent-[var(--sp-racing-orange)]" />
                   <div className="min-w-0 text-left">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Link href={`/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
+                      <Link href={`/sailors/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
                         {member.name}
                       </Link>
                       {member.fleet && <span className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${fleetPillClass(member.fleet)}`}>{member.fleet} #{member.ranking}</span>}

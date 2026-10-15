@@ -123,7 +123,7 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
       if (selected.type === "regatta") {
         router.push(selected.item.href);
       } else {
-        router.push(`/${selected.item.handle}`);
+        router.push(`/sailors/${selected.item.handle}`);
       }
       onClose();
     }
@@ -241,7 +241,7 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
                     return (
                       <Link
                         key={s.id}
-                        href={`/${s.handle}`}
+                        href={`/sailors/${s.handle}`}
                         onClick={onClose}
                         className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-2xl transition-colors ${
                           isSelected
@@ -275,7 +275,7 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
                               )}
                             </div>
                             <p className={`text-[11px] truncate ${isSelected ? "text-slate-300" : "text-slate-500"}`}>
-                              {s.club} {s.school ? `· ${s.school}` : ""}
+                              {s.club || "Club not listed"}
                             </p>
                           </div>
                         </div>
@@ -298,7 +298,7 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
               {/* View all results on /search link */}
               <div className="pt-2 border-t border-slate-100 px-2 pb-1">
                 <Link
-                  href={`/search?q=${encodeURIComponent(query.trim())}`}
+                  href={`/sailors?q=${encodeURIComponent(query.trim())}`}
                   onClick={onClose}
                   className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-orange-600 hover:bg-orange-50 transition-colors"
                 >
@@ -313,7 +313,7 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
               <p className="text-[11px] text-slate-400">
                 Press Enter or{" "}
                 <Link
-                  href={`/search?q=${encodeURIComponent(query.trim())}`}
+                  href={`/sailors?q=${encodeURIComponent(query.trim())}`}
                   onClick={onClose}
                   className="text-orange-600 font-bold hover:underline"
                 >

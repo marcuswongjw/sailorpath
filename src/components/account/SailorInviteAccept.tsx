@@ -115,7 +115,7 @@ export function SailorInviteAccept({
                   {claim.sailorName}
                 </p>
                 <Link
-                  href={`/${claim.sailorHandle}`}
+                  href={`/sailors/${claim.sailorHandle}`}
                   className="text-xs text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-teal)] break-all"
                 >
                   /{claim.sailorHandle}

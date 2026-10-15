@@ -127,6 +127,24 @@ export const sailors = pgTable("sailors", {
   /** Public profile photo URL (Supabase Storage or external) */
   avatarUrl: text("avatar_url"),
   bio: text("bio"),
+  /** Explicit, owner-controlled public profile fields. All default to private. */
+  showSchoolOnPublicProfile: boolean("show_school_on_public_profile")
+    .default(false)
+    .notNull(),
+  showEquipmentOnPublicProfile: boolean("show_equipment_on_public_profile")
+    .default(false)
+    .notNull(),
+  showProfilePhotoOnPublicProfile: boolean("show_profile_photo_on_public_profile")
+    .default(false)
+    .notNull(),
+  showSocialLinksOnPublicProfile: boolean("show_social_links_on_public_profile")
+    .default(false)
+    .notNull(),
+  showSailingMilestonesOnPublicProfile: boolean(
+    "show_sailing_milestones_on_public_profile"
+  )
+    .default(false)
+    .notNull(),
   gender: text("gender"),
   nationalSquadStatus: text("national_squad_status"),
   /**

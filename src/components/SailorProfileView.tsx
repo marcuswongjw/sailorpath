@@ -68,6 +68,8 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     setIsPublicWeight,
     isPublicDob,
     setIsPublicDob,
+    publicVisibility,
+    setPublicVisibility,
     claimStatus,
     setClaimStatus,
     claimMsg,
@@ -326,6 +328,8 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           setIsPublicWeight={setIsPublicWeight}
           isPublicDob={isPublicDob}
           setIsPublicDob={setIsPublicDob}
+          publicVisibility={publicVisibility}
+          setPublicVisibility={setPublicVisibility}
           saveBusy={saveBusy}
           saveMsg={saveMsg}
           onSave={() => void saveProfile()}

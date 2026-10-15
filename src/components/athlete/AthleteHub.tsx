@@ -344,7 +344,7 @@ function AthleteWorkspace({
           {/* Quick Actions */}
           <div className="flex items-center gap-2 sm:self-start">
             <Link
-              href={`/${athlete.handle}`}
+              href={`/sailors/${athlete.handle}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-3.5 py-2 text-xs font-bold transition-all shadow-2xs"

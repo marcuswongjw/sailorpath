@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  toPublicEquipmentProps,
-  toPublicSailorProps,
-} from "./publicSailor";
+import { toPublicEquipmentProps, toPublicSailorProps } from "./publicSailor";
 import type { SailorMapped } from "./queries";
 
 const base = {
@@ -14,10 +11,10 @@ const base = {
   boardNumber: "S24",
   ilca4NationalList: false,
   club: "CSC",
-  school: null,
+  school: "Private School",
   nationality: "SGP",
   nationalityFromSail: false,
-  avatarUrl: null,
+  avatarUrl: "https://images.example/sailor.jpg",
   parentId: "auth-user-secret",
   ownerRelation: "parent",
   goldEntryDate: "2024-01-01",
@@ -26,10 +23,10 @@ const base = {
   currentFleet: "Series",
   dob: "2012-06-15",
   weight: 42,
-  bio: "Hello",
+  bio: "Owner-written biography",
   gender: "M",
-  nationalSquadStatus: null,
-  instagram: null,
+  nationalSquadStatus: "Nat A",
+  instagram: "@private-sailor",
   facebook: null,
   natSquadStatusJan25: null,
   natSquadStatusJul25: null,
@@ -46,14 +43,19 @@ const base = {
   european: null,
   asian: null,
   seaGames: null,
-  isPublicWeight: false,
-  isPublicDob: false,
-  isPublicEquipment: false,
-  sailingJourney: null,
-  hullBrand: "Secret Hull",
-  sailMake: "Secret Sail",
-  foilBrand: null,
-  mast: null,
+  isPublicWeight: true,
+  isPublicDob: true,
+  isPublicEquipment: true,
+  showSchoolOnPublicProfile: false,
+  showEquipmentOnPublicProfile: false,
+  showProfilePhotoOnPublicProfile: false,
+  showSocialLinksOnPublicProfile: false,
+  showSailingMilestonesOnPublicProfile: false,
+  sailingJourney: '[{"title":"Private draft"}]',
+  hullBrand: "Safe Hull",
+  sailMake: "Safe Sail",
+  foilBrand: "Private Foil",
+  mast: "Private Mast",
   equipmentNotes: "private note",
   hullBrandIlca4: null,
   sailMakeIlca4: null,
@@ -63,48 +65,78 @@ const base = {
 } as SailorMapped;
 
 describe("toPublicSailorProps", () => {
-  it("strips parentId, full DOB, weight, and equipment for public viewers", () => {
+  it("uses an allow-list for an anonymous profile", () => {
     const pub = toPublicSailorProps(base, { canSeePrivate: false });
-    expect(pub).not.toHaveProperty("parentId");
-    expect(pub.dob).toBe("2012-01-01"); // year only
-    expect(pub.weight).toBeNull();
-    expect(pub.hullBrand).toBeUndefined();
-    expect(pub.equipmentNotes).toBeUndefined();
-    expect(pub.ownerRelation).toBeUndefined();
-    expect(pub.name).toBe("Test Sailor");
-    expect(pub.boardNumber).toBe("S24");
-    expect(pub.sailNumber).toBe("SGP 1");
+    expect(pub).toMatchObject({
+      name: "Test Sailor",
+      handle: "test-sailor",
+      birthYear: 2012,
+      dob: null,
+      bio: "Owner-written biography",
+      club: "CSC",
+    });
+    for (const field of [
+      "parentId", "ownerRelation", "weight", "gender", "nationalSquadStatus",
+      "equipmentNotes", "hullBrand", "currentFleet", "showSchoolOnPublicProfile",
+      "showEquipmentOnPublicProfile", "showProfilePhotoOnPublicProfile",
+      "showSocialLinksOnPublicProfile", "showSailingMilestonesOnPublicProfile",
+    ]) {
+      expect(pub[field]).toBeUndefined();
+    }
+    expect(pub.dob).toBeNull();
+    expect(pub.school).toBeNull();
+    expect(pub.avatarUrl).toBeNull();
+    expect(pub.instagram).toBeNull();
+    expect(pub.sailingJourney).toBeNull();
   });
 
-  it("includes private fields for owners", () => {
+  it("only includes explicit owner-approved optional profile fields", () => {
+    const pub = toPublicSailorProps(
+      {
+        ...base,
+        showSchoolOnPublicProfile: true,
+        showProfilePhotoOnPublicProfile: true,
+        showSocialLinksOnPublicProfile: true,
+        showSailingMilestonesOnPublicProfile: true,
+      },
+      { canSeePrivate: false }
+    );
+    expect(pub.school).toBe("Private School");
+    expect(pub.avatarUrl).toContain("images.example");
+    expect(pub.instagram).toBe("@private-sailor");
+    expect(pub.sailingJourney).toContain("Private draft");
+    expect(pub.showSchoolOnPublicProfile).toBeUndefined();
+  });
+
+  it("never honors legacy full-DOB or weight public flags", () => {
+    const pub = toPublicSailorProps(base, { canSeePrivate: false });
+    expect(pub.dob).toBeNull();
+    expect(pub.weight).toBeUndefined();
+    expect(pub.birthYear).toBe(2012);
+  });
+
+  it("retains private data only for authorised viewers", () => {
     const priv = toPublicSailorProps(base, { canSeePrivate: true });
     expect(priv.dob).toBe("2012-06-15");
     expect(priv.weight).toBe(42);
-    expect(priv.hullBrand).toBe("Secret Hull");
-    expect(priv.ownerRelation).toBe("parent");
-    expect(priv).not.toHaveProperty("parentId");
-  });
-
-  it("respects isPublicDob / isPublicWeight flags", () => {
-    const open = toPublicSailorProps(
-      { ...base, isPublicDob: true, isPublicWeight: true },
-      { canSeePrivate: false }
-    );
-    expect(open.dob).toBe("2012-06-15");
-    expect(open.weight).toBe(42);
+    expect(priv.equipmentNotes).toBe("private note");
   });
 });
 
 describe("toPublicEquipmentProps", () => {
-  it("returns nulls for public viewers", () => {
+  it("omits equipment without explicit consent", () => {
     const eq = toPublicEquipmentProps(base, false);
     expect(eq.hullBrand).toBeNull();
     expect(eq.notes).toBeNull();
   });
 
-  it("returns legacy columns for private viewers", () => {
-    const eq = toPublicEquipmentProps(base, true);
-    expect(eq.hullBrand).toBe("Secret Hull");
-    expect(eq.notes).toBe("private note");
+  it("publishes safe brand/model fields but never notes", () => {
+    const eq = toPublicEquipmentProps(
+      { ...base, showEquipmentOnPublicProfile: true },
+      false
+    );
+    expect(eq.hullBrand).toBe("Safe Hull");
+    expect(eq.sailMake).toBe("Safe Sail");
+    expect(eq.notes).toBeNull();
   });
 });

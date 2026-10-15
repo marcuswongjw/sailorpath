@@ -647,7 +647,7 @@ function AccountInner() {
             <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
               None yet. After a claim is approved, your sailor profile appears
               here. Use{" "}
-              <Link href="/search" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
+              <Link href="/sailors" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
                 Search
               </Link>{" "}
               to find yourself and claim.
@@ -673,7 +673,7 @@ function AccountInner() {
                       Manage &amp; Log
                     </Link>
                     <Link
-                      href={`/${s.handle}`}
+                      href={`/sailors/${s.handle}`}
                       className="rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-3.5 py-1.5 text-xs font-semibold text-white text-center transition-colors shadow-2xs shrink-0"
                     >
                       Public profile
@@ -740,7 +740,7 @@ function AccountInner() {
           {claims.length === 0 ? (
             <p className="text-xs text-[var(--sp-slate-soft)]">
               No claim requests yet.{" "}
-              <Link href="/search" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
+              <Link href="/sailors" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
                 Search for your profile
               </Link>
               .
@@ -755,7 +755,7 @@ function AccountInner() {
                   <div>
                     <p className="font-bold text-[var(--sp-charcoal)]">{c.sailorName}</p>
                     <Link
-                      href={`/${c.sailorHandle}`}
+                      href={`/sailors/${c.sailorHandle}`}
                       className="text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-teal)]"
                     >
                       /{c.sailorHandle}
@@ -796,7 +796,7 @@ function AccountInner() {
           <ol className="space-y-2 text-xs text-[var(--sp-slate-soft)] font-medium list-decimal list-inside leading-relaxed">
             <li>
               Find yourself on{" "}
-              <Link href="/search" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
+              <Link href="/sailors" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
                 Search
               </Link>
               .

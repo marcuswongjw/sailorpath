@@ -52,6 +52,17 @@ export function shouldRefreshSession(
   );
 }
 
+/** Invalid local placeholder values must not break otherwise public routes. */
+export function hasUsableSupabaseUrl(value: string): boolean {
+  if (!value || value.includes("placeholder")) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
 export async function proxy(request: NextRequest) {
   const host = request.headers.get("host") || "";
   const pathname = request.nextUrl.pathname;
@@ -72,7 +83,7 @@ export async function proxy(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY ||
     "";
-  if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes("placeholder")) {
+  if (!hasUsableSupabaseUrl(supabaseUrl) || !supabaseAnonKey) {
     return response;
   }
 
