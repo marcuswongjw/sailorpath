@@ -32,10 +32,6 @@ export type ProfileOwnerForm = {
 type Props = {
   form: ProfileOwnerForm;
   setForm: React.Dispatch<React.SetStateAction<ProfileOwnerForm>>;
-  isPublicWeight: boolean;
-  setIsPublicWeight: (v: boolean) => void;
-  isPublicDob: boolean;
-  setIsPublicDob: (v: boolean) => void;
   publicVisibility: {
     showSchoolOnPublicProfile: boolean;
     showEquipmentOnPublicProfile: boolean;
@@ -62,10 +58,6 @@ type Props = {
 export function ProfileOwnerEditor({
   form,
   setForm,
-  isPublicWeight,
-  setIsPublicWeight,
-  isPublicDob,
-  setIsPublicDob,
   publicVisibility,
   setPublicVisibility,
   saveBusy,

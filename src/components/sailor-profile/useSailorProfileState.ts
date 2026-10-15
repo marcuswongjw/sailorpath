@@ -67,12 +67,6 @@ export function useSailorProfileState({
 }: SailorProfileViewProps) {
   const router = useRouter();
   const { toast, confirm } = useFeedback();
-  const [isPublicWeight, setIsPublicWeight] = useState<boolean>(
-    Boolean(initialSailor.isPublicWeight)
-  );
-  const [isPublicDob, setIsPublicDob] = useState<boolean>(
-    Boolean(initialSailor.isPublicDob)
-  );
   const [publicVisibility, setPublicVisibility] = useState({
     showSchoolOnPublicProfile: Boolean(initialSailor.showSchoolOnPublicProfile),
     showEquipmentOnPublicProfile: Boolean(initialSailor.showEquipmentOnPublicProfile),
@@ -284,8 +278,6 @@ export function useSailorProfileState({
           boardNumber: form.boardNumber || null,
           dob: form.dob === "" ? null : form.dob,
           weight: form.weight === "" ? null : Number(form.weight),
-          isPublicWeight,
-          isPublicDob,
           isPublicEquipment: false,
           ...publicVisibility,
           hullBrand: form.hullBrand,
@@ -307,8 +299,6 @@ export function useSailorProfileState({
         ...data.sailor,
         dob: data.sailor.dob ?? (form.dob || s.dob),
       }));
-      setIsPublicWeight(Boolean(data.sailor.isPublicWeight));
-      setIsPublicDob(Boolean(data.sailor.isPublicDob));
       setPublicVisibility({
         showSchoolOnPublicProfile: Boolean(data.sailor.showSchoolOnPublicProfile),
         showEquipmentOnPublicProfile: Boolean(data.sailor.showEquipmentOnPublicProfile),
@@ -1234,10 +1224,6 @@ export function useSailorProfileState({
     demoRole,
     onDemoClaim,
     profileVerified,
-    isPublicWeight,
-    setIsPublicWeight,
-    isPublicDob,
-    setIsPublicDob,
     publicVisibility,
     setPublicVisibility,
     claimStatus,
