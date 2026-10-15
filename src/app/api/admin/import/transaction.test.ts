@@ -3,7 +3,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { getTableConfig, PgDialect } from "drizzle-orm/pg-core";
 import { SQL } from "drizzle-orm";
-import { sailors, sailorAliases, regattas, regattaResults, regattaRaceResults } from "@/db/schema";
+import { sailors, sailorAliases, regattas, regattaResults, regattaRaceResults, regattaResultParticipants } from "@/db/schema";
 
 const state = vi.hoisted(() => ({ db: null as unknown }));
 vi.mock("@/db", () => ({ get db() { return state.db; }, ensureCoreSchema: async () => {} }));
@@ -20,7 +20,7 @@ const quote = (name: string) => `"${name.replaceAll('"', '""')}"`;
 beforeAll(async () => {
   const dialect = new PgDialect();
   // Build the five import tables from the actual schema, including defaults and unique keys.
-  for (const table of [sailors, sailorAliases, regattas, regattaResults, regattaRaceResults]) {
+  for (const table of [sailors, sailorAliases, regattas, regattaResults, regattaRaceResults, regattaResultParticipants]) {
     const config = getTableConfig(table);
     const columns = config.columns.map((col) => {
       const defaultSql = col.default instanceof SQL ? dialect.sqlToQuery(col.default).sql : typeof col.default === "string" ? `'${col.default.replaceAll("'", "''")}'` : String(col.default);
@@ -32,7 +32,7 @@ beforeAll(async () => {
   await pg.exec("ALTER TABLE regatta_race_results ADD FOREIGN KEY (regatta_result_id) REFERENCES regatta_results(id) ON DELETE CASCADE");
   state.db = testDb;
 }, 30000);
-beforeEach(async () => { await pg.exec("TRUNCATE regatta_race_results, regatta_results, sailor_aliases, sailors, regattas CASCADE"); });
+beforeEach(async () => { await pg.exec("TRUNCATE regatta_result_participants, regatta_race_results, regatta_results, sailor_aliases, sailors, regattas CASCADE"); });
 afterAll(async () => { await pg.close(); });
 
 function upload(extra: Record<string, unknown> = {}, headers: Record<string, string> = {}) {
@@ -45,6 +45,7 @@ describe("import database transaction", () => {
     expect(await testDb.select().from(regattas)).toHaveLength(1);
     expect(await testDb.select().from(sailors)).toHaveLength(1);
     expect(await testDb.select().from(regattaResults)).toHaveLength(1);
+    expect(await testDb.select().from(regattaResultParticipants)).toHaveLength(1);
     expect(await testDb.select().from(regattaRaceResults)).toHaveLength(1);
   });
 

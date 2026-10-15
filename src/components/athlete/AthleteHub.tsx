@@ -245,10 +245,22 @@ function AthleteWorkspace({
     }
   };
 
-  const isResultVerified = (r: RegattaResultItem) =>
-    r.verificationStatus === "verified" ||
-    Boolean(r.countsForRanking) ||
-    (r.regattaSlug ? !r.regattaSlug.startsWith("log-") : false);
+  const isResultVerified = (r: RegattaResultItem) => {
+    // Same rule as displayedResultVerificationStatus. Kept inline so the
+    // athlete hub does not pull another module into the client bundle.
+    if (r.countsForRanking) return true;
+    const slug = r.regattaSlug ?? "";
+    const stored = r.verificationStatus;
+    if (slug.startsWith("log-")) return stored === "verified";
+    if (
+      stored === "pending_review" ||
+      stored === "self_reported" ||
+      stored === "rejected"
+    ) {
+      return false;
+    }
+    return stored === "verified" || stored == null;
+  };
 
   const verifiedCount = results.filter(isResultVerified).length;
   const underReviewCount = results.filter(

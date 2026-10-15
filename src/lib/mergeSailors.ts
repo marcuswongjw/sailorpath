@@ -122,6 +122,22 @@ export function preferredDuplicateResultUpdate(
       isOverseasCommitment: Boolean(source.isOverseasCommitment),
     };
   }
+  // Same place: a real finish must replace a DNS flag. Equal ranks used to
+  // leave isDns on the survivor, so rankings still scored a finish as a no-show.
+  if (
+    source.rank != null &&
+    mergeRank === keepRank &&
+    Boolean(target.isDns) &&
+    !source.isDns
+  ) {
+    return {
+      rank: source.rank,
+      nettScore: source.nettScore ?? target.nettScore,
+      totalScore: source.totalScore ?? target.totalScore,
+      isDns: false,
+      isOverseasCommitment: Boolean(source.isOverseasCommitment),
+    };
+  }
   if (target.totalScore == null && source.totalScore != null) {
     return { totalScore: source.totalScore };
   }

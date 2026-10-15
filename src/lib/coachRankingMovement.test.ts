@@ -30,6 +30,19 @@ describe("latestRankingRegattaIdForFleet", () => {
     expect(latestRankingRegattaIdForFleet(rows, "Silver", period)).toBe("both-sep");
   });
 
+  it("ignores a later sheet that did not complete three ranking races", () => {
+    const rows = [
+      event("gold-jul", "2026-07-04", "Gold"),
+      { ...event("gold-short", "2026-09-01", "Gold"), raceCount: 2 },
+    ];
+    expect(
+      latestRankingRegattaIdForFleet(rows, "Gold", {
+        year: 2026,
+        half: "Jul-Dec",
+      })
+    ).toBe("gold-jul");
+  });
+
   it("keeps a later single-fleet event ahead of an earlier Both sheet", () => {
     const rows = [
       event("both-jul", "2026-07-01", "Both"),

@@ -25,6 +25,7 @@ import {
 import {
   calculateRankings,
   divisionCountsOnFleet,
+  regattaCountsForRanking,
   overallRankOnBoard,
   periodBounds,
   periodLabel,
@@ -67,10 +68,12 @@ import {
   matchesCsc29erStaticSlug,
 } from "@/lib/results29erData";
 import type { OfficialRaceResultInput } from "@/types/raceResult";
+import { displayedResultVerificationStatus } from "@/lib/resultVerification";
 import {
   asc,
   desc,
   eq,
+  exists,
   inArray,
   or,
   and,
@@ -633,6 +636,23 @@ export async function getResultsForRegatta(
 
 export async function getResultsForSailor(sailorId: string) {
   return withDb(async () => {
+    // Profiles follow participant rows so crew members appear. Owner logbook
+    // writes and some imports only set regatta_results.sailor_id, so those
+    // rows must still show until a participant link exists.
+    const linkedAsParticipant = exists(
+      db
+        .select({ id: regattaResultParticipants.id })
+        .from(regattaResultParticipants)
+        .where(
+          and(
+            eq(
+              regattaResultParticipants.regattaResultId,
+              regattaResults.id
+            ),
+            eq(regattaResultParticipants.sailorId, sailorId)
+          )
+        )
+    );
     const results = await db
       .select({
         resultId: regattaResults.id,
@@ -663,13 +683,9 @@ export async function getResultsForSailor(sailorId: string) {
         verificationStatus: regattaResults.verificationStatus,
         verifiedAt: regattaResults.verifiedAt,
       })
-      .from(regattaResultParticipants)
-      .innerJoin(
-        regattaResults,
-        eq(regattaResultParticipants.regattaResultId, regattaResults.id)
-      )
+      .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .where(eq(regattaResultParticipants.sailorId, sailorId))
+      .where(or(eq(regattaResults.sailorId, sailorId), linkedAsParticipant))
       .orderBy(desc(regattas.date));
 
     if (!results.length) {
@@ -736,35 +752,29 @@ export async function getResultsForSailor(sailorId: string) {
         list.push(participant);
         participantsByResult.set(participant.resultId, list);
       }
-      return results.map((result) => {
-        const isOfficial =
-          (result.regattaSlug && !result.regattaSlug.startsWith("log-")) ||
-          Boolean(result.countsForRanking);
-        return {
-          ...result,
-          verificationStatus: isOfficial
-            ? "verified"
-            : result.verificationStatus || "self_reported",
-          raceResults: racesByResult.get(result.resultId) || [],
-          participants: participantsByResult.get(result.resultId) || [],
-        };
-      });
+      return results.map((result) => ({
+        ...result,
+        verificationStatus: displayedResultVerificationStatus({
+          slug: result.regattaSlug,
+          countsForRanking: result.countsForRanking,
+          verificationStatus: result.verificationStatus,
+        }),
+        raceResults: racesByResult.get(result.resultId) || [],
+        participants: participantsByResult.get(result.resultId) || [],
+      }));
     } catch (error) {
       // Keep profiles available during rollout before migration 044 is applied.
       if (/regatta_race_results|does not exist|relation/i.test(formatDbError(error))) {
-        return results.map((result) => {
-          const isOfficial =
-            (result.regattaSlug && !result.regattaSlug.startsWith("log-")) ||
-            Boolean(result.countsForRanking);
-          return {
-            ...result,
-            verificationStatus: isOfficial
-              ? "verified"
-            : result.verificationStatus || "self_reported",
-            participants: [],
-            raceResults: [],
-          };
-        });
+        return results.map((result) => ({
+          ...result,
+          verificationStatus: displayedResultVerificationStatus({
+            slug: result.regattaSlug,
+            countsForRanking: result.countsForRanking,
+            verificationStatus: result.verificationStatus,
+          }),
+          participants: [],
+          raceResults: [],
+        }));
       }
       throw error;
     }
@@ -773,7 +783,7 @@ export async function getResultsForSailor(sailorId: string) {
 
 export const getCachedResultsForSailor = unstable_cache(
   async (sailorId: string) => getResultsForSailor(sailorId),
-  ["public-sailor-results-v1"],
+  ["public-sailor-results-v2"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
@@ -1431,15 +1441,17 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
             .from(regattaResults)
             .where(inArray(regattaResults.regattaId, regattaIds));
 
-    const resultsOut: RegattaResultRecord[] = resRows.map((row) => ({
-      sailorId: row.sailorId,
-      regattaId: row.regattaId,
-      rank: row.rank,
-      nettScore: row.nettScore,
-      totalScore: row.totalScore,
-      isDns: row.isDns,
-      isOverseasCommitment: row.isOverseasCommitment,
-    }));
+    const resultsOut: RegattaResultRecord[] = restoreBestNettHiddenAsDnsByRegatta(
+      resRows.map((row) => ({
+        sailorId: row.sailorId,
+        regattaId: row.regattaId,
+        rank: row.rank,
+        nettScore: row.nettScore,
+        totalScore: row.totalScore,
+        isDns: Boolean(row.isDns),
+        isOverseasCommitment: Boolean(row.isOverseasCommitment),
+      }))
+    );
 
     return { sailors: sailorsOut, regattas: regattasOut, results: resultsOut };
   });
@@ -1452,7 +1464,7 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
  */
 const getCachedPublishedOptimistSnapshot = unstable_cache(
   queryPublishedOptimistSnapshot,
-  ["published-optimist-snapshot-v1"],
+  ["published-optimist-snapshot-v2"],
   {
     revalidate: PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS],
@@ -1517,7 +1529,7 @@ export const getCachedFleetRankings = unstable_cache(
   ): Promise<RankedSailor[]> => {
     return computeFleetRankings(fleet, { year, half });
   },
-  ["fleet-rankings-v8"],
+  ["fleet-rankings-v9"],
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
@@ -1525,7 +1537,7 @@ export const getCachedFleetRankings = unstable_cache(
 export const getCachedPreviousFleetRankings = unstable_cache(
   async (fleet: "Gold" | "Silver", year: number, half: Period["half"]): Promise<RankedSailor[]> =>
     computeFleetRankings(fleet, { year, half }, true),
-  ["previous-fleet-rankings-v3"],
+  ["previous-fleet-rankings-v4"],
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
@@ -1536,7 +1548,7 @@ export function latestRankingRegattaIdForFleet(
   const candidates = rows.filter((row) => {
     const date = String(row.date || "").slice(0, 10);
     return (
-      row.countsForRanking !== false &&
+      regattaCountsForRanking(row) &&
       date >= start &&
       date <= end &&
       divisionCountsOnFleet(row.division, fleet)

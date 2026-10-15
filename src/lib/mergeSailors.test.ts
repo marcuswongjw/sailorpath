@@ -87,6 +87,24 @@ describe("preferredDuplicateResultUpdate", () => {
     });
   });
 
+  it("clears isDns when the duplicate finish has the same place", () => {
+    expect(
+      preferredDuplicateResultUpdate({ ...dns, rank: 4 }, finish)
+    ).toEqual({
+      rank: 4,
+      nettScore: 12,
+      totalScore: 18,
+      isDns: false,
+      isOverseasCommitment: false,
+    });
+  });
+
+  it("keeps a real finish when the duplicate is DNS at the same place", () => {
+    expect(
+      preferredDuplicateResultUpdate(finish, { ...dns, rank: 4 })
+    ).toBeNull();
+  });
+
   it("fills a missing total without changing a DNS flag", () => {
     expect(
       preferredDuplicateResultUpdate(

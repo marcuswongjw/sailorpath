@@ -5,6 +5,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import {
   regattaRaceResults,
+  regattaResultParticipants,
   regattaEvents,
   regattaResults,
   regattas,
@@ -1799,6 +1800,54 @@ export async function POST(req: Request) {
                     verifiedAt: sql`COALESCE(excluded.verified_at, now())`,
                     updatedAt: sql`now()`,
                   },
+                });
+            }
+          }
+
+          if (pendingResults.length) {
+            const storedForParticipants = await tx
+              .select({
+                id: regattaResults.id,
+                sailorId: regattaResults.sailorId,
+              })
+              .from(regattaResults)
+              .where(
+                and(
+                  eq(regattaResults.regattaId, reg.id),
+                  inArray(
+                    regattaResults.sailorId,
+                    pendingResults.map((item) => item.sailorId)
+                  )
+                )
+              );
+            const nameBySailorId = new Map(
+              sailorList.map((sailor) => [sailor.id, sailor.name])
+            );
+            const participantRows = storedForParticipants.flatMap((row) => {
+              const sourceName = (nameBySailorId.get(row.sailorId) || "").trim();
+              if (!row.sailorId || !sourceName) return [];
+              return [
+                {
+                  regattaResultId: row.id,
+                  sailorId: row.sailorId,
+                  sourceName: sourceName.slice(0, 200),
+                  displayOrder: 1,
+                  role: "solo" as const,
+                  matchStatus: "matched" as const,
+                  rankingCredit: true,
+                },
+              ];
+            });
+            const PARTICIPANT_CHUNK = 50;
+            for (let i = 0; i < participantRows.length; i += PARTICIPANT_CHUNK) {
+              await tx
+                .insert(regattaResultParticipants)
+                .values(participantRows.slice(i, i + PARTICIPANT_CHUNK))
+                .onConflictDoNothing({
+                  target: [
+                    regattaResultParticipants.regattaResultId,
+                    regattaResultParticipants.displayOrder,
+                  ],
                 });
             }
           }
