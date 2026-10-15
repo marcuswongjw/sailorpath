@@ -159,10 +159,12 @@ describe("Youth Thailand National Sailing Championship 2026 hub", () => {
 describe("RSYC Optimist Knockout 2026", () => {
   const silverSlug = "rsyc-optimist-silver-fleet-knockout-championship-2026";
   const goldSlug = "rsyc-optimist-gold-fleet-knockout-championship-2026";
+  const shortGoldSlug = "rsyc-2026-gold";
 
   it("opens Gold and Silver as separate event hubs", () => {
     expect(getRegattaEvent(silverSlug)?.slug).toBe(silverSlug);
     expect(getRegattaEvent(goldSlug)?.slug).toBe(goldSlug);
+    expect(getRegattaEvent(shortGoldSlug)?.slug).toBe(goldSlug);
     expect(getRegattaEvent(silverSlug)?.slices.map((slice) => slice.key)).toEqual([
       "optimist-silver",
     ]);
@@ -179,12 +181,17 @@ describe("RSYC Optimist Knockout 2026", () => {
     expect(sliceMatchesRegattaSlug(silverSlice, silverSlug)).toBe(true);
     expect(sliceMatchesRegattaSlug(silverSlice, goldSlug)).toBe(false);
     expect(sliceMatchesRegattaSlug(goldSlice, goldSlug)).toBe(true);
+    expect(sliceMatchesRegattaSlug(goldSlice, shortGoldSlug)).toBe(true);
     expect(sliceMatchesRegattaSlug(goldSlice, silverSlug)).toBe(false);
     expect(sliceMatchesRegattaSlug(goldSlice, "rsyc-optimist-gold-fleet-knockout-championship-2025")).toBe(
       false
     );
 
     expect(findEventSliceForRegattaSlug(goldSlug)).toEqual({
+      event: RSYC_OPTIMIST_GOLD_2026_EVENT,
+      slice: goldSlice,
+    });
+    expect(findEventSliceForRegattaSlug(shortGoldSlug)).toEqual({
       event: RSYC_OPTIMIST_GOLD_2026_EVENT,
       slice: goldSlice,
     });
@@ -201,6 +208,11 @@ describe("RSYC Optimist Knockout 2026", () => {
       regatta(goldSlug),
     ]);
     expect(goldResolved.map((slice) => slice.regatta?.slug ?? null)).toEqual([goldSlug]);
+
+    const shortGoldResolved = resolveEventSlices(RSYC_OPTIMIST_GOLD_2026_EVENT, [
+      regatta(shortGoldSlug),
+    ]);
+    expect(shortGoldResolved.map((slice) => slice.regatta?.slug ?? null)).toEqual([shortGoldSlug]);
   });
 });
 
