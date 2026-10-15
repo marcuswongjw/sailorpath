@@ -1,6 +1,11 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { postgresJsOptions, toSupabaseTransactionPooler } from "./client";
+import {
+  pgSql,
+  postgresJsOptions,
+  recycleDatabaseClient,
+  toSupabaseTransactionPooler,
+} from "./client";
 
 describe("postgres.js serverless options", () => {
   it("does not introspect pg_type and does not prepare statements", () => {
@@ -41,5 +46,13 @@ describe("postgres.js serverless options", () => {
         undefined
       )
     ).toBeNull();
+  });
+
+  it("replaces the isolate client after a retryable socket failure", () => {
+    const previousClient = pgSql;
+
+    recycleDatabaseClient();
+
+    expect(pgSql).not.toBe(previousClient);
   });
 });
