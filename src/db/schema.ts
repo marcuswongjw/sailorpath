@@ -468,6 +468,68 @@ export const regattas = pgTable("regattas", {
 }).enableRLS();
 
 /**
+ * Public editorial content. Only published rows cross the public query boundary;
+ * author/reviewer identity and draft state remain private workflow data.
+ */
+export const newsArticles = pgTable(
+  "news_articles",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    slug: text("slug").unique().notNull(),
+    status: text("status", {
+      enum: ["draft", "in_review", "published", "archived"],
+    })
+      .default("draft")
+      .notNull(),
+    kind: text("kind", {
+      enum: [
+        "result_report",
+        "correction",
+        "class_announcement",
+        "product_update",
+        "partner_update",
+      ],
+    })
+      .default("product_update")
+      .notNull(),
+    title: text("title").notNull(),
+    summary: text("summary").notNull(),
+    body: text("body").notNull(),
+    authorDisplayName: text("author_display_name").default("SailorPath").notNull(),
+    reviewedBy: uuid("reviewed_by").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    publishedAt: timestamp("published_at", { withTimezone: true }),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+    relatedEventId: uuid("related_event_id").references(() => regattaEvents.id, {
+      onDelete: "set null",
+    }),
+    relatedRegattaId: uuid("related_regatta_id").references(() => regattas.id, {
+      onDelete: "set null",
+    }),
+    relatedClass: text("related_class"),
+    relatedRegion: text("related_region"),
+    relatedSailorId: uuid("related_sailor_id").references(() => sailors.id, {
+      onDelete: "set null",
+    }),
+    sourceUrl: text("source_url"),
+    sourceLabel: text("source_label"),
+    tags: jsonb("tags").$type<string[]>().default([]).notNull(),
+  },
+  (table) => ({
+    publicationIdx: index("news_articles_publication_idx").on(
+      table.status,
+      table.publishedAt
+    ),
+    relatedEventIdx: index("news_articles_related_event_idx").on(table.relatedEventId),
+    relatedRegattaIdx: index("news_articles_related_regatta_idx").on(
+      table.relatedRegattaId
+    ),
+  })
+).enableRLS();
+
+/**
  * Published regatta rows for API roles. securityInvoker keeps
  * regattas_public_read in force. Replacing this view without that option
  * clears it on Postgres 15+.

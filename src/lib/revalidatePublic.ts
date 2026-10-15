@@ -1,5 +1,8 @@
 import { revalidatePath, revalidateTag } from "next/cache";
-import { PUBLIC_RANKING_CACHE_TAGS } from "@/lib/cacheTags";
+import {
+  CACHE_TAG_NEWS_ARTICLES,
+  PUBLIC_RANKING_CACHE_TAGS,
+} from "@/lib/cacheTags";
 
 /**
  * Public ranking / regatta routes that use ISR (`export const revalidate`)
@@ -50,5 +53,20 @@ export function revalidatePublicRankings(reason?: string): void {
     }
   } catch (e) {
     console.warn("[revalidatePublicRankings] failed", reason || "", e);
+  }
+}
+
+/** Refresh the published news index and an optional canonical article route. */
+export function revalidatePublicNews(slug?: string): void {
+  try {
+    try {
+      revalidateTag(CACHE_TAG_NEWS_ARTICLES, { expire: 0 });
+    } catch {
+      revalidateTag(CACHE_TAG_NEWS_ARTICLES, "max");
+    }
+    revalidatePath("/news");
+    if (slug) revalidatePath(`/news/${encodeURIComponent(slug)}`);
+  } catch (error) {
+    console.warn("[revalidatePublicNews] failed", slug || "", error);
   }
 }

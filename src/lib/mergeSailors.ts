@@ -12,6 +12,7 @@ import {
   equipmentItems,
   equipmentLogs,
   equipmentUsages,
+  newsArticles,
   parentNotes,
   raceObservations,
   regattaRaceResults,
@@ -39,6 +40,7 @@ export const SAILOR_RELATIONSHIP_MERGE_PLAN = [
   { table: "equipmentLogs", strategy: "repoint" },
   { table: "equipmentItems", strategy: "repoint" },
   { table: "equipmentUsages", strategy: "repoint" },
+  { table: "newsArticles", strategy: "repoint" },
   { table: "parentNotes", strategy: "repoint" },
   { table: "coachSquadMembers", strategy: "target-wins-conflict" },
   { table: "coachFollowedSailors", strategy: "target-wins-conflict" },
@@ -593,6 +595,11 @@ export async function mergeSailors({
       .set({ sailorId: keepId })
       .where(eq(equipmentLogs.sailorId, mergeId))
       .returning({ id: equipmentLogs.id });
+    const newsArticlesMoved = await tx
+      .update(newsArticles)
+      .set({ relatedSailorId: keepId, updatedAt: now })
+      .where(eq(newsArticles.relatedSailorId, mergeId))
+      .returning({ id: newsArticles.id });
     const notesMoved = await tx
       .update(parentNotes)
       .set({ sailorId: keepId, updatedAt: now })
@@ -782,6 +789,7 @@ export async function mergeSailors({
       equipmentMoved: equipmentMoved.length,
       equipmentUsagesMoved: equipmentUsagesMoved.length,
       equipmentLogsMoved: equipmentLogsMoved.length,
+      newsArticlesMoved: newsArticlesMoved.length,
       notesMoved: notesMoved.length,
       claimsMoved: claimsMoved.length,
       indexSailorsMoved: indexSailorsMoved.length,
