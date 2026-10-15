@@ -10,6 +10,7 @@ import { PUBLIC_RANKING_REGATTA_STATUS } from "@/lib/regattaStatus";
 import {
   db,
   DbUnavailableError,
+  ensureDatabaseLiveness,
   formatDbError,
   ensureCoreSchema,
   recycleDatabaseClient,
@@ -258,6 +259,9 @@ export function isRetryableDbConnectionError(errorMessage: string): boolean {
 }
 
 async function withDb<T>(fn: () => Promise<T>): Promise<T> {
+  // Probe only after brief isolate inactivity. This prevents a serverless
+  // cache revalidation from issuing its first real query over a stale socket.
+  await ensureDatabaseLiveness();
   try {
     return await fn();
   } catch (e) {
@@ -267,6 +271,7 @@ async function withDb<T>(fn: () => Promise<T>): Promise<T> {
       // pooler socket. Rebuild the singleton once, then rerun the read/query.
       recycleDatabaseClient();
       try {
+        await ensureDatabaseLiveness();
         return await fn();
       } catch (retryErr) {
         throw new DbUnavailableError(formatDbError(retryErr));

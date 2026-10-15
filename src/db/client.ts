@@ -2,9 +2,18 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
+type SqlClient = ReturnType<typeof postgres>;
+
 const globalForDb = globalThis as unknown as {
-  sql: ReturnType<typeof postgres> | undefined;
+  sql: SqlClient | undefined;
 };
+
+/** Avoid reusing a possibly frozen serverless socket after brief inactivity. */
+const DATABASE_LIVENESS_RECHECK_MS = 5_000;
+/** Bound the liveness probe so a stale socket cannot consume a request budget. */
+export const DATABASE_PREFLIGHT_TIMEOUT_MS = 3_000;
+let lastDatabaseLivenessCheckAt = 0;
+let databaseLivenessCheck: Promise<void> | null = null;
 
 function cleanUrl(raw: string): string {
   let url = raw.trim();
@@ -152,6 +161,8 @@ export function resolveConnectionString(): string | null {
  * `prepare: false` is required for Supabase transaction-mode pooler (6543).
  * `max: 1` keeps one connection per isolate so warm invocations reuse it
  * instead of opening a pool that each fetches types and holds pooler slots.
+ * A short idle timeout closes live-but-unused sockets before a serverless
+ * instance suspends; an application liveness probe handles frozen sockets.
  */
 export function postgresJsOptions(connectionString: string) {
   const isSupabase =
@@ -159,8 +170,8 @@ export function postgresJsOptions(connectionString: string) {
     connectionString.includes("pooler.supabase.com");
   return {
     max: 1,
-    idle_timeout: 20,
-    connect_timeout: 10,
+    idle_timeout: 5,
+    connect_timeout: 5,
     prepare: false,
     fetch_types: false,
     ssl: isSupabase ? ("require" as const) : undefined,
@@ -215,15 +226,62 @@ export let pgSql = sql;
  * failure. Serverless runtimes can freeze warm isolates while the pooler or
  * NAT retires their idle TCP socket; the next query must use a new client.
  */
-export function recycleDatabaseClient(): void {
+export function recycleDatabaseClient(expectedClient?: SqlClient): boolean {
+  // Several concurrent requests can discover the same stale socket. Only the
+  // first should replace it; later requests can reuse the fresh replacement.
+  if (expectedClient && sql !== expectedClient) return false;
+
   const retiredSql = sql;
   sql = buildSql();
   globalForDb.sql = sql;
   pgSql = sql;
   db = drizzle(sql, { schema });
+  lastDatabaseLivenessCheckAt = 0;
 
   // Do not hold the retry path open while the failed client's socket closes.
   void retiredSql.end({ timeout: 0 }).catch(() => undefined);
+  return true;
+}
+
+function withTimeout<T>(operation: Promise<T>, timeoutMs: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timeout = setTimeout(
+      () => reject(new Error("DB_PREFLIGHT_TIMEOUT")),
+      timeoutMs
+    );
+    operation.then(resolve, reject).finally(() => clearTimeout(timeout));
+  });
+}
+
+/**
+ * Check a warm serverless isolate before reusing its database socket.
+ *
+ * Supabase documents that frozen functions can retain a stale TCP socket even
+ * when an application-level idle timeout is configured. A failed or slow
+ * lightweight query replaces that socket before the caller performs its real
+ * read. Successful probes are coalesced for a short interval per isolate.
+ */
+export async function ensureDatabaseLiveness(): Promise<void> {
+  if (Date.now() - lastDatabaseLivenessCheckAt < DATABASE_LIVENESS_RECHECK_MS) {
+    return;
+  }
+  if (databaseLivenessCheck) return databaseLivenessCheck;
+
+  const client = sql;
+  const check = (async () => {
+    try {
+      await withTimeout(client`select 1 as ok`, DATABASE_PREFLIGHT_TIMEOUT_MS);
+      if (sql === client) lastDatabaseLivenessCheckAt = Date.now();
+    } catch {
+      recycleDatabaseClient(client);
+    }
+  })();
+
+  databaseLivenessCheck = check;
+  void check.finally(() => {
+    if (databaseLivenessCheck === check) databaseLivenessCheck = null;
+  });
+  return check;
 }
 
 export function getDatabaseUrlMeta() {

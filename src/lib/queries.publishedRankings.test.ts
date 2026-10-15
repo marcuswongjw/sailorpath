@@ -40,6 +40,7 @@ describe("public ranking published-regatta guard (source)", () => {
     const body = fnBody("export function isRetryableDbConnectionError", "export async function listSailors");
 
     expect(body).toContain("CONNECT_TIMEOUT");
+    expect(body).toContain("await ensureDatabaseLiveness()");
     expect(body).toContain("recycleDatabaseClient()");
     expect(body).toContain("return await fn()");
   });
