@@ -1570,20 +1570,11 @@ export function latestRankingRegattaIdForFleet(
 }
 
 /**
-  * Shared 120s cache for public regattas list — speeds up directory pages.
-  */
+ * Shared 120s cache for public regattas list — speeds up directory pages.
+ */
 export const getCachedPublicRegattas = unstable_cache(
-  async (): Promise<RegattaRecord[]> => {
-    try {
-      return await listRegattas();
-    } catch (e) {
-      if (process.env.NODE_ENV !== "test") {
-        console.warn("[getCachedPublicRegattas] DB unavailable, returning empty list:", e);
-      }
-      return [];
-    }
-  },
-  ["public-regattas-list-v4"],
+  async (): Promise<RegattaRecord[]> => listRegattas(),
+  ["public-regattas-list-v5"],
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
