@@ -35,6 +35,14 @@ describe("public ranking published-regatta guard (source)", () => {
     );
     expect(body).toMatch(/eq\(\s*regattas\.status\s*,\s*PUBLIC_RANKING_REGATTA_STATUS\s*\)/);
   });
+
+  it("recycles only retryable serverless connection failures", () => {
+    const body = fnBody("export function isRetryableDbConnectionError", "export async function listSailors");
+
+    expect(body).toContain("CONNECT_TIMEOUT");
+    expect(body).toContain("recycleDatabaseClient()");
+    expect(body).toContain("return await fn()");
+  });
 });
 
 describe("unpublished regattas do not score on public Optimist rankings", () => {

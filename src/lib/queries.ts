@@ -7,7 +7,13 @@ import {
   PUBLIC_DATA_REVALIDATE_SECONDS,
 } from "@/lib/cacheTags";
 import { PUBLIC_RANKING_REGATTA_STATUS } from "@/lib/regattaStatus";
-import { db, DbUnavailableError, formatDbError, ensureCoreSchema } from "@/db";
+import {
+  db,
+  DbUnavailableError,
+  formatDbError,
+  ensureCoreSchema,
+  recycleDatabaseClient,
+} from "@/db";
 import { restoreBestNettHiddenAsDns, restoreBestNettHiddenAsDnsByRegatta } from "@/lib/restoreFinisherRank";
 import {
   sailors,
@@ -245,11 +251,27 @@ export type IlcaSeriesStanding = {
   rankBasis?: "official-list" | "recorded-results";
 };
 
+export function isRetryableDbConnectionError(errorMessage: string): boolean {
+  return /\b(?:CONNECT_TIMEOUT|ETIMEDOUT|ECONNRESET|ECONNREFUSED)\b|socket hang up|connection (?:closed|terminated|reset)/i.test(
+    errorMessage
+  );
+}
+
 async function withDb<T>(fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
     const errStr = formatDbError(e);
+    if (isRetryableDbConnectionError(errStr)) {
+      // Supabase documents that frozen serverless isolates can retain a stale
+      // pooler socket. Rebuild the singleton once, then rerun the read/query.
+      recycleDatabaseClient();
+      try {
+        return await fn();
+      } catch (retryErr) {
+        throw new DbUnavailableError(formatDbError(retryErr));
+      }
+    }
     if (
       /venue|end_date|nor_url|registration_url|is_selection_trial|organizer|schedule_notes|regatta_race_results|does not exist/i.test(
         errStr

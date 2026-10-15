@@ -204,11 +204,27 @@ function buildSql() {
 
 // Reuse one client per isolate, including production. Next can evaluate this
 // module from more than one server bundle; globalThis is the shared slot.
-const sql = globalForDb.sql ?? buildSql();
+let sql = globalForDb.sql ?? buildSql();
 globalForDb.sql = sql;
 
-export const db = drizzle(sql, { schema });
-export { sql as pgSql };
+export let db = drizzle(sql, { schema });
+export let pgSql = sql;
+
+/**
+ * Drops a stale postgres.js socket after a retryable serverless connection
+ * failure. Serverless runtimes can freeze warm isolates while the pooler or
+ * NAT retires their idle TCP socket; the next query must use a new client.
+ */
+export function recycleDatabaseClient(): void {
+  const retiredSql = sql;
+  sql = buildSql();
+  globalForDb.sql = sql;
+  pgSql = sql;
+  db = drizzle(sql, { schema });
+
+  // Do not hold the retry path open while the failed client's socket closes.
+  void retiredSql.end({ timeout: 0 }).catch(() => undefined);
+}
 
 export function getDatabaseUrlMeta() {
   const cs = resolveConnectionString();
