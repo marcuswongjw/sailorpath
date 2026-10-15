@@ -10,7 +10,6 @@ const PATHS = [
   "/rankings",
   "/calendar",
   "/sailors",
-  "/classes/x-15",
   "/news",
   "/sg/optimist/gold",
   "/sg/optimist/silver",

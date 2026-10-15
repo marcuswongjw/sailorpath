@@ -5,6 +5,10 @@ import { CalendarDays, ExternalLink, Info, MapPin } from "lucide-react";
 export const metadata: Metadata = {
   title: "X-15 class hub | SailorPath",
   description: "Pre-Worlds X-15 class context, event planning and verified foundation-circuit history.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 const foundationHistory = [
