@@ -1165,7 +1165,10 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 />
               )}
 
-              {editSubTab === "duplicates" && (
+              {editSubTab === "duplicates" && !data.loadedData.sailors && !data.dataLoadError && (
+                <p role="status" className="p-5 text-sm text-slate-700">Loading sailors for duplicate review…</p>
+              )}
+              {editSubTab === "duplicates" && data.loadedData.sailors && (
                 <AdminSailorDuplicatesPanel
                   duplicatePairs={sailors.panelProps.duplicatePairs}
                   selectedSailors={sailors.panelProps.selectedSailors}

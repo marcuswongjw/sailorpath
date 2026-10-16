@@ -71,7 +71,7 @@ export function useAdminData({
     (needsFullResults ||
       sheetOpen ||
       (activeTab === "edit" &&
-        (editSubTab === "sailors" || editSubTab === "selection")));
+        (editSubTab === "sailors" || editSubTab === "duplicates" || editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
