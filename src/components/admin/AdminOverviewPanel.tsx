@@ -133,7 +133,7 @@ export function AdminOverviewPanel({
 }) {
   const overviewQuery = useQuery({
     queryKey: adminQueryKeys.overview(),
-    queryFn: fetchAdminOverview,
+    queryFn: ({ signal }) => fetchAdminOverview({ signal }),
     enabled: !regattas || !results,
   });
 

@@ -499,19 +499,22 @@ export function AdminRegattasPanel({
 
   useEffect(() => {
     if (!editingRegattaId || editingRegattaId === "new") return;
-    let cancelled = false;
+    const controller = new AbortController();
     void fetch(`/api/admin/regatta-readiness?sheet=${encodeURIComponent(editingRegattaId)}`, {
       credentials: "include",
+      signal: controller.signal,
     })
       .then((res) => res.json())
       .then((body: { readiness?: PublicationReadiness }) => {
-        if (!cancelled) setReadiness(body.readiness ?? null);
+        setReadiness(body.readiness ?? null);
       })
-      .catch(() => {
-        if (!cancelled) setReadiness(null);
+      .catch((err: unknown) => {
+        if ((err as Error)?.name !== "AbortError") {
+          setReadiness(null);
+        }
       });
     return () => {
-      cancelled = true;
+      controller.abort();
     };
   }, [editingRegattaId, readinessRevision]);
 
@@ -522,29 +525,34 @@ export function AdminRegattasPanel({
   useEffect(() => {
     const ids = openSheetKey.split(",").filter(Boolean);
     if (ids.length === 0) return;
-    let cancelled = false;
-    void Promise.all(
-      ids.map(async (id) => {
-        const res = await fetch(`/api/admin/regatta-readiness?sheet=${encodeURIComponent(id)}`, {
-          credentials: "include",
-        });
-        const body = (await res.json()) as { readiness?: PublicationReadiness };
-        return [id, body.readiness] as const;
-      })
-    )
-      .then((rows) => {
-        if (cancelled) return;
-        const next: Record<string, PublicationReadiness> = {};
-        for (const [id, value] of rows) {
-          if (value) next[id] = value;
+    const controller = new AbortController();
+
+    const fetchBatchReadiness = async () => {
+      try {
+        const res = await fetch(
+          `/api/admin/regatta-readiness?sheets=${encodeURIComponent(ids.join(","))}`,
+          {
+            credentials: "include",
+            signal: controller.signal,
+          }
+        );
+        if (!res.ok) return;
+        const body = (await res.json()) as {
+          readinessBySheet?: Record<string, PublicationReadiness>;
+        };
+        if (body.readinessBySheet) {
+          setCardReadiness(body.readinessBySheet);
         }
-        setCardReadiness(next);
-      })
-      .catch(() => {
-        if (!cancelled) setCardReadiness({});
-      });
+      } catch (err: unknown) {
+        if ((err as Error)?.name === "AbortError") return;
+        // Fallback: don't clear existing cards on temporary network errors
+      }
+    };
+
+    void fetchBatchReadiness();
+
     return () => {
-      cancelled = true;
+      controller.abort();
     };
   }, [openSheetKey]);
 

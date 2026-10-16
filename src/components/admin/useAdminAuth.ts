@@ -73,13 +73,18 @@ export function useAdminAuth(initialAuth?: InitialAdminAuth): UseAdminAuthReturn
         }
 
         let res: Response;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+          controller.abort(new Error("Timeout verifying admin authorization"));
+        }, 10_000);
         try {
           res = await fetch("/api/admin/me", {
             headers: { Accept: "application/json" },
             cache: "no-store",
+            signal: controller.signal,
           });
         } catch (fetchErr) {
-          // Network failure or client offline
+          // Network failure, timeout, or client offline
           setAuthUnavailable(true);
           setAuthError(
             fetchErr instanceof Error ? fetchErr.message : "Network error contacting server"
@@ -88,6 +93,8 @@ export function useAdminAuth(initialAuth?: InitialAdminAuth): UseAdminAuthReturn
             setUser((prev) => prev ?? sessionUser);
           }
           return;
+        } finally {
+          clearTimeout(timeoutId);
         }
 
         if (res.ok) {

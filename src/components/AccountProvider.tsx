@@ -47,8 +47,13 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
 
   const loadAccount = useCallback(async () => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10_000);
     try {
-      const res = await fetch("/api/account", { credentials: "include" });
+      const res = await fetch("/api/account", {
+        credentials: "include",
+        signal: controller.signal,
+      });
       if (!res.ok) {
         if (res.status === 401) {
           setOwned([]);
@@ -64,7 +69,9 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       setRole(r);
       setIsSuperadmin(r === "superadmin" || Boolean(data.isSuperadmin));
     } catch {
-      // Network or transient error: preserve existing session state
+      // Network or transient error or timeout: preserve existing session state
+    } finally {
+      clearTimeout(timeoutId);
     }
   }, []);
 

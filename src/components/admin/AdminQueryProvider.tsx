@@ -15,7 +15,22 @@ export function AdminQueryProvider({ children }: { children: ReactNode }) {
             staleTime: 60_000,
             gcTime: 5 * 60_000,
             refetchOnWindowFocus: false,
-            retry: 1,
+            retry: (failureCount, error) => {
+              if (failureCount >= 1) return false;
+              if ((error as Error)?.name === "AbortError") return false;
+              const msg = (error as Error)?.message || "";
+              if (
+                msg.includes("401") ||
+                msg.includes("403") ||
+                msg.includes("404") ||
+                msg.includes("Unauthorized") ||
+                msg.includes("Forbidden") ||
+                msg.includes("aborted")
+              ) {
+                return false;
+              }
+              return true;
+            },
           },
         },
       })

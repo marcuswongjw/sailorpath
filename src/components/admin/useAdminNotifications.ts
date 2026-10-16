@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { adminJson } from "@/components/admin/adminFetch";
 import { coachRequestsFromCache } from "@/components/admin/coachAccessCache";
 import { totalPendingAdminInboxItems } from "@/lib/admin/adminInboxCounts";
 
@@ -25,10 +26,11 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryKey: adminQueryKeys.claims(),
     enabled: isSuperadmin,
     refetchInterval: 60_000,
-    queryFn: async () => {
-      const res = await fetch("/api/admin/claims");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load claims");
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ claims?: ClaimNotification[] }>(
+        "/api/admin/claims",
+        { signal, timeoutMs: 15_000 }
+      );
       return (data.claims || []) as ClaimNotification[];
     },
   });
@@ -37,10 +39,11 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryKey: adminQueryKeys.support("new"),
     enabled: isSuperadmin,
     refetchInterval: 60_000,
-    queryFn: async () => {
-      const res = await fetch("/api/support?status=new");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load support");
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ messages?: DatedRow[] }>(
+        "/api/support?status=new",
+        { signal, timeoutMs: 15_000 }
+      );
       return (data.messages || []) as DatedRow[];
     },
   });
@@ -49,10 +52,11 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryKey: adminQueryKeys.coachAccess(),
     enabled: isSuperadmin,
     refetchInterval: 60_000,
-    queryFn: async () => {
-      const res = await fetch("/api/admin/coach-access");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load coach requests");
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{
+        requests?: Array<ClaimNotification & DatedRow>;
+        coaches?: unknown[];
+      }>("/api/admin/coach-access", { signal, timeoutMs: 15_000 });
       return {
         requests: (Array.isArray(data.requests) ? data.requests : []) as Array<
           ClaimNotification & DatedRow
@@ -66,11 +70,11 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryKey: adminQueryKeys.regattaSuggestions(),
     enabled: isSuperadmin,
     refetchInterval: 60_000,
-    queryFn: async () => {
-      const res = await fetch("/api/admin/regatta-suggestions");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load suggestions");
-      return data;
+    queryFn: async ({ signal }) => {
+      return adminJson<{ count?: number; suggestions?: unknown[] }>(
+        "/api/admin/regatta-suggestions",
+        { signal, timeoutMs: 15_000 }
+      );
     },
   });
 

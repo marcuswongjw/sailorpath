@@ -89,19 +89,19 @@ export function useAdminData({
 
   const sailorsQuery = useQuery({
     queryKey: adminQueryKeys.sailors(),
-    queryFn: fetchAdminSailors,
+    queryFn: ({ signal }) => fetchAdminSailors({ signal }),
     enabled: needSailors,
   });
 
   const regattasQuery = useQuery({
     queryKey: adminQueryKeys.regattas(),
-    queryFn: fetchAdminRegattas,
+    queryFn: ({ signal }) => fetchAdminRegattas({ signal }),
     enabled: needRegattas,
   });
 
   const calendarEventsQuery = useQuery({
     queryKey: adminQueryKeys.regattaEvents(),
-    queryFn: fetchAdminRegattaEvents,
+    queryFn: ({ signal }) => fetchAdminRegattaEvents({ signal }),
     enabled: needCalendarEvents,
   });
 
@@ -111,7 +111,7 @@ export function useAdminData({
 
   const resultsAllQuery = useQuery({
     queryKey: adminQueryKeys.resultsAll(),
-    queryFn: fetchAdminResultsAll,
+    queryFn: ({ signal }) => fetchAdminResultsAll({ signal }),
     enabled: isSuperadmin && needsFullResults,
   });
 
@@ -119,8 +119,8 @@ export function useAdminData({
     queryKey: adminQueryKeys.resultsByRegatta(
       selectedRegattaId || "_"
     ),
-    queryFn: () =>
-      fetchAdminResultsForRegatta(selectedRegattaId, true),
+    queryFn: ({ signal }) =>
+      fetchAdminResultsForRegatta(selectedRegattaId, true, { signal }),
     enabled:
       needResultsEditor &&
       Boolean(selectedRegattaIdForResultEdit),
