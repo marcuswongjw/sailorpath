@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   AUTH_GET_USER_TIMEOUT_MS,
   AUTH_PROFILE_LOOKUP_TIMEOUT_MS,
