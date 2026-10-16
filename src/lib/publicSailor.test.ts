@@ -115,6 +115,22 @@ describe("toPublicSailorProps", () => {
     expect(pub.birthYear).toBe(2012);
   });
 
+  it("does not serialize consent controls or private relationship metadata", () => {
+    const pub = toPublicSailorProps(
+      {
+        ...base,
+        showSchoolOnPublicProfile: true,
+        showEquipmentOnPublicProfile: true,
+      },
+      { canSeePrivate: false }
+    );
+
+    expect(JSON.stringify(pub)).not.toContain("auth-user-secret");
+    expect(JSON.stringify(pub)).not.toContain("ownerRelation");
+    expect(JSON.stringify(pub)).not.toContain("showEquipmentOnPublicProfile");
+    expect(JSON.stringify(pub)).not.toContain("2012-06-15");
+  });
+
   it("retains private data only for authorised viewers", () => {
     const priv = toPublicSailorProps(base, { canSeePrivate: true });
     expect(priv.dob).toBe("2012-06-15");

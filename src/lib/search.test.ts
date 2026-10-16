@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 import { describe, it, expect } from "vitest";
 import { parseSearchQuery } from "./search";
 
+const source = readFileSync(new URL("./search.ts", import.meta.url), "utf8");
+
 describe("parseSearchQuery", () => {
   it("extracts sail number and country prefix from SGP 4652", () => {
     const res = parseSearchQuery("SGP 4652");
@@ -45,9 +47,37 @@ describe("parseSearchQuery", () => {
     expect(res.extractedSailNumber).toBe("1");
     expect(res.clubExpansions).toContain("SAF Yacht Club");
   });
+});
 
-  it("uses the shared database retry wrapper for public sailor and regatta reads", () => {
-    const source = readFileSync(new URL("./search.ts", import.meta.url), "utf8");
-    expect(source.match(/withDatabaseRetry/g)?.length).toBeGreaterThanOrEqual(4);
+describe("public search projection", () => {
+  it("caches one minimal public sailor directory for all public filters", () => {
+    expect(source).toContain("getCachedSearchSailorDirectory()");
+    expect(source).toContain("sailorMatchesPublicSearch");
+    expect(source).not.toContain(".where(and(...conditions))");
+  });
+
+  it("does not read or filter private school, squad, DOB, weight, or equipment fields", () => {
+    const projection = source.slice(
+      source.indexOf("const searchSailorColumns"),
+      source.indexOf("const getCachedSearchSailorDirectory")
+    );
+    for (const privateField of [
+      "school:",
+      "nationalSquadStatus:",
+      "dob:",
+      "weight:",
+      "equipmentNotes:",
+    ]) {
+      expect(projection).not.toContain(privateField);
+    }
+    expect(source).not.toContain("SCHOOL_ABBREVIATIONS");
+    expect(source).not.toContain("birthYearFrom");
+    expect(source).not.toContain("birthYearTo");
+    expect(source).not.toContain("squad:");
+  });
+
+  it("uses the published regatta cache instead of querying draft rows during public search", () => {
+    expect(source).toContain("getCachedPublicRegattas()");
+    expect(source).not.toContain("from(regattas)");
   });
 });

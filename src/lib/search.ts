@@ -1,16 +1,16 @@
 import { unstable_cache } from "next/cache";
-import { sql, ilike, or, and, eq, ne, desc, asc, type SQL } from "drizzle-orm";
+import { asc } from "drizzle-orm";
 import { db, withDatabaseRetry } from "@/db";
 import {
   CACHE_TAG_FLEET_RANKINGS,
   PUBLIC_DATA_REVALIDATE_SECONDS,
 } from "@/lib/cacheTags";
-import { sailors, regattas } from "@/db/schema";
+import { sailors } from "@/db/schema";
+import { getCachedPublicRegattas } from "@/lib/queries";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
-import { resolveSailorFleet, type SailorRecord, type RegattaRecord } from "@/lib/ranking";
+import { resolveSailorFleet, type SailorRecord } from "@/lib/ranking";
 import { isInSgSeries } from "@/lib/seriesMembership";
 import { classResultsHref } from "@/lib/calendar/calendarResultLinks";
-import { ILCA6_STATIC_REGATTAS } from "@/lib/ilca6ResultsData";
 
 /**
  * Common Singapore sailing club abbreviations to official club names.
@@ -150,24 +150,123 @@ const searchSailorColumns = {
 };
 
 /**
- * Unfiltered directory (the /search page and empty /api/search). Filtered
- * queries stay in SQL so they do not pull the whole roster.
+ * The cached payload is the complete anonymous directory allow-list. It is
+ * intentionally limited to discovery fields—never consent flags, school,
+ * date of birth, measurements, squad status, equipment, or relationship data.
+ */
+export type PublicSearchDirectoryRow = {
+  id: string;
+  name: string;
+  handle: string;
+  sailNumber: string;
+  sailNumberIlca4: string | null;
+  boardNumber: string | null;
+  ilca4NationalList: boolean | null;
+  club: string;
+  nationality: string | null;
+  goldEntryDate: string | null;
+  silverEntryDate: string | null;
+  dropDate: string | null;
+  currentFleet: string | null;
+};
+
+/**
+ * One minimal roster read per revalidation window. Public filters run against
+ * the same privacy-safe cache rather than issuing an additional database query
+ * on each search request.
  */
 const getCachedSearchSailorDirectory = unstable_cache(
-  async () =>
+  async (): Promise<PublicSearchDirectoryRow[]> =>
     withDatabaseRetry(() =>
       db.select(searchSailorColumns).from(sailors).orderBy(asc(sailors.name))
     ),
-  ["public-sailor-search-directory-v1"],
+  ["public-sailor-search-directory-v2"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS],
   }
 );
 
-/**
- * Searches sailors with token parsing, synonym expansions, and relevance scoring.
- */
+function includesFolded(value: string | null | undefined, query: string): boolean {
+  return Boolean(value && query && value.toLowerCase().includes(query.toLowerCase()));
+}
+
+function compactSailNumber(value: string | null | undefined): string {
+  return (value || "").replace(/[\s-]/g, "").toLowerCase();
+}
+
+function tokenMatchesPublicSearch(row: PublicSearchDirectoryRow, token: string): boolean {
+  if (
+    includesFolded(row.name, token) ||
+    includesFolded(row.handle, token) ||
+    includesFolded(row.sailNumber, token) ||
+    includesFolded(row.sailNumberIlca4, token) ||
+    includesFolded(row.boardNumber, token) ||
+    includesFolded(row.club, token) ||
+    includesFolded(row.nationality, token)
+  ) {
+    return true;
+  }
+
+  const compactToken = token.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  if (
+    compactToken &&
+    (compactSailNumber(row.sailNumber).includes(compactToken) ||
+      compactSailNumber(row.sailNumberIlca4).includes(compactToken) ||
+      compactSailNumber(row.boardNumber).includes(compactToken))
+  ) {
+    return true;
+  }
+
+  if (/^(sgp|sin)$/i.test(token)) {
+    return (
+      !row.nationality ||
+      includesFolded(row.nationality, "singapore") ||
+      includesFolded(row.nationality, "sgp")
+    );
+  }
+
+  const clubNames = CLUB_ABBREVIATIONS[token.toLowerCase()];
+  return Boolean(clubNames?.some((club) => includesFolded(row.club, club)));
+}
+
+function matchesSailNumber(row: PublicSearchDirectoryRow, sailNumber: string): boolean {
+  const normalized = sailNumber.toLowerCase();
+  return (
+    includesFolded(row.sailNumber, normalized) ||
+    includesFolded(row.sailNumberIlca4, normalized) ||
+    includesFolded(row.boardNumber, normalized) ||
+    includesFolded(row.name, normalized) ||
+    compactSailNumber(row.sailNumber).includes(normalized) ||
+    compactSailNumber(row.sailNumberIlca4).includes(normalized) ||
+    compactSailNumber(row.boardNumber).includes(normalized)
+  );
+}
+
+/** Applies only the public directory filters to the cached allow-list. */
+export function sailorMatchesPublicSearch(
+  row: PublicSearchDirectoryRow,
+  filters: SearchFilters,
+  parsed: ParsedSearchQuery
+): boolean {
+  if (parsed.tokens.some((token) => !tokenMatchesPublicSearch(row, token))) {
+    return false;
+  }
+  if (parsed.extractedSailNumber && !matchesSailNumber(row, parsed.extractedSailNumber)) {
+    return false;
+  }
+  if (filters.nationality?.trim() && !includesFolded(row.nationality, filters.nationality.trim())) {
+    return false;
+  }
+  if (filters.club?.trim()) {
+    const value = filters.club.trim();
+    const alternatives = CLUB_ABBREVIATIONS[value.toLowerCase()] || [value];
+    if (!alternatives.some((club) => includesFolded(row.club, club))) return false;
+  }
+  return true;
+}
+
+/** Searches sailors with token parsing, synonym expansions, and relevance scoring. */
 export async function searchSailorsEnhanced(
   filters: string | SearchFilters
 ): Promise<SailorSearchResult[]> {
@@ -176,135 +275,7 @@ export async function searchSailorsEnhanced(
   const q = (f.query || "").trim();
   const parsed = parseSearchQuery(q);
   const period = currentPeriodFromSgToday();
-  const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
-
-  const conditions: SQL[] = [];
-
-  if (parsed.tokens.length > 0) {
-    for (const token of parsed.tokens) {
-      const lower = token.toLowerCase();
-      const tokenPattern = `%${token}%`;
-      const alphanumeric = token.replace(/[^a-zA-Z0-9]/g, "");
-      const cleanPattern = alphanumeric ? `%${alphanumeric}%` : null;
-
-      const tokenOrs: SQL[] = [
-        ilike(sailors.name, tokenPattern),
-        ilike(sailors.sailNumber, tokenPattern),
-        ilike(sailors.club, tokenPattern),
-        ilike(sailors.handle, tokenPattern),
-        ilike(sailors.nationality, tokenPattern),
-      ];
-
-      tokenOrs.push(ilike(sailors.sailNumberIlca4, tokenPattern));
-      tokenOrs.push(ilike(sailors.boardNumber, tokenPattern));
-
-      if (cleanPattern && cleanPattern !== tokenPattern) {
-        tokenOrs.push(
-          sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`,
-          sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`,
-          sql`replace(replace(coalesce(${sailors.boardNumber}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`
-        );
-      }
-
-      if (/^(SGP|SIN)$/i.test(token)) {
-        tokenOrs.push(
-          sql`${sailors.nationality} IS NULL`,
-          ilike(sailors.nationality, "%Singapore%"),
-          ilike(sailors.nationality, "%SGP%")
-        );
-      }
-
-      if (CLUB_ABBREVIATIONS[lower]) {
-        for (const clubName of CLUB_ABBREVIATIONS[lower]) {
-          tokenOrs.push(ilike(sailors.club, `%${clubName}%`));
-        }
-      }
-
-      conditions.push(or(...tokenOrs)!);
-    }
-
-    if (parsed.extractedSailNumber) {
-      const numPattern = `%${parsed.extractedSailNumber}%`;
-      conditions.push(
-        or(
-          ilike(sailors.sailNumber, numPattern),
-          ilike(sailors.sailNumberIlca4, numPattern),
-          ilike(sailors.boardNumber, numPattern),
-          sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${numPattern}`,
-          sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
-          sql`replace(replace(coalesce(${sailors.boardNumber}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
-          ilike(sailors.name, numPattern)
-        )!
-      );
-    }
-  }
-
-  // Public directory filters; schools, squads, DOB and other private fields
-  // intentionally have no query path here.
-  if (f.nationality?.trim()) {
-    conditions.push(ilike(sailors.nationality, `%${f.nationality.trim()}%`));
-  }
-  if (f.club?.trim()) {
-    const clubLower = f.club.trim().toLowerCase();
-    const clubExp = CLUB_ABBREVIATIONS[clubLower] || [f.club.trim()];
-    conditions.push(or(...clubExp.map((c) => ilike(sailors.club, `%${c}%`)))!);
-  }
-
-  // Fleet filtering in SQL
-  const fleetFilter = (f.fleet || "all").toLowerCase();
-  if (fleetFilter !== "all") {
-    if (fleetFilter === "gold") {
-      conditions.push(
-        and(
-          ne(sailors.currentFleet, "Guest"),
-          sql`${sailors.goldEntryDate} <= ${pEndStr}`,
-          or(sql`${sailors.dropDate} IS NULL`, sql`${sailors.dropDate} > ${pEndStr}`)
-        )!
-      );
-    } else if (fleetFilter === "silver") {
-      conditions.push(
-        and(
-          ne(sailors.currentFleet, "Guest"),
-          or(sql`${sailors.goldEntryDate} IS NULL`, sql`${sailors.goldEntryDate} > ${pEndStr}`),
-          or(sql`${sailors.silverEntryDate} <= ${pEndStr}`, sql`${sailors.goldEntryDate} <= ${pEndStr}`),
-          or(sql`${sailors.dropDate} IS NULL`, sql`${sailors.dropDate} > ${pEndStr}`)
-        )!
-      );
-    } else if (fleetFilter === "ilca" || fleetFilter === "ilca4") {
-      conditions.push(
-        or(
-          eq(sailors.ilca4NationalList, true),
-          sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`
-        )!
-      );
-    } else if (fleetFilter === "guest") {
-      conditions.push(
-        or(
-          eq(sailors.currentFleet, "Guest"),
-          and(
-            ne(sailors.currentFleet, "Guest"),
-            // Not eligible for Gold or Silver
-            or(
-              sql`${sailors.goldEntryDate} IS NULL and ${sailors.silverEntryDate} IS NULL`,
-              sql`${sailors.dropDate} <= ${pEndStr}`
-            )
-          )!
-        )!
-      );
-    }
-  }
-
-  const dbLimit = f.limit ? Math.max(f.limit * 2, 500) : 1500;
-  const rows =
-    conditions.length > 0
-      ? await withDatabaseRetry(() =>
-          db
-            .select(searchSailorColumns)
-            .from(sailors)
-            .where(and(...conditions))
-            .limit(dbLimit)
-        )
-      : (await getCachedSearchSailorDirectory()).slice(0, dbLimit);
+  const rows = await getCachedSearchSailorDirectory();
 
   // Map and score
   const scored: SailorSearchResult[] = [];
@@ -312,6 +283,8 @@ export async function searchSailorsEnhanced(
   const rawNum = parsed.extractedSailNumber;
 
   for (const row of rows) {
+    if (!sailorMatchesPublicSearch(row, f, parsed)) continue;
+
     const s: SailorRecord = {
       id: row.id,
       name: row.name,
@@ -436,40 +409,10 @@ export async function searchRegattasEnhanced(query: string, limit = 15): Promise
 
   const tokens = q.split(/\s+/).filter(Boolean);
 
-  const rows = await withDatabaseRetry(() =>
-    db
-      .select()
-      .from(regattas)
-      .where(or(ne(regattas.status, "archived"), sql`${regattas.status} IS NULL`))
-      .orderBy(desc(regattas.date))
-      .limit(100)
-  );
-
-  const candidates: RegattaRecord[] = rows.map((r): RegattaRecord => ({
-    id: r.id,
-    name: r.name,
-    slug: r.slug,
-    date: r.date,
-    totalFleetSize: r.totalFleetSize,
-    division: r.division,
-    raceCount: r.raceCount,
-    geography: r.geography ?? "SG",
-    boatClass: r.boatClass ?? "Optimist",
-    countsForRanking: r.countsForRanking !== false,
-    venue: r.venue,
-    endDate: r.endDate,
-    norUrl: r.norUrl,
-    registrationUrl: r.registrationUrl,
-    isSelectionTrial: r.isSelectionTrial ?? false,
-    organizer: r.organizer,
-    scheduleNotes: r.scheduleNotes,
-  }));
-
-  for (const staticReg of ILCA6_STATIC_REGATTAS) {
-    if (!candidates.some((m) => m.slug.toLowerCase() === staticReg.slug.toLowerCase())) {
-      candidates.push(staticReg);
-    }
-  }
+  // Reuse the published-only cache. Draft and in-review sheets never enter
+  // the public search candidate set, and static ILCA sheets are merged by the
+  // shared loader.
+  const candidates = await getCachedPublicRegattas();
 
   const results: RegattaSearchResult[] = [];
 
