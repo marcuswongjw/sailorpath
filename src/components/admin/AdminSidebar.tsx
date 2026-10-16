@@ -177,16 +177,20 @@ export function AdminSidebar({
                 current: insightsView === view,
               }))
             : activeArea === "settings"
-              ? (
-                  [
-                    ["audit", "Audit log"],
-                  ] as const
-                ).map(([view, label]) => ({
-                  key: view,
-                  href: areaHref({ area: "settings", view, event: null, sheet: null }),
-                  label,
-                  current: settingsView === view,
-                }))
+              ? [
+                  {
+                    key: "audit",
+                    href: areaHref({ area: "settings", view: "audit", event: null, sheet: null }),
+                    label: "Audit log",
+                    current: settingsView === "audit",
+                  },
+                  {
+                  key: "editorial",
+                  href: "/admin/news",
+                  label: "Editorial",
+                  current: false,
+                  },
+                ]
               : [];
 
   return (
