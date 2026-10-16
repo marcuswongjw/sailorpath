@@ -284,6 +284,31 @@ export async function ensureDatabaseLiveness(): Promise<void> {
   return check;
 }
 
+export function isRetryableDatabaseConnectionError(errorMessage: string): boolean {
+  return /\b(?:CONNECT_TIMEOUT|CONNECTION_DESTROYED|ETIMEDOUT|ECONNRESET|ECONNREFUSED)\b|socket hang up|connection (?:closed|destroyed|terminated|reset)/i.test(
+    errorMessage
+  );
+}
+
+/**
+ * Runs a database operation after a liveness probe and once more with a fresh
+ * client when the pooler rejects a stale serverless socket. Keep this bounded:
+ * callers receive the second failure instead of exhausting their request time.
+ */
+export async function withDatabaseRetry<T>(operation: () => Promise<T>): Promise<T> {
+  await ensureDatabaseLiveness();
+  try {
+    return await operation();
+  } catch (error) {
+    if (!isRetryableDatabaseConnectionError(formatDbError(error))) throw error;
+
+    recycleDatabaseClient();
+    await new Promise<void>((resolve) => setTimeout(resolve, 100));
+    await ensureDatabaseLiveness();
+    return operation();
+  }
+}
+
 export function getDatabaseUrlMeta() {
   const cs = resolveConnectionString();
   if (!cs) return null;

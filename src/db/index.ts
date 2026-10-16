@@ -4,6 +4,8 @@ export {
   pgSql,
   recycleDatabaseClient,
   ensureDatabaseLiveness,
+  isRetryableDatabaseConnectionError,
+  withDatabaseRetry,
   getDatabaseUrlMeta,
   formatDbError,
   DbUnavailableError,

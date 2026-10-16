@@ -6,7 +6,7 @@ import {
   CACHE_TAG_PUBLIC_REGATTAS,
   PUBLIC_DATA_REVALIDATE_SECONDS,
 } from "@/lib/cacheTags";
-import { db, ensureCoreSchema } from "@/db";
+import { db, ensureCoreSchema, withDatabaseRetry } from "@/db";
 import { techno293Regattas, wingfoilRegattas } from "@/db/schema";
 import {
   BOARD_CLASS_KEYS,
@@ -68,15 +68,17 @@ async function loadPublishedSpecialistScorecards(
     if (typeof ensureCoreSchema === "function") await ensureCoreSchema();
 
     if (key === "wingfoil") {
-      const rows = await db
-        .select()
-        .from(wingfoilRegattas)
-        .where(
-          or(
-            eq(wingfoilRegattas.status, "published"),
-            sql`${wingfoilRegattas.status} IS NULL`
+      const rows = await withDatabaseRetry(() =>
+        db
+          .select()
+          .from(wingfoilRegattas)
+          .where(
+            or(
+              eq(wingfoilRegattas.status, "published"),
+              sql`${wingfoilRegattas.status} IS NULL`
+            )
           )
-        );
+      );
       return mergeWithSeed(
         SINGAPORE_WINGFOIL_REGATTAS,
         rows.map((row) => row.data as WingfoilRegatta),
@@ -84,15 +86,17 @@ async function loadPublishedSpecialistScorecards(
       );
     }
 
-    const rows = await db
-      .select()
-      .from(techno293Regattas)
-      .where(
-        or(
-          eq(techno293Regattas.status, "published"),
-          sql`${techno293Regattas.status} IS NULL`
+    const rows = await withDatabaseRetry(() =>
+      db
+        .select()
+        .from(techno293Regattas)
+        .where(
+          or(
+            eq(techno293Regattas.status, "published"),
+            sql`${techno293Regattas.status} IS NULL`
+          )
         )
-      );
+    );
     return mergeWithSeed(
       SINGAPORE_TECHNO293_REGATTAS,
       rows.map((row) => row.data as Techno293Regatta),

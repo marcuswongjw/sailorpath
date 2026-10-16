@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { sql, ilike, or, and, eq, ne, desc, asc, type SQL } from "drizzle-orm";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import {
   CACHE_TAG_FLEET_RANKINGS,
   PUBLIC_DATA_REVALIDATE_SECONDS,
@@ -155,7 +155,9 @@ const searchSailorColumns = {
  */
 const getCachedSearchSailorDirectory = unstable_cache(
   async () =>
-    db.select(searchSailorColumns).from(sailors).orderBy(asc(sailors.name)),
+    withDatabaseRetry(() =>
+      db.select(searchSailorColumns).from(sailors).orderBy(asc(sailors.name))
+    ),
   ["public-sailor-search-directory-v1"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
@@ -295,11 +297,13 @@ export async function searchSailorsEnhanced(
   const dbLimit = f.limit ? Math.max(f.limit * 2, 500) : 1500;
   const rows =
     conditions.length > 0
-      ? await db
-          .select(searchSailorColumns)
-          .from(sailors)
-          .where(and(...conditions))
-          .limit(dbLimit)
+      ? await withDatabaseRetry(() =>
+          db
+            .select(searchSailorColumns)
+            .from(sailors)
+            .where(and(...conditions))
+            .limit(dbLimit)
+        )
       : (await getCachedSearchSailorDirectory()).slice(0, dbLimit);
 
   // Map and score
@@ -432,11 +436,14 @@ export async function searchRegattasEnhanced(query: string, limit = 15): Promise
 
   const tokens = q.split(/\s+/).filter(Boolean);
 
-  const base = db.select().from(regattas);
-  const rows = await base
-    .where(or(ne(regattas.status, "archived"), sql`${regattas.status} IS NULL`))
-    .orderBy(desc(regattas.date))
-    .limit(100);
+  const rows = await withDatabaseRetry(() =>
+    db
+      .select()
+      .from(regattas)
+      .where(or(ne(regattas.status, "archived"), sql`${regattas.status} IS NULL`))
+      .orderBy(desc(regattas.date))
+      .limit(100)
+  );
 
   const candidates: RegattaRecord[] = rows.map((r): RegattaRecord => ({
     id: r.id,
