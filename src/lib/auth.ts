@@ -5,6 +5,7 @@ import {
   formatDbError,
   isRetryableDatabaseConnectionError,
   withDatabaseRetry,
+  withDatabaseDeadline,
 } from "@/db";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -23,6 +24,8 @@ export {
 export const AUTH_GET_USER_TIMEOUT_MS = 5_000;
 /** Explicit application deadline for the `profiles` role lookup per attempt. */
 export const AUTH_PROFILE_LOOKUP_TIMEOUT_MS = 4_000;
+/** Includes provider retries, profile reads and any initial profile sync. */
+export const AUTH_CONTEXT_TIMEOUT_MS = 8_000;
 /** Emit structured phase timings when authorization takes at least 1s. */
 export const AUTH_SLOW_THRESHOLD_MS = 1_000;
 
@@ -50,7 +53,18 @@ function isTransientAuthError(message: string): boolean {
   );
 }
 
-export async function getAuthContext(): Promise<AuthContext | null> {
+export async function getAuthContext(signal?: AbortSignal): Promise<AuthContext | null> {
+  try {
+    return await withDatabaseDeadline(getAuthContextWithinDeadline, AUTH_CONTEXT_TIMEOUT_MS, signal);
+  } catch (error) {
+    if (isRetryableDatabaseConnectionError(formatDbError(error))) {
+      throw new DbUnavailableError("Authentication service temporarily unavailable");
+    }
+    throw error;
+  }
+}
+
+async function getAuthContextWithinDeadline(): Promise<AuthContext | null> {
   const requestStart = Date.now();
   let supabase: Awaited<ReturnType<typeof createServerSupabase>>;
   try {
@@ -233,8 +247,8 @@ export async function getAuthContext(): Promise<AuthContext | null> {
   };
 }
 
-export async function requireSuperadmin(): Promise<AuthContext> {
-  return requireRoles(["superadmin"]);
+export async function requireSuperadmin(signal?: AbortSignal): Promise<AuthContext> {
+  return requireRoles(["superadmin"], signal);
 }
 
 /** Require an authenticated coach workspace user. Superadmins retain access for support/testing. */
@@ -242,8 +256,8 @@ export async function requireCoach(): Promise<AuthContext> {
   return requireRoles(["coach", "superadmin"]);
 }
 
-async function requireRoles(roles: AppRole[]): Promise<AuthContext> {
-  const ctx = await getAuthContext();
+async function requireRoles(roles: AppRole[], signal?: AbortSignal): Promise<AuthContext> {
+  const ctx = await getAuthContext(signal);
   if (!ctx) {
     const err = new Error("UNAUTHORIZED");
     (err as Error & { status: number }).status = 401;

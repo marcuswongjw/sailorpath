@@ -1,21 +1,19 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool, type PoolClient } from "pg";
 import * as schema from "./schema";
 
-type SqlClient = ReturnType<typeof postgres>;
-
+/** One budget covers acquisition, queries, and both read attempts. */
+export const DATABASE_OPERATION_TIMEOUT_MS = 6_000;
+export const DATABASE_PREFLIGHT_TIMEOUT_MS = 1_000;
+// Next can evaluate the module in several server bundles in one process. The
+// context must be shared with the pool, including its original connect method.
 const globalForDb = globalThis as unknown as {
-  sql: SqlClient | undefined;
+  sailorpathPgPool?: DatabasePool;
+  sailorpathDatabaseContext?: AsyncLocalStorage<{ signal: AbortSignal }>;
 };
-
-/** Avoid reusing a possibly frozen serverless socket after brief inactivity. */
-const DATABASE_LIVENESS_RECHECK_MS = 5_000;
-/** Bound the liveness probe so a stale socket cannot consume a request budget. */
-export const DATABASE_PREFLIGHT_TIMEOUT_MS = 3_000;
-/** Bound individual retryable read operations so a mid-query stall cannot hang until the 300s platform timeout. */
-export const DATABASE_OPERATION_TIMEOUT_MS = 8_000;
-let lastDatabaseLivenessCheckAt = 0;
-let databaseLivenessCheck: Promise<void> | null = null;
+const readContext = globalForDb.sailorpathDatabaseContext ?? new AsyncLocalStorage<{ signal: AbortSignal }>();
+globalForDb.sailorpathDatabaseContext = readContext;
 
 function cleanUrl(raw: string): string {
   let url = raw.trim();
@@ -26,7 +24,7 @@ function cleanUrl(raw: string): string {
   ) {
     url = url.slice(1, -1).trim();
   }
-  // Prisma-only schemes are not valid for postgres.js
+  // Prisma-only schemes are not valid for PostgreSQL
   if (url.startsWith("prisma+postgres://")) {
     url = "postgres://" + url.slice("prisma+postgres://".length);
   }
@@ -106,7 +104,7 @@ export function describeDatabaseUrl(connectionString: string) {
 }
 
 /**
- * Resolve a postgres.js-compatible connection string.
+ * Resolve a PostgreSQL-compatible connection string.
  * Tries DATABASE_URL first, then Supabase/Vercel integration vars.
  */
 export function resolveConnectionString(): string | null {
@@ -152,202 +150,176 @@ export function resolveConnectionString(): string | null {
   return null;
 }
 
-/**
- * Serverless connection options.
- *
- * `fetch_types: false` skips postgres.js catalog introspection
- * (`select b.oid, b.typarray from pg_catalog.pg_type ...`) that otherwise
- * runs on every new connection. Built-in types still parse; this schema
- * does not use custom array types.
- *
- * `prepare: false` is required for Supabase transaction-mode pooler (6543).
- * `max: 1` keeps one connection per isolate so warm invocations reuse it
- * instead of opening a pool that each fetches types and holds pooler slots.
- * A short idle timeout closes live-but-unused sockets before a serverless
- * instance suspends; an application liveness probe handles frozen sockets.
+/** node-postgres serializes queries on each socket. postgres.js pipelining can
+ * return mismatched rows or hang on Supavisor transaction mode:
+ * https://supabase.com/docs/guides/database/postgres-js
  */
-export function postgresJsOptions(connectionString: string) {
-  const isSupabase =
-    connectionString.includes("supabase") ||
-    connectionString.includes("pooler.supabase.com");
+export function postgresPoolOptions(connectionString: string) {
   return {
+    connectionString,
     max: 1,
-    idle_timeout: 5,
-    connect_timeout: 5,
-    prepare: false,
-    fetch_types: false,
-    ssl: isSupabase ? ("require" as const) : undefined,
+    idleTimeoutMillis: 5_000,
+    connectionTimeoutMillis: 2_000,
+    query_timeout: 4_000,
+    allowExitOnIdle: true,
+    ssl: /(?:\.supabase\.co|\.pooler\.supabase\.com)(?::|\/)/i.test(connectionString) ? true : undefined,
   };
 }
 
-function makeDeadClient() {
-  // Valid URL that fails fast at query time (never throws at construct)
-  return postgres("postgres://postgres:postgres@127.0.0.1:1/sailorpath", {
-    max: 1,
-    connect_timeout: 1,
-    prepare: false,
-    fetch_types: false,
-  });
+type ConnectCallback = (
+  error: Error | undefined,
+  client: PoolClient | undefined,
+  release: (error?: Error | boolean) => void
+) => void;
+
+/** Abort only this operation's lease, never other requests' connections.
+ * A late acquisition is released without querying. Release is idempotent so
+ * Drizzle's transaction finally block remains safe after cancellation.
+ */
+export class DatabasePool extends Pool {
+  connect(): Promise<PoolClient>;
+  connect(callback: ConnectCallback): void;
+  connect(callback?: ConnectCallback): Promise<PoolClient> | void {
+    const context = readContext.getStore();
+    if (!context) {
+      if (callback) return super.connect(callback);
+      return super.connect();
+    }
+    const { signal } = context;
+    const pending = new Promise<PoolClient>((resolve, reject) => {
+      if (signal.aborted) return reject(signal.reason);
+      let leased: PoolClient | undefined;
+      const onAbort = () => {
+        leased?.release(true);
+        reject(signal.reason);
+      };
+      signal.addEventListener("abort", onAbort, { once: true });
+      super.connect((error, client, release) => {
+        if (error || !client) {
+          signal.removeEventListener("abort", onAbort);
+          reject(error ?? new Error("Database connection unavailable"));
+          return;
+        }
+        if (signal.aborted) {
+          signal.removeEventListener("abort", onAbort);
+          release(true);
+          reject(signal.reason);
+          return;
+        }
+        let released = false;
+        client.release = (releaseError?: Error | boolean) => {
+          if (released) return;
+          released = true;
+          signal.removeEventListener("abort", onAbort);
+          release(releaseError);
+        };
+        leased = client;
+        resolve(client);
+      });
+    });
+    if (callback) {
+      void pending.then(
+        (client) => callback(undefined, client, client.release),
+        (error: Error) => callback(error, undefined, () => undefined)
+      );
+      return;
+    }
+    return pending;
+  }
 }
 
-function buildSql() {
+function buildPool() {
+  const connectionString = resolveConnectionString();
+  if (!connectionString) console.error("[sailorpath] No valid DATABASE_URL / POSTGRES_URL configured.");
+  const pool = new DatabasePool(postgresPoolOptions(
+    connectionString ?? "postgres://postgres:postgres@127.0.0.1:1/sailorpath"
+  ));
+  // pg removes failed idle clients itself. Do not kill the entire shared pool.
+  pool.on("error", (error) => console.warn("[sailorpath] Idle database connection removed", {
+    error: formatDbError(error),
+  }));
+  return pool;
+}
+
+export const databasePool = globalForDb.sailorpathPgPool ?? buildPool();
+globalForDb.sailorpathPgPool = databasePool;
+export const db = drizzle(databasePool, { schema });
+
+/** Parameterized tag retained for aggregate and health queries. */
+export async function pgSql(strings: TemplateStringsArray, ...values: unknown[]): Promise<Record<string, unknown>[]> {
+  const text = strings.reduce((query, part, index) => query + (index ? `$${index}` : "") + part, "");
+  return (await databasePool.query(text, values)).rows;
+}
+
+/** The aborted context remains attached to late continuations, preventing them
+ * issuing queries after timeout. Parent/caller cancellation is propagated too.
+ */
+export async function withDatabaseDeadline<T>(operation: () => Promise<T>, timeoutMs: number, signal?: AbortSignal): Promise<T> {
+  const parent = readContext.getStore()?.signal;
+  const controller = new AbortController();
+  const abortParent = () => controller.abort(parent?.reason);
+  const abortCaller = () => controller.abort(signal?.reason);
+  parent?.addEventListener("abort", abortParent, { once: true });
+  signal?.addEventListener("abort", abortCaller, { once: true });
+  if (parent?.aborted) abortParent();
+  if (signal?.aborted) abortCaller();
+  const timer = setTimeout(() => controller.abort(new Error("DB_OPERATION_TIMEOUT")), Math.max(0, timeoutMs));
+  let onAbort: () => void = () => undefined;
   try {
-    const connectionString = resolveConnectionString();
-    if (!connectionString) {
-      console.error(
-        "[sailorpath] No valid DATABASE_URL / POSTGRES_URL. Set Supabase Transaction pooler URI (port 6543) on Vercel."
-      );
-      return makeDeadClient();
-    }
-
-    const meta = describeDatabaseUrl(connectionString);
-    console.info(
-      "[sailorpath] DB host=%s port=%s pooler=%s",
-      meta.host,
-      meta.port,
-      meta.isPooler
-    );
-
-    return postgres(connectionString, postgresJsOptions(connectionString));
-  } catch (e) {
-    console.error("[sailorpath] DB client init failed; using dead client.", e);
-    return makeDeadClient();
+    return await readContext.run({ signal: controller.signal }, () => Promise.race([
+      new Promise<never>((_, reject) => {
+        onAbort = () => reject(controller.signal.reason);
+        controller.signal.addEventListener("abort", onAbort, { once: true });
+        if (controller.signal.aborted) onAbort();
+      }),
+      Promise.resolve().then(() => {
+        if (controller.signal.aborted) throw controller.signal.reason;
+        return operation();
+      }),
+    ]));
+  } finally {
+    clearTimeout(timer);
+    controller.signal.removeEventListener("abort", onAbort);
+    controller.abort(new Error("DB_OPERATION_CLOSED"));
+    parent?.removeEventListener("abort", abortParent);
+    signal?.removeEventListener("abort", abortCaller);
   }
 }
 
-// Reuse one client per isolate, including production. Next can evaluate this
-// module from more than one server bundle; globalThis is the shared slot.
-let sql = globalForDb.sql ?? buildSql();
-globalForDb.sql = sql;
-
-export let db = drizzle(sql, { schema });
-export let pgSql = sql;
-
-/**
- * Drops a stale postgres.js socket after a retryable serverless connection
- * failure. Serverless runtimes can freeze warm isolates while the pooler or
- * NAT retires their idle TCP socket; the next query must use a new client.
- */
-export function recycleDatabaseClient(expectedClient?: SqlClient): boolean {
-  // Several concurrent requests can discover the same stale socket. Only the
-  // first should replace it; later requests can reuse the fresh replacement.
-  if (expectedClient && sql !== expectedClient) return false;
-
-  const retiredSql = sql;
-  sql = buildSql();
-  globalForDb.sql = sql;
-  pgSql = sql;
-  db = drizzle(sql, { schema });
-  lastDatabaseLivenessCheckAt = 0;
-
-  // Do not hold the retry path open while the failed client's socket closes.
-  void retiredSql.end({ timeout: 0 }).catch(() => undefined);
-  return true;
-}
-
-function withTimeout<T>(
-  operation: Promise<T>,
-  timeoutMs: number,
-  errorCode = "DB_PREFLIGHT_TIMEOUT"
-): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      const cancellable = operation as Promise<T> & { cancel?: () => void };
-      try {
-        cancellable.cancel?.();
-      } catch {
-        /* ignore cancel errors on dead sockets */
-      }
-      reject(new Error(errorCode));
-    }, timeoutMs);
-    operation.then(resolve, reject).finally(() => clearTimeout(timeout));
-  });
-}
-
-/**
- * Check a warm serverless isolate before reusing its database socket.
- *
- * Supabase documents that frozen functions can retain a stale TCP socket even
- * when an application-level idle timeout is configured. A failed or slow
- * lightweight query replaces that socket before the caller performs its real
- * read. Successful probes are coalesced for a short interval per isolate.
- */
 export async function ensureDatabaseLiveness(): Promise<void> {
-  if (Date.now() - lastDatabaseLivenessCheckAt < DATABASE_LIVENESS_RECHECK_MS) {
-    return;
-  }
-  if (databaseLivenessCheck) return databaseLivenessCheck;
-
-  const client = sql;
-  const check = (async () => {
-    try {
-      await withTimeout(
-        client`select 1 as ok`,
-        DATABASE_PREFLIGHT_TIMEOUT_MS,
-        "DB_PREFLIGHT_TIMEOUT"
-      );
-      if (sql === client) lastDatabaseLivenessCheckAt = Date.now();
-    } catch {
-      recycleDatabaseClient(client);
-    }
-  })();
-
-  databaseLivenessCheck = check;
-  void check.finally(() => {
-    if (databaseLivenessCheck === check) databaseLivenessCheck = null;
-  });
-  return check;
+  await withDatabaseDeadline(async () => { await databasePool.query("select 1 as ok"); }, DATABASE_PREFLIGHT_TIMEOUT_MS);
 }
 
 export function isRetryableDatabaseConnectionError(errorMessage: string): boolean {
-  return /\b(?:DB_PREFLIGHT_TIMEOUT|DB_OPERATION_TIMEOUT|CONNECT_TIMEOUT|CONNECTION_DESTROYED|CONNECTION_CLOSED|CONNECTION_ENDED|ETIMEDOUT|ECONNRESET|ECONNREFUSED|EPIPE)\b|socket hang up|connection (?:closed|destroyed|terminated|reset)|write EOF|read ECONNRESET/i.test(
-    errorMessage
-  );
+  return /\b(?:DB_PREFLIGHT_TIMEOUT|DB_OPERATION_TIMEOUT|CONNECT_TIMEOUT|CONNECTION_DESTROYED|CONNECTION_CLOSED|CONNECTION_ENDED|ETIMEDOUT|ECONNRESET|ECONNREFUSED|EPIPE)\b|query read timeout|timeout exceeded when trying to connect|connection terminated|socket hang up|connection (?:closed|destroyed|terminated|reset)|write EOF|read ECONNRESET/i.test(errorMessage);
 }
 
 export type DatabaseRetryOptions = {
+  /** Total budget, not a fresh timeout per attempt. */
   timeoutMs?: number;
   label?: string;
+  signal?: AbortSignal;
 };
 
-/**
- * Runs a database operation after a liveness probe and once more with a fresh
- * client when the pooler rejects or stalls a stale serverless socket. Keep this
- * bounded: callers receive the second failure instead of exhausting their request time.
- */
-export async function withDatabaseRetry<T>(
-  operation: () => Promise<T>,
-  options?: DatabaseRetryOptions
-): Promise<T> {
-  const timeoutMs = options?.timeoutMs ?? DATABASE_OPERATION_TIMEOUT_MS;
-  await ensureDatabaseLiveness();
-  const firstClient = sql;
-  try {
-    return await withTimeout(operation(), timeoutMs, "DB_OPERATION_TIMEOUT");
-  } catch (error) {
-    const formatted = formatDbError(error);
-    if (!isRetryableDatabaseConnectionError(formatted)) throw error;
-
-    console.warn(
-      "[sailorpath] Retrying database read after recoverable connection failure",
-      {
-        label: options?.label ?? "db.read",
-        error: formatted.slice(0, 240),
-      }
-    );
-    recycleDatabaseClient(firstClient);
-    await new Promise<void>((resolve) => setTimeout(resolve, 100));
-    await ensureDatabaseLiveness();
-    const secondClient = sql;
+/** Read-only recovery: retire only failed leases and share one total budget. */
+export async function withDatabaseRetry<T>(operation: () => Promise<T>, options?: DatabaseRetryOptions): Promise<T> {
+  const deadline = Date.now() + (options?.timeoutMs ?? DATABASE_OPERATION_TIMEOUT_MS);
+  const parentSignal = readContext.getStore()?.signal;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) throw new Error("DB_OPERATION_TIMEOUT");
     try {
-      return await withTimeout(operation(), timeoutMs, "DB_OPERATION_TIMEOUT");
-    } catch (secondError) {
-      if (isRetryableDatabaseConnectionError(formatDbError(secondError))) {
-        recycleDatabaseClient(secondClient);
-      }
-      throw secondError;
+      return await withDatabaseDeadline(operation, attempt === 0 ? Math.ceil(remaining / 2) : remaining, options?.signal);
+    } catch (error) {
+      if (options?.signal?.aborted || parentSignal?.aborted || attempt === 1 || !isRetryableDatabaseConnectionError(formatDbError(error))) throw error;
+      console.warn("[sailorpath] Retrying database read", {
+        label: options?.label ?? "db.read",
+        remainingMs: Math.max(0, deadline - Date.now()),
+        error: formatDbError(error).slice(0, 240),
+      });
     }
   }
+  throw new Error("DB_OPERATION_TIMEOUT");
 }
 
 export function getDatabaseUrlMeta() {
@@ -377,7 +349,8 @@ export function formatDbError(e: unknown): string {
     }
     depth += 1;
   }
-  return parts.join(" | ").slice(0, 600);
+  // Long Drizzle SQL text must not truncate the underlying connection code.
+  return parts.reverse().join(" | ").slice(0, 600);
 }
 
 export class DbUnavailableError extends Error {

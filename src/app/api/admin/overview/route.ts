@@ -13,9 +13,9 @@ export const dynamic = "force-dynamic";
  * Replaces full table downloads of 8,477+ results and 1,108+ sailors
  * with index group-by counts and minimal projections.
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    await requireSuperadmin();
+    await requireSuperadmin(request?.signal);
     if (typeof ensureCoreSchema === "function") {
       await ensureCoreSchema();
     }
@@ -32,7 +32,31 @@ export async function GET() {
             .from(regattaResults)
             .groupBy(regattaResults.regattaId),
           // Regatta metadata for publication readiness checks
-          db.select().from(regattas).orderBy(desc(regattas.date)),
+          db.select({
+            id: regattas.id,
+            name: regattas.name,
+            slug: regattas.slug,
+            // Stable ISO calendar strings; do not decode unused timestamp columns.
+            date: sql<string>`${regattas.date}::text`,
+            endDate: sql<string | null>`${regattas.endDate}::text`,
+            totalFleetSize: regattas.totalFleetSize,
+            division: regattas.division,
+            raceCount: regattas.raceCount,
+            geography: regattas.geography,
+            boatClass: regattas.boatClass,
+            countsForRanking: regattas.countsForRanking,
+            status: regattas.status,
+            venue: regattas.venue,
+            organizer: regattas.organizer,
+            norUrl: regattas.norUrl,
+            registrationUrl: regattas.registrationUrl,
+            officialResultsUrl: regattas.officialResultsUrl,
+            officialResultsSourceName: regattas.officialResultsSourceName,
+            isSelectionTrial: regattas.isSelectionTrial,
+            selectionEventId: regattas.selectionEventId,
+            eventId: regattas.eventId,
+            scheduleNotes: regattas.scheduleNotes,
+          }).from(regattas).orderBy(desc(regattas.date)),
           // Lightweight sailor projection strictly for duplicate detection
           db
             .select({
@@ -62,7 +86,7 @@ export async function GET() {
           duplicateCount: duplicates.length,
         };
       },
-      { label: "admin.overview.get" }
+      { label: "admin.overview.get", signal: request?.signal }
     );
 
     return NextResponse.json(

@@ -1,84 +1,29 @@
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import {
-  DATABASE_OPERATION_TIMEOUT_MS,
-  DbUnavailableError,
-  isRetryableDatabaseConnectionError,
-  pgSql,
-  postgresJsOptions,
-  recycleDatabaseClient,
-  toSupabaseTransactionPooler,
-} from "./client";
+import { postgresPoolOptions, toSupabaseTransactionPooler, isRetryableDatabaseConnectionError, formatDbError } from "./client";
 
-describe("postgres.js serverless options", () => {
-  it("does not introspect pg_type and does not prepare statements", () => {
-    const pooler = postgresJsOptions(
-      "postgresql://user:pass@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
-    );
-    expect(pooler.fetch_types).toBe(false);
-    expect(pooler.prepare).toBe(false);
-    expect(pooler.max).toBe(1);
-    expect(pooler.idle_timeout).toBe(5);
-    expect(pooler.connect_timeout).toBe(5);
-    expect(pooler.ssl).toBe("require");
-
-    const local = postgresJsOptions("postgresql://postgres:postgres@127.0.0.1:5432/sailorpath");
-    expect(local.fetch_types).toBe(false);
-    expect(local.prepare).toBe(false);
-    expect(local.ssl).toBeUndefined();
+describe("PostgreSQL transport", () => {
+  it("keeps a small bounded pool without opting into pipelining or named statements", () => {
+    const options = postgresPoolOptions("postgresql://localhost/sailorpath");
+    expect(options.max).toBe(1);
+    expect(options.connectionTimeoutMillis).toBeGreaterThan(0);
+    expect(options.query_timeout).toBeGreaterThan(0);
+    expect(options).not.toHaveProperty("pipeline", true);
+    expect(postgresPoolOptions("postgresql://user:pass@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres").ssl).toBe(true);
   });
-
-  it("reuses one client on the isolate in production", () => {
-    const src = readFileSync(new URL("./client.ts", import.meta.url), "utf8");
-    expect(src).toContain("globalForDb.sql = sql");
-    expect(src).not.toMatch(
-      /if \(process\.env\.NODE_ENV !== "production"\) \{\s*globalForDb\.sql = sql;/
-    );
-  });
-
-  it("converts an explicit direct Supabase URL to the transaction pooler", () => {
-    const converted = toSupabaseTransactionPooler(
+  it("preserves credentials when resolving a direct Supabase URL", () => {
+    expect(toSupabaseTransactionPooler(
       "postgresql://postgres:pass%40word@db.fdziuyexczkngvugvsbu.supabase.co:5432/postgres",
       "ap-southeast-1"
-    );
-
-    expect(converted).toBe(
-      "postgresql://postgres.fdziuyexczkngvugvsbu:pass%40word@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
-    );
-    expect(
-      toSupabaseTransactionPooler(
-        "postgresql://postgres:pass@db.fdziuyexczkngvugvsbu.supabase.co:5432/postgres",
-        undefined
-      )
-    ).toBeNull();
+    )).toBe("postgresql://postgres.fdziuyexczkngvugvsbu:pass%40word@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require");
   });
-
-  it("replaces the isolate client after a retryable socket failure", () => {
-    const previousClient = pgSql;
-
-    recycleDatabaseClient();
-
-    expect(pgSql).not.toBe(previousClient);
-  });
-
-  it("uses a short, coalesced liveness preflight and operation timeout before reusing a warm socket", () => {
-    const src = readFileSync(new URL("./client.ts", import.meta.url), "utf8");
-
-    expect(src).toContain("DATABASE_PREFLIGHT_TIMEOUT_MS = 3_000");
-    expect(src).toContain("DATABASE_OPERATION_TIMEOUT_MS = 8_000");
-    expect(DATABASE_OPERATION_TIMEOUT_MS).toBe(8_000);
-    expect(src).toContain("client`select 1 as ok`");
-    expect(src).toContain("recycleDatabaseClient(client)");
-    expect(src).toContain("databaseLivenessCheck");
-    expect(src).toContain("cancellable.cancel?.()");
-  });
-
-  it("retries Supavisor connection destruction, preflight timeouts, and operation timeouts", () => {
-    expect(isRetryableDatabaseConnectionError("write CONNECT_TIMEOUT pooler")).toBe(true);
-    expect(isRetryableDatabaseConnectionError("code=CONNECTION_DESTROYED")).toBe(true);
-    expect(isRetryableDatabaseConnectionError("DB_PREFLIGHT_TIMEOUT")).toBe(true);
-    expect(isRetryableDatabaseConnectionError("DB_OPERATION_TIMEOUT")).toBe(true);
+  it("only retries connection and timeout failures", () => {
+    for (const error of ["Query read timeout", "Connection terminated unexpectedly", "timeout exceeded when trying to connect", "DB_OPERATION_TIMEOUT", "code=ECONNRESET"]) {
+      expect(isRetryableDatabaseConnectionError(error)).toBe(true);
+    }
     expect(isRetryableDatabaseConnectionError("invalid input syntax for type uuid")).toBe(false);
-    expect(new DbUnavailableError().status).toBe(503);
+  });
+  it("retains the underlying connection failure when the SQL wrapper is long", () => {
+    const error = new Error(`Failed query: ${"column ".repeat(200)}`, { cause: new Error("Connection terminated unexpectedly") });
+    expect(isRetryableDatabaseConnectionError(formatDbError(error))).toBe(true);
   });
 });

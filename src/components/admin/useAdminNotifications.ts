@@ -29,7 +29,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryFn: async ({ signal }) => {
       const data = await adminJson<{ claims?: ClaimNotification[] }>(
         "/api/admin/claims",
-        { signal, timeoutMs: 15_000 }
+        { signal }
       );
       return (data.claims || []) as ClaimNotification[];
     },
@@ -42,7 +42,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryFn: async ({ signal }) => {
       const data = await adminJson<{ messages?: DatedRow[] }>(
         "/api/support?status=new",
-        { signal, timeoutMs: 15_000 }
+        { signal }
       );
       return (data.messages || []) as DatedRow[];
     },
@@ -56,7 +56,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
       const data = await adminJson<{
         requests?: Array<ClaimNotification & DatedRow>;
         coaches?: unknown[];
-      }>("/api/admin/coach-access", { signal, timeoutMs: 15_000 });
+      }>("/api/admin/coach-access", { signal });
       return {
         requests: (Array.isArray(data.requests) ? data.requests : []) as Array<
           ClaimNotification & DatedRow
@@ -73,7 +73,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryFn: async ({ signal }) => {
       return adminJson<{ count?: number; suggestions?: unknown[] }>(
         "/api/admin/regatta-suggestions",
-        { signal, timeoutMs: 15_000 }
+        { signal }
       );
     },
   });

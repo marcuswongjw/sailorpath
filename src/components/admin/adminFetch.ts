@@ -1,6 +1,7 @@
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
+import { ADMIN_REQUEST_TIMEOUT_MS, AdminRequestError } from "@/lib/adminRequestPolicy";
 
 export interface AdminFetchOptions extends Omit<RequestInit, "signal"> {
   signal?: AbortSignal;
@@ -11,22 +12,23 @@ export async function adminJson<T>(
   url: string,
   options: AdminFetchOptions = {}
 ): Promise<T> {
-  const { timeoutMs = 15_000, signal, ...rest } = options;
+  const { timeoutMs = ADMIN_REQUEST_TIMEOUT_MS, signal, ...rest } = options;
   const controller = new AbortController();
+  const forwardAbort = () => controller.abort(signal?.reason);
 
   if (signal) {
     if (signal.aborted) {
       throw signal.reason || new Error("Request aborted");
     }
-    signal.addEventListener("abort", () => controller.abort(signal.reason), {
+    signal.addEventListener("abort", forwardAbort, {
       once: true,
     });
   }
 
   const timeoutId = setTimeout(() => {
-    controller.abort(
-      new Error(`Admin request to ${url} timed out after ${timeoutMs}ms`)
-    );
+    const error = new Error(`Admin request to ${url} timed out after ${timeoutMs}ms`);
+    error.name = "TimeoutError";
+    controller.abort(error);
   }, timeoutMs);
 
   try {
@@ -45,11 +47,12 @@ export async function adminJson<T>(
         detail && detail !== body.error
           ? `${body.error}: ${detail}`
           : body.error || `Request failed (${response.status})`;
-      throw new Error(msg);
+      throw new AdminRequestError(msg, response.status);
     }
     return body;
   } finally {
     clearTimeout(timeoutId);
+    signal?.removeEventListener("abort", forwardAbort);
   }
 }
 

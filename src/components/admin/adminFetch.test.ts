@@ -5,6 +5,7 @@ import {
   fetchAdminRegattas,
   fetchAdminOverview,
 } from "./adminFetch";
+import { AdminRequestError } from "@/lib/adminRequestPolicy";
 
 describe("adminFetch", () => {
   beforeEach(() => {
@@ -78,5 +79,22 @@ describe("adminFetch", () => {
     await expect(
       adminJson("/api/admin/slow", { timeoutMs: 50 })
     ).rejects.toThrow(/timed out after 50ms/);
+  });
+
+  it("preserves HTTP status for the retry policy", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: false, status: 503, json: async () => ({ error: "Please retry later" }),
+    }));
+    const error = await adminJson("/api/admin/overview").catch((error) => error);
+    expect(error).toBeInstanceOf(AdminRequestError);
+    expect((error as AdminRequestError).status).toBe(503);
+  });
+
+  it("cleans up the caller abort listener after success", async () => {
+    const controller = new AbortController();
+    const remove = vi.spyOn(controller.signal, "removeEventListener");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) }));
+    await adminJson("/api/admin/me", { signal: controller.signal });
+    expect(remove).toHaveBeenCalledWith("abort", expect.any(Function));
   });
 });

@@ -123,7 +123,7 @@ describe("/api/admin/coach-access", () => {
 
   describe("GET", () => {
     it("returns requests and coaches", async () => {
-      const res = await GET();
+      const res = await GET(new Request("https://admin.sailorpath.com/api/admin/coach-access"));
       expect(res.status).toBe(200);
       const data = await res.json();
       expect(data).toHaveProperty("requests");

@@ -8,9 +8,9 @@ import { logAdminChange } from "@/lib/adminChangeLog";
 import { notifyCoachInvite } from "@/lib/coachInviteNotify";
 import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    await requireSuperadmin();
+    await requireSuperadmin(request?.signal);
     const [requests, coaches] = await withDatabaseRetry(
       () =>
         Promise.all([
@@ -41,7 +41,7 @@ export async function GET() {
             .where(eq(profiles.role, "coach"))
             .orderBy(desc(profiles.updatedAt)),
         ]),
-      { label: "admin.coach_access.get" }
+      { label: "admin.coach_access.get", signal: request?.signal }
     );
 
     return NextResponse.json({ requests, coaches });

@@ -12,7 +12,7 @@ if (missing.length > 0) {
   throw new Error(`Missing production smoke secrets: ${missing.join(", ")}`);
 }
 
-const baseUrl = (process.env.SMOKE_BASE_URL || "https://sailorpath.com").replace(
+const baseUrl = (process.env.SMOKE_BASE_URL || "https://admin.sailorpath.com").replace(
   /\/$/,
   ""
 );
@@ -57,7 +57,10 @@ async function timedRequest(pathname, maxMs) {
   const response = await fetch(`${baseUrl}${pathname}`, {
     headers: { cookie: cookieHeader },
     redirect: "manual",
+    signal: AbortSignal.timeout(maxMs),
   });
+  // Include receipt of the body in the budget, not just response headers.
+  await response.clone().arrayBuffer();
   const durationMs = Math.round(performance.now() - startedAt);
   if (!response.ok) {
     const body = await response.text();
@@ -127,12 +130,23 @@ if (sampleSheets.length > 0) {
   }
 }
 
-console.log("Testing idle connection recovery (waiting 5 seconds)...");
-await new Promise((resolve) => setTimeout(resolve, 5_000));
-await timedRequest(
-  "/api/admin/me",
-  Number(process.env.SMOKE_AUTH_MAX_MS || 5_000)
-);
+async function checkConcurrentAdminReads() {
+  const responses = await Promise.all([
+    timedRequest("/api/admin/me", Number(process.env.SMOKE_AUTH_MAX_MS || 5_000)),
+    timedRequest("/api/admin/overview", Number(process.env.SMOKE_OVERVIEW_MAX_MS || 6_000)),
+    timedRequest("/api/admin/coach-access", Number(process.env.SMOKE_AUTH_MAX_MS || 5_000)),
+  ]);
+  const [role, summary, coaches] = await Promise.all(responses.map((response) => response.json()));
+  if (role.role !== "superadmin" || !Array.isArray(summary.sheets) || !Array.isArray(coaches.requests)) {
+    throw new Error("Concurrent reads returned invalid or mismatched admin data");
+  }
+}
+
+console.log("Checking concurrent authorization, Overview and coach-access reads...");
+await checkConcurrentAdminReads();
+console.log("Testing recovery after the pool idle timeout (waiting 6 seconds)...");
+await new Promise((resolve) => setTimeout(resolve, 6_000));
+await checkConcurrentAdminReads();
 
 await supabase.auth.signOut();
 console.log("Smoke verification completed successfully.");

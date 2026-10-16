@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getAuthContext, jsonError } from "@/lib/auth";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const ctx = await getAuthContext();
+    const ctx = await getAuthContext(request?.signal);
     if (!ctx) {
       return NextResponse.json({ user: null, role: null });
     }

@@ -86,14 +86,14 @@ describe("GET /api/admin/overview", () => {
 
   it("returns 403 when user is not a superadmin", async () => {
     mocks.requireSuperadmin.mockRejectedValue(new Error("Unauthorized: superadmin required"));
-    const res = await GET();
+    const res = await GET(new Request("https://admin.sailorpath.com/api/admin/overview"));
     expect(res.status).toBe(403);
     const data = await res.json();
     expect(data.error).toContain("superadmin required");
   });
 
   it("returns compact overview data with counts", async () => {
-    const res = await GET();
+    const res = await GET(new Request("https://admin.sailorpath.com/api/admin/overview"));
     expect(res.status).toBe(200);
     const data = await res.json();
 
