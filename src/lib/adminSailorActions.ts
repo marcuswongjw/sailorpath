@@ -147,7 +147,7 @@ async function applyIlcaSailorFixes(
       details.push(`Renamed “${fix.mergeName}” → “${fix.keepName}”`);
       merges++;
     } else if (keepId && mergeId && keepId !== mergeId) {
-      await mergeSailors({ keepId, mergeId, forceOwnershipConflict: true });
+      await mergeSailors({ keepId, mergeId });
       details.push(
         `Merged “${fix.mergeName}” into “${fix.keepName}”`
       );
@@ -1054,7 +1054,6 @@ async function mergeYuAnProfiles(
     await mergeSailors({
       keepId: keep.id,
       mergeId: dup.id,
-      forceOwnershipConflict: true,
     });
     mergedCount++;
     mergedNames.push(dup.name);

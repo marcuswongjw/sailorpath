@@ -3,11 +3,12 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { getSailorMergePlan } from "@/lib/sailorMergePlan";
 import { mergeSailors, SailorMergeError } from "@/lib/mergeSailors";
 
 /**
  * Merge duplicate sailor profiles.
- * POST { keepId, mergeId, forceOwnershipConflict?: boolean }
+ * GET reviews one survivor/source pair; POST requires its unchanged review token.
  *
  * All sailor relationships are reconciled transactionally by mergeSailors().
  */
@@ -19,9 +20,11 @@ export async function POST(req: Request) {
     const body = await req.json();
     const keepId = String(body.keepId || "").trim();
     const mergeId = String(body.mergeId || "").trim();
-    const forceOwnershipConflict = body.forceOwnershipConflict === true;
+    const reviewToken = typeof body.reviewToken === "string" ? body.reviewToken : undefined;
+    const identityEvidence = typeof body.identityEvidence === "string" ? body.identityEvidence.trim() : undefined;
 
-    if (!keepId || !mergeId) {
+    const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuid.test(keepId) || !uuid.test(mergeId)) {
       return NextResponse.json(
         { error: "keepId and mergeId are required" },
         { status: 400 }
@@ -39,23 +42,14 @@ export async function POST(req: Request) {
       txResult = await mergeSailors({
         keepId,
         mergeId,
-        forceOwnershipConflict,
+        reviewToken,
+        identityEvidence,
+        actor: { userId: auth.userId, email: auth.email },
       });
     } catch (error) {
       if (error instanceof SailorMergeError) {
-        if (error.code === "OWNERSHIP_CONFLICT") {
-          return NextResponse.json(
-            {
-              error: error.message,
-              code: error.code,
-              keepOwner: error.details.keepOwner,
-              mergeOwner: error.details.mergeOwner,
-            },
-            { status: error.status }
-          );
-        }
         return NextResponse.json(
-          { error: error.message },
+          { error: error.message, code: error.code },
           { status: error.status }
         );
       }
@@ -93,6 +87,8 @@ export async function POST(req: Request) {
       summary: `Merged “${mergeSailor.name}” into “${keepSailor.name}”`,
       details: {
         mergeId,
+        identityEvidence,
+        reviewToken,
         mergeName: mergeSailor.name,
         resultsMoved: txResult.resultsMoved,
         resultsMergedConflict: txResult.resultsMergedConflict,
@@ -136,4 +132,19 @@ export async function POST(req: Request) {
     console.error("sailors merge", e);
     return jsonError(e);
   }
+}
+
+
+export async function GET(req: Request) {
+  try {
+    await requireSuperadmin();
+    const url = new URL(req.url);
+    const keepId = url.searchParams.get("keepId") || "";
+    const mergeId = url.searchParams.get("mergeId") || "";
+    const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuid.test(keepId) || !uuid.test(mergeId) || keepId === mergeId) {
+      return NextResponse.json({ error: "Choose two different sailor profiles." }, { status: 400 });
+    }
+    return NextResponse.json(await getSailorMergePlan(keepId, mergeId), { headers: { "Cache-Control": "no-store" } });
+  } catch (error) { return jsonError(error); }
 }

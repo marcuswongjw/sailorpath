@@ -4,6 +4,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
 import type { SailorAdmin } from "@/types/sailor";
 import type { ResultAdmin } from "@/types/result";
+import type { SailorMergePlan } from "@/lib/sailorMergePlan";
 
 export type MergeSailorsResponse = {
   message?: string;
@@ -17,6 +18,8 @@ export type MergeSailorsResponse = {
 type MergeArgs = {
   keepId: string;
   mergeId: string;
+  reviewToken: string;
+  identityEvidence: string;
   setSailorList: Dispatch<SetStateAction<SailorAdmin[]>>;
   setResultsList: Dispatch<SetStateAction<ResultAdmin[]>>;
   /**
@@ -39,7 +42,7 @@ export async function mergeSailorsClient(
   const res = await fetch("/api/admin/sailors/merge", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ keepId, mergeId }),
+    body: JSON.stringify({ keepId, mergeId, reviewToken: args.reviewToken, identityEvidence: args.identityEvidence }),
   });
   const data = await parseApi(res);
   if (!res.ok) throw new Error(apiErr(data, "Merge failed"));
@@ -76,4 +79,12 @@ export async function mergeSailorsClient(
     resultsDroppedConflict: apiNum(data, "resultsDroppedConflict"),
     error: apiStr(data, "error"),
   };
+}
+
+export async function fetchSailorMergePlan(keepId: string, mergeId: string): Promise<SailorMergePlan> {
+  const params = new URLSearchParams({ keepId, mergeId });
+  const res = await fetch(`/api/admin/sailors/merge?${params}`, { cache: "no-store" });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Could not load the merge plan.");
+  return data as SailorMergePlan;
 }

@@ -12,7 +12,7 @@ import {
   emptySailorForm,
   sailorFormFromAdmin,
 } from "@/components/admin/adminForms";
-import { mergeSailorsClient } from "@/components/admin/mergeSailorsClient";
+import { mergeSailorsClient, fetchSailorMergePlan } from "@/components/admin/mergeSailorsClient";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { birthYear } from "@/lib/age";
 import { currentPeriodFromSgToday, isHalfBoundaryYmd } from "@/lib/datesSg";
@@ -491,6 +491,24 @@ export function useAdminSailors({
     }
   };
 
+  const reviewMergePair = async (keepId: string, mergeId: string) => {
+    const plan = await fetchSailorMergePlan(keepId, mergeId);
+    if (!plan.canMerge) throw new Error(plan.conflicts.join("\n"));
+    const evidence = window.prompt(
+      `Identity check for ${plan.keep.name} and ${plan.source.name}:\nEnter the official source and matching name/sail or board details that establish they are the same person.`
+    );
+    if (evidence === null) return null;
+    if (evidence.trim().length < 10 || evidence.length > 2000) throw new Error("Record the official source and identity details (10–2,000 characters).");
+    const identity = (p: typeof plan.keep) => `${p.name} · ${p.sailNumber || p.sailNumberIlca4 || p.boardNumber || "no number"} · ${p.nationality || "country unknown"}${p.claimed ? " · claimed profile" : ""}`;
+    const ok = await confirm({
+      title: "Review sailor merge plan",
+      message: `KEEP: ${identity(plan.keep)}\nSOURCE removed after transfer: ${identity(plan.source)}\n\n${plan.resultsToMove} scored entries and ${plan.participantLinksToMove} participant links move. ${plan.raceScoresPreserved} individual race scores and ${plan.evidenceLinksPreserved} evidence links stay intact. Other linked family, coach and equipment records are reconciled.\n\nIdentity evidence: ${evidence.trim()}\n\nConflicting entries are blocked; no finishing places are selected or replaced.`,
+      confirmLabel: "Confirm this pair",
+      tone: "danger",
+    });
+    return ok ? { reviewToken: plan.reviewToken, identityEvidence: evidence.trim() } : null;
+  };
+
   const handleMergeSailors = async () => {
     if (saving) return;
     if (!isSuperadmin) {
@@ -509,42 +527,20 @@ export function useAdminSailors({
       return;
     }
 
-    const score = (s: SailorAdmin) => {
-      let n = 0;
-      if (s.goldEntryDate) n += 5;
-      if (s.silverEntryDate) n += 2;
-      if (s.sailNumber && !/^SGP\s*0+$/i.test(s.sailNumber)) n += 3;
-      if (s.dob) n += 1;
-      if (s.club && s.club !== "N/A") n += 1;
-      if (s.currentFleet) n += 2;
-      if (s.nationalSquadStatus) n += 1;
-      const resCount = resultsList.filter((r) => r.sailorId === s.id).length;
-      n += resCount;
-      return n;
-    };
-    let keep = a;
-    let merge = b;
-    if (score(b) > score(a)) {
-      keep = b;
-      merge = a;
-    }
-
-    const ok = await confirm({
-      title: "Merge duplicate sailors?",
-      message:
-        `KEEP (profile retained):\n  ${keep.name} · ${keep.sailNumber || "—"}\n\n` +
-        `DELETE after merge (results + aliases moved):\n  ${merge.name} · ${merge.sailNumber || "—"}\n\n` +
-        `Results move to the kept sailor. On the same regatta, the better (lower) rank is kept.`,
-      confirmLabel: "Merge",
-      tone: "danger",
-    });
-    if (!ok) return;
+    // Selection order is explicit: the first chosen sailor is retained.
+    const keep = a;
+    const merge = b;
+    let review;
+    try { review = await reviewMergePair(keep.id, merge.id); }
+    catch (error) { toast.error(errorMessage(error, "Could not review this pair")); return; }
+    if (!review) return;
 
     setSaving(true);
     try {
       const data = await mergeSailorsClient({
         keepId: keep.id,
         mergeId: merge.id,
+        ...review,
         setSailorList,
         setResultsList,
         refreshResultsList: () => refreshResultsList(),
@@ -557,8 +553,7 @@ export function useAdminSailors({
       setTimeout(() => setBulkStatus(null), 6000);
       toast.success(
         `${data.message || "Merged"}\n\nResults moved: ${data.resultsMoved ?? 0}\n` +
-          `Conflicts resolved: ${data.resultsMergedConflict ?? 0}\n` +
-          `Conflicts kept (kept sailor better): ${data.resultsDroppedConflict ?? 0}`
+          `Existing race scores and evidence preserved.`
       );
       invalidateSailors?.();
       invalidateResults?.();
@@ -577,17 +572,14 @@ export function useAdminSailors({
       toast.error("Sailors not found");
       return;
     }
-    const ok = await confirm({
-      title: "Merge ILCA 4 duplicates?",
-      message: `KEEP: ${keep.name}\nDELETE: ${merge.name}\n\nResults and aliases move to keep.`,
-      confirmLabel: "Merge",
-      tone: "danger",
-    });
-    if (!ok) return;
+    if (!isSuperadmin || saving) return;
     try {
+      const review = await reviewMergePair(keepId, mergeId);
+      if (!review) return;
       const data = await mergeSailorsClient({
         keepId,
         mergeId,
+        ...review,
         setSailorList,
         setResultsList,
       });
