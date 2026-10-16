@@ -2,6 +2,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool, type PoolClient } from "pg";
 import * as schema from "./schema";
+import { SUPABASE_ROOT_CA } from "./supabaseCa";
 
 /** One budget covers acquisition, queries, and both read attempts. */
 export const DATABASE_OPERATION_TIMEOUT_MS = 6_000;
@@ -155,14 +156,25 @@ export function resolveConnectionString(): string | null {
  * https://supabase.com/docs/guides/database/postgres-js
  */
 export function postgresPoolOptions(connectionString: string) {
+  const url = new URL(connectionString);
+  const isSupabase = url.hostname.endsWith(".supabase.co") || url.hostname.endsWith(".pooler.supabase.com");
+  const customCertificate = ["sslrootcert", "sslcert", "sslkey"].some((key) => url.searchParams.has(key));
+  const useSupabaseCa = isSupabase && !customCertificate;
+  if (useSupabaseCa) {
+    // pg-connection-string would replace the explicit CA options below when
+    // sslmode=require is present. Keep encryption AND certificate verification.
+    url.searchParams.delete("sslmode");
+    url.searchParams.delete("ssl");
+    url.searchParams.delete("uselibpqcompat");
+  }
   return {
-    connectionString,
+    connectionString: useSupabaseCa ? url.toString() : connectionString,
     max: 1,
     idleTimeoutMillis: 5_000,
     connectionTimeoutMillis: 2_000,
     query_timeout: 4_000,
     allowExitOnIdle: true,
-    ssl: /(?:\.supabase\.co|\.pooler\.supabase\.com)(?::|\/)/i.test(connectionString) ? true : undefined,
+    ssl: useSupabaseCa ? { ca: SUPABASE_ROOT_CA, rejectUnauthorized: true } : isSupabase ? true : undefined,
   };
 }
 

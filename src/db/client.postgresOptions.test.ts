@@ -8,7 +8,15 @@ describe("PostgreSQL transport", () => {
     expect(options.connectionTimeoutMillis).toBeGreaterThan(0);
     expect(options.query_timeout).toBeGreaterThan(0);
     expect(options).not.toHaveProperty("pipeline", true);
-    expect(postgresPoolOptions("postgresql://user:pass@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres").ssl).toBe(true);
+    expect(postgresPoolOptions("postgresql://user:pass@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres").ssl).toMatchObject({ rejectUnauthorized: true, ca: expect.stringContaining("BEGIN CERTIFICATE") });
+  });
+  it("keeps the configured CA from being replaced by connection-string SSL options", async () => {
+    const { Client } = await import("pg");
+    const options = postgresPoolOptions("postgresql://user:pass@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require");
+    const client = new Client(options);
+    const parameters = (client as unknown as { connectionParameters: { ssl: unknown } }).connectionParameters;
+    expect(parameters.ssl).toMatchObject({ rejectUnauthorized: true, ca: expect.stringContaining("BEGIN CERTIFICATE") });
+    expect(options.connectionString).not.toContain("sslmode=");
   });
   it("preserves credentials when resolving a direct Supabase URL", () => {
     expect(toSupabaseTransactionPooler(
