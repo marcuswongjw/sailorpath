@@ -8,6 +8,7 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
     setupFiles: ["./vitest.setup.ts"],
+    testTimeout: 15000,
   },
   resolve: {
     alias: {

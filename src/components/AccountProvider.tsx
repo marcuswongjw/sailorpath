@@ -50,9 +50,11 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     try {
       const res = await fetch("/api/account", { credentials: "include" });
       if (!res.ok) {
-        setOwned([]);
-        setRole(null);
-        setIsSuperadmin(false);
+        if (res.status === 401) {
+          setOwned([]);
+          setRole(null);
+          setIsSuperadmin(false);
+        }
         return;
       }
       const data = await res.json();
@@ -62,9 +64,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       setRole(r);
       setIsSuperadmin(r === "superadmin" || Boolean(data.isSuperadmin));
     } catch {
-      setOwned([]);
-      setRole(null);
-      setIsSuperadmin(false);
+      // Network or transient error: preserve existing session state
     }
   }, []);
 

@@ -258,8 +258,11 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   const {
     user,
     loading,
+    isRevalidating,
     adminRole,
     isSuperadmin,
+    authUnavailable,
+    refreshAuth,
   } = useAdminAuth(initialAuth);
 
   const data = useAdminData({
@@ -637,6 +640,35 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   }
 
   if (!user) {
+    if (authUnavailable) {
+      return (
+        <div className="mx-auto max-w-md w-full px-4 py-20 flex-1 flex flex-col justify-center">
+          <div className="glass-card rounded-3xl p-8 border border-white/5 text-center space-y-6">
+            <div className="h-12 w-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto text-amber-400">
+              <AlertTriangle className="h-6 w-6" />
+            </div>
+            <div className="space-y-2">
+              <h1 className="text-xl font-black text-white">
+                Temporary Connection Issue
+              </h1>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Unable to verify administrative permissions with the server. Please check your connection and retry.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => void refreshAuth()}
+              disabled={isRevalidating}
+              className="inline-flex items-center justify-center gap-2 w-full rounded-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 px-6 py-3 text-[15px] font-semibold text-slate-950 transition-all shadow-lg shadow-amber-500/20 text-center cursor-pointer disabled:cursor-not-allowed"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRevalidating ? "animate-spin" : ""}`} />
+              {isRevalidating ? "Retrying…" : "Retry Admin Console"}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     const host = typeof window !== "undefined" ? window.location.host : "";
     const loginHref = host
       ? `${adminLoginOrigin(host)}/login?next=${encodeURIComponent(adminReturnUrl(host, "/"))}`
@@ -893,7 +925,37 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         </div>
       ) : null}
 
-      {!isSuperadmin && (
+      {authUnavailable && (
+        <div
+          role="status"
+          className="bg-amber-500/10 border border-amber-500/30 text-amber-200 rounded-xl p-4 flex items-center justify-between gap-4"
+        >
+          <div className="flex items-start gap-3 min-w-0">
+            <AlertTriangle className="h-5 w-5 flex-shrink-0 text-amber-400 mt-0.5" />
+            <div>
+              <h3 className="font-bold text-sm text-amber-300">
+                Temporary connection issue
+              </h3>
+              <p className="text-xs text-amber-200/80 mt-1">
+                Unable to reach the server to revalidate administrative permissions. Your active administrator session is preserved, but some real-time actions may be temporarily delayed.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => void refreshAuth()}
+            disabled={isRevalidating}
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-200 text-xs font-semibold transition disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+          >
+            <RefreshCw
+              className={`h-3.5 w-3.5 ${isRevalidating ? "animate-spin" : ""}`}
+            />
+            {isRevalidating ? "Retrying…" : "Retry"}
+          </button>
+        </div>
+      )}
+
+      {!isSuperadmin && !authUnavailable && (
         <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="h-5 w-5 flex-shrink-0 text-red-500 mt-0.5" />
           <div>
