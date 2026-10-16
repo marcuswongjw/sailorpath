@@ -74,10 +74,32 @@ async function timedRequest(pathname, maxMs) {
   return response;
 }
 
+console.log("Checking admin shell and role revalidation...");
 await timedRequest(
-  "/admin?tab=stats",
-  Number(process.env.SMOKE_ADMIN_PAGE_MAX_MS || 4_000)
+  "/admin?tab=overview",
+  Number(process.env.SMOKE_ADMIN_PAGE_MAX_MS || 5_000)
 );
+
+const meResponse = await timedRequest(
+  "/api/admin/me",
+  Number(process.env.SMOKE_AUTH_MAX_MS || 5_000)
+);
+const me = await meResponse.json();
+if (!me.user || me.role !== "superadmin") {
+  throw new Error(`Admin role verification failed: role=${me.role}`);
+}
+
+console.log("Checking compact overview aggregation...");
+const overviewResponse = await timedRequest(
+  "/api/admin/overview",
+  Number(process.env.SMOKE_OVERVIEW_MAX_MS || 6_000)
+);
+const overview = await overviewResponse.json();
+if (!overview.counts || typeof overview.duplicateCount !== "number") {
+  throw new Error("Overview API response is missing required aggregate fields");
+}
+
+console.log("Checking stats API...");
 const statsResponse = await timedRequest(
   "/api/admin/stats",
   Number(process.env.SMOKE_STATS_MAX_MS || 8_000)
@@ -87,4 +109,30 @@ if (!stats.generatedAt || !stats.northStars || !stats.dataTrust) {
   throw new Error("Stats API response is missing required aggregate fields");
 }
 
+console.log("Checking regattas and batch readiness checks...");
+const regattasResponse = await timedRequest(
+  "/api/admin/regattas?all=1",
+  Number(process.env.SMOKE_REGATTAS_MAX_MS || 8_000)
+);
+const regattasData = await regattasResponse.json();
+const sampleSheets = (regattasData.regattas || []).slice(0, 5).map((r) => r.id);
+if (sampleSheets.length > 0) {
+  const readinessResponse = await timedRequest(
+    `/api/admin/regatta-readiness?sheets=${encodeURIComponent(sampleSheets.join(","))}`,
+    Number(process.env.SMOKE_READINESS_MAX_MS || 6_000)
+  );
+  const readinessData = await readinessResponse.json();
+  if (!readinessData.readinessBySheet) {
+    throw new Error("Batch readiness API response missing readinessBySheet");
+  }
+}
+
+console.log("Testing idle connection recovery (waiting 5 seconds)...");
+await new Promise((resolve) => setTimeout(resolve, 5_000));
+await timedRequest(
+  "/api/admin/me",
+  Number(process.env.SMOKE_AUTH_MAX_MS || 5_000)
+);
+
 await supabase.auth.signOut();
+console.log("Smoke verification completed successfully.");
