@@ -2,10 +2,13 @@
 export {
   db,
   pgSql,
+  DATABASE_PREFLIGHT_TIMEOUT_MS,
+  DATABASE_OPERATION_TIMEOUT_MS,
   recycleDatabaseClient,
   ensureDatabaseLiveness,
   isRetryableDatabaseConnectionError,
   withDatabaseRetry,
+  type DatabaseRetryOptions,
   getDatabaseUrlMeta,
   formatDbError,
   DbUnavailableError,

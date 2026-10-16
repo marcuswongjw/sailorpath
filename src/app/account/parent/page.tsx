@@ -12,7 +12,10 @@ export const metadata = {
 };
 
 export default async function ParentPage() {
-  const auth = await getAuthContext();
+  const auth = await getAuthContext().catch((err) => {
+    console.error("[account/parent/page] Error loading auth context", err);
+    return null;
+  });
 
   if (!auth) {
     return (

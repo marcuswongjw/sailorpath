@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { and, desc, gte, ilike, inArray, like, or } from "drizzle-orm";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { adminChangeLog } from "@/db/schema";
 import { jsonError, requireSuperadmin } from "@/lib/auth";
 
@@ -24,10 +24,17 @@ export async function GET(request: Request) {
       ),
     ];
     if (email) conditions.push(ilike(adminChangeLog.actorEmail, `%${email.replace(/[\\%_]/g, "\\$&")}%`));
-    const rows = await db.select().from(adminChangeLog)
-      .where(and(...conditions))
-      .orderBy(desc(adminChangeLog.createdAt), desc(adminChangeLog.id))
-      .limit(101).offset(offset);
+    const rows = await withDatabaseRetry(
+      () =>
+        db
+          .select()
+          .from(adminChangeLog)
+          .where(and(...conditions))
+          .orderBy(desc(adminChangeLog.createdAt), desc(adminChangeLog.id))
+          .limit(101)
+          .offset(offset),
+      { label: "admin.user_changes.get" }
+    );
     return NextResponse.json({ changes: rows.slice(0, 100), hasMore: rows.length > 100 }, {
       headers: { "Cache-Control": "private, no-store" },
     });

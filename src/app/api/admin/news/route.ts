@@ -1,6 +1,6 @@
 import { desc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { newsArticles } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
@@ -69,11 +69,15 @@ function isArticleStatus(value: string): value is ArticleStatus {
 export async function GET() {
   try {
     await requireSuperadmin();
-    const rows = await db
-      .select(ADMIN_NEWS_COLUMNS)
-      .from(newsArticles)
-      .orderBy(desc(newsArticles.updatedAt))
-      .limit(100);
+    const rows = await withDatabaseRetry(
+      () =>
+        db
+          .select(ADMIN_NEWS_COLUMNS)
+          .from(newsArticles)
+          .orderBy(desc(newsArticles.updatedAt))
+          .limit(100),
+      { label: "admin.news.get" }
+    );
     return NextResponse.json({ ok: true, articles: rows.map(serializeArticle) });
   } catch (error) {
     return jsonError(error);

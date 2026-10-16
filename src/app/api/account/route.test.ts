@@ -25,6 +25,7 @@ vi.mock("@/db", () => {
   };
 
   return {
+    withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
     db: {
       select: () => ({
         from: () => ({

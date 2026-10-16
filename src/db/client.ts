@@ -12,6 +12,8 @@ const globalForDb = globalThis as unknown as {
 const DATABASE_LIVENESS_RECHECK_MS = 5_000;
 /** Bound the liveness probe so a stale socket cannot consume a request budget. */
 export const DATABASE_PREFLIGHT_TIMEOUT_MS = 3_000;
+/** Bound individual retryable read operations so a mid-query stall cannot hang until the 300s platform timeout. */
+export const DATABASE_OPERATION_TIMEOUT_MS = 8_000;
 let lastDatabaseLivenessCheckAt = 0;
 let databaseLivenessCheck: Promise<void> | null = null;
 
@@ -243,12 +245,21 @@ export function recycleDatabaseClient(expectedClient?: SqlClient): boolean {
   return true;
 }
 
-function withTimeout<T>(operation: Promise<T>, timeoutMs: number): Promise<T> {
+function withTimeout<T>(
+  operation: Promise<T>,
+  timeoutMs: number,
+  errorCode = "DB_PREFLIGHT_TIMEOUT"
+): Promise<T> {
   return new Promise<T>((resolve, reject) => {
-    const timeout = setTimeout(
-      () => reject(new Error("DB_PREFLIGHT_TIMEOUT")),
-      timeoutMs
-    );
+    const timeout = setTimeout(() => {
+      const cancellable = operation as Promise<T> & { cancel?: () => void };
+      try {
+        cancellable.cancel?.();
+      } catch {
+        /* ignore cancel errors on dead sockets */
+      }
+      reject(new Error(errorCode));
+    }, timeoutMs);
     operation.then(resolve, reject).finally(() => clearTimeout(timeout));
   });
 }
@@ -270,7 +281,11 @@ export async function ensureDatabaseLiveness(): Promise<void> {
   const client = sql;
   const check = (async () => {
     try {
-      await withTimeout(client`select 1 as ok`, DATABASE_PREFLIGHT_TIMEOUT_MS);
+      await withTimeout(
+        client`select 1 as ok`,
+        DATABASE_PREFLIGHT_TIMEOUT_MS,
+        "DB_PREFLIGHT_TIMEOUT"
+      );
       if (sql === client) lastDatabaseLivenessCheckAt = Date.now();
     } catch {
       recycleDatabaseClient(client);
@@ -285,27 +300,53 @@ export async function ensureDatabaseLiveness(): Promise<void> {
 }
 
 export function isRetryableDatabaseConnectionError(errorMessage: string): boolean {
-  return /\b(?:CONNECT_TIMEOUT|CONNECTION_DESTROYED|ETIMEDOUT|ECONNRESET|ECONNREFUSED)\b|socket hang up|connection (?:closed|destroyed|terminated|reset)/i.test(
+  return /\b(?:DB_PREFLIGHT_TIMEOUT|DB_OPERATION_TIMEOUT|CONNECT_TIMEOUT|CONNECTION_DESTROYED|CONNECTION_CLOSED|CONNECTION_ENDED|ETIMEDOUT|ECONNRESET|ECONNREFUSED|EPIPE)\b|socket hang up|connection (?:closed|destroyed|terminated|reset)|write EOF|read ECONNRESET/i.test(
     errorMessage
   );
 }
 
+export type DatabaseRetryOptions = {
+  timeoutMs?: number;
+  label?: string;
+};
+
 /**
  * Runs a database operation after a liveness probe and once more with a fresh
- * client when the pooler rejects a stale serverless socket. Keep this bounded:
- * callers receive the second failure instead of exhausting their request time.
+ * client when the pooler rejects or stalls a stale serverless socket. Keep this
+ * bounded: callers receive the second failure instead of exhausting their request time.
  */
-export async function withDatabaseRetry<T>(operation: () => Promise<T>): Promise<T> {
+export async function withDatabaseRetry<T>(
+  operation: () => Promise<T>,
+  options?: DatabaseRetryOptions
+): Promise<T> {
+  const timeoutMs = options?.timeoutMs ?? DATABASE_OPERATION_TIMEOUT_MS;
   await ensureDatabaseLiveness();
+  const firstClient = sql;
   try {
-    return await operation();
+    return await withTimeout(operation(), timeoutMs, "DB_OPERATION_TIMEOUT");
   } catch (error) {
-    if (!isRetryableDatabaseConnectionError(formatDbError(error))) throw error;
+    const formatted = formatDbError(error);
+    if (!isRetryableDatabaseConnectionError(formatted)) throw error;
 
-    recycleDatabaseClient();
+    console.warn(
+      "[sailorpath] Retrying database read after recoverable connection failure",
+      {
+        label: options?.label ?? "db.read",
+        error: formatted.slice(0, 240),
+      }
+    );
+    recycleDatabaseClient(firstClient);
     await new Promise<void>((resolve) => setTimeout(resolve, 100));
     await ensureDatabaseLiveness();
-    return operation();
+    const secondClient = sql;
+    try {
+      return await withTimeout(operation(), timeoutMs, "DB_OPERATION_TIMEOUT");
+    } catch (secondError) {
+      if (isRetryableDatabaseConnectionError(formatDbError(secondError))) {
+        recycleDatabaseClient(secondClient);
+      }
+      throw secondError;
+    }
   }
 }
 
@@ -340,6 +381,8 @@ export function formatDbError(e: unknown): string {
 }
 
 export class DbUnavailableError extends Error {
+  readonly status = 503;
+
   constructor(message = "Database unavailable") {
     super(message);
     this.name = "DbUnavailableError";

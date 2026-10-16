@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db, ensureCoreSchema } from "@/db";
+import { db, ensureCoreSchema, withDatabaseRetry } from "@/db";
 import {
   regattaRaceResults,
   regattaResultParticipants,
@@ -71,31 +71,35 @@ function parseOverseas(body: Record<string, unknown>): boolean {
 
 async function attachParticipants<T extends { id: string }>(rows: T[]) {
   if (!rows.length) return rows.map((row) => ({ ...row, participants: [] }));
-  const participants = await db
-    .select({
-      id: regattaResultParticipants.id,
-      resultId: regattaResultParticipants.regattaResultId,
-      sailorId: regattaResultParticipants.sailorId,
-      sailorName: sailors.name,
-      sailorHandle: sailors.handle,
-      sourceName: regattaResultParticipants.sourceName,
-      displayOrder: regattaResultParticipants.displayOrder,
-      role: regattaResultParticipants.role,
-      matchStatus: regattaResultParticipants.matchStatus,
-      rankingCredit: regattaResultParticipants.rankingCredit,
-    })
-    .from(regattaResultParticipants)
-    .leftJoin(sailors, eq(regattaResultParticipants.sailorId, sailors.id))
-    .where(
-      inArray(
-        regattaResultParticipants.regattaResultId,
-        rows.map((row) => row.id)
-      )
-    )
-    .orderBy(
-      asc(regattaResultParticipants.regattaResultId),
-      asc(regattaResultParticipants.displayOrder)
-    );
+  const participants = await withDatabaseRetry(
+    () =>
+      db
+        .select({
+          id: regattaResultParticipants.id,
+          resultId: regattaResultParticipants.regattaResultId,
+          sailorId: regattaResultParticipants.sailorId,
+          sailorName: sailors.name,
+          sailorHandle: sailors.handle,
+          sourceName: regattaResultParticipants.sourceName,
+          displayOrder: regattaResultParticipants.displayOrder,
+          role: regattaResultParticipants.role,
+          matchStatus: regattaResultParticipants.matchStatus,
+          rankingCredit: regattaResultParticipants.rankingCredit,
+        })
+        .from(regattaResultParticipants)
+        .leftJoin(sailors, eq(regattaResultParticipants.sailorId, sailors.id))
+        .where(
+          inArray(
+            regattaResultParticipants.regattaResultId,
+            rows.map((row) => row.id)
+          )
+        )
+        .orderBy(
+          asc(regattaResultParticipants.regattaResultId),
+          asc(regattaResultParticipants.displayOrder)
+        ),
+    { label: "admin.results.participants" }
+  );
   const byResult = new Map<string, typeof participants>();
   for (const participant of participants) {
     const list = byResult.get(participant.resultId) || [];
@@ -113,18 +117,22 @@ async function attachOfficialRaces<
 >(rows: T[]) {
   if (!rows.length) return [];
   const rowsWithParticipants = await attachParticipants(rows);
-  const raceRows = await db
-    .select({
-      regattaResultId: regattaRaceResults.regattaResultId,
-      raceNumber: regattaRaceResults.raceNumber,
-      score: regattaRaceResults.score,
-      scoringCode: regattaRaceResults.scoringCode,
-      discarded: regattaRaceResults.discarded,
-      rawValue: regattaRaceResults.rawValue,
-    })
-    .from(regattaRaceResults)
-    .where(inArray(regattaRaceResults.regattaResultId, rows.map((row) => row.id)))
-    .orderBy(asc(regattaRaceResults.regattaResultId), asc(regattaRaceResults.raceNumber));
+  const raceRows = await withDatabaseRetry(
+    () =>
+      db
+        .select({
+          regattaResultId: regattaRaceResults.regattaResultId,
+          raceNumber: regattaRaceResults.raceNumber,
+          score: regattaRaceResults.score,
+          scoringCode: regattaRaceResults.scoringCode,
+          discarded: regattaRaceResults.discarded,
+          rawValue: regattaRaceResults.rawValue,
+        })
+        .from(regattaRaceResults)
+        .where(inArray(regattaRaceResults.regattaResultId, rows.map((row) => row.id)))
+        .orderBy(asc(regattaRaceResults.regattaResultId), asc(regattaRaceResults.raceNumber)),
+    { label: "admin.results.races" }
+  );
   const racesByResult = new Map<string, typeof raceRows>();
   for (const race of raceRows) {
     const list = racesByResult.get(race.regattaResultId) || [];
@@ -166,8 +174,9 @@ export async function GET(req: Request) {
       if (!idCheck.ok) {
         return NextResponse.json({ error: idCheck.error }, { status: 400 });
       }
-      const rows = await adminResultRows().where(
-        eq(regattaResults.regattaId, idCheck.value)
+      const rows = await withDatabaseRetry(
+        () => adminResultRows().where(eq(regattaResults.regattaId, idCheck.value)),
+        { label: "admin.results.get.regatta" }
       );
       const results = includeRaces
         ? await attachOfficialRaces(rows)
@@ -199,10 +208,14 @@ export async function GET(req: Request) {
     );
     const offset = Math.max(0, Number.isFinite(offsetRaw) ? offsetRaw : 0);
 
-    const [rows, totalRow] = await Promise.all([
-      adminResultRows().limit(limit).offset(offset),
-      db.select({ n: count() }).from(regattaResults),
-    ]);
+    const [rows, totalRow] = await withDatabaseRetry(
+      () =>
+        Promise.all([
+          adminResultRows().limit(limit).offset(offset),
+          db.select({ n: count() }).from(regattaResults),
+        ]),
+      { label: "admin.results.get.all" }
+    );
 
     return NextResponse.json({
       results: (await attachParticipants(rows)).map((r) => ({

@@ -42,6 +42,7 @@ vi.mock("@/lib/coachInviteNotify", () => ({
 }));
 
 vi.mock("@/db", () => ({
+  withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
   db: {
     select: () => ({
       from: () => ({

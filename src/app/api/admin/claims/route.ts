@@ -3,7 +3,7 @@ import { and, asc, desc, eq, ne } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { profiles, sailorClaims, sailors } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
 import {
@@ -57,70 +57,73 @@ const sailorClaimColumns = {
 export async function GET() {
   try {
     await requireSuperadmin();
-    let rows;
-    try {
-      rows = await db
-        .select({
-          id: sailorClaims.id,
-          sailorId: sailorClaims.sailorId,
-          requesterId: sailorClaims.requesterId,
-          status: sailorClaims.status,
-          relation: sailorClaims.relation,
-          heardAbout: sailorClaims.heardAbout,
-          note: sailorClaims.note,
-          createdAt: sailorClaims.createdAt,
-          updatedAt: sailorClaims.updatedAt,
-          sailorName: sailors.name,
-          sailorHandle: sailors.handle,
-          sailorSailNumber: sailors.sailNumber,
-          sailorClub: sailors.club,
-          sailorParentId: sailors.parentId,
-          sailorOwnerRelation: sailors.ownerRelation,
-          requesterEmail: profiles.email,
-          requesterName: profiles.fullName,
-          requesterRole: profiles.role,
-          source: sailorClaims.source,
-        })
-        .from(sailorClaims)
-        .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
-        .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
-        .orderBy(desc(sailorClaims.createdAt));
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      if (/heard_about|does not exist/i.test(msg)) {
-        const fallbackRows = await db
-          .select({
-            id: sailorClaims.id,
-            sailorId: sailorClaims.sailorId,
-            requesterId: sailorClaims.requesterId,
-            status: sailorClaims.status,
-            relation: sailorClaims.relation,
-            note: sailorClaims.note,
-            createdAt: sailorClaims.createdAt,
-            updatedAt: sailorClaims.updatedAt,
-            sailorName: sailors.name,
-            sailorHandle: sailors.handle,
-            sailorSailNumber: sailors.sailNumber,
-            sailorClub: sailors.club,
-            sailorParentId: sailors.parentId,
-            sailorOwnerRelation: sailors.ownerRelation,
-            requesterEmail: profiles.email,
-            requesterName: profiles.fullName,
-            requesterRole: profiles.role,
-            source: sailorClaims.source,
-          })
-          .from(sailorClaims)
-          .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
-          .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
-          .orderBy(desc(sailorClaims.createdAt));
-        rows = fallbackRows.map((r) => ({
-          ...r,
-          heardAbout: null as string | null,
-        }));
-      } else {
-        throw err;
-      }
-    }
+    const rows = await withDatabaseRetry(
+      async () => {
+        try {
+          return await db
+            .select({
+              id: sailorClaims.id,
+              sailorId: sailorClaims.sailorId,
+              requesterId: sailorClaims.requesterId,
+              status: sailorClaims.status,
+              relation: sailorClaims.relation,
+              heardAbout: sailorClaims.heardAbout,
+              note: sailorClaims.note,
+              createdAt: sailorClaims.createdAt,
+              updatedAt: sailorClaims.updatedAt,
+              sailorName: sailors.name,
+              sailorHandle: sailors.handle,
+              sailorSailNumber: sailors.sailNumber,
+              sailorClub: sailors.club,
+              sailorParentId: sailors.parentId,
+              sailorOwnerRelation: sailors.ownerRelation,
+              requesterEmail: profiles.email,
+              requesterName: profiles.fullName,
+              requesterRole: profiles.role,
+              source: sailorClaims.source,
+            })
+            .from(sailorClaims)
+            .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
+            .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
+            .orderBy(desc(sailorClaims.createdAt));
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          if (/heard_about|does not exist/i.test(msg)) {
+            const fallbackRows = await db
+              .select({
+                id: sailorClaims.id,
+                sailorId: sailorClaims.sailorId,
+                requesterId: sailorClaims.requesterId,
+                status: sailorClaims.status,
+                relation: sailorClaims.relation,
+                note: sailorClaims.note,
+                createdAt: sailorClaims.createdAt,
+                updatedAt: sailorClaims.updatedAt,
+                sailorName: sailors.name,
+                sailorHandle: sailors.handle,
+                sailorSailNumber: sailors.sailNumber,
+                sailorClub: sailors.club,
+                sailorParentId: sailors.parentId,
+                sailorOwnerRelation: sailors.ownerRelation,
+                requesterEmail: profiles.email,
+                requesterName: profiles.fullName,
+                requesterRole: profiles.role,
+                source: sailorClaims.source,
+              })
+              .from(sailorClaims)
+              .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
+              .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
+              .orderBy(desc(sailorClaims.createdAt));
+            return fallbackRows.map((r) => ({
+              ...r,
+              heardAbout: null as string | null,
+            }));
+          }
+          throw err;
+        }
+      },
+      { label: "admin.claims.get" }
+    );
 
     const claims = rows.map((r) => ({
       ...r,

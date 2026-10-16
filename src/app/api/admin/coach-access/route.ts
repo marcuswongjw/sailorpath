@@ -1,7 +1,7 @@
 import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { desc, eq } from "drizzle-orm";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { coachAccessRequests, profiles } from "@/db/schema";
 import { jsonError, requireSuperadmin } from "@/lib/auth";
 import { logAdminChange } from "@/lib/adminChangeLog";
@@ -11,34 +11,38 @@ import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 export async function GET() {
   try {
     await requireSuperadmin();
-    const [requests, coaches] = await Promise.all([
-      db
-        .select({
-          id: coachAccessRequests.id,
-          requesterId: coachAccessRequests.requesterId,
-          status: coachAccessRequests.status,
-          requestedAt: coachAccessRequests.requestedAt,
-          reviewedAt: coachAccessRequests.reviewedAt,
-          requesterName: profiles.fullName,
-          requesterEmail: profiles.email,
-          requesterRole: profiles.role,
-          source: coachAccessRequests.source,
-        })
-        .from(coachAccessRequests)
-        .innerJoin(profiles, eq(coachAccessRequests.requesterId, profiles.id))
-        .orderBy(desc(coachAccessRequests.requestedAt)),
-      db
-        .select({
-          id: profiles.id,
-          email: profiles.email,
-          fullName: profiles.fullName,
-          role: profiles.role,
-          createdAt: profiles.createdAt,
-        })
-        .from(profiles)
-        .where(eq(profiles.role, "coach"))
-        .orderBy(desc(profiles.updatedAt)),
-    ]);
+    const [requests, coaches] = await withDatabaseRetry(
+      () =>
+        Promise.all([
+          db
+            .select({
+              id: coachAccessRequests.id,
+              requesterId: coachAccessRequests.requesterId,
+              status: coachAccessRequests.status,
+              requestedAt: coachAccessRequests.requestedAt,
+              reviewedAt: coachAccessRequests.reviewedAt,
+              requesterName: profiles.fullName,
+              requesterEmail: profiles.email,
+              requesterRole: profiles.role,
+              source: coachAccessRequests.source,
+            })
+            .from(coachAccessRequests)
+            .innerJoin(profiles, eq(coachAccessRequests.requesterId, profiles.id))
+            .orderBy(desc(coachAccessRequests.requestedAt)),
+          db
+            .select({
+              id: profiles.id,
+              email: profiles.email,
+              fullName: profiles.fullName,
+              role: profiles.role,
+              createdAt: profiles.createdAt,
+            })
+            .from(profiles)
+            .where(eq(profiles.role, "coach"))
+            .orderBy(desc(profiles.updatedAt)),
+        ]),
+      { label: "admin.coach_access.get" }
+    );
 
     return NextResponse.json({ requests, coaches });
   } catch (error) {

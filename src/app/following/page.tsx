@@ -12,7 +12,10 @@ export const metadata = {
 };
 
 export default async function FollowingPage() {
-  const auth = await getAuthContext();
+  const auth = await getAuthContext().catch((err) => {
+    console.error("[following/page] Error loading auth context", err);
+    return null;
+  });
   if (!auth) {
     return (
       <div className="mx-auto max-w-xl px-4 py-20 text-center">

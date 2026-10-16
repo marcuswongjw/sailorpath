@@ -7,12 +7,15 @@ vi.mock("@/lib/auth", () => ({
   requireSuperadmin: mocks.auth,
   jsonError: () => Response.json({ error: "Forbidden" }, { status: 403 }),
 }));
-vi.mock("@/db", () => ({ db: {
-  select: () => ({ from: () => ({ where: (predicate: unknown) => {
-    mocks.where(predicate);
-    return { orderBy: () => ({ limit: () => ({ offset: mocks.offset }) }) };
-  } }) }),
-} }));
+vi.mock("@/db", () => ({
+  withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
+  db: {
+    select: () => ({ from: () => ({ where: (predicate: unknown) => {
+      mocks.where(predicate);
+      return { orderBy: () => ({ limit: () => ({ offset: mocks.offset }) }) };
+    } }) }),
+  },
+}));
 import { GET } from "./route";
 
 describe("registered user change feed", () => {

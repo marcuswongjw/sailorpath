@@ -28,6 +28,7 @@ vi.mock("@/lib/revalidatePublic", () => ({
 }));
 
 vi.mock("@/db", () => ({
+  withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
   db: {
     selectDistinct: () => ({
       from: () => ({

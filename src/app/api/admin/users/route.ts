@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { ilike, or, desc } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { profiles } from "@/db/schema";
 
 export async function GET(req: Request) {
@@ -20,16 +20,19 @@ export async function GET(req: Request) {
       })
       .from(profiles);
 
-    let rows;
-    if (q) {
-      const pattern = `%${q}%`;
-      rows = await query
-        .where(or(ilike(profiles.email, pattern), ilike(profiles.fullName, pattern)))
-        .orderBy(desc(profiles.createdAt))
-        .limit(30);
-    } else {
-      rows = await query.orderBy(desc(profiles.createdAt)).limit(50);
-    }
+    const rows = await withDatabaseRetry(
+      () => {
+        if (q) {
+          const pattern = `%${q}%`;
+          return query
+            .where(or(ilike(profiles.email, pattern), ilike(profiles.fullName, pattern)))
+            .orderBy(desc(profiles.createdAt))
+            .limit(30);
+        }
+        return query.orderBy(desc(profiles.createdAt)).limit(50);
+      },
+      { label: "admin.users.get" }
+    );
 
     return NextResponse.json({ users: rows });
   } catch (e) {

@@ -29,4 +29,18 @@ describe("AdminSignInGate", () => {
     expect(html).toContain("Admin access required");
     expect(html).toContain("This account is signed in but is not a superadmin");
   });
+
+  it("renders retry gate when authorization check is temporarily unavailable", () => {
+    const html = renderToStaticMarkup(
+      <AdminSignInGate
+        nextUrl="https://admin.sailorpath.com/"
+        siteOrigin="https://admin.sailorpath.com"
+        reason="unavailable"
+      />
+    );
+
+    expect(html).toContain("Temporary connection issue");
+    expect(html).toContain("Retry Admin Console");
+    expect(html).toContain('href="https://admin.sailorpath.com/"');
+  });
 });

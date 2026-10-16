@@ -16,7 +16,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function CoachToolsPage() {
-  const auth = await getAuthContext();
+  const auth = await getAuthContext().catch((err) => {
+    console.error("[account/coach/page] Error loading auth context", err);
+    return null;
+  });
 
   if (!auth) {
     return (

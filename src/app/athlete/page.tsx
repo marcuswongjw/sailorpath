@@ -23,7 +23,10 @@ type AthletePageProps = {
 };
 
 export default async function AthletePage({ searchParams }: AthletePageProps) {
-  const auth = await getAuthContext();
+  const auth = await getAuthContext().catch((err) => {
+    console.error("[athlete/page] Error loading auth context", err);
+    return null;
+  });
   const sp = await searchParams;
 
   if (!auth) {

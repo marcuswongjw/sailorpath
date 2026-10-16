@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  DATABASE_OPERATION_TIMEOUT_MS,
+  DbUnavailableError,
   isRetryableDatabaseConnectionError,
   pgSql,
   postgresJsOptions,
@@ -59,18 +61,24 @@ describe("postgres.js serverless options", () => {
     expect(pgSql).not.toBe(previousClient);
   });
 
-  it("uses a short, coalesced liveness preflight before reusing a warm socket", () => {
+  it("uses a short, coalesced liveness preflight and operation timeout before reusing a warm socket", () => {
     const src = readFileSync(new URL("./client.ts", import.meta.url), "utf8");
 
     expect(src).toContain("DATABASE_PREFLIGHT_TIMEOUT_MS = 3_000");
+    expect(src).toContain("DATABASE_OPERATION_TIMEOUT_MS = 8_000");
+    expect(DATABASE_OPERATION_TIMEOUT_MS).toBe(8_000);
     expect(src).toContain("client`select 1 as ok`");
     expect(src).toContain("recycleDatabaseClient(client)");
     expect(src).toContain("databaseLivenessCheck");
+    expect(src).toContain("cancellable.cancel?.()");
   });
 
-  it("retries Supavisor connection destruction as well as connection timeouts", () => {
+  it("retries Supavisor connection destruction, preflight timeouts, and operation timeouts", () => {
     expect(isRetryableDatabaseConnectionError("write CONNECT_TIMEOUT pooler")).toBe(true);
     expect(isRetryableDatabaseConnectionError("code=CONNECTION_DESTROYED")).toBe(true);
+    expect(isRetryableDatabaseConnectionError("DB_PREFLIGHT_TIMEOUT")).toBe(true);
+    expect(isRetryableDatabaseConnectionError("DB_OPERATION_TIMEOUT")).toBe(true);
     expect(isRetryableDatabaseConnectionError("invalid input syntax for type uuid")).toBe(false);
+    expect(new DbUnavailableError().status).toBe(503);
   });
 });

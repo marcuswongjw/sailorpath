@@ -3,7 +3,7 @@
  * Also emits a structured console line via `adminLog` for log drains.
  */
 
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { adminChangeLog } from "@/db/schema";
 import { and, desc, gte } from "drizzle-orm";
 import { adminLog } from "@/lib/adminLog";
@@ -138,12 +138,16 @@ export async function listAdminChanges(opts?: {
   const days = opts?.days ?? 30;
   const since = new Date(Date.now() - days * 86400000);
   try {
-    const rows = await db
-      .select()
-      .from(adminChangeLog)
-      .where(and(gte(adminChangeLog.createdAt, since)))
-      .orderBy(desc(adminChangeLog.createdAt))
-      .limit(limit);
+    const rows = await withDatabaseRetry(
+      () =>
+        db
+          .select()
+          .from(adminChangeLog)
+          .where(and(gte(adminChangeLog.createdAt, since)))
+          .orderBy(desc(adminChangeLog.createdAt))
+          .limit(limit),
+      { label: "admin.change_log.list" }
+    );
     return rows.map((r) => ({
       id: r.id,
       createdAt: r.createdAt,

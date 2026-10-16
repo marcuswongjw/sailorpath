@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db, ensureCoreSchema } from "@/db";
+import { db, ensureCoreSchema, withDatabaseRetry } from "@/db";
 import { regattaEvents, regattas } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
 import { slugify } from "@/lib/slug";
@@ -102,15 +102,19 @@ export async function GET(req: Request) {
     const offset = Math.max(0, Number.isFinite(offsetRaw) ? offsetRaw : 0);
 
     const { count, desc } = await import("drizzle-orm");
-    const [rows, totalRow] = await Promise.all([
-      db
-        .select()
-        .from(regattas)
-        .orderBy(desc(regattas.date))
-        .limit(limit)
-        .offset(offset),
-      db.select({ n: count() }).from(regattas),
-    ]);
+    const [rows, totalRow] = await withDatabaseRetry(
+      () =>
+        Promise.all([
+          db
+            .select()
+            .from(regattas)
+            .orderBy(desc(regattas.date))
+            .limit(limit)
+            .offset(offset),
+          db.select({ n: count() }).from(regattas),
+        ]),
+      { label: "admin.regattas.get" }
+    );
 
     return NextResponse.json({
       regattas: rows,

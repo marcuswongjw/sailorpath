@@ -15,6 +15,7 @@ vi.mock("@/lib/auth", () => ({
 
 vi.mock("@/db", () => ({
   ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
+  withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
   db: {
     select: () => ({
       from: () => ({

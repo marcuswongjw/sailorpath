@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { eq, sql } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { regattaResults, regattas } from "@/db/schema";
 import { publicationReadiness } from "@/lib/admin/publicationReadiness";
 
@@ -12,18 +12,26 @@ export async function GET(req: Request) {
     if (!sheet) {
       return NextResponse.json({ error: "sheet is required" }, { status: 400 });
     }
-    const [row] = await db
-      .select()
-      .from(regattas)
-      .where(eq(regattas.id, sheet))
-      .limit(1);
+    const [row, countRow] = await withDatabaseRetry(
+      () =>
+        Promise.all([
+          db
+            .select()
+            .from(regattas)
+            .where(eq(regattas.id, sheet))
+            .limit(1)
+            .then((r) => r[0]),
+          db
+            .select({ n: sql<number>`count(*)::int` })
+            .from(regattaResults)
+            .where(eq(regattaResults.regattaId, sheet))
+            .then((r) => r[0]),
+        ]),
+      { label: "admin.regatta_readiness.get" }
+    );
     if (!row) {
       return NextResponse.json({ error: "Class sheet not found" }, { status: 404 });
     }
-    const [countRow] = await db
-      .select({ n: sql<number>`count(*)::int` })
-      .from(regattaResults)
-      .where(eq(regattaResults.regattaId, sheet));
     const readiness = publicationReadiness({
       name: row.name,
       date: row.date ? String(row.date).slice(0, 10) : null,

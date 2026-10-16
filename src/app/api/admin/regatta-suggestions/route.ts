@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray, isNull, like, or } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
@@ -17,71 +17,76 @@ export async function GET() {
   try {
     await requireSuperadmin();
 
-    // 1. Find all regatta IDs that have results awaiting verification
-    const pendingResultRegattas = await db
-      .selectDistinct({ regattaId: regattaResults.regattaId })
-      .from(regattaResults)
-      .where(eq(regattaResults.verificationStatus, "pending_review"));
-
-    const pendingRegattaIds = pendingResultRegattas.map((r) => r.regattaId);
-
-    const conditions = [
-      and(eq(regattas.countsForRanking, false), isNull(regattas.reviewedAt)),
-    ];
-    if (pendingRegattaIds.length > 0) {
-      // Ranking regattas with pending evidence always surface for review.
-      // Dismissed (reviewedAt set) NON-ranking regattas stay dismissed even
-      // if pending evidence remains — otherwise dismiss appears to do nothing.
-      conditions.push(
-        and(
-          inArray(regattas.id, pendingRegattaIds),
-          or(isNull(regattas.reviewedAt), eq(regattas.countsForRanking, true))
-        )
-      );
-    }
-
-    const rows = await db
-      .select({
-        id: regattas.id,
-        name: regattas.name,
-        slug: regattas.slug,
-        date: regattas.date,
-        totalFleetSize: regattas.totalFleetSize,
-        division: regattas.division,
-        geography: regattas.geography,
-        boatClass: regattas.boatClass,
-        countsForRanking: regattas.countsForRanking,
-        reviewedAt: regattas.reviewedAt,
-        createdAt: regattas.createdAt,
-      })
-      .from(regattas)
-      .where(and(like(regattas.slug, "log-%"), or(...conditions)))
-      .orderBy(desc(regattas.createdAt));
-
-    const withSailors = await Promise.all(
-      rows.map(async (r) => {
-        const results = await db
-          .select({
-            resultId: regattaResults.id,
-            rank: regattaResults.rank,
-            nettScore: regattaResults.nettScore,
-            totalScore: regattaResults.totalScore,
-            sailorId: sailors.id,
-            sailorName: sailors.name,
-            sailorHandle: sailors.handle,
-            evidenceUrl: regattaResults.evidenceUrl,
-            evidenceName: regattaResults.evidenceName,
-            evidenceType: regattaResults.evidenceType,
-            officialUrl: regattaResults.officialUrl,
-            evidenceNotes: regattaResults.evidenceNotes,
-            verificationStatus: regattaResults.verificationStatus,
-            verifiedAt: regattaResults.verifiedAt,
-          })
+    const withSailors = await withDatabaseRetry(
+      async () => {
+        // 1. Find all regatta IDs that have results awaiting verification
+        const pendingResultRegattas = await db
+          .selectDistinct({ regattaId: regattaResults.regattaId })
           .from(regattaResults)
-          .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
-          .where(eq(regattaResults.regattaId, r.id));
-        return { ...r, results };
-      })
+          .where(eq(regattaResults.verificationStatus, "pending_review"));
+
+        const pendingRegattaIds = pendingResultRegattas.map((r) => r.regattaId);
+
+        const conditions = [
+          and(eq(regattas.countsForRanking, false), isNull(regattas.reviewedAt)),
+        ];
+        if (pendingRegattaIds.length > 0) {
+          // Ranking regattas with pending evidence always surface for review.
+          // Dismissed (reviewedAt set) NON-ranking regattas stay dismissed even
+          // if pending evidence remains — otherwise dismiss appears to do nothing.
+          conditions.push(
+            and(
+              inArray(regattas.id, pendingRegattaIds),
+              or(isNull(regattas.reviewedAt), eq(regattas.countsForRanking, true))
+            )
+          );
+        }
+
+        const rows = await db
+          .select({
+            id: regattas.id,
+            name: regattas.name,
+            slug: regattas.slug,
+            date: regattas.date,
+            totalFleetSize: regattas.totalFleetSize,
+            division: regattas.division,
+            geography: regattas.geography,
+            boatClass: regattas.boatClass,
+            countsForRanking: regattas.countsForRanking,
+            reviewedAt: regattas.reviewedAt,
+            createdAt: regattas.createdAt,
+          })
+          .from(regattas)
+          .where(and(like(regattas.slug, "log-%"), or(...conditions)))
+          .orderBy(desc(regattas.createdAt));
+
+        return await Promise.all(
+          rows.map(async (r) => {
+            const results = await db
+              .select({
+                resultId: regattaResults.id,
+                rank: regattaResults.rank,
+                nettScore: regattaResults.nettScore,
+                totalScore: regattaResults.totalScore,
+                sailorId: sailors.id,
+                sailorName: sailors.name,
+                sailorHandle: sailors.handle,
+                evidenceUrl: regattaResults.evidenceUrl,
+                evidenceName: regattaResults.evidenceName,
+                evidenceType: regattaResults.evidenceType,
+                officialUrl: regattaResults.officialUrl,
+                evidenceNotes: regattaResults.evidenceNotes,
+                verificationStatus: regattaResults.verificationStatus,
+                verifiedAt: regattaResults.verifiedAt,
+              })
+              .from(regattaResults)
+              .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
+              .where(eq(regattaResults.regattaId, r.id));
+            return { ...r, results };
+          })
+        );
+      },
+      { label: "admin.regatta_suggestions.get" }
     );
 
     return NextResponse.json({

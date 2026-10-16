@@ -26,7 +26,19 @@ export default async function AdminPage() {
   if (!isAdminHost(host)) notFound();
 
   // Don't serialize admin data before auth — client dashboard fetches after gate.
-  const ctx = await getAuthContext();
+  let ctx: Awaited<ReturnType<typeof getAuthContext>>;
+  try {
+    ctx = await getAuthContext();
+  } catch (error) {
+    console.error("[admin/page] Temporary error verifying admin session", error);
+    return (
+      <AdminSignInGate
+        reason="unavailable"
+        nextUrl={adminReturnUrl(host, "/")}
+        siteOrigin={adminLoginOrigin(host)}
+      />
+    );
+  }
   if (!ctx) {
     return (
       <AdminSignInGate

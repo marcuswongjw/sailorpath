@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { eq, inArray } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { regattaEvents, regattas } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
@@ -23,7 +23,10 @@ function classesFrom(value: unknown): string[] {
 export async function GET() {
   try {
     await requireSuperadmin();
-    const rows = await db.select().from(regattaEvents);
+    const rows = await withDatabaseRetry(
+      () => db.select().from(regattaEvents),
+      { label: "admin.regatta_events.get" }
+    );
     return NextResponse.json({ ok: true, events: rows });
   } catch (e: unknown) {
     return jsonError(e);

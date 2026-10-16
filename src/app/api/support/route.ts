@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { withUserChangeTracking } from "@/lib/userChanges";
 import { desc, eq } from "drizzle-orm";
 import { getAuthContext, jsonError, requireSuperadmin } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { supportMessages } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
 import {
@@ -129,18 +129,22 @@ export async function GET(req: Request) {
         ? Math.min(requestedLimit, 100)
         : 100;
 
-    const rows = status
-      ? await db
-          .select()
-          .from(supportMessages)
-          .where(eq(supportMessages.status, status))
-          .orderBy(desc(supportMessages.createdAt))
-          .limit(limit)
-      : await db
-          .select()
-          .from(supportMessages)
-          .orderBy(desc(supportMessages.createdAt))
-          .limit(limit);
+    const rows = await withDatabaseRetry(
+      () =>
+        status
+          ? db
+              .select()
+              .from(supportMessages)
+              .where(eq(supportMessages.status, status))
+              .orderBy(desc(supportMessages.createdAt))
+              .limit(limit)
+          : db
+              .select()
+              .from(supportMessages)
+              .orderBy(desc(supportMessages.createdAt))
+              .limit(limit),
+      { label: "admin.support.get" }
+    );
 
     return NextResponse.json({ messages: rows });
   } catch (e) {

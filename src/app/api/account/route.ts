@@ -2,7 +2,7 @@ import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { sailorClaims, sailors, profiles } from "@/db/schema";
 
 /** Logged-in account: user profile + owned sailors + claim requests */
@@ -13,48 +13,52 @@ export async function GET() {
       return NextResponse.json({ error: "Sign in required" }, { status: 401 });
     }
 
-    const [approvedClaims, claims, profileRows] = await Promise.all([
-      db
-        .select({
-          sailorId: sailorClaims.sailorId,
-          relation: sailorClaims.relation,
-        })
-        .from(sailorClaims)
-        .where(
-          and(
-            eq(sailorClaims.requesterId, auth.userId),
-            eq(sailorClaims.status, "approved")
-          )
-        ),
-      db
-        .select({
-          id: sailorClaims.id,
-          status: sailorClaims.status,
-          relation: sailorClaims.relation,
-          source: sailorClaims.source,
-          note: sailorClaims.note,
-          createdAt: sailorClaims.createdAt,
-          sailorId: sailorClaims.sailorId,
-          sailorName: sailors.name,
-          sailorHandle: sailors.handle,
-        })
-        .from(sailorClaims)
-        .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
-        .where(eq(sailorClaims.requesterId, auth.userId))
-        .orderBy(desc(sailorClaims.createdAt)),
-      db
-        .select({
-          id: profiles.id,
-          email: profiles.email,
-          fullName: profiles.fullName,
-          role: profiles.role,
-          createdAt: profiles.createdAt,
-          notifyFollowedResults: profiles.notifyFollowedResults,
-        })
-        .from(profiles)
-        .where(eq(profiles.id, auth.userId))
-        .limit(1),
-    ]);
+    const [approvedClaims, claims, profileRows] = await withDatabaseRetry(
+      () =>
+        Promise.all([
+          db
+            .select({
+              sailorId: sailorClaims.sailorId,
+              relation: sailorClaims.relation,
+            })
+            .from(sailorClaims)
+            .where(
+              and(
+                eq(sailorClaims.requesterId, auth.userId),
+                eq(sailorClaims.status, "approved")
+              )
+            ),
+          db
+            .select({
+              id: sailorClaims.id,
+              status: sailorClaims.status,
+              relation: sailorClaims.relation,
+              source: sailorClaims.source,
+              note: sailorClaims.note,
+              createdAt: sailorClaims.createdAt,
+              sailorId: sailorClaims.sailorId,
+              sailorName: sailors.name,
+              sailorHandle: sailors.handle,
+            })
+            .from(sailorClaims)
+            .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
+            .where(eq(sailorClaims.requesterId, auth.userId))
+            .orderBy(desc(sailorClaims.createdAt)),
+          db
+            .select({
+              id: profiles.id,
+              email: profiles.email,
+              fullName: profiles.fullName,
+              role: profiles.role,
+              createdAt: profiles.createdAt,
+              notifyFollowedResults: profiles.notifyFollowedResults,
+            })
+            .from(profiles)
+            .where(eq(profiles.id, auth.userId))
+            .limit(1),
+        ]),
+      { label: "account.get" }
+    );
 
     const profileRow = profileRows[0];
 
@@ -68,17 +72,21 @@ export async function GET() {
       conditions.push(inArray(sailors.id, claimedIds));
     }
 
-    const ownedRows = await db
-      .select({
-        id: sailors.id,
-        name: sailors.name,
-        handle: sailors.handle,
-        sailNumber: sailors.sailNumber,
-        club: sailors.club,
-        ownerRelation: sailors.ownerRelation,
-      })
-      .from(sailors)
-      .where(or(...conditions));
+    const ownedRows = await withDatabaseRetry(
+      () =>
+        db
+          .select({
+            id: sailors.id,
+            name: sailors.name,
+            handle: sailors.handle,
+            sailNumber: sailors.sailNumber,
+            club: sailors.club,
+            ownerRelation: sailors.ownerRelation,
+          })
+          .from(sailors)
+          .where(or(...conditions)),
+      { label: "account.get.owned" }
+    );
 
     const owned = ownedRows.map((s) => ({
       ...s,
