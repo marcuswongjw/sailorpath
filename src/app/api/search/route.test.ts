@@ -18,4 +18,13 @@ describe("GET /api/search", () => {
       limit: undefined,
     });
   });
+
+  it("serves only the public contract through shared-cache directives", async () => {
+    unifiedSearch.mockResolvedValue({ sailors: [], regattas: [], total: 0 });
+    const response = await GET(new Request("https://sailorpath.test/api/search?q=Test"));
+
+    expect(response.headers.get("cache-control")).toBe(
+      "public, s-maxage=10, stale-while-revalidate=60"
+    );
+  });
 });

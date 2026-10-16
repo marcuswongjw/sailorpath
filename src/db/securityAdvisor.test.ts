@@ -76,3 +76,20 @@ describe("definitions that would recreate the view or extension", () => {
     );
   });
 });
+
+describe("browser-role policy hardening", () => {
+  const remediation = read("./migrations/122_harden_browser_roles_and_split_class_write_policies.sql");
+
+  it("keeps the published view as a security-invoker view", () => {
+    expect(remediation).toContain(
+      "ALTER VIEW public.published_regattas SET (security_invoker = true)"
+    );
+  });
+
+  it("splits lifecycle writes from public reads", () => {
+    expect(remediation).toContain("CREATE POLICY regattas_superadmin_insert");
+    expect(remediation).toContain("CREATE POLICY wingfoil_superadmin_update");
+    expect(remediation).toContain("CREATE POLICY techno293_superadmin_delete");
+    expect(remediation).not.toMatch(/CREATE POLICY .*_superadmin_mutate[\s\S]*FOR ALL/);
+  });
+});
