@@ -1,119 +1,9 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
-  planPreferredResultRaceScores,
-  preferredDuplicateResultUpdate,
   SAILOR_RELATIONSHIP_MERGE_PLAN,
   splitSourceRowsByTargetConflict,
 } from "@/lib/mergeSailors";
-
-describe("preferredDuplicateResultUpdate", () => {
-  const dns = {
-    rank: 81,
-    nettScore: 90,
-    totalScore: 90,
-    isDns: true,
-    isOverseasCommitment: false,
-  };
-  const finish = {
-    rank: 4,
-    nettScore: 12,
-    totalScore: 18,
-    isDns: false,
-    isOverseasCommitment: false,
-  };
-
-  it("clears isDns when the duplicate has the better finish", () => {
-    expect(preferredDuplicateResultUpdate(dns, finish)).toEqual({
-      rank: 4,
-      nettScore: 12,
-      totalScore: 18,
-      isDns: false,
-      isOverseasCommitment: false,
-    });
-  });
-
-  it("keeps the survivor when its place is already better", () => {
-    expect(preferredDuplicateResultUpdate(finish, dns)).toBeNull();
-  });
-
-  it("copies an overseas flag together with a better place", () => {
-    expect(
-      preferredDuplicateResultUpdate(finish, {
-        rank: 2,
-        nettScore: 8,
-        totalScore: null,
-        isDns: false,
-        isOverseasCommitment: true,
-      })
-    ).toEqual({
-      rank: 2,
-      nettScore: 8,
-      totalScore: 18,
-      isDns: false,
-      isOverseasCommitment: true,
-    });
-  });
-
-  it("keeps the duplicate races when that finish is the one copied across", () => {
-    expect(
-      planPreferredResultRaceScores({
-        sourceWinsPlace: true,
-        sourceScores: [
-          { id: "source-r1", raceNumber: 1 },
-          { id: "source-r2", raceNumber: 2 },
-        ],
-        targetScores: [{ id: "target-r1", raceNumber: 1 }],
-      })
-    ).toEqual({
-      deleteIds: ["target-r1"],
-      moveIds: ["source-r1", "source-r2"],
-    });
-  });
-
-  it("drops only conflicting source races when the survivor place stays", () => {
-    expect(
-      planPreferredResultRaceScores({
-        sourceWinsPlace: false,
-        sourceScores: [
-          { id: "source-r1", raceNumber: 1 },
-          { id: "source-r3", raceNumber: 3 },
-        ],
-        targetScores: [{ id: "target-r1", raceNumber: 1 }],
-      })
-    ).toEqual({
-      deleteIds: ["source-r1"],
-      moveIds: ["source-r3"],
-    });
-  });
-
-  it("clears isDns when the duplicate finish has the same place", () => {
-    expect(
-      preferredDuplicateResultUpdate({ ...dns, rank: 4 }, finish)
-    ).toEqual({
-      rank: 4,
-      nettScore: 12,
-      totalScore: 18,
-      isDns: false,
-      isOverseasCommitment: false,
-    });
-  });
-
-  it("keeps a real finish when the duplicate is DNS at the same place", () => {
-    expect(
-      preferredDuplicateResultUpdate(finish, { ...dns, rank: 4 })
-    ).toBeNull();
-  });
-
-  it("fills a missing total without changing a DNS flag", () => {
-    expect(
-      preferredDuplicateResultUpdate(
-        { ...dns, rank: 10, totalScore: null },
-        { ...dns, rank: 20, totalScore: 40 }
-      )
-    ).toEqual({ totalScore: 40 });
-  });
-});
 
 describe("sailor relationship merge planning", () => {
   it("moves non-conflicting source rows and deterministically drops target conflicts", () => {
@@ -183,7 +73,7 @@ describe("sailor relationship merge planning", () => {
 
     expect(service).toContain("return db.transaction(async (tx) =>");
     expect(route).toContain("txResult = await mergeSailors({");
-    expect(adminActions).toContain("await mergeSailors({ keepId, mergeId, forceOwnershipConflict: true });");
+    expect(adminActions).not.toContain("forceOwnershipConflict");
     expect(route).not.toContain("db.transaction(");
   });
 });

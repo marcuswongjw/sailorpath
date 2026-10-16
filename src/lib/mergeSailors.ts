@@ -1,8 +1,11 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
+import { buildSailorMergePlan } from "@/lib/sailorMergePlan";
+import { toAdminAuditJsonValue } from "@/lib/adminAuditDetails";
 import {
   asianOptimistIndexDuplicateReviews,
   asianOptimistIndexSailors,
+  adminChangeLog,
   coachActionReviews,
   coachDevelopmentRecords,
   coachFollowedSailors,
@@ -15,7 +18,6 @@ import {
   newsArticles,
   parentNotes,
   raceObservations,
-  regattaRaceResults,
   regattaResultParticipants,
   regattaResults,
   sailorAliases,
@@ -73,7 +75,10 @@ export type SailorMergeErrorCode =
   | "KEEP_NOT_FOUND"
   | "MERGE_NOT_FOUND"
   | "OWNERSHIP_CONFLICT"
-  | "SAME_SAILOR";
+  | "SAME_SAILOR"
+  | "PREFLIGHT_REQUIRED"
+  | "IDENTITY_CONFLICT"
+  | "STALE_MERGE_PLAN";
 
 export class SailorMergeError extends Error {
   constructor(
@@ -87,100 +92,20 @@ export class SailorMergeError extends Error {
   }
 }
 
-type ResultScoreFields = {
-  rank: number | null;
-  nettScore: number | null;
-  totalScore: number | null;
-  isDns: boolean | null;
-  isOverseasCommitment: boolean | null;
-};
-
-/**
- * When two profiles share a regatta, keep the better place and the flags that
- * explain that place. Copying only rank/nett left a DNS (or overseas) flag on
- * the survivor, so rankings still treated a real finish as a non-start.
- * Returns null when the survivor row should stay as-is.
- */
-export function preferredDuplicateResultUpdate(
-  target: ResultScoreFields,
-  source: ResultScoreFields
-): {
-  rank: number;
-  nettScore: number | null;
-  totalScore: number | null;
-  isDns: boolean;
-  isOverseasCommitment: boolean;
-} | {
-  totalScore: number;
-} | null {
-  const keepRank = target.rank ?? 9999;
-  const mergeRank = source.rank ?? 9999;
-  if (source.rank != null && mergeRank < keepRank) {
-    return {
-      rank: source.rank,
-      nettScore: source.nettScore,
-      totalScore: source.totalScore ?? target.totalScore,
-      isDns: Boolean(source.isDns),
-      isOverseasCommitment: Boolean(source.isOverseasCommitment),
-    };
-  }
-  // Same place: a real finish must replace a DNS flag. Equal ranks used to
-  // leave isDns on the survivor, so rankings still scored a finish as a no-show.
-  if (
-    source.rank != null &&
-    mergeRank === keepRank &&
-    Boolean(target.isDns) &&
-    !source.isDns
-  ) {
-    return {
-      rank: source.rank,
-      nettScore: source.nettScore ?? target.nettScore,
-      totalScore: source.totalScore ?? target.totalScore,
-      isDns: false,
-      isOverseasCommitment: Boolean(source.isOverseasCommitment),
-    };
-  }
-  if (target.totalScore == null && source.totalScore != null) {
-    return { totalScore: source.totalScore };
-  }
-  return null;
-}
-
-/**
- * Race scores that should survive a duplicate merge.
- * When the duplicate has the better place, keep that result's races and drop
- * the survivor's races, so the copied nett still matches the score sheet.
- * Otherwise the survivor's races stay and only non-conflicting source races move.
- */
-export function planPreferredResultRaceScores(args: {
-  sourceWinsPlace: boolean;
-  sourceScores: readonly { id: string; raceNumber: number | string }[];
-  targetScores: readonly { id: string; raceNumber: number | string }[];
-}): { deleteIds: string[]; moveIds: string[] } {
-  if (args.sourceWinsPlace) {
-    return {
-      deleteIds: args.targetScores.map((row) => row.id),
-      moveIds: args.sourceScores.map((row) => row.id),
-    };
-  }
-  const split = splitSourceRowsByTargetConflict(
-    args.sourceScores,
-    args.targetScores,
-    (row) => String(row.raceNumber)
-  );
-  return { deleteIds: split.conflictIds, moveIds: split.moveIds };
-}
-
 export type MergeSailorsOptions = {
   keepId: string;
   mergeId: string;
-  forceOwnershipConflict?: boolean;
+  reviewToken?: string;
+  identityEvidence?: string;
+  actor?: { userId: string; email?: string | null };
 };
 
 export async function mergeSailors({
   keepId,
   mergeId,
-  forceOwnershipConflict = false,
+  reviewToken,
+  identityEvidence,
+  actor,
 }: MergeSailorsOptions) {
   if (keepId === mergeId) {
     throw new SailorMergeError(
@@ -196,6 +121,7 @@ export async function mergeSailors({
       .select()
       .from(sailors)
       .where(inArray(sailors.id, [keepId, mergeId]))
+      .orderBy(sailors.id)
       .for("update");
     const keepSailor = lockedSailors.find((row) => row.id === keepId);
     const mergeSailor = lockedSailors.find((row) => row.id === mergeId);
@@ -215,21 +141,18 @@ export async function mergeSailors({
       );
     }
 
+    const plan = await buildSailorMergePlan(tx, keepId, mergeId);
+    if (!plan.canMerge) {
+      throw new SailorMergeError("IDENTITY_CONFLICT", plan.conflicts.join(" "), 409);
+    }
+    if (!reviewToken || !identityEvidence || identityEvidence.trim().length < 10 || identityEvidence.length > 2000) {
+      throw new SailorMergeError("PREFLIGHT_REQUIRED", "Review this explicit survivor/source pair and record official identity evidence before merging.", 409);
+    }
+    if (reviewToken !== plan.reviewToken) {
+      throw new SailorMergeError("STALE_MERGE_PLAN", "These profiles or results changed after review. Review a fresh merge plan.", 409);
+    }
     const keepOwner = keepSailor.parentId || null;
     const mergeOwner = mergeSailor.parentId || null;
-    if (
-      keepOwner &&
-      mergeOwner &&
-      keepOwner !== mergeOwner &&
-      !forceOwnershipConflict
-    ) {
-      throw new SailorMergeError(
-        "OWNERSHIP_CONFLICT",
-        "Both profiles are claimed by different accounts. Unclaim one side first, or pass forceOwnershipConflict=true to keep the survivor’s owner and drop the duplicate’s link.",
-        409,
-        { keepOwner, mergeOwner }
-      );
-    }
 
     const now = new Date();
     const mergeResults = await tx
@@ -238,80 +161,17 @@ export async function mergeSailors({
       .where(eq(regattaResults.sailorId, mergeId));
 
     let resultsMoved = 0;
-    let resultsMergedConflict = 0;
-    let resultsDroppedConflict = 0;
-    let raceScoresMoved = 0;
-    let raceScoresDroppedConflict = 0;
-
+    const resultsMergedConflict = 0;
+    const resultsDroppedConflict = 0;
+    const raceScoresMoved = 0;
+    const raceScoresDroppedConflict = 0;
+    // Preflight rejects every shared sheet before any write. Update ownership
+    // only: result IDs, every race/discard/code, totals and evidence stay intact.
     for (const sourceResult of mergeResults) {
-      const [targetResult] = await tx
-        .select()
-        .from(regattaResults)
-        .where(
-          and(
-            eq(regattaResults.sailorId, keepId),
-            eq(regattaResults.regattaId, sourceResult.regattaId)
-          )
-        )
-        .limit(1);
-
-      if (!targetResult) {
-        await tx
-          .update(regattaResults)
-          .set({ sailorId: keepId, updatedAt: now })
-          .where(eq(regattaResults.id, sourceResult.id));
-        resultsMoved++;
-        continue;
-      }
-
-      // Move the race scores that belong with the place we keep before
-      // deleting the duplicate result. Its foreign key would otherwise
-      // cascade those scores.
-      const [sourceScores, targetScores] = await Promise.all([
-        tx
-          .select({ id: regattaRaceResults.id, raceNumber: regattaRaceResults.raceNumber })
-          .from(regattaRaceResults)
-          .where(eq(regattaRaceResults.regattaResultId, sourceResult.id)),
-        tx
-          .select({ id: regattaRaceResults.id, raceNumber: regattaRaceResults.raceNumber })
-          .from(regattaRaceResults)
-          .where(eq(regattaRaceResults.regattaResultId, targetResult.id)),
-      ]);
-      const scorePatch = preferredDuplicateResultUpdate(
-        targetResult,
-        sourceResult
-      );
-      const scorePlan = planPreferredResultRaceScores({
-        sourceWinsPlace: Boolean(scorePatch && "rank" in scorePatch),
-        sourceScores,
-        targetScores,
-      });
-      if (scorePlan.deleteIds.length > 0) {
-        await tx
-          .delete(regattaRaceResults)
-          .where(inArray(regattaRaceResults.id, scorePlan.deleteIds));
-      }
-      if (scorePlan.moveIds.length > 0) {
-        await tx
-          .update(regattaRaceResults)
-          .set({ regattaResultId: targetResult.id, updatedAt: now })
-          .where(inArray(regattaRaceResults.id, scorePlan.moveIds));
-      }
-      raceScoresMoved += scorePlan.moveIds.length;
-      raceScoresDroppedConflict += scorePlan.deleteIds.length;
-      if (scorePatch) {
-        await tx
-          .update(regattaResults)
-          .set({ ...scorePatch, updatedAt: now })
-          .where(eq(regattaResults.id, targetResult.id));
-        resultsMergedConflict++;
-      } else {
-        resultsDroppedConflict++;
-      }
-
-      await tx
-        .delete(regattaResults)
+      await tx.update(regattaResults)
+        .set({ sailorId: keepId, updatedAt: now })
         .where(eq(regattaResults.id, sourceResult.id));
+      resultsMoved++;
     }
 
     // A duplicate can also be the second sailor in a crew entry. Repoint that
@@ -362,7 +222,7 @@ export async function mergeSailors({
       .returning({ id: sailorAliases.id });
 
     const aliasCandidates = Array.from(
-      new Set([mergeSailor.name, mergeSailor.sailNumber].map((value) => value?.trim()))
+      new Set([mergeSailor.name].map((value) => value?.trim()))
     ).filter((value): value is string => Boolean(value) && value !== "SGP 000");
     let aliasesAdded = 0;
     for (const aliasName of aliasCandidates) {
@@ -689,9 +549,9 @@ export async function mergeSailors({
       }
     }
     if (
-      (!keepSailor.sailNumber || /^SGP\s*0+$/i.test(keepSailor.sailNumber)) &&
+      (!keepSailor.sailNumber || /^(?:SGP\s*)?0+$/i.test(keepSailor.sailNumber)) &&
       mergeSailor.sailNumber &&
-      !/^SGP\s*0+$/i.test(mergeSailor.sailNumber)
+      !/^(?:SGP\s*)?0+$/i.test(mergeSailor.sailNumber)
     ) {
       fill.sailNumber = mergeSailor.sailNumber;
     }
@@ -765,6 +625,19 @@ export async function mergeSailors({
     if (Object.keys(fill).length > 1) {
       await tx.update(sailors).set(fill).where(eq(sailors.id, keepId));
     }
+
+    // Commit the reviewed pair and identity evidence atomically with the merge.
+    await tx.insert(adminChangeLog).values({
+      actorUserId: actor?.userId || null,
+      actorEmail: actor?.email || null,
+      action: "sailors.merge_reviewed",
+      entityType: "sailor",
+      entityId: keepId,
+      entityLabel: keepSailor.name,
+      summary: `Merged ${mergeSailor.name} into ${keepSailor.name} after explicit identity review.`,
+      details: toAdminAuditJsonValue({ keepId, mergeId, reviewToken, identityEvidence, sourceProfile: mergeSailor, resultsMoved, participantLinksMoved: movedParticipantIds.length }),
+      source: "/api/admin/sailors/merge",
+    });
 
     // Every direct and dependent relationship is now safe; this delete should
     // cascade nothing except an unexpected future FK omitted from the plan.

@@ -162,7 +162,7 @@ export type DuplicatePair = {
   b: SailorDupRow;
   similarity: number;
   how: string;
-  /** Confidence band for UI: high >= 0.8, medium >= 0.6 */
+  /** Name-similarity band, never confidence that two profiles are one person. */
   band: "high" | "medium";
 };
 

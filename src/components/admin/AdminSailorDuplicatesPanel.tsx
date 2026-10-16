@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { AlertTriangle, CheckCircle, UsersRound, UserCheck } from "lucide-react";
+import { AlertTriangle, CheckCircle, UserCheck } from "lucide-react";
 import type { DuplicatePair } from "@/components/admin/AdminSailorsPanel";
 
 export function AdminSailorDuplicatesPanel({
@@ -27,31 +26,6 @@ export function AdminSailorDuplicatesPanel({
   emptySeriesCount?: number;
   onCleanupEmptySeries?: () => void | Promise<void>;
 }) {
-  const [bulkMerging, setBulkMerging] = useState(false);
-  const mergeHighConfidence = async () => {
-    if (!window.confirm("Merge every sailor match scored 100%? This combines their results and removes the duplicate profiles.")) return;
-    setBulkMerging(true);
-    try {
-      let total = 0;
-      for (let batch = 0; batch < 50; batch += 1) {
-        const response = await fetch("/api/admin/sailors/bulk-merge-high-similarity", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ exactOnly: true }),
-        });
-        const data = await response.json() as { error?: string; count?: number; hasMore?: boolean };
-        if (!response.ok) throw new Error(data.error || "Bulk merge failed");
-        total += data.count ?? 0;
-        if (!data.hasMore) break;
-      }
-      window.alert(`Merged ${total} high-confidence duplicate profile${total === 1 ? "" : "s"}.`);
-      window.location.reload();
-    } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Bulk merge failed");
-      setBulkMerging(false);
-    }
-  };
-
   return (
     <section className="space-y-4" aria-labelledby="duplicate-sailors-title">
       {emptySeriesCount > 0 && onCleanupEmptySeries ? (
@@ -80,19 +54,10 @@ export function AdminSailorDuplicatesPanel({
               Possible duplicate sailors
             </h2>
             <p className="mt-1 text-xs text-slate-700">
-              Review likely matches, select a pair, then merge the records.
+              Name similarity is a suggestion. Choose the profile to keep, then review identity and the merge plan.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            disabled={!isSuperadmin || saving || bulkMerging}
-            onClick={() => void mergeHighConfidence()}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-amber-400 bg-amber-50 px-4 text-sm font-bold text-amber-950 hover:bg-amber-100 disabled:opacity-40"
-          >
-            <UsersRound className="h-4 w-4" aria-hidden="true" />
-            {bulkMerging ? "Merging…" : "Merge all 100%"}
-          </button>
           <button
             type="button"
             disabled={
@@ -102,7 +67,7 @@ export function AdminSailorDuplicatesPanel({
             className="inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-600 px-4 text-sm font-bold text-white hover:bg-emerald-500 disabled:opacity-40"
           >
             <UserCheck className="h-4 w-4" aria-hidden="true" />
-            Merge selected pair
+            Review selected pair
           </button>
           </div>
         </div>
@@ -135,7 +100,7 @@ export function AdminSailorDuplicatesPanel({
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-start sm:gap-x-12">
                   <div className="min-w-0 max-w-md">
                     <p className="text-xs font-bold text-amber-900">
-                      {percent}% match{pair.how ? ` · ${pair.how}` : ""}
+                      {percent}% name similarity
                     </p>
                     <button
                       type="button"
@@ -166,7 +131,11 @@ export function AdminSailorDuplicatesPanel({
                       }
                       className="min-h-11 rounded-full bg-emerald-600 px-4 text-sm font-bold text-white hover:bg-emerald-500"
                     >
-                      {selected ? "Pair selected" : "Select pair"}
+                      Keep {pair.a.name}
+                    </button>
+                    <button type="button" onClick={() => setSelectedSailors([pair.b.id, pair.a.id])}
+                      className="min-h-11 rounded-full border border-slate-300 px-4 text-sm font-bold text-slate-800">
+                      Keep {pair.b.name}
                     </button>
                     <button
                       type="button"

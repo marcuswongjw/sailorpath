@@ -53,8 +53,7 @@ export async function POST() {
       await mergeSailors({
         keepId: keep.id,
         mergeId: dup.id,
-        forceOwnershipConflict: true,
-      });
+        });
       mergedCount++;
       mergedNames.push(dup.name);
     }
