@@ -399,6 +399,12 @@ export const regattaEvents = pgTable("regatta_events", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 }).enableRLS();
 
+/** Durable suppression of deleted built-in calendar entries. Server access only. */
+export const regattaEventDeletions = pgTable("regatta_event_deletions", {
+  slug: text("slug").primaryKey().notNull(),
+  deletedAt: timestamp("deleted_at", { withTimezone: true }).defaultNow().notNull(),
+}).enableRLS();
+
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),

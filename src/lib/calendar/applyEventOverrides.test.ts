@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   applyCalendarEventOverride,
+  filterDeletedCalendarEvents,
   canonicalCalendarEventSlug,
 } from "./applyEventOverrides";
 import type { RegattaRecord } from "@/lib/ranking";
@@ -85,5 +86,19 @@ describe("applyCalendarEventOverride", () => {
     expect(next.classes).toEqual(card.classes);
     expect(next.date).toBe("2026-07-25");
     expect(next.keyDeadlines).toBe("Entry closes 13 July 2026");
+  });
+});
+
+
+describe("deleted calendar entries", () => {
+  it("suppresses built-in events across canonical aliases", () => {
+    expect(filterDeletedCalendarEvents([card], ["snsc-2026"], [])).toEqual([]);
+    expect(filterDeletedCalendarEvents([{ ...card, slug: "snsc-2026" }], [card.slug], [])).toEqual([]);
+  });
+
+  it("allows an explicitly recreated saved event and keeps other events", () => {
+    const other = { ...card, id: "other", slug: "other-event" };
+    expect(filterDeletedCalendarEvents([card, other], ["snsc-2026"], ["snsc-2026"])).toEqual([card, other]);
+    expect(filterDeletedCalendarEvents([card, other], ["snsc-2026"], [])).toEqual([other]);
   });
 });

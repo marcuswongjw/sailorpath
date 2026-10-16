@@ -50,3 +50,17 @@ export function applyCalendarEventOverride(
     boatClass: primary && classes.length > 0 ? classes[0] : entry.boatClass,
   };
 }
+
+/** Saved records explicitly recreate events; missing records cannot revive static copies. */
+export function filterDeletedCalendarEvents(
+  entries: RegattaRecord[],
+  deletedSlugs: string[],
+  savedSlugs: string[]
+): RegattaRecord[] {
+  const deleted = new Set(deletedSlugs.map(canonicalCalendarEventSlug));
+  const saved = new Set(savedSlugs.map(canonicalCalendarEventSlug));
+  return entries.filter((entry) => {
+    const slug = canonicalCalendarEventSlug(entry.slug);
+    return !deleted.has(slug) || saved.has(slug);
+  });
+}

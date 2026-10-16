@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { DbOffline } from "@/components/DbOffline";
 import { permanentRedirect } from "next/navigation";
 import { calendarPastResultsHref } from "@/lib/publicRouteRedirects";
 import { unstable_cache } from "next/cache";
@@ -11,12 +12,13 @@ import { RegattaCalendarClient } from "@/components/calendar/RegattaCalendarClie
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 import {
   applyCalendarEventOverride,
+  filterDeletedCalendarEvents,
   canonicalCalendarEventSlug,
   type CalendarEventOverride,
 } from "@/lib/calendar/applyEventOverrides";
 import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
 import { db, withDatabaseRetry } from "@/db";
-import { regattaEvents } from "@/db/schema";
+import { regattaEventDeletions, regattaEvents } from "@/db/schema";
 import type { RegattaRecord } from "@/lib/ranking";
 
 export const revalidate = 3600;
@@ -49,6 +51,15 @@ const getCachedCalendarEvents = unstable_cache(
   }
 );
 
+const getCachedCalendarDeletions = unstable_cache(
+  () => withDatabaseRetry(
+    () => db.select({ slug: regattaEventDeletions.slug }).from(regattaEventDeletions),
+    { label: "calendar.deleted_events" }
+  ),
+  ["calendar-event-deletions-v1"],
+  { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
+);
+
 export const metadata: Metadata = {
   title: "Regattas and results | SailorPath",
   description:
@@ -78,13 +89,15 @@ export default async function CalendarPage(props: CalendarPageProps) {
   let dbRegattas: RegattaRecord[] = [];
   let eventSlugsById = new Map<string, string>();
   let savedEvents: CalendarEventOverride[] = [];
+  let deletedSlugs: string[] = [];
   try {
     dbRegattas = await getCachedPublicRegattas();
   } catch {
     dbRegattas = [];
   }
   try {
-    const rows = await getCachedCalendarEvents();
+    const [rows, deleted] = await Promise.all([getCachedCalendarEvents(), getCachedCalendarDeletions()]);
+    deletedSlugs = deleted.map((row) => row.slug);
     eventSlugsById = new Map(rows.map((row) => [row.id, row.slug]));
     savedEvents = rows.map((row) => ({
       slug: row.slug,
@@ -101,7 +114,8 @@ export default async function CalendarPage(props: CalendarPageProps) {
       keyDeadlines: row.keyDeadlines,
     }));
   } catch {
-    savedEvents = [];
+    // Do not fall back to built-in entries when deletion state cannot be checked.
+    return <DbOffline title="Calendar is temporarily unavailable" />;
   }
 
   // Load 2026 master schedule events
@@ -244,7 +258,9 @@ export default async function CalendarPage(props: CalendarPageProps) {
     resultSheetsByEvent[sheet.slug] = [sheet];
   }
 
-  const allRegattas = Array.from(publicEvents.values());
+  const allRegattas = filterDeletedCalendarEvents(
+    Array.from(publicEvents.values()), deletedSlugs, savedEvents.map((event) => event.slug)
+  );
 
   return (
     <RegattaCalendarClient

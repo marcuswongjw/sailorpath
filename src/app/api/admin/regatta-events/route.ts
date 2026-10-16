@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { eq, inArray } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, withDatabaseRetry } from "@/db";
-import { regattaEvents, regattas } from "@/db/schema";
+import { regattaEventDeletions, regattaEvents, regattas } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
 import { planRegattaEventDelete } from "@/lib/admin/planRegattaEventDelete";
@@ -276,18 +276,18 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: planned.error }, { status: planned.status });
     }
 
-    if (planned.sheetIds.length > 0 || planned.eventId) {
-      await db.transaction(async (tx) => {
-        if (planned.sheetIds.length > 0) {
-          await tx.delete(regattas).where(inArray(regattas.id, planned.sheetIds));
-        }
-        if (planned.eventId) {
-          await tx
-            .delete(regattaEvents)
-            .where(eq(regattaEvents.id, planned.eventId));
-        }
-      });
-    }
+    // The marker and removal must commit together, including calendar-only events.
+    await db.transaction(async (tx) => {
+      await tx.insert(regattaEventDeletions)
+        .values({ slug, deletedAt: new Date() })
+        .onConflictDoUpdate({ target: regattaEventDeletions.slug, set: { deletedAt: new Date() } });
+      if (planned.sheetIds.length > 0) {
+        await tx.delete(regattas).where(inArray(regattas.id, planned.sheetIds));
+      }
+      if (planned.eventId) {
+        await tx.delete(regattaEvents).where(eq(regattaEvents.id, planned.eventId));
+      }
+    });
 
     revalidatePath("/calendar");
     revalidatePublicRankings(`regatta-event-delete:${slug}`);

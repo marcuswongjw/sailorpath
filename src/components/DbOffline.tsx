@@ -2,15 +2,14 @@ import Link from "next/link";
 import { Database } from "lucide-react";
 
 /** Shown when a page needs Postgres and it is not reachable. No mock data. */
-export function DbOffline(_props: { message?: string }) {
-  void _props;
+export function DbOffline({ title = "Results are temporarily unavailable" }: { message?: string; title?: string }) {
   return (
     <div className="mx-auto max-w-xl px-4 py-16 text-center space-y-4">
       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400">
         <Database className="h-6 w-6" />
       </div>
       <h1 className="text-xl font-black text-white">
-        Results are temporarily unavailable
+        {title}
       </h1>
       <p className="text-sm text-slate-400 leading-relaxed">
         We couldn&apos;t load this page. Try again in a moment, or contact support
