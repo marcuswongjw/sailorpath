@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, it, expect } from "vitest";
 import { parseSearchQuery } from "./search";
 
@@ -43,5 +44,10 @@ describe("parseSearchQuery", () => {
     expect(res.countryPrefix).toBe("SGP");
     expect(res.extractedSailNumber).toBe("1");
     expect(res.clubExpansions).toContain("SAF Yacht Club");
+  });
+
+  it("uses the shared database retry wrapper for public sailor and regatta reads", () => {
+    const source = readFileSync(new URL("./search.ts", import.meta.url), "utf8");
+    expect(source.match(/withDatabaseRetry/g)?.length).toBeGreaterThanOrEqual(4);
   });
 });

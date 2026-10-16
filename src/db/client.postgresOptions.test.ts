@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  isRetryableDatabaseConnectionError,
   pgSql,
   postgresJsOptions,
   recycleDatabaseClient,
@@ -65,5 +66,11 @@ describe("postgres.js serverless options", () => {
     expect(src).toContain("client`select 1 as ok`");
     expect(src).toContain("recycleDatabaseClient(client)");
     expect(src).toContain("databaseLivenessCheck");
+  });
+
+  it("retries Supavisor connection destruction as well as connection timeouts", () => {
+    expect(isRetryableDatabaseConnectionError("write CONNECT_TIMEOUT pooler")).toBe(true);
+    expect(isRetryableDatabaseConnectionError("code=CONNECTION_DESTROYED")).toBe(true);
+    expect(isRetryableDatabaseConnectionError("invalid input syntax for type uuid")).toBe(false);
   });
 });

@@ -15,7 +15,7 @@ import {
   type CalendarEventOverride,
 } from "@/lib/calendar/applyEventOverrides";
 import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
-import { db } from "@/db";
+import { db, withDatabaseRetry } from "@/db";
 import { regattaEvents } from "@/db/schema";
 import type { RegattaRecord } from "@/lib/ranking";
 
@@ -23,23 +23,25 @@ export const revalidate = 3600;
 
 const getCachedCalendarEvents = unstable_cache(
   async () =>
-    db
-      .select({
-        id: regattaEvents.id,
-        slug: regattaEvents.slug,
-        name: regattaEvents.name,
-        startDate: regattaEvents.startDate,
-        endDate: regattaEvents.endDate,
-        venue: regattaEvents.venue,
-        organizer: regattaEvents.organizer,
-        classes: regattaEvents.classes,
-        norUrl: regattaEvents.norUrl,
-        registrationUrl: regattaEvents.registrationUrl,
-        countsForRanking: regattaEvents.countsForRanking,
-        isSelectionTrial: regattaEvents.isSelectionTrial,
-        keyDeadlines: regattaEvents.keyDeadlines,
-      })
-      .from(regattaEvents),
+    withDatabaseRetry(() =>
+      db
+        .select({
+          id: regattaEvents.id,
+          slug: regattaEvents.slug,
+          name: regattaEvents.name,
+          startDate: regattaEvents.startDate,
+          endDate: regattaEvents.endDate,
+          venue: regattaEvents.venue,
+          organizer: regattaEvents.organizer,
+          classes: regattaEvents.classes,
+          norUrl: regattaEvents.norUrl,
+          registrationUrl: regattaEvents.registrationUrl,
+          countsForRanking: regattaEvents.countsForRanking,
+          isSelectionTrial: regattaEvents.isSelectionTrial,
+          keyDeadlines: regattaEvents.keyDeadlines,
+        })
+        .from(regattaEvents)
+    ),
   ["calendar-events-v1"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,

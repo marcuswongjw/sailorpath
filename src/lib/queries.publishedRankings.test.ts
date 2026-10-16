@@ -39,10 +39,8 @@ describe("public ranking published-regatta guard (source)", () => {
   it("recycles only retryable serverless connection failures", () => {
     const body = fnBody("export function isRetryableDbConnectionError", "export async function listSailors");
 
-    expect(body).toContain("CONNECT_TIMEOUT");
-    expect(body).toContain("await ensureDatabaseLiveness()");
-    expect(body).toContain("recycleDatabaseClient()");
-    expect(body).toContain("return await fn()");
+    expect(body).toContain("withDatabaseRetry");
+    expect(body).toContain("isRetryableDatabaseConnectionError");
   });
 });
 
