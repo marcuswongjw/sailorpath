@@ -44,9 +44,7 @@ describe("CalendarEventForm", () => {
           classes: "ILCA 4",
           norUrl: "",
           registrationUrl: "",
-          keyDeadlines: "",
           scheduleSummary: "Knockout series at the yacht club.",
-          scoringRules: "Appendix MR applies.",
           countsForRanking: true,
         }}
         setCalendarForm={vi.fn()}
@@ -63,7 +61,8 @@ describe("CalendarEventForm", () => {
     expect(screen.getByLabelText("Description")).toHaveValue(
       "Knockout series at the yacht club."
     );
-    expect(screen.getByLabelText("Scoring")).toHaveValue("Appendix MR applies.");
+    expect(screen.queryByLabelText("Scoring")).not.toBeInTheDocument();
+    expect(screen.queryByText(/status \/ deadline/i)).not.toBeInTheDocument();
   });
 });
 

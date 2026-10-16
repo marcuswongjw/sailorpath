@@ -102,9 +102,7 @@ function withSavedEvent(
     registrationUrl: saved.registrationUrl ?? "",
     countsForRanking: saved.countsForRanking ?? event.countsForRanking,
     isSelectionTrial: Boolean(saved.isSelectionTrial),
-    keyDeadlines: saved.keyDeadlines ?? "",
     scheduleSummary: saved.scheduleSummary?.trim() || event.scheduleSummary || "",
-    scoringRules: saved.scoringRules?.trim() || event.scoringRules || "",
     expectedClasses,
     missingClasses: missingClassesFor(expectedClasses, [
       ...event.sheets,
@@ -277,10 +275,8 @@ export function AdminRegattasPanel({
         registrationUrl: saved.registrationUrl || undefined,
         countsForRanking: saved.countsForRanking !== false,
         isSelectionTrial: Boolean(saved.isSelectionTrial),
-        keyDeadlines: saved.keyDeadlines || undefined,
         scheduleSummary:
           saved.scheduleSummary?.trim() || registry?.scheduleSummary || "",
-        scoringRules: saved.scoringRules?.trim() || registry?.scoringRules || "",
         expectedClasses: classes,
         missingClasses: classes,
         sheets: [],

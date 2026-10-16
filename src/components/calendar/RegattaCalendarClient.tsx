@@ -15,7 +15,6 @@ import {
   Compass,
   ShieldCheck,
   Globe,
-  AlertCircle,
 } from "lucide-react";
 import type { RegattaRecord } from "@/lib/ranking";
 import { matchesRegattaClass, nationalRankingLabel } from "@/lib/calendar/publicRegattas";
@@ -594,15 +593,6 @@ export function RegattaCalendarClient({
                           ))}
                         </div>
                       )}
-
-                      {/* Key Deadlines indicator */}
-                      {regatta.keyDeadlines && (
-                        <p className="text-[11px] font-semibold text-[var(--sp-racing-orange)] flex items-center gap-1.5 pt-0.5">
-                          <AlertCircle className="h-3.5 w-3.5 text-[var(--sp-racing-orange)] shrink-0" />
-                          <span>Status / Deadline: {regatta.keyDeadlines}</span>
-                        </p>
-                      )}
-
                     </div>
                   </div>
 

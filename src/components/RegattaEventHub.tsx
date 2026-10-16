@@ -398,11 +398,6 @@ export async function RegattaEventHub({ event, activeFleet, calendarView }: Prop
             {event.scheduleSummary}
           </p>
         )}
-        {event.scoringRules && (
-          <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed max-w-3xl">
-            Scoring: {event.scoringRules}
-          </p>
-        )}
         {event.seriesLinks && event.seriesLinks.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
             <span className="font-bold text-[var(--sp-slate-soft)]">Series Championship:</span>

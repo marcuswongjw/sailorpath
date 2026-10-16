@@ -11,9 +11,7 @@ export type CalendarFormState = {
   classes: string;
   norUrl: string;
   registrationUrl: string;
-  keyDeadlines: string;
   scheduleSummary: string;
-  scoringRules: string;
   countsForRanking: boolean;
 };
 
@@ -30,9 +28,7 @@ export type SavedCalendarEvent = {
   registrationUrl?: string | null;
   countsForRanking?: boolean | null;
   isSelectionTrial?: boolean | null;
-  keyDeadlines?: string | null;
   scheduleSummary?: string | null;
-  scoringRules?: string | null;
 };
 
 const DEFAULT_CALENDAR_CLASSES = [
@@ -58,9 +54,7 @@ export function calendarFormFrom(
     norUrl?: string;
     registrationUrl?: string;
     countsForRanking: boolean;
-    keyDeadlines?: string;
     scheduleSummary?: string;
-    scoringRules?: string;
     expectedClasses: string[];
   }
 ): CalendarFormState {
@@ -73,9 +67,7 @@ export function calendarFormFrom(
     classes: event.expectedClasses.join(", "),
     norUrl: event.norUrl || "",
     registrationUrl: event.registrationUrl || "",
-    keyDeadlines: event.keyDeadlines || "",
     scheduleSummary: event.scheduleSummary || "",
-    scoringRules: event.scoringRules || "",
     countsForRanking: event.countsForRanking,
   };
 }
@@ -211,31 +203,6 @@ export function CalendarEventForm({
           </p>
         </div>
         <div className="sm:col-span-2">
-          <label
-            htmlFor="event-scoring-rules"
-            className="text-[11px] font-bold text-slate-700 uppercase tracking-wider"
-          >
-            Scoring
-          </label>
-          <textarea
-            id="event-scoring-rules"
-            value={calendarForm.scoringRules}
-            onChange={(e) =>
-              setCalendarForm({
-                ...calendarForm,
-                scoringRules: e.target.value,
-              })
-            }
-            rows={3}
-            maxLength={2000}
-            placeholder="Shown on the Scoring line"
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs leading-relaxed focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-          />
-          <p className="mt-1 text-[11px] font-normal text-slate-600">
-            Shown on the next line, after “Scoring:”. Leave blank to use the built-in scoring text.
-          </p>
-        </div>
-        <div className="sm:col-span-2">
           <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block mb-1.5">
             Sailing Classes
           </label>
@@ -284,22 +251,6 @@ export function CalendarEventForm({
               })}
             </div>
           </div>
-        </div>
-        <div className="sm:col-span-2">
-          <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
-            Status / Deadline
-          </label>
-          <input
-            value={calendarForm.keyDeadlines}
-            onChange={(e) =>
-              setCalendarForm({
-                ...calendarForm,
-                keyDeadlines: e.target.value,
-              })
-            }
-            placeholder="Entry closes 24 August 2026, 2359h"
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-          />
         </div>
         <div className="sm:col-span-2">
           <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
