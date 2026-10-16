@@ -58,3 +58,23 @@ export async function fetchAdminResultsForRegatta(
   );
   return Array.isArray(body.results) ? body.results : [];
 }
+
+export type AdminOverviewPayload = {
+  sheets: import("@/lib/admin/adminOverview").OverviewSheet[];
+  ready: import("@/lib/admin/adminOverview").OverviewSheet[];
+  missingResults: import("@/lib/admin/adminOverview").OverviewSheet[];
+  blocked: import("@/lib/admin/adminOverview").OverviewSheet[];
+  incomplete: import("@/lib/admin/adminOverview").OverviewSheet[];
+  duplicateCount: number;
+  counts: {
+    ready: number;
+    missingResults: number;
+    blocked: number;
+    incomplete: number;
+    duplicateSailors: number;
+  };
+};
+
+export async function fetchAdminOverview(): Promise<AdminOverviewPayload> {
+  return adminJson<AdminOverviewPayload>("/api/admin/overview");
+}

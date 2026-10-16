@@ -18,11 +18,20 @@ export type OverviewSheet = {
 
 export function buildAdminOverview(
   regattas: RegattaAdmin[],
-  results: ResultAdmin[]
+  results: ResultAdmin[] | Map<string, number> | Record<string, number>
 ) {
-  const resultCounts = new Map<string, number>();
-  for (const result of results) {
-    resultCounts.set(result.regattaId, (resultCounts.get(result.regattaId) ?? 0) + 1);
+  let resultCounts: Map<string, number>;
+  if (results instanceof Map) {
+    resultCounts = results;
+  } else if (Array.isArray(results)) {
+    resultCounts = new Map<string, number>();
+    for (const result of results) {
+      resultCounts.set(result.regattaId, (resultCounts.get(result.regattaId) ?? 0) + 1);
+    }
+  } else if (results && typeof results === "object") {
+    resultCounts = new Map(Object.entries(results));
+  } else {
+    resultCounts = new Map();
   }
 
   const sheets: OverviewSheet[] = [];

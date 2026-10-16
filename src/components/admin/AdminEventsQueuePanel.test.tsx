@@ -1,4 +1,5 @@
 /** @vitest-environment jsdom */
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AdminEventsQueuePanel } from "./AdminEventsQueuePanel";
@@ -15,9 +16,16 @@ const sheet = {
   countsForRanking: true,
 };
 
+function renderWithClient(ui: React.ReactElement) {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  return render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+}
+
 describe("AdminEventsQueuePanel", () => {
   it("lists missing-results sheets and links directly to result entry", () => {
-    render(
+    renderWithClient(
       <AdminEventsQueuePanel view="missing-results" regattas={[sheet]} results={[]} />
     );
 
@@ -29,7 +37,7 @@ describe("AdminEventsQueuePanel", () => {
   });
 
   it("links publication-ready sheets to their readiness checks", () => {
-    render(
+    renderWithClient(
       <AdminEventsQueuePanel
         view="ready-to-publish"
         regattas={[{ ...sheet, raceCount: 0 }]}
@@ -44,15 +52,24 @@ describe("AdminEventsQueuePanel", () => {
   });
 
   it("links issues to readiness checks and explains empty queues", () => {
+    const client = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
     const { rerender } = render(
-      <AdminEventsQueuePanel view="attention" regattas={[sheet]} results={[]} />
+      <QueryClientProvider client={client}>
+        <AdminEventsQueuePanel view="attention" regattas={[sheet]} results={[]} />
+      </QueryClientProvider>
     );
 
     expect(screen.getByRole("link", { name: /Review checks/ })).toHaveAttribute(
       "href",
       "/admin?area=events&view=readiness&sheet=sheet-1"
     );
-    rerender(<AdminEventsQueuePanel view="missing-results" regattas={[]} results={[]} />);
+    rerender(
+      <QueryClientProvider client={client}>
+        <AdminEventsQueuePanel view="missing-results" regattas={[]} results={[]} />
+      </QueryClientProvider>
+    );
     expect(screen.getByText("No missing results")).toBeInTheDocument();
   });
 });

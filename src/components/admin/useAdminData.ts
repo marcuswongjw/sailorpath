@@ -56,7 +56,6 @@ export function useAdminData({
     useState<string>("");
 
   const needsFullResults =
-    activeTab === "overview" ||
     activeTab === "analysis" ||
     activeTab === "ilca" ||
     (activeTab === "edit" && editSubTab === "selection");
@@ -71,13 +70,13 @@ export function useAdminData({
     isSuperadmin &&
     (needsFullResults ||
       sheetOpen ||
-      activeTab === "regattas" ||
       (activeTab === "edit" &&
         (editSubTab === "sailors" || editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
     (needsFullResults ||
+      sheetOpen ||
       activeTab === "regattas" ||
       activeTab === "import" ||
       (activeTab === "edit" &&

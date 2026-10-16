@@ -1,12 +1,16 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, CheckCircle2, ClipboardCheck, Sailboat } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import type { AdminEventsQueueView } from "@/components/admin/adminNav";
 import { regattaDateLabel } from "@/types/regatta";
 import { buildAdminOverview, type OverviewSheet } from "@/lib/admin/adminOverview";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { fetchAdminOverview } from "@/components/admin/adminFetch";
 
 type QueueConfig = {
   title: string;
@@ -80,10 +84,32 @@ export function AdminEventsQueuePanel({
   results,
 }: {
   view: AdminEventsQueueView;
-  regattas: RegattaAdmin[];
-  results: ResultAdmin[];
+  regattas?: RegattaAdmin[];
+  results?: ResultAdmin[];
 }) {
-  const queue = queueFor(view, buildAdminOverview(regattas, results));
+  const overviewQuery = useQuery({
+    queryKey: adminQueryKeys.overview(),
+    queryFn: fetchAdminOverview,
+    enabled: !regattas || !results,
+  });
+
+  const overview = useMemo(() => {
+    if (regattas && results) {
+      return buildAdminOverview(regattas, results);
+    }
+    if (overviewQuery.data) {
+      return overviewQuery.data;
+    }
+    return {
+      sheets: [],
+      ready: [],
+      missingResults: [],
+      blocked: [],
+      incomplete: [],
+    };
+  }, [regattas, results, overviewQuery.data]);
+
+  const queue = queueFor(view, overview);
   const Icon = queue.icon;
 
   return (

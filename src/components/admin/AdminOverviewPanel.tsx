@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import type { AdminInboxView } from "@/components/admin/adminNav";
@@ -9,6 +10,7 @@ import {
   CheckCircle2,
   History,
   Inbox,
+  RefreshCw,
   Sailboat,
   UserRoundSearch,
 } from "lucide-react";
@@ -17,6 +19,8 @@ import type { ResultAdmin } from "@/types/result";
 import type { AdminInboxQueueCounts } from "@/lib/admin/adminInboxCounts";
 import { totalPendingAdminInboxItems } from "@/lib/admin/adminInboxCounts";
 import { buildAdminOverview, type OverviewSheet } from "@/lib/admin/adminOverview";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { fetchAdminOverview } from "@/components/admin/adminFetch";
 
 function sheetHref(sheet: OverviewSheet, view: "results" | "readiness") {
   const params = new URLSearchParams({
@@ -122,12 +126,35 @@ export function AdminOverviewPanel({
   duplicateCount,
   inboxQueueCounts,
 }: {
-  regattas: RegattaAdmin[];
-  results: ResultAdmin[];
-  duplicateCount: number;
+  regattas?: RegattaAdmin[];
+  results?: ResultAdmin[];
+  duplicateCount?: number;
   inboxQueueCounts: AdminInboxQueueCounts;
 }) {
-  const overview = buildAdminOverview(regattas, results);
+  const overviewQuery = useQuery({
+    queryKey: adminQueryKeys.overview(),
+    queryFn: fetchAdminOverview,
+    enabled: !regattas || !results,
+  });
+
+  const overview = useMemo(() => {
+    if (regattas && results) {
+      return buildAdminOverview(regattas, results);
+    }
+    if (overviewQuery.data) {
+      return overviewQuery.data;
+    }
+    return {
+      sheets: [],
+      ready: [],
+      missingResults: [],
+      blocked: [],
+      incomplete: [],
+    };
+  }, [regattas, results, overviewQuery.data]);
+
+  const effectiveDuplicateCount =
+    duplicateCount ?? overviewQuery.data?.duplicateCount ?? 0;
   const attention = [...overview.blocked, ...overview.incomplete].slice(0, 6);
   const recent = useQuery({
     queryKey: ["admin", "overview-changes"],
@@ -139,6 +166,43 @@ export function AdminOverviewPanel({
     },
   });
 
+  const isLoading = (!regattas || !results) && overviewQuery.isLoading;
+
+  if (isLoading) {
+    return (
+      <section className="space-y-6" aria-labelledby="overview-heading">
+        <div className="glass-panel rounded-2xl border border-white/5 p-5">
+          <h2 id="overview-heading" className="text-lg font-black text-white">Work requiring attention</h2>
+          <p className="mt-1 text-sm text-slate-400">Loading workspace summary…</p>
+        </div>
+        <div className="flex items-center justify-center p-12 text-slate-400 text-xs gap-2">
+          <RefreshCw className="h-5 w-5 animate-spin text-orange-500" />
+          Loading overview summary…
+        </div>
+      </section>
+    );
+  }
+
+  if (overviewQuery.isError && (!regattas || !results)) {
+    return (
+      <section className="space-y-6" aria-labelledby="overview-heading">
+        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-200">
+          <h2 id="overview-heading" className="font-bold text-sm">Unable to load overview</h2>
+          <p className="mt-1 text-xs text-rose-300">
+            {overviewQuery.error instanceof Error ? overviewQuery.error.message : "Temporary error loading overview summary."}
+          </p>
+          <button
+            type="button"
+            onClick={() => void overviewQuery.refetch()}
+            className="mt-3 px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold transition cursor-pointer"
+          >
+            Retry
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="space-y-6" aria-labelledby="overview-heading">
       <div className="glass-panel rounded-2xl border border-white/5 p-5">
@@ -149,7 +213,7 @@ export function AdminOverviewPanel({
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <InboxQueueCard queues={inboxQueueCounts} />
         <ActionCard title="Missing results" count={overview.missingResults.length} description="Classes with a recorded race count but no score rows." href="/admin?area=events&view=missing-results" icon={Sailboat} tone={overview.missingResults.length ? "amber" : "emerald"} />
-        <ActionCard title="Duplicate sailors" count={duplicateCount} description="Likely duplicate records waiting for review or merge." href="/admin?area=sailors&view=duplicates" icon={UserRoundSearch} tone={duplicateCount ? "amber" : "emerald"} />
+        <ActionCard title="Duplicate sailors" count={effectiveDuplicateCount} description="Likely duplicate records waiting for review or merge." href="/admin?area=sailors&view=duplicates" icon={UserRoundSearch} tone={effectiveDuplicateCount ? "amber" : "emerald"} />
         <ActionCard title="Ready to publish" count={overview.ready.length} description="Valid, complete classes ready for a final publication review." href="/admin?area=events&view=ready-to-publish" icon={CheckCircle2} tone="emerald" />
       </div>
 

@@ -985,9 +985,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
 
         {activeTab === "overview" && (
           <AdminOverviewPanel
-            regattas={data.regattaList}
-            results={data.resultsList}
-            duplicateCount={sailors.panelProps.duplicatePairs.length}
             inboxQueueCounts={inboxQueueCounts}
           />
         )}
@@ -1011,8 +1008,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             ) : isAdminEventsQueueView(eventsView) ? (
               <AdminEventsQueuePanel
                 view={eventsView}
-                regattas={data.regattaList}
-                results={data.resultsList}
               />
             ) : (
               <>

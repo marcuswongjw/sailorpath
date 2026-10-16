@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState, useMemo, type Dispatch, type SetStateAction } from "react";
 import Link from "next/link";
 import {
   Columns3,
@@ -357,6 +357,29 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     competitionsSailorId,
     setCompetitionsSailorId,
   } = p;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50);
+  const [prevFilters, setPrevFilters] = useState({ dbSearch, dbFleetFilter, dbSquadFilter });
+
+  if (
+    prevFilters.dbSearch !== dbSearch ||
+    prevFilters.dbFleetFilter !== dbFleetFilter ||
+    prevFilters.dbSquadFilter !== dbSquadFilter
+  ) {
+    setPrevFilters({ dbSearch, dbFleetFilter, dbSquadFilter });
+    setCurrentPage(1);
+  }
+
+  const totalSailors = sortedDbSailors.length;
+  const totalPages = Math.max(1, Math.ceil(totalSailors / pageSize));
+  const page = Math.min(Math.max(1, currentPage), totalPages);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, totalSailors);
+  const paginatedSailors = useMemo(
+    () => sortedDbSailors.slice(startIndex, endIndex),
+    [sortedDbSailors, startIndex, endIndex]
+  );
 
   return (
               <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
@@ -1007,7 +1030,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             </td>
                           </tr>
                         )}
-                        {sortedDbSailors.map((s) => {
+                        {paginatedSailors.map((s) => {
                           const seriesLabel = seriesLabelOf(s);
                           const isChecked = selectedSailors.includes(s.id);
                           const cells: Record<string, React.ReactNode> = {
@@ -1237,6 +1260,68 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       </tbody>
                     </table>
                   </div>
+
+                  {/* Pagination controls */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-[var(--sp-cool-veil)] text-xs text-slate-400">
+                    <div className="flex items-center gap-2">
+                      <span>
+                        Showing{" "}
+                        <span className="font-bold text-white">
+                          {totalSailors > 0 ? startIndex + 1 : 0}–{endIndex}
+                        </span>{" "}
+                        of{" "}
+                        <span className="font-bold text-white">
+                          {totalSailors}
+                        </span>{" "}
+                        sailors
+                      </span>
+                      {selectedSailors.length > 0 && (
+                        <span className="text-orange-400 font-semibold ml-2">
+                          ({selectedSailors.length} selected)
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <label className="flex items-center gap-1.5 text-[11px] text-slate-400">
+                        <span>Per page:</span>
+                        <select
+                          value={pageSize}
+                          onChange={(e) => {
+                            setPageSize(Number(e.target.value));
+                            setCurrentPage(1);
+                          }}
+                          className="rounded-lg border border-[var(--sp-cool-veil)] bg-slate-900 px-2 py-1 text-xs text-white"
+                        >
+                          <option value={25}>25</option>
+                          <option value={50}>50</option>
+                          <option value={100}>100</option>
+                          <option value={250}>250</option>
+                        </select>
+                      </label>
+                      <div className="inline-flex items-center gap-1">
+                        <button
+                          type="button"
+                          disabled={page <= 1}
+                          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                          className="px-2.5 py-1 rounded-lg border border-white/10 hover:bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs text-slate-200 cursor-pointer"
+                        >
+                          Previous
+                        </button>
+                        <span className="px-2 text-xs text-slate-300">
+                          {page} / {totalPages}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={page >= totalPages}
+                          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                          className="px-2.5 py-1 rounded-lg border border-white/10 hover:bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs text-slate-200 cursor-pointer"
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
                   <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
                     Tick rows for bulk edit · Filter by ILCA 4 or dual-class · Best 3 of 5 =
                     Optimist SG half score · ILCA sail # / national list via bulk or Columns ·
