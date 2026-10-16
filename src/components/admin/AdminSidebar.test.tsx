@@ -38,6 +38,14 @@ describe("AdminSidebar", () => {
     expect(screen.getByRole("link", { name: "ILCA 4 squad" })).toBeInTheDocument();
   });
 
+  it("links to the editorial author-review workflow from Settings", () => {
+    render(<AdminSidebar {...base} activeArea="settings" settingsView="audit" />);
+    expect(screen.getByRole("link", { name: "Editorial" })).toHaveAttribute(
+      "href",
+      "/admin/news"
+    );
+  });
+
   it("shows focused event queues and marks the selected queue", () => {
     render(
       <AdminSidebar {...base} activeArea="events" eventsView="missing-results" />
