@@ -1,0 +1,545 @@
+{
+  "batch": "sysc-ilca-board-completion-2026-10-17",
+  "officialSource": {
+    "url": "https://drive.google.com/file/d/19_QN-jMbB6vMwLcY-3T_BXvEG9ZwGlqY/view",
+    "title": "Techno293 & iQFoil Final Result.SYSC2025.pdf",
+    "visuallyReviewed": true,
+    "pages": 1,
+    "printedStatus": "provisional"
+  },
+  "event": {
+    "id": "bf6cec5a-3710-4295-9d99-e5c1d6bb5bab",
+    "slug": "singapore-youth-sailing-championships-2025",
+    "name": "Singapore Youth Sailing Championships 2025",
+    "startDate": "2025-03-15",
+    "endDate": "2025-03-18",
+    "venue": "National Sailing Centre, Singapore",
+    "scheduleSource": "https://www.sailing.org.sg/events/263419"
+  },
+  "sheet": {
+    "id": "d23a4232-8f7f-5e0a-8ad3-8de07a39f7de",
+    "existing": false,
+    "slug": "sysc-2025-techno293",
+    "name": "Singapore Youth Sailing Championships 2025 (Techno 293, Provisional)",
+    "boatClass": "Techno 293",
+    "division": "Open",
+    "raceCount": 10,
+    "discardCount": 2,
+    "totalFleetSize": 5,
+    "countsForRanking": false,
+    "status": "published",
+    "resultStatus": "provisional",
+    "date": "2025-03-15",
+    "endDate": "2025-03-18",
+    "venue": "National Sailing Centre, Singapore",
+    "organizer": "Singapore Sailing Federation",
+    "geography": "SGP"
+  },
+  "results": [
+    {
+      "ordinal": 1,
+      "rank": 1,
+      "name": "Jonathan Chan",
+      "sailOrBoardNumber": "1",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2)"
+        }
+      ],
+      "grossScore": 11.0,
+      "nettScore": 8.0,
+      "sailorId": "0746fdb3-9981-4881-8b8d-0db869997999",
+      "profileName": "Jonathan Chan",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "4349f1d3-fcef-5364-9188-568456f5adf7",
+      "officialName": "Jonathan Chan",
+      "participantId": "b834a000-e24b-5db1-8dee-15cc46f34cb8",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Jonathan Chan; historical board/sail SGP 1. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 2,
+      "rank": 2,
+      "name": "Muhammad Razin",
+      "sailOrBoardNumber": "3",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        }
+      ],
+      "grossScore": 20.0,
+      "nettScore": 15.0,
+      "sailorId": "83fdb5a7-68f0-4fc3-95b3-8e569b600a8e",
+      "profileName": "Muhammad Razin Bin Mohd Airudin",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually. Existing explicit short-name alias, same SGP gender, source class/club corroborate established board/Optimist crossover; retain current profile equipment.",
+      "resultId": "a0ffb508-5697-5f97-bd37-b1cdc976ab77",
+      "officialName": "Muhammad Razin",
+      "participantId": "468d70fa-2642-5fd0-9219-a971ef1cd626",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Muhammad Razin; historical board/sail SGP 3. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually. Existing explicit short-name alias, same SGP gender, source class/club corroborate established board/Optimist crossover; retain current profile equipment."
+    },
+    {
+      "ordinal": 3,
+      "rank": 3,
+      "name": "Axl Tan",
+      "sailOrBoardNumber": "82",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        }
+      ],
+      "grossScore": 30.0,
+      "nettScore": 23.0,
+      "sailorId": "d16d2658-3ee4-468c-8ee7-934c6a103fec",
+      "profileName": "Axl Tan Yi En",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually. Existing explicit short-name alias, same SGP gender, source class/club corroborate established board/Optimist crossover; retain current profile equipment.",
+      "resultId": "5c9ba4b9-e0a4-55a8-bdc9-6b1a2d5fa8f7",
+      "officialName": "Axl Tan",
+      "participantId": "aca6a666-3f4b-59af-beae-e54d58feedc9",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Axl Tan; historical board/sail SGP 82. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually. Existing explicit short-name alias, same SGP gender, source class/club corroborate established board/Optimist crossover; retain current profile equipment."
+    },
+    {
+      "ordinal": 4,
+      "rank": 4,
+      "name": "Ansley Inessa Suganda-Chin",
+      "sailOrBoardNumber": "220",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6 DNC)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6 DNC)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        }
+      ],
+      "grossScore": 50.0,
+      "nettScore": 38.0,
+      "sailorId": "1b610e8c-a65a-492d-b840-11db5be25aa8",
+      "profileName": "Ansley Inessa Suganda-Chin",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "fcde3b20-9033-5c24-97c0-842e22f96e9b",
+      "officialName": "Ansley Inessa Suganda-Chin",
+      "participantId": "45b13181-518e-5abf-a356-a624aba53920",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Ansley Inessa Suganda-Chin; historical board/sail SGP 220. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 5,
+      "rank": 5,
+      "name": "Michael Shi Jun Lim",
+      "sailOrBoardNumber": "38",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC"
+        }
+      ],
+      "grossScore": 53.0,
+      "nettScore": 41.0,
+      "sailorId": "cf07a131-6a65-4f95-8554-cfd10a8eb09c",
+      "profileName": "Michael Shi Jun Lim",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "c1ca52c4-e377-50bb-bf54-67edbe035208",
+      "officialName": "Michael Shi Jun Lim",
+      "participantId": "857f2a17-2788-5e89-a459-c1c369bd9a76",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Michael Shi Jun Lim; historical board/sail SGP 38. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    }
+  ],
+  "newProfiles": [],
+  "beforeResults": [],
+  "beforeParticipants": [],
+  "profilePreflight": [
+    {
+      "id": "1b610e8c-a65a-492d-b840-11db5be25aa8",
+      "name": "Ansley Inessa Suganda-Chin",
+      "gender": "F",
+      "handle": "ansley-inessa-suganda-chin-a2efbe6b96",
+      "nationality": "SGP",
+      "sail_number": "",
+      "board_number": null,
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "83fdb5a7-68f0-4fc3-95b3-8e569b600a8e",
+      "name": "Muhammad Razin Bin Mohd Airudin",
+      "gender": "M",
+      "handle": "muhammad-razin-nsc25",
+      "nationality": "SGP",
+      "sail_number": "",
+      "board_number": "33",
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "cf07a131-6a65-4f95-8554-cfd10a8eb09c",
+      "name": "Michael Shi Jun Lim",
+      "gender": "M",
+      "handle": "michael-shi-jun-lim-10deb39c22",
+      "nationality": "SGP",
+      "sail_number": "",
+      "board_number": "38",
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "0746fdb3-9981-4881-8b8d-0db869997999",
+      "name": "Jonathan Chan",
+      "gender": "M",
+      "handle": "jonathan-techno-11-nsc25",
+      "nationality": "SGP",
+      "sail_number": "",
+      "board_number": "11",
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "d16d2658-3ee4-468c-8ee7-934c6a103fec",
+      "name": "Axl Tan Yi En",
+      "gender": "M",
+      "handle": "axl-tan-yi-en-2bbwrh2",
+      "nationality": "SGP",
+      "sail_number": "SGP 4697",
+      "board_number": null,
+      "sail_number_ilca4": null
+    }
+  ]
+}

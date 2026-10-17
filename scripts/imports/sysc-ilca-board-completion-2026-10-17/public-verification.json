@@ -1,0 +1,47 @@
+[
+  {
+    "sheet": "ilca4-2025",
+    "url": "https://sailorpath.com/regattas/singapore-youth-sailing-championships-2025/results/ilca-4",
+    "entries": 76,
+    "raceScores": 684,
+    "everyVisibleRaceMatches": true,
+    "officialSourceLink": true,
+    "resultStatus": "final"
+  },
+  {
+    "sheet": "ilca4-2026",
+    "url": "https://sailorpath.com/regattas/sysc-2026/results/ilca-4",
+    "entries": 70,
+    "raceScores": 840,
+    "everyVisibleRaceMatches": true,
+    "officialSourceLink": true,
+    "resultStatus": "final"
+  },
+  {
+    "sheet": "ilca6-2025",
+    "url": "https://sailorpath.com/regattas/singapore-youth-sailing-championships-2025/results/ilca-6",
+    "entries": 19,
+    "raceScores": 190,
+    "everyVisibleRaceMatches": true,
+    "officialSourceLink": true,
+    "resultStatus": "final"
+  },
+  {
+    "sheet": "iqfoil-2025",
+    "url": "https://sailorpath.com/regattas/singapore-youth-sailing-championships-2025/results/iqfoil",
+    "entries": 2,
+    "raceScores": 20,
+    "everyVisibleRaceMatches": true,
+    "officialSourceLink": true,
+    "resultStatus": "provisional"
+  },
+  {
+    "sheet": "techno293-2025",
+    "url": "https://sailorpath.com/regattas/singapore-youth-sailing-championships-2025/results/techno-293",
+    "entries": 5,
+    "raceScores": 50,
+    "everyVisibleRaceMatches": true,
+    "officialSourceLink": true,
+    "resultStatus": "provisional"
+  }
+]

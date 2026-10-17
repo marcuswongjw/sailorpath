@@ -1,0 +1,1947 @@
+{
+  "batch": "sysc-ilca-board-completion-2026-10-17",
+  "officialSource": {
+    "url": "https://drive.google.com/file/d/1wzeEhn66Xll6nQIF7SfPsS2QRugX2IEf/view",
+    "title": "ILCA 6 Final Result.SYSC2025.pdf",
+    "visuallyReviewed": true,
+    "pages": 2,
+    "printedStatus": "final"
+  },
+  "event": {
+    "id": "bf6cec5a-3710-4295-9d99-e5c1d6bb5bab",
+    "slug": "singapore-youth-sailing-championships-2025",
+    "name": "Singapore Youth Sailing Championships 2025",
+    "startDate": "2025-03-15",
+    "endDate": "2025-03-18",
+    "venue": "National Sailing Centre, Singapore",
+    "scheduleSource": "https://www.sailing.org.sg/events/263419"
+  },
+  "sheet": {
+    "id": "5bdbaaff-c569-5b63-94b6-06b261b9637e",
+    "existing": false,
+    "slug": "sysc-2025-ilca6",
+    "name": "Singapore Youth Sailing Championships 2025 (ILCA 6)",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 10,
+    "discardCount": 2,
+    "totalFleetSize": 19,
+    "countsForRanking": true,
+    "status": "published",
+    "resultStatus": "final",
+    "date": "2025-03-15",
+    "endDate": "2025-03-18",
+    "venue": "National Sailing Centre, Singapore",
+    "organizer": "Singapore Sailing Federation",
+    "geography": "SGP"
+  },
+  "results": [
+    {
+      "ordinal": 1,
+      "rank": 1,
+      "name": "Kenan Tan",
+      "sailOrBoardNumber": "185201",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(20 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(20 RET)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        }
+      ],
+      "grossScore": 49.0,
+      "nettScore": 9.0,
+      "sailorId": "7baafbd0-cddb-4217-9727-a692f6902b79",
+      "profileName": "Kenan Kee Zen Tan",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "6ea56210-811d-5c3f-823d-88b1e7db9ead",
+      "officialName": "Kenan Tan",
+      "participantId": "e036a3d5-6b68-5f1d-8947-ad55c2aa5ed1",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Kenan Tan; historical sail SGP 185201. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 2,
+      "rank": 2,
+      "name": "Eitan Oh",
+      "sailOrBoardNumber": "222743",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        }
+      ],
+      "grossScore": 32.0,
+      "nettScore": 21.0,
+      "sailorId": "922e1135-5c83-45cc-81cd-69c7b5a5ee65",
+      "profileName": "Eitan Oh",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "93730219-8554-54f7-b0fb-47b673c04c85",
+      "officialName": "Eitan Oh",
+      "participantId": "6a92d07d-5868-5a29-bcb7-b70b7662af18",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Eitan Oh; historical sail SGP 222743. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 3,
+      "rank": 3,
+      "name": "Keira Carlyle",
+      "sailOrBoardNumber": "225225",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(20 DNC)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 10,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15)"
+        }
+      ],
+      "grossScore": 70.0,
+      "nettScore": 35.0,
+      "sailorId": "be779040-d45c-4052-b458-9c9e88803505",
+      "profileName": "Keira Carlyle",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "9647765f-5193-586b-ae74-8148582b5aeb",
+      "officialName": "Keira Carlyle",
+      "participantId": "6d910f36-fb6f-5ecc-95fe-d7f138d1639e",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Keira Carlyle; historical sail SGP 225225. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 4,
+      "rank": 4,
+      "name": "Elisha Lim",
+      "sailOrBoardNumber": "214808",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        }
+      ],
+      "grossScore": 63.0,
+      "nettScore": 37.0,
+      "sailorId": "0273c8c6-3b9c-48a6-9f34-91c6c2b61e01",
+      "profileName": "Elisha Lim Yu Ting",
+      "identityBasis": "Elisha Lim is existing Elisha Lim Yu Ting: exact SGP sail 214808, same gender, source Constant Wind SeaSports; no competing candidate.",
+      "resultId": "104789d3-42a7-53bc-9fbf-680a845be152",
+      "officialName": "Elisha Lim",
+      "participantId": "5271aaf0-9478-5b84-ab7b-7d02afafd672",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Elisha Lim; historical sail SGP 214808. Elisha Lim is existing Elisha Lim Yu Ting: exact SGP sail 214808, same gender, source Constant Wind SeaSports; no competing candidate."
+    },
+    {
+      "ordinal": 5,
+      "rank": 5,
+      "name": "Caio Sullivan",
+      "sailOrBoardNumber": "221931",
+      "nationality": "USA",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        }
+      ],
+      "grossScore": 56.0,
+      "nettScore": 37.0,
+      "sailorId": "30934f1e-6d00-4b86-8f08-9f7e56e5f5f3",
+      "profileName": "Caio Sullivan",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "7d407042-84f5-53ce-86cd-b37f7b2e595d",
+      "officialName": "Caio Sullivan",
+      "participantId": "abc8d262-6798-5438-a73a-c696f2815b1f",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Caio Sullivan; historical sail USA 221931. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 6,
+      "rank": 6,
+      "name": "Gordon Allan",
+      "sailOrBoardNumber": "221058",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        }
+      ],
+      "grossScore": 80.0,
+      "nettScore": 46.0,
+      "sailorId": "97828399-4ff6-40c1-8deb-6b308b6072ad",
+      "profileName": "Gordon Alexander Allan",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "34ff6704-43c0-59b3-bf42-c10b57980c67",
+      "officialName": "Gordon Allan",
+      "participantId": "23821cef-0dce-5a8d-b26c-120b498dd466",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Gordon Allan; historical sail SGP 221058. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 7,
+      "rank": 7,
+      "name": "Sarah Hui Yan Seow",
+      "sailOrBoardNumber": "219162",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        }
+      ],
+      "grossScore": 72.0,
+      "nettScore": 47.0,
+      "sailorId": "fc5e098b-be2e-4466-8b92-bada3a3479db",
+      "profileName": "Sarah Seow Hui Yan",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "1a59b1dc-76a0-532a-a26a-907e37854ad4",
+      "officialName": "Sarah Hui Yan Seow",
+      "participantId": "c0294d81-4765-5af4-86ec-bc6e1e7cc50f",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Sarah Hui Yan Seow; historical sail SGP 219162. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 8,
+      "rank": 8,
+      "name": "Ramakant",
+      "sailOrBoardNumber": "221143",
+      "nationality": "IND",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 10,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        }
+      ],
+      "grossScore": 74.0,
+      "nettScore": 51.0,
+      "sailorId": "85972df9-0595-4195-b72b-09706875ffa0",
+      "profileName": "Ramakant Ramakant",
+      "identityBasis": "Mononym Ramakant versus repeated Ramakant Ramakant in existing SNSC 2025 ILCA 4 summary marked IND/M. User confirmed on 17 October 2026 that this is the same sailor and profile nationality should be IND.",
+      "resultId": "a6bfab3c-dc6e-50f9-aeac-3d6e4d25ec22",
+      "officialName": "Ramakant",
+      "participantId": "68d2c115-ea23-5804-b779-9de68a91b80a",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Ramakant; historical sail IND 221143. Mononym Ramakant versus repeated Ramakant Ramakant in existing SNSC 2025 ILCA 4 summary marked IND/M. User confirmed on 17 October 2026 that this is the same sailor and profile nationality should be IND."
+    },
+    {
+      "ordinal": 9,
+      "rank": 9,
+      "name": "Preet Siwal",
+      "sailOrBoardNumber": "222622",
+      "nationality": "IND",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        }
+      ],
+      "grossScore": 80.0,
+      "nettScore": 56.0,
+      "sailorId": "d41014b8-67ad-4e56-9e87-55d51612d5a8",
+      "profileName": "Preet Siwal",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "e7ad9216-625c-5b08-9c0f-c630f9172d37",
+      "officialName": "Preet Siwal",
+      "participantId": "e2775962-c1d1-5c40-9b72-0aaa6faa973f",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Preet Siwal; historical sail IND 222622. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 10,
+      "rank": 10,
+      "name": "Mathias Yu Da Wong",
+      "sailOrBoardNumber": "222255",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        }
+      ],
+      "grossScore": 106.0,
+      "nettScore": 73.0,
+      "sailorId": "f0858934-d4bc-46cc-b818-54cd5337ba3c",
+      "profileName": "Mathias Yu Da Wong",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "8f74a412-9975-533d-893e-5389eb914edf",
+      "officialName": "Mathias Yu Da Wong",
+      "participantId": "e63bb840-77b4-562f-8387-2a15e2f1d3b7",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Mathias Yu Da Wong; historical sail SGP 222255. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 11,
+      "rank": 11,
+      "name": "Clive Wei Jun Seah",
+      "sailOrBoardNumber": "214240",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 10,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        }
+      ],
+      "grossScore": 108.0,
+      "nettScore": 79.0,
+      "sailorId": "9feccee3-556f-494a-bb80-593be88884cc",
+      "profileName": "Clive Wei Jun Seah",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "ceb1c337-4584-521b-b6a6-a82d18ab1fc5",
+      "officialName": "Clive Wei Jun Seah",
+      "participantId": "97321b38-a089-5f31-906c-670132406e4e",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Clive Wei Jun Seah; historical sail SGP 214240. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 12,
+      "rank": 12,
+      "name": "Foo Yuei Jit",
+      "sailOrBoardNumber": "221686",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        }
+      ],
+      "grossScore": 113.0,
+      "nettScore": 80.0,
+      "sailorId": "38a04183-810a-478f-bb9f-6bd63314415c",
+      "profileName": "Foo Yuei Jit",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "d1377ec3-2496-5a95-b791-5c1b9922e997",
+      "officialName": "Foo Yuei Jit",
+      "participantId": "c04598e0-39f8-5ba0-b6b8-c074b426b8fa",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Foo Yuei Jit; historical sail SGP 221686. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 13,
+      "rank": 13,
+      "name": "John Gabriel Lim",
+      "sailOrBoardNumber": "225262",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(20 DSQ)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 10,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        }
+      ],
+      "grossScore": 117.0,
+      "nettScore": 81.0,
+      "sailorId": "3143b0a2-ba21-46fd-9576-6fe6560f6a07",
+      "profileName": "John Gabriel Lim",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "7236701e-a5a5-5d4e-8749-9ed9917a5152",
+      "officialName": "John Gabriel Lim",
+      "participantId": "14ef9207-d72d-51e2-99c0-dfacbe4fe659",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: John Gabriel Lim; historical sail SGP 225262. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 14,
+      "rank": 14,
+      "name": "Elizabeth Victoria Say",
+      "sailOrBoardNumber": "214873",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 10,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17)"
+        }
+      ],
+      "grossScore": 121.0,
+      "nettScore": 87.0,
+      "sailorId": "1873b5fc-0682-4bfc-b02b-9e453e49f384",
+      "profileName": "Elizabeth Victoria Say",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "3447a20e-0399-505b-bc3f-21b9472af16f",
+      "officialName": "Elizabeth Victoria Say",
+      "participantId": "24a14ef3-2d01-51fd-9497-43654bc2a29d",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Elizabeth Victoria Say; historical sail SGP 214873. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 15,
+      "rank": 15,
+      "name": "Zachary Zhang",
+      "sailOrBoardNumber": "223148",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 10,
+          "score": 20.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(20 RET)"
+        }
+      ],
+      "grossScore": 140.0,
+      "nettScore": 104.0,
+      "sailorId": "a841f654-dcfd-44ca-9546-a31595385ee0",
+      "profileName": "Zachary Hong Yi Zhang",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "0f0b3197-3f4e-5f36-b01e-53261ef41bb8",
+      "officialName": "Zachary Zhang",
+      "participantId": "e42cb446-ff95-5f0b-801e-b93512c5216c",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Zachary Zhang; historical sail SGP 223148. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 16,
+      "rank": 16,
+      "name": "Abigail Ling",
+      "sailOrBoardNumber": "2179",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 9,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 10,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        }
+      ],
+      "grossScore": 136.0,
+      "nettScore": 104.0,
+      "sailorId": "659d2fab-d7dc-409c-8c87-22379c586910",
+      "profileName": "Abigail Jia En Ling",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "526ca367-c308-59f5-bad2-cb90d516930c",
+      "officialName": "Abigail Ling",
+      "participantId": "464de4a7-5e5c-5b35-a691-90103dd715bc",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Abigail Ling; historical sail SGP 2179. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 17,
+      "rank": 17,
+      "name": "Samuel Tan Hsien Ern",
+      "sailOrBoardNumber": "209051",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 9,
+          "score": 20.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(20 RET)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 20.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(20 RET)"
+        }
+      ],
+      "grossScore": 153.0,
+      "nettScore": 113.0,
+      "sailorId": "dfa93284-418b-447e-99e0-e1c67a2845fe",
+      "profileName": "Samuel Tan Hsien Ern",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "b04f4959-815b-5557-aa6b-982a36b30281",
+      "officialName": "Samuel Tan Hsien Ern",
+      "participantId": "232db5b8-ea3d-5484-b696-2ba0f7cdfc76",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Samuel Tan Hsien Ern; historical sail SGP 209051. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 18,
+      "rank": 18,
+      "name": "Hu Kam Hing",
+      "sailOrBoardNumber": "225952",
+      "nationality": "HKG",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(20 UFD)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(20 UFD)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 10,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        }
+      ],
+      "grossScore": 171.0,
+      "nettScore": 131.0,
+      "sailorId": "5badeb1d-e41c-549d-af7b-66e65845a726",
+      "profileName": "Hu Kam Hing",
+      "identityBasis": "No existing name/alias or equivalent full-name candidate. Create source-faithful HKG sailor Hu Kam Hing, sail 225952.",
+      "resultId": "e0f834a2-d893-5d23-8a62-7e64c1ecc5be",
+      "officialName": "Hu Kam Hing",
+      "participantId": "6150c2be-5396-59ce-8999-74f1ad917181",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Hu Kam Hing; historical sail HKG 225952. No existing name/alias or equivalent full-name candidate. Create source-faithful HKG sailor Hu Kam Hing, sail 225952."
+    },
+    {
+      "ordinal": 19,
+      "rank": 19,
+      "name": "Tan En Xi Arabelle",
+      "sailOrBoardNumber": "221690",
+      "nationality": "SGP",
+      "gender": "F",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(20 DNC)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 10,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        }
+      ],
+      "grossScore": 172.0,
+      "nettScore": 133.0,
+      "sailorId": "6057a852-a589-4ed9-b887-e96a2178a307",
+      "profileName": "Arabelle En Xi Tan",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "3482b005-2909-5888-9806-83d4ba60ac98",
+      "officialName": "Tan En Xi Arabelle",
+      "participantId": "4f20cab5-22d6-5657-91a1-fd4d6c459796",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 2 source pages visually reviewed. Printed final as of 15:22 on 22 March 2025. Official name: Tan En Xi Arabelle; historical sail SGP 221690. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "5badeb1d-e41c-549d-af7b-66e65845a726",
+      "name": "Hu Kam Hing",
+      "handle": "hu-kam-hing-sysc25",
+      "sail_number": "225952",
+      "sail_number_ilca4": null,
+      "gender": "M",
+      "nationality": "HKG",
+      "club": "Sailing Federation of Hong Kong, China (HKSF)",
+      "school": "Hong Kong Sea School"
+    }
+  ],
+  "beforeResults": [],
+  "beforeParticipants": [],
+  "profilePreflight": [
+    {
+      "id": "922e1135-5c83-45cc-81cd-69c7b5a5ee65",
+      "name": "Eitan Oh",
+      "gender": "M",
+      "handle": "eitan-oh-1xoammz",
+      "nationality": "SGP",
+      "sail_number": "224717",
+      "board_number": null,
+      "sail_number_ilca4": "222743"
+    },
+    {
+      "id": "d41014b8-67ad-4e56-9e87-55d51612d5a8",
+      "name": "Preet Siwal",
+      "gender": null,
+      "handle": "preet-siwal-2qkw8co",
+      "nationality": "SGP",
+      "sail_number": "0",
+      "board_number": null,
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "38a04183-810a-478f-bb9f-6bd63314415c",
+      "name": "Foo Yuei Jit",
+      "gender": "M",
+      "handle": "foo-yuei-jit-nsc25c1",
+      "nationality": "SGP",
+      "sail_number": "221686",
+      "board_number": null,
+      "sail_number_ilca4": "221686"
+    },
+    {
+      "id": "3143b0a2-ba21-46fd-9576-6fe6560f6a07",
+      "name": "John Gabriel Lim",
+      "gender": "M",
+      "handle": "john-gabriel-lim-549345ac98",
+      "nationality": "SGP",
+      "sail_number": "206799",
+      "board_number": null,
+      "sail_number_ilca4": "225262"
+    },
+    {
+      "id": "9feccee3-556f-494a-bb80-593be88884cc",
+      "name": "Clive Wei Jun Seah",
+      "gender": "M",
+      "handle": "clive-wei-jun-seah-8ac2810789",
+      "nationality": "SGP",
+      "sail_number": "214240",
+      "board_number": null,
+      "sail_number_ilca4": "214240"
+    },
+    {
+      "id": "f0858934-d4bc-46cc-b818-54cd5337ba3c",
+      "name": "Mathias Yu Da Wong",
+      "gender": "M",
+      "handle": "mathias-yu-da-wong-445c0f0f75",
+      "nationality": "SGP",
+      "sail_number": "222255",
+      "board_number": null,
+      "sail_number_ilca4": "SGP 222255"
+    },
+    {
+      "id": "a841f654-dcfd-44ca-9546-a31595385ee0",
+      "name": "Zachary Hong Yi Zhang",
+      "gender": "M",
+      "handle": "zachary-hong-yi-zhang-16bb67be4a",
+      "nationality": "SGP",
+      "sail_number": "223148",
+      "board_number": null,
+      "sail_number_ilca4": "223148"
+    },
+    {
+      "id": "0273c8c6-3b9c-48a6-9f34-91c6c2b61e01",
+      "name": "Elisha Lim Yu Ting",
+      "gender": "F",
+      "handle": "elisha-lim-yu-ting-csc25",
+      "nationality": "SGP",
+      "sail_number": "214808",
+      "board_number": null,
+      "sail_number_ilca4": "214808"
+    },
+    {
+      "id": "30934f1e-6d00-4b86-8f08-9f7e56e5f5f3",
+      "name": "Caio Sullivan",
+      "gender": "M",
+      "handle": "caio-sullivan-csc25",
+      "nationality": "USA",
+      "sail_number": "221931",
+      "board_number": null,
+      "sail_number_ilca4": "221931"
+    },
+    {
+      "id": "fc5e098b-be2e-4466-8b92-bada3a3479db",
+      "name": "Sarah Seow Hui Yan",
+      "gender": "F",
+      "handle": "sarah-seow-hui-yan-csc25",
+      "nationality": "SGP",
+      "sail_number": "219162",
+      "board_number": null,
+      "sail_number_ilca4": "18"
+    },
+    {
+      "id": "be779040-d45c-4052-b458-9c9e88803505",
+      "name": "Keira Carlyle",
+      "gender": "F",
+      "handle": "keira-carlyle-a3d1c07b3e",
+      "nationality": "SGP",
+      "sail_number": "225225",
+      "board_number": null,
+      "sail_number_ilca4": "212216"
+    },
+    {
+      "id": "97828399-4ff6-40c1-8deb-6b308b6072ad",
+      "name": "Gordon Alexander Allan",
+      "gender": "M",
+      "handle": "gordon-alexander-allan-c32df510a0",
+      "nationality": "SGP",
+      "sail_number": "221058",
+      "board_number": null,
+      "sail_number_ilca4": "221058"
+    },
+    {
+      "id": "1873b5fc-0682-4bfc-b02b-9e453e49f384",
+      "name": "Elizabeth Victoria Say",
+      "gender": "F",
+      "handle": "elizabeth-victoria-say-de34f28898",
+      "nationality": "SGP",
+      "sail_number": "214873",
+      "board_number": null,
+      "sail_number_ilca4": "214873"
+    },
+    {
+      "id": "7baafbd0-cddb-4217-9727-a692f6902b79",
+      "name": "Kenan Kee Zen Tan",
+      "gender": "M",
+      "handle": "kenan-kee-zen-tan-2eae5576ae",
+      "nationality": "SGP",
+      "sail_number": "1",
+      "board_number": null,
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "659d2fab-d7dc-409c-8c87-22379c586910",
+      "name": "Abigail Jia En Ling",
+      "gender": "F",
+      "handle": "abigail-jia-en-ling-7e546c7319",
+      "nationality": "SGP",
+      "sail_number": "204636",
+      "board_number": null,
+      "sail_number_ilca4": "2179"
+    },
+    {
+      "id": "85972df9-0595-4195-b72b-09706875ffa0",
+      "name": "Ramakant Ramakant",
+      "gender": "M",
+      "handle": "ramakant-ramakant-zlgdga5",
+      "nationality": "SGP",
+      "sail_number": "0",
+      "board_number": null,
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "6057a852-a589-4ed9-b887-e96a2178a307",
+      "name": "Arabelle En Xi Tan",
+      "gender": "F",
+      "handle": "arabelle-en-xi-tan-523da64801",
+      "nationality": "SGP",
+      "sail_number": "221690",
+      "board_number": null,
+      "sail_number_ilca4": "221690"
+    },
+    {
+      "id": "dfa93284-418b-447e-99e0-e1c67a2845fe",
+      "name": "Samuel Tan Hsien Ern",
+      "gender": "M",
+      "handle": "samuel-tan-hsien-ern-safyc23",
+      "nationality": "SGP",
+      "sail_number": "197857",
+      "board_number": null,
+      "sail_number_ilca4": "223134"
+    }
+  ]
+}
