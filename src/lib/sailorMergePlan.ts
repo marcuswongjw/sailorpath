@@ -1,4 +1,4 @@
-import { getSeparateSailorPairs } from "./sailorDuplicateDecisionStore";
+import { getSeparateSailorPairs, sailorDuplicateReviewRevision } from "./sailorDuplicateDecisionStore";
 import { createHash } from "node:crypto";
 import { inArray } from "drizzle-orm";
 import { db } from "@/db";
@@ -49,7 +49,8 @@ export async function buildSailorMergePlan(tx: Transaction, keepId: string, merg
   for (const sheet of sharedSheets) conflicts.push(`Both profiles have entries in ${sheet.name}. Resolve the official entries before merging.`);
   const sameEntry = memberships.some(a => a.sailorId === keepId && memberships.some(b => b.sailorId === mergeId && a.regattaResultId === b.regattaResultId));
   if (sameEntry) conflicts.push("Both profiles are linked to the same crew entry; resolve participant identities first.");
-  const token = createHash("sha256").update(JSON.stringify({ keepId, mergeId, profiles, results, memberships, races, separatePairs })).digest("hex");
+  const duplicateReviewRevision = await sailorDuplicateReviewRevision(tx, [keepId, mergeId]);
+  const token = createHash("sha256").update(JSON.stringify({ keepId, mergeId, profiles, results, memberships, races, separatePairs, duplicateReviewRevision })).digest("hex");
   const profile = (s: typeof keep) => ({ id: s.id, name: s.name, handle: s.handle, sailNumber: s.sailNumber, sailNumberIlca4: s.sailNumberIlca4, boardNumber: s.boardNumber, nationality: s.nationality, gender: s.gender, claimed: Boolean(s.parentId) });
   const sourceResultIds = new Set(results.filter(r => r.sailorId === mergeId).map(r => r.id));
   return {

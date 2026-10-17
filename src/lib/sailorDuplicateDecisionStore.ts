@@ -30,6 +30,16 @@ export async function getSeparateSailorPairs(reader: Reader = db): Promise<Sailo
   return active.filter(d => existing.has(d.aId) && existing.has(d.bId));
 }
 
+/** Include reopened reviews in merge-token freshness, even after suppression ends. */
+export async function sailorDuplicateReviewRevision(reader: Reader, ids: string[]) {
+  const history = await reader.select({ id: adminChangeLog.id, details: adminChangeLog.details })
+    .from(adminChangeLog).where(inArray(adminChangeLog.action, actions)).orderBy(adminChangeLog.id);
+  return history.filter(row => {
+    const d = row.details as SailorDuplicateDecision | null;
+    return d && (ids.includes(d.aId) || ids.includes(d.bId));
+  }).map(row => row.id);
+}
+
 export async function saveSailorDuplicateDecision(input: {
   aId: string; bId: string; reason: string; separate: boolean;
   actor: { userId: string; email: string | null };

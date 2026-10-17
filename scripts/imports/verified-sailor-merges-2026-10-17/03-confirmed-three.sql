@@ -128,4 +128,3 @@ if participant_hash is distinct from (select md5(jsonb_agg(to_jsonb(p)-'sailor_i
 if (select count(*) from sailors where id=any(target_ids))<>3 then raise exception 'Unexpected survivor count'; end if;
 end $repair$;
 commit;
-

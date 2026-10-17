@@ -72,7 +72,9 @@ describe("transactional identity merge protection", () => {
     await saveSailorDuplicateDecision({ aId: a, bId: b, separate: false,
       reason: "New official evidence requires another identity review.", actor });
     expect(await getSeparateSailorPairs()).toHaveLength(0);
-    expect((await getSailorMergePlan(a, b)).canMerge).toBe(true);
+    const reopened = await getSailorMergePlan(a, b);
+    expect(reopened.canMerge).toBe(true);
+    expect(reopened.reviewToken).not.toBe(originalPlan.reviewToken);
     expect(await database.select().from(schema.adminChangeLog)).toHaveLength(2);
   });
 
