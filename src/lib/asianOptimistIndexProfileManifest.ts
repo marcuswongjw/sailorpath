@@ -350,7 +350,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-ksa-mohammed-a-6cc1bb"
   },
   "IND:chandralekhatattari": {
-    "handle": "asian-ind-chandralek-4ae157"
+    "handle": "chandralekha-tattari-fg1jg3a"
   },
   "OMA:habibalhussaini": {
     "handle": "asian-oma-habib-al-h-9b54f3"
