@@ -7,6 +7,7 @@ import {
   isIndexablePublicSailor,
   organizationWebsiteJsonLd,
   profilePageJsonLd,
+  publicBirthYear,
   publicResultSheetPaths,
   resultSheetFromEventSlice,
   resultSheetTitle,
@@ -18,8 +19,6 @@ import {
 } from "@/lib/publicSeo";
 
 const PRIVATE_KEYS = [
-  "birthDate",
-  "birthYear",
   "dob",
   "school",
   "weight",
@@ -51,27 +50,48 @@ describe("public share metadata", () => {
       handle: SAMPLE_SAILOR.handle,
       nationality: SAMPLE_SAILOR.nationality,
       club: SAMPLE_SAILOR.club,
+      birthYear: SAMPLE_SAILOR.dob,
       results: SAMPLE_RESULTS,
       path: "/sample",
     });
     expect(share.title).toBe("Kimberly Tan – Optimist, Singapore | SailorPath");
     expect(share.country).toBe("Singapore");
+    expect(share.birthYear).toBe(2013);
     expect(share.boatClass).toBe("Optimist");
     expect(share.bestResult).toBe("1st in Optimist at Singapore National Championship 2026");
     expect(share.summary).toBe(
-      `${share.bestResult}. ${share.regattaCount} regattas on record.`
+      `Born 2013. ${share.bestResult}. ${share.regattaCount} regattas on record.`
     );
-    expect(share.summary).not.toContain("2013");
+    expect(share.summary).not.toContain("2013-08-14");
+    expect(share.summary).not.toContain("August");
     expect(share.summary).not.toContain("Raffles");
     expect(share.summary).not.toContain("Dual-class");
 
     const jsonLd = profilePageJsonLd(share);
     expect(jsonLd["@type"]).toBe("ProfilePage");
     expect(jsonLd.mainEntity["@type"]).toBe("Person");
+    expect(jsonLd.mainEntity.birthDate).toBe("2013");
     const serialized = JSON.stringify(jsonLd);
-    expect(serialized).not.toContain("2013");
+    expect(serialized).not.toContain("2013-08-14");
     expect(serialized).not.toContain("Raffles");
     for (const key of PRIVATE_KEYS) expect(keysDeep(jsonLd).has(key)).toBe(false);
+  });
+
+  it("keeps a birth year and drops a full date", () => {
+    expect(publicBirthYear(2013)).toBe(2013);
+    expect(publicBirthYear("2013-08-14")).toBe(2013);
+    expect(publicBirthYear("14 August 2013")).toBeNull();
+    const fromDate = sailorShareModel({
+      name: "Ada Lim",
+      handle: "ada-lim",
+      birthYear: "2014-02-02",
+    });
+    expect(fromDate.birthYear).toBe(2014);
+    expect(fromDate.summary.startsWith("Born 2014.")).toBe(true);
+    expect(JSON.stringify(profilePageJsonLd(fromDate))).not.toContain("2014-02-02");
+    const missing = sailorShareModel({ name: "Ada Lim", handle: "ada-lim" });
+    expect(missing.birthYear).toBeNull();
+    expect(JSON.stringify(profilePageJsonLd(missing))).not.toContain("birthDate");
   });
 
   it("keeps a tied class when that class was sailed most recently", () => {
@@ -120,7 +140,9 @@ describe("public share metadata", () => {
     expect(jsonLd["@type"]).toBe("SportsEvent");
     expect(jsonLd.sport).toBe("Sailing");
     expect(jsonLd.startDate).toBe("2025-09-06");
-    for (const key of PRIVATE_KEYS) expect(keysDeep(jsonLd).has(key)).toBe(false);
+    for (const key of [...PRIVATE_KEYS, "birthDate", "birthYear"]) {
+      expect(keysDeep(jsonLd).has(key)).toBe(false);
+    }
   });
 
   it("adds the year when the regatta name does not already contain it", () => {
@@ -182,9 +204,12 @@ describe("public share metadata", () => {
     expect(serialized).toContain("Ada Lim");
     expect(serialized).toContain("https://sailorpath.com/sailors/ada-lim");
     expect(serialized).not.toContain("2013");
+    expect(serialized).not.toContain("2012-01-01");
     expect(serialized).not.toContain("Raffles");
     expect(serialized).not.toContain("DNS Sailor");
-    for (const key of PRIVATE_KEYS) expect(keysDeep(jsonLd).has(key)).toBe(false);
+    for (const key of [...PRIVATE_KEYS, "birthDate", "birthYear"]) {
+      expect(keysDeep(jsonLd).has(key)).toBe(false);
+    }
   });
 
   it("describes the site and its search box without personal data", () => {

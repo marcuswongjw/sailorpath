@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
-import { profilePageJsonLd, sailorShareModel, shareMetadata } from "@/lib/publicSeo";
 import { DemoNavHeader } from "@/components/demo/DemoNavHeader";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import { SampleViewControls } from "@/components/sample/SampleViewControls";
+import { birthYear } from "@/lib/age";
+import { profilePageJsonLd, sailorShareModel, shareMetadata } from "@/lib/publicSeo";
 import {
   DEMO_ROLE_COPY,
   SAMPLE_EQUIPMENT,
@@ -31,6 +32,7 @@ function sampleShare() {
     handle: SAMPLE_SAILOR.handle,
     nationality: SAMPLE_SAILOR.nationality,
     club: SAMPLE_SAILOR.club,
+    birthYear: birthYear(SAMPLE_SAILOR.dob),
     results: SAMPLE_RESULTS,
     path: "/sample",
   });

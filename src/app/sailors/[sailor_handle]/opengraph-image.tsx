@@ -28,6 +28,7 @@ export default async function Image({
         handle: publicSailor.handle,
         nationality: publicSailor.nationality,
         club: publicSailor.club,
+        birthYear: publicSailor.birthYear,
         results: results.map((result) => ({
           regattaName: result.regattaName,
           regattaDate: result.regattaDate,

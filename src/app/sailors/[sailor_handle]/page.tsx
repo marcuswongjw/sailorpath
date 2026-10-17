@@ -51,6 +51,7 @@ export async function generateMetadata({
       handle: publicSailor.handle,
       nationality: publicSailor.nationality,
       club: publicSailor.club,
+      birthYear: publicSailor.birthYear,
       results: results.map((result) => ({
         regattaName: result.regattaName,
         regattaDate: result.regattaDate,
@@ -280,6 +281,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
     handle: seoSailor.handle,
     nationality: seoSailor.nationality,
     club: seoSailor.club,
+    birthYear: seoSailor.birthYear,
     results: (results || []).map((result) => ({
       regattaName: result.regattaName,
       regattaDate: result.regattaDate,

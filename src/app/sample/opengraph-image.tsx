@@ -1,3 +1,4 @@
+import { birthYear } from "@/lib/age";
 import { renderProfileShareImage, SHARE_IMAGE_SIZE } from "@/lib/og/shareImage";
 import { sailorShareModel } from "@/lib/publicSeo";
 import { SAMPLE_RESULTS, SAMPLE_SAILOR } from "@/lib/sampleProfile";
@@ -14,6 +15,7 @@ export default async function Image() {
       handle: SAMPLE_SAILOR.handle,
       nationality: SAMPLE_SAILOR.nationality,
       club: SAMPLE_SAILOR.club,
+      birthYear: birthYear(SAMPLE_SAILOR.dob),
       results: SAMPLE_RESULTS,
       path: "/sample",
     })

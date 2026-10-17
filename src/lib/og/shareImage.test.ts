@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { birthYear } from "@/lib/age";
 import { renderProfileShareImage, renderResultShareImage } from "@/lib/og/shareImage";
-import { sailorShareModel } from "@/lib/publicSeo";
+import { resultSheetFromEventSlice, sailorShareModel } from "@/lib/publicSeo";
 import { getRegattaEvent } from "@/lib/regattaEvents";
-import { resultSheetFromEventSlice } from "@/lib/publicSeo";
 import { SAMPLE_RESULTS, SAMPLE_SAILOR } from "@/lib/sampleProfile";
 
 describe("share images", () => {
@@ -13,6 +13,7 @@ describe("share images", () => {
         handle: SAMPLE_SAILOR.handle,
         nationality: SAMPLE_SAILOR.nationality,
         club: SAMPLE_SAILOR.club,
+        birthYear: birthYear(SAMPLE_SAILOR.dob),
         results: SAMPLE_RESULTS,
         path: "/sample",
       })

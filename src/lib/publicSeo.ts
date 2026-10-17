@@ -95,6 +95,8 @@ export type SailorShareModel = {
   handle: string;
   country: string | null;
   club: string | null;
+  /** Four-digit public birth year. The full date is never stored here. */
+  birthYear: number | null;
   boatClass: string | null;
   regattaCount: number;
   bestResult: string | null;
@@ -321,13 +323,28 @@ function regattaCountLabel(count: number): string {
 }
 
 /**
- * Public share copy for a sailor. Birth year, school, photo, and weight are not inputs.
+ * Birth year is public. A full date is reduced to its year, and anything else is dropped.
+ */
+export function publicBirthYear(value: number | string | null | undefined): number | null {
+  if (typeof value === "number" && Number.isInteger(value)) {
+    return value >= 1900 && value <= 2100 ? value : null;
+  }
+  const text = String(value ?? "").trim();
+  const match = text.match(/^(\d{4})(?:-\d{2}-\d{2})?$/);
+  if (!match) return null;
+  const year = Number(match[1]);
+  return year >= 1900 && year <= 2100 ? year : null;
+}
+
+/**
+ * Public share copy for a sailor. School, photo, weight, and the full date of birth are not inputs.
  */
 export function sailorShareModel(input: {
   name: string;
   handle: string;
   nationality?: string | null;
   club?: string | null;
+  birthYear?: number | string | null;
   results?: ShareResultRow[] | null;
   path?: string;
 }): SailorShareModel {
@@ -336,22 +353,27 @@ export function sailorShareModel(input: {
   const results = input.results || [];
   const country = publicCountryName(input.nationality);
   const club = String(input.club || "").trim() || null;
+  const birthYear = publicBirthYear(input.birthYear);
   const boatClass = primaryClassLabel(results);
   const regattaCount = regattaCountOf(results);
   const best = bestFinish(results);
   const bestResult = best
     ? `${ordinal(best.rank)} in ${best.boatClass} at ${best.regattaName}`
     : null;
+  const born = birthYear ? `Born ${birthYear}. ` : "";
   const summary = bestResult
-    ? `${bestResult}. ${regattaCountLabel(regattaCount)}.`
+    ? `${born}${bestResult}. ${regattaCountLabel(regattaCount)}.`
     : regattaCount
-      ? `${regattaCountLabel(regattaCount)}.`
-      : `Sailing results for ${name} on SailorPath.`;
+      ? `${born}${regattaCountLabel(regattaCount)}.`
+      : born
+        ? `${born.trim()} Sailing results for ${name} on SailorPath.`
+        : `Sailing results for ${name} on SailorPath.`;
   return {
     name,
     handle,
     country,
     club,
+    birthYear,
     boatClass,
     regattaCount,
     bestResult,
@@ -546,6 +568,7 @@ export function profilePageJsonLd(share: SailorShareModel) {
   };
   if (share.country) person.nationality = { "@type": "Country", name: share.country };
   if (share.club) person.memberOf = { "@type": "SportsOrganization", name: share.club };
+  if (share.birthYear) person.birthDate = String(share.birthYear);
   if (share.summary) person.description = share.summary;
   return {
     "@context": "https://schema.org",

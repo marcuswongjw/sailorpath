@@ -55,7 +55,12 @@ function BrandMark() {
 export async function renderProfileShareImage(share: SailorShareModel) {
   const name = ogText(share.name, 48) || "Sailor";
   const subtitle =
-    ogText([share.country, share.club].filter(Boolean).join(" | "), 80) || "Sailor profile";
+    ogText(
+      [share.country, share.club, share.birthYear ? `Born ${share.birthYear}` : null]
+        .filter(Boolean)
+        .join(" | "),
+      80
+    ) || "Sailor profile";
   const best = ogText(share.bestResult || "Results on SailorPath", 90);
   return new ImageResponse(
     (
