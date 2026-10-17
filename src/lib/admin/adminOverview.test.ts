@@ -35,6 +35,15 @@ describe("buildAdminOverview", () => {
     expect(overview.incomplete).toHaveLength(1);
   });
 
+  it("excludes archived sheets from every actionable overview queue", () => {
+    const overview = buildAdminOverview([{ ...complete, status: "archived" }], []);
+    expect(overview.sheets).toHaveLength(0);
+    expect(overview.blocked).toHaveLength(0);
+    expect(overview.incomplete).toHaveLength(0);
+    expect(overview.ready).toHaveLength(0);
+    expect(overview.missingResults).toHaveLength(0);
+  });
+
   it("does not treat an unknown race count as proof of missing results", () => {
     const overview = buildAdminOverview([{ ...complete, raceCount: null }], []);
     expect(overview.missingResults).toHaveLength(0);
