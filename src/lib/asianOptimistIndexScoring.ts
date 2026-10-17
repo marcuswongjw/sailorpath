@@ -136,6 +136,14 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     rank: 2,
   },
   {
+    // Confirmed full/compact identity; official OPTIMIST.pdf, page 1,
+    // rank 4, MAS 119. Retain the original cohort name as the scoring key.
+    qualifierId: "langkawi-international-regatta-perdana-2026",
+    name: "Khairulilzani Afendy",
+    nationality: "MAS",
+    rank: 4,
+  },
+  {
     qualifierId: "sysc-2026-gold",
     name: "Wenyu Cheng",
     nationality: "CHN",
