@@ -31,3 +31,16 @@ export function birthYear(
   const y = Number(s.slice(0, 4));
   return Number.isFinite(y) && y >= 1900 && y <= 2100 ? y : null;
 }
+
+/** A birth year safe to show beside "Born". Placeholders such as "—" are unknown. */
+export function knownBirthYearLabel(
+  value: number | string | null | undefined
+): string | null {
+  if (typeof value === "number") {
+    return Number.isInteger(value) && value >= 1900 && value <= 2100
+      ? String(value)
+      : null;
+  }
+  const text = String(value ?? "").trim();
+  return /^(19|20)\d{2}$/.test(text) ? text : null;
+}

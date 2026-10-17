@@ -58,11 +58,48 @@ function namedResults(rows: readonly ResultsBioRow[]): NamedResult[] {
     .filter((row) => row.name);
 }
 
+/** Podium, or a finish in the top quarter of the fleet. */
+const STRONG_FLEET_SHARE = 0.25;
+
+/** Lower is better. Unknown when the fleet size cannot be compared with the place. */
+function fleetShare(finish: Finish): number | null {
+  if (finish.rank < 1 || finish.fleetSize < finish.rank) return null;
+  return finish.rank / finish.fleetSize;
+}
+
+function isStrongFinish(finish: Finish): boolean {
+  if (finish.rank >= 1 && finish.rank <= 3) return true;
+  const share = fleetShare(finish);
+  return share != null && share <= STRONG_FLEET_SHARE;
+}
+
 function betterFinish(candidate: Finish, current: Finish): boolean {
+  const candidateShare = fleetShare(candidate);
+  const currentShare = fleetShare(current);
+  if (
+    candidateShare != null &&
+    currentShare != null &&
+    candidateShare !== currentShare
+  ) {
+    return candidateShare < currentShare;
+  }
+  if (candidateShare != null && currentShare == null) return true;
+  if (candidateShare == null && currentShare != null) return false;
   if (candidate.rank !== current.rank) return candidate.rank < current.rank;
   if (candidate.date && !current.date) return true;
-  if (candidate.date && current.date) return candidate.date < current.date;
+  if (candidate.date && current.date && candidate.date !== current.date) {
+    return candidate.date < current.date;
+  }
   return false;
+}
+
+function compareFinishQuality(a: Finish, b: Finish): number {
+  const aShare = fleetShare(a);
+  const bShare = fleetShare(b);
+  if (aShare != null && bShare != null && aShare !== bShare) return aShare - bShare;
+  if (aShare != null && bShare == null) return -1;
+  if (aShare == null && bShare != null) return 1;
+  return a.rank - b.rank || a.date.localeCompare(b.date) || a.boatClass.localeCompare(b.boatClass);
 }
 
 function placeText(finish: Finish, withClass: boolean): string {
@@ -107,9 +144,8 @@ export function buildSailorResultsBio(
     const current = bestByClass.get(key);
     if (!current || betterFinish(candidate, current)) bestByClass.set(key, candidate);
   }
-  const finishes = [...bestByClass.values()].sort(
-    (a, b) => a.rank - b.rank || a.date.localeCompare(b.date) || a.boatClass.localeCompare(b.boatClass)
-  );
+  const finishes = [...bestByClass.values()].sort(compareFinishQuality);
+  const strong = finishes.filter(isStrongFinish);
 
   const sailor = name.trim() || "This sailor";
   const firstDate = first.date ? ` on ${formatDate(first.date)}` : "";
@@ -117,10 +153,34 @@ export function buildSailorResultsBio(
   if (classes.length === 1) sentences.push(`Class sailed: ${classes[0]}.`);
   else if (classes.length > 1) sentences.push(`Classes sailed: ${joinAnd(classes)}.`);
 
-  if (finishes.length === 1) {
-    sentences.push(`Best finish: ${placeText(finishes[0], classes.length > 1)}.`);
-  } else if (finishes.length > 1) {
-    sentences.push(`Best finishes: ${joinAnd(finishes.slice(0, 3).map((finish) => placeText(finish, true)))}.`);
+  const withClass = classes.length > 1;
+  if (strong.length === 1) {
+    sentences.push(`Best finish: ${placeText(strong[0], withClass)}.`);
+  } else if (strong.length > 1) {
+    sentences.push(
+      `Best finishes: ${joinAnd(strong.slice(0, 3).map((finish) => placeText(finish, true)))}.`
+    );
+  } else {
+    const recent = chronological
+      .filter((row) => !row.dns && Number.isFinite(row.rank) && row.rank >= 1)
+      .map(
+        (row): Finish => ({
+          rank: Math.floor(row.rank),
+          event: row.name,
+          date: row.date,
+          boatClass: row.boatClass,
+          fleetSize: Number.isFinite(row.fleetSize) ? Math.floor(row.fleetSize) : 0,
+        })
+      )
+      .sort((a, b) => b.date.localeCompare(a.date) || a.event.localeCompare(b.event))
+      .slice(0, 3);
+    if (recent.length === 1) {
+      sentences.push(`Most recent result: ${placeText(recent[0], withClass)}.`);
+    } else if (recent.length > 1) {
+      sentences.push(
+        `Most recent results: ${joinAnd(recent.map((finish) => placeText(finish, withClass)))}.`
+      );
+    }
   }
 
   return sentences.join(" ");

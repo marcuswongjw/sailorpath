@@ -36,4 +36,20 @@ describe("SearchClient mobile layout", () => {
     expect(screen.queryByText("Changi Sailing Club")).not.toBeInTheDocument();
     expect(screen.queryByText("ANGLO-CHINESE SCHOOL (INDEPENDENT)")).not.toBeInTheDocument();
   });
+
+  it("counts and pages the full sailor list past the old 500 cap", () => {
+    const sailors = Array.from({ length: 501 }, (_, index) => ({
+      ...sailor,
+      id: `sailor-${index}`,
+      name: `Sailor ${index}`,
+      handle: `sailor-${index}`,
+    }));
+    render(<SearchClient sailorsOnly initialSailors={sailors} initialRegattas={[]} />);
+
+    expect(screen.getByRole("button", { name: "All (501)" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sailors (501)" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show 60 more" })).toBeInTheDocument();
+    expect(screen.getByText("Sailor 0")).toBeInTheDocument();
+    expect(screen.queryByText("Sailor 60")).not.toBeInTheDocument();
+  });
 });

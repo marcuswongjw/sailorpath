@@ -25,6 +25,7 @@ import {
 } from "./helpers";
 import { describeProfileRank } from "./rankBasis";
 import { FollowSailorButton } from "@/components/FollowSailorButton";
+import { knownBirthYearLabel } from "@/lib/age";
 import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
@@ -435,21 +436,27 @@ export function HeroAthleteCard({
                     "nat"
                   );
 
-                  // Age / Born Year
-                  if (bornYear) {
+                  // Age / Born Year. Unknown years stay off the card entirely.
+                  const yearLabel = knownBirthYearLabel(bornYear);
+                  const dobText = String(fullDobLabel || "").trim();
+                  const dobLabel =
+                    showFullDob && dobText && dobText !== "—" && dobText !== "-"
+                      ? dobText
+                      : null;
+                  if (yearLabel || dobLabel) {
                     push(
-                      showFullDob && fullDobLabel ? (
+                      dobLabel ? (
                         <>
                           Born{" "}
                           <span className="text-charcoal font-semibold">
-                            {fullDobLabel}
+                            {dobLabel}
                           </span>
                         </>
                       ) : (
                         <>
                           Born{" "}
                           <span className="text-charcoal font-semibold">
-                            {bornYear}
+                            {yearLabel}
                           </span>
                         </>
                       ),

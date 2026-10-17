@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ageYears, birthYear } from "./age";
+import { ageYears, birthYear, knownBirthYearLabel } from "./age";
 
 describe("ageYears", () => {
   it("returns null for missing/invalid", () => {
@@ -20,5 +20,17 @@ describe("birthYear", () => {
   it("extracts calendar year", () => {
     expect(birthYear("2013-07-21")).toBe(2013);
     expect(birthYear(null)).toBeNull();
+  });
+});
+
+describe("knownBirthYearLabel", () => {
+  it("hides missing and placeholder years", () => {
+    expect(knownBirthYearLabel(null)).toBeNull();
+    expect(knownBirthYearLabel(undefined)).toBeNull();
+    expect(knownBirthYearLabel("")).toBeNull();
+    expect(knownBirthYearLabel("—")).toBeNull();
+    expect(knownBirthYearLabel("-")).toBeNull();
+    expect(knownBirthYearLabel(2011)).toBe("2011");
+    expect(knownBirthYearLabel("2012")).toBe("2012");
   });
 });

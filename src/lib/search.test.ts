@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, it, expect } from "vitest";
-import { parseSearchQuery } from "./search";
+import { limitSearchResults, parseSearchQuery } from "./search";
 
 const source = readFileSync(new URL("./search.ts", import.meta.url), "utf8");
 
@@ -46,6 +46,20 @@ describe("parseSearchQuery", () => {
     expect(res.countryPrefix).toBe("SGP");
     expect(res.extractedSailNumber).toBe("1");
     expect(res.clubExpansions).toContain("SAF Yacht Club");
+  });
+});
+
+describe("limitSearchResults", () => {
+  it("returns the full roster unless a caller sets a finite limit", () => {
+    expect(limitSearchResults([1, 2, 3])).toEqual([1, 2, 3]);
+    expect(limitSearchResults([1, 2, 3], undefined)).toEqual([1, 2, 3]);
+    expect(limitSearchResults([1, 2, 3], Number.NaN)).toEqual([1, 2, 3]);
+    expect(limitSearchResults([1, 2, 3], 2)).toEqual([1, 2]);
+    expect(limitSearchResults([1, 2, 3], 0)).toEqual([]);
+    expect(source).not.toContain("f.limit ?? 500");
+    const directory = readFileSync(new URL("../app/sailors/page.tsx", import.meta.url), "utf8");
+    expect(directory).not.toContain("limit: 500");
+    expect(directory).toContain("formatAthleteCount");
   });
 });
 

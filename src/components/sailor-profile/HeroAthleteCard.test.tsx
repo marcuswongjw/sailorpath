@@ -78,6 +78,20 @@ describe("HeroAthleteCard", () => {
     expect(follow.closest("form")?.querySelector('input[name="sailorId"]')).toHaveValue("s1");
   });
 
+  it("hides Born when the birth year is unknown", () => {
+    const { rerender } = render(
+      <HeroAthleteCard {...defaultProps} bornYear={null} />
+    );
+    expect(screen.queryByText(/Born/)).toBeNull();
+
+    rerender(<HeroAthleteCard {...defaultProps} bornYear="—" />);
+    expect(screen.queryByText(/Born/)).toBeNull();
+
+    rerender(<HeroAthleteCard {...defaultProps} bornYear="2012" />);
+    expect(screen.getByText("2012")).toBeInTheDocument();
+    expect(screen.getByText(/Born/)).toBeInTheDocument();
+  });
+
   it("renders athlete passport identity and hero metric modules", () => {
     render(<HeroAthleteCard {...defaultProps} />);
 

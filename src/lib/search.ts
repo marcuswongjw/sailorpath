@@ -396,8 +396,17 @@ export async function searchSailorsEnhanced(
 
   scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 
-  const maxResults = f.limit ?? 500;
-  return scored.slice(0, maxResults);
+  return limitSearchResults(scored, f.limit);
+}
+
+/**
+ * An omitted limit returns the full public roster. Callers that want a short
+ * list, such as quick search, pass an explicit limit. The directory must not
+ * default to a cap: the homepage sailor figure counts this same roster.
+ */
+export function limitSearchResults<T>(rows: readonly T[], limit?: number): T[] {
+  if (limit == null || !Number.isFinite(limit)) return [...rows];
+  return rows.slice(0, Math.max(0, Math.floor(limit)));
 }
 
 /**
