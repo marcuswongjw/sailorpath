@@ -1,0 +1,34 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {PGlite} from '@electric-sql/pglite';
+import {is} from 'drizzle-orm';
+import {getTableConfig,PgTable,PgDialect} from 'drizzle-orm/pg-core';
+import * as schema from '../../../src/db/schema';
+const folder=process.argv[2];
+if(!folder) throw new Error('Provide the local private snapshot folder.');
+const snapshot=JSON.parse(fs.readFileSync(folder+'/confirmed-three-before.private.json','utf8'));
+const sqlDir=new URL('.',import.meta.url).pathname;
+const scripts=['03-confirmed-three.sql'].map(f=>fs.readFileSync(sqlDir+f,'utf8'));
+const pg=new PGlite(); const dialect=new PgDialect();
+const quote=(v:unknown):string=>v===null?'null':typeof v==='object'?quote(JSON.stringify(v)):typeof v==='string'?`'${v.replaceAll("'","''")}'`:String(v);
+for(const t of Object.values(schema).filter(t=>is(t,PgTable))){const c=getTableConfig(t);const cols=c.columns.map(col=>`"${col.name}" ${col.getSQLType()}${col.notNull?' NOT NULL':''}${col.default!==undefined?' DEFAULT '+(typeof col.default==='object'&&col.default!==null&&'queryChunks' in col.default?dialect.sqlToQuery(col.default as Parameters<typeof dialect.sqlToQuery>[0]).sql:quote(col.default)):''}${col.primary?' PRIMARY KEY':''}${col.isUnique?' UNIQUE':''}`); for(const u of c.uniqueConstraints)cols.push(`UNIQUE (${u.columns.map(x=>`"${x.name}"`).join(',')})`);await pg.exec(`CREATE TABLE "${c.name}" (${cols.join(',')})`);}
+const insert=async(t:string,x:unknown)=>pg.query<Record<string, unknown>>(`INSERT INTO "${t}" SELECT * FROM jsonb_populate_record(null::"${t}",$1::jsonb)`,[JSON.stringify(x)]);
+for(const [key,table] of Object.entries({profiles:'sailors',results:'regatta_results',races:'regatta_race_results',participants:'regatta_result_participants',indexSailors:'asian_optimist_index_sailors',indexResults:'asian_optimist_index_results',aliases:'sailor_aliases'}))for(const row of snapshot[key]??[])await insert(table,row);
+await pg.exec(`INSERT INTO sailors(id,name,handle,nationality,sail_number,club) VALUES ('ff0a1516-6b16-4ba7-a9c5-7959ae9f50e7','Khairul Ilzani bin Mohd Afendy','ilzani','MAS','MAS 119','N/A');`);
+const baselineRaces=(await pg.query<Record<string, unknown>>('select * from regatta_race_results order by id')).rows;
+const baselineResults=(await pg.query<Record<string, unknown>>(`select to_jsonb(r)-'sailor_id'-'updated_at'-'nationality' data from regatta_results r order by id`)).rows;
+// An identity conflict rolls back profile corrections too.
+await pg.exec("update sailors set gender='F' where id='fb374084-e7d7-4796-a106-c5bf8c1abc2b'");
+await assert.rejects(()=>pg.exec(scripts[0]),/Gender conflict/);await pg.exec('rollback');
+await pg.exec("update sailors set gender='M' where id='fb374084-e7d7-4796-a106-c5bf8c1abc2b'");
+const first=snapshot.results.find((x: {sailor_id:string;regatta_id:string})=>x.sailor_id==='e0d61d81-9b7f-45d3-a6fb-b78ff25b39dc');
+await pg.exec(`insert into regatta_results(sailor_id,regatta_id,rank) values('fb374084-e7d7-4796-a106-c5bf8c1abc2b','${first.regatta_id}',99)`);
+await assert.rejects(()=>pg.exec(scripts[0]),/Shared official sheet/);await pg.exec('rollback');
+await pg.exec(`delete from regatta_results where sailor_id='fb374084-e7d7-4796-a106-c5bf8c1abc2b'`);
+for(const sql of scripts)await pg.exec(sql);
+for(const sql of scripts)await pg.exec(sql);
+assert.deepEqual((await pg.query<Record<string, unknown>>('select * from regatta_race_results order by id')).rows,baselineRaces);
+assert.deepEqual((await pg.query<Record<string, unknown>>(`select to_jsonb(r)-'sailor_id'-'updated_at'-'nationality' data from regatta_results r order by id`)).rows,baselineResults);
+assert.equal((await pg.query<Record<string, unknown>>('select count(*)::int n from sailors')).rows[0].n,4);
+assert.equal((await pg.query<Record<string, unknown>>("select count(*)::int n from admin_change_log where action='sailors.merge_reviewed_batch'")).rows[0].n,3);
+console.log(JSON.stringify({passed:true,merged:3,preservedResults:baselineResults.length,preservedRaces:baselineRaces.length,replay:true,nationalityConflictBlocked:true,sharedSheetBlocked:true,userConfirmed:true})); await pg.close();

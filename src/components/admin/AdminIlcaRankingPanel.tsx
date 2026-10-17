@@ -1,5 +1,6 @@
 "use client";
 
+import { useSailorDuplicateDecisions } from "./useSailorDuplicateDecisions";
 import { useMemo, useState, useCallback } from "react";
 import Link from "next/link";
 import {
@@ -94,15 +95,8 @@ export function AdminIlcaRankingPanel({
   });
   const [editBusy, setEditBusy] = useState(false);
   const [showDupes, setShowDupes] = useState(true);
-  const [ignoredDupes, setIgnoredDupes] = useState<Set<string>>(() => {
-    try {
-      const raw = localStorage.getItem("sailorpath_ignored_ilca4_duplicates");
-      if (raw) return new Set(JSON.parse(raw) as string[]);
-    } catch {
-      /* ignore */
-    }
-    return new Set();
-  });
+  const duplicateReview = useSailorDuplicateDecisions();
+  const ignoredDupes = duplicateReview.keys;
 
   const cutoff = useMemo(
     () => ilcaSquadCutoff(intakeKind, intakeYear),
@@ -247,22 +241,7 @@ export function AdminIlcaRankingPanel({
     });
   }, [ilca4Sailors, ignoredDupes]);
 
-  const ignoreDupe = (aId: string, bId: string) => {
-    const key = [aId, bId].sort().join("|");
-    setIgnoredDupes((prev) => {
-      const next = new Set(prev);
-      next.add(key);
-      try {
-        localStorage.setItem(
-          "sailorpath_ignored_ilca4_duplicates",
-          JSON.stringify([...next])
-        );
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
-  };
+  const ignoreDupe = (aId: string, bId: string) => { void duplicateReview.decide(aId, bId); };
 
   const refreshSailors = useCallback(async () => {
     const list = await fetch("/api/admin/sailors?all=1", {
@@ -909,7 +888,7 @@ export function AdminIlcaRankingPanel({
                             onClick={() => ignoreDupe(p.a.id, p.b.id)}
                             className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[13px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
                           >
-                            Ignore
+                            Confirm different sailors
                           </button>
                         </div>
                       </li>

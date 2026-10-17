@@ -1,0 +1,26 @@
+[
+  {
+    "pairId": "Chen-Wang-Sun",
+    "keepId": "e0d61d81-9b7f-45d3-a6fb-b78ff25b39dc",
+    "mergeId": "fb374084-e7d7-4796-a106-c5bf8c1abc2b",
+    "keepName": "Chen Wang Sun",
+    "sourceName": "Wang Sun Chen",
+    "evidence": "User confirmed same identity, Macau nationality MAC and sail MAC 20 on 17 October 2026; official Asian & Oceanian source CHEN, Wang Sun / MAC20. Preserve established profile and historical source entries."
+  },
+  {
+    "pairId": "Tong-Xuan-Ya",
+    "keepId": "f8a52951-c0d1-48ea-ab43-e6a8d02d5e71",
+    "mergeId": "b284cbfc-dd13-4042-b67c-d9120770ad38",
+    "keepName": "Tong Xuan Ya",
+    "sourceName": "Xuan Ya Tong",
+    "evidence": "User confirmed same identity, SGP nationality, both sail numbers SGP4460 and KSA107, sailing under KSA107. Retain both numbers and all official historical entries."
+  },
+  {
+    "pairId": "Xinran-Liu",
+    "keepId": "7b299201-3c25-490e-9d7c-e92164369360",
+    "mergeId": "447b377e-8937-4457-ab22-e443e7d22fca",
+    "keepName": "Xinran Liu",
+    "sourceName": "Xinran Liu",
+    "evidence": "User confirmed same identity, nationality HKG and correct current sail HKG187; official Asian & Oceanian LIU, Xinran / HKG187; retain all SNSC2023 evidence and historical sail HKG260."
+  }
+]

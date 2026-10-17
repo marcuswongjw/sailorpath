@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, type Dispatch, type SetStateAction } from "react";
 import { natSquadFieldForPeriod } from "@/lib/ranking";
+import { useSailorDuplicateDecisions } from "./useSailorDuplicateDecisions";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 import {
   DB_COLS_STORAGE,
@@ -66,18 +67,8 @@ export function useAdminSailors({
   loadRankingSummary = true,
 }: UseAdminSailorsArgs) {
   const { toast, confirm } = useFeedback();
-  const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
-    () => {
-      if (typeof window === "undefined") return new Set();
-      try {
-        const raw = localStorage.getItem("sailorpath_ignored_duplicates");
-        const arr = raw ? (JSON.parse(raw) as string[]) : [];
-        return new Set(arr);
-      } catch {
-        return new Set();
-      }
-    }
-  );
+  const duplicateReview = useSailorDuplicateDecisions(isSuperadmin);
+  const ignoredDuplicateKeys = duplicateReview.keys;
 
   const [selectedSailors, setSelectedSailors] = useState<string[]>([]);
   const [bulkField, setBulkField] = useState<string>("");
@@ -285,20 +276,7 @@ export function useAdminSailors({
   }, [sailorList, ignoredDuplicateKeys]);
 
   const ignoreDuplicatePair = (aId: string, bId: string) => {
-    const key = [aId, bId].sort().join("|");
-    setIgnoredDuplicateKeys((prev) => {
-      const next = new Set(prev);
-      next.add(key);
-      try {
-        localStorage.setItem(
-          "sailorpath_ignored_duplicates",
-          JSON.stringify([...next])
-        );
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
+    void duplicateReview.decide(aId, bId);
   };
 
   const sortedDbSailors = useMemo(() => {

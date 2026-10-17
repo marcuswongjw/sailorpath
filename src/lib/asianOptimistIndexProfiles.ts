@@ -3,6 +3,7 @@ import "server-only";
 import { and, asc, count, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import {
+  asianOptimistIndexSailors,
   asianOptimistIndexEvents,
   asianOptimistIndexResults,
   regattaResults,
@@ -82,7 +83,10 @@ export async function getAsianOptimistIndexEntries(): Promise<
   const baseline = createAsianOptimistIndexBaseline();
 
   try {
-    const profiles = await db
+    const [confirmed, profiles] = await Promise.all([db.select({ identityKey: asianOptimistIndexSailors.identityKey,
+      name: sailors.name, handle: sailors.handle, dob: sailors.dob, isPublicDob: sailors.isPublicDob })
+      .from(asianOptimistIndexSailors).innerJoin(sailors, eq(sailors.id, asianOptimistIndexSailors.sailorId)),
+    db
       .select({
         name: sailors.name,
         handle: sailors.handle,
@@ -91,9 +95,13 @@ export async function getAsianOptimistIndexEntries(): Promise<
         dob: sailors.dob,
         isPublicDob: sailors.isPublicDob,
       })
-      .from(sailors);
+      .from(sailors),
+    ]);
 
     return baseline.map((entry) => {
+      const explicit = confirmed.find(p => p.identityKey.toLowerCase() === entry.identityKey.toLowerCase());
+      if (explicit) return { ...entry, displayName: explicit.name, profileHref: `/${explicit.handle}`,
+        birthYear: explicit.isPublicDob ? publicBirthYear(explicit.dob) : null };
       const entryName = normalizeName(entry.name);
       const match = profiles.find((profile) => {
         const profileNoc = toNoc(profile.nationality);

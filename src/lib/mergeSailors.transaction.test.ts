@@ -7,6 +7,7 @@ import * as schema from "@/db/schema";
 
 const state = vi.hoisted(() => ({ db: null as unknown }));
 vi.mock("@/db", () => ({ get db() { return state.db; } }));
+import { getSeparateSailorPairs, saveSailorDuplicateDecision } from "./sailorDuplicateDecisionStore";
 import { mergeSailors } from "./mergeSailors";
 import { getSailorMergePlan } from "./sailorMergePlan";
 
@@ -55,6 +56,41 @@ beforeEach(async () => {
 afterAll(() => pg.close());
 
 describe("transactional identity merge protection", () => {
+  it("persists confirmed-different decisions in either pair order, blocks a stale merge and preserves audit history on reopen", async () => {
+    const originalPlan = await getSailorMergePlan(a, b);
+    const actor = { userId: ownerA, email: "admin@example.test" };
+    await saveSailorDuplicateDecision({ aId: b, bId: a, separate: true,
+      reason: "Official sheet confirms two distinct individuals.", actor });
+    expect(await getSeparateSailorPairs()).toHaveLength(1);
+    const plan = await getSailorMergePlan(a, b);
+    expect(plan.canMerge).toBe(false);
+    expect(plan.conflicts.join(" ")).toContain("confirmed-different");
+    writes.length = 0;
+    await expect(mergeSailors({ keepId: a, mergeId: b, reviewToken: originalPlan.reviewToken,
+      identityEvidence: "Previously reviewed source name and sail." })).rejects.toBeDefined();
+    expect(writes).toEqual([]);
+    await saveSailorDuplicateDecision({ aId: a, bId: b, separate: false,
+      reason: "New official evidence requires another identity review.", actor });
+    expect(await getSeparateSailorPairs()).toHaveLength(0);
+    expect((await getSailorMergePlan(a, b)).canMerge).toBe(true);
+    expect(await database.select().from(schema.adminChangeLog)).toHaveLength(2);
+  });
+
+  it("does not implicitly transfer a separate-person decision through a third-profile merge", async () => {
+    await database.insert(schema.sailors).values({ id: ownerB, name: "Another sailor", handle: "another", sailNumber: "123", club: "Club" });
+    await saveSailorDuplicateDecision({ aId: b, bId: ownerB, separate: true,
+      reason: "Verified as separate competitors in an official source.", actor: { userId: ownerA, email: null } });
+    expect((await getSailorMergePlan(a, b)).canMerge).toBe(false);
+  });
+
+  it("retains audit history but stops suggesting decisions involving a deleted profile", async () => {
+    await saveSailorDuplicateDecision({ aId: a, bId: b, separate: true,
+      reason: "Official source confirms distinct sailors.", actor: { userId: ownerA, email: null } });
+    await database.delete(schema.sailors).where(eq(schema.sailors.id, b));
+    expect(await getSeparateSailorPairs()).toHaveLength(0);
+    expect(await database.select().from(schema.adminChangeLog)).toHaveLength(1);
+  });
+
   it("preserves result IDs, evidence, every race/discard/code and participant source names", async () => {
     const original = (await pg.query("select to_jsonb(r) - 'sailor_id' - 'updated_at' as data from regatta_results r")).rows;
     const races = (await pg.query("select * from regatta_race_results order by race_number")).rows;
