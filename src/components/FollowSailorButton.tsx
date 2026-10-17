@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function FollowSailorButton({
@@ -7,12 +8,15 @@ export function FollowSailorButton({
   initiallyFollowing,
   disabled = false,
   disabledReason,
+  nextPath = "/following",
 }: {
   sailorId: string;
   initiallyFollowing: boolean;
   disabled?: boolean;
   disabledReason?: string;
+  nextPath?: string;
 }) {
+  const router = useRouter();
   const [following, setFollowing] = useState(initiallyFollowing);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +37,10 @@ export function FollowSailorButton({
         }
       );
       const data = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        router.push(`/login?next=${encodeURIComponent(nextPath)}`);
+        return;
+      }
       if (!response.ok) {
         throw new Error(data.error || "Could not update follow");
       }
@@ -45,10 +53,20 @@ export function FollowSailorButton({
   }
 
   return (
-    <span className="inline-flex flex-col items-start gap-1">
+    <form
+      action="/api/following"
+      method="post"
+      className="inline-flex flex-col items-start gap-1"
+      onSubmit={(event) => {
+        event.preventDefault();
+        void toggle();
+      }}
+    >
+      <input type="hidden" name="sailorId" value={sailorId} />
+      <input type="hidden" name="next" value={nextPath} />
+      <input type="hidden" name="intent" value={following ? "unfollow" : "follow"} />
       <button
-        type="button"
-        onClick={() => void toggle()}
+        type="submit"
         disabled={disabled || busy}
         aria-pressed={following}
         title={disabled ? disabledReason : undefined}
@@ -63,6 +81,6 @@ export function FollowSailorButton({
         {busy ? "Saving…" : following ? "Following" : "Follow"}
       </button>
       {error ? <span className="text-[11px] font-semibold text-rose-700">{error}</span> : null}
-    </span>
+    </form>
   );
 }

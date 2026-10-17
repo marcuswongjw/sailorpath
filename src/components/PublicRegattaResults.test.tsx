@@ -97,6 +97,53 @@ describe("PublicRegattaResults", () => {
     expect(html).toContain("Total Only Sailor");
     expect(html).toContain("Total");
     expect(html).toContain("Nett");
+    expect(html).not.toContain("Is this you? Claim profile");
+  });
+
+  it("links an unclaimed sailor to claim, and skips a claimed sailor", () => {
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults
+        accent="orange"
+        totalFleetSize={12}
+        results={[
+          {
+            resultId: "open-result",
+            sailorId: "sailor-open",
+            regattaId: "regatta-1",
+            rank: 2,
+            nettScore: 8,
+            totalScore: 10,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Open Sailor",
+            sailNumber: "SGP 1",
+            handle: "open-sailor",
+            profileClaimed: false,
+            raceResults: [],
+          },
+          {
+            resultId: "claimed-result",
+            sailorId: "sailor-claimed",
+            regattaId: "regatta-1",
+            rank: 1,
+            nettScore: 4,
+            totalScore: 6,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Claimed Sailor",
+            sailNumber: "SGP 2",
+            handle: "claimed-sailor",
+            profileClaimed: true,
+            raceResults: [],
+          },
+        ]}
+      />
+    );
+
+    expect(html).toContain("Is this you? Claim profile");
+    expect(html).toContain('href="/login?next=%2Fsailors%2Fopen-sailor"');
+    expect(html).toContain('href="/sailors/claimed-sailor"');
+    expect(html).not.toContain("next=%2Fsailors%2Fclaimed-sailor");
   });
 
   it("labels a crewed boat entry without duplicating its score row", () => {

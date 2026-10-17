@@ -2,6 +2,11 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), refresh: vi.fn() }),
+}));
+
 import { HeroAthleteCard } from "./HeroAthleteCard";
 
 describe("HeroAthleteCard", () => {
@@ -41,6 +46,10 @@ describe("HeroAthleteCard", () => {
       />
     );
     expect(screen.getByRole("button", { name: "Follow" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Follow" }).closest("form")).toHaveAttribute(
+      "action",
+      "/api/following"
+    );
 
     rerender(
       <HeroAthleteCard
@@ -51,6 +60,22 @@ describe("HeroAthleteCard", () => {
       />
     );
     expect(screen.getByRole("button", { name: "Follow" })).toBeDisabled();
+  });
+
+  it("shows a results bio and a follow form before sign-in when the sailor has no written bio", () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        displaySailor={{ ...defaultProps.displaySailor, bio: "" }}
+        resultsBio="Ethan Wong first raced at Harbour Regatta on 2 Apr 2025. Class sailed: Optimist. Best finish: 2nd of 40 at Harbour Regatta."
+        followControl={{ sailorId: "s1", following: false, disabled: false, nextPath: "/sailors/ethan-wong" }}
+      />
+    );
+
+    expect(screen.getByText(/first raced at Harbour Regatta/)).toBeInTheDocument();
+    const follow = screen.getByRole("button", { name: "Follow" });
+    expect(follow.closest("form")).toHaveAttribute("action", "/api/following");
+    expect(follow.closest("form")?.querySelector('input[name="sailorId"]')).toHaveValue("s1");
   });
 
   it("renders athlete passport identity and hero metric modules", () => {

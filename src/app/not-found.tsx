@@ -1,30 +1,39 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { SearchX } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Page not found | SailorPath",
+  description: "This page is not on SailorPath. Open rankings, published results, or search.",
+};
+
+const links = [
+  { href: "/rankings", label: "Rankings", detail: "Current class standings" },
+  { href: "/results", label: "Results", detail: "Published scorecards" },
+  { href: "/search", label: "Search", detail: "Find a sailor or event" },
+] as const;
 
 export default function NotFound() {
   return (
-    <div className="mx-auto max-w-xl px-4 py-16 text-center space-y-4">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400">
-        <SearchX className="h-6 w-6" />
-      </div>
-      <h1 className="text-xl font-black text-white">Page not found</h1>
-      <p className="text-sm text-slate-400 leading-relaxed">
-        This sailor or page doesn&apos;t exist. Check the URL or search below.
+    <div className="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">SailorPath</p>
+      <h1 className="mt-3 text-3xl font-black tracking-tight text-harbour-shadow sm:text-4xl">
+        Page not found
+      </h1>
+      <p className="mt-4 max-w-xl text-base leading-7 text-slate-soft">
+        This page is not on SailorPath. Check the address, or continue from rankings, published results, or search.
       </p>
-      <div className="flex flex-wrap justify-center gap-3 pt-2">
-        <Link
-          href="/sailors"
-          className="rounded-full bg-orange-600 px-5 py-2 text-[15px] font-semibold text-white hover:bg-orange-500"
-        >
-          Search sailors
-        </Link>
-        <Link
-          href="/"
-          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-slate-300 hover:text-white"
-        >
-          Home
-        </Link>
-      </div>
+      <nav aria-label="Continue" className="mt-8 grid gap-3 sm:grid-cols-3">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-xs transition-colors hover:border-harbour"
+          >
+            <span className="block text-base font-semibold text-harbour-shadow">{link.label}</span>
+            <span className="mt-1 block text-sm text-slate-soft">{link.detail}</span>
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

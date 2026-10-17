@@ -54,6 +54,53 @@ function raceValueClass(race: OfficialRaceResultInput | undefined) {
   return "text-[var(--sp-charcoal-slate)]";
 }
 
+function claimProfileHref(handle: string): string {
+  return `/login?next=${encodeURIComponent(`/sailors/${handle}`)}`;
+}
+
+function unclaimedSailors(result: PublicRegattaResult): { handle: string; name: string }[] {
+  const links: { handle: string; name: string }[] = [];
+  const seen = new Set<string>();
+  const add = (
+    handle: string | null | undefined,
+    name: string | null | undefined,
+    claimed: boolean | undefined
+  ) => {
+    const safeHandle = String(handle || "").trim();
+    if (!safeHandle || claimed !== false || seen.has(safeHandle)) return;
+    seen.add(safeHandle);
+    links.push({ handle: safeHandle, name: String(name || "").trim() || safeHandle });
+  };
+  add(result.handle, result.sailorName, result.profileClaimed);
+  for (const member of result.participants || []) {
+    add(member.handle, member.sailorName || member.sourceName, member.profileClaimed);
+  }
+  return links;
+}
+
+function ClaimProfileLinks({ result }: { result: PublicRegattaResult }) {
+  const links = unclaimedSailors(result);
+  if (!links.length) return null;
+  return (
+    <div className="mt-1 flex flex-col gap-0.5">
+      {links.map((link) => (
+        <Link
+          key={link.handle}
+          href={claimProfileHref(link.handle)}
+          className="text-[11px] font-semibold leading-snug text-[var(--sp-harbour-teal)] hover:underline"
+          aria-label={
+            links.length > 1
+              ? `Is this you? Claim profile for ${link.name}`
+              : "Is this you? Claim profile"
+          }
+        >
+          Is this you? Claim profile
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 function crewSummary(result: PublicRegattaResult): string | null {
   const members = (result.participants || [])
     .slice()
@@ -181,25 +228,28 @@ export function PublicRegattaResults({
           >
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-start gap-2">
                   <RankMedalBadge
                     rank={result.rank}
                     suffix={overseas ? "†" : dns ? "*" : ""}
                     nonPodiumClassName={`${colors.rank} shrink-0 font-black tabular-nums`}
                   />
-                  <Link
-                    href={`/sailors/${result.handle}`}
-                    prefetch
-                    className={`${colors.link} break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
-                  >
-                    {result.sailorName}
-                  </Link>
-                  {crew && (
-                    <p className="mt-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)]">
-                      Crew · {crew}
-                      {result.entrySailNumber ? ` · Sail ${result.entrySailNumber}` : ""}
-                    </p>
-                  )}
+                  <div className="min-w-0">
+                    <Link
+                      href={`/sailors/${result.handle}`}
+                      prefetch
+                      className={`${colors.link} break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
+                    >
+                      {result.sailorName}
+                    </Link>
+                    <ClaimProfileLinks result={result} />
+                    {crew && (
+                      <p className="mt-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)]">
+                        Crew · {crew}
+                        {result.entrySailNumber ? ` · Sail ${result.entrySailNumber}` : ""}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <p className="mt-1 text-[11px] text-[var(--sp-charcoal)]">
                   {[
@@ -318,6 +368,7 @@ export function PublicRegattaResults({
                   >
                     {result.sailorName}
                   </Link>
+                  <ClaimProfileLinks result={result} />
                   {crew && (
                     <p className="mt-0.5 text-[11px] font-semibold text-[var(--sp-harbour-teal)]">
                       Crew · {crew}

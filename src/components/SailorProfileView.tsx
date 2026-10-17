@@ -312,7 +312,8 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         boardNumber={boardNumber}
         noc={noc}
         totalRegattasCount={results.length}
-        followControl={isLoggedIn ? props.followControl : null}
+        resultsBio={props.resultsBio}
+        followControl={props.followControl}
       />
 
       {/* Owner editor */}

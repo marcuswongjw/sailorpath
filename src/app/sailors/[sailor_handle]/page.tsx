@@ -22,6 +22,7 @@ import {
 import { resolveProfileAccess } from "@/lib/viewAs";
 import { canManageSailor } from "@/lib/claimAccess";
 import { getProfileFollowState } from "@/lib/followedSailorsQuery";
+import { buildSailorResultsBio } from "@/lib/sailorResultsBio";
 
 export const dynamic = "force-dynamic";
 
@@ -102,6 +103,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
     sailorId: string;
     following: boolean;
     disabled: boolean;
+    nextPath: string;
   } | null = null;
 
   try {
@@ -178,19 +180,24 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       observations = obs;
       equipmentHistory = equipHist;
 
+      followControl = {
+        sailorId: sailor.id,
+        following: false,
+        disabled: access.isOwner,
+        nextPath: `/sailors/${encodeURIComponent(sailor.handle)}`,
+      };
       if (auth?.userId) {
         const followState = await getProfileFollowState(
           auth.userId,
           sailor.id,
           access.isOwner
         );
-        if (followState.show) {
-          followControl = {
-            sailorId: sailor.id,
-            following: followState.following,
-            disabled: followState.disabled,
-          };
-        }
+        followControl = {
+          sailorId: sailor.id,
+          following: followState.following,
+          disabled: followState.disabled,
+          nextPath: `/sailors/${encodeURIComponent(sailor.handle)}`,
+        };
       }
 
       if (shouldLoadPrivateProfileExtras && !ilcaStanding && !mayHaveIlca) {
@@ -221,6 +228,19 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
   const canSeePrivate = access.canSeePrivate;
   const publicSailor = toPublicSailorProps(sailor, { canSeePrivate });
   const equipment = toPublicEquipmentProps(sailor, canSeePrivate);
+  const resultsBio = publicSailor.bio?.trim()
+    ? null
+    : buildSailorResultsBio(
+        sailor.name,
+        (results || []).map((result) => ({
+          regattaName: result.regattaName,
+          regattaDate: result.regattaDate,
+          boatClass: result.boatClass,
+          rank: result.rank,
+          isDns: result.isDns,
+          fleetSize: result.fleetSize,
+        }))
+      );
 
   return (
     <ErrorBoundary
@@ -276,6 +296,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       isLoggedIn={Boolean(auth?.userId)}
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}
+      resultsBio={resultsBio}
       followControl={followControl}
     />
     </ErrorBoundary>

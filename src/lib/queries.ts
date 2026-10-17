@@ -122,6 +122,8 @@ export type RegattaResultParticipantView = {
   role: "solo" | "helm" | "crew" | "member" | "unknown";
   matchStatus: "matched" | "needs_review" | "unresolved";
   rankingCredit: boolean;
+  /** False when the sailor record has no owner. Omitted when claim state is unknown. */
+  profileClaimed?: boolean;
 };
 
 /** Public result row, keeping entry metadata additive for existing consumers. */
@@ -148,6 +150,8 @@ export type PublicRegattaResult = {
   entrySailNumber?: string | null;
   entryBoardNumber?: string | null;
   entryType?: "individual" | "crew" | null;
+  /** False when this result's sailor has no owner. Omitted when claim state is unknown. */
+  profileClaimed?: boolean;
   participants?: RegattaResultParticipantView[];
   raceResults: Array<OfficialRaceResultInput & { regattaResultId?: string }>;
 };
@@ -525,6 +529,7 @@ async function loadResultsForRegatta(
           sailorName: sailors.name,
           sailNumber: sailors.sailNumber,
           handle: sailors.handle,
+          parentId: sailors.parentId,
           school: sailors.school,
           gender: regattaResults.gender,
           sailorGender: sailors.gender,
@@ -545,6 +550,7 @@ async function loadResultsForRegatta(
           sailorId: regattaResultParticipants.sailorId,
           sailorName: sailors.name,
           handle: sailors.handle,
+          parentId: sailors.parentId,
           sourceName: regattaResultParticipants.sourceName,
           displayOrder: regattaResultParticipants.displayOrder,
           role: regattaResultParticipants.role,
@@ -601,27 +607,35 @@ async function loadResultsForRegatta(
         list.push(race);
         racesByResult.set(race.regattaResultId, list);
       }
-      const participantsByResult = new Map<string, typeof participantRows>();
+      const participantsByResult = new Map<string, RegattaResultParticipantView[]>();
       for (const participant of participantRows) {
+        const { parentId, ...view } = participant;
         const list = participantsByResult.get(participant.resultId) || [];
-        list.push(participant);
+        list.push({
+          ...view,
+          profileClaimed: participant.sailorId ? Boolean(parentId) : undefined,
+        });
         participantsByResult.set(participant.resultId, list);
       }
       return restoreBestNettHiddenAsDns(
-        rows.map((r) => ({
-          ...r,
-          sailorName:
-            r.entryLabel ||
-            (participantsByResult.get(r.resultId) || [])
-              .map((participant) => participant.sailorName || participant.sourceName)
-              .join(" / ") ||
-            r.sailorName,
-          sailNumber: r.entrySailNumber || r.sailNumber,
-          participants: participantsByResult.get(r.resultId) || [],
-          gender: r.gender || r.sailorGender || null,
-          nationality: r.nationality || r.sailorNationality || null,
-          raceResults: racesByResult.get(r.resultId) || [],
-        }))
+        rows.map((r) => {
+          const { parentId, ...publicRow } = r;
+          return {
+            ...publicRow,
+            profileClaimed: Boolean(parentId),
+            sailorName:
+              r.entryLabel ||
+              (participantsByResult.get(r.resultId) || [])
+                .map((participant) => participant.sailorName || participant.sourceName)
+                .join(" / ") ||
+              r.sailorName,
+            sailNumber: r.entrySailNumber || r.sailNumber,
+            participants: participantsByResult.get(r.resultId) || [],
+            gender: r.gender || r.sailorGender || null,
+            nationality: r.nationality || r.sailorNationality || null,
+            raceResults: racesByResult.get(r.resultId) || [],
+          };
+        })
       );
     });
 
@@ -649,7 +663,7 @@ async function loadResultsForRegatta(
 
 const getCachedResultsForRegatta = unstable_cache(
   loadResultsForRegatta,
-  ["public-regatta-results-v1"],
+  ["public-regatta-results-v2"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS],

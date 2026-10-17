@@ -90,10 +90,12 @@ export interface HeroAthleteCardProps {
   noc?: string;
   totalRegattasCount?: number;
   currentNatSquad?: string | null;
+  resultsBio?: string | null;
   followControl?: {
     sailorId: string;
     following: boolean;
     disabled: boolean;
+    nextPath?: string;
   } | null;
 }
 
@@ -158,6 +160,7 @@ export function HeroAthleteCard({
   noc = "SGP",
   totalRegattasCount = 0,
   currentNatSquad,
+  resultsBio = null,
   followControl = null,
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -166,6 +169,8 @@ export function HeroAthleteCard({
 
   const activeBoatClass: "optimist" | "ilca4" =
     selectedBoatClass === "ilca4" || standingIsIlca ? "ilca4" : "optimist";
+  const writtenBio = String(displaySailor.bio || "").trim();
+  const bioParagraph = writtenBio || String(resultsBio || "").trim();
   const resolvedOptimistCount =
     optimistCount ??
     (activeBoatClass === "optimist" ? totalRegattasCount : 0);
@@ -548,12 +553,11 @@ export function HeroAthleteCard({
           </div>
         </div>
 
-        {/* Bio */}
-        {displaySailor.bio && (
+        {bioParagraph ? (
           <p className="text-[13px] sm:text-sm leading-relaxed text-charcoal max-w-2xl bg-sailcloth/60 border-l-2 border-harbour pl-3 py-1 rounded-r-lg">
-            {displaySailor.bio}
+            {bioParagraph}
           </p>
-        )}
+        ) : null}
 
         <div className="space-y-2.5 pt-1">
           {boardSummary ? (
@@ -685,12 +689,13 @@ export function HeroAthleteCard({
         <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-cool-veil">
           <div className="flex flex-wrap items-center gap-2">
             {/* Share Profile button */}
-            {isLoggedIn && followControl ? (
+            {followControl ? (
               <FollowSailorButton
                 sailorId={followControl.sailorId}
                 initiallyFollowing={followControl.following}
                 disabled={followControl.disabled}
                 disabledReason="You already manage this sailor"
+                nextPath={followControl.nextPath || (displaySailor.handle ? `/sailors/${displaySailor.handle}` : "/following")}
               />
             ) : null}
             <button
