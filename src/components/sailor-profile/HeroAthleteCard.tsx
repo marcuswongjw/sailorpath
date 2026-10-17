@@ -24,8 +24,11 @@ import {
   initials,
 } from "./helpers";
 import { describeProfileRank } from "./rankBasis";
+import { ConsistencyScoreChip } from "./ConsistencyScoreChip";
 import { FollowSailorButton } from "@/components/FollowSailorButton";
 import { knownBirthYearLabel } from "@/lib/age";
+import { getPercentileBadge } from "@/lib/ranking";
+import type { ConsistencyScoreResult } from "@/lib/consistencyScore";
 import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
@@ -98,6 +101,11 @@ export interface HeroAthleteCardProps {
     disabled: boolean;
     nextPath?: string;
   } | null;
+  /**
+   * Class-and-period consistency from results already on the profile.
+   * Shown beside the series percentile badge.
+   */
+  consistency?: ConsistencyScoreResult | null;
 }
 
 function natSquadBadgeClass(label: string): string {
@@ -163,6 +171,7 @@ export function HeroAthleteCard({
   currentNatSquad,
   resultsBio = null,
   followControl = null,
+  consistency = null,
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
@@ -573,6 +582,7 @@ export function HeroAthleteCard({
               awardTotal={awardTotal}
               awardParts={awardParts}
               onViewAwards={onViewAwards}
+              consistency={consistency}
             />
           ) : (
           <>
@@ -640,6 +650,12 @@ export function HeroAthleteCard({
                 {rank.basisDetail}
               </p>
             )}
+            <ProfilePercentileAndConsistency
+              rank={rank.rank}
+              fleetSize={rank.fleetSize}
+              hasRank={rank.hasRank}
+              consistency={consistency}
+            />
           </div>
 
           <div
@@ -834,16 +850,48 @@ export function HeroAthleteCard({
   );
 }
 
+function ProfilePercentileAndConsistency({
+  rank,
+  fleetSize,
+  hasRank,
+  consistency,
+}: {
+  rank: number | null;
+  fleetSize: number | null;
+  hasRank: boolean;
+  consistency?: ConsistencyScoreResult | null;
+}) {
+  const badge =
+    hasRank && rank != null && fleetSize != null && fleetSize > 0
+      ? getPercentileBadge(rank, fleetSize)
+      : null;
+  if (!badge && !consistency) return null;
+  return (
+    <div className="mt-3 flex flex-wrap items-center gap-2">
+      {badge && (
+        <span
+          className={`rounded-full px-2.5 py-1 text-[12px] font-bold ${badge.className}`}
+        >
+          {badge.label}
+        </span>
+      )}
+      {consistency ? <ConsistencyScoreChip score={consistency} /> : null}
+    </div>
+  );
+}
+
 function BoardSummaryCards({
   summary,
   awardTotal,
   awardParts,
   onViewAwards,
+  consistency,
 }: {
   summary: NonNullable<HeroAthleteCardProps["boardSummary"]>;
   awardTotal: number;
   awardParts: string[];
   onViewAwards?: () => void;
+  consistency?: ConsistencyScoreResult | null;
 }) {
   return (
     <div className="flex flex-col gap-2.5">
@@ -868,6 +916,11 @@ function BoardSummaryCards({
             No recorded finish yet.
           </p>
         )}
+        {consistency ? (
+          <div className="mt-3">
+            <ConsistencyScoreChip score={consistency} />
+          </div>
+        ) : null}
       </div>
 
       <div

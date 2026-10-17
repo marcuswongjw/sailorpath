@@ -312,4 +312,64 @@ describe("HeroAthleteCard", () => {
       screen.getByText("No ranked ILCA 4 results for this series yet.")
     ).toBeInTheDocument();
   });
+
+  it("shows the series percentile badge beside the consistency score", async () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        consistency={{
+          status: "ready",
+          score: 82,
+          band: "very_consistent",
+          bandLabel: "Very consistent",
+          level: "race",
+          sampleSize: 16,
+          classKey: "optimist",
+          classLabel: "Optimist",
+          periodLabel: "Jul – Dec 2026",
+          basisLabel: "16 Optimist races · Jul – Dec 2026",
+          explanation:
+            "100 means every counted finish was the same place in the fleet.",
+        }}
+      />
+    );
+
+    const percentile = screen.getByText("Top 20%");
+    const consistency = screen.getByText(/Consistency 82/);
+    expect(percentile).toBeInTheDocument();
+    expect(consistency).toBeInTheDocument();
+    expect(percentile.parentElement).toContainElement(consistency);
+    expect(screen.getByText(/Very consistent/)).toBeInTheDocument();
+    expect(screen.getByText(/16 Optimist races/)).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "What this means" }));
+    expect(screen.getByText(/same place in the fleet/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "How this is calculated" })).toHaveAttribute(
+      "href",
+      "/how-rankings-work#consistency"
+    );
+  });
+
+  it("shows not enough races yet when the half is too thin", async () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        activeStanding={null}
+        consistency={{
+          status: "insufficient",
+          classKey: "optimist",
+          classLabel: "Optimist",
+          periodLabel: "Jul – Dec 2026",
+          countedRaces: 2,
+          countedRegattas: 1,
+          explanation: "Not enough Optimist races in Jul – Dec 2026 yet.",
+        }}
+      />
+    );
+
+    expect(screen.getByText("Not enough races yet")).toBeInTheDocument();
+    expect(screen.queryByText("Top 20%")).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "What this means" }));
+    expect(screen.getByText(/Not enough Optimist races/)).toBeInTheDocument();
+  });
 });

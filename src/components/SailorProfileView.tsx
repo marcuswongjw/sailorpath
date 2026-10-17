@@ -155,6 +155,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     classChoices,
     hasBoardResults,
     selectedClassLabel,
+    consistency,
     visibleAwards,
     displayMedals,
     showEquipmentSection,
@@ -314,6 +315,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         totalRegattasCount={results.length}
         resultsBio={props.resultsBio}
         followControl={props.followControl}
+        consistency={consistency}
       />
 
       {/* Owner editor */}

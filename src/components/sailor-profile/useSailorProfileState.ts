@@ -44,6 +44,12 @@ import type {
 } from "./types";
 import type { ProfileSectionTab } from "./ProfileClassNavigation";
 import { getSailorPrizes, getSailorMedalCounts } from "@/lib/sailorPrizes";
+import { currentPeriodFromSgToday } from "@/lib/datesSg";
+import {
+  computeConsistencyScore,
+  consistencyClassForProfileTab,
+  type ConsistencyResultInput,
+} from "@/lib/consistencyScore";
 import type { ProfileOwnerForm } from "@/components/sailor-profile/ProfileOwnerEditor";
 import { errorMessage } from "@/lib/errors";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
@@ -1108,6 +1114,26 @@ export function useSailorProfileState({
     : activeBoatClass === "ilca4"
       ? "ILCA 4"
       : "Optimist";
+  /**
+   * Same half the rankings use, and one boat class. Computed from the
+   * results this page already loaded — no extra ranking query.
+   */
+  const consistency = useMemo(() => {
+    const tab = onBoardClass
+      ? resultsTab
+      : activeBoatClass === "ilca4"
+        ? "ilca4"
+        : "optimist";
+    const classKey = consistencyClassForProfileTab(
+      tab,
+      results as ConsistencyResultInput[]
+    );
+    if (!classKey) return null;
+    return computeConsistencyScore(results as ConsistencyResultInput[], {
+      classKey,
+      period: currentPeriodFromSgToday(),
+    });
+  }, [activeBoatClass, onBoardClass, results, resultsTab]);
   const visibleAwards = useMemo(() => {
     if (!onBoardClass) return awards;
     return awards.filter(
@@ -1333,6 +1359,7 @@ export function useSailorProfileState({
     classChoices,
     hasBoardResults,
     selectedClassLabel,
+    consistency,
     visibleAwards,
     displayMedals,
     showEquipmentSection,

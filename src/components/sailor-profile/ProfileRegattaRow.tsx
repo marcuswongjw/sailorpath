@@ -20,7 +20,7 @@ import {
   profileBoatClassGroup,
   type ProfileResult,
 } from "@/lib/profileAnalytics";
-import { regattaCountsForRanking } from "@/lib/ranking";
+import { getPercentileBadge, regattaCountsForRanking } from "@/lib/ranking";
 import { fleetPillClass } from "./helpers";
 import { RaceObservationForm, type RaceObservationForm as RaceObservationFormType } from "./RaceObservationForm";
 import type { ObservationItem } from "./types";
@@ -152,6 +152,16 @@ export function ProfileRegattaRow({
       ? String(nett)
       : "—";
   const tags = buildResultTags(res, goldEntryDate);
+  const percentileBadge =
+    !dns &&
+    !res.isOverseasCommitment &&
+    rank != null &&
+    Number.isFinite(rank) &&
+    rank >= 1 &&
+    fleetSize != null &&
+    Number(fleetSize) > 0
+      ? getPercentileBadge(rank, Number(fleetSize))
+      : null;
   const showFleetSizeUnderPlace =
     fleetSize != null &&
     Number(fleetSize) > 0 &&
@@ -286,8 +296,15 @@ export function ProfileRegattaRow({
               </p>
             ) : null;
           })()}
-          {tags.length > 0 && (
+          {(percentileBadge || tags.length > 0) && (
             <div className="mt-1.5 flex flex-wrap gap-1">
+              {percentileBadge && (
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${percentileBadge.className}`}
+                >
+                  {percentileBadge.label}
+                </span>
+              )}
               {tags.map((t) => (
                 <span
                   key={t.label}
