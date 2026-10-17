@@ -64,6 +64,9 @@ export async function GET(req: Request) {
           totalFleetSize: row.totalFleetSize,
           raceCount: row.raceCount,
           countsForRanking: row.countsForRanking,
+          geography: row.geography,
+          officialResultsUrl: row.officialResultsUrl,
+          officialResultsSourceName: row.officialResultsSourceName,
           resultCount: countMap.get(row.id) ?? 0,
           status: row.status,
         });
@@ -100,6 +103,9 @@ export async function GET(req: Request) {
       totalFleetSize: row.totalFleetSize,
       raceCount: row.raceCount,
       countsForRanking: row.countsForRanking,
+      geography: row.geography,
+      officialResultsUrl: row.officialResultsUrl,
+      officialResultsSourceName: row.officialResultsSourceName,
       resultCount: countRow?.n ?? 0,
       status: row.status,
     });

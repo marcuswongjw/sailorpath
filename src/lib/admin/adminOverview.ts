@@ -37,6 +37,8 @@ export function buildAdminOverview(
   const sheets: OverviewSheet[] = [];
   const grouped = groupRegattaEvents(regattas);
   const addSheet = (sheet: RegattaAdmin, event: string | null) => {
+      // Archived history cannot be published, but it is not an active work item.
+      if (sheet.status === "archived") return;
       const readiness = publicationReadiness({
         ...sheet,
         date: String(sheet.date).slice(0, 10),

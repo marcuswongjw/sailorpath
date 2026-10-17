@@ -1,97 +1,43 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-
-const mocks = vi.hoisted(() => ({
-  requireSuperadmin: vi.fn(),
-  regattaRows: [
-    {
-      id: "sheet-1",
-      name: "Optimist Gold",
-      date: "2026-06-01",
-      boatClass: "Optimist",
-      division: "Gold",
-      totalFleetSize: 20,
-      raceCount: 3,
-      countsForRanking: true,
-      status: "completed",
-    },
-    {
-      id: "sheet-2",
-      name: "ILCA 4 Open",
-      date: "2026-06-02",
-      boatClass: "ILCA 4",
-      division: "Open",
-      totalFleetSize: 15,
-      raceCount: 0,
-      countsForRanking: false,
-      status: "completed",
-    },
-  ],
-  countRows: [
-    { regattaId: "sheet-1", n: 20 },
-    { regattaId: "sheet-2", n: 0 },
-  ],
-}));
-
-vi.mock("@/lib/auth", () => ({
-  requireSuperadmin: mocks.requireSuperadmin,
-  jsonError: (error: unknown) => {
-    const message = error instanceof Error ? error.message : "Error";
-    const status = message.includes("Forbidden") || message.includes("Unauthorized") ? 403 : 500;
-    return Response.json({ error: message }, { status });
-  },
-}));
-
-vi.mock("@/db", () => ({
-  withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
-  db: {
-    select: () => ({
-      from: () => ({
-        where: () => ({
-          limit: () => Promise.resolve([mocks.regattaRows[0]]),
-          groupBy: () => Promise.resolve(mocks.countRows),
-          then: (resolve: (val: unknown) => void) => resolve([mocks.countRows[0]]),
-        }),
-      }),
-    }),
-  },
-}));
-
-import { GET } from "./route";
-
-describe("GET /api/admin/regatta-readiness", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    mocks.requireSuperadmin.mockResolvedValue({
-      userId: "admin-1",
-      email: "admin@sailorpath.com",
-      role: "superadmin",
-    });
-  });
-
-  it("returns 400 when neither sheet nor sheets is provided", async () => {
-    const req = new Request("https://sailorpath.com/api/admin/regatta-readiness");
-    const res = await GET(req);
-    const data = await res.json();
-    expect(data.error).toContain("sheet or sheets is required");
-    expect(res.status).toBe(400);
-  });
-
-  it("handles single sheet readiness check", async () => {
-    const req = new Request("https://sailorpath.com/api/admin/regatta-readiness?sheet=sheet-1");
-    const res = await GET(req);
-    expect(res.status).toBe(200);
-    const data = await res.json();
-    expect(data.ok).toBe(true);
-    expect(data.sheetId).toBe("sheet-1");
-    expect(data).toHaveProperty("readiness");
-  });
-
-  it("handles batch sheets parameter", async () => {
-    const req = new Request("https://sailorpath.com/api/admin/regatta-readiness?sheets=sheet-1,sheet-2");
-    const res = await GET(req);
-    expect(res.status).toBe(200);
-    const data = await res.json();
-    expect(data.ok).toBe(true);
-    expect(data).toHaveProperty("readinessBySheet");
-  });
+import {beforeEach,describe,expect,it,vi} from 'vitest';
+const mocks=vi.hoisted(()=>({auth:vi.fn(),select:vi.fn(),sheet:{
+ id:'sheet-1',name:'Official overseas regatta',date:'2026-01-01',boatClass:'Optimist',division:'Open',
+ totalFleetSize:3,raceCount:3,countsForRanking:false,geography:'THA',status:'draft',
+ officialResultsUrl:null as string|null,officialResultsSourceName:null as string|null,
+}}));
+vi.mock('@/lib/auth',()=>({requireSuperadmin:mocks.auth,jsonError:()=>Response.json({error:'Forbidden'},{status:403})}));
+vi.mock('@/db',()=>({withDatabaseRetry:<T>(fn:()=>Promise<T>)=>fn(),db:{select:mocks.select}}));
+import {GET} from './route';
+beforeEach(()=>{
+ vi.clearAllMocks();mocks.auth.mockResolvedValue({role:'superadmin'});
+ Object.assign(mocks.sheet,{countsForRanking:false,officialResultsUrl:null,officialResultsSourceName:null});
+ mocks.select.mockImplementation((selection?:Record<string,unknown>)=>({from:()=>({where:()=>{
+  const rows=selection&&'n' in selection?[{regattaId:mocks.sheet.id,n:3}]:[mocks.sheet];
+  return {limit:()=>Promise.resolve(rows),groupBy:()=>Promise.resolve(rows),then:(resolve:(value:unknown)=>unknown)=>Promise.resolve(rows).then(resolve)};
+ }})}));
+});
+describe('regatta readiness uses the same source/ranking policy as the overview and publish gate',()=>{
+ it('requires a sheet or sheets parameter',async()=>{
+  const response=await GET(new Request('https://example.com/api/admin/regatta-readiness'));
+  expect(response.status).toBe(400);
+  expect((await response.json()).error).toContain('sheet or sheets is required');
+ });
+ it('requires overseas source metadata for a single sheet, then accepts a complete source',async()=>{
+  const missing=await(await GET(new Request('https://example.com/api/admin/regatta-readiness?sheet=sheet-1'))).json();
+  expect(missing.readiness.summary).toBe('incomplete');
+  expect(missing.readiness.checks.map((c:{code:string})=>c.code)).toEqual(expect.arrayContaining(['official-results-url-missing','official-results-source-missing']));
+  Object.assign(mocks.sheet,{officialResultsUrl:'https://example.com/official.pdf',officialResultsSourceName:'Official results.pdf'});
+  const ready=await(await GET(new Request('https://example.com/api/admin/regatta-readiness?sheet=sheet-1'))).json();
+  expect(ready.readiness.summary).toBe('publishable_non_ranking');
+ });
+ it('blocks overseas ranking inclusion in batch checks too',async()=>{
+  Object.assign(mocks.sheet,{countsForRanking:true,officialResultsUrl:'https://example.com/official.pdf',officialResultsSourceName:'Official results.pdf'});
+  const body=await(await GET(new Request('https://example.com/api/admin/regatta-readiness?sheets=sheet-1'))).json();
+  expect(body.readinessBySheet['sheet-1'].summary).toBe('blocked');
+  expect(body.readinessBySheet['sheet-1'].checks.map((c:{code:string})=>c.code)).toContain('external-ranking-blocked');
+ });
+ it('requires superadmin before reading the database',async()=>{
+  mocks.auth.mockRejectedValue(new Error('Forbidden'));
+  expect((await GET(new Request('https://example.com/api/admin/regatta-readiness?sheet=sheet-1'))).status).toBe(403);
+  expect(mocks.select).not.toHaveBeenCalled();
+ });
 });
