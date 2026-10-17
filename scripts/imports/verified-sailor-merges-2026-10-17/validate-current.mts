@@ -8,7 +8,7 @@ const folder=process.argv[2];
 if(!folder) throw new Error('Provide the local private snapshot folder.');
 const snapshot=JSON.parse(fs.readFileSync(folder+'/before.private.json','utf8'));
 const sqlDir=new URL('.',import.meta.url).pathname;
-const scripts=['01-reviewed-merges.sql','02-ilzani-index-link.sql'].map(f=>fs.readFileSync(sqlDir+f,'utf8'));
+const scripts=['01-reviewed-merges.sql','02-ilzani-index-link.sql','04-ilzani-confirmed-alias.sql'].map(f=>fs.readFileSync(sqlDir+f,'utf8'));
 const pg=new PGlite(); const dialect=new PgDialect();
 const quote=(v:unknown):string=>v===null?'null':typeof v==='object'?quote(JSON.stringify(v)):typeof v==='string'?`'${v.replaceAll("'","''")}'`:String(v);
 for(const t of Object.values(schema).filter(t=>is(t,PgTable))){const c=getTableConfig(t);const cols=c.columns.map(col=>`"${col.name}" ${col.getSQLType()}${col.notNull?' NOT NULL':''}${col.default!==undefined?' DEFAULT '+(typeof col.default==='object'&&col.default!==null&&'queryChunks' in col.default?dialect.sqlToQuery(col.default as Parameters<typeof dialect.sqlToQuery>[0]).sql:quote(col.default)):''}${col.primary?' PRIMARY KEY':''}${col.isUnique?' UNIQUE':''}`); for(const u of c.uniqueConstraints)cols.push(`UNIQUE (${u.columns.map(x=>`"${x.name}"`).join(',')})`);await pg.exec(`CREATE TABLE "${c.name}" (${cols.join(',')})`);}
@@ -33,4 +33,5 @@ assert.deepEqual((await pg.query<Record<string, unknown>>(`select to_jsonb(r)-'s
 assert.equal((await pg.query<Record<string, unknown>>('select count(*)::int n from sailors')).rows[0].n,5);
 assert.equal((await pg.query<Record<string, unknown>>("select count(*)::int n from admin_change_log where action='sailors.merge_reviewed_batch'")).rows[0].n,4);
 assert.equal((await pg.query<Record<string, unknown>>("select sailor_id from asian_optimist_index_sailors where id='16078d0b-6d3e-4ac6-9aa7-6f3b5e059214'")).rows[0].sailor_id,'ff0a1516-6b16-4ba7-a9c5-7959ae9f50e7');
+assert.equal((await pg.query<Record<string, unknown>>("select count(*)::int n from sailor_aliases where alias_name='Khairulilzani Afendy' and sailor_id='ff0a1516-6b16-4ba7-a9c5-7959ae9f50e7'")).rows[0].n,1);
 console.log(JSON.stringify({passed:true,merged:4,preservedResults:baselineResults.length,preservedRaces:baselineRaces.length,replay:true,nationalityConflictBlocked:true,sharedSheetBlocked:true,indexLinked:true})); await pg.close();
