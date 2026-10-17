@@ -1,0 +1,35 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {PGlite} from '@electric-sql/pglite';
+import {is} from 'drizzle-orm';
+import {getTableConfig,PgTable,PgDialect} from 'drizzle-orm/pg-core';
+import * as schema from '../../../src/db/schema';
+const folder=process.argv[2];
+if(!folder) throw new Error('Provide the local private snapshot folder.');
+const snapshot=JSON.parse(fs.readFileSync(folder+'/before.private.json','utf8'));
+const sqlDir=new URL('.',import.meta.url).pathname;
+const scripts=['merge.sql'].map(f=>fs.readFileSync(sqlDir+f,'utf8'));
+const pg=new PGlite(); const dialect=new PgDialect();
+const quote=(v:unknown):string=>v===null?'null':typeof v==='object'?quote(JSON.stringify(v)):typeof v==='string'?`'${v.replaceAll("'","''")}'`:String(v);
+for(const t of Object.values(schema).filter(t=>is(t,PgTable))){const c=getTableConfig(t);const cols=c.columns.map(col=>`"${col.name}" ${col.getSQLType()}${col.notNull?' NOT NULL':''}${col.default!==undefined?' DEFAULT '+(typeof col.default==='object'&&col.default!==null&&'queryChunks' in col.default?dialect.sqlToQuery(col.default as Parameters<typeof dialect.sqlToQuery>[0]).sql:quote(col.default)):''}${col.primary?' PRIMARY KEY':''}${col.isUnique?' UNIQUE':''}`); for(const u of c.uniqueConstraints)cols.push(`UNIQUE (${u.columns.map(x=>`"${x.name}"`).join(',')})`);await pg.exec(`CREATE TABLE "${c.name}" (${cols.join(',')})`);}
+const insert=async(t:string,x:unknown)=>pg.query<Record<string, unknown>>(`INSERT INTO "${t}" SELECT * FROM jsonb_populate_record(null::"${t}",$1::jsonb)`,[JSON.stringify(x)]);
+for(const [key,table] of Object.entries({profiles:'sailors',results:'regatta_results',races:'regatta_race_results',participants:'regatta_result_participants',indexSailors:'asian_optimist_index_sailors',indexResults:'asian_optimist_index_results',aliases:'sailor_aliases'}))for(const row of snapshot[key]??[])await insert(table,row);
+const baselineRaces=(await pg.query<Record<string, unknown>>('select * from regatta_race_results order by id')).rows;
+const baselineResults=(await pg.query<Record<string, unknown>>(`select to_jsonb(r)-'sailor_id'-'updated_at'-'nationality' data from regatta_results r order by id`)).rows;
+// A conflicting explicit review blocks all writes.
+await pg.exec(`insert into admin_change_log(action,entity_type,summary,details) values('sailors.duplicates.keep_separate','sailor','Fixture decision','{"pairKey":"fixture","aId":"c766be2b-32b7-4e38-9f7f-d31332e58c80","bId":"9a81d511-ade5-428c-b79f-1d6e13977120"}')`);
+await assert.rejects(()=>pg.exec(scripts[0]),/Confirmed different-sailor/);await pg.exec('rollback');
+await pg.exec('delete from admin_change_log');
+const first=snapshot.results.find((x: {sailor_id:string;regatta_id:string})=>x.sailor_id==='c766be2b-32b7-4e38-9f7f-d31332e58c80');
+await pg.exec(`insert into regatta_results(sailor_id,regatta_id,rank) values('9a81d511-ade5-428c-b79f-1d6e13977120','${first.regatta_id}',99)`);
+await assert.rejects(()=>pg.exec(scripts[0]),/Shared official sheet/);await pg.exec('rollback');
+await pg.exec(`delete from regatta_results where sailor_id='9a81d511-ade5-428c-b79f-1d6e13977120'`);
+for(const sql of scripts)await pg.exec(sql);
+for(const sql of scripts)await pg.exec(sql);
+assert.deepEqual((await pg.query<Record<string, unknown>>('select * from regatta_race_results order by id')).rows,baselineRaces);
+assert.deepEqual((await pg.query<Record<string, unknown>>(`select to_jsonb(r)-'sailor_id'-'updated_at'-'nationality' data from regatta_results r order by id`)).rows,baselineResults);
+assert.equal((await pg.query<Record<string, unknown>>('select count(*)::int n from sailors')).rows[0].n,1);
+assert.equal((await pg.query<Record<string, unknown>>("select count(*)::int n from admin_change_log where action='sailors.merge_reviewed_batch'")).rows[0].n,1);
+assert.equal((await pg.query<Record<string, unknown>>("select sail_number from sailors")).rows[0].sail_number,'IND 1711');
+assert.deepEqual((await pg.query<Record<string, unknown>>("select * from asian_optimist_index_results order by id")).rows.map(r=>r.id),snapshot.indexResults.map((r:{id:string})=>r.id));
+console.log(JSON.stringify({passed:true,merged:1,preservedResults:baselineResults.length,preservedRaces:baselineRaces.length,replay:true,separateDecisionBlocked:true,sharedSheetBlocked:true,currentSailNumber:"IND 1711"})); await pg.close();
