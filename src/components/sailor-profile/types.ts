@@ -130,8 +130,6 @@ export interface SailorProfileViewProps {
   hidePrivacySection?: boolean;
   /** Show "Claimed" vs "Unclaimed" badge in header */
   profileVerified?: boolean;
-  /** Server paragraph built from this sailor's results. Shown when the sailor has no written bio. */
-  resultsBio?: string | null;
   followControl?: {
     sailorId: string;
     following: boolean;

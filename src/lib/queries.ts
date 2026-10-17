@@ -50,7 +50,11 @@ import { applyProjectedSilverParticipationDropped } from "@/lib/silverSeriesDrop
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
 import { superadminRoleDecision, type AppRole } from "@/lib/superadminEmail";
 import { normalizeGender } from "@/lib/gender";
-import { normalizeSgSeriesMembership } from "@/lib/seriesMembership";
+import {
+  isExplicitGuest,
+  isSgpNationality,
+  normalizeSgSeriesMembership,
+} from "@/lib/seriesMembership";
 import {
   computeIlcaRankings,
   ilcaRankingRegattas,
@@ -828,11 +832,33 @@ export const getCachedResultsForSailor = unstable_cache(
   }
 );
 
+function seriesStandingFromBoard(
+  ranked: RankedSailor[],
+  sailorId: string,
+  period: Period
+): SeriesStanding | null {
+  const me = ranked.find((row) => row.id === sailorId);
+  if (!me) return null;
+  const overallRank = overallRankOnBoard(ranked, sailorId);
+  if (overallRank == null) return null;
+  return {
+    period,
+    periodLabel: periodLabel(period),
+    fleet: me.fleet,
+    overallRank,
+    fleetSize: ranked.length,
+    best3of5: me.overallScore,
+    rScores: me.regattaScores,
+    trendNote: `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+  };
+}
+
 /**
  * Live Best 3 of 5 strip for a single sailor.
  *
- * Reuses the same 60s fleet-ranking cache as /api/rankings and gold/silver SSR,
- * so opening a profile right after viewing rankings is near-instant.
+ * Reuses the same fleet-ranking cache as /api/rankings and the Gold/Silver pages.
+ * Fleet membership resolves from entry dates. Singapore sailors with no Series
+ * stamp are then looked up on those same cached boards, one fleet at a time.
  */
 export async function getSailorSeriesStanding(
   sailorId: string,
@@ -876,27 +902,32 @@ export async function getSailorSeriesStanding(
   if (!meRow) return null;
 
   const fleetInfo = resolveSailorFleet(meRow, period);
-  if (!fleetInfo?.active) return null;
+  if (fleetInfo?.active) {
+    const ranked = await getCachedFleetRankings(
+      fleetInfo.fleet,
+      period.year,
+      period.half
+    );
+    return seriesStandingFromBoard(ranked, sailorId, period);
+  }
 
-  const all = await getCachedFleetRankings(
-    fleetInfo.fleet,
+  // resolveSailorFleet omits Optimist history here. Singapore sailors can still
+  // be on the published Silver (or Gold) board without a Series tag or entry
+  // date. Read the shared caches one fleet at a time so this matches the board.
+  if (!isSgpNationality(meRow.nationality) || isExplicitGuest(meRow)) {
+    return null;
+  }
+
+  const gold = await getCachedFleetRankings("Gold", period.year, period.half);
+  const onGold = seriesStandingFromBoard(gold, sailorId, period);
+  if (onGold) return onGold;
+
+  const silver = await getCachedFleetRankings(
+    "Silver",
     period.year,
     period.half
   );
-  const me = all.find((x) => x.id === sailorId);
-  if (!me) return null;
-  const overallRank = overallRankOnBoard(all, sailorId);
-  if (overallRank == null) return null;
-  return {
-    period,
-    periodLabel: periodLabel(period),
-    fleet: me.fleet,
-    overallRank,
-    fleetSize: all.length,
-    best3of5: me.overallScore,
-    rScores: me.regattaScores,
-    trendNote: `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
-  };
+  return seriesStandingFromBoard(silver, sailorId, period);
 }
 
 /**

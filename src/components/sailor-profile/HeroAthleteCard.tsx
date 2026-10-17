@@ -91,7 +91,6 @@ export interface HeroAthleteCardProps {
   noc?: string;
   totalRegattasCount?: number;
   currentNatSquad?: string | null;
-  resultsBio?: string | null;
   followControl?: {
     sailorId: string;
     following: boolean;
@@ -161,7 +160,6 @@ export function HeroAthleteCard({
   noc = "SGP",
   totalRegattasCount = 0,
   currentNatSquad,
-  resultsBio = null,
   followControl = null,
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -170,8 +168,7 @@ export function HeroAthleteCard({
 
   const activeBoatClass: "optimist" | "ilca4" =
     selectedBoatClass === "ilca4" || standingIsIlca ? "ilca4" : "optimist";
-  const writtenBio = String(displaySailor.bio || "").trim();
-  const bioParagraph = writtenBio || String(resultsBio || "").trim();
+  const bioParagraph = String(displaySailor.bio || "").trim();
   const resolvedOptimistCount =
     optimistCount ??
     (activeBoatClass === "optimist" ? totalRegattasCount : 0);
