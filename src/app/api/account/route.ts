@@ -2,7 +2,7 @@ import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
-import { db, withDatabaseRetry } from "@/db";
+import { db, withDatabaseRetry, withSequentialDatabaseReads } from "@/db";
 import { sailorClaims, sailors, profiles } from "@/db/schema";
 
 /** Logged-in account: user profile + owned sailors + claim requests */
@@ -13,10 +13,9 @@ export async function GET() {
       return NextResponse.json({ error: "Sign in required" }, { status: 401 });
     }
 
-    const [approvedClaims, claims, profileRows] = await withDatabaseRetry(
-      () =>
-        Promise.all([
-          db
+    const [approvedClaims, claims, profileRows] = await withSequentialDatabaseReads(
+      [
+          () => db
             .select({
               sailorId: sailorClaims.sailorId,
               relation: sailorClaims.relation,
@@ -28,7 +27,7 @@ export async function GET() {
                 eq(sailorClaims.status, "approved")
               )
             ),
-          db
+          () => db
             .select({
               id: sailorClaims.id,
               status: sailorClaims.status,
@@ -44,7 +43,7 @@ export async function GET() {
             .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
             .where(eq(sailorClaims.requesterId, auth.userId))
             .orderBy(desc(sailorClaims.createdAt)),
-          db
+          () => db
             .select({
               id: profiles.id,
               email: profiles.email,
@@ -56,7 +55,7 @@ export async function GET() {
             .from(profiles)
             .where(eq(profiles.id, auth.userId))
             .limit(1),
-        ]),
+        ],
       { label: "account.get" }
     );
 

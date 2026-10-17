@@ -5,7 +5,15 @@ const mocks=vi.hoisted(()=>({auth:vi.fn(),select:vi.fn(),sheet:{
  officialResultsUrl:null as string|null,officialResultsSourceName:null as string|null,
 }}));
 vi.mock('@/lib/auth',()=>({requireSuperadmin:mocks.auth,jsonError:()=>Response.json({error:'Forbidden'},{status:403})}));
-vi.mock('@/db',()=>({withDatabaseRetry:<T>(fn:()=>Promise<T>)=>fn(),db:{select:mocks.select}}));
+vi.mock('@/db',()=>({
+ withDatabaseRetry:<T>(fn:()=>Promise<T>)=>fn(),
+ withSequentialDatabaseReads:async (reads:ReadonlyArray<() => Promise<unknown>>)=>{
+  const results=[];
+  for (const read of reads) results.push(await read());
+  return results;
+ },
+ db:{select:mocks.select},
+}));
 import {GET} from './route';
 beforeEach(()=>{
  vi.clearAllMocks();mocks.auth.mockResolvedValue({role:'superadmin'});

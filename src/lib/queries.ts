@@ -596,11 +596,9 @@ async function loadResultsForRegatta(
           throw error;
         });
 
-      const [rows, raceRows, participantRows] = await Promise.all([
-        rowsPromise,
-        raceRowsPromise,
-        participantsPromise,
-      ]);
+      const rows = await rowsPromise;
+      const participantRows = await participantsPromise;
+      const raceRows = await raceRowsPromise;
       const racesByResult = new Map<string, typeof raceRows>();
       for (const race of raceRows) {
         const list = racesByResult.get(race.regattaResultId) || [];
@@ -738,8 +736,7 @@ export async function getResultsForSailor(sailorId: string) {
       }));
     }
     try {
-      const [raceRows, participantRows] = await Promise.all([
-        db
+      const raceRows = await db
         .select({
           regattaResultId: regattaRaceResults.regattaResultId,
           raceNumber: regattaRaceResults.raceNumber,
@@ -755,8 +752,8 @@ export async function getResultsForSailor(sailorId: string) {
             results.map((result) => result.resultId)
           )
         )
-        .orderBy(asc(regattaRaceResults.raceNumber)),
-        db
+        .orderBy(asc(regattaRaceResults.raceNumber));
+      const participantRows = await db
           .select({
             resultId: regattaResultParticipants.regattaResultId,
             id: regattaResultParticipants.id,
@@ -780,8 +777,7 @@ export async function getResultsForSailor(sailorId: string) {
           .orderBy(
             asc(regattaResultParticipants.regattaResultId),
             asc(regattaResultParticipants.displayOrder)
-          ),
-      ]);
+          );
       const racesByResult = new Map<string, typeof raceRows>();
       for (const race of raceRows) {
         const list = racesByResult.get(race.regattaResultId) || [];
@@ -962,8 +958,7 @@ async function computeIlcaRankingsBoard(
   const asOf = asOfYmd || todayYmdSg();
   try {
     return await withDb(async () => {
-      const [sailorRows, regattaRows] = await Promise.all([
-        db
+      const sailorRows = await db
           .select({
             id: sailors.id,
             name: sailors.name,
@@ -995,8 +990,8 @@ async function computeIlcaRankingsBoard(
                   )
               )`
             )
-          ),
-        db
+          );
+      const regattaRows = await db
           .select({
             id: regattas.id,
             name: regattas.name,
@@ -1023,8 +1018,7 @@ async function computeIlcaRankingsBoard(
                 sql`lower(coalesce(${regattas.boatClass}, '')) like '%radial%'`
               )
             )
-          ),
-      ]);
+          );
 
       const ilcaSailors = sailorRows.map((s) => ({
         id: s.id,
@@ -1403,8 +1397,7 @@ function publishedOptimistBoatClassSql() {
 
 async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
   return withDb(async () => {
-    const [sailorRows, regattaRows] = await Promise.all([
-      db
+    const sailorRows = await db
         .select({
           id: sailors.id,
           name: sailors.name,
@@ -1427,8 +1420,8 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
           natSquadStatusJul27: sailors.natSquadStatusJul27,
           nationalSquadStatus: sailors.nationalSquadStatus,
         })
-        .from(sailors),
-      db
+        .from(sailors);
+    const regattaRows = await db
         .select({
           id: regattas.id,
           name: regattas.name,
@@ -1447,8 +1440,7 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
             eq(regattas.status, PUBLIC_RANKING_REGATTA_STATUS),
             publishedOptimistBoatClassSql()
           )
-        ),
-    ]);
+        );
 
     const sailorsOut = sailorRows.map((row) => ({
       ...row,

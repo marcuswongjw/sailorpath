@@ -48,6 +48,11 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@/db", () => ({
   ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
   withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
+  withSequentialDatabaseReads: async (reads: ReadonlyArray<() => Promise<unknown>>) => {
+    const results = [];
+    for (const read of reads) results.push(await read());
+    return results;
+  },
   db: {
     select: () => ({
       from: () => ({

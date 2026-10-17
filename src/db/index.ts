@@ -9,6 +9,7 @@ export {
   ensureDatabaseLiveness,
   isRetryableDatabaseConnectionError,
   withDatabaseRetry,
+  withSequentialDatabaseReads,
   type DatabaseRetryOptions,
   getDatabaseUrlMeta,
   formatDbError,

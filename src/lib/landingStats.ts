@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { count } from "drizzle-orm";
-import { db, withDatabaseRetry } from "@/db";
+import { db, withSequentialDatabaseReads } from "@/db";
 import { regattas, sailors } from "@/db/schema";
 import {
   CACHE_TAG_FLEET_RANKINGS,
@@ -32,12 +32,10 @@ async function queryLandingTotals(): Promise<{
   athletes: string;
   regattas: string;
 }> {
-  const [sailorRow, regattaRow] = await withDatabaseRetry(() =>
-    Promise.all([
-      db.select({ value: count() }).from(sailors).then((rows) => rows[0]),
-      db.select({ value: count() }).from(regattas).then((rows) => rows[0]),
-    ])
-  );
+  const [sailorRow, regattaRow] = await withSequentialDatabaseReads([
+    () => db.select({ value: count() }).from(sailors).then((rows) => rows[0]),
+    () => db.select({ value: count() }).from(regattas).then((rows) => rows[0]),
+  ], { label: "landing.totals" });
   return {
     athletes: formatAthleteCount(Number(sailorRow?.value)),
     regattas: formatRegattaCount(Number(regattaRow?.value)),

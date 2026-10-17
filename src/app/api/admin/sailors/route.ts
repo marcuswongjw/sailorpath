@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db, withDatabaseRetry } from "@/db";
+import { db, withSequentialDatabaseReads } from "@/db";
 import { sailors } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
 import {
@@ -93,12 +93,11 @@ export async function GET(req: Request) {
     const listQ = whereClause ? baseList.where(whereClause) : baseList;
     const countQ = whereClause ? baseCount.where(whereClause) : baseCount;
 
-    const [rows, totalRow] = await withDatabaseRetry(
-      () =>
-        Promise.all([
-          listQ.orderBy(asc(sailors.name)).limit(limit).offset(offset),
-          countQ,
-        ]),
+    const [rows, totalRow] = await withSequentialDatabaseReads(
+      [
+        () => listQ.orderBy(asc(sailors.name)).limit(limit).offset(offset),
+        () => countQ,
+      ],
       { label: "admin.sailors.get" }
     );
 

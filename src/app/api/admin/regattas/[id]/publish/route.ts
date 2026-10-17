@@ -125,7 +125,7 @@ export async function POST(
         if (existingDinghy.slug) {
           revalidatePath(`/regattas/${existingDinghy.slug}`);
         }
-        revalidateTag("public-rankings", "max-age: 0");
+        revalidateTag("public-rankings", "max");
       } catch (e) {
         console.warn("[publish] Cache revalidation warning:", e);
       }

@@ -32,16 +32,14 @@ const PUBLIC_RANKING_PATHS = [
  *
  * Uses `revalidateTag(..., "max")` (stale-while-revalidate) plus path
  * invalidation so the next visit to Gold/Silver/ILCA/regatta pages refreshes.
- * Safe to call from Route Handlers; never throws to the client.
+ * Immediate expiry would make that visit wait on the database and turn a
+ * pooler timeout into a public 503. Safe to call from Route Handlers; never
+ * throws to the client.
  */
 export function revalidatePublicRankings(reason?: string): void {
   try {
     for (const tag of PUBLIC_RANKING_CACHE_TAGS) {
-      try {
-        revalidateTag(tag, { expire: 0 });
-      } catch {
-        revalidateTag(tag, "max");
-      }
+      revalidateTag(tag, "max");
     }
     for (const path of PUBLIC_RANKING_PATHS) {
       revalidatePath(path);
@@ -59,11 +57,7 @@ export function revalidatePublicRankings(reason?: string): void {
 /** Refresh the published news index and an optional canonical article route. */
 export function revalidatePublicNews(slug?: string): void {
   try {
-    try {
-      revalidateTag(CACHE_TAG_NEWS_ARTICLES, { expire: 0 });
-    } catch {
-      revalidateTag(CACHE_TAG_NEWS_ARTICLES, "max");
-    }
+    revalidateTag(CACHE_TAG_NEWS_ARTICLES, "max");
     revalidatePath("/news");
     if (slug) revalidatePath(`/news/${encodeURIComponent(slug)}`);
   } catch (error) {

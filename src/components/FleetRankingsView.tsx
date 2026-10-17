@@ -204,7 +204,9 @@ export function FleetRankingsView({
           `/api/rankings?fleet=${fleet}&year=${period.year}&half=${encodeURIComponent(period.half)}`
         );
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Failed to load rankings");
+        if (!res.ok || data.unavailable) {
+          throw new Error(data.error || "Rankings are temporarily unavailable");
+        }
         if (!cancelled) setRanked(data.ranked || []);
       } catch (e) {
         if (!cancelled) {

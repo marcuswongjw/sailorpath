@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { eq, inArray, sql } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db, withDatabaseRetry } from "@/db";
+import { db, withSequentialDatabaseReads } from "@/db";
 import { regattaResults, regattas } from "@/db/schema";
 import { publicationReadiness } from "@/lib/admin/publicationReadiness";
 
@@ -30,10 +30,10 @@ export async function GET(req: Request) {
         return NextResponse.json({ ok: true, readinessBySheet: {} });
       }
 
-      const [sheetRows, countRows] = await withDatabaseRetry(
-        () =>
-          Promise.all([
-            db.select().from(regattas).where(inArray(regattas.id, ids)),
+      const [sheetRows, countRows] = await withSequentialDatabaseReads(
+        [
+          () => db.select().from(regattas).where(inArray(regattas.id, ids)),
+          () =>
             db
               .select({
                 regattaId: regattaResults.regattaId,
@@ -42,7 +42,7 @@ export async function GET(req: Request) {
               .from(regattaResults)
               .where(inArray(regattaResults.regattaId, ids))
               .groupBy(regattaResults.regattaId),
-          ]),
+        ],
         { label: "admin.regatta_readiness.get_batch" }
       );
 
@@ -75,21 +75,22 @@ export async function GET(req: Request) {
       return NextResponse.json({ ok: true, readinessBySheet });
     }
 
-    const [row, countRow] = await withDatabaseRetry(
-      () =>
-        Promise.all([
+    const [row, countRow] = await withSequentialDatabaseReads(
+      [
+        () =>
           db
             .select()
             .from(regattas)
             .where(eq(regattas.id, sheet!))
             .limit(1)
             .then((r) => r[0]),
+        () =>
           db
             .select({ n: sql<number>`count(*)::int` })
             .from(regattaResults)
             .where(eq(regattaResults.regattaId, sheet!))
             .then((r) => r[0]),
-        ]),
+      ],
       { label: "admin.regatta_readiness.get" }
     );
     if (!row) {

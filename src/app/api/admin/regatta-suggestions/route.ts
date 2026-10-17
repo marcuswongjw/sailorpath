@@ -17,7 +17,7 @@ export async function GET() {
   try {
     await requireSuperadmin();
 
-    const withSailors = await withDatabaseRetry(
+    const suggestionRows = await withDatabaseRetry(
       async () => {
         // 1. Find all regatta IDs that have results awaiting verification
         const pendingResultRegattas = await db
@@ -60,34 +60,39 @@ export async function GET() {
           .where(and(like(regattas.slug, "log-%"), or(...conditions)))
           .orderBy(desc(regattas.createdAt));
 
-        return await Promise.all(
-          rows.map(async (r) => {
-            const results = await db
-              .select({
-                resultId: regattaResults.id,
-                rank: regattaResults.rank,
-                nettScore: regattaResults.nettScore,
-                totalScore: regattaResults.totalScore,
-                sailorId: sailors.id,
-                sailorName: sailors.name,
-                sailorHandle: sailors.handle,
-                evidenceUrl: regattaResults.evidenceUrl,
-                evidenceName: regattaResults.evidenceName,
-                evidenceType: regattaResults.evidenceType,
-                officialUrl: regattaResults.officialUrl,
-                evidenceNotes: regattaResults.evidenceNotes,
-                verificationStatus: regattaResults.verificationStatus,
-                verifiedAt: regattaResults.verifiedAt,
-              })
-              .from(regattaResults)
-              .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
-              .where(eq(regattaResults.regattaId, r.id));
-            return { ...r, results };
-          })
-        );
+        return rows;
       },
-      { label: "admin.regatta_suggestions.get" }
+      { label: "admin.regatta_suggestions.rows" }
     );
+
+    const withSailors = [];
+    for (const row of suggestionRows) {
+      const results = await withDatabaseRetry(
+        () =>
+          db
+            .select({
+              resultId: regattaResults.id,
+              rank: regattaResults.rank,
+              nettScore: regattaResults.nettScore,
+              totalScore: regattaResults.totalScore,
+              sailorId: sailors.id,
+              sailorName: sailors.name,
+              sailorHandle: sailors.handle,
+              evidenceUrl: regattaResults.evidenceUrl,
+              evidenceName: regattaResults.evidenceName,
+              evidenceType: regattaResults.evidenceType,
+              officialUrl: regattaResults.officialUrl,
+              evidenceNotes: regattaResults.evidenceNotes,
+              verificationStatus: regattaResults.verificationStatus,
+              verifiedAt: regattaResults.verifiedAt,
+            })
+            .from(regattaResults)
+            .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
+            .where(eq(regattaResults.regattaId, row.id)),
+        { label: "admin.regatta_suggestions.results" }
+      );
+      withSailors.push({ ...row, results });
+    }
 
     return NextResponse.json({
       suggestions: withSailors,

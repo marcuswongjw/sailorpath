@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, asc, desc, eq, gte, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, withSequentialDatabaseReads } from "@/db";
 import {
   coachDevelopmentRecords,
   equipmentItems,
@@ -46,8 +46,8 @@ export async function GET() {
       return NextResponse.json({ error: "Sign in required" }, { status: 401 });
     }
 
-    const [approvedClaims, claims] = await Promise.all([
-      db
+    const [approvedClaims, claims] = await withSequentialDatabaseReads([
+      () => db
         .select({
           sailorId: sailorClaims.sailorId,
           relation: sailorClaims.relation,
@@ -59,7 +59,7 @@ export async function GET() {
             eq(sailorClaims.status, "approved")
           )
         ),
-      db
+      () => db
         .select({
           id: sailorClaims.id,
           status: sailorClaims.status,
@@ -137,8 +137,8 @@ export async function GET() {
       selectionData,
       allCoachRecords,
       upcomingRegattas,
-    ] = await Promise.all([
-      loadPersonalSeasons(
+    ] = await withSequentialDatabaseReads([
+      () => loadPersonalSeasons(
         owned.map((s) => ({
           id: s.id,
           name: s.name,
@@ -155,17 +155,17 @@ export async function GET() {
           ilca6NationalList: s.ilca6NationalList,
         }))
       ).catch(() => new Map()),
-      ids.length
+      () => ids.length
         ? getCachedFleetRankings("Gold", period.year, period.half).catch(
             () => []
           )
         : Promise.resolve([]),
-      ids.length
+      () => ids.length
         ? getCachedFleetRankings("Silver", period.year, period.half).catch(
             () => []
           )
         : Promise.resolve([]),
-      ids.length
+      () => ids.length
         ? db
             .select({
               sailorId: regattaResults.sailorId,
@@ -180,14 +180,14 @@ export async function GET() {
             .orderBy(desc(regattas.date))
             .catch(() => [])
         : Promise.resolve([]),
-      ids.length
+      () => ids.length
         ? db
             .select()
             .from(equipmentItems)
             .where(inArray(equipmentItems.sailorId, ids))
             .catch(() => [])
         : Promise.resolve([]),
-      ids.length
+      () => ids.length
         ? db
             .select()
             .from(parentNotes)
@@ -200,8 +200,8 @@ export async function GET() {
             .orderBy(desc(parentNotes.createdAt))
             .catch(() => [])
         : Promise.resolve([]),
-      computeOptimistSelectionData().catch(() => null),
-      ids.length
+      () => computeOptimistSelectionData().catch(() => null),
+      () => ids.length
         ? db
             .select({
               id: coachDevelopmentRecords.id,
@@ -224,7 +224,7 @@ export async function GET() {
             .limit(20)
             .catch(() => [])
         : Promise.resolve([]),
-      db
+      () => db
         .select({
           id: regattas.id,
           name: regattas.name,

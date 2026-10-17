@@ -2,7 +2,7 @@ import { getSeparateSailorPairs } from "@/lib/sailorDuplicateDecisionStore";
 import { duplicatePairKey } from "@/lib/sailorDuplicateDecisions";
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db, ensureCoreSchema, withDatabaseRetry } from "@/db";
+import { db, ensureCoreSchema, withSequentialDatabaseReads } from "@/db";
 import { regattas, regattaResults, sailors } from "@/db/schema";
 import { desc, sql } from "drizzle-orm";
 import { buildAdminOverview } from "@/lib/admin/adminOverview";
@@ -22,11 +22,10 @@ export async function GET(request: Request) {
       await ensureCoreSchema();
     }
 
-    const { overview, duplicateCount } = await withDatabaseRetry(
-      async () => {
-        const [resultCountRows, regattaRows, sailorRows, separatePairs] = await Promise.all([
+    const [resultCountRows, regattaRows, sailorRows, separatePairs] = await withSequentialDatabaseReads(
+      [
           // Fast index group-by aggregate for result counts per regatta
-          db
+          () => db
             .select({
               regattaId: regattaResults.regattaId,
               count: sql<number>`count(*)::int`,
@@ -34,7 +33,7 @@ export async function GET(request: Request) {
             .from(regattaResults)
             .groupBy(regattaResults.regattaId),
           // Regatta metadata for publication readiness checks
-          db.select({
+          () => db.select({
             id: regattas.id,
             name: regattas.name,
             slug: regattas.slug,
@@ -60,37 +59,32 @@ export async function GET(request: Request) {
             scheduleNotes: regattas.scheduleNotes,
           }).from(regattas).orderBy(desc(regattas.date)),
           // Lightweight sailor projection strictly for duplicate detection
-          db
+          () => db
             .select({
               id: sailors.id,
               name: sailors.name,
               sailNumber: sailors.sailNumber,
             })
             .from(sailors),
-          getSeparateSailorPairs(),
-        ]);
-
-        const resultCounts = new Map<string, number>();
-        for (const row of resultCountRows) {
-          resultCounts.set(row.regattaId, Number(row.count) || 0);
-        }
-
-        const overviewData = buildAdminOverview(regattaRows, resultCounts);
-        const duplicates = findDuplicateSailorPairs(
-          sailorRows.map((s) => ({
-            id: s.id,
-            name: s.name,
-            sailNumber: s.sailNumber,
-          }))
-        );
-
-        return {
-          overview: overviewData,
-          duplicateCount: duplicates.filter(p => !separatePairs.some(d => d.pairKey === duplicatePairKey(p.a.id, p.b.id))).length,
-        };
-      },
+          () => getSeparateSailorPairs(),
+        ],
       { label: "admin.overview.get", signal: request?.signal }
     );
+
+    const resultCounts = new Map<string, number>();
+    for (const row of resultCountRows) {
+      resultCounts.set(row.regattaId, Number(row.count) || 0);
+    }
+
+    const overview = buildAdminOverview(regattaRows, resultCounts);
+    const duplicates = findDuplicateSailorPairs(
+      sailorRows.map((s) => ({
+        id: s.id,
+        name: s.name,
+        sailNumber: s.sailNumber,
+      }))
+    );
+    const duplicateCount = duplicates.filter(p => !separatePairs.some(d => d.pairKey === duplicatePairKey(p.a.id, p.b.id))).length;
 
     return NextResponse.json(
       {

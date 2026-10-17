@@ -334,6 +334,26 @@ export async function withDatabaseRetry<T>(operation: () => Promise<T>, options?
   throw new Error("DB_OPERATION_TIMEOUT");
 }
 
+/** Run reads one after another. Each read keeps its own retry budget.
+ * A single-connection pool would otherwise queue a Promise.all inside one deadline.
+ */
+export async function withSequentialDatabaseReads<T extends readonly unknown[]>(
+  reads: { [K in keyof T]: () => Promise<T[K]> },
+  options?: DatabaseRetryOptions
+): Promise<T> {
+  const results: unknown[] = [];
+  for (let index = 0; index < reads.length; index += 1) {
+    const read = reads[index] as () => Promise<unknown>;
+    results.push(
+      await withDatabaseRetry(read, {
+        ...options,
+        label: options?.label ? `${options.label}.${index + 1}` : undefined,
+      })
+    );
+  }
+  return results as unknown as T;
+}
+
 export function getDatabaseUrlMeta() {
   const cs = resolveConnectionString();
   if (!cs) return null;

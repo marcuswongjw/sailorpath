@@ -1,7 +1,7 @@
 import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { desc, eq } from "drizzle-orm";
-import { db, withDatabaseRetry } from "@/db";
+import { db, withSequentialDatabaseReads } from "@/db";
 import { coachAccessRequests, profiles } from "@/db/schema";
 import { jsonError, requireSuperadmin } from "@/lib/auth";
 import { logAdminChange } from "@/lib/adminChangeLog";
@@ -11,10 +11,9 @@ import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 export async function GET(request: Request) {
   try {
     await requireSuperadmin(request?.signal);
-    const [requests, coaches] = await withDatabaseRetry(
-      () =>
-        Promise.all([
-          db
+    const [requests, coaches] = await withSequentialDatabaseReads(
+      [
+          () => db
             .select({
               id: coachAccessRequests.id,
               requesterId: coachAccessRequests.requesterId,
@@ -29,7 +28,7 @@ export async function GET(request: Request) {
             .from(coachAccessRequests)
             .innerJoin(profiles, eq(coachAccessRequests.requesterId, profiles.id))
             .orderBy(desc(coachAccessRequests.requestedAt)),
-          db
+          () => db
             .select({
               id: profiles.id,
               email: profiles.email,
@@ -40,7 +39,7 @@ export async function GET(request: Request) {
             .from(profiles)
             .where(eq(profiles.role, "coach"))
             .orderBy(desc(profiles.updatedAt)),
-        ]),
+        ],
       { label: "admin.coach_access.get", signal: request?.signal }
     );
 

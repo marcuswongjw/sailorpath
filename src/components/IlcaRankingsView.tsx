@@ -117,11 +117,14 @@ export function IlcaRankingsView({
       );
       const data = (await res.json()) as {
         error?: string;
+        unavailable?: boolean;
         ranked?: IlcaRankedSailor[];
         label?: string;
         asOf?: string;
       };
-      if (!res.ok) throw new Error(data.error || "Could not load rankings");
+      if (!res.ok || data.unavailable) {
+        throw new Error(data.error || "Rankings are temporarily unavailable");
+      }
       setRanked(Array.isArray(data.ranked) ? data.ranked : []);
       setExcluded(new Set());
       if (data.asOf) setAsOf(data.asOf);

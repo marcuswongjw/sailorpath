@@ -43,6 +43,11 @@ vi.mock("@/lib/coachInviteNotify", () => ({
 
 vi.mock("@/db", () => ({
   withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
+  withSequentialDatabaseReads: async (reads: ReadonlyArray<() => Promise<unknown>>) => {
+    const results = [];
+    for (const read of reads) results.push(await read());
+    return results;
+  },
   db: {
     select: () => ({
       from: () => ({

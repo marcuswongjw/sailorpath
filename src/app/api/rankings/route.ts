@@ -7,9 +7,33 @@ import {
 import { toPublicRankedSailors } from "@/lib/publicRankings";
 import type { Period } from "@/lib/ranking";
 import type { IlcaIntakeKind } from "@/lib/ilcaRanking";
-import { DbUnavailableError } from "@/db";
+import { DbUnavailableError, isRetryableDatabaseConnectionError, formatDbError } from "@/db";
+import { recallPublicRead, rememberPublicRead } from "@/lib/publicReadMemory";
+
+const PUBLIC_CACHE = {
+  "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+} as const;
+
+function databaseUnavailable(error: unknown): boolean {
+  return (
+    error instanceof DbUnavailableError ||
+    isRetryableDatabaseConnectionError(formatDbError(error))
+  );
+}
+
+function unavailableRankings() {
+  return NextResponse.json(
+    {
+      unavailable: true,
+      error: "Rankings are temporarily unavailable",
+      ranked: [],
+    },
+    { headers: { "Cache-Control": "no-store" } }
+  );
+}
 
 export async function GET(req: Request) {
+  let cacheKey = "";
   try {
     const { searchParams } = new URL(req.url);
     const requestedFleet = searchParams.get("fleet");
@@ -36,23 +60,19 @@ export async function GET(req: Request) {
       const intakeKind: IlcaIntakeKind =
         intakeRaw === "january" ? "january" : "july";
       const year = Number(searchParams.get("year") || fallback.year);
+      cacheKey = `ilca:${targetClass}:${intakeKind}:${year}`;
       const board = await getCachedIlcaRankings(targetClass, intakeKind, year);
-      return NextResponse.json(
-        {
-          fleet: targetClass.replace(/\s+/g, ""),
-          boatClass: targetClass,
-          intakeKind: board.intakeKind,
-          intakeYear: board.intakeYear,
-          asOf: board.asOf,
-          label: board.label,
-          ranked: board.ranked,
-        },
-        {
-          headers: {
-            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
-          },
-        }
-      );
+      const body = {
+        fleet: targetClass.replace(/\s+/g, ""),
+        boatClass: targetClass,
+        intakeKind: board.intakeKind,
+        intakeYear: board.intakeYear,
+        asOf: board.asOf,
+        label: board.label,
+        ranked: board.ranked,
+      };
+      rememberPublicRead(cacheKey, body);
+      return NextResponse.json(body, { headers: PUBLIC_CACHE });
     }
 
     const optimistFleet = fleetLower === "gold" ? "Gold" : fleetLower === "silver" ? "Silver" : null;
@@ -72,23 +92,19 @@ export async function GET(req: Request) {
       searchParams.get("half") === "Jan-Jun" ? "Jan-Jun" : "Jul-Dec"
     ) as Period["half"];
     const period: Period = { year, half };
+    cacheKey = `optimist:${fleet}:${period.year}:${period.half}`;
     const ranked = await getCachedFleetRankings(fleet, period.year, period.half);
-    const publicRanked = toPublicRankedSailors(ranked);
-    return NextResponse.json(
-      { period, fleet, ranked: publicRanked },
-      {
-        headers: {
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
-        },
-      }
-    );
+    const body = { period, fleet, ranked: toPublicRankedSailors(ranked) };
+    rememberPublicRead(cacheKey, body);
+    return NextResponse.json(body, { headers: PUBLIC_CACHE });
   } catch (e) {
-    if (e instanceof DbUnavailableError) {
-      console.error("[api/rankings] DB unavailable:", e.message);
-      return NextResponse.json(
-        { error: "Database unavailable" },
-        { status: 503 }
-      );
+    if (databaseUnavailable(e)) {
+      const stale = cacheKey ? recallPublicRead<Record<string, unknown>>(cacheKey) : undefined;
+      if (stale) {
+        return NextResponse.json({ ...stale, stale: true }, { headers: PUBLIC_CACHE });
+      }
+      console.error("[api/rankings] DB unavailable:", e instanceof Error ? e.message : e);
+      return unavailableRankings();
     }
     console.error(e);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

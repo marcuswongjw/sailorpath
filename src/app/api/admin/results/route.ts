@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db, ensureCoreSchema, withDatabaseRetry } from "@/db";
+import { db, ensureCoreSchema, withDatabaseRetry, withSequentialDatabaseReads } from "@/db";
 import {
   regattaRaceResults,
   regattaResultParticipants,
@@ -208,12 +208,11 @@ export async function GET(req: Request) {
     );
     const offset = Math.max(0, Number.isFinite(offsetRaw) ? offsetRaw : 0);
 
-    const [rows, totalRow] = await withDatabaseRetry(
-      () =>
-        Promise.all([
-          adminResultRows().limit(limit).offset(offset),
-          db.select({ n: count() }).from(regattaResults),
-        ]),
+    const [rows, totalRow] = await withSequentialDatabaseReads(
+      [
+        () => adminResultRows().limit(limit).offset(offset),
+        () => db.select({ n: count() }).from(regattaResults),
+      ],
       { label: "admin.results.get.all" }
     );
 
@@ -468,13 +467,13 @@ export async function POST(req: Request) {
     let sailorLabel: string | null = null;
     let regattaLabel: string | null = null;
     try {
-      const [[sailorRow], [regattaRow]] = await Promise.all([
-        db
+      const [[sailorRow], [regattaRow]] = await withSequentialDatabaseReads([
+        () => db
           .select({ name: sailors.name })
           .from(sailors)
           .where(eq(sailors.id, row.sailorId))
           .limit(1),
-        db
+        () => db
           .select({ name: regattas.name })
           .from(regattas)
           .where(eq(regattas.id, row.regattaId))
@@ -623,13 +622,13 @@ export async function PATCH(req: Request) {
     let sailorLabel: string | null = null;
     let regattaLabel: string | null = null;
     try {
-      const [[sailorRow], [regattaRow]] = await Promise.all([
-        db
+      const [[sailorRow], [regattaRow]] = await withSequentialDatabaseReads([
+        () => db
           .select({ name: sailors.name })
           .from(sailors)
           .where(eq(sailors.id, row.sailorId))
           .limit(1),
-        db
+        () => db
           .select({ name: regattas.name })
           .from(regattas)
           .where(eq(regattas.id, row.regattaId))
