@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ilca4-sysc2025.pdf",
+    "sha256": "33655d2c3172b4e229393596f8e15bc8800a8191843f0730e1b3e9558667811c",
+    "pages": 4,
+    "allPagesVisuallyReviewed": true
+  },
+  {
+    "file": "ilca4.pdf",
+    "sha256": "0d8b7bb9ed696f30f8961b78c1580a3279740861793941f20d88f2fde951abb0",
+    "pages": 3,
+    "allPagesVisuallyReviewed": true
+  },
+  {
+    "file": "ilca6-sysc2025.pdf",
+    "sha256": "8712bb8ed9455bd064b5132ba6a67a964aaa81dcb4eff77304f3b7c264caccbf",
+    "pages": 2,
+    "allPagesVisuallyReviewed": true
+  },
+  {
+    "file": "boards-sysc2025.pdf",
+    "sha256": "1cb519d3ffc00b7c810881cb00c0bf178d3c805a66df9e1a973531fced9fe8fc",
+    "pages": 1,
+    "allPagesVisuallyReviewed": true
+  }
+]

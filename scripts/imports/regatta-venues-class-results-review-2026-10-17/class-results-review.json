@@ -1,0 +1,91 @@
+{
+  "scope": "Venue mutations authorized; supplied class results compared and confirmed, not imported.",
+  "sources": [
+    {
+      "id": "1I33FveFTEeKyfXbCSbgZQAEG7JIGUbW8",
+      "file": "ilca4.pdf",
+      "title": "ILCA 4 Results.pdf",
+      "event": "Singapore Youth Sailing Championships 2026",
+      "printedStatus": "final",
+      "pages": 3,
+      "classes": [
+        {
+          "class": "ILCA 4",
+          "entries": 70,
+          "races": 12,
+          "discards": 2,
+          "expectedRaceRows": 840,
+          "savedEntries": 70,
+          "savedRaceRows": 0,
+          "finding": "Existing summary-only sheet; all individual race rows, historic sail numbers and source links missing."
+        }
+      ],
+      "url": "https://drive.google.com/file/d/1I33FveFTEeKyfXbCSbgZQAEG7JIGUbW8/view",
+      "sha256": "0d8b7bb9ed696f30f8961b78c1580a3279740861793941f20d88f2fde951abb0",
+      "visuallyReviewedEveryPage": true
+    },
+    {
+      "id": "1wzeEhn66Xll6nQIF7SfPsS2QRugX2IEf",
+      "file": "ilca6-sysc2025.pdf",
+      "title": "ILCA 6 Final Result.SYSC2025.pdf",
+      "event": "Singapore Youth Sailing Championships 2025",
+      "printedStatus": "final",
+      "pages": 2,
+      "classes": [
+        {
+          "class": "ILCA 6",
+          "entries": 19,
+          "races": 10,
+          "discards": 2,
+          "expectedRaceRows": 190,
+          "savedEntries": 0,
+          "savedRaceRows": 0,
+          "finding": "Class sheet missing."
+        }
+      ],
+      "url": "https://drive.google.com/file/d/1wzeEhn66Xll6nQIF7SfPsS2QRugX2IEf/view",
+      "sha256": "8712bb8ed9455bd064b5132ba6a67a964aaa81dcb4eff77304f3b7c264caccbf",
+      "visuallyReviewedEveryPage": true
+    },
+    {
+      "id": "19_QN-jMbB6vMwLcY-3T_BXvEG9ZwGlqY",
+      "file": "boards-sysc2025.pdf",
+      "title": "Techno293 & iQFoil Final Result.SYSC2025.pdf",
+      "event": "Singapore Youth Sailing Championships 2025",
+      "printedStatus": "provisional",
+      "pages": 1,
+      "classes": [
+        {
+          "class": "Techno 293",
+          "entries": 5,
+          "races": 10,
+          "discards": 2,
+          "expectedRaceRows": 50,
+          "savedEntries": 0,
+          "savedRaceRows": 0,
+          "finding": "Class sheet missing."
+        },
+        {
+          "class": "iQFOiL Youth",
+          "entries": 2,
+          "races": 10,
+          "discards": 2,
+          "expectedRaceRows": 20,
+          "savedEntries": 0,
+          "savedRaceRows": 0,
+          "finding": "Class sheet missing."
+        }
+      ],
+      "url": "https://drive.google.com/file/d/19_QN-jMbB6vMwLcY-3T_BXvEG9ZwGlqY/view",
+      "sha256": "1cb519d3ffc00b7c810881cb00c0bf178d3c805a66df9e1a973531fced9fe8fc",
+      "visuallyReviewedEveryPage": true
+    }
+  ],
+  "existingSource": "existing-sysc-inventory.json",
+  "totals": {
+    "missingWholeClassSheets": 3,
+    "entriesOnMissingSheets": 26,
+    "missingRaceRowsInSuppliedSources": 1100,
+    "existingSummaryRowsNeedingRaceBackfill": 70
+  }
+}

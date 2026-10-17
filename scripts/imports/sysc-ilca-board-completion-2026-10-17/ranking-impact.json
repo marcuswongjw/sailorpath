@@ -1,0 +1,178 @@
+[
+  {
+    "board": "ILCA4-2025-july",
+    "beforeCount": 81,
+    "afterCount": 81,
+    "changedRankOrPoints": 12,
+    "pointsChanged": 1,
+    "rankChanged": 12,
+    "changes": [
+      {
+        "name": "Josh Yong Jun Ong",
+        "beforeRank": 19,
+        "afterRank": 18,
+        "beforePoints": 101,
+        "afterPoints": 101
+      },
+      {
+        "name": "Ruiqiao Bu",
+        "beforeRank": 20,
+        "afterRank": 19,
+        "beforePoints": 101,
+        "afterPoints": 101
+      },
+      {
+        "name": "Travis Jia Le Yeo",
+        "beforeRank": 21,
+        "afterRank": 20,
+        "beforePoints": 100,
+        "afterPoints": 100
+      },
+      {
+        "name": "Joash Tan Jing En",
+        "beforeRank": 22,
+        "afterRank": 21,
+        "beforePoints": 99,
+        "afterPoints": 99
+      },
+      {
+        "name": "Lauren Lim",
+        "beforeRank": 23,
+        "afterRank": 22,
+        "beforePoints": 77,
+        "afterPoints": 77
+      },
+      {
+        "name": "Ashlea Tham Yan Shuang",
+        "beforeRank": 24,
+        "afterRank": 23,
+        "beforePoints": 71,
+        "afterPoints": 71
+      },
+      {
+        "name": "Caleb Cao Zhixuan",
+        "beforeRank": 25,
+        "afterRank": 24,
+        "beforePoints": 70,
+        "afterPoints": 70
+      },
+      {
+        "name": "Jayden Zi Xi Bai",
+        "beforeRank": 26,
+        "afterRank": 25,
+        "beforePoints": 68,
+        "afterPoints": 68
+      },
+      {
+        "name": "Nicholas Jiang En Ng",
+        "beforeRank": 27,
+        "afterRank": 26,
+        "beforePoints": 67,
+        "afterPoints": 67
+      },
+      {
+        "name": "Liao ZhiTing",
+        "beforeRank": 28,
+        "afterRank": 27,
+        "beforePoints": 62,
+        "afterPoints": 62
+      },
+      {
+        "name": "Jonas Tan Kia Jeng",
+        "beforeRank": 29,
+        "afterRank": 28,
+        "beforePoints": 55,
+        "afterPoints": 55
+      },
+      {
+        "name": "Yong Heng Yi",
+        "beforeRank": 18,
+        "afterRank": 29,
+        "beforePoints": 106,
+        "afterPoints": 48
+      }
+    ]
+  },
+  {
+    "board": "ILCA4-2026-july",
+    "beforeCount": 81,
+    "afterCount": 81,
+    "changedRankOrPoints": 0,
+    "pointsChanged": 0,
+    "rankChanged": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA6-2025-july",
+    "beforeCount": 45,
+    "afterCount": 45,
+    "changedRankOrPoints": 9,
+    "pointsChanged": 7,
+    "rankChanged": 7,
+    "changes": [
+      {
+        "name": "Keira Carlyle",
+        "beforeRank": 1,
+        "afterRank": 1,
+        "beforePoints": 66,
+        "afterPoints": 65
+      },
+      {
+        "name": "Gordon Alexander Allan",
+        "beforeRank": 2,
+        "afterRank": 2,
+        "beforePoints": 59,
+        "afterPoints": 56
+      },
+      {
+        "name": "Eitan Oh",
+        "beforeRank": 5,
+        "afterRank": 3,
+        "beforePoints": 33,
+        "afterPoints": 51
+      },
+      {
+        "name": "Kenan Kee Zen Tan",
+        "beforeRank": 3,
+        "afterRank": 4,
+        "beforePoints": 44,
+        "afterPoints": 42
+      },
+      {
+        "name": "Elizabeth Victoria Say",
+        "beforeRank": 4,
+        "afterRank": 5,
+        "beforePoints": 41,
+        "afterPoints": 40
+      },
+      {
+        "name": "Foo Yuei Jit",
+        "beforeRank": 8,
+        "afterRank": 6,
+        "beforePoints": 21,
+        "afterPoints": 29
+      },
+      {
+        "name": "Asher-James Nair",
+        "beforeRank": 6,
+        "afterRank": 7,
+        "beforePoints": 25,
+        "afterPoints": 25
+      },
+      {
+        "name": "Justiin Ang",
+        "beforeRank": 9,
+        "afterRank": 8,
+        "beforePoints": 20,
+        "afterPoints": 20
+      },
+      {
+        "name": "Arabelle En Xi Tan",
+        "beforeRank": 7,
+        "afterRank": 9,
+        "beforePoints": 24,
+        "afterPoints": 20
+      }
+    ]
+  }
+]

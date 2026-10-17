@@ -1,0 +1,245 @@
+{
+  "batch": "sysc-ilca-board-completion-2026-10-17",
+  "officialSource": {
+    "url": "https://drive.google.com/file/d/19_QN-jMbB6vMwLcY-3T_BXvEG9ZwGlqY/view",
+    "title": "Techno293 & iQFoil Final Result.SYSC2025.pdf",
+    "visuallyReviewed": true,
+    "pages": 1,
+    "printedStatus": "provisional"
+  },
+  "event": {
+    "id": "bf6cec5a-3710-4295-9d99-e5c1d6bb5bab",
+    "slug": "singapore-youth-sailing-championships-2025",
+    "name": "Singapore Youth Sailing Championships 2025",
+    "startDate": "2025-03-15",
+    "endDate": "2025-03-18",
+    "venue": "National Sailing Centre, Singapore",
+    "scheduleSource": "https://www.sailing.org.sg/events/263419"
+  },
+  "sheet": {
+    "id": "dc5aa1de-a403-54ba-80f1-c26dc92d8edd",
+    "existing": false,
+    "slug": "sysc-2025-iqfoil-youth",
+    "name": "Singapore Youth Sailing Championships 2025 (iQFOiL Youth, Provisional)",
+    "boatClass": "iQFOiL",
+    "division": "Youth",
+    "raceCount": 10,
+    "discardCount": 2,
+    "totalFleetSize": 2,
+    "countsForRanking": false,
+    "status": "published",
+    "resultStatus": "provisional",
+    "date": "2025-03-15",
+    "endDate": "2025-03-18",
+    "venue": "National Sailing Centre, Singapore",
+    "organizer": "Singapore Sailing Federation",
+    "geography": "SGP"
+  },
+  "results": [
+    {
+      "ordinal": 1,
+      "rank": 1,
+      "name": "Jonas Knick",
+      "sailOrBoardNumber": "39",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        }
+      ],
+      "grossScore": 10.0,
+      "nettScore": 8.0,
+      "sailorId": "6f819b67-dbd9-4e5d-9bd4-e9b0d57a0f33",
+      "profileName": "Jonas Haris Knick",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "ac488500-3943-5922-8fda-b04729e2e422",
+      "officialName": "Jonas Knick",
+      "participantId": "ba79c60d-abc6-5c20-9c40-94b14445f7a7",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Jonas Knick; historical board/sail SGP 39. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    },
+    {
+      "ordinal": 2,
+      "rank": 2,
+      "name": "Mark Wong",
+      "sailOrBoardNumber": "95",
+      "nationality": "SGP",
+      "gender": "M",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        }
+      ],
+      "grossScore": 20.0,
+      "nettScore": 16.0,
+      "sailorId": "c1fef555-4202-4814-8fd3-b397ad4fa912",
+      "profileName": "Mark Wong",
+      "identityBasis": "Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually.",
+      "resultId": "0e98e612-6a3e-58e7-a84a-451883f5380d",
+      "officialName": "Mark Wong",
+      "participantId": "7d60246d-a3b6-58ed-8da1-9e6e9c3022d4",
+      "page": 1,
+      "evidenceNotes": "Official PDF page 1; all 1 source pages visually reviewed. Printed provisional as of 15:23 on 22 March 2025. Official name: Mark Wong; historical board/sail SGP 95. Unique full official name/token-order variant and compatible gender; reviewed against existing profile and explicit aliases individually."
+    }
+  ],
+  "newProfiles": [],
+  "beforeResults": [],
+  "beforeParticipants": [],
+  "profilePreflight": [
+    {
+      "id": "6f819b67-dbd9-4e5d-9bd4-e9b0d57a0f33",
+      "name": "Jonas Haris Knick",
+      "gender": "M",
+      "handle": "jonas-haris-knick-2cbvzw2",
+      "nationality": "SGP",
+      "sail_number": "SGP 3482",
+      "board_number": null,
+      "sail_number_ilca4": null
+    },
+    {
+      "id": "c1fef555-4202-4814-8fd3-b397ad4fa912",
+      "name": "Mark Wong",
+      "gender": "M",
+      "handle": "mark-wong-d3ca0b7c5e",
+      "nationality": "SGP",
+      "sail_number": "",
+      "board_number": "95",
+      "sail_number_ilca4": null
+    }
+  ]
+}

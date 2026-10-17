@@ -1,0 +1,14 @@
+{
+  "publicEventVenues": [
+    {
+      "url": "https://sailorpath.com/regattas/singapore-youth-sailing-championships-2023",
+      "venue": "National Sailing Centre"
+    },
+    {
+      "url": "https://sailorpath.com/regattas/raffles-marina-optimist-regatta-2023",
+      "venue": "Raffles Marina"
+    }
+  ],
+  "verifiedOn": "2026-10-17",
+  "metadataOnly": true
+}
