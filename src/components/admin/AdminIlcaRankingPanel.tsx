@@ -1,5 +1,6 @@
 "use client";
 
+import { SailorDuplicateDecisionButton } from "./SailorDuplicateDecisionButton";
 import { useSailorDuplicateDecisions } from "./useSailorDuplicateDecisions";
 import { useMemo, useState, useCallback } from "react";
 import Link from "next/link";
@@ -241,7 +242,6 @@ export function AdminIlcaRankingPanel({
     });
   }, [ilca4Sailors, ignoredDupes]);
 
-  const ignoreDupe = (aId: string, bId: string) => { void duplicateReview.decide(aId, bId); };
 
   const refreshSailors = useCallback(async () => {
     const list = await fetch("/api/admin/sailors?all=1", {
@@ -883,13 +883,7 @@ export function AdminIlcaRankingPanel({
                               </button>
                             </>
                           )}
-                          <button
-                            type="button"
-                            onClick={() => ignoreDupe(p.a.id, p.b.id)}
-                            className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[13px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
-                          >
-                            Confirm different sailors
-                          </button>
+                          <SailorDuplicateDecisionButton a={p.a} b={p.b} />
                         </div>
                       </li>
                     );

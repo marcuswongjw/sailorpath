@@ -275,10 +275,6 @@ export function useAdminSailors({
     ).filter((p) => !ignoredDuplicateKeys.has(pairKey(p.a.id, p.b.id)));
   }, [sailorList, ignoredDuplicateKeys]);
 
-  const ignoreDuplicatePair = (aId: string, bId: string) => {
-    void duplicateReview.decide(aId, bId);
-  };
-
   const sortedDbSailors = useMemo(() => {
     const rows = [...filteredDbSailors];
     const dir = dbSortDir === "asc" ? 1 : -1;
@@ -857,7 +853,6 @@ export function useAdminSailors({
     handleDeleteSailor,
     showDuplicateFinder,
     setShowDuplicateFinder,
-    ignoreDuplicatePair,
     bulkStatus,
     openSailorResults,
     openSailor,

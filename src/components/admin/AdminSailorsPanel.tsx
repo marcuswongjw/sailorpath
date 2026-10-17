@@ -42,6 +42,7 @@ import type { SailorAdmin } from "@/types/sailor";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { SailorFilterBar } from "@/components/admin/SailorFilterBar";
 import { SailorBulkEditToolbar } from "@/components/admin/SailorBulkEditToolbar";
+import { SailorDuplicateDecisionButton } from "./SailorDuplicateDecisionButton";
 import { formatGenderLabel } from "@/lib/gender";
 
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
@@ -98,7 +99,6 @@ export type AdminSailorsPanelProps = {
   handleDeleteSailor: (id: string) => void | Promise<void>;
   showDuplicateFinder: boolean;
   setShowDuplicateFinder: Dispatch<SetStateAction<boolean>>;
-  ignoreDuplicatePair: (aId: string, bId: string) => void;
   bulkStatus: string | null;
   openSailorResults: (id: string) => void | Promise<void>;
   openSailor: (id: string) => boolean;
@@ -402,14 +402,19 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       ? "Tick rows to open bulk edit, merge, or delete."
                       : "Bulk toolbar is open above the table."}
                   </p>
-                  {duplicatePairs.length > 0 ? (
+                  {isSuperadmin && selectedSailors.length === 2 && (
+                    <SailorDuplicateDecisionButton
+                      a={{ id: selectedSailors[0], name: sailorList.find(s => s.id === selectedSailors[0])?.name ?? "Selected sailor A" }}
+                      b={{ id: selectedSailors[1], name: sailorList.find(s => s.id === selectedSailors[1])?.name ?? "Selected sailor B" }}
+                      disabled={saving}
+                    />
+                  )}
                     <Link
                       href="/admin?area=sailors&view=duplicates"
                       className="text-[11px] font-bold text-orange-800 hover:text-orange-900"
                     >
-                      {duplicatePairs.length} possible duplicate{duplicatePairs.length === 1 ? "" : "s"}
+                      Review duplicates ({duplicatePairs.length}) · manage different sailors
                     </Link>
-                  ) : null}
                 </div>
 
                 {/* Bulk edit toolbar — only when at least one row is selected */}

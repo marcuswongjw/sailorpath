@@ -1173,7 +1173,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                   duplicatePairs={sailors.panelProps.duplicatePairs}
                   selectedSailors={sailors.panelProps.selectedSailors}
                   setSelectedSailors={sailors.panelProps.setSelectedSailors}
-                  ignoreDuplicatePair={sailors.panelProps.ignoreDuplicatePair}
                   handleMergeSailors={sailors.panelProps.handleMergeSailors}
                   saving={sailors.panelProps.saving}
                   isSuperadmin={isSuperadmin}

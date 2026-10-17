@@ -1,5 +1,6 @@
 "use client";
 
+import { SailorDuplicateDecisionButton } from "./SailorDuplicateDecisionButton";
 import { AdminSeparateSailors } from "./AdminSeparateSailors";
 import { AlertTriangle, CheckCircle, UserCheck } from "lucide-react";
 import type { DuplicatePair } from "@/components/admin/AdminSailorsPanel";
@@ -8,7 +9,6 @@ export function AdminSailorDuplicatesPanel({
   duplicatePairs,
   selectedSailors,
   setSelectedSailors,
-  ignoreDuplicatePair,
   handleMergeSailors,
   saving,
   isSuperadmin,
@@ -19,7 +19,6 @@ export function AdminSailorDuplicatesPanel({
   duplicatePairs: DuplicatePair[];
   selectedSailors: string[];
   setSelectedSailors: (ids: string[]) => void;
-  ignoreDuplicatePair: (aId: string, bId: string) => void;
   handleMergeSailors: () => void | Promise<void>;
   saving: boolean;
   isSuperadmin: boolean;
@@ -55,7 +54,7 @@ export function AdminSailorDuplicatesPanel({
               Possible duplicate sailors
             </h2>
             <p className="mt-1 text-xs text-slate-700">
-              Name similarity is a suggestion. Choose the profile to keep, then review identity and the merge plan.
+              Choose a profile to keep and review the merge plan, or choose “Confirm different sailors” to stop suggesting this pair. Saved decisions apply to all administrators.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -100,8 +99,8 @@ export function AdminSailorDuplicatesPanel({
                     : "border-white/10 bg-white/[0.03]"
                 }`}
               >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-start sm:gap-x-12">
-                  <div className="min-w-0 max-w-md">
+                <div className="flex flex-col gap-3">
+                  <div className="min-w-0 break-words">
                     <p className="text-xs font-bold text-amber-900">
                       {percent}% name similarity
                     </p>
@@ -126,7 +125,7 @@ export function AdminSailorDuplicatesPanel({
                       </span>
                     </button>
                   </div>
-                  <div className="flex flex-wrap gap-2 shrink-0">
+                  <div className="flex min-w-0 flex-wrap items-start gap-2">
                     <button
                       type="button"
                       onClick={() =>
@@ -140,16 +139,7 @@ export function AdminSailorDuplicatesPanel({
                       className="min-h-11 rounded-full border border-slate-300 px-4 text-sm font-bold text-slate-800">
                       Keep {pair.b.name}
                     </button>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin || saving}
-                      onClick={() =>
-                        ignoreDuplicatePair(pair.a.id, pair.b.id)
-                      }
-                      className="min-h-11 rounded-full border border-slate-300 px-4 text-sm font-bold text-slate-800 hover:bg-slate-50"
-                    >
-                      Confirm different sailors
-                    </button>
+                    {isSuperadmin && <SailorDuplicateDecisionButton a={pair.a} b={pair.b} disabled={saving} />}
                   </div>
                 </div>
               </li>
