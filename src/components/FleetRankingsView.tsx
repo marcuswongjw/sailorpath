@@ -19,6 +19,7 @@ import { formatGenderLabel, normalizeGender } from "@/lib/gender";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 import { useAccount } from "@/components/AccountProvider";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { birthYear as birthYearFromDob, knownBirthYearLabel } from "@/lib/age";
 
 function scoreCell(
   score: number | undefined,
@@ -31,10 +32,8 @@ function scoreCell(
   return String(score);
 }
 
-function birthYear(dob?: string | null) {
-  if (!dob) return "—";
-  const y = new Date(dob).getFullYear();
-  return Number.isFinite(y) ? String(y) : "—";
+function birthYear(dob?: string | null): string | null {
+  return knownBirthYearLabel(birthYearFromDob(dob));
 }
 
 /** Distinct colours for Nat A vs Nat B (and other squad labels). */
@@ -787,7 +786,7 @@ export function FleetRankingsView({
                     <p className="mt-1 flex min-w-0 flex-wrap items-center gap-1">
                       <span className="text-[10px] text-slate-500">
                         {formatGenderLabel(s.gender)}
-                        {birthYear(s.dob) !== "—" ? ` · ${birthYear(s.dob)}` : ""}
+                        {birthYear(s.dob) ? ` · ${birthYear(s.dob)}` : ""}
                       </span>
                       {showSquad && squadFor(s) ? (
                         <MobileSquadChip label={squadFor(s)!} />
