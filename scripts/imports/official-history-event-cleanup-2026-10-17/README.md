@@ -38,7 +38,7 @@ No profiles are merged. Each manifest lists the exact result ID, previous owner,
 
 `08` restores the nine races and two printed discards on Mikaela's already-verified Qingdao personal entry (gross 118, net 80). The final Girls Gold fleet is 25; the PDF includes a separate 24-girl Silver fleet, making 49 combined qualifiers. The printed race-column order Q1,Q2,Q3,Q4,F1,F2,F3,F4,F6 is documented. This remains a draft, non-ranking personal entry. The full Qingdao event roster is not imported or published.
 
-The dashboard excludes archived history from active work queues. The readiness API now passes geography and official source metadata to the same policy used by the overview and publication gate, preventing inconsistent readiness indicators.
+The public event hub displays an Official Results link for the active class sheet, so switching Gold/Silver uses the correct PDF. The dashboard excludes archived history from active work queues. The readiness API now passes geography and official source metadata to the same policy used by the overview and publication gate, preventing inconsistent readiness indicators.
 
 ## Verification and execution
 

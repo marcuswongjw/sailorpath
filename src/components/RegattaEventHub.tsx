@@ -304,6 +304,11 @@ async function DbSlicePanel({
         {" · "}
         {nationalRankingLabel(regatta)}
       </p>
+      {regatta.officialResultsUrl && (
+        <div>
+          <EventLinkChip href={regatta.officialResultsUrl} label="Official Results" />
+        </div>
+      )}
       {results.length === 0 ? (
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 text-center shadow-xs">
           <p className="text-sm font-semibold text-[var(--sp-charcoal-slate)]">
