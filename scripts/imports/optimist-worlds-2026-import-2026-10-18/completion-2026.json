@@ -1,0 +1,339 @@
+{
+  "batch": "optimist-worlds-2026-completion-2026-10-18",
+  "officialSource": {
+    "url": "https://scoring.sailti.com/public/download/overall-datetime-pdf/10651/1/20260628140956",
+    "title": "2026 Optimist World Championship - Overall Results (28 June 2026, 14:09:56).pdf",
+    "website": "https://2026worlds.optiworld.org/en/default/races/race-resultsall",
+    "sha256": "66f165fc9364d6b98166221d70f1a72dde76e14373e7436e12b76429f913fa9a",
+    "pages": 12,
+    "visuallyReviewed": true,
+    "publicationStatus": "final",
+    "statusBasis": "Organiser last overall classification after the event; winner and final top positions corroborated by World Sailing official closing report; PDF has no provisional marker."
+  },
+  "event": {
+    "id": "1e1b625c-c10a-564a-b919-c3bf0bb713cc",
+    "name": "2026 Optimist World Championship",
+    "slug": "2026-optimist-world-championship",
+    "existing": false,
+    "startDate": "2026-06-18",
+    "endDate": "2026-06-28",
+    "venue": "Royal Yacht Club de Tanger, Tangier, Morocco",
+    "organizer": "Royal Yacht Club de Tanger / IODA",
+    "norUrl": "https://optimist-it.com/admin/_static/files/regate/175621064967076/176821260493960.pdf"
+  },
+  "sheet": {
+    "id": "b100399c-9ea7-5034-b8ca-838cee5df58d",
+    "name": "2026 Optimist World Championship (Optimist Overall)",
+    "slug": "2026-optimist-world-championship-overall",
+    "existing": false,
+    "boatClass": "Optimist",
+    "division": "Open",
+    "raceCount": 12,
+    "discardCount": 1,
+    "totalFleetSize": 284,
+    "countsForRanking": false,
+    "status": "published",
+    "resultStatus": "final",
+    "date": "2026-06-18",
+    "endDate": "2026-06-28",
+    "venue": "Royal Yacht Club de Tanger, Tangier, Morocco",
+    "organizer": "Royal Yacht Club de Tanger / IODA",
+    "geography": "MAR",
+    "scheduleNotes": "Asian sailors only are imported at present. Original overall world positions and the full official 284-boat fleet size are retained. See Official Results for the complete classification. Two identity checks and the country scope of Turkey, Israel, Azerbaijan and Cyprus remain pending."
+  },
+  "results": [
+    {
+      "rank": 176,
+      "sourceName": "Nana MURANAKA",
+      "name": "Nana Muranaka",
+      "nationality": "JPN",
+      "sailOrBoardNumber": "JPN 3356",
+      "gender": "F",
+      "nettScore": 384.0,
+      "grossScore": 442.0,
+      "rawScores": [
+        "56",
+        "51",
+        "(58)",
+        "7",
+        "45",
+        "27",
+        "58",
+        "23",
+        "22",
+        "20",
+        "44",
+        "31"
+      ],
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 56.0,
+          "code": null,
+          "discarded": false,
+          "raw": "56",
+          "sourceColumn": "1Q"
+        },
+        {
+          "raceNumber": 2,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51",
+          "sourceColumn": "2Q"
+        },
+        {
+          "raceNumber": 3,
+          "score": 58.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(58)",
+          "sourceColumn": "3Q"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceColumn": "4Q"
+        },
+        {
+          "raceNumber": 5,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45",
+          "sourceColumn": "5Q"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27",
+          "sourceColumn": "6F"
+        },
+        {
+          "raceNumber": 7,
+          "score": 58.0,
+          "code": null,
+          "discarded": false,
+          "raw": "58",
+          "sourceColumn": "7F"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23",
+          "sourceColumn": "8F"
+        },
+        {
+          "raceNumber": 9,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22",
+          "sourceColumn": "9F"
+        },
+        {
+          "raceNumber": 10,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20",
+          "sourceColumn": "10F"
+        },
+        {
+          "raceNumber": 11,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44",
+          "sourceColumn": "11F"
+        },
+        {
+          "raceNumber": 12,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31",
+          "sourceColumn": "12F"
+        }
+      ],
+      "pdfSourceName": "MURANAKA, Nana",
+      "page": 7,
+      "visualReview": true,
+      "sailorId": "5f6d71a5-1dc3-599c-b9be-377150d4dd3a",
+      "resultId": "028f395f-3753-59fc-b234-011ca288e2f0",
+      "participantId": "11638db7-188f-559d-809e-791f1347b45f",
+      "sourceNationality": "JPN",
+      "identityBasis": "User explicitly confirmed on 18 October 2026 that Nana Muranaka JPN3356 and existing Riko Muranaka JPN3356 are different sailors. Create a separate Nana profile; shared sail is not identity proof.",
+      "evidenceNotes": "Official overall results, page 7/12, 28 June 2026 14:09:56. Source name Nana MURANAKA / MURANAKA, Nana; source NOC/sail JPN3356. All 12 race values, one discard, total and net visually read and reconciled with official HTML. Original world position retained. User explicitly confirmed on 18 October 2026 that Nana Muranaka JPN3356 and existing Riko Muranaka JPN3356 are different sailors. Create a separate Nana profile; shared sail is not identity proof."
+    },
+    {
+      "rank": 248,
+      "sourceName": "Rameeza Bhanu SK",
+      "name": "S K Rameeza Bhanu",
+      "nationality": "IND",
+      "sailOrBoardNumber": "IND 1927",
+      "gender": "F",
+      "nettScore": 458.0,
+      "grossScore": 530.0,
+      "rawScores": [
+        "61",
+        "DNC (72)",
+        "62",
+        "40",
+        "46",
+        "24",
+        "32",
+        "8",
+        "31",
+        "UFD 72",
+        "49",
+        "33"
+      ],
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 61.0,
+          "code": null,
+          "discarded": false,
+          "raw": "61",
+          "sourceColumn": "1Q"
+        },
+        {
+          "raceNumber": 2,
+          "score": 72.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "DNC (72)",
+          "sourceColumn": "2Q"
+        },
+        {
+          "raceNumber": 3,
+          "score": 62.0,
+          "code": null,
+          "discarded": false,
+          "raw": "62",
+          "sourceColumn": "3Q"
+        },
+        {
+          "raceNumber": 4,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40",
+          "sourceColumn": "4Q"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46",
+          "sourceColumn": "5Q"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24",
+          "sourceColumn": "6F"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32",
+          "sourceColumn": "7F"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8",
+          "sourceColumn": "8F"
+        },
+        {
+          "raceNumber": 9,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31",
+          "sourceColumn": "9F"
+        },
+        {
+          "raceNumber": 10,
+          "score": 72.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "UFD 72",
+          "sourceColumn": "10F"
+        },
+        {
+          "raceNumber": 11,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49",
+          "sourceColumn": "11F"
+        },
+        {
+          "raceNumber": 12,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33",
+          "sourceColumn": "12F"
+        }
+      ],
+      "pdfSourceName": "SK, Rameeza Bhanu",
+      "page": 10,
+      "visualReview": true,
+      "sailorId": "f381d00f-cd7e-4418-98af-04d9bdfe9d7d",
+      "resultId": "f4c08214-7f63-541e-a319-6a6ea80e0634",
+      "participantId": "06cb1a55-f859-5170-85ce-faf269220d6d",
+      "sourceNationality": "IND",
+      "identityBasis": "User explicitly confirmed on 18 October 2026 that Rameeza Bhanu SK / S K Rameeza Bhanu / Rameeza Bh Sk are the same sailor; keep the existing S K Rameeza Bhanu profile and results. Historical duplicate consolidation preserves both previous event entries and all 18 races. Event-specific IND1927 does not overwrite existing profile equipment IND1716.",
+      "evidenceNotes": "Official overall results, page 10/12, 28 June 2026 14:09:56. Source name Rameeza Bhanu SK / SK, Rameeza Bhanu; source NOC/sail IND1927. All 12 race values, one discard, total and net visually read and reconciled with official HTML. Original world position retained. User explicitly confirmed on 18 October 2026 that Rameeza Bhanu SK / S K Rameeza Bhanu / Rameeza Bh Sk are the same sailor; keep the existing S K Rameeza Bhanu profile and results. Historical duplicate consolidation preserves both previous event entries and all 18 races. Event-specific IND1927 does not overwrite existing profile equipment IND1716."
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "5f6d71a5-1dc3-599c-b9be-377150d4dd3a",
+      "name": "Nana Muranaka",
+      "handle": "nana-muranaka-worlds26",
+      "sail_number": "JPN 3356",
+      "sail_number_ilca4": null,
+      "gender": "F",
+      "nationality": "JPN",
+      "club": "Imported official result",
+      "school": null
+    }
+  ],
+  "beforeEntryCount": 44,
+  "finalEntryCount": 46,
+  "finalRaceCount": 552,
+  "keepSeparate": {
+    "aId": "5f6d71a5-1dc3-599c-b9be-377150d4dd3a",
+    "bId": "3d7d17df-71ad-4195-b41d-abdebbed13bc",
+    "aName": "Nana Muranaka",
+    "bName": "Riko Muranaka",
+    "reason": "User explicitly confirmed on 18 October 2026 that Nana Muranaka JPN3356 and existing Riko Muranaka JPN3356 are different sailors. Create a separate Nana profile; shared sail is not identity proof."
+  },
+  "scopeSource": "https://www.optiworld.org/default/classinfo/national-members?ini=1",
+  "excludedEuropeanNocs": [
+    "TUR",
+    "ISR",
+    "AZE",
+    "CYP"
+  ],
+  "finalScopeNote": "Asian sailors only (IODA continental scope). Original overall world positions and the full official 284-boat fleet size are retained. See Official Results for the complete classification."
+}
