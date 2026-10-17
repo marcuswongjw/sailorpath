@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
 import { getCachedPublicRegattas } from "@/lib/queries";
+import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
 import { getRegattaEvent } from "@/lib/regattaEvents";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 
@@ -15,5 +16,5 @@ export default async function FleetResultsPage({ params }: { params: Promise<{ r
   const grouped = getRegattaEvent(regatta_slug) ? null : (savedEventHubForSlug(regatta_slug, all) || groupedHubForSlug(regatta_slug, all));
   const event = getRegattaEvent(regatta_slug) || grouped?.event;
   if (!event || !event.slices.some((slice) => slice.key === fleet)) notFound();
-  return <RegattaEventHub event={event} activeFleet={fleet} />;
+  return <RegattaEventHub event={await withSavedEventCopy(event)} activeFleet={fleet} />;
 }
