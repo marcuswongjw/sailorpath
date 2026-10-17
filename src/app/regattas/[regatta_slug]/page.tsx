@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { permanentRedirect, redirect } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
+import { resolveFleetResultSheet } from "@/lib/publicShareData";
+import { eventHubShare, eventHubTitle, shareMetadata, sportsEventJsonLd, yearFromText, resultSheetFromEventSlice } from "@/lib/publicSeo";
 import { eq } from "drizzle-orm";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
 import {
@@ -7,7 +10,7 @@ import {
   matchCalendarResults,
 } from "@/lib/calendar/calendarResultLinks";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
-import { db } from "@/db";
+import { db, getDatabaseUrlMeta } from "@/db";
 import { regattaEvents } from "@/db/schema";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 import { applyRegattaEventCopy } from "@/lib/regattaEventCopy";
@@ -38,33 +41,63 @@ async function withSavedEventCopy(event: RegattaEventDef): Promise<RegattaEventD
 
 export const dynamic = "force-dynamic";
 
+function PublishedEventHub({
+  event,
+  activeFleet,
+  calendarView,
+}: {
+  event: RegattaEventDef;
+  activeFleet: string | null;
+  calendarView: "past" | null;
+}) {
+  const slice = activeFleet ? event.slices.find((item) => item.key === activeFleet) : undefined;
+  const sheet = slice ? resultSheetFromEventSlice(event, slice) : eventHubShare(event);
+  return (
+    <>
+      <JsonLd data={sportsEventJsonLd(sheet)} />
+      <RegattaEventHub event={event} activeFleet={activeFleet} calendarView={calendarView} />
+    </>
+  );
+}
+
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ regatta_slug: string }>;
+  searchParams: Promise<{ fleet?: string }>;
 }): Promise<Metadata> {
   const { regatta_slug } = await params;
-  const published = await getCachedPublicRegattas().catch(() => []);
-  const event =
-    getRegattaEvent(regatta_slug) ||
-    savedEventHubForSlug(regatta_slug, published)?.event ||
-    groupedHubForSlug(regatta_slug, published)?.event;
-  if (event) {
+  const { fleet } = await searchParams;
+  try {
+    if (fleet) {
+      const resolved = await resolveFleetResultSheet(regatta_slug, fleet);
+      if (resolved) return shareMetadata(resolved.sheet);
+    }
+    const direct = getRegattaEvent(regatta_slug);
+    if (direct) return shareMetadata(eventHubShare(direct));
+    const published = getDatabaseUrlMeta()
+      ? await getCachedPublicRegattas().catch(() => [])
+      : [];
+    const event =
+      savedEventHubForSlug(regatta_slug, published)?.event ||
+      groupedHubForSlug(regatta_slug, published)?.event;
+    if (event) return shareMetadata(eventHubShare(event));
+    const calendarEntry = SINGAPORE_REGATTAS_2026.find((entry) => entry.slug === regatta_slug);
+    if (calendarEntry) {
+      return shareMetadata({
+        title: eventHubTitle(calendarEntry.name, yearFromText(calendarEntry.name)),
+        description: `Published results for ${calendarEntry.name}.`,
+        canonicalPath: `/regattas/${calendarEntry.slug}`,
+      });
+    }
+    return {};
+  } catch {
     return {
-      title: `${event.name} — results | SailorPath`,
-      description: `All classes at ${event.name} — ${event.slices
-        .map((s) => s.label)
-        .join(", ")} — standings and race scores.`,
+      title: "Regatta results | SailorPath",
+      description: "Published sailing results on SailorPath.",
     };
   }
-  const calendarEntry = SINGAPORE_REGATTAS_2026.find((entry) => entry.slug === regatta_slug);
-  if (calendarEntry) {
-    return {
-      title: `${calendarEntry.name} — results | SailorPath`,
-      description: `Published results for ${calendarEntry.name}.`,
-    };
-  }
-  return {};
 }
 
 export default async function RegattaRedirectPage({
@@ -89,7 +122,7 @@ export default async function RegattaRedirectPage({
       );
     }
     return (
-      <RegattaEventHub
+      <PublishedEventHub
         event={await withSavedEventCopy(event)}
         activeFleet={fleet ?? null}
         calendarView={calendarView}
@@ -121,7 +154,7 @@ export default async function RegattaRedirectPage({
       );
     }
     return (
-      <RegattaEventHub
+      <PublishedEventHub
         event={await withSavedEventCopy(saved.event)}
         activeFleet={fleet ?? saved.fleetKey}
         calendarView={calendarView}
@@ -141,7 +174,7 @@ export default async function RegattaRedirectPage({
       );
     }
     return (
-      <RegattaEventHub
+      <PublishedEventHub
         event={await withSavedEventCopy(grouped.event)}
         activeFleet={fleet ?? grouped.fleetKey}
         calendarView={calendarView}

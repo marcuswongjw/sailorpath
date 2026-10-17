@@ -1,18 +1,20 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { DbOffline } from "@/components/DbOffline";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { JsonLd } from "@/components/JsonLd";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import {
-  getCachedSailorByHandle,
   getSailorByHandle,
-  getResultsForSailor,
   getSailorSeriesStanding,
   getSailorIlcaStanding,
   getRaceObservationsForSailor,
   getEquipmentLogsForSailor,
 } from "@/lib/queries";
+import { loadShareSailor, loadShareSailorResults } from "@/lib/publicShareData";
+import { profilePageJsonLd, sailorShareModel, shareMetadata } from "@/lib/publicSeo";
 import { DbUnavailableError } from "@/db";
 import { getAuthContext } from "@/lib/auth";
 import {
@@ -25,6 +27,50 @@ import { getProfileFollowState } from "@/lib/followedSailorsQuery";
 import { buildSailorResultsBio } from "@/lib/sailorResultsBio";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ sailor_handle: string }>;
+}): Promise<Metadata> {
+  const { sailor_handle } = await params;
+  try {
+    const sailor = await loadShareSailor(sailor_handle);
+    if (!sailor) {
+      return shareMetadata({
+        title: "Sailor not found | SailorPath",
+        description: "This SailorPath profile is not available.",
+        canonicalPath: `/sailors/${encodeURIComponent(sailor_handle)}`,
+        index: false,
+      });
+    }
+    const results = await loadShareSailorResults(sailor.id).catch(() => []);
+    const publicSailor = toPublicSailorProps(sailor, { canSeePrivate: false });
+    const share = sailorShareModel({
+      name: publicSailor.name,
+      handle: publicSailor.handle,
+      nationality: publicSailor.nationality,
+      club: publicSailor.club,
+      results: results.map((result) => ({
+        regattaName: result.regattaName,
+        regattaDate: result.regattaDate,
+        boatClass: result.boatClass,
+        rank: result.rank,
+        isDns: result.isDns,
+      })),
+    });
+    return shareMetadata({
+      title: share.title,
+      description: share.summary,
+      canonicalPath: share.path,
+    });
+  } catch {
+    return {
+      title: "Sailor profile | SailorPath",
+      description: "Sailor profiles and published sailing results on SailorPath.",
+    };
+  }
+}
 
 function requestMayHaveSession(cookieNames: string[]): boolean {
   // Avoid a remote Supabase `getUser()` round trip for the normal anonymous
@@ -47,7 +93,7 @@ export default async function SailorProfilePage({
   const { sailor_handle } = await params;
   let sailor;
   try {
-    sailor = await getCachedSailorByHandle(sailor_handle);
+    sailor = await loadShareSailor(sailor_handle);
   } catch (error) {
     return <DbOffline message={error instanceof DbUnavailableError ? error.message : "DB error"} />;
   }
@@ -84,7 +130,7 @@ export default async function SailorProfilePage({
 
 async function SailorProfileDetails({ sailor_handle, initialSailor }: {
   sailor_handle: string;
-  initialSailor: NonNullable<Awaited<ReturnType<typeof getCachedSailorByHandle>>>;
+  initialSailor: NonNullable<Awaited<ReturnType<typeof loadShareSailor>>>;
 }) {
   let sailor;
   let auth;
@@ -157,7 +203,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       const shouldLoadPrivateProfileExtras = access.canSeePrivate;
 
       const [res, sStand, iStand, obs, equipHist] = await Promise.all([
-        getResultsForSailor(sailor.id),
+        loadShareSailorResults(sailor.id),
         shouldLoadPrivateProfileExtras && mayHaveSingaporeSeries
           ? getSailorSeriesStanding(sailor.id).catch(() => null)
           : Promise.resolve(null),
@@ -228,6 +274,20 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
   const canSeePrivate = access.canSeePrivate;
   const publicSailor = toPublicSailorProps(sailor, { canSeePrivate });
   const equipment = toPublicEquipmentProps(sailor, canSeePrivate);
+  const seoSailor = toPublicSailorProps(sailor, { canSeePrivate: false });
+  const share = sailorShareModel({
+    name: seoSailor.name,
+    handle: seoSailor.handle,
+    nationality: seoSailor.nationality,
+    club: seoSailor.club,
+    results: (results || []).map((result) => ({
+      regattaName: result.regattaName,
+      regattaDate: result.regattaDate,
+      boatClass: result.boatClass,
+      rank: result.rank,
+      isDns: result.isDns,
+    })),
+  });
   const resultsBio = publicSailor.bio?.trim()
     ? null
     : buildSailorResultsBio(
@@ -243,6 +303,8 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       );
 
   return (
+    <>
+    <JsonLd data={profilePageJsonLd(share)} />
     <ErrorBoundary
       fallback={
         <div className="mx-auto max-w-xl px-4 py-16 text-center space-y-3">
@@ -300,5 +362,6 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       followControl={followControl}
     />
     </ErrorBoundary>
+    </>
   );
 }
