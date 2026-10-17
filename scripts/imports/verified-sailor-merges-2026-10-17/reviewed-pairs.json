@@ -1,0 +1,34 @@
+[
+  {
+    "pairId": "MYA-Aung-Kaung-Myat",
+    "keepId": "fa4efa9c-d30f-47d0-897f-1f76370bf4e1",
+    "mergeId": "b233000a-8cd1-4695-91e5-86a86f40ed01",
+    "keepName": "Aung Kaung Myat",
+    "sourceName": "Aung Kaung Myat",
+    "evidence": "User verified all ODAM sailors as Myanmar and corrected sail MYA346; explicit instruction to merge the three Myanmar sailors. Official Asian & Oceanian source MYAT, Aung Kaung / MYA346 agrees. Retain historical and ODAM results."
+  },
+  {
+    "pairId": "MYA-Aung-Sitt-Maung",
+    "keepId": "3d2fede9-5b4d-444d-9eb1-49d05991d128",
+    "mergeId": "42f2093e-f6ec-41c6-9cb8-eb7dd47b7185",
+    "keepName": "Aung Sitt Maung",
+    "sourceName": "Aung Sitt Maung",
+    "evidence": "Explicit user identity confirmation to merge this Myanmar pair following ODAM review. Current sail MYA278 per user; Asian & Oceanian historical MYA117 preserved on official source entry."
+  },
+  {
+    "pairId": "MYA-Naing-Lin-Aung",
+    "keepId": "586ae1d6-91c4-4189-b0a4-b8cd05f0a15a",
+    "mergeId": "70354694-dc8b-4929-afdb-d82fc8562604",
+    "keepName": "Naing Lin Aung",
+    "sourceName": "Naing Lin Aung",
+    "evidence": "User confirmed Naing Lin Aung spelling and identity with former Naing Linn Aung; current sail MYA342 from ODAM and explicit merge instruction. Preserve official Asian & Oceanian source AUNG, Naing Linn / MYA289."
+  },
+  {
+    "pairId": "Chuhan-Zhang",
+    "keepId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+    "mergeId": "6cd38cfc-0331-4335-81fc-98ffea65db21",
+    "keepName": "Chuhan Zhang",
+    "sourceName": "CHUHAN ZHANG",
+    "evidence": "Official Thailand International final PDF page 1 rank14 visually confirms CHN flag, THA1947, female, birthyear2014; matches Youth Thailand profile and source metadata. Correct imported nationality THA to CHN before merge, retaining sail prefix THA and all scores."
+  }
+]

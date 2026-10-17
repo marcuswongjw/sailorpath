@@ -1,3 +1,4 @@
+import { getSeparateSailorPairs, sailorDuplicateReviewRevision } from "./sailorDuplicateDecisionStore";
 import { createHash } from "node:crypto";
 import { inArray } from "drizzle-orm";
 import { db } from "@/db";
@@ -36,13 +37,20 @@ export async function buildSailorMergePlan(tx: Transaction, keepId: string, merg
   const sharedSheetIds = [...sourceSheets].filter(id => keepSheets.has(id));
   const sharedSheets = sharedSheetIds.length ? await tx.select({ id: regattas.id, name: regattas.name })
     .from(regattas).where(inArray(regattas.id, sharedSheetIds)) : [];
+  const separatePairs = (await getSeparateSailorPairs(tx)).filter(d =>
+    [d.aId, d.bId].includes(mergeId) || [d.aId, d.bId].includes(keepId));
   const conflicts = sailorIdentityConflicts(keep, source);
+  for (const decision of separatePairs) {
+    // Do not transfer a reviewed identity relationship implicitly through a merge.
+    conflicts.push(`A confirmed-different decision involves ${decision.aName} / ${decision.bName}. Reopen that review before merging.`);
+  }
   if (keepId === mergeId) conflicts.push("Choose two different profiles.");
   // Conservative: even identical/DNS rows require a source-backed result repair first.
   for (const sheet of sharedSheets) conflicts.push(`Both profiles have entries in ${sheet.name}. Resolve the official entries before merging.`);
   const sameEntry = memberships.some(a => a.sailorId === keepId && memberships.some(b => b.sailorId === mergeId && a.regattaResultId === b.regattaResultId));
   if (sameEntry) conflicts.push("Both profiles are linked to the same crew entry; resolve participant identities first.");
-  const token = createHash("sha256").update(JSON.stringify({ keepId, mergeId, profiles, results, memberships, races })).digest("hex");
+  const duplicateReviewRevision = await sailorDuplicateReviewRevision(tx, [keepId, mergeId]);
+  const token = createHash("sha256").update(JSON.stringify({ keepId, mergeId, profiles, results, memberships, races, separatePairs, duplicateReviewRevision })).digest("hex");
   const profile = (s: typeof keep) => ({ id: s.id, name: s.name, handle: s.handle, sailNumber: s.sailNumber, sailNumberIlca4: s.sailNumberIlca4, boardNumber: s.boardNumber, nationality: s.nationality, gender: s.gender, claimed: Boolean(s.parentId) });
   const sourceResultIds = new Set(results.filter(r => r.sailorId === mergeId).map(r => r.id));
   return {

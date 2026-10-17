@@ -8,6 +8,15 @@ import {
 import { createAsianOptimistIndexBaseline } from "@/lib/asianOptimistIndex";
 
 describe("Asian Optimist Index provisional scoring", () => {
+  it("connects Ilzani’s confirmed identity to both Malaysian finishes and scores only the strongest country result", () => {
+    const entries = createAsianOptimistIndexProvisionalEntries();
+    const ilzani = entries.find(entry => entry.name === "Khairulilzani Afendy")!;
+    expect(ilzani).toMatchObject({ provisionalRank: 12, provisionalScore: 61.3, eligibleStarts: 2, hostCountryCount: 1 });
+    expect(ilzani.qualifierResults.map(r => r.rank).sort((a, b) => a - b)).toEqual([4, 9]);
+    expect(ilzani.scoredQualifiers).toHaveLength(1);
+    expect(ilzani.scoredQualifiers[0]).toMatchObject({ rank: 4, qualifier: { shortName: "LIRP" } });
+  });
+
   it("normalises a verified final classification to a 0–100 event score", () => {
     expect(normalisedFleetScore(1, 170)).toBe(100);
     expect(normalisedFleetScore(170, 170)).toBe(0);

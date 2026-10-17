@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   requireSuperadmin: vi.fn(),
+  decisions: vi.fn().mockResolvedValue([]),
   resultCountRows: [
     { regattaId: "reg-1", count: 12 },
     { regattaId: "reg-2", count: 0 },
@@ -33,6 +34,8 @@ const mocks = vi.hoisted(() => ({
   ],
 }));
 
+vi.mock("@/lib/sailorDuplicateDecisionStore", () => ({ getSeparateSailorPairs: mocks.decisions }));
+
 vi.mock("@/lib/auth", () => ({
   requireSuperadmin: mocks.requireSuperadmin,
   jsonError: (error: unknown) => {
@@ -63,8 +66,8 @@ vi.mock("@/lib/nameMatch", async (importOriginal) => {
     ...actual,
     findDuplicateSailorPairs: vi.fn().mockReturnValue([
       {
-        sailorA: { id: "s-1", name: "John Doe" },
-        sailorB: { id: "s-2", name: "John Doe" },
+        a: { id: "s-1", name: "John Doe" },
+        b: { id: "s-2", name: "John Doe" },
         confidence: 1,
         matchReason: "same name and sail number",
       },
@@ -77,6 +80,7 @@ import { GET } from "./route";
 describe("GET /api/admin/overview", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.decisions.mockResolvedValue([]);
     mocks.requireSuperadmin.mockResolvedValue({
       userId: "admin-1",
       email: "admin@sailorpath.com",
@@ -90,6 +94,13 @@ describe("GET /api/admin/overview", () => {
     expect(res.status).toBe(403);
     const data = await res.json();
     expect(data.error).toContain("superadmin required");
+  });
+
+  it("excludes confirmed-different pairs from the overview count", async () => {
+    mocks.decisions.mockResolvedValue([{ pairKey: "s-1|s-2" }]);
+    const response = await GET(new Request("https://admin.sailorpath.com/api/admin/overview"));
+    const body = await response.json();
+    expect(body.duplicateCount).toBe(0);
   });
 
   it("returns compact overview data with counts", async () => {

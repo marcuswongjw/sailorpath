@@ -1,3 +1,5 @@
+import { getSeparateSailorPairs } from "@/lib/sailorDuplicateDecisionStore";
+import { duplicatePairKey } from "@/lib/sailorDuplicateDecisions";
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema, withDatabaseRetry } from "@/db";
@@ -22,7 +24,7 @@ export async function GET(request: Request) {
 
     const { overview, duplicateCount } = await withDatabaseRetry(
       async () => {
-        const [resultCountRows, regattaRows, sailorRows] = await Promise.all([
+        const [resultCountRows, regattaRows, sailorRows, separatePairs] = await Promise.all([
           // Fast index group-by aggregate for result counts per regatta
           db
             .select({
@@ -65,6 +67,7 @@ export async function GET(request: Request) {
               sailNumber: sailors.sailNumber,
             })
             .from(sailors),
+          getSeparateSailorPairs(),
         ]);
 
         const resultCounts = new Map<string, number>();
@@ -83,7 +86,7 @@ export async function GET(request: Request) {
 
         return {
           overview: overviewData,
-          duplicateCount: duplicates.length,
+          duplicateCount: duplicates.filter(p => !separatePairs.some(d => d.pairKey === duplicatePairKey(p.a.id, p.b.id))).length,
         };
       },
       { label: "admin.overview.get", signal: request?.signal }

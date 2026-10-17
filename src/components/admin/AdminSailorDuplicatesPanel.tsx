@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminSeparateSailors } from "./AdminSeparateSailors";
 import { AlertTriangle, CheckCircle, UserCheck } from "lucide-react";
 import type { DuplicatePair } from "@/components/admin/AdminSailorsPanel";
 
@@ -73,6 +74,8 @@ export function AdminSailorDuplicatesPanel({
         </div>
       </div>
 
+      {isSuperadmin && <AdminSeparateSailors />}
+
       {duplicatePairs.length === 0 ? (
         <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
           <CheckCircle className="mx-auto h-6 w-6 text-emerald-700" aria-hidden="true" />
@@ -139,12 +142,13 @@ export function AdminSailorDuplicatesPanel({
                     </button>
                     <button
                       type="button"
+                      disabled={!isSuperadmin || saving}
                       onClick={() =>
                         ignoreDuplicatePair(pair.a.id, pair.b.id)
                       }
                       className="min-h-11 rounded-full border border-slate-300 px-4 text-sm font-bold text-slate-800 hover:bg-slate-50"
                     >
-                      Ignore
+                      Confirm different sailors
                     </button>
                   </div>
                 </div>

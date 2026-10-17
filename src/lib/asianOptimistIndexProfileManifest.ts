@@ -52,7 +52,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-jpn-riko-muran-26f981"
   },
   "THA:adisonein": {
-    "handle": "asian-tha-adison-ein-8501c5"
+    "handle": "adison-ein-f5kv46b",
+    "displayName": "Adison Ein"
   },
   "THA:rachatasadtrakulwattana": {
     "handle": "rachata-sadtrakulwatanna-823ho68",
@@ -68,7 +69,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2010
   },
   "SGP:seankum": {
-    "handle": "asian-sgp-sean-kum-3cf9c2"
+    "handle": "sean-kum-kok-wei",
+    "displayName": "Sean Kum Kok Wei"
   },
   "SGP:alyssawong": {
     "handle": "alyssa-wong-li-lin",
@@ -82,19 +84,22 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-chn-bocheng-zh-213db3"
   },
   "MAS:yaasinsyahrizan": {
-    "handle": "asian-mas-yaasin-sya-8110ee"
+    "handle": "asian-mas-muhammad-y-314f8d",
+    "displayName": "MUHAMMAD YAASIN BIN SYAHRIZAN"
   },
   "HKG:taramaliah": {
     "handle": "tara-maliah-j0xd6t3"
   },
   "SGP:lucascao": {
-    "handle": "asian-sgp-lucas-cao-575e71"
+    "handle": "lucas-cao-zhihong",
+    "displayName": "Lucas Cao Zhihong"
   },
   "CHN:shitenghuang": {
     "handle": "asian-chn-shiteng-hu-6ffa51"
   },
   "KSA:xuanyatong": {
-    "handle": "asian-ksa-xuan-ya-to-3286a6"
+    "handle": "tong-xuan-ya",
+    "displayName": "Tong Xuan Ya"
   },
   "SGP:ethanlow": {
     "handle": "ethan-low-zhi-ren",
@@ -106,7 +111,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2011
   },
   "THA:pailinjareonpon": {
-    "handle": "asian-tha-pailin-jar-d420ae"
+    "handle": "pailin-jaroenpon-f3tnzr6",
+    "displayName": "Pailin Jaroenpon"
   },
   "SGP:zephwan": {
     "handle": "zeph-wan",
@@ -124,13 +130,15 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-oma-mohammed-a-cc8f92"
   },
   "OMA:khalidalsarihi": {
-    "handle": "asian-oma-khalid-al-9a29ab"
+    "handle": "asian-oma-khalid-al--9a29ab",
+    "displayName": "Khalid Al Sarihi"
   },
   "MYA:sittmaychitpo": {
     "handle": "asian-mya-sitt-may-c-de19ca"
   },
   "MYA:aungsittmaung": {
-    "handle": "asian-mya-aung-sitt-8599fa"
+    "handle": "aung-sitt-maung-07r0qrq",
+    "displayName": "Aung Sitt Maung"
   },
   "SGP:zhitongwai": {
     "handle": "wai-zhi-tong",
@@ -138,13 +146,15 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2011
   },
   "OMA:khamisalmeshaikhi": {
-    "handle": "asian-oma-khamis-al-d98d6b"
+    "handle": "asian-oma-khamis-al--d98d6b",
+    "displayName": "Khamis Al Meshaikhi"
   },
   "JPN:nagisakawakami": {
     "handle": "asian-jpn-nagisa-kaw-f1a02d"
   },
   "JPN:kentokahara": {
-    "handle": "asian-jpn-kento-kaha-2ffd85"
+    "handle": "kento-kahara-f6yuu5l",
+    "displayName": "Kento Kahara"
   },
   "JPN:kotaromatsunaga": {
     "handle": "asian-jpn-kotaro-mat-4fa65f"
@@ -161,7 +171,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-jpn-kaito-hira-c15fa2"
   },
   "HKG:xinranliu": {
-    "handle": "asian-hkg-xinran-liu-918682"
+    "handle": "xinran-liu-2mjr4jo",
+    "displayName": "Xinran Liu"
   },
   "UAE:korneliapajak": {
     "handle": "asian-uae-kornelia-p-748bbf"
@@ -176,13 +187,15 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-qat-eryk-kazim-df1f84"
   },
   "MAC:wangsunchen": {
-    "handle": "asian-mac-wang-sun-c-d06bfb"
+    "handle": "chen-wang-sun",
+    "displayName": "Chen Wang Sun"
   },
   "CHN:guanghaozhang": {
     "handle": "asian-chn-guanghao-z-b01c86"
   },
   "MAS:khairulilzaniafendy": {
-    "handle": "asian-mas-khairulilz-f9de8a"
+    "handle": "khairul-ilzani-bin-mohd-afendy-ynk9juj",
+    "displayName": "Khairul Ilzani bin Mohd Afendy"
   },
   "UAE:zayedalhosani": {
     "handle": "zayed-al-hosani-j60tt5c"
@@ -191,16 +204,19 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-kuw-hamad-alma-79dd24"
   },
   "IND:ravikumarbenneollu": {
-    "handle": "asian-ind-ravi-kumar-9828d9"
+    "handle": "ravi-k-benneollu-93y0uue",
+    "displayName": "Ravi K Benneollu"
   },
   "SRI:harenwickramatillake": {
     "handle": "asian-sri-haren-wick-1b1716"
   },
   "IND:krishnaramakrishnan": {
-    "handle": "asian-ind-krishna-ra-ae190d"
+    "handle": "krishna-venkitachalam-ramakrishnan-94z5qb6",
+    "displayName": "Krishna Venkitachalam Ramakrishnan"
   },
   "MAS:lydialukman": {
-    "handle": "asian-mas-lydia-lukm-00e117"
+    "handle": "asian-mas-lydia-hann-8b1f73",
+    "displayName": "LYDIA HANNAH JASMINE BINTI LUKMAN"
   },
   "CHN:linshi": {
     "handle": "shi-lin-vysogv7",
@@ -213,10 +229,12 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-aze-furkan-mus-1235bb"
   },
   "OMA:alkhailialfoori": {
-    "handle": "asian-oma-al-khaili-a9bf9c"
+    "handle": "asian-oma-al-khaili--a9bf9c",
+    "displayName": "Al Khaili Al Foori"
   },
   "MAS:miaazrania": {
-    "handle": "asian-mas-mia-azrani-b0c822"
+    "handle": "asian-mas-mia-azrani-aab437",
+    "displayName": "MIA AZRANIA BT MOHD AZRALD"
   },
   "KSA:ahmedalshammari": {
     "handle": "asian-ksa-ahmed-al-s-4b7ffb"
@@ -232,7 +250,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-mas-zahir-isma-a18d7d"
   },
   "OMA:hadeelalmushaifri": {
-    "handle": "asian-oma-hadeel-al-4654b6"
+    "handle": "asian-oma-hadeel-al--4654b6",
+    "displayName": "Hadeel Al Mushaifri"
   },
   "JPN:natsumikubota": {
     "handle": "asian-jpn-natsumi-ku-112120"
@@ -281,10 +300,11 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-chn-yuntian-do-ba74e4"
   },
   "MYA:nainglinnaung": {
-    "handle": "asian-mya-naing-linn-89dd99"
+    "handle": "naing-lin-aung-29xulbs",
+    "displayName": "Naing Lin Aung"
   },
   "MYA:aungkaungmyat": {
-    "handle": "asian-mya-aung-kaung-888824"
+    "handle": "aung-kaung-myat-2by3gwg"
   },
   "AZE:yagmurhasanli": {
     "handle": "asian-aze-yagmur-has-47ebee"
@@ -306,13 +326,15 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-qat-tameem-sha-656a42"
   },
   "KUW:abdulazizalmansour": {
-    "handle": "asian-kuw-abdulaziz-d30ffd"
+    "handle": "asian-kuw-abdulaziz--d30ffd",
+    "displayName": "Abdulaziz Almansour"
   },
   "AZE:mikayilmammadzada": {
     "handle": "asian-aze-mikayil-ma-830ebe"
   },
   "HKG:decimuschan": {
-    "handle": "asian-hkg-decimus-ch-2f4e59"
+    "handle": "cheuk-hymn-decimus-chan-8dsgpsh",
+    "displayName": "Cheuk Hymn Decimus Chan"
   },
   "IND:karthiktelugu": {
     "handle": "asian-ind-karthik-te-0255ce"
@@ -337,19 +359,22 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-aze-kamilla-ha-c231b9"
   },
   "MYA:khantzinthaw": {
-    "handle": "asian-mya-khant-zin-f9357f"
+    "handle": "asian-mya-khant-zin--f9357f",
+    "displayName": "Khant Zin Thaw"
   },
   "MAC:chiinjaspertang": {
     "handle": "asian-mac-chi-in-jas-dd3094"
   },
   "QAT:abdulazizalmahmoud": {
-    "handle": "asian-qat-abdulaziz-628d50"
+    "handle": "asian-qat-abdulaziz--628d50",
+    "displayName": "Abdulaziz Al Mahmoud"
   },
   "SRI:dhirenavenperera": {
     "handle": "asian-sri-dhiren-ave-ffdd8f"
   },
   "IND:badrinathnirudu": {
-    "handle": "asian-ind-badrinath-9f76c8"
+    "handle": "asian-ind-badrinath--9f76c8",
+    "displayName": "Badrinath Nirudu"
   },
   "SRI:luqmaananeeq": {
     "handle": "asian-sri-luqmaan-an-a43375"
@@ -397,7 +422,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-kor-jihoo-kim-263754"
   },
   "KSA:abdulazizalforaih": {
-    "handle": "asian-ksa-abdulaziz-27213a"
+    "handle": "asian-ksa-abdulaziz--27213a",
+    "displayName": "Abdulaziz Alforaih"
   },
   "KOR:seoyian": {
     "handle": "asian-kor-seoyi-an-4eb55a"
