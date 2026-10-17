@@ -1,0 +1,24 @@
+{
+  "parents": [
+    {
+      "name": "Singapore Youth Sailing Championships 2023",
+      "venue": "National Sailing Centre"
+    },
+    {
+      "name": "Raffles Marina Optimist Regatta 2023",
+      "venue": "Raffles Marina"
+    }
+  ],
+  "racesUnchanged": true,
+  "updatedClasses": 27,
+  "resultsUnchanged": true,
+  "remainingBlankSheets": [
+    {
+      "name": "Qingdao International Optimist Training Camp & Regatta 2025",
+      "status": "draft"
+    }
+  ],
+  "participantsUnchanged": true,
+  "remainingBlankParents": 0,
+  "classesMatchingParents": 27
+}
