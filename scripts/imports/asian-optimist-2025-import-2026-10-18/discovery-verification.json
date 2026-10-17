@@ -1,0 +1,18 @@
+[
+  {
+    "url": "https://sailorpath.com/results?year=2025&class=Optimist&country=OMA&q=Asian",
+    "finalUrl": "https://sailorpath.com/results?year=2025&class=Optimist&country=OMA&q=Asian",
+    "visible": true,
+    "links": [
+      "/regattas/2025-optimist-asian-oceanian-championship/results/optimist"
+    ]
+  },
+  {
+    "url": "https://sailorpath.com/calendar?view=past",
+    "finalUrl": "https://sailorpath.com/results",
+    "visible": true,
+    "links": [
+      "/regattas/2025-optimist-asian-oceanian-championship/results/optimist"
+    ]
+  }
+]

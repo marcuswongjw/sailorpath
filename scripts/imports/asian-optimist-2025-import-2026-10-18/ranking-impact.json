@@ -1,0 +1,58 @@
+[
+  {
+    "board": "ILCA4-2025-january",
+    "beforeCount": 81,
+    "afterCount": 81,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA4-2025-july",
+    "beforeCount": 81,
+    "afterCount": 81,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA4-2026-january",
+    "beforeCount": 81,
+    "afterCount": 81,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA4-2026-july",
+    "beforeCount": 81,
+    "afterCount": 81,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA6-2025-january",
+    "beforeCount": 45,
+    "afterCount": 45,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA6-2025-july",
+    "beforeCount": 45,
+    "afterCount": 45,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA6-2026-january",
+    "beforeCount": 45,
+    "afterCount": 45,
+    "changedRankOrPoints": 0,
+    "changes": []
+  },
+  {
+    "board": "ILCA6-2026-july",
+    "beforeCount": 45,
+    "afterCount": 45,
+    "changedRankOrPoints": 0,
+    "changes": []
+  }
+]
