@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import type { SailorDuplicateDecision } from "@/lib/sailorDuplicateDecisions";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 
 const queryKey = ["admin", "sailor-duplicate-decisions"];
 export function useSailorDuplicateDecisions(enabled = true) {
@@ -20,7 +21,7 @@ export function useSailorDuplicateDecisions(enabled = true) {
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || "Could not save identity decision.");
     },
-    onSuccess: async () => { await client.invalidateQueries({ queryKey }); await client.invalidateQueries({ queryKey: ["admin", "overview"] }); },
+    onSuccess: async () => { invalidateAdminSummaries(client); await client.invalidateQueries({ queryKey }); },
   });
   const decisions = query.data;
   const keys = useMemo(() => new Set((decisions ?? []).map(d => d.pairKey)), [decisions]);

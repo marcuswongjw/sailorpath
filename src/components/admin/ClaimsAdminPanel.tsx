@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 import {
   UserCheck,
   CheckCircle,
@@ -134,6 +135,7 @@ const RELATIONS: ClaimRelation[] = ["parent", "sailor", "other"];
 
 export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast, confirm } = useFeedback();
+  const queryClient = useQueryClient();
   const [filter, setFilter] = useState<
     "all" | "pending" | "approved" | "rejected" | "updates"
   >("pending");
@@ -284,6 +286,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       setIsAssignOpen(false);
       resetAssignForm();
       await claimsQuery.refetch();
+      invalidateAdminSummaries(queryClient);
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Assignment failed");
     } finally {
@@ -324,6 +327,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
       await claimsQuery.refetch();
+      invalidateAdminSummaries(queryClient);
     } catch (e: unknown) {
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {

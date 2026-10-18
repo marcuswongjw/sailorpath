@@ -6,6 +6,7 @@ import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 import {
   fetchAdminRegattaEvents,
   fetchAdminRegattas,
@@ -71,7 +72,9 @@ export function useAdminData({
     (needsFullResults ||
       sheetOpen ||
       (activeTab === "edit" &&
-        (editSubTab === "sailors" || editSubTab === "duplicates" || editSubTab === "selection")));
+        (editSubTab === "sailors" ||
+          editSubTab === "duplicates" ||
+          editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
@@ -116,14 +119,10 @@ export function useAdminData({
   });
 
   const resultsRegattaQuery = useQuery({
-    queryKey: adminQueryKeys.resultsByRegatta(
-      selectedRegattaId || "_"
-    ),
+    queryKey: adminQueryKeys.resultsByRegatta(selectedRegattaId || "_"),
     queryFn: ({ signal }) =>
       fetchAdminResultsForRegatta(selectedRegattaId, true, { signal }),
-    enabled:
-      needResultsEditor &&
-      Boolean(selectedRegattaIdForResultEdit),
+    enabled: needResultsEditor && Boolean(selectedRegattaIdForResultEdit),
   });
 
   // Query data remains cached even when its ranking tab is disabled.
@@ -173,31 +172,33 @@ export function useAdminData({
 
   const setSailorList = useCallback(
     (updater: Updater<SailorAdmin[]>) => {
-      queryClient.setQueryData<SailorAdmin[]>(adminQueryKeys.sailors(), (prev) =>
-        applyUpdater(prev ?? [], updater)
+      queryClient.setQueryData<SailorAdmin[]>(
+        adminQueryKeys.sailors(),
+        (prev) => applyUpdater(prev ?? [], updater),
       );
     },
-    [queryClient]
+    [queryClient],
   );
 
   const setRegattaList = useCallback(
     (updater: Updater<RegattaAdmin[]>) => {
       queryClient.setQueryData<RegattaAdmin[]>(
         adminQueryKeys.regattas(),
-        (prev) => applyUpdater(prev ?? [], updater)
+        (prev) => applyUpdater(prev ?? [], updater),
       );
     },
-    [queryClient]
+    [queryClient],
   );
 
   const setResultsList = useCallback(
     (updater: Updater<ResultAdmin[]>) => {
       const next = applyUpdater(
         hasFullResults || needsFullResults
-          ? (queryClient.getQueryData<ResultAdmin[]>(adminQueryKeys.resultsAll()) ??
-              [])
+          ? (queryClient.getQueryData<ResultAdmin[]>(
+              adminQueryKeys.resultsAll(),
+            ) ?? [])
           : resultsList,
-        updater
+        updater,
       );
 
       if (hasFullResults || needsFullResults) {
@@ -216,7 +217,7 @@ export function useAdminData({
         queryClient.setQueryData(adminQueryKeys.resultsByRegatta(rid), rows);
       }
     },
-    [queryClient, hasFullResults, needsFullResults, resultsList]
+    [queryClient, hasFullResults, needsFullResults, resultsList],
   );
 
   const refreshResultsList = useCallback(
@@ -232,10 +233,10 @@ export function useAdminData({
               adminQueryKeys.resultsAll(),
               (prev) => {
                 const others = (prev ?? []).filter(
-                  (r) => r.regattaId !== opts.regattaId
+                  (r) => r.regattaId !== opts.regattaId,
                 );
                 return [...others, ...rows];
-              }
+              },
             );
           }
           return;
@@ -248,7 +249,7 @@ export function useAdminData({
         /* keep existing list */
       }
     },
-    [queryClient, hasFullResults]
+    [queryClient, hasFullResults],
   );
 
   const patchResultsFromImport = useCallback(
@@ -259,7 +260,7 @@ export function useAdminData({
         if (!rid) return;
         queryClient.setQueryData(
           adminQueryKeys.resultsByRegatta(rid),
-          incoming
+          incoming,
         );
         if (hasFullResults) {
           queryClient.setQueryData<ResultAdmin[]>(
@@ -267,14 +268,14 @@ export function useAdminData({
             (prev) => {
               const others = (prev ?? []).filter((r) => r.regattaId !== rid);
               return [...others, ...incoming];
-            }
+            },
           );
         }
       } else {
         queryClient.setQueryData(adminQueryKeys.resultsAll(), incoming);
       }
     },
-    [queryClient, hasFullResults]
+    [queryClient, hasFullResults],
   );
 
   const patchRegattaUpsert = useCallback(
@@ -286,7 +287,7 @@ export function useAdminData({
           : [...prev, regatta];
       });
     },
-    [setRegattaList]
+    [setRegattaList],
   );
 
   const patchRegattaPartial = useCallback(
@@ -298,30 +299,36 @@ export function useAdminData({
           : [...prev, reg as RegattaAdmin];
       });
     },
-    [setRegattaList]
+    [setRegattaList],
   );
 
   const patchSailorPartial = useCallback(
     (sailor: Partial<SailorAdmin> & { id: string }) => {
       setSailorList((prev) =>
-        prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s))
+        prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s)),
       );
     },
-    [setSailorList]
+    [setSailorList],
   );
 
   /** Refetch sailors from the server (after bulk/merge/actions). */
   const invalidateSailors = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: adminQueryKeys.sailors() });
+    invalidateAdminSummaries(queryClient);
   }, [queryClient]);
 
   const invalidateRegattas = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: adminQueryKeys.regattas() });
+    void queryClient.invalidateQueries({
+      queryKey: adminQueryKeys.regattaEvents(),
+    });
+    invalidateAdminSummaries(queryClient);
   }, [queryClient]);
 
   /** Invalidate all results caches (full + per-regatta). */
   const invalidateResults = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: ["admin", "results"] });
+    invalidateAdminSummaries(queryClient);
   }, [queryClient]);
 
   const invalidateAllLists = useCallback(() => {

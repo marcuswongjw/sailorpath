@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { FileText, Link2, Loader2, Trash2 } from "lucide-react";
-import { sheetClassLabel, type GroupableRegatta } from "@/lib/admin/groupRegattaEvents";
+import {
+  sheetClassLabel,
+  type GroupableRegatta,
+} from "@/lib/admin/groupRegattaEvents";
 import type { PublicationReadiness } from "@/lib/admin/publicationReadiness";
 
 export type LinkableWeekend = {
@@ -96,7 +99,11 @@ function EventLinkControls({
             onClick={onLink}
             className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-orange-300 bg-orange-50 px-3 py-1.5 text-xs font-bold text-orange-900 hover:bg-orange-100 disabled:opacity-40"
           >
-            {linking ? <Loader2 className="h-3 w-3 animate-spin" /> : <Link2 className="h-3 w-3" />}
+            {linking ? (
+              <Loader2 className="h-3 w-3 animate-spin" />
+            ) : (
+              <Link2 className="h-3 w-3" />
+            )}
             {actionLabel}
           </button>
         </div>
@@ -183,7 +190,7 @@ export function AdminClassSheetCard({
           ? "Needs work"
           : readiness.summary === "publishable_non_ranking"
             ? "Ready, non-ranking"
-            : "Ready to publish";
+            : "Metadata complete · review scores";
   const showMenu = Boolean(onDelete) || (Boolean(onTogglePublish) && published);
   const destinations = weekends.filter((event) => event.id !== currentEventId);
   const showMove = isSuperadmin && !unassigned && Boolean(onLink);
@@ -198,13 +205,20 @@ export function AdminClassSheetCard({
     <article className="rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs sm:p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <h5 className="text-sm font-bold leading-snug text-slate-900">{title}</h5>
+          <h5 className="text-sm font-bold leading-snug text-slate-900">
+            {title}
+          </h5>
           <MetaLine items={meta} />
           {readinessText ? (
-            <p className="mt-1 text-xs font-bold text-slate-800">{readinessText}</p>
+            <p className="mt-1 text-xs font-bold text-slate-800">
+              {readinessText}
+            </p>
           ) : null}
           {sheet.slug ? (
-            <p className="mt-0.5 truncate font-mono text-[11px] text-slate-500" title={sheet.slug}>
+            <p
+              className="mt-0.5 truncate font-mono text-[11px] text-slate-500"
+              title={sheet.slug}
+            >
               {sheet.slug}
             </p>
           ) : null}
@@ -291,7 +305,9 @@ export function AdminClassSheetCard({
                     }}
                     className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-xs font-bold text-slate-800 hover:bg-slate-50 disabled:opacity-50"
                   >
-                    {publishing ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : null}
+                    {publishing ? (
+                      <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+                    ) : null}
                     Unpublish
                   </button>
                 ) : null}

@@ -34,13 +34,18 @@ const mocks = vi.hoisted(() => ({
   ],
 }));
 
-vi.mock("@/lib/sailorDuplicateDecisionStore", () => ({ getSeparateSailorPairs: mocks.decisions }));
+vi.mock("@/lib/sailorDuplicateDecisionStore", () => ({
+  getSeparateSailorPairs: mocks.decisions,
+}));
 
 vi.mock("@/lib/auth", () => ({
   requireSuperadmin: mocks.requireSuperadmin,
   jsonError: (error: unknown) => {
     const message = error instanceof Error ? error.message : "Error";
-    const status = message.includes("Forbidden") || message.includes("Unauthorized") ? 403 : 500;
+    const status =
+      message.includes("Forbidden") || message.includes("Unauthorized")
+        ? 403
+        : 500;
     return Response.json({ error: message }, { status });
   },
 }));
@@ -48,7 +53,9 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@/db", () => ({
   ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
   withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
-  withSequentialDatabaseReads: async (reads: ReadonlyArray<() => Promise<unknown>>) => {
+  withSequentialDatabaseReads: async (
+    reads: ReadonlyArray<() => Promise<unknown>>,
+  ) => {
     const results = [];
     for (const read of reads) results.push(await read());
     return results;
@@ -81,8 +88,32 @@ vi.mock("@/lib/nameMatch", async (importOriginal) => {
 });
 
 import { GET } from "./route";
+import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 
 describe("GET /api/admin/overview", () => {
+  it("does not run identity detection when only event checks are requested", async () => {
+    const response = await GET(
+      new Request(
+        "https://admin.sailorpath.com/api/admin/overview?section=events",
+      ),
+    );
+    expect(response.status).toBe(200);
+    const body = await response.json();
+    expect(body.duplicateCount).toBeNull();
+    expect(body.generatedAt).toEqual(expect.any(String));
+    expect(findDuplicateSailorPairs).not.toHaveBeenCalled();
+    expect(mocks.decisions).not.toHaveBeenCalled();
+  });
+
+  it("can return duplicate counts independently of event readiness", async () => {
+    const response = await GET(
+      new Request(
+        "https://admin.sailorpath.com/api/admin/overview?section=duplicates",
+      ),
+    );
+    expect(await response.json()).toMatchObject({ duplicateCount: 1 });
+    expect(findDuplicateSailorPairs).toHaveBeenCalledOnce();
+  });
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.decisions.mockResolvedValue([]);
@@ -94,8 +125,12 @@ describe("GET /api/admin/overview", () => {
   });
 
   it("returns 403 when user is not a superadmin", async () => {
-    mocks.requireSuperadmin.mockRejectedValue(new Error("Unauthorized: superadmin required"));
-    const res = await GET(new Request("https://admin.sailorpath.com/api/admin/overview"));
+    mocks.requireSuperadmin.mockRejectedValue(
+      new Error("Unauthorized: superadmin required"),
+    );
+    const res = await GET(
+      new Request("https://admin.sailorpath.com/api/admin/overview"),
+    );
     expect(res.status).toBe(403);
     const data = await res.json();
     expect(data.error).toContain("superadmin required");
@@ -103,13 +138,17 @@ describe("GET /api/admin/overview", () => {
 
   it("excludes confirmed-different pairs from the overview count", async () => {
     mocks.decisions.mockResolvedValue([{ pairKey: "s-1|s-2" }]);
-    const response = await GET(new Request("https://admin.sailorpath.com/api/admin/overview"));
+    const response = await GET(
+      new Request("https://admin.sailorpath.com/api/admin/overview"),
+    );
     const body = await response.json();
     expect(body.duplicateCount).toBe(0);
   });
 
   it("returns compact overview data with counts", async () => {
-    const res = await GET(new Request("https://admin.sailorpath.com/api/admin/overview"));
+    const res = await GET(
+      new Request("https://admin.sailorpath.com/api/admin/overview"),
+    );
     expect(res.status).toBe(200);
     const data = await res.json();
 

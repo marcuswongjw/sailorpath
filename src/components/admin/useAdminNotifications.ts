@@ -5,6 +5,28 @@ import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 import { adminJson } from "@/components/admin/adminFetch";
 import { coachRequestsFromCache } from "@/components/admin/coachAccessCache";
 import { totalPendingAdminInboxItems } from "@/lib/admin/adminInboxCounts";
+import type {
+  AdminInboxQueueStates,
+  AdminQueueState,
+} from "@/lib/admin/adminInboxCounts";
+
+function queueState(query: {
+  data: unknown;
+  isError: boolean;
+  isSuccess: boolean;
+  dataUpdatedAt: number;
+}): AdminQueueState {
+  return {
+    status: query.isError
+      ? query.data !== undefined
+        ? "stale"
+        : "unavailable"
+      : query.isSuccess
+        ? "ready"
+        : "loading",
+    updatedAt: query.dataUpdatedAt,
+  };
+}
 
 type ClaimNotification = { status?: string; createdAt?: string | null };
 type DatedRow = { createdAt?: string | null; requestedAt?: string | null };
@@ -29,7 +51,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryFn: async ({ signal }) => {
       const data = await adminJson<{ claims?: ClaimNotification[] }>(
         "/api/admin/claims",
-        { signal }
+        { signal },
       );
       return (data.claims || []) as ClaimNotification[];
     },
@@ -42,7 +64,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryFn: async ({ signal }) => {
       const data = await adminJson<{ messages?: DatedRow[] }>(
         "/api/support?status=new",
-        { signal }
+        { signal },
       );
       return (data.messages || []) as DatedRow[];
     },
@@ -73,18 +95,18 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     queryFn: async ({ signal }) => {
       return adminJson<{ count?: number; suggestions?: unknown[] }>(
         "/api/admin/regatta-suggestions",
-        { signal }
+        { signal },
       );
     },
   });
 
   const claimsPendingCount = (claimsQuery.data ?? []).filter(
-    (claim) => claim.status === "pending"
+    (claim) => claim.status === "pending",
   ).length;
   const supportNewCount = supportQuery.data?.length ?? 0;
-  const coachPendingCount = coachRequestsFromCache(coachAccessQuery.data).filter(
-    (request) => request.status === "pending"
-  ).length;
+  const coachPendingCount = coachRequestsFromCache(
+    coachAccessQuery.data,
+  ).filter((request) => request.status === "pending").length;
   const suggestionsCount = Number(suggestionsQuery.data?.count ?? 0);
   const inboxQueueCounts = {
     suggestions: suggestionsCount,
@@ -93,12 +115,24 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     support: supportNewCount,
   };
   const inboxNotifCount = totalPendingAdminInboxItems(inboxQueueCounts);
+  const inboxQueueStates: AdminInboxQueueStates = {
+    suggestions: queueState(suggestionsQuery),
+    claims: queueState(claimsQuery),
+    coaches: queueState(coachAccessQuery),
+    support: queueState(supportQuery),
+  };
+  const retryInbox = () => {
+    void claimsQuery.refetch();
+    void supportQuery.refetch();
+    void coachAccessQuery.refetch();
+    void suggestionsQuery.refetch();
+  };
 
   const pendingClaims = (claimsQuery.data ?? []).filter(
-    (claim) => claim.status === "pending"
+    (claim) => claim.status === "pending",
   );
   const pendingCoaches = coachRequestsFromCache(coachAccessQuery.data).filter(
-    (request) => request.status === "pending"
+    (request) => request.status === "pending",
   ) as Array<ClaimNotification & DatedRow>;
   const suggestionRows = (
     Array.isArray(suggestionsQuery.data?.suggestions)
@@ -119,7 +153,11 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     {
       view: "coaches" as const,
       count: coachPendingCount,
-      at: earliest(pendingCoaches.map((request) => request.requestedAt || request.createdAt)),
+      at: earliest(
+        pendingCoaches.map(
+          (request) => request.requestedAt || request.createdAt,
+        ),
+      ),
     },
     {
       view: "support" as const,
@@ -129,7 +167,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
   ].filter((queue) => queue.count > 0);
   queues.sort(
     (a, b) =>
-      (a.at ?? Number.MAX_SAFE_INTEGER) - (b.at ?? Number.MAX_SAFE_INTEGER)
+      (a.at ?? Number.MAX_SAFE_INTEGER) - (b.at ?? Number.MAX_SAFE_INTEGER),
   );
   const inboxLandingView = queues[0]?.view ?? "claims";
 
@@ -141,5 +179,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     inboxQueueCounts,
     inboxNotifCount,
     inboxLandingView,
+    inboxQueueStates,
+    retryInbox,
   };
 }
