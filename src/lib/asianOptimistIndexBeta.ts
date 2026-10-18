@@ -1,15 +1,16 @@
 /**
- * SailorPath Asian Optimist Index (Beta) — methodology v0.3 constants.
+ * SailorPath Asian and Oceania Optimist Index — methodology V1 (Beta) constants.
  *
- * This is a consultation draft. Nothing here changes the live provisional
- * Index or designates any event. The figures in the register come from
+ * This defines the rolling 12-month methodology (V1 Beta) and candidate event
+ * register for Asian and Oceanian Optimist sailors. Figures come from
  * SailorPath's imported official result sheets (starters and verified MNAs)
  * unless a note says otherwise.
  */
 
-export const ASIAN_INDEX_BETA_VERSION = "0.3";
+export const ASIAN_INDEX_BETA_VERSION = "V1 (Beta)";
 export const ASIAN_INDEX_BETA_DRAFT_DATE = "18 October 2026";
-export const ASIAN_INDEX_PATH = "/sg/optimist/asian-index";
+export const ASIAN_INDEX_NAME = "SailorPath Asian and Oceania Optimist Index";
+export const ASIAN_INDEX_PATH = "/optimist/asian-index";
 export const ASIAN_INDEX_METHODOLOGY_PATH = `${ASIAN_INDEX_PATH}/methodology`;
 
 export type AsianIndexGrade = 150 | 75 | 40;
@@ -32,14 +33,14 @@ export const ASIAN_INDEX_GRADES: readonly {
     grade: 75,
     label: "Major international open",
     events: "Designated major international Optimist opens that meet the published criteria",
-    host: "Asia by default; a few designated non-Asian exceptions",
+    host: "Asia & Oceania by default; a few designated non-regional exceptions",
     gates: "At least 40 valid starters from at least 4 MNAs; at least 4 completed races",
   },
   {
     grade: 40,
     label: "National championship",
     events: "Designated national championships recognised by the national class association or sailing authority",
-    host: "Asia, and the host MNA's own championship",
+    host: "Asia & Oceania, and the host MNA's own championship",
     gates: "At least 30 valid starters; at least 4 completed races",
   },
 ] as const;
@@ -67,10 +68,14 @@ export const ASIAN_INDEX_MNA_REGIONS: readonly { region: string; codes: readonly
     region: "Southeast Asia",
     codes: ["BRU", "CAM", "INA", "MAS", "MYA", "PHI", "SGP", "THA", "TLS", "VIE"],
   },
-  { region: "Central Asia", codes: ["IRI", "KAZ", "KGZ", "UZB"] },
+  { region: "Central Asia", codes: ["AZE", "IRI", "KAZ", "KGZ", "UZB"] },
   {
     region: "West Asia",
     codes: ["BRN", "IRQ", "JOR", "KUW", "LIB", "OMA", "PLE", "QAT", "KSA", "UAE"],
+  },
+  {
+    region: "Oceania",
+    codes: ["AUS", "NZL", "COK", "FIJ", "GUM", "PNG", "SAM", "VAN", "ASA"],
   },
 ];
 
@@ -277,7 +282,7 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
   },
   {
     id: "other-national-championships",
-    name: "Hong Kong, UAE, Oman and other Asian national championships",
+    name: "Australia, New Zealand, Hong Kong, UAE, Oman and other Asian & Oceanian national championships",
     host: "Various",
     dates: "Open for nomination",
     grade: 40,

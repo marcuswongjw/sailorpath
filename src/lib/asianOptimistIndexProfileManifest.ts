@@ -430,5 +430,47 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
   },
   "SRI:ruwanekarajapaksa": {
     "handle": "asian-sri-ruwaneka-r-03d984"
+  },
+  "AUS:williamharris": {
+    "handle": "asian-aus-william-ha-3aca1e"
+  },
+  "AUS:balthazarroche": {
+    "handle": "asian-aus-balthazar--97a545"
+  },
+  "NZL:jeffreychenglindu": {
+    "handle": "asian-nzl-jeffrey-ch-d20610"
+  },
+  "NZL:zephyrlane": {
+    "handle": "asian-nzl-zephyr-lan-01f5ab"
+  },
+  "NZL:harrystrang": {
+    "handle": "asian-nzl-harry-stra-0db9d9"
+  },
+  "AUS:zacharytait": {
+    "handle": "asian-aus-zachary-ta-8aabec"
+  },
+  "AUS:hirojacobsen": {
+    "handle": "asian-aus-hiro-jacob-d94184"
+  },
+  "NZL:hollyrobson": {
+    "handle": "asian-nzl-holly-robs-2c40da"
+  },
+  "AUS:sijiadeng": {
+    "handle": "asian-aus-sijia-deng-562079"
+  },
+  "AUS:emeraldjacobsen": {
+    "handle": "asian-aus-emerald-ja-ad730f"
+  },
+  "AUS:rubensteel": {
+    "handle": "ruben-steel-0ajhhtd"
+  },
+  "AUS:ethanwilkinson": {
+    "handle": "asian-aus-ethan-wilk-023c23"
+  },
+  "AUS:kirrahowell": {
+    "handle": "asian-aus-kirra-howe-b60df5"
+  },
+  "AUS:emmatomkins": {
+    "handle": "asian-aus-emma-tomki-f4c72d"
   }
 } as const satisfies Record<string, AsianOptimistIndexProfileManifestEntry>;

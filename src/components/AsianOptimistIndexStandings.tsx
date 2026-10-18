@@ -83,19 +83,19 @@ export function AsianOptimistIndexStandings({
       <div className="flex flex-col gap-4 border-b border-cool-veil px-5 py-5 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-xl font-extrabold text-harbour">Provisional standings</h2>
+            <h2 className="text-xl font-extrabold text-harbour">Standings · V1 (Beta)</h2>
             <p className="mt-1 text-sm text-slate-soft">
-              Ordered by the calculated 0–100 Index score. Regatta cells show final rank / fleet; a dash means no verified finish is available for that sailor.
+              Ordered by total Index points calculated under the V1 (Beta) methodology. Cells show finish / fleet size in designated premier competitions; a dash indicates no verified finish.
             </p>
           </div>
           <p className="text-xs font-semibold text-slate-soft">Calculated through {asOf}</p>
         </div>
 
         <form
-          action="/sg/optimist/asian-index"
+          action="/optimist/asian-index"
           method="get"
           className="grid gap-3 sm:grid-cols-3"
-          aria-label="Filter provisional standings"
+          aria-label="Filter standings"
         >
           <label className="grid gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-soft">
             Country
@@ -144,7 +144,7 @@ export function AsianOptimistIndexStandings({
               Apply filters
             </button>
             {filtersActive ? (
-              <Link href="/sg/optimist/asian-index" className="text-sm font-bold text-harbour underline underline-offset-4 hover:text-racing-deep">
+              <Link href="/optimist/asian-index" className="text-sm font-bold text-harbour underline underline-offset-4 hover:text-racing-deep">
                 Clear filters
               </Link>
             ) : null}
@@ -165,7 +165,7 @@ export function AsianOptimistIndexStandings({
               <th scope="col" className="px-4 py-3 font-extrabold">Country</th>
               <th scope="col" className="px-4 py-3 font-extrabold">Gender</th>
               <th scope="col" className="px-4 py-3 text-center font-extrabold">Birth year</th>
-              <th scope="col" className="px-4 py-3 text-right font-extrabold">Score</th>
+              <th scope="col" className="px-4 py-3 text-right font-extrabold">Points</th>
               <th scope="col" className="px-4 py-3 text-center font-extrabold">2025 Asians</th>
               {qualifierColumns.map((qualifier) => (
                 <th key={qualifier.id} scope="col" className="px-4 py-3 text-center font-extrabold">
@@ -205,7 +205,7 @@ export function AsianOptimistIndexStandings({
                 <td className="px-4 py-3 text-xs font-semibold text-charcoal">{sailor.nationality}</td>
                 <td className="px-4 py-3 text-xs font-semibold text-charcoal">{genderCode(sailor.gender)}</td>
                 <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">{sailor.birthYear ?? "—"}</td>
-                <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</td>
+                <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</td>
                 <td className="px-4 py-3 text-center font-bold text-harbour">{sailor.overallPlace}/{totalFleetSize}</td>
                 {qualifierColumns.map((qualifier) => (
                   <td key={qualifier.id} className="px-4 py-3 text-center text-xs font-semibold text-charcoal">

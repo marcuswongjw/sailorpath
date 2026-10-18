@@ -50,17 +50,17 @@ export function AsianOptimistIndexView({
       <section className="border-b border-harbour-shadow bg-harbour text-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-soft-aqua">
-            Optimist · beta methodology in consultation
+            Optimist · V1 (Beta) methodology
           </p>
           <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <h1 className="font-display text-3xl font-extrabold tracking-tight sm:text-5xl">
-                SailorPath Asian Optimist Index (Beta)
+                SailorPath Asian and Oceania Optimist Index
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-sailcloth sm:text-lg">
-                An independent index of verified Optimist results for sailors representing Asian national
-                authorities. The standings below are the current provisional release for the 122 Asian sailors in the
-                official 2025 Asian &amp; Oceanian Championship, combined with verified 2026 regional form.
+                An independent analytical index of verified Optimist results for sailors representing Asian and Oceanian national
+                authorities. Standings are calculated under the V1 (Beta) rolling 12-month methodology
+                for the {entries.length} Asian and Oceanian competitors from the 2025 Asian &amp; Oceanian Championship, combined with verified 2026 regional form.
               </p>
             </div>
             <a
@@ -79,16 +79,16 @@ export function AsianOptimistIndexView({
       <section aria-label="Beta methodology notice" className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
         <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
           <p>
-            <strong>A new methodology is open for consultation.</strong> The standings on this page still use the
-            earlier provisional formula and do not change until the Beta launch is announced. The proposed rules,
-            event register and nomination call are below. This is not an official IODA or federation ranking.
+            <strong>V1 (Beta) methodology is live.</strong> Standings are calculated using the V1 (Beta) points formula
+            (<code className="font-bold">E × (N − P + 1) ÷ N</code>) with event-grade and host-country caps across eligible Asian and Oceanian regattas.
+            This is an independent analytical index published by SailorPath, not an official IODA or national federation ranking.
           </p>
           <nav aria-label="On this page" className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-bold">
             <a href="#beta-summary" className="underline underline-offset-2 hover:text-racing-deep">
               Index in one page
             </a>
             <a href="#register" className="underline underline-offset-2 hover:text-racing-deep">
-              Proposed event register
+              Event register
             </a>
             <a href="#nominate" className="underline underline-offset-2 hover:text-racing-deep">
               Nominate an event
@@ -105,12 +105,12 @@ export function AsianOptimistIndexView({
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Fixed cohort</p>
             <p className="mt-1 text-3xl font-extrabold text-harbour">{entries.length}</p>
-            <p className="mt-1 text-xs text-slate-soft">Asian sailors from the 2025 official final</p>
+            <p className="mt-1 text-xs text-slate-soft">Asian &amp; Oceanian sailors from 2025 official final</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Score formula</p>
-            <p className="mt-1 text-lg font-extrabold text-harbour">60% championship · 40% form</p>
-            <p className="mt-1 text-xs text-slate-soft">Up to five events · best three host-country results</p>
+            <p className="mt-1 text-lg font-extrabold text-harbour">V1 (Beta) Points</p>
+            <p className="mt-1 text-xs text-slate-soft">Best up to 5 events · Grade 150 / 75 / 40 tiers</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Verified 2026 form</p>
@@ -164,7 +164,7 @@ export function AsianOptimistIndexView({
                 ) : null}
                 <p className="mt-1 text-sm text-slate-soft">{sailor.nationality} · {sailor.sailNumber}</p>
                 <p className="mt-4 text-sm font-semibold text-charcoal">
-                  Index score <span className="font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</span>
+                  Index points <span className="font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</span>
                   <span className="px-1.5 text-cool-mist">·</span>
                   2025 finish <span className="font-extrabold text-harbour">{sailor.overallPlace}/{ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}</span>
                 </p>

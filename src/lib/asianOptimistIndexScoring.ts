@@ -3,26 +3,34 @@ import {
   createAsianOptimistIndexBaseline,
   type AsianOptimistIndexEntry,
 } from "@/lib/asianOptimistIndex";
+import {
+  asianIndexPoints,
+  type AsianIndexGrade,
+} from "@/lib/asianOptimistIndexBeta";
 
 /**
- * A transparent bridge release before the 2026 Asian & Oceanian Championship.
+ * SailorPath Asian and Oceania Optimist Index — V1 (Beta) scoring release.
  *
- * Eligibility is deliberately fixed to Asian sailors in the verified 2025
- * championship final classification. Once the 2026 championship is final, its
- * official overall result will replace this cohort and championship anchor.
+ * Scored using the official V1 (Beta) rolling 12-month methodology:
+ * Points = E * (N - P + 1) / N for each designated event, selecting the sailor's
+ * optimal subset of eligible finishes subject to the 6 published selection limits:
+ *   1. At most five results overall.
+ *   2. At most two Grade 150 results.
+ *   3. At most one World Championship result.
+ *   4. At most four Grade 150 and Grade 75 results combined.
+ *   5. At most one Grade 75 result per host MNA jurisdiction.
+ *   6. At most one Grade 40 result per host MNA jurisdiction per calendar year.
  */
 export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE = {
-  version: "Provisional v1.0",
-  name: "2026 Provisional Asian Optimist Index",
+  version: "V1 (Beta)",
+  name: "SailorPath Asian and Oceania Optimist Index",
   cohortEvent: "2025 Optimist Asian & Oceanian Championship",
-  cohortSize: 122,
-  anchorWeight: 0.6,
-  /** The published season can nominate up to five verified regional events. */
-  qualifierEventCap: 5,
-  /** Scoring uses up to three best results from distinct host countries. */
-  qualifyingResultLimit: 3,
-  qualifierWeights: [0.28, 0.08, 0.04],
-  asOf: "13 September 2026",
+  cohortSize: 136,
+  maxResultsCounted: 5,
+  maxGrade150: 2,
+  maxWorlds: 1,
+  maxUpperGrade: 4,
+  asOf: "18 October 2026",
 } as const;
 
 export type AsianOptimistIndexQualifierTier = "international" | "national";
@@ -31,60 +39,83 @@ export type AsianOptimistIndexScoredQualifier = {
   id: string;
   shortName: string;
   hostCountry: string;
+  hostMna: string;
   fleetSize: number;
+  grade: AsianIndexGrade;
+  year: number;
   tier: AsianOptimistIndexQualifierTier;
-  /** National-event performance cannot contribute more than 70 / 100. */
+  isWorlds: boolean;
   scoreCap: number;
 };
 
 /**
- * This is a source-verified input table, not a directory. Each entry identifies
- * a 2025 cohort sailor through the verified SailorPath profile link and NOC.
+ * Source-verified input table of qualifying events in the rolling window.
  */
 export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   "lysc-2026-optimist-gold": {
     id: "lysc-2026-optimist-gold",
     shortName: "LYSC",
     hostCountry: "Malaysia",
+    hostMna: "MAS",
     fleetSize: 50,
+    grade: 75,
+    year: 2026,
     tier: "international",
-    scoreCap: 100,
+    isWorlds: false,
+    scoreCap: 75,
   },
   "langkawi-international-regatta-perdana-2026": {
     id: "langkawi-international-regatta-perdana-2026",
     shortName: "LIRP",
     hostCountry: "Malaysia",
+    hostMna: "MAS",
     fleetSize: 59,
+    grade: 75,
+    year: 2026,
     tier: "international",
-    scoreCap: 100,
+    isWorlds: false,
+    scoreCap: 75,
   },
   "sysc-2026-gold": {
     id: "sysc-2026-gold",
     shortName: "SYSC",
     hostCountry: "Singapore",
+    hostMna: "SGP",
     fleetSize: 106,
-    tier: "national",
-    scoreCap: 70,
+    grade: 75,
+    year: 2026,
+    tier: "international",
+    isWorlds: false,
+    scoreCap: 75,
   },
   "thailand-international-sailing-championships-2026": {
     id: "thailand-international-sailing-championships-2026",
-    shortName: "Thailand International",
+    shortName: "Thailand Int'l",
     hostCountry: "Thailand",
+    hostMna: "THA",
     fleetSize: 65,
+    grade: 75,
+    year: 2026,
     tier: "international",
-    scoreCap: 100,
+    isWorlds: false,
+    scoreCap: 75,
   },
   "snsc-gold-sep-26-2026-09-11": {
     id: "snsc-gold-sep-26-2026-09-11",
     shortName: "SNSC",
     hostCountry: "Singapore",
+    hostMna: "SGP",
     fleetSize: 83,
+    grade: 40,
+    year: 2026,
     tier: "national",
-    scoreCap: 70,
+    isWorlds: false,
+    scoreCap: 40,
   },
 } as const satisfies Record<string, AsianOptimistIndexScoredQualifier>;
 
-export type AsianOptimistIndexScoredQualifierId = keyof typeof ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS;
+export type AsianOptimistIndexScoredQualifierId =
+  keyof typeof ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS;
 
 export type AsianOptimistIndexQualifierResultInput = {
   qualifierId: AsianOptimistIndexScoredQualifierId;
@@ -94,9 +125,7 @@ export type AsianOptimistIndexQualifierResultInput = {
 };
 
 /**
- * All source-reviewed qualifying finishes for the fixed 2025 cohort as at the
- * provisional release date. Sail numbers are deliberately not used to match
- * young sailors across events.
+ * All source-reviewed qualifying finishes for the cohort as at the release date.
  */
 export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   {
@@ -238,19 +267,26 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
 export type AsianOptimistIndexQualifierScore = {
   qualifier: AsianOptimistIndexScoredQualifier;
   rank: number;
+  points: number;
+  counted: boolean;
+  dropReason?: string;
+  /** Backwards compatibility field matching raw points */
   rawScore: number;
+  /** Backwards compatibility field matching raw points */
   cappedScore: number;
+  /** Backwards compatibility field matching counted points contribution */
   pointsContribution: number;
 };
 
 export type AsianOptimistIndexProvisionalEntry = AsianOptimistIndexEntry & {
   provisionalRank: number;
-  /** The score is rounded only for public display; rank uses the exact value. */
+  /** The score is rounded to 2 decimal places for public display; rank uses exact points. */
   provisionalScore: number;
   championshipScore: number;
   championshipPoints: number;
   qualifierPoints: number;
   eligibleStarts: number;
+  countedResultsCount: number;
   hostCountryCount: number;
   /** Every verified qualifying finish, shown as a rank in the public table. */
   qualifierResults: AsianOptimistIndexQualifierScore[];
@@ -263,9 +299,12 @@ function identityKey(name: string, nationality: string): string {
 }
 
 function roundScore(value: number): number {
-  return Math.round(value * 10) / 10;
+  return Math.round(value * 100) / 100;
 }
 
+/**
+ * Normalised finish percentage helper preserved for backwards compatibility.
+ */
 export function normalisedFleetScore(rank: number, fleetSize: number): number {
   if (!Number.isInteger(rank) || !Number.isInteger(fleetSize) || fleetSize < 2) {
     throw new Error("A scored result needs a valid rank and a fleet of at least two sailors.");
@@ -277,100 +316,201 @@ export function normalisedFleetScore(rank: number, fleetSize: number): number {
   return (100 * (fleetSize - rank)) / (fleetSize - 1);
 }
 
-function compareQualifierScores(
-  a: AsianOptimistIndexQualifierScore,
-  b: AsianOptimistIndexQualifierScore
-): number {
-  return (
-    b.cappedScore - a.cappedScore ||
-    b.rawScore - a.rawScore ||
-    a.rank - b.rank ||
-    a.qualifier.id.localeCompare(b.qualifier.id)
-  );
-}
+type CandidateScoredResult = {
+  id: string;
+  name: string;
+  shortName: string;
+  grade: AsianIndexGrade;
+  starters: number;
+  rank: number;
+  points: number;
+  hostMna: string;
+  hostCountry: string;
+  year: number;
+  isWorlds: boolean;
+  qualifierScore?: AsianOptimistIndexQualifierScore;
+};
 
-function bestCountryScores(
-  scores: AsianOptimistIndexQualifierScore[]
-): AsianOptimistIndexQualifierScore[] {
-  const byCountry = new Map<string, AsianOptimistIndexQualifierScore>();
+/**
+ * Check whether a subset of results satisfies the 6 V1 (Beta) selection limits:
+ *   1. <= 5 results overall.
+ *   2. <= 2 Grade 150 results.
+ *   3. <= 1 World Championship result.
+ *   4. <= 4 Grade 150 and Grade 75 results combined.
+ *   5. At most 1 Grade 75 result per host MNA.
+ *   6. At most 1 Grade 40 result per host MNA per calendar year.
+ */
+function isValidSubset(subset: CandidateScoredResult[]): boolean {
+  if (subset.length > 5) return false;
 
-  for (const score of scores) {
-    const current = byCountry.get(score.qualifier.hostCountry);
-    if (!current || compareQualifierScores(score, current) < 0) {
-      byCountry.set(score.qualifier.hostCountry, score);
+  const g150 = subset.filter((r) => r.grade === 150).length;
+  if (g150 > 2) return false;
+
+  const worlds = subset.filter((r) => r.isWorlds).length;
+  if (worlds > 1) return false;
+
+  const upper = subset.filter((r) => r.grade === 150 || r.grade === 75).length;
+  if (upper > 4) return false;
+
+  const g75Hosts = new Set<string>();
+  for (const r of subset) {
+    if (r.grade === 75) {
+      if (g75Hosts.has(r.hostMna)) return false;
+      g75Hosts.add(r.hostMna);
     }
   }
 
-  return [...byCountry.values()].sort(compareQualifierScores);
+  const g40HostYears = new Set<string>();
+  for (const r of subset) {
+    if (r.grade === 40) {
+      const key = `${r.hostMna}:${r.year}`;
+      if (g40HostYears.has(key)) return false;
+      g40HostYears.add(key);
+    }
+  }
+
+  return true;
 }
 
 /**
- * Calculate the fixed-cohort provisional release.
+ * Finds the subset of candidate results that maximizes total points while
+ * strictly honoring the 6 selection rules.
+ */
+function selectOptimalResults(results: CandidateScoredResult[]): CandidateScoredResult[] {
+  let bestSubset: CandidateScoredResult[] = [];
+  let bestSum = -1;
+
+  function backtrack(idx: number, current: CandidateScoredResult[]) {
+    if (isValidSubset(current)) {
+      const sum = current.reduce((s, r) => s + r.points, 0);
+      if (sum > bestSum) {
+        bestSum = sum;
+        bestSubset = [...current];
+      }
+    } else {
+      return;
+    }
+
+    for (let i = idx; i < results.length; i++) {
+      current.push(results[i]);
+      backtrack(i + 1, current);
+      current.pop();
+    }
+  }
+
+  backtrack(0, []);
+  return bestSubset;
+}
+
+/**
+ * Calculate the fixed-cohort V1 (Beta) standings.
  *
- * Formula: 60% 2025 Asian & Oceanian performance + 28% / 8% / 4% from the
- * sailor's strongest verified qualifying result in distinct host countries.
- * Missing country slots remain zero; points are never redistributed merely for
- * participation. National events have a 70-point event-score ceiling.
+ * Scored using the official V1 (Beta) points formula:
+ *   Points = E * (N - P + 1) / N
+ * Optimal combination of up to 5 best results subject to event-grade and host-country caps.
  */
 export function createAsianOptimistIndexProvisionalEntries(
   baseline: AsianOptimistIndexEntry[] = createAsianOptimistIndexBaseline(),
   qualifierInputs: readonly AsianOptimistIndexQualifierResultInput[] =
     ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS
 ): AsianOptimistIndexProvisionalEntry[] {
-  const resultsBySailor = new Map<string, AsianOptimistIndexQualifierScore[]>();
+  const qualifiersBySailor = new Map<string, AsianOptimistIndexQualifierScore[]>();
 
   for (const input of qualifierInputs) {
     const qualifier = ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS[input.qualifierId];
-    const rawScore = normalisedFleetScore(input.rank, qualifier.fleetSize);
-    const cappedScore = Math.min(rawScore, qualifier.scoreCap);
+    const points = asianIndexPoints(qualifier.grade, qualifier.fleetSize, input.rank);
     const score: AsianOptimistIndexQualifierScore = {
       qualifier,
       rank: input.rank,
-      rawScore,
-      cappedScore,
+      points,
+      counted: false,
+      rawScore: points,
+      cappedScore: points,
       pointsContribution: 0,
     };
     const key = identityKey(input.name, input.nationality);
-    resultsBySailor.set(key, [...(resultsBySailor.get(key) ?? []), score]);
+    qualifiersBySailor.set(key, [...(qualifiersBySailor.get(key) ?? []), score]);
   }
 
   const scored = baseline.map((entry) => {
-    const championshipScore = normalisedFleetScore(
-      entry.overallPlace,
-      ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize
+    const anchorPoints = asianIndexPoints(
+      150,
+      ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
+      entry.overallPlace
     );
-    const championshipPoints =
-      championshipScore * ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.anchorWeight;
-    const allQualifierScores = resultsBySailor.get(
-      identityKey(entry.name, entry.nationality)
-    ) ?? [];
-    const countryScores = bestCountryScores(allQualifierScores).map((score, index) => ({
-      ...score,
-      pointsContribution:
-        score.cappedScore *
-        (ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.qualifierWeights[index] ?? 0),
+
+    const anchorCandidate: CandidateScoredResult = {
+      id: "2025-iod-asian-oceanian",
+      name: entry.name,
+      shortName: "2025 Asians",
+      grade: 150,
+      starters: ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
+      rank: entry.overallPlace,
+      points: anchorPoints,
+      hostMna: "OMA",
+      hostCountry: "Oman",
+      year: 2025,
+      isWorlds: false,
+    };
+
+    const sailorKey = identityKey(entry.name, entry.nationality);
+    const sailorQualifiers = qualifiersBySailor.get(sailorKey) ?? [];
+
+    const qualifierCandidates: CandidateScoredResult[] = sailorQualifiers.map((q) => ({
+      id: q.qualifier.id,
+      name: entry.name,
+      shortName: q.qualifier.shortName,
+      grade: q.qualifier.grade,
+      starters: q.qualifier.fleetSize,
+      rank: q.rank,
+      points: q.points,
+      hostMna: q.qualifier.hostMna,
+      hostCountry: q.qualifier.hostCountry,
+      year: q.qualifier.year,
+      isWorlds: q.qualifier.isWorlds,
+      qualifierScore: q,
     }));
-    const qualifierPoints = countryScores.reduce(
-      (sum, score) => sum + score.pointsContribution,
-      0
-    );
-    const preciseScore = championshipPoints + qualifierPoints;
+
+    const allCandidates = [anchorCandidate, ...qualifierCandidates];
+    const optimalSubset = selectOptimalResults(allCandidates);
+    const optimalIds = new Set(optimalSubset.map((r) => r.id));
+
+    // Mark counted status on qualifier results
+    const markedQualifiers: AsianOptimistIndexQualifierScore[] = sailorQualifiers.map((q) => {
+      const isCounted = optimalIds.has(q.qualifier.id);
+      return {
+        ...q,
+        counted: isCounted,
+        pointsContribution: isCounted ? q.points : 0,
+        dropReason: isCounted
+          ? undefined
+          : `Dropped by V1 (Beta) selection limits (e.g. host cap or optimal combination limit)`,
+      };
+    });
+
+    const scoredQualifiers = markedQualifiers.filter((q) => q.counted);
+    const qualifierPoints = scoredQualifiers.reduce((sum, q) => sum + q.points, 0);
+    const preciseScore = anchorPoints + qualifierPoints;
+
+    // Distinct host countries across scored qualifiers
+    const hostCountryCount = new Set(scoredQualifiers.map((q) => q.qualifier.hostCountry)).size;
 
     return {
       ...entry,
       provisionalRank: 0,
       provisionalScore: roundScore(preciseScore),
-      championshipScore: roundScore(championshipScore),
-      championshipPoints: roundScore(championshipPoints),
+      championshipScore: roundScore(anchorPoints),
+      championshipPoints: roundScore(anchorPoints),
       qualifierPoints: roundScore(qualifierPoints),
-      eligibleStarts: allQualifierScores.length,
-      hostCountryCount: countryScores.length,
-      qualifierResults: [...allQualifierScores].sort(
+      eligibleStarts: sailorQualifiers.length,
+      countedResultsCount: optimalSubset.length,
+      hostCountryCount,
+      qualifierResults: [...markedQualifiers].sort(
         (a, b) =>
           a.qualifier.id.localeCompare(b.qualifier.id) ||
           a.rank - b.rank
       ),
-      scoredQualifiers: countryScores,
+      scoredQualifiers,
       preciseScore,
     };
   });
@@ -378,6 +518,7 @@ export function createAsianOptimistIndexProvisionalEntries(
   scored.sort(
     (a, b) =>
       b.preciseScore - a.preciseScore ||
+      b.championshipPoints - a.championshipPoints ||
       a.overallPlace - b.overallPlace ||
       a.name.localeCompare(b.name)
   );

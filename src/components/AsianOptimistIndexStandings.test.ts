@@ -11,6 +11,11 @@ describe("Asian Optimist Index standings filters", () => {
     expect(singapore).toHaveLength(11);
     expect(singapore.every((entry) => entry.nationality === "SGP")).toBe(true);
     expect(singapore.map((entry) => entry.name)).toContain("Anya Zahedi");
+
+    const australia = filterAsianOptimistIndexEntries(entries, "AUS", "all", "all");
+    expect(australia).toHaveLength(10);
+    expect(australia.every((entry) => entry.nationality === "AUS")).toBe(true);
+    expect(australia.map((entry) => entry.name)).toContain("William Harris");
   });
 
   it("intersects country, M/F gender, and birth-year filters", () => {

@@ -8,11 +8,11 @@ import {
 } from "@/lib/asianOptimistIndexDuplicateReviews";
 
 /**
- * First-release source data for the Asian Optimist Index.
+ * First-release source data for the SailorPath Asian and Oceania Optimist Index.
  *
  * Transcribed from the official 2025 IODA Asian & Oceanian Championship
- * final overall-result PDF, after page-image reconciliation.  Entries are
- * restricted to Asian national authorities represented in the final results.
+ * final overall-result PDF, after page-image reconciliation. Entries cover
+ * Asian and Oceanian national authorities represented in the final results.
  */
 
 export type AsianOptimistIndexGender = "M" | "W";
@@ -34,7 +34,7 @@ export type AsianOptimistIndexSourceEntry = {
 export type AsianOptimistIndexEntry = AsianOptimistIndexSourceEntry & {
   /** Stable 2025 cohort identity key used for profile and review linkage. */
   identityKey: string;
-  /** Rank inside the Asian-only first-release baseline. */
+  /** Rank inside the Asian and Oceania baseline. */
   baselineRank: number;
   /** SailorPath profile name when it is more complete than the source sheet. */
   displayName: string;
@@ -58,8 +58,8 @@ export const ASIAN_OPTIMIST_INDEX_EVENT = {
   dates: "25 October–1 November 2025",
   totalFleetSize: 170,
   raceCount: 7,
-  entries: 122,
-  countries: 17,
+  entries: 136,
+  countries: 19,
 } as const;
 
 export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
@@ -329,6 +329,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 88
   },
   {
+    "overallPlace": 30,
+    "sailNumber": "AUS 1932",
+    "sourceName": "HARRIS, William",
+    "name": "William Harris",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 139,
+    "netPoints": 88
+  },
+  {
     "overallPlace": 31,
     "sailNumber": "SGP 78",
     "sourceName": "LOW, Ethan",
@@ -382,6 +393,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "W",
     "totalPoints": 142,
     "netPoints": 98
+  },
+  {
+    "overallPlace": 40,
+    "sailNumber": "AUS 1931",
+    "sourceName": "ROCHE, Balthazar",
+    "name": "Balthazar Roche",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 160,
+    "netPoints": 102
   },
   {
     "overallPlace": 41,
@@ -560,6 +582,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 93
   },
   {
+    "overallPlace": 62,
+    "sailNumber": "NZL 4675",
+    "sourceName": "DU, Jeffrey Chenglin",
+    "name": "Jeffrey Chenglin Du",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": 123,
+    "netPoints": 99
+  },
+  {
     "overallPlace": 66,
     "sailNumber": "HKG 162",
     "sourceName": "ANDERSON, Kian",
@@ -591,6 +624,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 178,
     "netPoints": 120
+  },
+  {
+    "overallPlace": 70,
+    "sailNumber": "NZL 4561",
+    "sourceName": "LANE, Zephyr",
+    "name": "Zephyr Lane",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": 162,
+    "netPoints": 122
   },
   {
     "overallPlace": 71,
@@ -648,6 +692,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 141
   },
   {
+    "overallPlace": 76,
+    "sailNumber": "NZL 4819",
+    "sourceName": "STRANG, Harry",
+    "name": "Harry Strang",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": 189,
+    "netPoints": 142
+  },
+  {
     "overallPlace": 79,
     "sailNumber": "SRI 397",
     "sourceName": "WICKRAMATILLAKE , Haren",
@@ -679,6 +734,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "W",
     "totalPoints": 209,
     "netPoints": 154
+  },
+  {
+    "overallPlace": 84,
+    "sailNumber": "AUS 1743",
+    "sourceName": "TAIT, Zachary",
+    "name": "Zachary Tait",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 191,
+    "netPoints": 158
   },
   {
     "overallPlace": 85,
@@ -758,6 +824,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 180
   },
   {
+    "overallPlace": 98,
+    "sailNumber": "AUS 1845",
+    "sourceName": "JACOBSEN, Hiro",
+    "name": "Hiro Jacobsen",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 234,
+    "netPoints": 186
+  },
+  {
     "overallPlace": 99,
     "sailNumber": "IND 1633",
     "sourceName": "BONGUR, Banny",
@@ -789,6 +866,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "W",
     "totalPoints": 251,
     "netPoints": 193
+  },
+  {
+    "overallPlace": 102,
+    "sailNumber": "NZL 4530",
+    "sourceName": "ROBSON, Holly",
+    "name": "Holly Robson",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "W",
+    "totalPoints": 244,
+    "netPoints": 194
   },
   {
     "overallPlace": 103,
@@ -855,6 +943,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 273,
     "netPoints": 216
+  },
+  {
+    "overallPlace": 112,
+    "sailNumber": "AUS 1720",
+    "sourceName": "DENG, Sijia",
+    "name": "Sijia Deng",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 278,
+    "netPoints": 220
   },
   {
     "overallPlace": 113,
@@ -1099,6 +1198,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 207
   },
   {
+    "overallPlace": 137,
+    "sailNumber": "AUS 1846",
+    "sourceName": "JACOBSEN, Emerald",
+    "name": "Emerald Jacobsen",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 255,
+    "netPoints": 208
+  },
+  {
     "overallPlace": 139,
     "sailNumber": "IND 1681",
     "sourceName": "TANDON, Siddhi",
@@ -1143,6 +1253,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 222
   },
   {
+    "overallPlace": 143,
+    "sailNumber": "AUS 1879",
+    "sourceName": "STEEL, Ruben",
+    "name": "Ruben Steel",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 273,
+    "netPoints": 224
+  },
+  {
     "overallPlace": 144,
     "sailNumber": "AZE 51",
     "sourceName": "HASANOVA, Kamilla",
@@ -1163,6 +1284,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 287,
     "netPoints": 234
+  },
+  {
+    "overallPlace": 146,
+    "sailNumber": "AUS 1820",
+    "sourceName": "WILKINSON, Ethan",
+    "name": "Ethan Wilkinson",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 289,
+    "netPoints": 236
   },
   {
     "overallPlace": 147,
@@ -1218,6 +1350,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 302,
     "netPoints": 247
+  },
+  {
+    "overallPlace": 152,
+    "sailNumber": "AUS 1882",
+    "sourceName": "HOWELL, Kirra",
+    "name": "Kirra Howell",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 301,
+    "netPoints": 248
   },
   {
     "overallPlace": 153,
@@ -1317,6 +1460,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 336,
     "netPoints": 278
+  },
+  {
+    "overallPlace": 162,
+    "sailNumber": "AUS 1781",
+    "sourceName": "TOMKINS, Emma",
+    "name": "Emma Tomkins",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 338,
+    "netPoints": 280
   },
   {
     "overallPlace": 163,
@@ -1431,9 +1585,8 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
       displayName: profile?.displayName ?? entry.name,
       birthYear: profile?.birthYear ?? null,
       // Every source-cohort identity has an existing SailorPath profile or a
-      // deterministic import handle created by migration 115. Keeping this
-      // manifest static prevents the public Index page from blocking on a DB
-      // lookup merely to render profile links.
+      // deterministic import handle. Keeping this manifest static prevents
+      // the public Index page from blocking on a DB lookup.
       profileHref: profile ? `/${profile.handle}` : null,
       profileReview: profileReview ?? null,
     };

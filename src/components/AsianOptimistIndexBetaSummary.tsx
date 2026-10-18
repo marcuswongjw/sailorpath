@@ -41,13 +41,13 @@ export function AsianOptimistIndexBetaSummary() {
       >
         <div className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-sm sm:p-6">
           <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-racing-deep">
-            Beta methodology · v{ASIAN_INDEX_BETA_VERSION} · consultation draft
+            Index methodology · {ASIAN_INDEX_BETA_VERSION}
           </p>
           <h2 id="beta-summary-heading" className="mt-2 text-xl font-extrabold text-harbour sm:text-2xl">
             The Index in one page
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-soft">
-            The SailorPath Asian Optimist Index is an independent index of verified Optimist results. It is not an
+            The SailorPath Asian and Oceania Optimist Index is an independent analytical index of verified Optimist results. It is not an
             official IODA or national federation ranking and must not be used as a team-selection tool. Updated{" "}
             {ASIAN_INDEX_BETA_DRAFT_DATE}.
           </p>
@@ -56,8 +56,8 @@ export function AsianOptimistIndexBetaSummary() {
             <div className="rounded-xl bg-sailcloth p-4">
               <dt className="text-xs font-bold uppercase tracking-wide text-slate-soft">Who is ranked</dt>
               <dd className="mt-1 text-sm leading-6 text-charcoal">
-                Sailors verified as representing one of 35 Asian MNAs, through 31 December of the year they turn 15,
-                with at least one scoring result in the window.
+                Sailors verified as representing an eligible Asian or Oceanian MNA, through 31 December of the year they turn 15,
+                with at least one scoring result in the rolling window.
               </dd>
             </div>
             <div className="rounded-xl bg-sailcloth p-4">

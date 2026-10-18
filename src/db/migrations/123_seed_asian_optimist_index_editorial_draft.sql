@@ -1,6 +1,6 @@
 -- 123_seed_asian_optimist_index_editorial_draft.sql
--- Seed the SailorPath Asian Optimist Index (Beta) announcement and scoring
--- explainer articles as editorial drafts in public.news_articles.
+-- Seed the SailorPath Asian and Oceania Optimist Index (V1 Beta) announcement
+-- and scoring explainer articles as editorial drafts in public.news_articles.
 
 BEGIN;
 
@@ -26,18 +26,18 @@ VALUES
   'asian-optimist-index-beta-methodology-and-event-register',
   'draft',
   'class_announcement',
-  'Introducing the SailorPath Asian Optimist Index (Beta): Methodology & 2026–27 Event Register',
-  'SailorPath introduces the Asian Optimist Index (Beta) for youth sailors representing 35 Asian MNAs: balanced Grade 150/75/40 event tiers, published criteria for major opens, strict country caps, a rolling 12-month window, and the initial 2026–27 event register.',
-  $body$Youth sailors across Asia compete in an active calendar of national championships, regional international opens, and IODA championships—yet following form across borders between major events has historically been difficult.
+  'Introducing the SailorPath Asian and Oceania Optimist Index (V1 Beta): Methodology & 2026–27 Event Register',
+  'SailorPath introduces the Asian and Oceania Optimist Index (V1 Beta) for youth sailors representing eligible Asian and Oceanian MNAs: balanced Grade 150/75/40 event tiers, published criteria for major opens, strict country caps, a rolling 12-month window, and the initial 2026–27 event register.',
+  $body$Youth sailors across Asia and Oceania compete in an active calendar of national championships, regional international opens, and IODA championships—yet following form across borders between major events has historically been difficult.
 
-Ahead of the 2026 IODA Asian & Oceanian Championship in Colombo (12–19 December 2026), we are publishing the methodology for the SailorPath Asian Optimist Index (Beta) along with our initial Grade 75 and Grade 40 Event Register, and opening a community consultation window to nominate and confirm qualifying regattas across Asia.
+Ahead of the 2026 IODA Asian & Oceanian Championship in Colombo (12–19 December 2026), we are publishing the methodology for the SailorPath Asian and Oceania Optimist Index (V1 Beta) along with our initial Grade 75 and Grade 40 Event Register, and opening a community consultation window to nominate and confirm qualifying regattas across Asia and Oceania.
 
-Independence & Governance Note: The SailorPath Asian Optimist Index is an independent, source-backed analytical index published by SailorPath. It is not an official IODA or national federation ranking, and it must not be used as a team-selection tool. Event organisers, juries, and national authorities remain the sole authority for official regatta results.
+Independence & Governance Note: The SailorPath Asian and Oceania Optimist Index is an independent, source-backed analytical index published by SailorPath. It is not an official IODA or national federation ranking, and it must not be used as a team-selection tool. Event organisers, juries, and national authorities remain the sole authority for official regatta results.
 
 ## Who Is Ranked
 
 A sailor appears in the current Index when:
-• Their current verified sporting representation is an eligible Asian Member National Authority (MNA). Eligibility follows the 35 member authorities listed by the Asian Sailing Federation (ASAF), not arbitrary geographic boundaries.
+• Their current verified sporting representation is an eligible Asian or Oceanian Member National Authority (MNA), including regional competitors from Australia, New Zealand, and across East, South, Southeast, Central, and West Asia.
 • They meet the calendar-year age rule: eligible through 31 December of the calendar year in which they turn 15, leaving the current Index on 1 January of the following year.
 • They have at least one verified, positive-point result within the rolling 12-month window.
 
@@ -49,11 +49,11 @@ The Index groups competitions into four distinct tiers:
 
 • Grade 150 — Championship Anchors (Max 2 results counted, at most 1 World Championship): The IODA World Championship and official IODA continental championships, wherever held. Requires an official final individual classification with at least 5 completed races. Equalizing both championships at Grade 150 gives full credit to standout World Championship performances while maintaining continental championships as core regional benchmarks.
 
-• Grade 75 — Designated Major International Opens (Max 2 results, at most 1 per host country): Pre-designated major international Optimist regattas in Asia. Requires published advance evidence of at least 50 registered sailors from at least 4 verified MNAs, confirmed post-race by at least 40 valid starters from at least 4 MNAs and 4 completed races. A limited number of premier non-Asian opens (such as Lake Garda) may be designated by published exception.
+• Grade 75 — Designated Major International Opens (Max 2 results, at most 1 per host country): Pre-designated major international Optimist regattas in Asia and Oceania. Requires published advance evidence of at least 50 registered sailors from at least 4 verified MNAs, confirmed post-race by at least 40 valid starters from at least 4 MNAs and 4 completed races. A limited number of premier non-regional opens (such as Lake Garda) may be designated by published exception.
 
-• Grade 40 — Designated National Championships (Max 2 results, at most 1 per host country per calendar year): Pre-designated premier national championships hosted in Asia by the relevant national class association or sailing authority. Requires an open final classification with at least 30 valid starters and 4 completed races.
+• Grade 40 — Designated National Championships (Max 2 results, at most 1 per host country per calendar year): Pre-designated premier national championships hosted in Asia and Oceania by the relevant national class association or sailing authority. Requires an open final classification with at least 30 valid starters and 4 completed races.
 
-• Grade 0 — Verified Competition History (Unscored): Club regattas, clinics, team racing, development fleets, non-Asian national championships, and events failing minimum gates remain visible on sailor profiles as verified competition history without scoring Index points.
+• Grade 0 — Verified Competition History (Unscored): Club regattas, clinics, team racing, development fleets, non-regional national championships, and events failing minimum gates remain visible on sailor profiles as verified competition history without scoring Index points.
 
 ## The Six Selection Limits
 
@@ -90,22 +90,23 @@ Every scored result links directly to a public ledger showing the source URL, pu
 • Singapore (SGP): Grade 75 candidate: Singapore Youth Sailing Championships (SYSC Gold, N = 106, 11 races). Grade 40 candidate: Singapore National Sailing Championships (SNSC Gold, N = 83, 9 races).
 • Hong Kong (HKG): Grade 75 candidate: Hong Kong Race Week (Optimist Main, N = 77, 9 races). Grade 40: HKG Optimist National Championship (open for nomination).
 • West Asia / GCC (OMA / UAE): Grade 75 candidate: Mussanah Race Week (open for nomination). Grade 40: UAE and Oman National Championships (open for nomination).
+• Australia & New Zealand (AUS / NZL): Grade 40: Australian and New Zealand National Championships (open for nomination).
 
 ## Open Call: Nominate or Confirm Regattas for 2026–27
 
 To maintain fairness and transparency, all regattas must be designated in advance of racing—grades are never assigned retroactively based on who won.
 
-We invite national class associations, sailing federations, host clubs, coaches, and parents across Asia to help finalize the 2026–27 Event Register:
-• Confirm nominations for initial hubs: feedback on open slots in Singapore, Thailand, Malaysia, Hong Kong, and the Gulf.
-• Nominate additional Asian hubs: we welcome nominations for premier national championships and international opens from India, Japan, China, Chinese Taipei, Sri Lanka, Myanmar, Indonesia, the Philippines, and Korea.
+We invite national class associations, sailing federations, host clubs, coaches, and parents across Asia and Oceania to help finalize the 2026–27 Event Register:
+• Confirm nominations for initial hubs: feedback on open slots in Singapore, Thailand, Malaysia, Hong Kong, Australia, New Zealand, and the Gulf.
+• Nominate additional hubs: we welcome nominations for premier national championships and international opens from India, Japan, China, Chinese Taipei, Sri Lanka, Myanmar, Indonesia, the Philippines, and Korea.
 
-Please review the full technical specification at /sg/optimist/asian-index/methodology and explore the live provisional standings at /sg/optimist/asian-index.$body$,
+Please review the full technical specification at /optimist/asian-index/methodology and explore the live standings at /optimist/asian-index.$body$,
   'SailorPath',
   'Optimist',
   'Asia',
-  'https://sailorpath.com/sg/optimist/asian-index',
-  'SailorPath Asian Optimist Index',
-  '["optimist", "asian-index", "methodology", "event-register"]'::jsonb,
+  'https://sailorpath.com/optimist/asian-index',
+  'SailorPath Asian and Oceania Optimist Index',
+  '["optimist", "asian-index", "oceania", "methodology", "event-register"]'::jsonb,
   '2026-10-18 12:00:00+08'
 ),
 (
@@ -113,11 +114,11 @@ Please review the full technical specification at /sg/optimist/asian-index/metho
   'how-the-asian-optimist-index-scores-regattas',
   'draft',
   'product_update',
-  'How the SailorPath Asian Optimist Index Scores Regattas: Grades, Country Caps, and Fair Selection',
-  'A deep dive into the scoring mechanics of the SailorPath Asian Optimist Index (Beta): why attendance alone does not buy rank, how the six caps ensure regional balance, how starter adjustments and ties are handled, and how optimal combination selection works.',
+  'How the SailorPath Asian and Oceania Optimist Index Scores Regattas: Grades, Country Caps, and Fair Selection',
+  'A deep dive into the scoring mechanics of the SailorPath Asian and Oceania Optimist Index (V1 Beta): why attendance alone does not buy rank, how the six caps ensure regional balance, how starter adjustments and ties are handled, and how optimal combination selection works.',
   $body$Rankings in youth sailing often face a difficult trade-off: either they only count a single annual championship, or they reward the families with the budget to travel to ten regattas a year.
 
-The SailorPath Asian Optimist Index (Beta) is designed around a different principle: measure finishing quality in deep, verified fleets while putting strict structural caps on the advantage of excessive travel.
+The SailorPath Asian and Oceania Optimist Index (V1 Beta) is designed around a different principle: measure finishing quality in deep, verified fleets while putting strict structural caps on the advantage of excessive travel.
 
 Here is a transparent breakdown of how the scoring mechanics, country caps, and result selection work under the hood.
 
@@ -179,15 +180,23 @@ Every result expires exactly 12 calendar months after the final race day. There 
 
 On 31 December each year, SailorPath archives a permanent final year-end Index snapshot. On 1 January, sailors who turned 15 during the preceding year age out of the active Index, keeping their complete competition history and year-end rank permanently intact.
 
-For full details, read our complete technical specification at /sg/optimist/asian-index/methodology and explore the live provisional standings at /sg/optimist/asian-index.$body$,
+For full details, read our complete technical specification at /optimist/asian-index/methodology and explore the live standings at /optimist/asian-index.$body$,
   'SailorPath',
   'Optimist',
   'Asia',
-  'https://sailorpath.com/sg/optimist/asian-index/methodology',
-  'Asian Optimist Index Methodology',
-  '["optimist", "asian-index", "scoring", "methodology", "analysis"]'::jsonb,
+  'https://sailorpath.com/optimist/asian-index/methodology',
+  'Asian & Oceania Optimist Index Methodology',
+  '["optimist", "asian-index", "oceania", "scoring", "methodology", "analysis"]'::jsonb,
   '2026-10-18 12:00:00+08'
 )
-ON CONFLICT DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  slug = EXCLUDED.slug,
+  title = EXCLUDED.title,
+  summary = EXCLUDED.summary,
+  body = EXCLUDED.body,
+  source_url = EXCLUDED.source_url,
+  source_label = EXCLUDED.source_label,
+  tags = EXCLUDED.tags,
+  updated_at = now();
 
 COMMIT;

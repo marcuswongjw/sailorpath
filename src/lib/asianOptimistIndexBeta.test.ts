@@ -66,10 +66,12 @@ describe("Asian Optimist Index (Beta) scoring", () => {
 });
 
 describe("Asian Optimist Index (Beta) reference data", () => {
-  it("lists 35 unique eligible MNA codes", () => {
+  it("lists eligible MNA codes across Asian and Oceanian regions", () => {
     const codes = ASIAN_INDEX_MNA_REGIONS.flatMap((region) => region.codes);
-    expect(codes).toHaveLength(35);
-    expect(new Set(codes).size).toBe(35);
+    expect(codes).toHaveLength(45);
+    expect(new Set(codes).size).toBe(45);
+    expect(codes).toContain("AUS");
+    expect(codes).toContain("NZL");
   });
 
   it("never marks a Grade 75 entry as meeting criteria below the published thresholds", () => {
