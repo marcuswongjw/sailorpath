@@ -63,6 +63,44 @@ describe("official Optimist development fleets", () => {
   });
 });
 
+describe("Optimist Boys and Girls standings", () => {
+  const published = ["Boys", "Girls"].map((division) => row({
+    slug: `2026-optimist-european-championship-${division.toLowerCase()}`,
+    name: `2026 Optimist European Championship (Optimist ${division})`,
+    date: "2026-07-24",
+    endDate: "2026-07-31",
+    division,
+    raceCount: 8,
+    totalFleetSize: division === "Boys" ? 170 : 122,
+    eventSlug: "2026-optimist-european-championship",
+    eventName: "2026 Optimist European Championship",
+  }));
+
+  it("keeps the two overall standings and their direct routes separate", () => {
+    const hub = savedEventHubForSlug("2026-optimist-european-championship", published);
+    expect(hub?.event.slices.map((slice) => [slice.key, slice.label])).toEqual([
+      ["optimist-boys", "Optimist Boys"],
+      ["optimist-girls", "Optimist Girls"],
+    ]);
+    for (const sheet of published) {
+      const direct = savedEventHubForSlug(sheet.slug, published);
+      const key = `optimist-${sheet.division?.toLowerCase()}`;
+      expect(direct?.fleetKey).toBe(key);
+      const selected = resolveEventSlices(direct!.event, published).find((slice) => slice.def.key === key);
+      expect(selected?.regatta?.slug).toBe(sheet.slug);
+      expect(selected?.regatta?.totalFleetSize).toBe(sheet.totalFleetSize);
+      expect(hubHrefForClassSlug(sheet.slug, published)).toBe(`/regattas/2026-optimist-european-championship?fleet=${key}`);
+    }
+  });
+
+  it("also preserves Boys and Girls when no parent event is saved", () => {
+    const unlinked = published.map((sheet) => ({ ...sheet, eventSlug: undefined, eventName: undefined }));
+    expect(groupedHubForSlug(unlinked[0].slug, unlinked)?.event.slices.map((slice) => slice.key)).toEqual([
+      "optimist-boys", "optimist-girls",
+    ]);
+  });
+});
+
 describe("regattaGroupKey", () => {
   it("keeps March and July SAFYC apart and joins a gold/silver pair", () => {
     const march = regattaGroupKey({
