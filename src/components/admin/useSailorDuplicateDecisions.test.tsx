@@ -18,6 +18,7 @@ const reason = "Verified distinct people from official evidence.";
 const enterReason = () => fireEvent.change(screen.getByLabelText("Source evidence or reason (10–2000 characters)"), { target: { value: reason } });
 describe("shared sailor identity decisions", () => {
   it("saves through the visible form, reloads on a fresh client, and explicitly reopens in reverse pair order", async () => {
+    const invalidate = vi.spyOn(QueryClient.prototype, "invalidateQueries");
     let separate = false;
     const fetch = vi.fn(async (_url, options) => {
       if (options?.method === "POST") { separate = JSON.parse(options.body).separate; return Response.json({ ok: true }); }
@@ -30,6 +31,7 @@ describe("shared sailor identity decisions", () => {
     expect(screen.getByRole("form")).toHaveTextContent("A / B");
     enterReason(); fireEvent.click(screen.getByRole("button", { name: "Save as different sailors" }));
     await screen.findByText("1 confirmed different");
+    expect(invalidate).toHaveBeenCalledWith({queryKey: ["admin", "duplicate-count"]});
     expect(prompt).not.toHaveBeenCalled();
     first.unmount(); mount(); await screen.findByText("1 confirmed different");
     fireEvent.click(screen.getByRole("button", { name: "Reopen review" }));

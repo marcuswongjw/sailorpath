@@ -1,7 +1,10 @@
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import { ADMIN_REQUEST_TIMEOUT_MS, AdminRequestError } from "@/lib/adminRequestPolicy";
+import {
+  ADMIN_REQUEST_TIMEOUT_MS,
+  AdminRequestError,
+} from "@/lib/adminRequestPolicy";
 
 export interface AdminFetchOptions extends Omit<RequestInit, "signal"> {
   signal?: AbortSignal;
@@ -10,7 +13,7 @@ export interface AdminFetchOptions extends Omit<RequestInit, "signal"> {
 
 export async function adminJson<T>(
   url: string,
-  options: AdminFetchOptions = {}
+  options: AdminFetchOptions = {},
 ): Promise<T> {
   const { timeoutMs = ADMIN_REQUEST_TIMEOUT_MS, signal, ...rest } = options;
   const controller = new AbortController();
@@ -26,7 +29,9 @@ export async function adminJson<T>(
   }
 
   const timeoutId = setTimeout(() => {
-    const error = new Error(`Admin request to ${url} timed out after ${timeoutMs}ms`);
+    const error = new Error(
+      `Admin request to ${url} timed out after ${timeoutMs}ms`,
+    );
     error.name = "TimeoutError";
     controller.abort(error);
   }, timeoutMs);
@@ -57,45 +62,50 @@ export async function adminJson<T>(
 }
 
 export async function fetchAdminSailors(
-  options?: AdminFetchOptions
+  options?: AdminFetchOptions,
 ): Promise<SailorAdmin[]> {
   const body = await adminJson<{ sailors?: SailorAdmin[] }>(
     "/api/admin/sailors?all=1",
-    options
+    options,
   );
   return Array.isArray(body.sailors) ? body.sailors : [];
 }
 
 export async function fetchAdminRegattaEvents(
-  options?: AdminFetchOptions
+  options?: AdminFetchOptions,
 ): Promise<
   Array<{ id: string; slug: string; name: string; startDate: string }>
 > {
   const body = await adminJson<{
-    events?: Array<{ id: string; slug: string; name: string; startDate: string }>;
+    events?: Array<{
+      id: string;
+      slug: string;
+      name: string;
+      startDate: string;
+    }>;
   }>("/api/admin/regatta-events", options);
   return Array.isArray(body.events) ? body.events : [];
 }
 
 export async function fetchAdminRegattas(
-  options?: AdminFetchOptions
+  options?: AdminFetchOptions,
 ): Promise<RegattaAdmin[]> {
   const body = await adminJson<{ regattas?: RegattaAdmin[] }>(
     "/api/admin/regattas?all=1",
-    options
+    options,
   );
   const rows = Array.isArray(body.regattas) ? body.regattas : [];
   return [...rows].sort((a, b) =>
-    String(b.date || "").localeCompare(String(a.date || ""))
+    String(b.date || "").localeCompare(String(a.date || "")),
   );
 }
 
 export async function fetchAdminResultsAll(
-  options?: AdminFetchOptions
+  options?: AdminFetchOptions,
 ): Promise<ResultAdmin[]> {
   const body = await adminJson<{ results?: ResultAdmin[] }>(
     "/api/admin/results?all=1",
-    options
+    options,
   );
   return Array.isArray(body.results) ? body.results : [];
 }
@@ -103,11 +113,11 @@ export async function fetchAdminResultsAll(
 export async function fetchAdminResultsForRegatta(
   regattaId: string,
   includeRaces = false,
-  options?: AdminFetchOptions
+  options?: AdminFetchOptions,
 ): Promise<ResultAdmin[]> {
   const body = await adminJson<{ results?: ResultAdmin[] }>(
     `/api/admin/results?regattaId=${encodeURIComponent(regattaId)}${includeRaces ? "&includeRaces=1" : ""}`,
-    options
+    options,
   );
   return Array.isArray(body.results) ? body.results : [];
 }
@@ -118,18 +128,29 @@ export type AdminOverviewPayload = {
   missingResults: import("@/lib/admin/adminOverview").OverviewSheet[];
   blocked: import("@/lib/admin/adminOverview").OverviewSheet[];
   incomplete: import("@/lib/admin/adminOverview").OverviewSheet[];
-  duplicateCount: number;
+  duplicateCount: number | null;
+  generatedAt?: string;
   counts: {
     ready: number;
     missingResults: number;
     blocked: number;
     incomplete: number;
-    duplicateSailors: number;
+    duplicateSailors: number | null;
   };
 };
 
 export async function fetchAdminOverview(
-  options?: AdminFetchOptions
+  options?: AdminFetchOptions,
 ): Promise<AdminOverviewPayload> {
-  return adminJson<AdminOverviewPayload>("/api/admin/overview", options);
+  return adminJson<AdminOverviewPayload>(
+    "/api/admin/overview?section=events",
+    options,
+  );
+}
+
+export function fetchAdminDuplicateCount(options?: AdminFetchOptions) {
+  return adminJson<{ duplicateCount: number; generatedAt: string }>(
+    "/api/admin/overview?section=duplicates",
+    options,
+  );
 }

@@ -14,11 +14,18 @@ export type OverviewSheet = {
   resultCount: number;
   summary: ReturnType<typeof publicationReadiness>["summary"];
   status: string | null;
+  issues?: string[];
 };
 
 export function buildAdminOverview(
   regattas: RegattaAdmin[],
-  results: ResultAdmin[] | Map<string, number> | Record<string, number>
+  results: ResultAdmin[] | Map<string, number> | Record<string, number>,
+  today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Singapore",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date()),
 ) {
   let resultCounts: Map<string, number>;
   if (results instanceof Map) {
@@ -26,7 +33,10 @@ export function buildAdminOverview(
   } else if (Array.isArray(results)) {
     resultCounts = new Map<string, number>();
     for (const result of results) {
-      resultCounts.set(result.regattaId, (resultCounts.get(result.regattaId) ?? 0) + 1);
+      resultCounts.set(
+        result.regattaId,
+        (resultCounts.get(result.regattaId) ?? 0) + 1,
+      );
     }
   } else if (results && typeof results === "object") {
     resultCounts = new Map(Object.entries(results));
@@ -37,25 +47,33 @@ export function buildAdminOverview(
   const sheets: OverviewSheet[] = [];
   const grouped = groupRegattaEvents(regattas);
   const addSheet = (sheet: RegattaAdmin, event: string | null) => {
-      // Archived history cannot be published, but it is not an active work item.
-      if (sheet.status === "archived") return;
-      const readiness = publicationReadiness({
-        ...sheet,
-        date: String(sheet.date).slice(0, 10),
-        resultCount: resultCounts.get(sheet.id) ?? 0,
-      });
-      sheets.push({
-        id: sheet.id,
-        name: sheet.name,
-        event,
-        date: String(sheet.date).slice(0, 10),
-        boatClass: sheet.boatClass ?? null,
-        division: sheet.division ?? null,
-        raceCount: typeof sheet.raceCount === "number" ? sheet.raceCount : null,
-        resultCount: resultCounts.get(sheet.id) ?? 0,
-        summary: readiness.summary,
-        status: sheet.status ?? null,
-      });
+    // Archived history cannot be published, but it is not an active work item.
+    if (sheet.status === "archived") return;
+    // Future calendar placeholders are planning, not overdue results work.
+    if (String(sheet.endDate || sheet.date).slice(0, 10) > today) return;
+    const readiness = publicationReadiness({
+      ...sheet,
+      date: String(sheet.date).slice(0, 10),
+      resultCount: resultCounts.get(sheet.id) ?? 0,
+    });
+    sheets.push({
+      id: sheet.id,
+      name: sheet.name,
+      event,
+      date: String(sheet.date).slice(0, 10),
+      boatClass: sheet.boatClass ?? null,
+      division: sheet.division ?? null,
+      raceCount: typeof sheet.raceCount === "number" ? sheet.raceCount : null,
+      resultCount: resultCounts.get(sheet.id) ?? 0,
+      summary: readiness.summary,
+      status: sheet.status ?? null,
+      issues: readiness.checks
+        .filter(
+          (check) =>
+            check.severity === "blocked" || check.severity === "incomplete",
+        )
+        .map((check) => check.label),
+    });
   };
   for (const event of grouped.events) {
     for (const sheet of event.sheets) {
@@ -70,10 +88,13 @@ export function buildAdminOverview(
       (sheet) =>
         sheet.status !== "published" &&
         (sheet.summary === "publishable_ranking" ||
-          sheet.summary === "publishable_non_ranking")
+          sheet.summary === "publishable_non_ranking"),
     ),
     missingResults: sheets.filter(
-      (sheet) => sheet.raceCount != null && sheet.raceCount > 0 && sheet.resultCount === 0
+      (sheet) =>
+        sheet.raceCount != null &&
+        sheet.raceCount > 0 &&
+        sheet.resultCount === 0,
     ),
     blocked: sheets.filter((sheet) => sheet.summary === "blocked"),
     incomplete: sheets.filter((sheet) => sheet.summary === "incomplete"),

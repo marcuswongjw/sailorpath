@@ -1,277 +1,436 @@
 "use client";
 
-import { useMemo } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import type { AdminInboxView } from "@/components/admin/adminNav";
-import {
-  AlertTriangle,
-  ArrowRight,
-  CheckCircle2,
-  History,
-  Inbox,
-  RefreshCw,
-  Sailboat,
-  UserRoundSearch,
-} from "lucide-react";
+import { ArrowRight, RefreshCw } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import type { AdminInboxQueueCounts } from "@/lib/admin/adminInboxCounts";
-import { totalPendingAdminInboxItems } from "@/lib/admin/adminInboxCounts";
-import { buildAdminOverview, type OverviewSheet } from "@/lib/admin/adminOverview";
-import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
-import { fetchAdminOverview } from "@/components/admin/adminFetch";
+import type {
+  AdminInboxQueueCounts,
+  AdminInboxQueueStates,
+} from "@/lib/admin/adminInboxCounts";
+import {
+  inboxIsComplete,
+  totalPendingAdminInboxItems,
+} from "@/lib/admin/adminInboxCounts";
+import {
+  buildAdminOverview,
+  type OverviewSheet,
+} from "@/lib/admin/adminOverview";
+import { adminQueryKeys } from "./adminQueryKeys";
+import {
+  adminJson,
+  fetchAdminDuplicateCount,
+  fetchAdminOverview,
+} from "./adminFetch";
 
-function sheetHref(sheet: OverviewSheet, view: "results" | "readiness") {
+const queues = [
+  ["claims", "Claims"],
+  ["coaches", "Coach access"],
+  ["suggestions", "Suggestions"],
+  ["support", "Support"],
+] as const;
+const quickLinks = [
+  ["/admin?area=events&view=card", "Find an event"],
+  ["/admin?area=sailors&view=directory", "Find a sailor"],
+  ["/admin/news", "Write an update"],
+  ["/admin?area=insights&view=metrics", "View insights"],
+];
+const panel = "rounded-xl border border-slate-200 bg-white p-4";
+
+function sheetHref(sheet: OverviewSheet) {
   const params = new URLSearchParams({
     area: "events",
     sheet: sheet.id,
-    view,
+    view: "readiness",
   });
   if (sheet.event) params.set("event", sheet.event);
-  return `/admin?${params.toString()}`;
+  return `/admin?${params}`;
 }
-
-type AuditRow = {
-  id: string;
-  createdAt: string;
-  summary: string;
-  entityType: string;
-  entityId: string | null;
-};
-
-const INBOX_QUEUES: { view: AdminInboxView; label: string }[] = [
-  { view: "suggestions", label: "Suggestions" },
-  { view: "claims", label: "Claims" },
-  { view: "coaches", label: "Coach access" },
-  { view: "support", label: "Support" },
-];
-
-function InboxQueueCard({
-  queues,
-}: {
-  queues: AdminInboxQueueCounts;
-}) {
-  const total = totalPendingAdminInboxItems(queues);
-  return (
-    <div className={`rounded-2xl border p-4 text-slate-300 ${total ? "border-rose-500/25 bg-rose-500/5" : "border-emerald-500/25 bg-emerald-500/5"}`}>
-      <div className="flex items-start justify-between gap-3">
-        <Inbox className="h-5 w-5" aria-hidden={true} />
-        <span className="text-2xl font-black text-white">{total}</span>
-      </div>
-      <h2 className="mt-4 font-bold text-white">Inbox</h2>
-      <p className="mt-1 text-xs leading-relaxed text-slate-400">
-        {total === 0 ? "No items are waiting for review." : "Items awaiting a response or review."}
-      </p>
-      <ul className="mt-3 grid grid-cols-2 gap-2">
-        {INBOX_QUEUES.map(({ view, label }) => (
-          <li key={view}>
-            <Link
-              href={`/admin?area=inbox&view=${view}`}
-              aria-label={`${label}: ${queues[view]} pending`}
-              className="flex min-h-11 items-center justify-between gap-2 rounded-xl border border-white/10 px-2.5 text-xs font-semibold text-slate-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-            >
-              <span>{label}</span>
-              <span className="font-black text-white">{queues[view]}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
-        Recent profile edits are activity, not pending inbox items; see Recent changes.
-      </p>
-    </div>
-  );
+function timeLabel(value: number) {
+  return value
+    ? new Intl.DateTimeFormat("en-GB", { timeStyle: "short" }).format(value)
+    : "Not checked yet";
 }
-
-function ActionCard({
+function SummaryLink({
   title,
-  count,
-  description,
+  value,
+  hint,
   href,
-  icon: Icon,
-  tone = "slate",
 }: {
   title: string;
-  count: number;
-  description: string;
+  value: number | string;
+  hint: string;
   href: string;
-  icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
-  tone?: "slate" | "amber" | "rose" | "emerald";
 }) {
-  const tones = {
-    slate: "border-white/10 bg-white/[0.03] text-slate-300",
-    amber: "border-amber-500/25 bg-amber-500/5 text-amber-300",
-    rose: "border-rose-500/25 bg-rose-500/5 text-rose-300",
-    emerald: "border-emerald-500/25 bg-emerald-500/5 text-emerald-300",
-  };
   return (
-    <Link href={href} className={`group rounded-2xl border p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ${tones[tone]}`}>
-      <div className="flex items-start justify-between gap-3">
-        <Icon className="h-5 w-5" aria-hidden={true} />
-        <span className="text-2xl font-black text-white">{count}</span>
-      </div>
-      <h2 className="mt-4 font-bold text-white">{title}</h2>
-      <p className="mt-1 text-xs leading-relaxed text-slate-400">{description}</p>
-      <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold">
-        Open workspace <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden={true} />
-      </span>
+    <Link
+      href={href}
+      className={`${panel} hover:border-harbour focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600`}
+    >
+      <p className="text-sm font-semibold text-slate-600">{title}</p>
+      <p className="my-2 text-2xl font-bold tabular-nums text-slate-900">
+        {value}
+      </p>
+      <p className="text-xs text-slate-600">{hint}</p>
     </Link>
   );
 }
+function Retry({
+  onRetry,
+  children,
+}: {
+  onRetry: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onRetry}
+      className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-harbour underline"
+    >
+      <RefreshCw className="h-4 w-4" aria-hidden="true" />
+      {children}
+    </button>
+  );
+}
+type Change = { id: string; createdAt: string; summary: string };
 
 export function AdminOverviewPanel({
   regattas,
   results,
   duplicateCount,
   inboxQueueCounts,
+  inboxQueueStates,
+  onRetryInbox,
 }: {
   regattas?: RegattaAdmin[];
   results?: ResultAdmin[];
   duplicateCount?: number;
   inboxQueueCounts: AdminInboxQueueCounts;
+  inboxQueueStates?: AdminInboxQueueStates;
+  onRetryInbox?: () => void;
 }) {
-  const overviewQuery = useQuery({
+  const remote = !regattas || !results;
+  const events = useQuery({
     queryKey: adminQueryKeys.overview(),
     queryFn: ({ signal }) => fetchAdminOverview({ signal }),
-    enabled: !regattas || !results,
+    enabled: remote,
   });
-
-  const overview = useMemo(() => {
-    if (regattas && results) {
-      return buildAdminOverview(regattas, results);
-    }
-    if (overviewQuery.data) {
-      return overviewQuery.data;
-    }
-    return {
-      sheets: [],
-      ready: [],
-      missingResults: [],
-      blocked: [],
-      incomplete: [],
-    };
-  }, [regattas, results, overviewQuery.data]);
-
-  const effectiveDuplicateCount =
-    duplicateCount ?? overviewQuery.data?.duplicateCount ?? 0;
-  const attention = [...overview.blocked, ...overview.incomplete].slice(0, 6);
+  const duplicates = useQuery({
+    queryKey: adminQueryKeys.duplicates(),
+    queryFn: ({ signal }) => fetchAdminDuplicateCount({ signal }),
+    enabled: duplicateCount == null,
+  });
   const recent = useQuery({
-    queryKey: ["admin", "overview-changes"],
-    queryFn: async () => {
-      const res = await fetch("/api/admin/change-log?limit=5&days=14");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not load recent changes");
-      return (data.changes || []) as AuditRow[];
-    },
+    queryKey: adminQueryKeys.recentChanges(),
+    queryFn: ({ signal }) =>
+      adminJson<{ changes: Change[] }>(
+        "/api/admin/change-log?limit=5&days=14",
+        { signal },
+      ),
   });
-
-  const isLoading = (!regattas || !results) && overviewQuery.isLoading;
-
-  if (isLoading) {
-    return (
-      <section className="space-y-6" aria-labelledby="overview-heading">
-        <div className="glass-panel rounded-2xl border border-white/5 p-5">
-          <h2 id="overview-heading" className="text-lg font-black text-white">Work requiring attention</h2>
-          <p className="mt-1 text-sm text-slate-400">Loading workspace summary…</p>
-        </div>
-        <div className="flex items-center justify-center p-12 text-slate-400 text-xs gap-2">
-          <RefreshCw className="h-5 w-5 animate-spin text-orange-500" />
-          Loading overview summary…
-        </div>
-      </section>
-    );
-  }
-
-  if (overviewQuery.isError && (!regattas || !results)) {
-    return (
-      <section className="space-y-6" aria-labelledby="overview-heading">
-        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-200">
-          <h2 id="overview-heading" className="font-bold text-sm">Unable to load overview</h2>
-          <p className="mt-1 text-xs text-rose-300">
-            {overviewQuery.error instanceof Error ? overviewQuery.error.message : "Temporary error loading overview summary."}
-          </p>
-          <button
-            type="button"
-            onClick={() => void overviewQuery.refetch()}
-            className="mt-3 px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-semibold transition cursor-pointer"
-          >
-            Retry
-          </button>
-        </div>
-      </section>
-    );
-  }
+  const overview =
+    regattas && results ? buildAdminOverview(regattas, results) : events.data;
+  const knownInbox = totalPendingAdminInboxItems(inboxQueueCounts);
+  const completeInbox = inboxQueueStates
+    ? inboxIsComplete(inboxQueueStates)
+    : true;
+  const issues = overview
+    ? [...overview.blocked, ...overview.incomplete].sort(
+        (a, b) =>
+          Number(b.status === "published") - Number(a.status === "published") ||
+          b.date.localeCompare(a.date),
+      )
+    : [];
+  const duplicateValue = duplicateCount ?? duplicates.data?.duplicateCount;
+  const staleEvents = remote && events.isError && Boolean(events.data);
 
   return (
-    <section className="space-y-6" aria-labelledby="overview-heading">
-      <div className="glass-panel rounded-2xl border border-white/5 p-5">
-        <h2 id="overview-heading" className="text-lg font-black text-white">Work requiring attention</h2>
-        <p className="mt-1 text-sm text-slate-400">Open an item to continue in the workspace that owns it.</p>
+    <section className="space-y-6" aria-label="Daily admin work">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-slate-600">
+          Review waiting requests, fix event checks and continue your work.
+        </p>
+        <Link
+          href="/admin?area=events&view=import"
+          className="sp-primary inline-flex min-h-11 items-center gap-2 rounded-lg px-4 text-sm font-bold"
+        >
+          Import results <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </div>
-
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <InboxQueueCard queues={inboxQueueCounts} />
-        <ActionCard title="Missing results" count={overview.missingResults.length} description="Classes with a recorded race count but no score rows." href="/admin?area=events&view=missing-results" icon={Sailboat} tone={overview.missingResults.length ? "amber" : "emerald"} />
-        <ActionCard title="Duplicate sailors" count={effectiveDuplicateCount} description="Likely duplicate records waiting for review or merge." href="/admin?area=sailors&view=duplicates" icon={UserRoundSearch} tone={effectiveDuplicateCount ? "amber" : "emerald"} />
-        <ActionCard title="Ready to publish" count={overview.ready.length} description="Valid, complete classes ready for a final publication review." href="/admin?area=events&view=ready-to-publish" icon={CheckCircle2} tone="emerald" />
+        <SummaryLink
+          title="Inbox"
+          value={completeInbox ? knownInbox : `${knownInbox} known`}
+          hint={
+            completeInbox
+              ? "Requests waiting for a decision"
+              : "Some queues are loading or unavailable"
+          }
+          href="/admin?area=inbox&view=claims"
+        />
+        <SummaryLink
+          title="Missing results"
+          value={
+            overview
+              ? overview.missingResults.length
+              : events.isError
+                ? "Unavailable"
+                : "Loading…"
+          }
+          hint={
+            staleEvents
+              ? "Last available count · refresh failed"
+              : "Completed class sheets without results"
+          }
+          href="/admin?area=events&view=missing-results"
+        />
+        <SummaryLink
+          title="Ready for review"
+          value={
+            overview
+              ? overview.ready.length
+              : events.isError
+                ? "Unavailable"
+                : "Loading…"
+          }
+          hint="Metadata complete; source scores still need review"
+          href="/admin?area=events&view=ready-to-publish"
+        />
+        <SummaryLink
+          title="Duplicate candidates"
+          value={
+            duplicateValue ?? (duplicates.isError ? "Unavailable" : "Loading…")
+          }
+          hint={
+            duplicates.isError && duplicateValue != null
+              ? "Last available count · refresh failed"
+              : "Compare evidence before merging identities"
+          }
+          href="/admin?area=sailors&view=duplicates"
+        />
       </div>
-
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(17rem,0.6fr)]">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="font-bold text-white">Event data health</h2>
-            <span className="text-xs font-bold text-slate-400">{overview.blocked.length} blocked · {overview.incomplete.length} incomplete</span>
-          </div>
-          <Link
-            href="/admin?area=events&view=attention"
-            className="mt-2 inline-flex min-h-11 items-center gap-1 text-xs font-bold text-orange-300 hover:text-orange-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-          >
-            View all {overview.blocked.length + overview.incomplete.length} issues
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden={true} />
-          </Link>
-          {attention.length ? (
-            <ul className="mt-3 divide-y divide-white/10">
-              {attention.map((sheet) => (
-                <li key={sheet.id}>
-                  <Link href={sheetHref(sheet, sheet.summary === "blocked" || sheet.summary === "incomplete" ? "readiness" : "results")} className="flex min-h-12 items-center justify-between gap-3 py-2 text-sm hover:text-orange-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600">
-                    <span className="inline-flex min-w-0 items-center gap-2"><AlertTriangle className="h-4 w-4 shrink-0 text-amber-400" aria-hidden={true} /><span className="truncate text-slate-200">{sheet.name}</span></span>
-                    <span className="shrink-0 text-xs font-bold capitalize text-slate-500">{sheet.summary.replace("_", " ")}</span>
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.6fr)_minmax(16rem,1fr)]">
+        <div className="space-y-5">
+          <section className={panel} aria-labelledby="today-inbox-heading">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 id="today-inbox-heading" className="font-bold text-slate-900">
+                Requests awaiting review
+              </h2>
+              {!completeInbox && onRetryInbox ? (
+                <Retry onRetry={onRetryInbox}>Retry queues</Retry>
+              ) : null}
+            </div>
+            {!completeInbox ? (
+              <p role="status" className="mt-2 text-sm text-amber-800">
+                The Inbox total is incomplete. Available queues remain usable.
+              </p>
+            ) : knownInbox === 0 ? (
+              <p className="mt-2 text-sm text-slate-600">
+                No requests are waiting for review.
+              </p>
+            ) : null}
+            <ul className="mt-2 divide-y divide-slate-100">
+              {queues.map(([view, label]) => {
+                const state = inboxQueueStates?.[view];
+                const usable =
+                  !state ||
+                  state.status === "ready" ||
+                  state.status === "stale";
+                const count = inboxQueueCounts[view];
+                const value = usable
+                  ? String(count)
+                  : state.status === "loading"
+                    ? "Loading…"
+                    : "Unavailable";
+                return (
+                  <li key={view}>
+                    <Link
+                      href={`/admin?area=inbox&view=${view}`}
+                      aria-label={
+                        usable
+                          ? `${label}: ${count} pending`
+                          : `${label}: ${value}`
+                      }
+                      className="flex min-h-14 items-center justify-between gap-3 py-3 text-sm text-slate-900 hover:text-harbour"
+                    >
+                      <span>
+                        {label}
+                        {state ? (
+                          <small className="ml-2 text-slate-500">
+                            {state.status === "stale"
+                              ? "Last available count"
+                              : state.status === "ready"
+                                ? `Checked ${timeLabel(state.updatedAt)}`
+                                : ""}
+                          </small>
+                        ) : null}
+                      </span>
+                      <span className="inline-flex items-center gap-2 font-semibold">
+                        {value}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+          <section className={panel} aria-labelledby="today-events-heading">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2
+                id="today-events-heading"
+                className="font-bold text-slate-900"
+              >
+                Event checks
+              </h2>
+              <Link
+                href="/admin?area=events&view=attention"
+                className="text-sm font-semibold text-harbour"
+              >
+                View all checks →
+              </Link>
+            </div>
+            {remote && events.isError ? (
+              <div
+                role="alert"
+                className="mt-3 rounded-lg bg-amber-50 p-3 text-sm text-amber-900"
+              >
+                <p>
+                  {overview
+                    ? "Showing previous checks. The latest refresh failed."
+                    : "Event checks could not load. No all-clear has been issued."}
+                </p>
+                <Retry onRetry={() => void events.refetch()}>
+                  Retry event checks
+                </Retry>
+              </div>
+            ) : null}
+            {!overview && events.isPending ? (
+              <p role="status" className="mt-3 text-sm text-slate-600">
+                Loading event checks… You can continue in Inbox or Events.
+              </p>
+            ) : null}
+            {overview ? (
+              <>
+                <p className="mt-2 text-xs text-slate-500">
+                  {remote
+                    ? `Checked ${timeLabel(events.dataUpdatedAt)} · `
+                    : ""}
+                  Metadata and result-presence checks; not a score audit.
+                </p>
+                {issues.length ? (
+                  <ul className="mt-3 divide-y divide-slate-100">
+                    {issues.slice(0, 6).map((sheet) => (
+                      <li key={sheet.id}>
+                        <Link
+                          href={sheetHref(sheet)}
+                          className="flex min-h-16 items-center justify-between gap-3 py-3 hover:text-harbour"
+                        >
+                          <span className="min-w-0">
+                            <span className="block text-sm font-semibold text-slate-900">
+                              {sheet.name}
+                            </span>
+                            <span className="mt-1 block text-xs text-slate-600">
+                              {sheet.status === "published"
+                                ? "Public result · "
+                                : ""}
+                              {sheet.issues?.[0] ||
+                                (sheet.summary === "blocked"
+                                  ? "Resolve a blocking check"
+                                  : "Complete missing event details")}
+                            </span>
+                          </span>
+                          <span className="shrink-0 text-sm font-semibold text-harbour">
+                            Review →
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : !staleEvents ? (
+                  <p className="mt-4 text-sm text-slate-600">
+                    No blocking metadata issues found. Source and score review
+                    remains a separate step.
+                  </p>
+                ) : null}
+              </>
+            ) : null}
+            {duplicateCount == null && duplicates.isError ? (
+              <div role="status" className="mt-3 text-sm text-amber-800">
+                Duplicate detection could not refresh.{" "}
+                <Retry onRetry={() => void duplicates.refetch()}>
+                  Retry identity checks
+                </Retry>
+              </div>
+            ) : null}
+          </section>
+        </div>
+        <aside className="space-y-5">
+          <section className={panel} aria-labelledby="today-actions-heading">
+            <h2 id="today-actions-heading" className="font-bold text-slate-900">
+              Continue working
+            </h2>
+            <ul className="mt-2 divide-y divide-slate-100">
+              {quickLinks.map(([href, label]) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="flex min-h-12 items-center justify-between text-sm font-semibold text-harbour"
+                  >
+                    {label}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </li>
               ))}
             </ul>
-          ) : (
-            <p className="mt-4 text-sm text-emerald-300">No blocked or incomplete class sheets.</p>
-          )}
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-          <History className="h-5 w-5 text-slate-400" aria-hidden={true} />
-          <h2 className="mt-3 font-bold text-white">Recent changes</h2>
-          <p className="mt-1 text-xs leading-relaxed text-slate-500">
-            Recent profile edits are activity, not pending inbox work.
-          </p>
-          {recent.isLoading ? (
-            <p className="mt-1 text-xs leading-relaxed text-slate-600">Loading recent changes…</p>
-          ) : recent.data && recent.data.length > 0 ? (
-            <ul className="mt-3 space-y-2">
-              {recent.data.map((row) => (
-                <li key={row.id} className="text-sm text-slate-800">
-                  <span className="block font-semibold text-slate-900">{row.summary}</span>
-                  <span className="text-xs text-slate-600">{new Date(row.createdAt).toLocaleString()}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-1 text-xs leading-relaxed text-slate-600">
-              {recent.isError ? "Recent changes are available to a superadmin." : "No recent changes in the last 14 days."}
+          </section>
+          <section className={panel} aria-labelledby="today-changes-heading">
+            <h2 id="today-changes-heading" className="font-bold text-slate-900">
+              Recent changes
+            </h2>
+            <p className="mt-1 text-xs text-slate-500">
+              Recent profile edits are activity, not pending inbox items.
             </p>
-          )}
-          <div className="mt-4 flex flex-col gap-2">
-            <Link href="/admin?area=settings&view=audit" className="inline-flex min-h-11 items-center justify-between rounded-xl border border-slate-200 px-3 text-sm font-bold text-slate-900 hover:bg-slate-50">Audit log <ArrowRight className="h-4 w-4" aria-hidden={true} /></Link>
-          </div>
-        </div>
+            {recent.isPending ? (
+              <p role="status" className="mt-3 text-sm text-slate-600">
+                Loading activity…
+              </p>
+            ) : null}
+            {recent.isError ? (
+              <div role="status" className="mt-3 text-sm text-amber-800">
+                Activity could not refresh.{" "}
+                <Retry onRetry={() => void recent.refetch()}>
+                  Retry activity
+                </Retry>
+              </div>
+            ) : null}
+            {recent.data?.changes?.length ? (
+              <ul className="mt-3 space-y-3">
+                {recent.data.changes.map((change) => (
+                  <li key={change.id} className="text-sm text-slate-800">
+                    <p>{change.summary}</p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      {new Date(change.createdAt).toLocaleString()}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : recent.isSuccess ? (
+              <p className="mt-3 text-sm text-slate-600">
+                No recorded changes in the last 14 days.
+              </p>
+            ) : null}
+            <Link
+              href="/admin?area=settings&view=audit"
+              className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-harbour"
+            >
+              Open audit history{" "}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </section>
+        </aside>
       </div>
     </section>
   );

@@ -18,6 +18,7 @@ import type { RegattaAdmin } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 
 type Suggestion = {
   id: string;
@@ -70,6 +71,7 @@ export function AdminSuggestionsPanel({
   const queryClient = useQueryClient();
   /** Keep the header notification badge in sync after queue mutations. */
   const invalidateSuggestionsBadge = useCallback(() => {
+    invalidateAdminSummaries(queryClient);
     void queryClient.invalidateQueries({
       queryKey: adminQueryKeys.regattaSuggestions(),
     });

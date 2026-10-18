@@ -1,396 +1,355 @@
 "use client";
 
-import { type ReactNode } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import {
-  AlertTriangle,
-  Database,
-  HeartPulse,
-  Users,
-  RefreshCw,
-  Target,
-  TrendingUp,
-  type LucideIcon,
-} from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import type { AdminStatsPayload } from "@/lib/adminStats";
-import { errorMessage } from "@/lib/errors";
-import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { adminQueryKeys } from "./adminQueryKeys";
+import { adminJson } from "./adminFetch";
 
-type Props = {
-  isSuperadmin: boolean;
-};
-
-function Card({
+const number = (value: number | null | undefined) =>
+  value == null ? "—" : value.toLocaleString();
+function Metric({
   label,
   value,
   hint,
-  tone = "default",
 }: {
   label: string;
   value: string;
-  hint?: string;
-  tone?: "default" | "warn" | "ok";
+  hint: string;
 }) {
-  const valueColor =
-    tone === "warn"
-      ? "text-amber-300"
-      : tone === "ok"
-        ? "text-emerald-300"
-        : "text-white";
   return (
-    <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 min-w-0">
-      <p className="text-[12px] font-bold uppercase tracking-wider text-slate-500">
-        {label}
-      </p>
-      <p className={`mt-1.5 text-2xl font-black tabular-nums ${valueColor}`}>
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <h3 className="text-sm font-semibold text-slate-600">{label}</h3>
+      <p className="my-2 text-2xl font-bold tabular-nums text-slate-900">
         {value}
       </p>
-      {hint && (
-        <p className="mt-1 text-[13px] text-slate-500 leading-snug">{hint}</p>
-      )}
+      <p className="text-xs text-slate-600">{hint}</p>
     </div>
   );
 }
 
-function Section({
-  icon: Icon,
-  title,
-  children,
-}: {
-  icon: LucideIcon;
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <section className="space-y-3">
-      <div className="flex items-center gap-2">
-        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-orange-500/15 border border-orange-500/20">
-          <Icon className="h-4 w-4 text-orange-400" />
-        </span>
-        <h2 className="text-sm font-black text-white tracking-tight">{title}</h2>
-      </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">{children}</div>
-    </section>
-  );
-}
-
-function fmt(n: number | null | undefined): string {
-  if (n == null || Number.isNaN(n)) return "—";
-  return n.toLocaleString();
-}
-
-/**
- * Lean live Stats — COUNT/DISTINCT cards from GET /api/admin/stats.
- */
-export function AdminStatsPanel({ isSuperadmin }: Props) {
-  const statsQuery = useQuery({
+export function AdminStatsPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
+  const query = useQuery({
     queryKey: adminQueryKeys.stats(),
+    queryFn: ({ signal }) =>
+      adminJson<AdminStatsPayload>("/api/admin/stats", { signal }),
     enabled: isSuperadmin,
-    staleTime: 60_000,
     retry: false,
-    queryFn: async ({ signal }) => {
-      const ac = new AbortController();
-      const onAbort = () => ac.abort();
-      signal.addEventListener("abort", onAbort, { once: true });
-      const timer = window.setTimeout(() => ac.abort(), 20_000);
-      try {
-        const res = await fetch("/api/admin/stats", {
-          credentials: "include",
-          signal: ac.signal,
-          cache: "no-store",
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          throw new Error(
-            typeof data.error === "string" ? data.error : "Failed to load stats"
-          );
-        }
-        return data as AdminStatsPayload;
-      } catch (e: unknown) {
-        const aborted =
-          (e instanceof DOMException && e.name === "AbortError") ||
-          (e instanceof Error && e.name === "AbortError");
-        throw new Error(
-          aborted
-            ? "Stats took too long to load. Try Refresh, then contact support if the problem continues."
-            : errorMessage(e, "Failed to load stats")
-        );
-      } finally {
-        window.clearTimeout(timer);
-        signal.removeEventListener("abort", onAbort);
-      }
-    },
   });
-  const stats = statsQuery.data ?? null;
-  const loading = statsQuery.isFetching;
-  const error = statsQuery.error
-    ? errorMessage(statsQuery.error, "Failed to load stats")
-    : null;
-
-  if (!isSuperadmin) {
+  const stats = query.data;
+  if (!isSuperadmin)
     return (
-      <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-300">
-        Superadmin only.
-      </div>
+      <p className="text-sm text-slate-700">Superadmin access is required.</p>
     );
-  }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-        <div className="min-w-0 space-y-1">
-          <h1 className="text-lg sm:text-xl font-black text-white tracking-tight">
-            Platform stats
-          </h1>
-          <p className="text-[12px] text-slate-400 leading-relaxed max-w-xl">
-            Platform counts and superadmin account activity. Cached ~{stats?.cacheSeconds ?? 60}
-            s. Definitions live in the{" "}
-            <Link
-              href="/admin/metrics"
-              className="text-orange-400 hover:text-orange-300 font-semibold"
-            >
-              metrics guide
-            </Link>
-            .
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm text-slate-600">
+            Usage, adoption and the work behind the numbers.
           </p>
+          {stats ? (
+            <p className="mt-1 text-xs text-slate-500">
+              As of {new Date(stats.generatedAt).toLocaleString()} ·{" "}
+              <Link href="/admin/metrics" className="underline">
+                Metric definitions
+              </Link>
+            </p>
+          ) : null}
         </div>
-        <div className="flex items-center gap-2 shrink-0">
-          {stats?.generatedAt && (
-            <span className="text-[13px] text-slate-500 tabular-nums">
-              As of {new Date(stats.generatedAt).toLocaleString()}
-            </span>
-          )}
-          <button
-            type="button"
-            onClick={() => void statsQuery.refetch()}
-            disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[13px] font-bold text-slate-200 hover:border-orange-500/40 disabled:opacity-50"
-          >
-            <RefreshCw
-              className={`h-3.5 w-3.5 ${loading ? "animate-spin text-orange-400" : ""}`}
-            />
-            Refresh
-          </button>
-        </div>
+        <button
+          type="button"
+          disabled={query.isFetching}
+          onClick={() => void query.refetch()}
+          className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold text-slate-800 disabled:opacity-50"
+        >
+          <RefreshCw
+            className={`h-4 w-4 ${query.isFetching ? "animate-spin" : ""}`}
+            aria-hidden="true"
+          />
+          Refresh insights
+        </button>
       </div>
-
-      {error && (
-        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200 flex gap-2">
-          <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {loading && !stats && (
-        <div className="flex items-center gap-2 py-16 justify-center text-xs text-slate-400">
-          <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
-          Loading stats…
-        </div>
-      )}
-
-      {stats && (
+      {query.isPending ? (
+        <p role="status" className="py-8 text-sm text-slate-600">
+          Loading insights…
+        </p>
+      ) : null}
+      {query.isError ? (
+        <p
+          role="alert"
+          className="rounded-lg bg-amber-50 p-4 text-sm text-amber-900"
+        >
+          {stats
+            ? "Refresh failed. Displayed metrics are from the last successful check."
+            : "Insights could not load. This does not mean activity is zero."}{" "}
+          Use Refresh insights to try again.
+        </p>
+      ) : null}
+      {stats ? (
         <>
-          {!stats.usageEventsOk && (
-            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[12px] text-amber-100">
-              Traffic metrics are temporarily unavailable. Other platform
-              statistics are unaffected.
+          {!stats.usageEventsOk ? (
+            <p
+              role="status"
+              className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900"
+            >
+              Usage tracking is unavailable. Traffic values are shown as
+              unavailable, not zero.
+            </p>
+          ) : null}
+          <section aria-labelledby="usage-heading">
+            <h2
+              id="usage-heading"
+              className="mb-3 text-base font-bold text-slate-900"
+            >
+              Recorded usage · last 7 days
+            </h2>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <Metric
+                label="Recorded sessions"
+                value={number(
+                  stats.usageEventsOk
+                    ? stats.northStars.weeklyActiveSessions
+                    : null,
+                )}
+                hint="Distinct session IDs; not unique people or signed-in users"
+              />
+              <Metric
+                label="Profile views"
+                value={number(
+                  stats.usageEventsOk ? stats.traffic7d.profileViews : null,
+                )}
+                hint="Recorded profile-view events"
+              />
+              <Metric
+                label="Ranking views"
+                value={number(
+                  stats.usageEventsOk ? stats.traffic7d.rankingViews : null,
+                )}
+                hint="Recorded ranking-view events"
+              />
+              <Metric
+                label="Searches"
+                value={number(
+                  stats.usageEventsOk ? stats.traffic7d.searches : null,
+                )}
+                hint="Recorded search events"
+              />
             </div>
-          )}
-          {!stats.authAccountsOk && (
-            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[12px] text-amber-100">
-              Account activity is temporarily unavailable. Aggregate traffic
-              and platform statistics are unaffected.
+          </section>
+          <section aria-labelledby="adoption-heading">
+            <h2
+              id="adoption-heading"
+              className="mb-3 text-base font-bold text-slate-900"
+            >
+              Profile adoption
+            </h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Metric
+                label="Claimed active series roster"
+                value={`${number(stats.northStars.claimedSeriesSailors)} / ${number(stats.northStars.seriesSailors)}`}
+                hint={`${stats.northStars.rosterClaimedPct == null ? "Percentage unavailable" : `${stats.northStars.rosterClaimedPct}% linked to a parent`}. Uses the active series roster, excluding guests.`}
+              />
+              <Metric
+                label="Claimed sailor profiles"
+                value={number(stats.northStars.claimedSailors)}
+                hint="All profiles with a linked parent, including those outside the active series roster"
+              />
             </div>
-          )}
-
-          <Section icon={Target} title="North stars">
-            <Card
-              label="Weekly active sessions"
-              value={fmt(stats.northStars.weeklyActiveSessions)}
-              hint="Distinct session IDs · last 7 days"
-            />
-            <Card
-              label="Claimed sailors"
-              value={fmt(stats.northStars.claimedSailors)}
-              hint="Profiles with a linked parent"
-            />
-            <Card
-              label="% roster claimed"
-              value={
-                stats.northStars.rosterClaimedPct == null
-                  ? "—"
-                  : `${stats.northStars.rosterClaimedPct}%`
-              }
-              hint={`${fmt(stats.northStars.claimedSeriesSailors)} / ${fmt(stats.northStars.seriesSailors)} series`}
-              tone={
-                (stats.northStars.rosterClaimedPct ?? 0) >= 40 ? "ok" : "default"
-              }
-            />
-            <Card
-              label="Claims pending"
-              value={fmt(stats.northStars.claimsPending)}
-              hint="Awaiting approve / reject"
-              tone={stats.northStars.claimsPending > 0 ? "warn" : "ok"}
-            />
-          </Section>
-
-          <Section icon={HeartPulse} title="Ops pulse">
-            <Card
-              label="Support new"
-              value={fmt(stats.ops.supportNew)}
-              hint="Unread inbox"
-              tone={stats.ops.supportNew > 0 ? "warn" : "ok"}
-            />
-            <Card
-              label="Days since import"
-              value={
-                stats.ops.daysSinceLastImport == null
-                  ? "—"
-                  : fmt(stats.ops.daysSinceLastImport)
-              }
-              hint={
-                stats.ops.lastImportAt
-                  ? `Last: ${new Date(stats.ops.lastImportAt).toLocaleDateString()}`
-                  : stats.usageEventsOk ? "No import events yet" : "Import history unavailable"
-              }
-              tone={
-                stats.ops.daysSinceLastImport != null &&
-                stats.ops.daysSinceLastImport > 14
-                  ? "warn"
-                  : "default"
-              }
-            />
-            <Card
-              label="Ranking regattas"
-              value={fmt(stats.ops.rankingRegattas)}
-              hint="counts_for_ranking = true"
-            />
-            <Card
-              label="Series sailors"
-              value={fmt(stats.northStars.seriesSailors)}
-              hint="Active series membership"
-            />
-          </Section>
-
-          <Section icon={TrendingUp} title="Traffic · 7 days">
-            <Card label="Ranking views" value={fmt(stats.usageEventsOk ? stats.traffic7d.rankingViews : null)} />
-            <Card label="Profile views" value={fmt(stats.usageEventsOk ? stats.traffic7d.profileViews : null)} />
-            <Card label="Searches" value={fmt(stats.usageEventsOk ? stats.traffic7d.searches : null)} />
-            <Card
-              label="Sample · Admin"
-              value={`${fmt(stats.usageEventsOk ? stats.traffic7d.sampleViews : null)} · ${fmt(stats.usageEventsOk ? stats.traffic7d.adminOpens : null)}`}
-              hint="sample_view · admin_open"
-            />
-          </Section>
-
-          <Section icon={Users} title="Signed-in accounts">
-            <Card label="Registered" value={fmt(stats.authAccountsOk ? stats.accounts.registered : null)} />
-            <Card label="Confirmed" value={fmt(stats.authAccountsOk ? stats.accounts.confirmed : null)} />
-            <Card
-              label="Signed in · 7 days"
-              value={fmt(stats.authAccountsOk ? stats.accounts.signedInLast7d : null)}
-              hint="Accounts with a recent sign-in"
-            />
-            <Card
-              label="Auth sessions"
-              value={fmt(stats.authAccountsOk ? stats.accounts.authSessions : null)}
-              hint="Valid session records, not live online presence"
-            />
-          </Section>
-
-          {stats.authAccountsOk && (
-            <section className="space-y-3">
+            <Link
+              href="/admin?area=sailors&view=directory"
+              className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-harbour"
+            >
+              Open sailor directory →
+            </Link>
+          </section>
+          <section
+            className="rounded-xl border border-slate-200 bg-white p-4"
+            aria-labelledby="insights-actions-heading"
+          >
+            <h2
+              id="insights-actions-heading"
+              className="font-bold text-slate-900"
+            >
+              Turn an insight into action
+            </h2>
+            <div className="mt-2 divide-y divide-slate-100">
+              {[
+                [
+                  "/admin?area=events&view=missing-results",
+                  "Results coverage",
+                  "Find completed class sheets without results.",
+                ],
+                [
+                  "/admin?area=events&view=attention",
+                  "Publication blockers",
+                  "Review missing metadata and official source requirements.",
+                ],
+                [
+                  "/admin?area=inbox&view=claims",
+                  "Requests awaiting a decision",
+                  "Review claims, coach access, suggestions and support in Inbox.",
+                ],
+                [
+                  "/admin?area=settings&view=audit",
+                  "Changes and imports",
+                  "Inspect the recorded change history and affected records.",
+                ],
+              ].map(([href, label, hint]) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex min-h-16 items-center justify-between gap-3 py-3"
+                >
+                  <span>
+                    <span className="block text-sm font-semibold text-slate-900">
+                      {label}
+                    </span>
+                    <span className="mt-1 block text-xs text-slate-600">
+                      {hint}
+                    </span>
+                  </span>
+                  <span className="text-harbour" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-slate-500">
+              Coverage checks do not certify score accuracy. Turnaround trends
+              require complete request history.
+            </p>
+          </section>
+          <details className="rounded-xl border border-slate-200 bg-white p-4">
+            <summary className="min-h-11 text-sm font-semibold text-slate-800">
+              Diagnostics & account activity
+            </summary>
+            <p className="my-3 text-xs text-slate-600">
+              Technical observations, not daily priorities. Sign-ins, recorded
+              sessions and usage are different measures.
+            </p>
+            <dl className="grid gap-3 text-sm sm:grid-cols-2">
               <div>
-                <h2 className="text-sm font-black text-white tracking-tight">
-                  Recent account activity
-                </h2>
-                <p className="mt-1 text-[13px] text-slate-500">
-                  Superadmin only. A session can remain valid while the person
-                  is away, so this does not claim real-time online status.
-                </p>
+                <dt className="font-semibold">Last tracked UI import</dt>
+                <dd>
+                  {stats.usageEventsOk
+                    ? stats.ops.lastImportAt
+                      ? new Date(stats.ops.lastImportAt).toLocaleString()
+                      : "No tracked UI import"
+                    : "Unavailable"}
+                </dd>
+                <dd className="text-xs text-slate-500">
+                  May omit scripted imports and other paths; not a complete
+                  import ledger.
+                </dd>
               </div>
-              <div className="overflow-x-auto rounded-2xl border border-white/5 bg-white/[0.03]">
-                <table className="w-full min-w-[720px] text-left text-sm">
-                  <thead className="border-b border-white/5 text-[12px] uppercase tracking-wider text-slate-500">
-                    <tr>
-                      <th className="px-4 py-3 font-bold">Account</th>
-                      <th className="px-4 py-3 font-bold">Role</th>
-                      <th className="px-4 py-3 font-bold">Last sign-in</th>
-                      <th className="px-4 py-3 font-bold">Last session refresh</th>
-                      <th className="px-4 py-3 font-bold text-right">Sessions</th>
+              <div>
+                <dt className="font-semibold">Sailor records</dt>
+                <dd>{number(stats.dataTrust.sailorsTotal)}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold">
+                  Records without a full birth date
+                </dt>
+                <dd>{number(stats.dataTrust.missingDob)}</dd>
+                <dd className="text-xs text-slate-500">
+                  Not necessarily an error. Verify birth year only where age
+                  rules require it.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold">
+                  Missing or placeholder sail numbers
+                </dt>
+                <dd>{number(stats.dataTrust.missingOrPlaceholderSail)}</dd>
+                <dd className="text-xs text-slate-500">
+                  Charter sail numbers do not establish identity.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold">Registered accounts</dt>
+                <dd>
+                  {number(
+                    stats.authAccountsOk ? stats.accounts.registered : null,
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold">Accounts signing in · 7 days</dt>
+                <dd>
+                  {number(
+                    stats.authAccountsOk ? stats.accounts.signedInLast7d : null,
+                  )}
+                </dd>
+                <dd className="text-xs text-slate-500">
+                  Recent session refreshes do not count as a new sign-in.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold">Valid auth-session records</dt>
+                <dd>
+                  {number(
+                    stats.authAccountsOk ? stats.accounts.authSessions : null,
+                  )}
+                </dd>
+                <dd className="text-xs text-slate-500">
+                  Does not indicate who is online.
+                </dd>
+              </div>
+            </dl>
+            {stats.authAccountsOk ? (
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <caption className="mb-2 text-left font-semibold">
+                    Recent account sign-ins
+                  </caption>
+                  <thead>
+                    <tr className="border-b border-slate-200 text-slate-600">
+                      <th className="p-2">Account</th>
+                      <th className="p-2">Role</th>
+                      <th className="p-2">Last sign-in</th>
+                      <th className="p-2">Session refresh</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody>
                     {stats.accounts.recent.map((account) => (
-                      <tr key={account.id} className="text-slate-300">
-                        <td className="px-4 py-3">
-                          <p className="font-bold text-white">
-                            {account.fullName ||
-                              account.email ||
-                              "Unnamed account"}
-                          </p>
-                          {account.fullName && account.email && (
-                            <p className="mt-0.5 text-slate-500">{account.email}</p>
-                          )}
+                      <tr
+                        key={account.id}
+                        className="border-b border-slate-100"
+                      >
+                        <td className="break-all p-2">
+                          {account.fullName ||
+                            account.email ||
+                            "Unnamed account"}
                         </td>
-                        <td className="px-4 py-3 capitalize">{account.role}</td>
-                        <td className="px-4 py-3 tabular-nums">
+                        <td className="p-2">{account.role}</td>
+                        <td className="p-2">
                           {account.lastSignInAt
                             ? new Date(account.lastSignInAt).toLocaleString()
                             : "Never"}
                         </td>
-                        <td className="px-4 py-3 tabular-nums">
+                        <td className="p-2">
                           {account.lastSessionRefreshAt
                             ? new Date(
-                                account.lastSessionRefreshAt
+                                account.lastSessionRefreshAt,
                               ).toLocaleString()
                             : "—"}
                         </td>
-                        <td className="px-4 py-3 text-right font-bold tabular-nums">
-                          {fmt(account.authSessionCount)}
-                        </td>
                       </tr>
                     ))}
-                    {stats.accounts.recent.length === 0 && (
-                      <tr>
-                        <td colSpan={5} className="px-4 py-8 text-center text-slate-500">
-                          No accounts found.
-                        </td>
-                      </tr>
-                    )}
                   </tbody>
                 </table>
               </div>
-            </section>
-          )}
-
-          <Section icon={Database} title="Data trust">
-            <Card
-              label="Sailors total"
-              value={fmt(stats.dataTrust.sailorsTotal)}
-            />
-            <Card
-              label="Missing DOB"
-              value={fmt(stats.dataTrust.missingDob)}
-              tone={stats.dataTrust.missingDob > 0 ? "warn" : "ok"}
-            />
-            <Card
-              label="Missing / placeholder sail #"
-              value={fmt(stats.dataTrust.missingOrPlaceholderSail)}
-              hint="Empty or zero placeholder"
-              tone={
-                stats.dataTrust.missingOrPlaceholderSail > 0 ? "warn" : "ok"
-              }
-            />
-            <Card
-              label="Cache"
-              value={`${stats.cacheSeconds}s`}
-              hint="Client refresh window"
-            />
-          </Section>
+            ) : (
+              <p className="mt-3 text-sm text-amber-800">
+                Account activity is unavailable.
+              </p>
+            )}
+          </details>
         </>
-      )}
+      ) : null}
     </div>
   );
 }

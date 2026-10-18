@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandWordmark } from "@/components/BrandMark";
@@ -16,14 +17,22 @@ const getServerHost = () => "";
  */
 export function SiteFooter() {
   const { owned, ready } = useAccount();
+  const pathname = usePathname();
   const host = useSyncExternalStore(
     subscribeToHost,
     getBrowserHost,
-    getServerHost
+    getServerHost,
   );
 
-  const showDemo = Boolean(host) &&
-    (!ready || shouldShowDemoNavigation(host, owned.length));
+  const showDemo =
+    Boolean(host) && (!ready || shouldShowDemoNavigation(host, owned.length));
+
+  if (
+    pathname === "/admin" ||
+    pathname?.startsWith("/admin/") ||
+    (pathname === "/" && host === "admin.sailorpath.com")
+  )
+    return null;
 
   return (
     <footer className="min-w-0 w-full max-w-[100vw] border-t border-harbour-shadow bg-harbour-shadow py-8 sm:py-10 text-[13px] text-sailcloth">
@@ -31,13 +40,38 @@ export function SiteFooter() {
         <div className="flex items-center gap-3">
           <BrandWordmark reversed className="text-base sm:text-lg" />
           <span className="text-soft-aqua/60">·</span>
-          <p className="text-soft-aqua">© {new Date().getFullYear()} SailorPath</p>
+          <p className="text-soft-aqua">
+            © {new Date().getFullYear()} SailorPath
+          </p>
         </div>
-        <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sailcloth/90">
-          <Link href="/results" className="hover:text-white hover:underline transition-colors">Results</Link>
-          <Link href="/sailors" className="hover:text-white hover:underline transition-colors">Sailors</Link>
-          <Link href="/news" className="hover:text-white hover:underline transition-colors">Updates</Link>
-          <Link href="/about" className="hover:text-white hover:underline transition-colors">About</Link>
+        <nav
+          aria-label="Footer"
+          className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sailcloth/90"
+        >
+          <Link
+            href="/results"
+            className="hover:text-white hover:underline transition-colors"
+          >
+            Results
+          </Link>
+          <Link
+            href="/sailors"
+            className="hover:text-white hover:underline transition-colors"
+          >
+            Sailors
+          </Link>
+          <Link
+            href="/news"
+            className="hover:text-white hover:underline transition-colors"
+          >
+            Updates
+          </Link>
+          <Link
+            href="/about"
+            className="hover:text-white hover:underline transition-colors"
+          >
+            About
+          </Link>
           <Link
             href="/support"
             className="hover:text-white hover:underline transition-colors"

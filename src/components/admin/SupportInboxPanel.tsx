@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 import { LifeBuoy, CheckCircle, Mail, Inbox } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
@@ -21,6 +22,7 @@ type Msg = {
 
 export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast } = useFeedback();
+  const queryClient = useQueryClient();
   const [filter, setFilter] = useState<"new" | "all" | "resolved">("new");
 
   const messagesQuery = useQuery({
@@ -50,7 +52,8 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
-      await messagesQuery.refetch();
+      void queryClient.invalidateQueries({ queryKey: ["admin", "support"] });
+      invalidateAdminSummaries(queryClient);
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Failed"));
     }

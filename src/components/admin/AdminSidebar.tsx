@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import type { MouseEvent } from "react";
+import { useState } from "react";
+import { confirmAdminLeave } from "./adminLeaveGuard";
 import {
   BarChart3,
   Calendar,
   Gauge,
   Inbox,
   Settings,
+  FilePenLine,
+  Menu,
   Users,
 } from "lucide-react";
 import {
@@ -17,7 +20,7 @@ import {
 } from "@/components/admin/adminNav";
 
 type Item = {
-  area: AdminArea;
+  area: AdminArea | "editorial";
   label: string;
   href: string;
   active: boolean;
@@ -35,101 +38,172 @@ const childCurrent =
 
 export function AdminSidebar({
   activeArea,
-  sailorsView,
-  inboxView,
-  insightsView,
-  settingsView,
-  eventsView,
-  inboxCount,
-  queueCounts,
-  landingView,
-  onNavigate,
+  sailorsView = "directory",
+  inboxView = "claims",
+  insightsView = "metrics",
+  settingsView = "audit",
+  eventsView = "card",
+  inboxCount = 0,
+  queueCounts = {},
+  landingView = "claims",
+  inboxIncomplete = false,
+  onNavigate = confirmAdminLeave,
 }: {
-  activeArea: AdminArea;
-  sailorsView: string;
-  inboxView: string;
-  insightsView: string;
-  settingsView: string;
-  eventsView: string;
-  inboxCount: number;
-  queueCounts: Partial<Record<AdminInboxView, number>>;
-  landingView: AdminInboxView;
-  onNavigate: (href: string) => boolean;
+  activeArea: AdminArea | "editorial";
+  sailorsView?: string;
+  inboxView?: string;
+  insightsView?: string;
+  settingsView?: string;
+  eventsView?: string;
+  inboxCount?: number;
+  queueCounts?: Partial<Record<AdminInboxView, number>>;
+  landingView?: AdminInboxView;
+  inboxIncomplete?: boolean;
+  onNavigate?: (href: string) => boolean;
 }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const items: Item[] = [
     {
       area: "overview",
-      label: "Overview",
-      href: areaHref({ area: "overview", view: "home", event: null, sheet: null }),
+      label: "Today",
+      href: areaHref({
+        area: "overview",
+        view: "home",
+        event: null,
+        sheet: null,
+      }),
       active: activeArea === "overview",
     },
     {
       area: "events",
-      label: "Events",
-      href: areaHref({ area: "events", view: "card", event: null, sheet: null }),
+      label: "Events & results",
+      href: areaHref({
+        area: "events",
+        view: "card",
+        event: null,
+        sheet: null,
+      }),
       active: activeArea === "events",
     },
     {
       area: "sailors",
       label: "Sailors",
-      href: areaHref({ area: "sailors", view: "directory", event: null, sheet: null }),
+      href: areaHref({
+        area: "sailors",
+        view: "directory",
+        event: null,
+        sheet: null,
+      }),
       active: activeArea === "sailors",
     },
     {
       area: "inbox",
       label: "Inbox",
-      href: areaHref({ area: "inbox", view: landingView, event: null, sheet: null }),
+      href: areaHref({
+        area: "inbox",
+        view: landingView,
+        event: null,
+        sheet: null,
+      }),
       active: activeArea === "inbox",
       count: inboxCount,
     },
     {
+      area: "editorial",
+      label: "Editorial",
+      href: "/admin/news",
+      active: activeArea === "editorial",
+    },
+    {
       area: "insights",
       label: "Insights",
-      href: areaHref({ area: "insights", view: "metrics", event: null, sheet: null }),
+      href: areaHref({
+        area: "insights",
+        view: "metrics",
+        event: null,
+        sheet: null,
+      }),
       active: activeArea === "insights",
     },
     {
       area: "settings",
-      label: "Settings",
-      href: areaHref({ area: "settings", view: "audit", event: null, sheet: null }),
+      label: "Settings & audit",
+      href: areaHref({
+        area: "settings",
+        view: "audit",
+        event: null,
+        sheet: null,
+      }),
       active: activeArea === "settings",
     },
   ];
 
-  const guardLink = (href: string, event: MouseEvent<HTMLAnchorElement>) => {
+  const guardLink = (href: string, event: { preventDefault: () => void }) => {
     if (!onNavigate(href)) event.preventDefault();
+    else setMobileOpen(false);
   };
 
-  const subnav: { key: string; href: string; label: string; current: boolean; count?: number }[] =
+  const subnav: {
+    key: string;
+    href: string;
+    label: string;
+    current: boolean;
+    count?: number;
+  }[] =
     activeArea === "events"
       ? [
           {
             key: "board",
-            href: areaHref({ area: "events", view: "board", event: null, sheet: null }),
+            href: areaHref({
+              area: "events",
+              view: "board",
+              event: null,
+              sheet: null,
+            }),
             label: "Board & foil classes",
             current: eventsView === "board",
           },
           {
             key: "missing-results",
-            href: areaHref({ area: "events", view: "missing-results", event: null, sheet: null }),
+            href: areaHref({
+              area: "events",
+              view: "missing-results",
+              event: null,
+              sheet: null,
+            }),
             label: "Missing results",
             current: eventsView === "missing-results",
           },
           {
             key: "ready-to-publish",
-            href: areaHref({ area: "events", view: "ready-to-publish", event: null, sheet: null }),
-            label: "Ready to publish",
+            href: areaHref({
+              area: "events",
+              view: "ready-to-publish",
+              event: null,
+              sheet: null,
+            }),
+            label: "Ready for review",
             current: eventsView === "ready-to-publish",
           },
           {
             key: "attention",
-            href: areaHref({ area: "events", view: "attention", event: null, sheet: null }),
+            href: areaHref({
+              area: "events",
+              view: "attention",
+              event: null,
+              sheet: null,
+            }),
             label: "Data health",
             current: eventsView === "attention",
           },
           {
             key: "import",
-            href: areaHref({ area: "events", view: "import", event: null, sheet: null }),
+            href: areaHref({
+              area: "events",
+              view: "import",
+              event: null,
+              sheet: null,
+            }),
             label: "Import",
             current: eventsView === "import",
           },
@@ -172,7 +246,12 @@ export function AdminSidebar({
                 ] as const
               ).map(([view, label]) => ({
                 key: view,
-                href: areaHref({ area: "insights", view, event: null, sheet: null }),
+                href: areaHref({
+                  area: "insights",
+                  view,
+                  event: null,
+                  sheet: null,
+                }),
                 label,
                 current: insightsView === view,
               }))
@@ -180,77 +259,137 @@ export function AdminSidebar({
               ? [
                   {
                     key: "audit",
-                    href: areaHref({ area: "settings", view: "audit", event: null, sheet: null }),
+                    href: areaHref({
+                      area: "settings",
+                      view: "audit",
+                      event: null,
+                      sheet: null,
+                    }),
                     label: "Audit log",
                     current: settingsView === "audit",
                   },
                   {
-                  key: "editorial",
-                  href: "/admin/news",
-                  label: "Editorial",
-                  current: false,
+                    key: "tools",
+                    href: areaHref({
+                      area: "settings",
+                      view: "tools",
+                      event: null,
+                      sheet: null,
+                    }),
+                    label: "Maintenance",
+                    current: settingsView === "tools",
+                  },
+                  {
+                    key: "changelog",
+                    href: areaHref({
+                      area: "settings",
+                      view: "changelog",
+                      event: null,
+                      sheet: null,
+                    }),
+                    label: "Release notes",
+                    current: settingsView === "changelog",
                   },
                 ]
               : [];
 
   return (
-    <div className="flex flex-col gap-2 p-2 sm:px-3">
-      <ul className="flex flex-wrap items-center gap-1">
-        {items.map((item) => (
-          <li key={item.area}>
-            <Link
-              href={item.href}
-              aria-current={item.active ? "page" : undefined}
-              onClick={(event) => guardLink(item.href, event)}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 ${
-                item.active
-                  ? "bg-[var(--sp-harbour-teal)] text-white"
-                  : "text-slate-900 hover:bg-slate-100"
-              }`}
-            >
-              <span className="inline-flex items-center gap-2">
-                {item.area === "overview" && <Gauge className="h-4 w-4" aria-hidden="true" />}
-                {item.area === "events" && <Calendar className="h-4 w-4" aria-hidden="true" />}
-                {item.area === "sailors" && <Users className="h-4 w-4" aria-hidden="true" />}
-                {item.area === "inbox" && <Inbox className="h-4 w-4" aria-hidden="true" />}
-                {item.area === "insights" && <BarChart3 className="h-4 w-4" aria-hidden="true" />}
-                {item.area === "settings" && <Settings className="h-4 w-4" aria-hidden="true" />}
-                {item.label}
-              </span>
-              {item.count != null && item.count > 0 && (
-                <span className="min-w-6 rounded-full bg-rose-600 px-1.5 text-center text-[11px] font-black text-white">
-                  {item.count > 9 ? "9+" : item.count}
-                </span>
-              )}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      {subnav.length > 0 && (
-        <ul className="flex flex-wrap items-center gap-1 border-t border-slate-200 pt-2">
-          {subnav.map((link) => (
-            <li key={link.key}>
+    <div className="p-3">
+      <button
+        type="button"
+        aria-expanded={mobileOpen}
+        aria-controls="admin-workspace-links"
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className="flex min-h-11 w-full items-center justify-between text-sm font-bold text-slate-900 lg:hidden"
+      >
+        Admin navigation <Menu className="h-4 w-4" aria-hidden="true" />
+      </button>
+      <div
+        id="admin-workspace-links"
+        className={mobileOpen ? "block" : "hidden lg:block"}
+      >
+        <ul className="flex flex-col gap-1">
+          {items.map((item) => (
+            <li key={item.area}>
               <Link
-                href={link.href}
-                aria-current={link.current ? "page" : undefined}
-                onClick={(event) => guardLink(link.href, event)}
-                className={link.current ? childCurrent : childIdle}
+                href={item.href}
+                aria-current={item.active ? "page" : undefined}
+                onNavigate={(event) => guardLink(item.href, event)}
+                className={`flex min-h-11 w-full items-center justify-between gap-2 rounded-lg px-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 ${
+                  item.active
+                    ? "bg-[var(--sp-harbour-teal)] text-white"
+                    : "text-slate-900 hover:bg-slate-100"
+                }`}
               >
-                <span>{link.label}</span>
-                {link.count != null && link.count > 0 ? (
-                  <span
-                    className={`min-w-6 rounded-full px-1.5 text-center text-[11px] font-black ${
-                      link.current ? "bg-white/20 text-white" : "bg-rose-600 text-white"
-                    }`}
-                  >
-                    {link.count > 9 ? "9+" : link.count}
-                  </span>
-                ) : null}
+                <span className="inline-flex items-center gap-2">
+                  {item.area === "editorial" && (
+                    <FilePenLine className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "overview" && (
+                    <Gauge className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "events" && (
+                    <Calendar className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "sailors" && (
+                    <Users className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "inbox" && (
+                    <Inbox className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "insights" && (
+                    <BarChart3 className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "settings" && (
+                    <Settings className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.label}
+                </span>
+                {item.area === "inbox" && inboxIncomplete ? (
+                  <span className="text-xs text-amber-800">Check</span>
+                ) : (
+                  item.count != null &&
+                  item.count > 0 && (
+                    <span className="min-w-6 rounded-full bg-rose-600 px-1.5 text-center text-[11px] font-black text-white">
+                      {item.count > 9 ? "9+" : item.count}
+                    </span>
+                  )
+                )}
               </Link>
             </li>
           ))}
         </ul>
-      )}
+        {subnav.length > 0 && (
+          <ul
+            className="mt-3 flex flex-col gap-1 border-t border-slate-200 pt-3"
+            aria-label="Workspace tools"
+          >
+            {subnav.map((link) => (
+              <li key={link.key}>
+                <Link
+                  href={link.href}
+                  aria-current={link.current ? "page" : undefined}
+                  onNavigate={(event) => guardLink(link.href, event)}
+                  className={link.current ? childCurrent : childIdle}
+                >
+                  <span>{link.label}</span>
+                  {link.count != null && link.count > 0 ? (
+                    <span
+                      className={`min-w-6 rounded-full px-1.5 text-center text-[11px] font-black ${
+                        link.current
+                          ? "bg-white/20 text-white"
+                          : "bg-rose-600 text-white"
+                      }`}
+                    >
+                      {link.count > 9 ? "9+" : link.count}
+                    </span>
+                  ) : null}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
@@ -260,11 +399,11 @@ export function adminPageTitle(area: AdminArea, view: string): string {
     if (view === "board") return "Board & foil classes";
     if (view === "import") return "Import";
     if (view === "missing-results") return "Missing results";
-    if (view === "ready-to-publish") return "Ready to publish";
+    if (view === "ready-to-publish") return "Ready for review";
     if (view === "attention") return "Event data health";
     if (view === "wingfoil") return "WingFoil";
     if (view === "techno293") return "Techno 293";
-    return "Events";
+    return "Events & results";
   }
   if (area === "sailors") {
     if (view === "duplicates") return "Duplicate sailors";
@@ -289,5 +428,5 @@ export function adminPageTitle(area: AdminArea, view: string): string {
     if (view === "tools") return "Maintenance";
     return "Audit log";
   }
-  return "Overview";
+  return "Today";
 }

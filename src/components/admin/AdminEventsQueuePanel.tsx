@@ -3,12 +3,22 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ArrowRight, CheckCircle2, ClipboardCheck, Sailboat } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  ClipboardCheck,
+  Sailboat,
+  RefreshCw,
+} from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import type { AdminEventsQueueView } from "@/components/admin/adminNav";
 import { regattaDateLabel } from "@/types/regatta";
-import { buildAdminOverview, type OverviewSheet } from "@/lib/admin/adminOverview";
+import {
+  buildAdminOverview,
+  type OverviewSheet,
+} from "@/lib/admin/adminOverview";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 import { fetchAdminOverview } from "@/components/admin/adminFetch";
 
@@ -23,7 +33,10 @@ type QueueConfig = {
   sheets: OverviewSheet[];
 };
 
-function detailHref(sheet: OverviewSheet, view: QueueConfig["detailView"]): string {
+function detailHref(
+  sheet: OverviewSheet,
+  view: QueueConfig["detailView"],
+): string {
   const params = new URLSearchParams({ area: "events", view, sheet: sheet.id });
   if (sheet.event) params.set("event", sheet.event);
   return `/admin?${params.toString()}`;
@@ -31,20 +44,22 @@ function detailHref(sheet: OverviewSheet, view: QueueConfig["detailView"]): stri
 
 function sortNewestFirst(sheets: OverviewSheet[]): OverviewSheet[] {
   return [...sheets].sort(
-    (a, b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name)
+    (a, b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name),
   );
 }
 
 function queueFor(
   view: AdminEventsQueueView,
-  overview: ReturnType<typeof buildAdminOverview>
+  overview: ReturnType<typeof buildAdminOverview>,
 ): QueueConfig {
   if (view === "missing-results") {
     return {
       title: "Missing results",
-      description: "Class sheets with a recorded race count but no result rows.",
+      description:
+        "Class sheets with a recorded race count but no result rows.",
       emptyTitle: "No missing results",
-      emptyDescription: "Every class with completed races has at least one score row.",
+      emptyDescription:
+        "Every class with completed races has at least one score row.",
       detailView: "results",
       actionLabel: "Enter results",
       icon: Sailboat,
@@ -53,10 +68,12 @@ function queueFor(
   }
   if (view === "ready-to-publish") {
     return {
-      title: "Ready to publish",
-      description: "Complete class sheets that passed the publication checks and still need a final review.",
+      title: "Ready for review",
+      description:
+        "Metadata checks passed. Verify identities, source scores, discards and totals before publishing.",
       emptyTitle: "Nothing is ready to publish",
-      emptyDescription: "Incomplete or blocked sheets will appear in Event data health instead.",
+      emptyDescription:
+        "Incomplete or blocked sheets will appear in Event data health instead.",
       detailView: "readiness",
       actionLabel: "Review checks",
       icon: CheckCircle2,
@@ -64,13 +81,14 @@ function queueFor(
     };
   }
   const attention = [...overview.blocked, ...overview.incomplete].sort(
-    (a, b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name)
+    (a, b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name),
   );
   return {
     title: "Event data health",
     description: "Class sheets with blocking or incomplete publication checks.",
     emptyTitle: "No event data issues",
-    emptyDescription: "There are no blocked or incomplete class sheets to review.",
+    emptyDescription:
+      "There are no blocked or incomplete class sheets to review.",
     detailView: "readiness",
     actionLabel: "Review checks",
     icon: ClipboardCheck,
@@ -111,6 +129,10 @@ export function AdminEventsQueuePanel({
 
   const queue = queueFor(view, overview);
   const Icon = queue.icon;
+  const remote = !regattas || !results;
+  const loading = remote && overviewQuery.isPending;
+  const failed = remote && overviewQuery.isError;
+  const unavailable = failed && !overviewQuery.data;
 
   return (
     <section className="space-y-4" aria-labelledby="events-queue-title">
@@ -120,10 +142,15 @@ export function AdminEventsQueuePanel({
             <Icon className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>
-            <h2 id="events-queue-title" className="text-lg font-black text-slate-900">
+            <h2
+              id="events-queue-title"
+              className="text-lg font-black text-slate-900"
+            >
               {queue.title}
             </h2>
-            <p className="mt-1 max-w-2xl text-sm text-slate-600">{queue.description}</p>
+            <p className="mt-1 max-w-2xl text-sm text-slate-600">
+              {queue.description}
+            </p>
           </div>
         </div>
         <Link
@@ -135,7 +162,30 @@ export function AdminEventsQueuePanel({
         </Link>
       </div>
 
-      {queue.sheets.length > 0 ? (
+      {failed ? (
+        <div
+          role="alert"
+          className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900"
+        >
+          {unavailable
+            ? "These checks could not load. The queue has not been verified."
+            : "Showing the last available checks. Refresh failed; these results may be out of date."}
+          <button
+            type="button"
+            onClick={() => void overviewQuery.refetch()}
+            className="ml-3 inline-flex min-h-11 items-center gap-2 font-bold underline"
+          >
+            <RefreshCw className="h-4 w-4" aria-hidden="true" />
+            Retry checks
+          </button>
+        </div>
+      ) : null}
+      {loading ? (
+        <p role="status" className="py-8 text-sm text-slate-600">
+          Loading event checks…
+        </p>
+      ) : unavailable || (failed && queue.sheets.length === 0) ? null : queue
+          .sheets.length > 0 ? (
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
           <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
             <h3 className="text-sm font-bold text-slate-900">Class sheets</h3>
@@ -155,10 +205,16 @@ export function AdminEventsQueuePanel({
                       {sheet.name}
                     </span>
                     <span className="mt-1 block text-xs text-slate-600">
-                      {[sheet.boatClass, sheet.division, regattaDateLabel(sheet.date)]
+                      {[
+                        sheet.boatClass,
+                        sheet.division,
+                        regattaDateLabel(sheet.date),
+                      ]
                         .filter(Boolean)
                         .join(" · ")}
-                      {sheet.raceCount != null ? ` · ${sheet.raceCount} races` : ""}
+                      {sheet.raceCount != null
+                        ? ` · ${sheet.raceCount} races`
+                        : ""}
                       {view === "missing-results" ? " · 0 result rows" : ""}
                     </span>
                   </span>
@@ -173,8 +229,13 @@ export function AdminEventsQueuePanel({
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-12 text-center">
-          <Icon className="mx-auto h-8 w-8 text-emerald-600" aria-hidden="true" />
-          <h3 className="mt-3 text-sm font-bold text-slate-900">{queue.emptyTitle}</h3>
+          <Icon
+            className="mx-auto h-8 w-8 text-emerald-600"
+            aria-hidden="true"
+          />
+          <h3 className="mt-3 text-sm font-bold text-slate-900">
+            {queue.emptyTitle}
+          </h3>
           <p className="mx-auto mt-1 max-w-md text-sm text-slate-600">
             {queue.emptyDescription}
           </p>
