@@ -1635,7 +1635,7 @@ export function latestRankingRegattaIdForFleet(
  */
 export const getCachedPublicRegattas = unstable_cache(
   async (): Promise<RegattaRecord[]> => listRegattas(),
-  ["public-regattas-list-v5"],
+  ["public-regattas-list-v6"],
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
