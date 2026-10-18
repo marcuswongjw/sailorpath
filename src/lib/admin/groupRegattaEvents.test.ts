@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { planRegattaEventDelete } from "./planRegattaEventDelete";
 import {
   eventShellSlug,
+  eventClassProgress,
   eventStatusLabel,
   groupRegattaEvents,
   importTargetEvents,
@@ -46,6 +47,27 @@ describe("missingClassesFor", () => {
     expect(missingClassesFor(["Optimist Gold", "Optimist Silver"], sheets)).toEqual([
       "Optimist Silver",
     ]);
+  });
+});
+
+describe("event publication progress", () => {
+  it("counts a published legacy result sheet stored as an event shell", () => {
+    const shell = { ...row({ slug: "rsyc-2026-gold" }), raceCount: 6 };
+    const event = groupRegattaEvents([shell]).events[0];
+    expect(event.shells).toHaveLength(1);
+    expect(eventClassProgress({ ...event, expectedClasses: ["Optimist Gold"] })).toEqual({ published: 1, total: 1 });
+  });
+
+  it("does not count calendar-only shells as published classes", () => {
+    const shell = { ...row({ slug: "temasek-regatta-2026" }), raceCount: 0 };
+    const event = groupRegattaEvents([shell]).events[0];
+    expect(eventClassProgress(event).published).toBe(0);
+  });
+
+  it("does not count the same scored row twice", () => {
+    const shell = { ...row({ slug: "temasek-regatta-2026" }), raceCount: 6 };
+    const event = groupRegattaEvents([shell]).events[0];
+    expect(eventClassProgress({ ...event, sheets: [shell], expectedClasses: ["Optimist Gold"] })).toEqual({ published: 1, total: 1 });
   });
 });
 

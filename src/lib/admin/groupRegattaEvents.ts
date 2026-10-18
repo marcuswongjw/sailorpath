@@ -162,8 +162,14 @@ export function eventClassProgress(event: AdminEventGroup): {
   published: number;
   total: number;
 } {
-  const published = event.sheets.filter((row) => row.status === "published").length;
-  const total = Math.max(event.expectedClasses.length, event.sheets.length);
+  // Older result sheets can use the calendar event's slug. Include those
+  // scored shells, but not calendar-only placeholders, in publication counts.
+  const rows = [...new Map([
+    ...event.sheets,
+    ...event.shells.filter((row) => (row.raceCount ?? 0) > 0),
+  ].map((row) => [row.id, row])).values()];
+  const published = rows.filter((row) => row.status === "published").length;
+  const total = Math.max(event.expectedClasses.length, rows.length);
   return { published, total };
 }
 
