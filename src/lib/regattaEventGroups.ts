@@ -35,6 +35,9 @@ export function groupSlug(key: string): string {
 type Fleet =
   | "gold"
   | "silver"
+  | "main"
+  | "intermediate"
+  | "green"
   | "open"
   | "ilca4"
   | "ilca6"
@@ -98,6 +101,12 @@ function publicFleet(row: RegattaRecord): Fleet | null {
     return null;
   }
   const blob = `${row.division || ""} ${row.name} ${row.slug}`.toLowerCase();
+  if (classKey === "optimist") {
+    const division = String(row.division || "").trim().toLowerCase();
+    if (division === "main" || division === "intermediate" || division === "green") {
+      return division;
+    }
+  }
   if (blob.includes("silver")) return "silver";
   if (blob.includes("gold")) return "gold";
   return "open";
@@ -135,6 +144,16 @@ function formatDay(ymd: string): string {
 }
 
 function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
+  if (fleet === "main" || fleet === "intermediate" || fleet === "green") {
+    const label = `Optimist ${fleet[0].toUpperCase()}${fleet.slice(1)}`;
+    return {
+      key: `optimist-${fleet}`,
+      label,
+      series: "optimist",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: `${label} Fleet`,
+    };
+  }
   if (fleet === "ilca4") {
     return {
       key: "ilca-4",
@@ -234,6 +253,9 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
 const FLEET_ORDER: Fleet[] = [
   "gold",
   "silver",
+  "main",
+  "intermediate",
+  "green",
   "open",
   "ilca4",
   "ilca6",
