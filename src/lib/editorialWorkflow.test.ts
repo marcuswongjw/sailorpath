@@ -75,4 +75,16 @@ describe("editorial workflow", () => {
     expect(draft?.body).toContain("Hong Kong Race Week");
     expect(draft?.body).toContain("Mussanah Race Week");
   });
+
+  it("includes the scoring deep dive draft for coaches and families", () => {
+    const draft = SEEDED_EDITORIAL_DRAFTS.find(
+      (item) => item.slug === "how-the-asian-optimist-index-scores-regattas"
+    );
+    expect(draft).toBeDefined();
+    expect(draft?.status).toBe("draft");
+    expect(draft?.kind).toBe("product_update");
+    expect(draft?.body).toContain("Points = E × (N − P + 1) / N");
+    expect(draft?.body).toContain("The host-country cap is essential");
+    expect(draft?.body).toContain("Lower Grades Can Beat Weak Higher Grades");
+  });
 });

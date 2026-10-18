@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   inserts: [] as Record<string, unknown>[],
+  profiles: vi.fn(),
 }));
 
 vi.mock("@/lib/auth", () => ({
@@ -12,6 +13,9 @@ vi.mock("@/lib/adminChangeLog", () => ({ logAdminChange: vi.fn() }));
 vi.mock("@/lib/revalidatePublic", () => ({ revalidatePublicNews: vi.fn() }));
 vi.mock("@/db", () => ({
   db: {
+    select: () => ({
+      from: () => ({ where: () => ({ limit: mocks.profiles }) }),
+    }),
     insert: () => ({
       values: (values: Record<string, unknown>) => {
         mocks.inserts.push(values);
@@ -31,6 +35,11 @@ vi.mock("@/db", () => ({
 }));
 
 import { POST } from "./route";
+
+beforeEach(() => {
+  mocks.profiles.mockReset();
+  mocks.profiles.mockResolvedValue([]);
+});
 
 describe("POST /api/admin/news", () => {
   it("creates a draft rather than accepting a direct publish request", async () => {
@@ -76,8 +85,9 @@ describe("POST /api/admin/news", () => {
     expect(mocks.inserts).toHaveLength(0);
   });
 
-  it("allows direct publish when action is explicitly publish", async () => {
+  it.each([true, false])("allows direct publish with or without a reviewer profile (%s)", async (hasProfile) => {
     mocks.inserts.length = 0;
+    mocks.profiles.mockResolvedValue(hasProfile ? [{ id: "admin-id" }] : []);
     const response = await POST(
       new Request("https://admin.sailorpath.com/api/admin/news", {
         method: "POST",
@@ -100,6 +110,10 @@ describe("POST /api/admin/news", () => {
     expect(mocks.inserts[0]).toMatchObject({
       status: "published",
       slug: "asian-optimist-index-launch",
+      reviewedBy: hasProfile ? "admin-id" : null,
+      reviewedAt: expect.any(Date),
+      publishedAt: expect.any(Date),
     });
+    expect(mocks.profiles).toHaveBeenCalledWith(1);
   });
 });

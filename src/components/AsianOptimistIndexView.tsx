@@ -4,6 +4,8 @@ import {
   AsianOptimistIndexStandings,
   type AsianOptimistIndexFilterState,
 } from "@/components/AsianOptimistIndexStandings";
+import { AsianOptimistIndexBetaSummary } from "@/components/AsianOptimistIndexBetaSummary";
+import { ASIAN_INDEX_METHODOLOGY_PATH } from "@/lib/asianOptimistIndexBeta";
 import {
   ASIAN_OPTIMIST_INDEX_EVENT,
   ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL,
@@ -48,17 +50,17 @@ export function AsianOptimistIndexView({
       <section className="border-b border-harbour-shadow bg-harbour text-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-soft-aqua">
-            Optimist · provisional regional index
+            Optimist · beta methodology in consultation
           </p>
           <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <h1 className="font-display text-3xl font-extrabold tracking-tight sm:text-5xl">
-                Asian Optimist Index
+                SailorPath Asian Optimist Index (Beta)
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-sailcloth sm:text-lg">
-                A transparent provisional score for the 122 Asian sailors in the
-                official 2025 Asian &amp; Oceanian Championship. It combines that
-                championship finish with verified 2026 regional form available today.
+                An independent index of verified Optimist results for sailors representing Asian national
+                authorities. The standings below are the current provisional release for the 122 Asian sailors in the
+                official 2025 Asian &amp; Oceanian Championship, combined with verified 2026 regional form.
               </p>
             </div>
             <a
@@ -71,6 +73,30 @@ export function AsianOptimistIndexView({
               <ExternalLink className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
+        </div>
+      </section>
+
+      <section aria-label="Beta methodology notice" className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+          <p>
+            <strong>A new methodology is open for consultation.</strong> The standings on this page still use the
+            earlier provisional formula and do not change until the Beta launch is announced. The proposed rules,
+            event register and nomination call are below. This is not an official IODA or federation ranking.
+          </p>
+          <nav aria-label="On this page" className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-bold">
+            <a href="#beta-summary" className="underline underline-offset-2 hover:text-racing-deep">
+              Index in one page
+            </a>
+            <a href="#register" className="underline underline-offset-2 hover:text-racing-deep">
+              Proposed event register
+            </a>
+            <a href="#nominate" className="underline underline-offset-2 hover:text-racing-deep">
+              Nominate an event
+            </a>
+            <Link href={ASIAN_INDEX_METHODOLOGY_PATH} className="underline underline-offset-2 hover:text-racing-deep">
+              Full methodology
+            </Link>
+          </nav>
         </div>
       </section>
 
@@ -222,6 +248,8 @@ export function AsianOptimistIndexView({
           </div>
         </div>
       </section>
+
+      <AsianOptimistIndexBetaSummary />
 
       <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
         <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">

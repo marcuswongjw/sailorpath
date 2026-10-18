@@ -4,9 +4,9 @@ import { createAsianOptimistIndexProvisionalEntries } from "@/lib/asianOptimistI
 import { ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS } from "@/lib/asianOptimistIndexQualifiers";
 
 export const metadata: Metadata = {
-  title: "Asian Optimist Index | SailorPath",
+  title: "SailorPath Asian Optimist Index (Beta) | SailorPath",
   description:
-    "A transparent provisional Asian Optimist Index based on the 2025 championship cohort and verified 2026 regional form.",
+    "An independent index of verified Optimist results for Asian sailors. Provisional standings, the Beta methodology in consultation, and the proposed 2026–27 event register.",
 };
 
 type AsianOptimistIndexPageProps = {
