@@ -13,7 +13,6 @@ import {
 } from "@/lib/asianOptimistIndex";
 import {
   ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS,
-  ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS,
   ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE,
   type AsianOptimistIndexProvisionalEntry,
 } from "@/lib/asianOptimistIndexScoring";

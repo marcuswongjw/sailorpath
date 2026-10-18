@@ -1,8 +1,5 @@
 import Link from "next/link";
-import type {
-  AsianOptimistIndexProvisionalEntry,
-  AsianOptimistIndexScoredQualifier,
-} from "@/lib/asianOptimistIndexScoring";
+import type { AsianOptimistIndexProvisionalEntry } from "@/lib/asianOptimistIndexScoring";
 
 export type AsianOptimistIndexFilterState = {
   country?: string;
