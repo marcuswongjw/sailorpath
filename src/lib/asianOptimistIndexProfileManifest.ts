@@ -472,5 +472,132 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
   },
   "AUS:emmatomkins": {
     "handle": "asian-aus-emma-tomki-f4c72d"
+  },
+  "AUS:walterheeley": {
+    "handle": "walter-heeley-worlds26-c34abc"
+  },
+  "SGP:kevinhojunyi": {
+    "handle": "kevin-ho-jun-yi"
+  },
+  "SGP:ashlynthamyanlin": {
+    "handle": "tham-yan-lin-ashlyn"
+  },
+  "SGP:ethanlee": {
+    "handle": "ethan-lee"
+  },
+  "NZL:williamhandley": {
+    "handle": "william-handley-worlds26-480927"
+  },
+  "AUS:nicholascooper": {
+    "handle": "nicholas-cooper-05okeff"
+  },
+  "THA:pariyapornchantarawong": {
+    "handle": "pariyaporn-chantarawong-87lhahh"
+  },
+  "AUS:tobyphillips": {
+    "handle": "toby-phillips-worlds26-f8f1b2"
+  },
+  "NZL:noahpetersen": {
+    "handle": "noah-petersen-worlds26-c10959"
+  },
+  "SGP:lyricliyuxuan": {
+    "handle": "lyric-li-yuxuan"
+  },
+  "JPN:joyamada": {
+    "handle": "jo-yamada-worlds26",
+    "displayName": "Jo Yamada"
+  },
+  "HKG:chantalhenriksson": {
+    "handle": "chantal-henriksson-worlds26",
+    "displayName": "Chantal Henriksson"
+  },
+  "JPN:nanamuranaka": {
+    "handle": "nana-muranaka-worlds26"
+  },
+  "THA:suraphamuangngam": {
+    "handle": "surapha-muangngam-8gw2ruy"
+  },
+  "NZL:tomhall": {
+    "handle": "tom-hall-worlds26-28a393"
+  },
+  "AUS:charliepurt": {
+    "handle": "charlie-purt-fbul6vn"
+  },
+  "NZL:allyburfoot": {
+    "handle": "ally-burfoot-worlds26-a022aa"
+  },
+  "IND:antonyaldrin": {
+    "handle": "antony-aldrin-worlds26",
+    "displayName": "Antony Aldrin"
+  },
+  "INA:williampoon": {
+    "handle": "william-poon"
+  },
+  "PHI:giannamayor": {
+    "handle": "gianna-mayor-worlds26",
+    "displayName": "Gianna Mayor"
+  },
+  "OMA:mohammednabilalbalushi": {
+    "handle": "mohammed-nabil-al-balushi-worlds26",
+    "displayName": "Mohammed Nabil Al-Balushi"
+  },
+  "OMA:mohammedalqartoubi": {
+    "handle": "mohammed-al-qartoubi-worlds26",
+    "displayName": "Mohammed Al-Qartoubi"
+  },
+  "KUW:salehalmethen": {
+    "handle": "saleh-almethen-worlds26",
+    "displayName": "Saleh Almethen"
+  },
+  "NZL:zacloader": {
+    "handle": "zac-loader-euro26-54993c"
+  },
+  "AUS:lucadegiosa": {
+    "handle": "luca-de-giosa-euro26-5a61d8"
+  },
+  "JPN:haruyahirano": {
+    "handle": "haruya-hirano-euro26-b8f8b7"
+  },
+  "JPN:gentanaoi": {
+    "handle": "genta-naoi-euro26-3d6c3a"
+  },
+  "AUS:sebastiantucker": {
+    "handle": "sebastian-tucker-euro26-023319"
+  },
+  "THA:pakornkiatchaiyaocha": {
+    "handle": "pakornkiat-chaiya-o-cha-h112x3c"
+  },
+  "THA:itthichaitiathongchai": {
+    "handle": "itthichai-tiathongchai-iw2jhva"
+  },
+  "SGP:elijahong": {
+    "handle": "elijah-ong"
+  },
+  "JPN:hansutsunomori": {
+    "handle": "hansu-tsunomori-euro26-6471b3"
+  },
+  "HKG:liuqiheng": {
+    "handle": "liu-qi-heng-ey38t8o"
+  },
+  "SGP:darianhuang": {
+    "handle": "darian-huang"
+  },
+  "NZL:auroraedhouse": {
+    "handle": "aurora-edhouse-euro26-ba2f7c"
+  },
+  "JPN:naotoda": {
+    "handle": "nao-toda-euro26-18e73e"
+  },
+  "THA:thawareeraksapun": {
+    "handle": "thawaree-raksapun-sd0d5wz"
+  },
+  "NZL:clairebao": {
+    "handle": "claire-bao-euro26-b9b647"
+  },
+  "SGP:nicolewongjingchen": {
+    "handle": "nicole-wong-jing-chen"
+  },
+  "THA:punthitawerotjanakul": {
+    "handle": "punthita-werotjanakul-itr1144"
   }
 } as const satisfies Record<string, AsianOptimistIndexProfileManifestEntry>;

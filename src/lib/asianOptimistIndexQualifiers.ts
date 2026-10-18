@@ -25,6 +25,36 @@ export type AsianOptimistIndexQualifierSource = {
  */
 export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
   {
+    id: "optimist-worlds-2026",
+    name: "2026 IODA World Championship",
+    hostCountry: "Morocco",
+    startDate: "2026-06-18",
+    endDate: "2026-06-28",
+    officialResultsUrl:
+      "https://2026worlds.optiworld.org/en/default/races/race-resultsall",
+    officialResultsSourceName:
+      "Official World Championship overall classification",
+    sailorPathRegattaSlug: "2026-optimist-world-championship",
+    usesSailorPathResults: true,
+    resultCount: 284,
+    resultStatus: "verified",
+  },
+  {
+    id: "optimist-europeans-2026",
+    name: "2026 Optimist European Championship",
+    hostCountry: "Poland",
+    startDate: "2026-07-24",
+    endDate: "2026-07-31",
+    officialResultsUrl:
+      "https://2026europeans.optiworld.org/en/default/races/race-resultsall",
+    officialResultsSourceName:
+      "Official European Championship Boys and Girls classifications",
+    sailorPathRegattaSlug: "2026-optimist-european-championship",
+    usesSailorPathResults: true,
+    resultCount: 292,
+    resultStatus: "verified",
+  },
+  {
     id: "lysc-2026-optimist-gold",
     name: "5th Langkawi International Youth Sailing Championship — Optimist Gold",
     hostCountry: "Malaysia",

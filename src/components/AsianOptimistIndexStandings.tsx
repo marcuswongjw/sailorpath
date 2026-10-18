@@ -10,7 +10,10 @@ export type AsianOptimistIndexFilterState = {
   birthYear?: string;
 };
 
-type QualifierColumn = Pick<AsianOptimistIndexScoredQualifier, "id" | "shortName">;
+export type QualifierColumn = {
+  readonly id: string;
+  readonly shortName: string;
+};
 
 function genderCode(gender: AsianOptimistIndexProvisionalEntry["gender"]): "M" | "F" {
   return gender === "W" ? "F" : "M";
@@ -28,7 +31,9 @@ function qualifierRank(
   qualifierId: string
 ): string {
   const result = entry.qualifierResults.find(
-    (qualifier) => qualifier.qualifier.id === qualifierId
+    (qualifier) =>
+      qualifier.qualifier.id === qualifierId ||
+      qualifier.qualifier.id.startsWith(qualifierId)
   );
   return result ? `${result.rank}/${result.qualifier.fleetSize}` : "—";
 }
@@ -57,7 +62,7 @@ export function AsianOptimistIndexStandings({
   filters = {},
 }: {
   entries: AsianOptimistIndexProvisionalEntry[];
-  qualifierColumns: QualifierColumn[];
+  qualifierColumns: readonly QualifierColumn[];
   asOf: string;
   totalFleetSize: number;
   filters?: AsianOptimistIndexFilterState;
@@ -206,7 +211,9 @@ export function AsianOptimistIndexStandings({
                 <td className="px-4 py-3 text-xs font-semibold text-charcoal">{genderCode(sailor.gender)}</td>
                 <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">{sailor.birthYear ?? "—"}</td>
                 <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</td>
-                <td className="px-4 py-3 text-center font-bold text-harbour">{sailor.overallPlace}/{totalFleetSize}</td>
+                <td className="px-4 py-3 text-center font-bold text-harbour">
+                  {sailor.overallPlace != null ? `${sailor.overallPlace}/${totalFleetSize}` : "—"}
+                </td>
                 {qualifierColumns.map((qualifier) => (
                   <td key={qualifier.id} className="px-4 py-3 text-center text-xs font-semibold text-charcoal">
                     {qualifierRank(sailor, qualifier.id)}

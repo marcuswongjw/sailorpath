@@ -137,6 +137,18 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     note: "Baseline candidate. Counts until 28 Jun 2027. At most one World result per sailor.",
   },
   {
+    id: "2026-iod-europeans",
+    name: "2026 Optimist European Championship",
+    host: "POL",
+    dates: "24–31 Jul 2026 · Gdynia",
+    grade: 150,
+    starters: 292,
+    verifiedMnas: null,
+    races: 8,
+    check: "meets",
+    note: "Continental championship candidate scored in separate Boys (170 starters) and Girls (122 starters) premier divisions.",
+  },
+  {
     id: "2026-iod-asian-oceanian",
     name: "2026 IODA Asian & Oceanian Championship",
     host: "SRI",

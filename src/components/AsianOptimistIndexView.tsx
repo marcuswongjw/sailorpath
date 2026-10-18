@@ -12,6 +12,7 @@ import {
   ASIAN_OPTIMIST_INDEX_SOURCE_URL,
 } from "@/lib/asianOptimistIndex";
 import {
+  ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS,
   ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS,
   ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE,
   type AsianOptimistIndexProvisionalEntry,
@@ -28,9 +29,7 @@ function rankClass(rank: number): string {
   return "bg-sailcloth text-harbour";
 }
 
-const INDEX_QUALIFIER_COLUMNS = Object.values(
-  ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS
-);
+const INDEX_QUALIFIER_COLUMNS = ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS;
 
 export function AsianOptimistIndexView({
   entries,
@@ -60,7 +59,7 @@ export function AsianOptimistIndexView({
               <p className="mt-4 max-w-2xl text-base leading-7 text-sailcloth sm:text-lg">
                 An independent analytical index of verified Optimist results for sailors representing Asian and Oceanian national
                 authorities. Standings are calculated under the V1 (Beta) rolling 12-month methodology
-                for the {entries.length} Asian and Oceanian competitors from the 2025 Asian &amp; Oceanian Championship, combined with verified 2026 regional form.
+                for the {entries.length} Asian and Oceanian competitors from verified international championships (World Championship, Asian &amp; Oceanian Championship, European Championship) and designated regional regattas.
               </p>
             </div>
             <a
@@ -105,7 +104,7 @@ export function AsianOptimistIndexView({
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Fixed cohort</p>
             <p className="mt-1 text-3xl font-extrabold text-harbour">{entries.length}</p>
-            <p className="mt-1 text-xs text-slate-soft">Asian &amp; Oceanian sailors from 2025 official final</p>
+            <p className="mt-1 text-xs text-slate-soft">Asian &amp; Oceanian sailors across verified championships</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Score formula</p>
@@ -166,7 +165,7 @@ export function AsianOptimistIndexView({
                 <p className="mt-4 text-sm font-semibold text-charcoal">
                   Index points <span className="font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</span>
                   <span className="px-1.5 text-cool-mist">·</span>
-                  2025 finish <span className="font-extrabold text-harbour">{sailor.overallPlace}/{ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}</span>
+                  2025 finish <span className="font-extrabold text-harbour">{sailor.overallPlace != null ? `${sailor.overallPlace}/${ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}` : "—"}</span>
                 </p>
               </article>
             ))}

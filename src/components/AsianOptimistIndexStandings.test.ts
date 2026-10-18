@@ -8,12 +8,12 @@ describe("Asian Optimist Index standings filters", () => {
   it("filters the fixed cohort by three-letter country code", () => {
     const singapore = filterAsianOptimistIndexEntries(entries, "SGP", "all", "all");
 
-    expect(singapore).toHaveLength(11);
+    expect(singapore).toHaveLength(18);
     expect(singapore.every((entry) => entry.nationality === "SGP")).toBe(true);
     expect(singapore.map((entry) => entry.name)).toContain("Anya Zahedi");
 
     const australia = filterAsianOptimistIndexEntries(entries, "AUS", "all", "all");
-    expect(australia).toHaveLength(10);
+    expect(australia).toHaveLength(16);
     expect(australia.every((entry) => entry.nationality === "AUS")).toBe(true);
     expect(australia.map((entry) => entry.name)).toContain("William Harris");
   });

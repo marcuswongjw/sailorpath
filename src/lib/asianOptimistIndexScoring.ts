@@ -24,8 +24,8 @@ import {
 export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE = {
   version: "V1 (Beta)",
   name: "SailorPath Asian and Oceania Optimist Index",
-  cohortEvent: "2025 Optimist Asian & Oceanian Championship",
-  cohortSize: 136,
+  cohortEvent: "Verified international and continental championships",
+  cohortSize: 176,
   maxResultsCounted: 5,
   maxGrade150: 2,
   maxWorlds: 1,
@@ -33,7 +33,10 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE = {
   asOf: "18 October 2026",
 } as const;
 
-export type AsianOptimistIndexQualifierTier = "international" | "national";
+export type AsianOptimistIndexQualifierTier =
+  | "championship"
+  | "international"
+  | "national";
 
 export type AsianOptimistIndexScoredQualifier = {
   id: string;
@@ -52,6 +55,42 @@ export type AsianOptimistIndexScoredQualifier = {
  * Source-verified input table of qualifying events in the rolling window.
  */
 export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
+  "optimist-worlds-2026": {
+    id: "optimist-worlds-2026",
+    shortName: "Worlds",
+    hostCountry: "Morocco",
+    hostMna: "MAR",
+    fleetSize: 284,
+    grade: 150,
+    year: 2026,
+    tier: "championship",
+    isWorlds: true,
+    scoreCap: 150,
+  },
+  "optimist-europeans-2026-boys": {
+    id: "optimist-europeans-2026-boys",
+    shortName: "Europeans",
+    hostCountry: "Poland",
+    hostMna: "POL",
+    fleetSize: 170,
+    grade: 150,
+    year: 2026,
+    tier: "championship",
+    isWorlds: false,
+    scoreCap: 150,
+  },
+  "optimist-europeans-2026-girls": {
+    id: "optimist-europeans-2026-girls",
+    shortName: "Europeans",
+    hostCountry: "Poland",
+    hostMna: "POL",
+    fleetSize: 122,
+    grade: 150,
+    year: 2026,
+    tier: "championship",
+    isWorlds: false,
+    scoreCap: 150,
+  },
   "lysc-2026-optimist-gold": {
     id: "lysc-2026-optimist-gold",
     shortName: "LYSC",
@@ -113,6 +152,17 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
     scoreCap: 40,
   },
 } as const satisfies Record<string, AsianOptimistIndexScoredQualifier>;
+
+export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
+  { id: "optimist-worlds-2026", shortName: "Worlds" },
+  { id: "optimist-europeans-2026", shortName: "Europeans" },
+  { id: "lysc-2026-optimist-gold", shortName: "LYSC" },
+  { id: "langkawi-international-regatta-perdana-2026", shortName: "LIRP" },
+  { id: "sysc-2026-gold", shortName: "SYSC" },
+  { id: "thailand-international-sailing-championships-2026", shortName: "Thailand Int'l" },
+  { id: "snsc-gold-sep-26-2026-09-11", shortName: "SNSC" },
+] as const;
+
 
 export type AsianOptimistIndexScoredQualifierId =
   keyof typeof ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS;
@@ -262,6 +312,486 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     nationality: "SGP",
     rank: 22,
   },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Margaux Nguyen-Minh",
+    nationality: "HKG",
+    rank: 14,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Walter Heeley",
+    nationality: "AUS",
+    rank: 17,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Kotaro Matsunaga",
+    nationality: "JPN",
+    rank: 21,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Lucas Cao",
+    nationality: "SGP",
+    rank: 29,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Jean Luc Herve",
+    nationality: "UAE",
+    rank: 33,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Kevin Ho Jun Yi",
+    nationality: "SGP",
+    rank: 79,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Ashlyn Tham Yan Lin",
+    nationality: "SGP",
+    rank: 83,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Tara Maliah",
+    nationality: "HKG",
+    rank: 85,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Ethan Lee",
+    nationality: "SGP",
+    rank: 89,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "William Handley",
+    nationality: "NZL",
+    rank: 91,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Xuan Ya Tong",
+    nationality: "KSA",
+    rank: 94,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Natsumi Kubota",
+    nationality: "JPN",
+    rank: 99,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Nicholas Cooper",
+    nationality: "AUS",
+    rank: 101,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Soki Higuchi",
+    nationality: "JPN",
+    rank: 104,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Pariyaporn Chantarawong",
+    nationality: "THA",
+    rank: 105,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Toby Phillips",
+    nationality: "AUS",
+    rank: 114,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Jeffrey Chenglin Du",
+    nationality: "NZL",
+    rank: 123,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Noah Petersen",
+    nationality: "NZL",
+    rank: 133,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Alix Nguyen-Minh",
+    nationality: "HKG",
+    rank: 144,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Rohan Maliah",
+    nationality: "HKG",
+    rank: 147,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Sorawit Naksuk",
+    nationality: "THA",
+    rank: 149,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Lyric Li Yuxuan",
+    nationality: "SGP",
+    rank: 154,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Kornelia Pajak",
+    nationality: "UAE",
+    rank: 160,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Rachata Sadtrakulwattana",
+    nationality: "THA",
+    rank: 163,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Suthinan Nakpasom",
+    nationality: "THA",
+    rank: 169,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Jo YAMADA",
+    nationality: "JPN",
+    rank: 172,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Chantal HENRIKSSON",
+    nationality: "HKG",
+    rank: 174,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Nana Muranaka",
+    nationality: "JPN",
+    rank: 176,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Balthazar Roche",
+    nationality: "AUS",
+    rank: 181,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Surapha Muangngam",
+    nationality: "THA",
+    rank: 188,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Tom Hall",
+    nationality: "NZL",
+    rank: 189,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Khalifa Alromaithi",
+    nationality: "UAE",
+    rank: 190,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Charlie Purt",
+    nationality: "AUS",
+    rank: 191,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Ally Burfoot",
+    nationality: "NZL",
+    rank: 195,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Muyu Lu",
+    nationality: "MAC",
+    rank: 207,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Krishna Ramakrishnan",
+    nationality: "IND",
+    rank: 219,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Wang Sun Chen",
+    nationality: "MAC",
+    rank: 225,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Tameem Shams",
+    nationality: "QAT",
+    rank: 227,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Haren Wickramatillake ",
+    nationality: "SRI",
+    rank: 228,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Ravi Kumar Benneollu",
+    nationality: "IND",
+    rank: 229,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Theyab Almheiri",
+    nationality: "UAE",
+    rank: 242,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Shringhari Roy",
+    nationality: "IND",
+    rank: 243,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Antony ALDRIN",
+    nationality: "IND",
+    rank: 246,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Rameeza Bh Sk",
+    nationality: "IND",
+    rank: 248,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Mohammed Al Qasmi",
+    nationality: "OMA",
+    rank: 249,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "William Poon",
+    nationality: "INA",
+    rank: 251,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Zayed Alhosani",
+    nationality: "UAE",
+    rank: 254,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Khalid Al Sarihi",
+    nationality: "OMA",
+    rank: 260,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Gianna MAYOR",
+    nationality: "PHI",
+    rank: 262,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Chi In Jasper Tang",
+    nationality: "MAC",
+    rank: 265,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Zakareya Bohamad",
+    nationality: "KUW",
+    rank: 272,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Mohammed Nabil AL-BALUSHI",
+    nationality: "OMA",
+    rank: 273,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Yunxi Jin",
+    nationality: "MAC",
+    rank: 274,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Mohammed Al Balushi",
+    nationality: "OMA",
+    rank: 277,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Mohammed AL-QARTOUBI",
+    nationality: "OMA",
+    rank: 280,
+  },
+  {
+    qualifierId: "optimist-worlds-2026",
+    name: "Saleh ALMETHEN",
+    nationality: "KUW",
+    rank: 284,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Zac Loader",
+    nationality: "NZL",
+    rank: 81,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Luca De Giosa",
+    nationality: "AUS",
+    rank: 86,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Kian Anderson",
+    nationality: "HKG",
+    rank: 90,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Haruya Hirano",
+    nationality: "JPN",
+    rank: 95,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Zephyr Lane",
+    nationality: "NZL",
+    rank: 100,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Genta Naoi",
+    nationality: "JPN",
+    rank: 103,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Sebastian Tucker",
+    nationality: "AUS",
+    rank: 107,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Pakornkiat Chaiya-o-cha",
+    nationality: "THA",
+    rank: 124,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Itthichai Tiathongchai",
+    nationality: "THA",
+    rank: 125,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Elijah Ong",
+    nationality: "SGP",
+    rank: 128,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Hansu Tsunomori",
+    nationality: "JPN",
+    rank: 130,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Liu Qi Heng",
+    nationality: "HKG",
+    rank: 137,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Decimus Chan",
+    nationality: "HKG",
+    rank: 140,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-boys",
+    name: "Darian Huang",
+    nationality: "SGP",
+    rank: 153,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Aurora Edhouse",
+    nationality: "NZL",
+    rank: 20,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Nao Toda",
+    nationality: "JPN",
+    rank: 25,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Emma Tomkins",
+    nationality: "AUS",
+    rank: 43,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Sijia Deng",
+    nationality: "AUS",
+    rank: 48,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Anya Zahedi",
+    nationality: "SGP",
+    rank: 66,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Thawaree Raksapun",
+    nationality: "THA",
+    rank: 78,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Claire Bao",
+    nationality: "NZL",
+    rank: 79,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Nicole Wong Jing Chen",
+    nationality: "SGP",
+    rank: 83,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "PUNTHITA WEROTJANAKUL",
+    nationality: "THA",
+    rank: 98,
+  },
+  {
+    qualifierId: "optimist-europeans-2026-girls",
+    name: "Scarlett Tao",
+    nationality: "HKG",
+    rank: 109,
+  }
 ] as const satisfies readonly AsianOptimistIndexQualifierResultInput[];
 
 export type AsianOptimistIndexQualifierScore = {
@@ -433,25 +963,29 @@ export function createAsianOptimistIndexProvisionalEntries(
   }
 
   const scored = baseline.map((entry) => {
-    const anchorPoints = asianIndexPoints(
-      150,
-      ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
-      entry.overallPlace
-    );
+    const anchorPoints = entry.overallPlace != null
+      ? asianIndexPoints(
+          150,
+          ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
+          entry.overallPlace
+        )
+      : 0;
 
-    const anchorCandidate: CandidateScoredResult = {
-      id: "2025-iod-asian-oceanian",
-      name: entry.name,
-      shortName: "2025 Asians",
-      grade: 150,
-      starters: ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
-      rank: entry.overallPlace,
-      points: anchorPoints,
-      hostMna: "OMA",
-      hostCountry: "Oman",
-      year: 2025,
-      isWorlds: false,
-    };
+    const anchorCandidate: CandidateScoredResult | null = entry.overallPlace != null
+      ? {
+          id: "2025-iod-asian-oceanian",
+          name: entry.name,
+          shortName: "2025 Asians",
+          grade: 150,
+          starters: ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
+          rank: entry.overallPlace,
+          points: anchorPoints,
+          hostMna: "OMA",
+          hostCountry: "Oman",
+          year: 2025,
+          isWorlds: false,
+        }
+      : null;
 
     const sailorKey = identityKey(entry.name, entry.nationality);
     const sailorQualifiers = qualifiersBySailor.get(sailorKey) ?? [];
@@ -471,7 +1005,10 @@ export function createAsianOptimistIndexProvisionalEntries(
       qualifierScore: q,
     }));
 
-    const allCandidates = [anchorCandidate, ...qualifierCandidates];
+    const allCandidates = [
+      ...(anchorCandidate ? [anchorCandidate] : []),
+      ...qualifierCandidates,
+    ];
     const optimalSubset = selectOptimalResults(allCandidates);
     const optimalIds = new Set(optimalSubset.map((r) => r.id));
 
@@ -488,21 +1025,27 @@ export function createAsianOptimistIndexProvisionalEntries(
       };
     });
 
-    const scoredQualifiers = markedQualifiers.filter((q) => q.counted);
-    const qualifierPoints = scoredQualifiers.reduce((sum, q) => sum + q.points, 0);
-    const preciseScore = anchorPoints + qualifierPoints;
+    const championshipCandidates = optimalSubset.filter((r) => r.grade === 150);
+    const championshipPoints = championshipCandidates.reduce((sum, r) => sum + r.points, 0);
 
-    // Distinct host countries across scored qualifiers
-    const hostCountryCount = new Set(scoredQualifiers.map((q) => q.qualifier.hostCountry)).size;
+    const scoredQualifiers = markedQualifiers.filter((q) => q.counted);
+    const qualifierPoints = optimalSubset
+      .filter((r) => r.grade !== 150)
+      .reduce((sum, r) => sum + r.points, 0);
+
+    const preciseScore = optimalSubset.reduce((sum, r) => sum + r.points, 0);
+
+    // Distinct host countries across scored results
+    const hostCountryCount = new Set(optimalSubset.map((r) => r.hostCountry)).size;
 
     return {
       ...entry,
       provisionalRank: 0,
       provisionalScore: roundScore(preciseScore),
-      championshipScore: roundScore(anchorPoints),
-      championshipPoints: roundScore(anchorPoints),
+      championshipScore: roundScore(championshipPoints),
+      championshipPoints: roundScore(championshipPoints),
       qualifierPoints: roundScore(qualifierPoints),
-      eligibleStarts: sailorQualifiers.length,
+      eligibleStarts: allCandidates.length,
       countedResultsCount: optimalSubset.length,
       hostCountryCount,
       qualifierResults: [...markedQualifiers].sort(
@@ -519,7 +1062,7 @@ export function createAsianOptimistIndexProvisionalEntries(
     (a, b) =>
       b.preciseScore - a.preciseScore ||
       b.championshipPoints - a.championshipPoints ||
-      a.overallPlace - b.overallPlace ||
+      (a.overallPlace ?? 999) - (b.overallPlace ?? 999) ||
       a.name.localeCompare(b.name)
   );
 
