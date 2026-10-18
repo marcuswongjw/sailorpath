@@ -75,4 +75,31 @@ describe("POST /api/admin/news", () => {
     expect(response.status).toBe(400);
     expect(mocks.inserts).toHaveLength(0);
   });
+
+  it("allows direct publish when action is explicitly publish", async () => {
+    mocks.inserts.length = 0;
+    const response = await POST(
+      new Request("https://admin.sailorpath.com/api/admin/news", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "publish",
+          slug: "asian-optimist-index-launch",
+          kind: "class_announcement",
+          title: "Asian Optimist Index Launch",
+          summary: "Methodology and 2026-27 event register.",
+          body: "Full article body.",
+          sourceUrl: "https://sailorpath.com/sg/optimist/asian-index",
+          sourceLabel: "SailorPath Asian Optimist Index",
+        }),
+      })
+    );
+
+    expect(response.status).toBe(201);
+    expect(mocks.inserts).toHaveLength(1);
+    expect(mocks.inserts[0]).toMatchObject({
+      status: "published",
+      slug: "asian-optimist-index-launch",
+    });
+  });
 });

@@ -1,7 +1,7 @@
 import { desc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { db, withDatabaseRetry } from "@/db";
-import { newsArticles } from "@/db/schema";
+import { newsArticles, profiles } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import {
@@ -13,6 +13,19 @@ import {
 import { revalidatePublicNews } from "@/lib/revalidatePublic";
 
 export const dynamic = "force-dynamic";
+
+async function resolveReviewerProfileId(userId: string): Promise<string | null> {
+  try {
+    const [row] = await db
+      .select({ id: profiles.id })
+      .from(profiles)
+      .where(eq(profiles.id, userId))
+      .limit(1);
+    return row?.id ?? null;
+  } catch {
+    return null;
+  }
+}
 
 const ADMIN_NEWS_COLUMNS = {
   id: newsArticles.id,
@@ -87,27 +100,42 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const auth = await requireSuperadmin();
-    const fields = parseEditorialFields(await request.json());
+    const payload = (await request.json()) as Record<string, unknown>;
+    const action = payload.action ? parseEditorialAction(payload.action) : "save_draft";
+    const status: ArticleStatus = action === "publish" ? "published" : "draft";
+    const fields = parseEditorialFields(payload);
     const now = new Date();
+    const reviewerId = status === "published" ? await resolveReviewerProfileId(auth.userId) : null;
     const [article] = await db
       .insert(newsArticles)
       .values({
         ...fields,
-        status: "draft",
+        status,
+        ...(status === "published"
+          ? {
+              reviewedBy: reviewerId,
+              reviewedAt: now,
+              publishedAt: now,
+            }
+          : {}),
         updatedAt: now,
       })
       .returning();
 
     if (!article) throw new Error("failed to create editorial draft");
 
+    if (status === "published") {
+      revalidatePublicNews(article.slug);
+    }
+
     void logAdminChange({
       actorUserId: auth.userId,
       actorEmail: auth.email,
-      action: "editorial_draft_create",
+      action: status === "published" ? "editorial_publish" : "editorial_draft_create",
       entityType: "news_article",
       entityId: article.id,
       entityLabel: article.slug,
-      summary: `Created editorial draft ${article.title}`,
+      summary: `${status === "published" ? "Published" : "Created editorial draft"} ${article.title}`,
       details: { status: article.status, kind: article.kind },
       source: "/api/admin/news",
     });
@@ -137,11 +165,12 @@ export async function PATCH(request: Request) {
 
     const status = transitionEditorialStatus(existing.status, action);
     const now = new Date();
+    const reviewerId = action === "publish" ? await resolveReviewerProfileId(auth.userId) : null;
     const lifecycle =
       action === "publish"
         ? {
             status,
-            reviewedBy: auth.userId,
+            reviewedBy: reviewerId,
             reviewedAt: now,
             publishedAt: existing.publishedAt ?? now,
           }
