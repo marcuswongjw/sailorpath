@@ -347,6 +347,7 @@ function AdminDashboardInner({
   const currentSearch = searchParams.toString();
   const acceptedSearch = useRef(currentSearch);
   const approvedSearch = useRef<string | null>(null);
+  const applyingExternalNavigation = useRef(false);
   const initialSheetPending = useRef(initialNav.regattaId);
 
   // Seed results regatta from ?regattaId= before list default kicks in
@@ -401,6 +402,7 @@ function AdminDashboardInner({
       return;
     }
     acceptedSearch.current = decision.search;
+    applyingExternalNavigation.current = true;
     const parsed = parseAdminNav(searchParams);
     setActiveTab(parsed.tab);
     setEditSubTab(parsed.sub);
@@ -422,12 +424,10 @@ function AdminDashboardInner({
   // Keep state-driven changes canonical and refresh-safe. Do not normalize a
   // bookmarked class link until its initial class selection has been applied.
   useEffect(() => {
-    const address = parseAdminArea(new URLSearchParams(currentSearch));
-    if (
-      address.area === "events" &&
-      (isAdminEventsQueueView(address.view) || address.view === "board") &&
-      (activeTab !== "regattas" || eventsView !== address.view)
-    ) {
+    // URL-driven state updates take effect on the next render. Serializing
+    // this render would write the previous view back over the destination.
+    if (applyingExternalNavigation.current) {
+      applyingExternalNavigation.current = false;
       return;
     }
     if (
