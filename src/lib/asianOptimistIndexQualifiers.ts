@@ -128,6 +128,21 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     resultStatus: "verified",
   },
   {
+    id: "hong-kong-race-week-2026-optimist-main",
+    name: "Hong Kong Race Week 2026 — Optimist Main",
+    hostCountry: "Hong Kong",
+    startDate: "2026-01-27",
+    endDate: "2026-02-01",
+    officialResultsUrl:
+      "https://www.rhkyc.org.hk/storage/app/media/Sailing/result/HONG-KONG-RACE-WEEK/2026/OptimistMain.htm",
+    officialResultsSourceName:
+      "Official Optimist Main provisional results — 1 February 2026",
+    sailorPathRegattaSlug: "hong-kong-race-week-2026",
+    usesSailorPathResults: true,
+    resultCount: 77,
+    resultStatus: "verified",
+  },
+  {
     id: "eastern-seaboard-regatta-2026",
     name: "Eastern Seaboard Regatta — Optimist",
     hostCountry: "Thailand",

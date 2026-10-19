@@ -185,12 +185,12 @@ export function AsianOptimistIndexView({
       <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-cool-veil px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
-            <div>
-              <h2 className="text-xl font-extrabold text-harbour">2026 qualifying events</h2>
-              <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
-                Verified final classifications are published on SailorPath and are the active form inputs. Eastern Seaboard is listed as the next Thai candidate and will be reviewed only after its final classification is published. The provisional slate can include up to five scored events; a sailor can use only their strongest result from each host country, and Singapore national-event scores are capped at 70 out of 100.
-              </p>
-            </div>
+              <div>
+                <h2 className="text-xl font-extrabold text-harbour">2026 qualifying events</h2>
+                <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
+                  Verified final classifications are published on SailorPath and are the active form inputs. Each regatta is designated under the V1 (Beta) tiers: Grade 150 (Championships), Grade 75 (International Opens), or Grade 40 (National Championships). Selection limits apply across host jurisdictions and grades.
+                </p>
+              </div>
             <p className="text-xs font-semibold text-slate-soft">
               {qualifiers.reduce((total, qualifier) => total + (qualifier.resultCount ?? 0), 0)} source rows tracked
             </p>
@@ -259,18 +259,17 @@ export function AsianOptimistIndexView({
               <h2 className="text-xl font-extrabold text-harbour">How this provisional score works</h2>
             </div>
             <div className="mt-4 space-y-4 text-sm leading-6 text-charcoal">
-              <p><strong>Who is ranked:</strong> the fixed 122-sailor Asian cohort from the official 2025 Asian &amp; Oceanian final classification. A new qualifier participant is not added to this provisional table until the 2026 championship refresh.</p>
-              <p><strong>2025 championship points (60):</strong> the official overall finish is fleet-normalised: <code>100 × (170 − finish) ÷ 169</code>, then multiplied by 60%. First in the 170-sailor fleet earns 60 points; last earns 0.</p>
-              <p><strong>2026 form points (40):</strong> the season can nominate up to five verified regional events. Each final qualifier finish is fleet-normalised the same way; the strongest result from one host country contributes up to 28 points, a second country up to 8, and a third up to 4. A fifth event can replace a weaker result but never creates an attendance bonus. Missing country slots are zero.</p>
-              <p><strong>National-event safeguard:</strong> Singapore national-event result scores are capped at 70 out of 100 before the 28% / 8% / 4% weights are applied. This prevents domestic-only form from outweighing the common championship anchor.</p>
-              <p><strong>Profile links:</strong> sailor names link to the consolidated SailorPath record. The founding-cohort profile audit was resolved by an administrator on 14 October 2026; the original verified result identities remain intact.</p>
-              <p><strong>Refresh at Colombo:</strong> after the official 2026 Asian &amp; Oceanian Championship final is checked, SailorPath will refresh the cohort, replace the temporary 2025 anchor, add eligible sailors from the new championship, and recalculate the index.</p>
+              <p><strong>Who is ranked:</strong> verified Asian and Oceanian Optimist sailors representing eligible MNAs with at least one verified scoring result in the 12-month window. The cohort includes competitors from the 2025 Asian &amp; Oceanian Championship, 2026 World Championship, and 2026 European Championship.</p>
+              <p><strong>Points formula:</strong> each eligible result earns points based on event grade (E), valid starters (N), and finishing position (P): <code>Points = E × (N − P + 1) ÷ N</code>. First place earns E, and last place earns E ÷ N.</p>
+              <p><strong>Event tiers:</strong> Grade 150 for IODA Worlds and continental fleet-racing championships; Grade 75 for designated international opens meeting the 50-starter / 4-MNA gates; Grade 40 for recognized national championships.</p>
+              <p><strong>Selection limits:</strong> each sailor’s Index is the sum of their best combination of results subject to six selection limits: at most 5 results overall; at most 2 Grade 150 results; at most 1 World Championship; at most 4 upper-grade results (Grade 150 + 75); at most 1 Grade 75 result per host MNA; and at most 1 Grade 40 result per host MNA per calendar year.</p>
+              <p><strong>Profile links:</strong> sailor names link to their verified SailorPath profile. Results expire on their 12-month anniversary.</p>
             </div>
           </article>
           <aside className="rounded-2xl bg-harbour p-5 text-white shadow-sm sm:p-6">
             <Medal className="h-6 w-6 text-soft-aqua" aria-hidden="true" />
             <h2 className="mt-3 text-xl font-extrabold">Source and scope</h2>
-            <p className="mt-3 text-sm leading-6 text-sailcloth">Only sailors representing Asian national authorities in the 2025 official final classification are eligible for this provisional release. Australia and New Zealand were part of the official Asian &amp; Oceanian event but are not in this Asian-only cohort.</p>
+            <p className="mt-3 text-sm leading-6 text-sailcloth">Sailors representing eligible World Sailing Member National Authorities across Asia and Oceania are included in the Index. Standings are calculated from verified official results and updated with each designated regatta.</p>
             <a href={ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-soft-aqua hover:text-white hover:underline">
               Download 2025 final-result PDF
               <ExternalLink className="h-4 w-4" aria-hidden="true" />

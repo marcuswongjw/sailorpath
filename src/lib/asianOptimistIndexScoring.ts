@@ -139,6 +139,18 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
     isWorlds: false,
     scoreCap: 75,
   },
+  "hong-kong-race-week-2026-optimist-main": {
+    id: "hong-kong-race-week-2026-optimist-main",
+    shortName: "HKRW",
+    hostCountry: "Hong Kong",
+    hostMna: "HKG",
+    fleetSize: 77,
+    grade: 75,
+    year: 2026,
+    tier: "international",
+    isWorlds: false,
+    scoreCap: 75,
+  },
   "snsc-gold-sep-26-2026-09-11": {
     id: "snsc-gold-sep-26-2026-09-11",
     shortName: "SNSC",
@@ -154,13 +166,17 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
 } as const satisfies Record<string, AsianOptimistIndexScoredQualifier>;
 
 export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
-  { id: "optimist-worlds-2026", shortName: "Worlds" },
-  { id: "optimist-europeans-2026", shortName: "Europeans" },
-  { id: "lysc-2026-optimist-gold", shortName: "LYSC" },
-  { id: "langkawi-international-regatta-perdana-2026", shortName: "LIRP" },
-  { id: "sysc-2026-gold", shortName: "SYSC" },
-  { id: "thailand-international-sailing-championships-2026", shortName: "Thailand Int'l" },
-  { id: "snsc-gold-sep-26-2026-09-11", shortName: "SNSC" },
+  // Grade 150 · Championships
+  { id: "optimist-worlds-2026", shortName: "Worlds", grade: 150 },
+  { id: "optimist-europeans-2026", shortName: "Europeans", grade: 150 },
+  // Grade 75 · International Opens
+  { id: "hong-kong-race-week-2026-optimist-main", shortName: "HKRW", grade: 75 },
+  { id: "lysc-2026-optimist-gold", shortName: "LYSC", grade: 75 },
+  { id: "langkawi-international-regatta-perdana-2026", shortName: "LIRP", grade: 75 },
+  { id: "sysc-2026-gold", shortName: "SYSC", grade: 75 },
+  { id: "thailand-international-sailing-championships-2026", shortName: "Thailand Int'l", grade: 75 },
+  // Grade 40 · National Championships
+  { id: "snsc-gold-sep-26-2026-09-11", shortName: "SNSC", grade: 40 },
 ] as const;
 
 
@@ -791,6 +807,156 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     name: "Scarlett Tao",
     nationality: "HKG",
     rank: 109,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Tara Maliah",
+    nationality: "HKG",
+    rank: 3,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Kevin Ho Jun Yi",
+    nationality: "SGP",
+    rank: 4,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Rohan Maliah",
+    nationality: "HKG",
+    rank: 5,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Lucas Cao",
+    nationality: "SGP",
+    rank: 6,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Alix Nguyen-Minh",
+    nationality: "HKG",
+    rank: 8,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Decimus Chan",
+    nationality: "HKG",
+    rank: 9,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Margaux Nguyen-Minh",
+    nationality: "HKG",
+    rank: 10,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Youjia Xu",
+    nationality: "CHN",
+    rank: 11,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Lyric Li Yuxuan",
+    nationality: "SGP",
+    rank: 12,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Chantal HENRIKSSON",
+    nationality: "HKG",
+    rank: 13,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Alyssa Wong",
+    nationality: "SGP",
+    rank: 14,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Ethan Lee",
+    nationality: "SGP",
+    rank: 15,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Ashlyn Tham Yan Lin",
+    nationality: "SGP",
+    rank: 16,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Elijah Ong",
+    nationality: "SGP",
+    rank: 18,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Anya Zahedi",
+    nationality: "SGP",
+    rank: 19,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Zhi Tong Wai",
+    nationality: "SGP",
+    rank: 20,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Lucien Cohen-Addad",
+    nationality: "HKG",
+    rank: 21,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Scarlett Tao",
+    nationality: "HKG",
+    rank: 22,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Kian Anderson",
+    nationality: "HKG",
+    rank: 24,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Xinran Liu",
+    nationality: "HKG",
+    rank: 28,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Shiteng Huang",
+    nationality: "CHN",
+    rank: 30,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Muyu Lu",
+    nationality: "MAC",
+    rank: 31,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Liu Qi Heng",
+    nationality: "HKG",
+    rank: 32,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Chi In Jasper Tang",
+    nationality: "MAC",
+    rank: 62,
+  },
+  {
+    qualifierId: "hong-kong-race-week-2026-optimist-main",
+    name: "Yunxi Jin",
+    nationality: "MAC",
+    rank: 65,
   }
 ] as const satisfies readonly AsianOptimistIndexQualifierResultInput[];
 

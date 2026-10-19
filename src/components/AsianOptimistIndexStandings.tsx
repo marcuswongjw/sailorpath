@@ -10,6 +10,7 @@ export type AsianOptimistIndexFilterState = {
 export type QualifierColumn = {
   readonly id: string;
   readonly shortName: string;
+  readonly grade?: number;
 };
 
 function genderCode(gender: AsianOptimistIndexProvisionalEntry["gender"]): "M" | "F" {
@@ -79,6 +80,10 @@ export function AsianOptimistIndexStandings({
       : "all";
   const filteredEntries = filterAsianOptimistIndexEntries(entries, country, gender, birthYear);
   const filtersActive = country !== "all" || gender !== "all" || birthYear !== "all";
+
+  const g150Cols = qualifierColumns.filter((col) => col.grade === 150);
+  const g75Cols = qualifierColumns.filter((col) => col.grade === 75);
+  const g40Cols = qualifierColumns.filter((col) => col.grade === 40);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
@@ -159,21 +164,62 @@ export function AsianOptimistIndexStandings({
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1320px] border-collapse text-left text-sm">
-          <thead className="bg-sailcloth text-xs uppercase tracking-wide text-slate-soft">
-            <tr>
-              <th scope="col" className="px-4 py-3 font-extrabold">Index</th>
-              <th scope="col" className="px-4 py-3 font-extrabold">Sailor</th>
-              <th scope="col" className="px-4 py-3 font-extrabold">Country</th>
-              <th scope="col" className="px-4 py-3 font-extrabold">Gender</th>
-              <th scope="col" className="px-4 py-3 text-center font-extrabold">Birth year</th>
-              <th scope="col" className="px-4 py-3 text-right font-extrabold">Points</th>
-              <th scope="col" className="px-4 py-3 text-center font-extrabold">2025 Asians</th>
-              {qualifierColumns.map((qualifier) => (
-                <th key={qualifier.id} scope="col" className="px-4 py-3 text-center font-extrabold">
-                  {qualifier.shortName}
-                </th>
-              ))}
+        <table className="w-full min-w-[1380px] border-collapse text-left text-sm">
+          <thead className="text-xs uppercase tracking-wide text-slate-soft">
+            <tr className="border-b border-cool-veil bg-warm-white text-[11px] font-extrabold">
+              <th colSpan={5} className="border-r border-cool-veil px-4 py-2 text-left text-slate-soft">
+                Competitor details
+              </th>
+              <th className="border-r border-cool-veil px-4 py-2 text-right text-harbour">
+                Score
+              </th>
+              <th colSpan={1 + g150Cols.length} className="border-r border-cool-veil bg-harbour/10 px-4 py-2 text-center text-harbour">
+                Grade 150 · Championships <span className="normal-case font-medium text-slate-soft">(max 2)</span>
+              </th>
+              <th colSpan={g75Cols.length} className="border-r border-cool-veil bg-aqua/10 px-4 py-2 text-center text-harbour">
+                Grade 75 · International Opens <span className="normal-case font-medium text-slate-soft">(max 1/host)</span>
+              </th>
+              <th colSpan={Math.max(g40Cols.length, 1)} className="bg-amber-500/10 px-4 py-2 text-center text-harbour">
+                Grade 40 · Nationals <span className="normal-case font-medium text-slate-soft">(max 1/country/yr)</span>
+              </th>
+            </tr>
+            <tr className="border-b border-cool-veil bg-sailcloth font-bold">
+              <th scope="col" className="px-4 py-2.5 font-extrabold text-harbour">Index</th>
+              <th scope="col" className="px-4 py-2.5 font-extrabold text-harbour">Sailor</th>
+              <th scope="col" className="px-4 py-2.5 font-extrabold text-harbour">Country</th>
+              <th scope="col" className="px-4 py-2.5 font-extrabold text-harbour">Gender</th>
+              <th scope="col" className="px-4 py-2.5 text-center font-extrabold text-harbour">Birth year</th>
+              <th scope="col" className="border-r border-cool-veil px-4 py-2.5 text-right font-extrabold text-harbour">Points</th>
+              <th scope="col" className="bg-harbour/5 px-4 py-2.5 text-center font-extrabold text-harbour">
+                <div>2025 Asians</div>
+                <div className="mt-0.5">
+                  <span className="inline-block rounded bg-harbour/20 px-1.5 py-0.5 text-[10px] font-black text-harbour">G150 · 170</span>
+                </div>
+              </th>
+              {qualifierColumns.map((qualifier) => {
+                const isG150 = qualifier.grade === 150;
+                const isG75 = qualifier.grade === 75;
+                const bg = isG150 ? "bg-harbour/5" : isG75 ? "bg-aqua/5" : "bg-amber-500/5";
+                const badgeBg = isG150
+                  ? "bg-harbour/20 text-harbour"
+                  : isG75
+                    ? "bg-aqua/20 text-harbour"
+                    : "bg-amber-500/20 text-amber-900";
+                const gradeLabel = qualifier.grade ? `G${qualifier.grade}` : "";
+
+                return (
+                  <th key={qualifier.id} scope="col" className={`${bg} px-4 py-2.5 text-center font-extrabold text-harbour`}>
+                    <div>{qualifier.shortName}</div>
+                    {gradeLabel ? (
+                      <div className="mt-0.5">
+                        <span className={`inline-block rounded ${badgeBg} px-1.5 py-0.5 text-[10px] font-black`}>
+                          {gradeLabel}
+                        </span>
+                      </div>
+                    ) : null}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody className="divide-y divide-cool-veil">
@@ -207,15 +253,20 @@ export function AsianOptimistIndexStandings({
                 <td className="px-4 py-3 text-xs font-semibold text-charcoal">{sailor.nationality}</td>
                 <td className="px-4 py-3 text-xs font-semibold text-charcoal">{genderCode(sailor.gender)}</td>
                 <td className="px-4 py-3 text-center text-xs font-semibold text-charcoal">{sailor.birthYear ?? "—"}</td>
-                <td className="px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</td>
-                <td className="px-4 py-3 text-center font-bold text-harbour">
+                <td className="border-r border-cool-veil px-4 py-3 text-right text-base font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</td>
+                <td className="bg-harbour/[0.02] px-4 py-3 text-center font-bold text-harbour">
                   {sailor.overallPlace != null ? `${sailor.overallPlace}/${totalFleetSize}` : "—"}
                 </td>
-                {qualifierColumns.map((qualifier) => (
-                  <td key={qualifier.id} className="px-4 py-3 text-center text-xs font-semibold text-charcoal">
-                    {qualifierRank(sailor, qualifier.id)}
-                  </td>
-                ))}
+                {qualifierColumns.map((qualifier) => {
+                  const isG150 = qualifier.grade === 150;
+                  const isG75 = qualifier.grade === 75;
+                  const bg = isG150 ? "bg-harbour/[0.02]" : isG75 ? "bg-aqua/[0.02]" : "bg-amber-500/[0.02]";
+                  return (
+                    <td key={qualifier.id} className={`${bg} px-4 py-3 text-center text-xs font-semibold text-charcoal`}>
+                      {qualifierRank(sailor, qualifier.id)}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
             {filteredEntries.length === 0 ? (
