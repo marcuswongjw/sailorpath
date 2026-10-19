@@ -15,5 +15,7 @@ export const adminQueryKeys = {
   promote: () => ["admin", "promote"] as const,
   support: (status: string) => ["admin", "support", status] as const,
   overview: () => ["admin", "overview"] as const,
+  duplicates: () => ["admin", "duplicate-count"] as const,
+  recentChanges: () => ["admin", "overview-changes"] as const,
   regattaSuggestions: () => ["admin", "regatta-suggestions"] as const,
 };

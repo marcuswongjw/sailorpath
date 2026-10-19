@@ -6,6 +6,7 @@ import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 import {
   fetchAdminRegattaEvents,
   fetchAdminRegattas,
@@ -16,6 +17,7 @@ import {
 import type {
   AdminActiveTab,
   AdminEditSubTab,
+  AdminEventsView,
 } from "@/components/admin/adminNav";
 
 export type AdminDataKey = "sailors" | "regattas" | "results";
@@ -27,10 +29,17 @@ export type {
   AdminOpsSubTab,
 } from "@/components/admin/adminNav";
 
+import { isAdminEventsQueueView } from "./adminNav";
+
+const EMPTY_SAILORS: SailorAdmin[] = [];
+const EMPTY_REGATTAS: RegattaAdmin[] = [];
+const EMPTY_RESULTS: ResultAdmin[] = [];
+
 type UseAdminDataArgs = {
   isSuperadmin: boolean;
   activeTab: AdminActiveTab;
   editSubTab: AdminEditSubTab;
+  eventsView?: AdminEventsView;
 };
 
 type Updater<T> = T | ((prev: T) => T);
@@ -50,6 +59,7 @@ export function useAdminData({
   isSuperadmin,
   activeTab,
   editSubTab,
+  eventsView = "results",
 }: UseAdminDataArgs) {
   const queryClient = useQueryClient();
   const [selectedRegattaIdForResultEdit, setSelectedRegattaIdForResultEdit] =
@@ -62,7 +72,7 @@ export function useAdminData({
 
   const sheetOpen =
     isSuperadmin &&
-    (activeTab === "regattas" ||
+    ((activeTab === "regattas" && eventsView === "results") ||
       (activeTab === "edit" && editSubTab === "regattas")) &&
     Boolean(selectedRegattaIdForResultEdit);
 
@@ -71,13 +81,15 @@ export function useAdminData({
     (needsFullResults ||
       sheetOpen ||
       (activeTab === "edit" &&
-        (editSubTab === "sailors" || editSubTab === "duplicates" || editSubTab === "selection")));
+        (editSubTab === "sailors" ||
+          editSubTab === "duplicates" ||
+          editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
     (needsFullResults ||
       sheetOpen ||
-      activeTab === "regattas" ||
+      (activeTab === "regattas" && !isAdminEventsQueueView(eventsView)) ||
       activeTab === "import" ||
       (activeTab === "edit" &&
         (editSubTab === "regattas" || editSubTab === "selection")) ||
@@ -116,21 +128,17 @@ export function useAdminData({
   });
 
   const resultsRegattaQuery = useQuery({
-    queryKey: adminQueryKeys.resultsByRegatta(
-      selectedRegattaId || "_"
-    ),
+    queryKey: adminQueryKeys.resultsByRegatta(selectedRegattaId || "_"),
     queryFn: ({ signal }) =>
       fetchAdminResultsForRegatta(selectedRegattaId, true, { signal }),
-    enabled:
-      needResultsEditor &&
-      Boolean(selectedRegattaIdForResultEdit),
+    enabled: needResultsEditor && Boolean(selectedRegattaIdForResultEdit),
   });
 
   // Query data remains cached even when its ranking tab is disabled.
   const hasFullResults = resultsAllQuery.data !== undefined;
 
-  const sailorList = sailorsQuery.data ?? [];
-  const regattaList = regattasQuery.data ?? [];
+  const sailorList = sailorsQuery.data ?? EMPTY_SAILORS;
+  const regattaList = regattasQuery.data ?? EMPTY_REGATTAS;
   const calendarEvents = calendarEventsQuery.data ?? [];
 
   const resultsList = useMemo(() => {
@@ -140,10 +148,10 @@ export function useAdminData({
       return resultsRegattaQuery.data;
     }
     if (hasFullResults || needsFullResults) {
-      return resultsAllQuery.data ?? [];
+      return resultsAllQuery.data ?? EMPTY_RESULTS;
     }
     // Results editor: active regatta slice only (competitions forces a full load).
-    return resultsRegattaQuery.data ?? [];
+    return resultsRegattaQuery.data ?? EMPTY_RESULTS;
   }, [
     sheetOpen,
     hasFullResults,
@@ -152,52 +160,53 @@ export function useAdminData({
     resultsRegattaQuery.data,
   ]);
 
-  const dataLoading =
-    (needSailors && sailorsQuery.isFetching) ||
-    (needRegattas && regattasQuery.isFetching) ||
-    (needCalendarEvents && calendarEventsQuery.isFetching) ||
-    (needsFullResults && resultsAllQuery.isFetching) ||
-    (needResultsEditor &&
-      Boolean(selectedRegattaId) &&
-      resultsRegattaQuery.isFetching);
-
-  const dataLoadError =
-    (sailorsQuery.error instanceof Error && sailorsQuery.error.message) ||
-    (regattasQuery.error instanceof Error && regattasQuery.error.message) ||
-    (calendarEventsQuery.error instanceof Error &&
-      calendarEventsQuery.error.message) ||
-    (resultsAllQuery.error instanceof Error && resultsAllQuery.error.message) ||
-    (resultsRegattaQuery.error instanceof Error &&
-      resultsRegattaQuery.error.message) ||
-    null;
+  // Only the current workspace can report loading/errors or be retried.
+  const activeQueries = [
+    ...(needSailors ? [sailorsQuery] : []),
+    ...(needRegattas ? [regattasQuery] : []),
+    ...(needCalendarEvents ? [calendarEventsQuery] : []),
+    ...(isSuperadmin && needsFullResults ? [resultsAllQuery] : []),
+    ...(needResultsEditor && selectedRegattaId ? [resultsRegattaQuery] : []),
+  ];
+  const dataLoading = activeQueries.some((query) => query.isFetching);
+  // Keep the event form mounted while a newly selected class loads its rows.
+  const workspaceQueries = activeQueries.filter((query) =>
+    !sheetOpen || (query !== sailorsQuery && query !== resultsRegattaQuery));
+  const dataReady = workspaceQueries.every((query) => query.data !== undefined);
+  const resultsEditorReady = sailorsQuery.data !== undefined && resultsRegattaQuery.data !== undefined;
+  const dataLoadError = activeQueries.find((query) => query.error instanceof Error)
+    ?.error?.message ?? null;
+  const retryActiveData = () => Promise.all(activeQueries.map((query) => query.refetch()));
 
   const setSailorList = useCallback(
     (updater: Updater<SailorAdmin[]>) => {
-      queryClient.setQueryData<SailorAdmin[]>(adminQueryKeys.sailors(), (prev) =>
-        applyUpdater(prev ?? [], updater)
+      queryClient.setQueryData<SailorAdmin[]>(
+        adminQueryKeys.sailors(),
+        (prev) => applyUpdater(prev ?? [], updater),
       );
     },
-    [queryClient]
+    [queryClient],
   );
 
   const setRegattaList = useCallback(
     (updater: Updater<RegattaAdmin[]>) => {
       queryClient.setQueryData<RegattaAdmin[]>(
         adminQueryKeys.regattas(),
-        (prev) => applyUpdater(prev ?? [], updater)
+        (prev) => applyUpdater(prev ?? [], updater),
       );
     },
-    [queryClient]
+    [queryClient],
   );
 
   const setResultsList = useCallback(
     (updater: Updater<ResultAdmin[]>) => {
       const next = applyUpdater(
         hasFullResults || needsFullResults
-          ? (queryClient.getQueryData<ResultAdmin[]>(adminQueryKeys.resultsAll()) ??
-              [])
+          ? (queryClient.getQueryData<ResultAdmin[]>(
+              adminQueryKeys.resultsAll(),
+            ) ?? [])
           : resultsList,
-        updater
+        updater,
       );
 
       if (hasFullResults || needsFullResults) {
@@ -216,39 +225,37 @@ export function useAdminData({
         queryClient.setQueryData(adminQueryKeys.resultsByRegatta(rid), rows);
       }
     },
-    [queryClient, hasFullResults, needsFullResults, resultsList]
+    [queryClient, hasFullResults, needsFullResults, resultsList],
   );
 
   const refreshResultsList = useCallback(
     async (opts?: { regattaId?: string }) => {
-      try {
-        if (opts?.regattaId) {
-          const rows = await queryClient.fetchQuery({
-            queryKey: adminQueryKeys.resultsByRegatta(opts.regattaId),
-            queryFn: () => fetchAdminResultsForRegatta(opts.regattaId!, true),
-          });
-          if (hasFullResults) {
-            queryClient.setQueryData<ResultAdmin[]>(
-              adminQueryKeys.resultsAll(),
-              (prev) => {
-                const others = (prev ?? []).filter(
-                  (r) => r.regattaId !== opts.regattaId
-                );
-                return [...others, ...rows];
-              }
-            );
-          }
-          return;
-        }
-        await queryClient.fetchQuery({
-          queryKey: adminQueryKeys.resultsAll(),
-          queryFn: fetchAdminResultsAll,
+      if (opts?.regattaId) {
+        const rows = await queryClient.fetchQuery({
+          staleTime: 0,
+          queryKey: adminQueryKeys.resultsByRegatta(opts.regattaId),
+          queryFn: ({ signal }) => fetchAdminResultsForRegatta(opts.regattaId!, true, { signal }),
         });
-      } catch {
-        /* keep existing list */
+        if (hasFullResults) {
+          queryClient.setQueryData<ResultAdmin[]>(
+            adminQueryKeys.resultsAll(),
+            (prev) => {
+              const others = (prev ?? []).filter(
+                (r) => r.regattaId !== opts.regattaId,
+              );
+              return [...others, ...rows];
+            },
+          );
+        }
+        return;
       }
+      await queryClient.fetchQuery({
+        staleTime: 0,
+        queryKey: adminQueryKeys.resultsAll(),
+        queryFn: ({ signal }) => fetchAdminResultsAll({ signal }),
+      });
     },
-    [queryClient, hasFullResults]
+    [queryClient, hasFullResults],
   );
 
   const patchResultsFromImport = useCallback(
@@ -259,7 +266,7 @@ export function useAdminData({
         if (!rid) return;
         queryClient.setQueryData(
           adminQueryKeys.resultsByRegatta(rid),
-          incoming
+          incoming,
         );
         if (hasFullResults) {
           queryClient.setQueryData<ResultAdmin[]>(
@@ -267,14 +274,14 @@ export function useAdminData({
             (prev) => {
               const others = (prev ?? []).filter((r) => r.regattaId !== rid);
               return [...others, ...incoming];
-            }
+            },
           );
         }
       } else {
         queryClient.setQueryData(adminQueryKeys.resultsAll(), incoming);
       }
     },
-    [queryClient, hasFullResults]
+    [queryClient, hasFullResults],
   );
 
   const patchRegattaUpsert = useCallback(
@@ -286,7 +293,7 @@ export function useAdminData({
           : [...prev, regatta];
       });
     },
-    [setRegattaList]
+    [setRegattaList],
   );
 
   const patchRegattaPartial = useCallback(
@@ -298,30 +305,36 @@ export function useAdminData({
           : [...prev, reg as RegattaAdmin];
       });
     },
-    [setRegattaList]
+    [setRegattaList],
   );
 
   const patchSailorPartial = useCallback(
     (sailor: Partial<SailorAdmin> & { id: string }) => {
       setSailorList((prev) =>
-        prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s))
+        prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s)),
       );
     },
-    [setSailorList]
+    [setSailorList],
   );
 
   /** Refetch sailors from the server (after bulk/merge/actions). */
   const invalidateSailors = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: adminQueryKeys.sailors() });
+    invalidateAdminSummaries(queryClient);
   }, [queryClient]);
 
   const invalidateRegattas = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: adminQueryKeys.regattas() });
+    void queryClient.invalidateQueries({
+      queryKey: adminQueryKeys.regattaEvents(),
+    });
+    invalidateAdminSummaries(queryClient);
   }, [queryClient]);
 
   /** Invalidate all results caches (full + per-regatta). */
   const invalidateResults = useCallback(() => {
     void queryClient.invalidateQueries({ queryKey: ["admin", "results"] });
+    invalidateAdminSummaries(queryClient);
   }, [queryClient]);
 
   const invalidateAllLists = useCallback(() => {
@@ -354,7 +367,10 @@ export function useAdminData({
     } as Record<AdminDataKey, boolean>,
     hasFullResults,
     dataLoading,
+    dataReady,
+    resultsEditorReady,
     dataLoadError,
+    retryActiveData,
     refreshResultsList,
     patchResultsFromImport,
     patchRegattaUpsert,

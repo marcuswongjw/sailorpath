@@ -14,33 +14,45 @@ import { Trophy, Calendar, RefreshCw, Filter, RotateCcw, Lock } from "lucide-rea
 import { trackClientUsage } from "@/lib/clientUsage";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 import { formatRankingMonthYear } from "@/lib/datesSg";
+import { knownBirthYearLabel } from "@/lib/age";
 import { mobileRegattaBadge } from "@/components/FleetRankingsView";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { useAccountOptional } from "@/components/AccountProvider";
 
-export function getIlcaIntakeOptions(activeYear?: number): Array<{
+const ILCA_INTAKE_MIN_YEAR = 2024;
+
+/**
+ * Competition halves to offer in the standings picker, newest first.
+ * The current half is always included. Earlier halves go back to 2024.
+ * Future halves are omitted: a January intake year is the year after its
+ * Jul–Dec competition window, and must not be treated as a competition year.
+ */
+export function getIlcaIntakeOptions(now = new Date()): Array<{
   kind: IlcaIntakeKind;
   year: number;
   label: string;
 }> {
-  const currentYear = new Date().getFullYear();
-  const maxYear = Math.max(currentYear, activeYear || 0);
-  const minYear = 2024;
+  let year = now.getFullYear();
+  let half: "Jul-Dec" | "Jan-Jun" = now.getMonth() >= 6 ? "Jul-Dec" : "Jan-Jun";
   const list: Array<{ kind: IlcaIntakeKind; year: number; label: string }> = [];
 
-  for (let yr = maxYear; yr >= minYear; yr--) {
-    // Jul – Dec yr competition period leads to January yr+1 intake (cutoff 31 Dec yr)
-    list.push({
-      kind: "january",
-      year: yr + 1,
-      label: `Jul – Dec ${yr}`,
-    });
-    // Jan – Jun yr competition period leads to July yr intake (cutoff 30 Jun yr)
-    list.push({
-      kind: "july",
-      year: yr,
-      label: `Jan – Jun ${yr}`,
-    });
+  while (year >= ILCA_INTAKE_MIN_YEAR) {
+    if (half === "Jul-Dec") {
+      list.push({
+        kind: "january",
+        year: year + 1,
+        label: `Jul – Dec ${year}`,
+      });
+      half = "Jan-Jun";
+    } else {
+      list.push({
+        kind: "july",
+        year,
+        label: `Jan – Jun ${year}`,
+      });
+      half = "Jul-Dec";
+      year -= 1;
+    }
   }
   return list;
 }
@@ -91,10 +103,7 @@ export function IlcaRankingsView({
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const intakeOptions = useMemo(
-    () => getIlcaIntakeOptions(Math.max(initialIntakeYear, intakeYear)),
-    [initialIntakeYear, intakeYear]
-  );
+  const intakeOptions = useMemo(() => getIlcaIntakeOptions(new Date()), []);
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
 
   const toggleExclude = (regattaId: string) => {
@@ -553,6 +562,7 @@ export function IlcaRankingsView({
       <div className="md:hidden space-y-2.5 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s) => {
           const handle = s.handle;
+          const born = knownBirthYearLabel(s.birthYear);
           const selectedIndexes = bestThreeSelectedIndexes(
             eventSlots.map((event) => pointsFor(s, event.regattaId).points),
             { higherIsBetter: true, excludedIndexes }
@@ -585,7 +595,9 @@ export function IlcaRankingsView({
                     )}
                   </div>
                   <p className="text-[11px] text-slate-700 font-medium mt-1">
-                    {s.gender || "—"} · Born {s.birthYear ?? "—"}
+                    {[s.gender || "—", born ? `Born ${born}` : null]
+                      .filter(Boolean)
+                      .join(" · ")}
                   </p>
                 </div>
                 <div className="text-right shrink-0 pl-1">
@@ -807,7 +819,7 @@ export function IlcaRankingsView({
                       {s.gender || "—"}
                     </td>
                     <td className="px-3 py-3.5 text-center font-mono text-slate-700 font-semibold">
-                      {s.birthYear ?? "—"}
+                      {knownBirthYearLabel(s.birthYear)}
                     </td>
                     {Array.from({ length: 5 }).map((_, idx) => {
                       const ev = eventSlots[idx];

@@ -97,4 +97,14 @@ describe("adminFetch", () => {
     await adminJson("/api/admin/me", { signal: controller.signal });
     expect(remove).toHaveBeenCalledWith("abort", expect.any(Function));
   });
+  it("preserves gateway HTTP failures even when the response is HTML", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: false, status: 504, json: async () => { throw new SyntaxError("Unexpected token <"); },
+    }));
+    const error = await adminJson("/api/admin/claims").catch(error => error);
+    expect(error).toBeInstanceOf(AdminRequestError);
+    expect((error as AdminRequestError).status).toBe(504);
+    expect((error as AdminRequestError).message).toBe("Request failed (504)");
+  });
+
 });

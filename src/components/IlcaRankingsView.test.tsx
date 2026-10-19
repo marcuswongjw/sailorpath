@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { IlcaRankingsView } from "./IlcaRankingsView";
+import { getIlcaIntakeOptions, IlcaRankingsView } from "./IlcaRankingsView";
 import type { IlcaRankedSailor } from "@/lib/ilcaRanking";
 
 vi.mock("next/link", () => ({
@@ -73,6 +73,26 @@ const mockSailors: IlcaRankedSailor[] = [
   },
 ];
 
+describe("getIlcaIntakeOptions", () => {
+  it("offers the current half and earlier halves, not future periods", () => {
+    const october = getIlcaIntakeOptions(new Date("2026-10-17T04:00:00Z"));
+    expect(october.map((option) => option.label)).toEqual([
+      "Jul – Dec 2026",
+      "Jan – Jun 2026",
+      "Jul – Dec 2025",
+      "Jan – Jun 2025",
+      "Jul – Dec 2024",
+      "Jan – Jun 2024",
+    ]);
+    expect(october[0]).toMatchObject({ kind: "january", year: 2027 });
+    expect(october.some((option) => option.label.includes("2027"))).toBe(false);
+
+    const march = getIlcaIntakeOptions(new Date("2026-03-15T00:00:00Z"));
+    expect(march[0]).toMatchObject({ kind: "july", year: 2026, label: "Jan – Jun 2026" });
+    expect(march.some((option) => option.label === "Jul – Dec 2026")).toBe(false);
+  });
+});
+
 describe("IlcaRankingsView", () => {
   it("renders ILCA 4 standings, exclusion checkboxes, and selection links", () => {
     render(
@@ -122,5 +142,30 @@ describe("IlcaRankingsView", () => {
     // Click reset
     fireEvent.click(resetButtons[0]);
     expect(screen.queryByText(/Viewing what-if ranking/i)).toBeNull();
+  });
+
+  it("hides Born when the birth year is unknown", () => {
+    render(
+      <IlcaRankingsView
+        initialRanked={[
+          { ...mockSailors[0], birthYear: 2011 },
+          {
+            ...mockSailors[0],
+            sailorId: "s2",
+            name: "No Year",
+            handle: "no-year",
+            birthYear: null,
+          },
+        ]}
+        initialIntakeKind="july"
+        initialIntakeYear={2026}
+        initialLabel="July 2026"
+        initialAsOf="2026-06-30"
+      />
+    );
+
+    expect(screen.getAllByText(/Born 2011/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/Born —/)).toBeNull();
+    expect(screen.queryByText(/Born –/)).toBeNull();
   });
 });

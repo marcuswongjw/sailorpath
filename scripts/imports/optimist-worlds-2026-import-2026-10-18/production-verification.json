@@ -1,0 +1,70 @@
+{
+  "event": {
+    "id": "1e1b625c-c10a-564a-b919-c3bf0bb713cc",
+    "slug": "2026-optimist-world-championship",
+    "venue": "Royal Yacht Club de Tanger, Tangier, Morocco",
+    "endDate": "2026-06-28",
+    "scopeNote": "Asian sailors only (IODA continental scope). Original overall world positions and the full official 284-boat fleet size are retained. See Official Results for the complete classification.",
+    "startDate": "2026-06-18"
+  },
+  "races": 552,
+  "sheet": {
+    "id": "b100399c-9ea7-5034-b8ca-838cee5df58d",
+    "status": "published",
+    "boatClass": "Optimist",
+    "fleetSize": 284,
+    "raceCount": 12,
+    "sourceUrl": "https://scoring.sailti.com/public/download/overall-datetime-pdf/10651/1/20260628140956",
+    "rankingEligible": false
+  },
+  "results": 46,
+  "indexHash": "a48fc6c7189c5af92016200bc91ead05",
+  "newProfiles": [
+    {
+      "name": "Jo Yamada",
+      "nationality": "JPN"
+    },
+    {
+      "name": "Chantal Henriksson",
+      "nationality": "HKG"
+    },
+    {
+      "name": "Antony Aldrin",
+      "nationality": "IND"
+    },
+    {
+      "name": "Gianna Mayor",
+      "nationality": "PHI"
+    },
+    {
+      "name": "Mohammed Nabil Al-Balushi",
+      "nationality": "OMA"
+    },
+    {
+      "name": "Yun Xi Jin",
+      "nationality": "MAC"
+    },
+    {
+      "name": "Mohammed Al-Qartoubi",
+      "nationality": "OMA"
+    },
+    {
+      "name": "Saleh Almethen",
+      "nationality": "KUW"
+    },
+    {
+      "name": "Nana Muranaka",
+      "nationality": "JPN"
+    }
+  ],
+  "sailorCount": 1169,
+  "rameezaRaces": 30,
+  "legacyRaceHash": "94b1ae4d80d4883253defe5542a62a36",
+  "raceExceptions": 0,
+  "rameezaResults": 3,
+  "entryExceptions": 0,
+  "participantExceptions": 0,
+  "reconciliationExceptions": 0,
+  "indexScoresUnchanged": true,
+  "historicalRaceScoresUnchanged": true
+}

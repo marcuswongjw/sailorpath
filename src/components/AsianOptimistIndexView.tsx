@@ -4,13 +4,15 @@ import {
   AsianOptimistIndexStandings,
   type AsianOptimistIndexFilterState,
 } from "@/components/AsianOptimistIndexStandings";
+import { AsianOptimistIndexBetaSummary } from "@/components/AsianOptimistIndexBetaSummary";
+import { ASIAN_INDEX_METHODOLOGY_PATH } from "@/lib/asianOptimistIndexBeta";
 import {
   ASIAN_OPTIMIST_INDEX_EVENT,
   ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL,
   ASIAN_OPTIMIST_INDEX_SOURCE_URL,
 } from "@/lib/asianOptimistIndex";
 import {
-  ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS,
+  ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS,
   ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE,
   type AsianOptimistIndexProvisionalEntry,
 } from "@/lib/asianOptimistIndexScoring";
@@ -26,9 +28,7 @@ function rankClass(rank: number): string {
   return "bg-sailcloth text-harbour";
 }
 
-const INDEX_QUALIFIER_COLUMNS = Object.values(
-  ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS
-);
+const INDEX_QUALIFIER_COLUMNS = ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS;
 
 export function AsianOptimistIndexView({
   entries,
@@ -40,25 +40,23 @@ export function AsianOptimistIndexView({
   filters?: AsianOptimistIndexFilterState;
 }) {
   const leaders = entries.slice(0, 3);
-  const sailorsWithQualifiers = entries.filter((entry) => entry.eligibleStarts > 0).length;
-  const totalStarts = entries.reduce((total, entry) => total + entry.eligibleStarts, 0);
 
   return (
     <main className="min-h-screen bg-sailcloth pb-16">
       <section className="border-b border-harbour-shadow bg-harbour text-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-soft-aqua">
-            Optimist · provisional regional index
+            Optimist · V1 (Beta) methodology
           </p>
           <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <h1 className="font-display text-3xl font-extrabold tracking-tight sm:text-5xl">
-                Asian Optimist Index
+                SailorPath Asian and Oceania Optimist Index
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-sailcloth sm:text-lg">
-                A transparent provisional score for the 122 Asian sailors in the
-                official 2025 Asian &amp; Oceanian Championship. It combines that
-                championship finish with verified 2026 regional form available today.
+                An independent analytical index of verified Optimist results for sailors representing Asian and Oceanian national
+                authorities. Standings are calculated under the V1 (Beta) rolling 12-month methodology
+                for the {entries.length} Asian and Oceanian competitors from verified international championships (World Championship, Asian &amp; Oceanian Championship, European Championship) and designated regional regattas.
               </p>
             </div>
             <a
@@ -74,22 +72,54 @@ export function AsianOptimistIndexView({
         </div>
       </section>
 
+      <section aria-label="Beta methodology notice" className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+          <p>
+            <strong>V1 (Beta) methodology is live.</strong> Standings are calculated using the V1 (Beta) points formula
+            (<code className="font-bold">E × (N − P + 1) ÷ N</code>) with event-grade and host-country caps across eligible Asian and Oceanian regattas.
+            This is an independent analytical index published by SailorPath, not an official IODA or national federation ranking.
+          </p>
+          <nav aria-label="On this page" className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-bold">
+            <a href="#standings" className="underline underline-offset-2 hover:text-racing-deep">
+              Standings table
+            </a>
+            <a href="#qualifiers" className="underline underline-offset-2 hover:text-racing-deep">
+              2026 qualifying events
+            </a>
+            <a href="#beta-summary" className="underline underline-offset-2 hover:text-racing-deep">
+              Index in one page
+            </a>
+            <a href="#register" className="underline underline-offset-2 hover:text-racing-deep">
+              Event register
+            </a>
+            <a href="#nominate" className="underline underline-offset-2 hover:text-racing-deep">
+              Nominate an event
+            </a>
+            <Link href={ASIAN_INDEX_METHODOLOGY_PATH} className="underline underline-offset-2 hover:text-racing-deep">
+              Full methodology
+            </Link>
+          </nav>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Fixed cohort</p>
             <p className="mt-1 text-3xl font-extrabold text-harbour">{entries.length}</p>
-            <p className="mt-1 text-xs text-slate-soft">Asian sailors from the 2025 official final</p>
+            <p className="mt-1 text-xs text-slate-soft">Asian &amp; Oceanian sailors across verified championships</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Score formula</p>
-            <p className="mt-1 text-lg font-extrabold text-harbour">60% championship · 40% form</p>
-            <p className="mt-1 text-xs text-slate-soft">Up to five events · best three host-country results</p>
+            <p className="mt-1 text-lg font-extrabold text-harbour">V1 (Beta) Points</p>
+            <p className="mt-1 text-xs text-slate-soft">Best up to 5 events · Grade 150 / 75 / 40 tiers</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Verified 2026 form</p>
-            <p className="mt-1 text-lg font-extrabold text-harbour">{sailorsWithQualifiers} sailors · {totalStarts} starts</p>
-            <p className="mt-1 text-xs text-slate-soft">Across {INDEX_QUALIFIER_COLUMNS.length} verified qualifying events today</p>
+            <p className="mt-1 text-lg font-extrabold text-harbour">
+              {entries.filter((entry) => entry.qualifierResults.length > 0).length} sailors · {entries.reduce((total, entry) => total + entry.qualifierResults.length, 0)} starts
+            </p>
+            <p className="mt-1 text-xs text-slate-soft">Across {INDEX_QUALIFIER_COLUMNS.length} verified 2026 qualifying events</p>
           </div>
         </div>
       </section>
@@ -138,9 +168,9 @@ export function AsianOptimistIndexView({
                 ) : null}
                 <p className="mt-1 text-sm text-slate-soft">{sailor.nationality} · {sailor.sailNumber}</p>
                 <p className="mt-4 text-sm font-semibold text-charcoal">
-                  Index score <span className="font-extrabold text-harbour">{sailor.provisionalScore.toFixed(1)}</span>
+                  Index points <span className="font-extrabold text-harbour">{sailor.provisionalScore.toFixed(2)}</span>
                   <span className="px-1.5 text-cool-mist">·</span>
-                  2025 finish <span className="font-extrabold text-harbour">{sailor.overallPlace}/{ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}</span>
+                  2025 finish <span className="font-extrabold text-harbour">{sailor.overallPlace != null ? `${sailor.overallPlace}/${ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}` : "—"}</span>
                 </p>
               </article>
             ))}
@@ -148,7 +178,7 @@ export function AsianOptimistIndexView({
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="standings" aria-label="Index standings" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AsianOptimistIndexStandings
           entries={entries}
           qualifierColumns={INDEX_QUALIFIER_COLUMNS}
@@ -158,15 +188,15 @@ export function AsianOptimistIndexView({
         />
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
+      <section id="qualifiers" aria-label="2026 qualifying events" className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-cool-veil px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
-            <div>
-              <h2 className="text-xl font-extrabold text-harbour">2026 qualifying events</h2>
-              <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
-                Verified final classifications are published on SailorPath and are the active form inputs. Eastern Seaboard is listed as the next Thai candidate and will be reviewed only after its final classification is published. The provisional slate can include up to five scored events; a sailor can use only their strongest result from each host country, and Singapore national-event scores are capped at 70 out of 100.
-              </p>
-            </div>
+              <div>
+                <h2 className="text-xl font-extrabold text-harbour">2026 qualifying events</h2>
+                <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-soft">
+                  Verified final classifications are published on SailorPath and are the active form inputs. Each regatta is designated under the V1 (Beta) tiers: Grade 150 (Championships), Grade 75 (International Opens), or Grade 40 (National Championships). Selection limits apply across host jurisdictions and grades.
+                </p>
+              </div>
             <p className="text-xs font-semibold text-slate-soft">
               {qualifiers.reduce((total, qualifier) => total + (qualifier.resultCount ?? 0), 0)} source rows tracked
             </p>
@@ -223,6 +253,8 @@ export function AsianOptimistIndexView({
         </div>
       </section>
 
+      <AsianOptimistIndexBetaSummary />
+
       <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
         <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
           <article className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-sm sm:p-6">
@@ -233,18 +265,17 @@ export function AsianOptimistIndexView({
               <h2 className="text-xl font-extrabold text-harbour">How this provisional score works</h2>
             </div>
             <div className="mt-4 space-y-4 text-sm leading-6 text-charcoal">
-              <p><strong>Who is ranked:</strong> the fixed 122-sailor Asian cohort from the official 2025 Asian &amp; Oceanian final classification. A new qualifier participant is not added to this provisional table until the 2026 championship refresh.</p>
-              <p><strong>2025 championship points (60):</strong> the official overall finish is fleet-normalised: <code>100 × (170 − finish) ÷ 169</code>, then multiplied by 60%. First in the 170-sailor fleet earns 60 points; last earns 0.</p>
-              <p><strong>2026 form points (40):</strong> the season can nominate up to five verified regional events. Each final qualifier finish is fleet-normalised the same way; the strongest result from one host country contributes up to 28 points, a second country up to 8, and a third up to 4. A fifth event can replace a weaker result but never creates an attendance bonus. Missing country slots are zero.</p>
-              <p><strong>National-event safeguard:</strong> Singapore national-event result scores are capped at 70 out of 100 before the 28% / 8% / 4% weights are applied. This prevents domestic-only form from outweighing the common championship anchor.</p>
-              <p><strong>Profile links:</strong> sailor names link to the consolidated SailorPath record. The founding-cohort profile audit was resolved by an administrator on 14 October 2026; the original verified result identities remain intact.</p>
-              <p><strong>Refresh at Colombo:</strong> after the official 2026 Asian &amp; Oceanian Championship final is checked, SailorPath will refresh the cohort, replace the temporary 2025 anchor, add eligible sailors from the new championship, and recalculate the index.</p>
+              <p><strong>Who is ranked:</strong> verified Asian and Oceanian Optimist sailors representing eligible MNAs with at least one verified scoring result in the 12-month window. The cohort includes competitors from the 2025 Asian &amp; Oceanian Championship, 2026 World Championship, and 2026 European Championship.</p>
+              <p><strong>Points formula:</strong> each eligible result earns points based on event grade (E), valid starters (N), and finishing position (P): <code>Points = E × (N − P + 1) ÷ N</code>. First place earns E, and last place earns E ÷ N.</p>
+              <p><strong>Event tiers:</strong> Grade 150 for IODA Worlds and continental fleet-racing championships; Grade 75 for designated international opens meeting the 50-starter / 4-MNA gates; Grade 40 for recognized national championships.</p>
+              <p><strong>Selection limits:</strong> each sailor’s Index is the sum of their best combination of results subject to six selection limits: at most 5 results overall; at most 2 Grade 150 results; at most 1 World Championship; at most 4 upper-grade results (Grade 150 + 75); at most 1 Grade 75 result per host MNA; and at most 1 Grade 40 result per host MNA per calendar year.</p>
+              <p><strong>Profile links:</strong> sailor names link to their verified SailorPath profile. Results expire on their 12-month anniversary.</p>
             </div>
           </article>
           <aside className="rounded-2xl bg-harbour p-5 text-white shadow-sm sm:p-6">
             <Medal className="h-6 w-6 text-soft-aqua" aria-hidden="true" />
             <h2 className="mt-3 text-xl font-extrabold">Source and scope</h2>
-            <p className="mt-3 text-sm leading-6 text-sailcloth">Only sailors representing Asian national authorities in the 2025 official final classification are eligible for this provisional release. Australia and New Zealand were part of the official Asian &amp; Oceanian event but are not in this Asian-only cohort.</p>
+            <p className="mt-3 text-sm leading-6 text-sailcloth">Sailors representing eligible World Sailing Member National Authorities across Asia and Oceania are included in the Index. Standings are calculated from verified official results and updated with each designated regatta.</p>
             <a href={ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-soft-aqua hover:text-white hover:underline">
               Download 2025 final-result PDF
               <ExternalLink className="h-4 w-4" aria-hidden="true" />

@@ -1,7 +1,10 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 import { LifeBuoy, CheckCircle, Mail, Inbox } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
@@ -21,18 +24,17 @@ type Msg = {
 
 export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast } = useFeedback();
+  const queryClient = useQueryClient();
   const [filter, setFilter] = useState<"new" | "all" | "resolved">("new");
 
   const messagesQuery = useQuery({
     queryKey: adminQueryKeys.support(filter),
     enabled: isSuperadmin,
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const q =
         filter === "all" ? "" : `?status=${filter === "resolved" ? "resolved" : "new"}`;
-      const res = await fetch(`/api/support${q}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load");
-      return (data.messages || []) as Msg[];
+      const data = await adminJson<{ messages?: Msg[] }>(`/api/support${q}`, { signal });
+      return data.messages || [];
     },
   });
   const messages = messagesQuery.data ?? [];
@@ -50,7 +52,8 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
-      await messagesQuery.refetch();
+      void queryClient.invalidateQueries({ queryKey: ["admin", "support"] });
+      invalidateAdminSummaries(queryClient);
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Failed"));
     }

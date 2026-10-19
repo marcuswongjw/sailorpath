@@ -26,3 +26,13 @@ Health check: https://sailorpath.com/api/health
 ## Admin
 
 `https://admin.sailorpath.com` (requires `profiles.role = superadmin`).
+
+The workspace starts at **Today** with independently loaded Inbox, event checks,
+duplicate candidates and recent changes. Failed checks are unavailable, never an
+all-clear. Events & results separates recent events, upcoming planning and history;
+event selection is bookmarkable. Editorial shares the workspace navigation.
+Insights defines its metrics and keeps account diagnostics collapsed.
+
+“Ready for review” means metadata checks pass, not that source scores, discards
+or sailor identities have been audited. The tracked UI-import timestamp is not a
+complete import ledger. Existing admin links remain supported.

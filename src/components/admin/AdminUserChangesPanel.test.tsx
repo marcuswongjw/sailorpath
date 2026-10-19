@@ -27,9 +27,9 @@ describe("User changes panel", () => {
     expect(screen.getByText(/submittedFields/)).toBeVisible();
     await user.type(screen.getByLabelText("User email"), "parent@example.com");
     await user.click(screen.getByRole("button", { name: "Filter" }));
-    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/user-changes?days=30&email=parent%40example.com&offset=0"));
+    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/user-changes?days=30&email=parent%40example.com&offset=0", expect.objectContaining({ signal: expect.any(AbortSignal) })));
     await user.selectOptions(screen.getByLabelText("Period"), "7");
-    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/user-changes?days=7&email=parent%40example.com&offset=0"));
+    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/user-changes?days=7&email=parent%40example.com&offset=0", expect.objectContaining({ signal: expect.any(AbortSignal) })));
   });
 
   it("supports pagination beyond the first hundred entries", async () => {
@@ -38,7 +38,7 @@ describe("User changes panel", () => {
     show();
     await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toBeEnabled());
     await userEvent.setup().click(screen.getByRole("button", { name: "Next" }));
-    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/user-changes?days=30&email=&offset=100"));
+    await waitFor(() => expect(fetchMock).toHaveBeenLastCalledWith("/api/admin/user-changes?days=30&email=&offset=100", expect.objectContaining({ signal: expect.any(AbortSignal) })));
     expect(screen.getByText("Page 2")).toBeInTheDocument();
   });
 

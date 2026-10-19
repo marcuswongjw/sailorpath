@@ -22,11 +22,14 @@ export function AdminMaintenancePanel({
         body: JSON.stringify({ action: "seed-2026" }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not link the 2026 events");
+      if (!res.ok)
+        throw new Error(data.error || "Could not link the 2026 events");
       toast.success(data.message || "2026 events linked.");
       window.location.reload();
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Could not link the 2026 events");
+      toast.error(
+        err instanceof Error ? err.message : "Could not link the 2026 events",
+      );
     } finally {
       setSeeding(false);
     }
@@ -35,17 +38,23 @@ export function AdminMaintenancePanel({
   return (
     <section className="space-y-4" aria-labelledby="maintenance-title">
       <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h2 id="maintenance-title" className="text-sm font-black uppercase tracking-wider text-slate-900">
+        <h2
+          id="maintenance-title"
+          className="text-sm font-black uppercase tracking-wider text-slate-900"
+        >
           Maintenance
         </h2>
         <p className="mt-1 max-w-2xl text-sm text-slate-700">
           One-time repairs live here so they stay off the event list.
         </p>
       </div>
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="font-bold text-slate-900">Link 2026 events</h3>
+      <details className="rounded-2xl border border-slate-200 bg-white p-5">
+        <summary className="cursor-pointer font-bold text-slate-900">
+          Legacy repair: link 2026 events
+        </summary>
         <p className="mt-1 max-w-2xl text-sm text-slate-700">
-          Attach each 2026 weekend to its existing classes. This does not publish results.
+          Attach each 2026 weekend to its existing classes. This does not
+          publish results.
         </p>
         <button
           type="button"
@@ -60,7 +69,7 @@ export function AdminMaintenancePanel({
           )}
           Link 2026 events
         </button>
-      </div>
+      </details>
     </section>
   );
 }

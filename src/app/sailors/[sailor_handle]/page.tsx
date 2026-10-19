@@ -24,7 +24,7 @@ import {
 import { resolveProfileAccess } from "@/lib/viewAs";
 import { canManageSailor } from "@/lib/claimAccess";
 import { getProfileFollowState } from "@/lib/followedSailorsQuery";
-import { buildSailorResultsBio } from "@/lib/sailorResultsBio";
+import { isExplicitGuest, isSgpNationality } from "@/lib/seriesMembership";
 
 export const dynamic = "force-dynamic";
 
@@ -51,7 +51,6 @@ export async function generateMetadata({
       handle: publicSailor.handle,
       nationality: publicSailor.nationality,
       club: publicSailor.club,
-      birthYear: publicSailor.birthYear,
       results: results.map((result) => ({
         regattaName: result.regattaName,
         regattaDate: result.regattaDate,
@@ -192,25 +191,13 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       const mayHaveIlca = Boolean(
         sailor.sailNumberIlca4 || sailor.ilca4NationalList
       );
-      const mayHaveSingaporeSeries =
-        sailor.nationality === "SGP" &&
-        Boolean(
-          sailor.currentFleet || sailor.goldEntryDate || sailor.silverEntryDate
-        );
-      // A public profile must never wait on a full national-board calculation.
-      // That calculation can miss its shared cache and scan the entire result
-      // history, whereas this sailor's own official result history is a small,
-      // indexed lookup. Owners still receive live private standings and notes.
+      // Notes and equipment stay private. Rank is public. Load the sailor's
+      // own results first, then one national board at a time. A cold board
+      // scans the full result history, and the pool has a single connection.
       const shouldLoadPrivateProfileExtras = access.canSeePrivate;
 
-      const [res, sStand, iStand, obs, equipHist] = await Promise.all([
+      const [res, obs, equipHist] = await Promise.all([
         loadShareSailorResults(sailor.id),
-        shouldLoadPrivateProfileExtras && mayHaveSingaporeSeries
-          ? getSailorSeriesStanding(sailor.id).catch(() => null)
-          : Promise.resolve(null),
-        shouldLoadPrivateProfileExtras && mayHaveIlca
-          ? getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null)
-          : Promise.resolve(null),
         shouldLoadPrivateProfileExtras
           ? getRaceObservationsForSailor(sailor.id, {
               includePrivate: true,
@@ -222,10 +209,39 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       ]);
 
       results = res;
-      seriesStanding = sStand;
-      ilcaStanding = iStand;
       observations = obs;
       equipmentHistory = equipHist;
+
+      const hasOptimistResult = (results || []).some((result) => {
+        const boatClass = String(result.boatClass ?? "").trim().toLowerCase();
+        return (
+          boatClass === "" ||
+          boatClass === "optimist" ||
+          boatClass.includes("optimist")
+        );
+      });
+      const hasSeriesStamp = Boolean(
+        sailor.currentFleet || sailor.goldEntryDate || sailor.silverEntryDate
+      );
+      const mayHaveSingaporeSeries =
+        !isExplicitGuest(sailor) &&
+        (hasSeriesStamp ||
+          (isSgpNationality(sailor.nationality) && hasOptimistResult));
+
+      if (mayHaveSingaporeSeries) {
+        seriesStanding = await getSailorSeriesStanding(sailor.id).catch(
+          () => null
+        );
+      }
+
+      const hasIlcaResults = (results || []).some((result) =>
+        String(result.boatClass || "").toLowerCase().includes("ilca")
+      );
+      if (mayHaveIlca || hasIlcaResults) {
+        ilcaStanding = await getSailorIlcaStanding(sailor.id, "ILCA 4").catch(
+          () => null
+        );
+      }
 
       followControl = {
         sailorId: sailor.id,
@@ -247,18 +263,6 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
         };
       }
 
-      if (shouldLoadPrivateProfileExtras && !ilcaStanding && !mayHaveIlca) {
-        const hasIlcaResults = (results || []).some((r) => {
-          const bc = String(r.boatClass || "").toLowerCase();
-          return bc.includes("ilca");
-        });
-
-        if (hasIlcaResults) {
-          ilcaStanding = await getSailorIlcaStanding(sailor.id, "ILCA 4").catch(
-            () => null
-          );
-        }
-      }
     }
   } catch (e) {
     errorMsg = e instanceof DbUnavailableError ? e.message : "DB error";
@@ -281,7 +285,6 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
     handle: seoSailor.handle,
     nationality: seoSailor.nationality,
     club: seoSailor.club,
-    birthYear: seoSailor.birthYear,
     results: (results || []).map((result) => ({
       regattaName: result.regattaName,
       regattaDate: result.regattaDate,
@@ -290,19 +293,6 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       isDns: result.isDns,
     })),
   });
-  const resultsBio = publicSailor.bio?.trim()
-    ? null
-    : buildSailorResultsBio(
-        sailor.name,
-        (results || []).map((result) => ({
-          regattaName: result.regattaName,
-          regattaDate: result.regattaDate,
-          boatClass: result.boatClass,
-          rank: result.rank,
-          isDns: result.isDns,
-          fleetSize: result.fleetSize,
-        }))
-      );
 
   return (
     <>
@@ -360,7 +350,6 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       isLoggedIn={Boolean(auth?.userId)}
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}
-      resultsBio={resultsBio}
       followControl={followControl}
     />
     </ErrorBoundary>

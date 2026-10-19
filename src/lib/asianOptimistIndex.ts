@@ -8,17 +8,17 @@ import {
 } from "@/lib/asianOptimistIndexDuplicateReviews";
 
 /**
- * First-release source data for the Asian Optimist Index.
+ * First-release source data for the SailorPath Asian and Oceania Optimist Index.
  *
  * Transcribed from the official 2025 IODA Asian & Oceanian Championship
- * final overall-result PDF, after page-image reconciliation.  Entries are
- * restricted to Asian national authorities represented in the final results.
+ * final overall-result PDF, after page-image reconciliation. Entries cover
+ * Asian and Oceanian national authorities represented in the final results.
  */
 
 export type AsianOptimistIndexGender = "M" | "W";
 
 export type AsianOptimistIndexSourceEntry = {
-  overallPlace: number;
+  overallPlace: number | null;
   sailNumber: string;
   /** Name exactly as displayed in the official final result, normalized to Given Surname order. */
   name: string;
@@ -27,14 +27,14 @@ export type AsianOptimistIndexSourceEntry = {
   nationality: string;
   country: string;
   gender: AsianOptimistIndexGender;
-  totalPoints: number;
-  netPoints: number;
+  totalPoints: number | null;
+  netPoints: number | null;
 };
 
 export type AsianOptimistIndexEntry = AsianOptimistIndexSourceEntry & {
   /** Stable 2025 cohort identity key used for profile and review linkage. */
   identityKey: string;
-  /** Rank inside the Asian-only first-release baseline. */
+  /** Rank inside the Asian and Oceania baseline. */
   baselineRank: number;
   /** SailorPath profile name when it is more complete than the source sheet. */
   displayName: string;
@@ -58,8 +58,8 @@ export const ASIAN_OPTIMIST_INDEX_EVENT = {
   dates: "25 October–1 November 2025",
   totalFleetSize: 170,
   raceCount: 7,
-  entries: 122,
-  countries: 17,
+  entries: 136,
+  countries: 19,
 } as const;
 
 export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
@@ -329,6 +329,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 88
   },
   {
+    "overallPlace": 30,
+    "sailNumber": "AUS 1932",
+    "sourceName": "HARRIS, William",
+    "name": "William Harris",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 139,
+    "netPoints": 88
+  },
+  {
     "overallPlace": 31,
     "sailNumber": "SGP 78",
     "sourceName": "LOW, Ethan",
@@ -382,6 +393,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "W",
     "totalPoints": 142,
     "netPoints": 98
+  },
+  {
+    "overallPlace": 40,
+    "sailNumber": "AUS 1931",
+    "sourceName": "ROCHE, Balthazar",
+    "name": "Balthazar Roche",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 160,
+    "netPoints": 102
   },
   {
     "overallPlace": 41,
@@ -560,6 +582,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 93
   },
   {
+    "overallPlace": 62,
+    "sailNumber": "NZL 4675",
+    "sourceName": "DU, Jeffrey Chenglin",
+    "name": "Jeffrey Chenglin Du",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": 123,
+    "netPoints": 99
+  },
+  {
     "overallPlace": 66,
     "sailNumber": "HKG 162",
     "sourceName": "ANDERSON, Kian",
@@ -591,6 +624,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 178,
     "netPoints": 120
+  },
+  {
+    "overallPlace": 70,
+    "sailNumber": "NZL 4561",
+    "sourceName": "LANE, Zephyr",
+    "name": "Zephyr Lane",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": 162,
+    "netPoints": 122
   },
   {
     "overallPlace": 71,
@@ -648,6 +692,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 141
   },
   {
+    "overallPlace": 76,
+    "sailNumber": "NZL 4819",
+    "sourceName": "STRANG, Harry",
+    "name": "Harry Strang",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": 189,
+    "netPoints": 142
+  },
+  {
     "overallPlace": 79,
     "sailNumber": "SRI 397",
     "sourceName": "WICKRAMATILLAKE , Haren",
@@ -679,6 +734,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "W",
     "totalPoints": 209,
     "netPoints": 154
+  },
+  {
+    "overallPlace": 84,
+    "sailNumber": "AUS 1743",
+    "sourceName": "TAIT, Zachary",
+    "name": "Zachary Tait",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 191,
+    "netPoints": 158
   },
   {
     "overallPlace": 85,
@@ -758,6 +824,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 180
   },
   {
+    "overallPlace": 98,
+    "sailNumber": "AUS 1845",
+    "sourceName": "JACOBSEN, Hiro",
+    "name": "Hiro Jacobsen",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 234,
+    "netPoints": 186
+  },
+  {
     "overallPlace": 99,
     "sailNumber": "IND 1633",
     "sourceName": "BONGUR, Banny",
@@ -789,6 +866,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "W",
     "totalPoints": 251,
     "netPoints": 193
+  },
+  {
+    "overallPlace": 102,
+    "sailNumber": "NZL 4530",
+    "sourceName": "ROBSON, Holly",
+    "name": "Holly Robson",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "W",
+    "totalPoints": 244,
+    "netPoints": 194
   },
   {
     "overallPlace": 103,
@@ -855,6 +943,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 273,
     "netPoints": 216
+  },
+  {
+    "overallPlace": 112,
+    "sailNumber": "AUS 1720",
+    "sourceName": "DENG, Sijia",
+    "name": "Sijia Deng",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 278,
+    "netPoints": 220
   },
   {
     "overallPlace": 113,
@@ -1099,6 +1198,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 207
   },
   {
+    "overallPlace": 137,
+    "sailNumber": "AUS 1846",
+    "sourceName": "JACOBSEN, Emerald",
+    "name": "Emerald Jacobsen",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 255,
+    "netPoints": 208
+  },
+  {
     "overallPlace": 139,
     "sailNumber": "IND 1681",
     "sourceName": "TANDON, Siddhi",
@@ -1143,6 +1253,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 222
   },
   {
+    "overallPlace": 143,
+    "sailNumber": "AUS 1879",
+    "sourceName": "STEEL, Ruben",
+    "name": "Ruben Steel",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 273,
+    "netPoints": 224
+  },
+  {
     "overallPlace": 144,
     "sailNumber": "AZE 51",
     "sourceName": "HASANOVA, Kamilla",
@@ -1163,6 +1284,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 287,
     "netPoints": 234
+  },
+  {
+    "overallPlace": 146,
+    "sailNumber": "AUS 1820",
+    "sourceName": "WILKINSON, Ethan",
+    "name": "Ethan Wilkinson",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": 289,
+    "netPoints": 236
   },
   {
     "overallPlace": 147,
@@ -1218,6 +1350,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 302,
     "netPoints": 247
+  },
+  {
+    "overallPlace": 152,
+    "sailNumber": "AUS 1882",
+    "sourceName": "HOWELL, Kirra",
+    "name": "Kirra Howell",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 301,
+    "netPoints": 248
   },
   {
     "overallPlace": 153,
@@ -1319,6 +1462,17 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "netPoints": 278
   },
   {
+    "overallPlace": 162,
+    "sailNumber": "AUS 1781",
+    "sourceName": "TOMKINS, Emma",
+    "name": "Emma Tomkins",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "W",
+    "totalPoints": 338,
+    "netPoints": 280
+  },
+  {
     "overallPlace": 163,
     "sailNumber": "OMA 306",
     "sourceName": "AL RUZAIQI, Layan",
@@ -1405,6 +1559,446 @@ export const ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES =
     "gender": "M",
     "totalPoints": 378,
     "netPoints": 320
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "AUS 1575",
+    "sourceName": "Walter Heeley",
+    "name": "Walter Heeley",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 171",
+    "sourceName": "Kevin Ho Jun Yi",
+    "name": "Kevin Ho Jun Yi",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 100",
+    "sourceName": "Ashlyn Tham Yan Lin",
+    "name": "Ashlyn Tham Yan Lin",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 83",
+    "sourceName": "Ethan Lee",
+    "name": "Ethan Lee",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4818",
+    "sourceName": "William Handley",
+    "name": "William Handley",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "AUS 1635",
+    "sourceName": "Nicholas Cooper",
+    "name": "Nicholas Cooper",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "THA 1223",
+    "sourceName": "Pariyaporn Chantarawong",
+    "name": "Pariyaporn Chantarawong",
+    "nationality": "THA",
+    "country": "Thailand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "AUS 1906",
+    "sourceName": "Toby Phillips",
+    "name": "Toby Phillips",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4592",
+    "sourceName": "Noah Petersen",
+    "name": "Noah Petersen",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 154",
+    "sourceName": "Lyric Li Yuxuan",
+    "name": "Lyric Li Yuxuan",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "JPN 3394",
+    "sourceName": "Jo YAMADA",
+    "name": "Jo YAMADA",
+    "nationality": "JPN",
+    "country": "Japan",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "HKG 163",
+    "sourceName": "Chantal HENRIKSSON",
+    "name": "Chantal HENRIKSSON",
+    "nationality": "HKG",
+    "country": "Hong Kong",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "JPN 3356",
+    "sourceName": "Nana Muranaka",
+    "name": "Nana Muranaka",
+    "nationality": "JPN",
+    "country": "Japan",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "THA 1941",
+    "sourceName": "Surapha Muangngam",
+    "name": "Surapha Muangngam",
+    "nationality": "THA",
+    "country": "Thailand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4684",
+    "sourceName": "Tom Hall",
+    "name": "Tom Hall",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "AUS 1203",
+    "sourceName": "Charlie Purt",
+    "name": "Charlie Purt",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4825",
+    "sourceName": "Ally Burfoot",
+    "name": "Ally Burfoot",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "IND 1820",
+    "sourceName": "Antony ALDRIN",
+    "name": "Antony ALDRIN",
+    "nationality": "IND",
+    "country": "India",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "INA 21",
+    "sourceName": "William Poon",
+    "name": "William Poon",
+    "nationality": "INA",
+    "country": "Indonesia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "PHI 8",
+    "sourceName": "Gianna MAYOR",
+    "name": "Gianna MAYOR",
+    "nationality": "PHI",
+    "country": "Philippines",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "OMA 303",
+    "sourceName": "Mohammed Nabil AL-BALUSHI",
+    "name": "Mohammed Nabil AL-BALUSHI",
+    "nationality": "OMA",
+    "country": "Oman",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "OMA 302",
+    "sourceName": "Mohammed AL-QARTOUBI",
+    "name": "Mohammed AL-QARTOUBI",
+    "nationality": "OMA",
+    "country": "Oman",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "KUW 56",
+    "sourceName": "Saleh ALMETHEN",
+    "name": "Saleh ALMETHEN",
+    "nationality": "KUW",
+    "country": "Kuwait",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4800",
+    "sourceName": "Zac Loader",
+    "name": "Zac Loader",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "AUS 1920",
+    "sourceName": "Luca De Giosa",
+    "name": "Luca De Giosa",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "JPN 3337",
+    "sourceName": "Haruya Hirano",
+    "name": "Haruya Hirano",
+    "nationality": "JPN",
+    "country": "Japan",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "JPN 3253",
+    "sourceName": "Genta Naoi",
+    "name": "Genta Naoi",
+    "nationality": "JPN",
+    "country": "Japan",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "AUS 1771",
+    "sourceName": "Sebastian Tucker",
+    "name": "Sebastian Tucker",
+    "nationality": "AUS",
+    "country": "Australia",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "THA 1643",
+    "sourceName": "Pakornkiat Chaiya-o-cha",
+    "name": "Pakornkiat Chaiya-o-cha",
+    "nationality": "THA",
+    "country": "Thailand",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "THA 1322",
+    "sourceName": "Itthichai Tiathongchai",
+    "name": "Itthichai Tiathongchai",
+    "nationality": "THA",
+    "country": "Thailand",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 140",
+    "sourceName": "Elijah Ong",
+    "name": "Elijah Ong",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "JPN 3355",
+    "sourceName": "Hansu Tsunomori",
+    "name": "Hansu Tsunomori",
+    "nationality": "JPN",
+    "country": "Japan",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "HKG 186",
+    "sourceName": "Liu Qi Heng",
+    "name": "Liu Qi Heng",
+    "nationality": "HKG",
+    "country": "Hong Kong",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 131",
+    "sourceName": "Darian Huang",
+    "name": "Darian Huang",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "M",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4792",
+    "sourceName": "Aurora Edhouse",
+    "name": "Aurora Edhouse",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "JPN 3423",
+    "sourceName": "Nao Toda",
+    "name": "Nao Toda",
+    "nationality": "JPN",
+    "country": "Japan",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "THA 1459",
+    "sourceName": "Thawaree Raksapun",
+    "name": "Thawaree Raksapun",
+    "nationality": "THA",
+    "country": "Thailand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "NZL 4811",
+    "sourceName": "Claire Bao",
+    "name": "Claire Bao",
+    "nationality": "NZL",
+    "country": "New Zealand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "SGP 143",
+    "sourceName": "Nicole Wong Jing Chen",
+    "name": "Nicole Wong Jing Chen",
+    "nationality": "SGP",
+    "country": "Singapore",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
+  },
+  {
+    "overallPlace": null,
+    "sailNumber": "THA 1888",
+    "sourceName": "PUNTHITA WEROTJANAKUL",
+    "name": "PUNTHITA WEROTJANAKUL",
+    "nationality": "THA",
+    "country": "Thailand",
+    "gender": "W",
+    "totalPoints": null,
+    "netPoints": null
   }
 ] as const satisfies readonly AsianOptimistIndexSourceEntry[];
 
@@ -1413,7 +2007,18 @@ export function asianOptimistIndexIdentityKey(name: string, nationality: string)
 }
 
 export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
-  return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.map((entry, index) => {
+  return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.flatMap((sourceEntry, index) => {
+    // Confirmed by the user on 19 October 2026: Yuxuan Li and Lyric Li
+    // Yuxuan are one SGP sailor. Keep the original source rows above for
+    // reconciliation, but combine the championship and qualifier identity.
+    if (sourceEntry.name === "Lyric Li Yuxuan" && sourceEntry.nationality === "SGP") {
+      return [];
+    }
+    const entry: AsianOptimistIndexSourceEntry =
+      sourceEntry.name === "Yuxuan Li" && sourceEntry.nationality === "CHN"
+        ? { ...sourceEntry, name: "Lyric Li Yuxuan", nationality: "SGP",
+            country: "Singapore", sailNumber: "SGP 154" }
+        : sourceEntry;
     const identityKey = asianOptimistIndexIdentityKey(entry.name, entry.nationality);
     const profile: AsianOptimistIndexProfileManifestEntry | undefined =
       ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST[
@@ -1424,18 +2029,17 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
         identityKey as keyof typeof ASIAN_OPTIMIST_INDEX_DUPLICATE_REVIEWS
       ];
 
-    return {
+    return [{
       ...entry,
       identityKey,
       baselineRank: index + 1,
       displayName: profile?.displayName ?? entry.name,
       birthYear: profile?.birthYear ?? null,
       // Every source-cohort identity has an existing SailorPath profile or a
-      // deterministic import handle created by migration 115. Keeping this
-      // manifest static prevents the public Index page from blocking on a DB
-      // lookup merely to render profile links.
+      // deterministic import handle. Keeping this manifest static prevents
+      // the public Index page from blocking on a DB lookup.
       profileHref: profile ? `/${profile.handle}` : null,
       profileReview: profileReview ?? null,
-    };
+    }];
   });
 }

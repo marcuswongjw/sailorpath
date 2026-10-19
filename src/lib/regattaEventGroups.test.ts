@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { RegattaRecord } from "@/lib/ranking";
-import { resolveEventSlices } from "@/lib/regattaEvents";
+import { getSliceResultAvailability, resolveEventSlices } from "@/lib/regattaEvents";
 import {
   groupedHubForSlug,
   hubHrefForClassSlug,
@@ -20,6 +20,86 @@ function row(
     ...partial,
   };
 }
+
+describe("official Optimist development fleets", () => {
+  const published = ["Main", "Intermediate", "Green"].map((division) => row({
+    slug: `hong-kong-race-week-2026-optimist-${division.toLowerCase()}`,
+    name: `Hong Kong Race Week 2026 (Optimist ${division})`,
+    date: "2026-01-27",
+    endDate: "2026-02-01",
+    division,
+    eventSlug: "hong-kong-race-week-2026",
+    eventName: "Hong Kong Race Week 2026",
+    countsForRanking: false,
+    scheduleNotes: "Results are provisional as of 16:35 on February 1, 2026. Official source status retained.",
+    raceCount: division === "Main" ? 9 : 8,
+    totalFleetSize: division === "Main" ? 77 : division === "Intermediate" ? 37 : 34,
+  }));
+
+  it("keeps all three official standings in the saved event hub", () => {
+    const hub = savedEventHubForSlug("hong-kong-race-week-2026", published);
+    expect(hub?.event.slices.map((slice) => [slice.key, slice.label])).toEqual([
+      ["optimist-main", "Optimist Main"],
+      ["optimist-intermediate", "Optimist Intermediate"],
+      ["optimist-green", "Optimist Green"],
+    ]);
+    for (const sheet of published) {
+      const direct = savedEventHubForSlug(sheet.slug, published);
+      const expectedKey = `optimist-${sheet.division?.toLowerCase()}`;
+      expect(direct?.fleetKey).toBe(expectedKey);
+      const slices = resolveEventSlices(direct!.event, published);
+      const matching = slices.find((slice) => slice.def.key === expectedKey);
+      expect(matching?.regatta?.slug).toBe(sheet.slug);
+      expect(getSliceResultAvailability(matching!).status).toBe("provisional");
+    }
+  });
+
+  it("keeps the same fleets separate when no parent event was saved", () => {
+    const unlinked = published.map((sheet) => ({ ...sheet, eventSlug: undefined, eventName: undefined }));
+    const hub = groupedHubForSlug(unlinked[0].slug, unlinked);
+    expect(hub?.event.slices.map((slice) => slice.key)).toEqual([
+      "optimist-main", "optimist-intermediate", "optimist-green",
+    ]);
+  });
+});
+
+describe("Optimist Boys and Girls standings", () => {
+  const published = ["Boys", "Girls"].map((division) => row({
+    slug: `2026-optimist-european-championship-${division.toLowerCase()}`,
+    name: `2026 Optimist European Championship (Optimist ${division})`,
+    date: "2026-07-24",
+    endDate: "2026-07-31",
+    division,
+    raceCount: 8,
+    totalFleetSize: division === "Boys" ? 170 : 122,
+    eventSlug: "2026-optimist-european-championship",
+    eventName: "2026 Optimist European Championship",
+  }));
+
+  it("keeps the two overall standings and their direct routes separate", () => {
+    const hub = savedEventHubForSlug("2026-optimist-european-championship", published);
+    expect(hub?.event.slices.map((slice) => [slice.key, slice.label])).toEqual([
+      ["optimist-boys", "Optimist Boys"],
+      ["optimist-girls", "Optimist Girls"],
+    ]);
+    for (const sheet of published) {
+      const direct = savedEventHubForSlug(sheet.slug, published);
+      const key = `optimist-${sheet.division?.toLowerCase()}`;
+      expect(direct?.fleetKey).toBe(key);
+      const selected = resolveEventSlices(direct!.event, published).find((slice) => slice.def.key === key);
+      expect(selected?.regatta?.slug).toBe(sheet.slug);
+      expect(selected?.regatta?.totalFleetSize).toBe(sheet.totalFleetSize);
+      expect(hubHrefForClassSlug(sheet.slug, published)).toBe(`/regattas/2026-optimist-european-championship?fleet=${key}`);
+    }
+  });
+
+  it("also preserves Boys and Girls when no parent event is saved", () => {
+    const unlinked = published.map((sheet) => ({ ...sheet, eventSlug: undefined, eventName: undefined }));
+    expect(groupedHubForSlug(unlinked[0].slug, unlinked)?.event.slices.map((slice) => slice.key)).toEqual([
+      "optimist-boys", "optimist-girls",
+    ]);
+  });
+});
 
 describe("regattaGroupKey", () => {
   it("keeps March and July SAFYC apart and joins a gold/silver pair", () => {

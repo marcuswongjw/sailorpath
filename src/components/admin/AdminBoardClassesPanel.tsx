@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { adminQueryKeys } from "./adminQueryKeys";
+import { fetchAdminOverview } from "./adminFetch";
 import { ArrowRight, CheckCircle2, ClipboardList, Layers3 } from "lucide-react";
 import {
   BOARD_CLASS_KEYS,
@@ -14,21 +17,26 @@ import type { ResultAdmin } from "@/types/result";
 type ClassSummary = {
   key: BoardClassKey;
   sheets: RegattaAdmin[];
-  resultCount: number;
+  resultCount: number | null;
   publishedCount: number;
 };
 
 function summaryFor(
   key: BoardClassKey,
   regattas: RegattaAdmin[],
-  results: ResultAdmin[]
+  results?: ResultAdmin[],
+  resultCounts?: Record<string, number>,
 ): ClassSummary {
   const sheets = regattas.filter((sheet) => matchesSailingClass(sheet.boatClass, key));
   const ids = new Set(sheets.map((sheet) => sheet.id));
   return {
     key,
     sheets,
-    resultCount: results.filter((row) => ids.has(row.regattaId)).length,
+    resultCount: results
+      ? results.filter((row) => ids.has(row.regattaId)).length
+      : sheets.length === 0 ? 0 : resultCounts
+        ? sheets.reduce((total, sheet) => total + (resultCounts[sheet.id] ?? 0), 0)
+        : null,
     publishedCount: sheets.filter((sheet) => sheet.status === "published").length,
   };
 }
@@ -39,10 +47,15 @@ export function AdminBoardClassesPanel({
   onOpenClass,
 }: {
   regattas: RegattaAdmin[];
-  results: ResultAdmin[];
+  results?: ResultAdmin[];
   onOpenClass: (key: BoardClassKey) => void;
 }) {
-  const summaries = BOARD_CLASS_KEYS.map((key) => summaryFor(key, regattas, results));
+  const counts = useQuery({
+    queryKey: adminQueryKeys.overview(),
+    queryFn: ({ signal }) => fetchAdminOverview({ signal }),
+    enabled: results === undefined && regattas.length > 0,
+  });
+  const summaries = BOARD_CLASS_KEYS.map((key) => summaryFor(key, regattas, results, counts.data?.resultCounts));
 
   return (
     <section className="space-y-5" aria-labelledby="board-classes-title">
@@ -76,6 +89,12 @@ export function AdminBoardClassesPanel({
         </div>
       </header>
 
+      {counts.isError && !results && (
+        <p role="alert" className="text-sm text-amber-800">
+          Result counts could not refresh.
+          <button type="button" className="ml-3 min-h-11 font-bold underline" onClick={() => void counts.refetch()}>Retry counts</button>
+        </p>
+      )}
       <div className="grid gap-4 xl:grid-cols-3">
         {summaries.map((summary) => {
           const definition = boardClassDefinition(summary.key);
@@ -115,7 +134,7 @@ export function AdminBoardClassesPanel({
                 </div>
                 <div className="px-3 py-2.5 text-center">
                   <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Rows</dt>
-                  <dd className="mt-1 text-lg font-black tabular-nums text-slate-950">{summary.resultCount}</dd>
+                  <dd className="mt-1 text-lg font-black tabular-nums text-slate-950">{summary.resultCount ?? (counts.isError ? "Unavailable" : counts.isPending ? "Loading…" : "Unavailable")}</dd>
                 </div>
                 <div className="px-3 py-2.5 text-center">
                   <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Published</dt>

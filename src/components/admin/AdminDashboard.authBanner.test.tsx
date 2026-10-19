@@ -21,6 +21,7 @@ vi.mock("./useAdminData", () => ({
     resultsList: [],
     calendarEvents: [],
     dataLoading: false,
+    dataReady: true,
     dataLoadError: null,
     selectedRegattaIdForResultEdit: "",
     setSelectedRegattaIdForResultEdit: vi.fn(),

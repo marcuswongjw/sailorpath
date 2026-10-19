@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -19,6 +21,7 @@ import {
 } from "@/components/admin/coachAccessCache";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
 
 export type CoachAccessRow = {
   id: string;
@@ -57,10 +60,9 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
   const query = useQuery({
     queryKey: adminQueryKeys.coachAccess(),
     enabled: isSuperadmin,
-    queryFn: async () => {
-      const res = await fetch("/api/admin/coach-access");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load coach requests");
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ requests?: CoachAccessRow[]; coaches?: ActiveCoachUser[] }>(
+        "/api/admin/coach-access", { signal });
       return {
         requests: (Array.isArray(data.requests) ? data.requests : []) as CoachAccessRow[],
         coaches: (Array.isArray(data.coaches) ? data.coaches : []) as ActiveCoachUser[],
@@ -75,10 +77,9 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
   const userSearchQuery = useQuery({
     queryKey: ["admin", "users", trimmedSearch],
     enabled: isSuperadmin && trimmedSearch.length >= 2,
-    queryFn: async () => {
-      const res = await fetch(`/api/admin/users?q=${encodeURIComponent(trimmedSearch)}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to search users");
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ users?: UserSearchResult[] }>(
+        `/api/admin/users?q=${encodeURIComponent(trimmedSearch)}`, { signal });
       return (data.users || []) as UserSearchResult[];
     },
   });
@@ -105,6 +106,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
       await queryClient.invalidateQueries({ queryKey: adminQueryKeys.coachAccess() });
+      invalidateAdminSummaries(queryClient);
       toast.success(action === "approve" ? "Coach access approved" : "Coach request rejected");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Update failed");
@@ -139,6 +141,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
       if (!res.ok) throw new Error(data.error || "Failed to update user role");
 
       await queryClient.invalidateQueries({ queryKey: adminQueryKeys.coachAccess() });
+      invalidateAdminSummaries(queryClient);
       await queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
       toast.success(
         isAssign

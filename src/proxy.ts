@@ -3,23 +3,41 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getAuthCookieOptions } from "@/lib/supabase/cookie-options";
 
 const PUBLIC_SINGLE_SEGMENT_PATHS = new Set([
+  "about",
   "account",
   "admin",
+  "blog",
+  "calendar",
   "claim-profile",
   "following",
   "coach-tools",
   "demo-profile",
+  "forgot-password",
   "how-rankings-work",
   "login",
+  "news",
   "parent",
+  "privacy",
   "rankings",
+  "regattas",
   "register",
+  "reset-password",
+  "results",
+  "sailors",
   "sample",
   "search",
   "support",
+  "terms",
   "whats-new",
   "wingfoil",
 ]);
+
+/**
+ * Bound for a best-effort Supabase Auth refresh. Undici's connect timeout is
+ * 10s; leaving getUser unbounded let a stalled TLS handshake hold the whole
+ * response until the platform closed it.
+ */
+export const SESSION_REFRESH_TIMEOUT_MS = 2_500;
 
 /** Routes whose server-rendered content depends on a refreshed auth cookie. */
 export function shouldRefreshSession(
@@ -50,6 +68,44 @@ export function shouldRefreshSession(
     !segments[0].includes(".") &&
     !PUBLIC_SINGLE_SEGMENT_PATHS.has(segments[0])
   );
+}
+
+/** True when the browser is carrying an app or Supabase auth cookie. */
+export function requestHasAuthSession(cookieNames: readonly string[]): boolean {
+  return cookieNames.some(
+    (name) =>
+      name.startsWith("sailorpath-public-auth") ||
+      name.startsWith("sailorpath-admin-auth") ||
+      name.startsWith("sb-") ||
+      name.includes("supabase-auth-token")
+  );
+}
+
+function withDeadline<T>(operation: Promise<T>, timeoutMs: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(
+      () => reject(new Error("SESSION_REFRESH_TIMEOUT")),
+      timeoutMs
+    );
+    operation.then(resolve, reject).finally(() => clearTimeout(timer));
+  });
+}
+
+/** Refresh the session, or give up. A failed refresh must not fail the page. */
+export async function refreshAuthSession(
+  getUser: () => Promise<unknown>,
+  timeoutMs = SESSION_REFRESH_TIMEOUT_MS
+): Promise<"refreshed" | "skipped"> {
+  try {
+    await withDeadline(Promise.resolve().then(getUser), timeoutMs);
+    return "refreshed";
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "session refresh failed";
+    console.warn("[proxy] Session refresh skipped", {
+      error: message.slice(0, 180),
+    });
+    return "skipped";
+  }
 }
 
 /** Invalid local placeholder values must not break otherwise public routes. */
@@ -84,6 +140,9 @@ export async function proxy(request: NextRequest) {
     process.env.SUPABASE_ANON_KEY ||
     "";
   if (!hasUsableSupabaseUrl(supabaseUrl) || !supabaseAnonKey) {
+    return response;
+  }
+  if (!requestHasAuthSession(request.cookies.getAll().map((cookie) => cookie.name))) {
     return response;
   }
 
@@ -132,7 +191,7 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getUser();
+  await refreshAuthSession(() => supabase.auth.getUser());
   return response;
 }
 

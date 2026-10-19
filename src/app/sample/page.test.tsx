@@ -30,12 +30,14 @@ describe("sample profile page", () => {
   it("uses the public share title and omits personal details from JSON-LD", async () => {
     const metadata = await generateMetadata();
     expect(metadata.title).toBe("Kimberly Tan – Optimist, Singapore | SailorPath");
-    expect(metadata.description).toContain("Born 2013.");
     expect(metadata.description).toContain("1st in Optimist at Singapore National Championship 2026");
-    expect(metadata.description).not.toContain("2013-08-14");
+    expect(metadata.description).not.toContain("2013");
+    expect(metadata.description).not.toMatch(/born/i);
     expect(metadata.description).not.toContain("Raffles");
     expect(metadata.alternates?.canonical).toBe("https://sailorpath.com/sample");
     expect(metadata.openGraph?.title).toBe(metadata.title);
+    expect(metadata.openGraph?.description).not.toContain("2013");
+    expect(metadata.twitter?.description).not.toContain("2013");
 
     const page = await SamplePage({ searchParams: Promise.resolve({ view: "sailor" }) });
     const html = renderToStaticMarkup(page);
@@ -44,9 +46,10 @@ describe("sample profile page", () => {
     const jsonLd = JSON.parse(match![1].replace(/\\u003c/g, "<"));
     expect(jsonLd["@type"]).toBe("ProfilePage");
     expect(jsonLd.mainEntity.name).toBe("Kimberly Tan");
-    expect(jsonLd.mainEntity.birthDate).toBe("2013");
+    expect(jsonLd.mainEntity.birthDate).toBeUndefined();
     const serialized = JSON.stringify(jsonLd);
-    expect(serialized).not.toContain("2013-08-14");
+    expect(serialized).not.toContain("2013");
+    expect(serialized).not.toContain("birthDate");
     expect(serialized).not.toContain("Raffles");
     expect(html).toContain("b. 2013");
   });

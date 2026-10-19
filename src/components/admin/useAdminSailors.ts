@@ -45,6 +45,8 @@ type UseAdminSailorsArgs = {
   invalidateSailors?: () => void;
   invalidateResults?: () => void;
   loadRankingSummary?: boolean;
+  /** Expensive fuzzy matching belongs only to the duplicate-review view. */
+  loadDuplicateReview?: boolean;
 };
 
 /**
@@ -65,9 +67,10 @@ export function useAdminSailors({
   invalidateSailors,
   invalidateResults,
   loadRankingSummary = true,
+  loadDuplicateReview = false,
 }: UseAdminSailorsArgs) {
   const { toast, confirm } = useFeedback();
-  const duplicateReview = useSailorDuplicateDecisions(isSuperadmin);
+  const duplicateReview = useSailorDuplicateDecisions(isSuperadmin && loadDuplicateReview);
   const ignoredDuplicateKeys = duplicateReview.keys;
 
   const [selectedSailors, setSelectedSailors] = useState<string[]>([]);
@@ -163,54 +166,56 @@ export function useAdminSailors({
     };
   }, [loadRankingSummary, sailorList, resultsList, regattaListLength]);
 
-  const filteredDbSailors = sailorList.filter((s) => {
+  const filteredDbSailors = useMemo(() => {
     const q = dbSearch.trim().toLowerCase();
-    if (q) {
-      const hay =
-        `${s.name} ${s.sailNumber || ""} ${s.sailNumberIlca4 || ""} ${s.boardNumber || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    if (dbFleetFilter !== "all") {
-      const inSeries = isInSgSeries(s);
-      const hasIlca =
-        Boolean(String(s.sailNumberIlca4 || "").trim()) ||
-        Boolean((s as { ilca4NationalList?: boolean }).ilca4NationalList);
-      if (dbFleetFilter === "series" && !inSeries) return false;
-      if (dbFleetFilter === "guest" && inSeries) return false;
-      if (dbFleetFilter === "gold") {
-        if (!inSeries || !s.goldEntryDate) return false;
+    return sailorList.filter((s) => {
+      if (q) {
+        const hay =
+          `${s.name} ${s.sailNumber || ""} ${s.sailNumberIlca4 || ""} ${s.boardNumber || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
+        if (!hay.includes(q)) return false;
       }
-      if (dbFleetFilter === "silver") {
-        if (!inSeries || s.goldEntryDate) return false;
+      if (dbFleetFilter !== "all") {
+        const inSeries = isInSgSeries(s);
+        const hasIlca =
+          Boolean(String(s.sailNumberIlca4 || "").trim()) ||
+          Boolean((s as { ilca4NationalList?: boolean }).ilca4NationalList);
+        if (dbFleetFilter === "series" && !inSeries) return false;
+        if (dbFleetFilter === "guest" && inSeries) return false;
+        if (dbFleetFilter === "gold") {
+          if (!inSeries || !s.goldEntryDate) return false;
+        }
+        if (dbFleetFilter === "silver") {
+          if (!inSeries || s.goldEntryDate) return false;
+        }
+        if (dbFleetFilter === "ilca4" && !hasIlca) return false;
+        if (dbFleetFilter === "ilca4list" && s.ilca4NationalList !== true) {
+          return false;
+        }
+        if (dbFleetFilter === "ilca6" && !isSailorOnIlca6NationalList(s)) {
+          return false;
+        }
+        if (dbFleetFilter === "dual") {
+          const hasOpti =
+            inSeries ||
+            Boolean(s.goldEntryDate) ||
+            Boolean(s.silverEntryDate) ||
+            (Boolean(String(s.sailNumber || "").trim()) &&
+              !/^SGP\s*0+$/i.test(String(s.sailNumber)));
+          if (!hasIlca || !hasOpti) return false;
+        }
       }
-      if (dbFleetFilter === "ilca4" && !hasIlca) return false;
-      if (dbFleetFilter === "ilca4list" && s.ilca4NationalList !== true) {
-        return false;
+      if (dbSquadFilter !== "all") {
+        const field = natSquadFieldForPeriod(currentPeriodFromSgToday());
+        const periodVal = field
+          ? (s as Record<string, unknown>)[field]
+          : null;
+        const sq =
+          periodVal || s.natSquadStatusJul26 || s.nationalSquadStatus || "";
+        if (String(sq) !== dbSquadFilter) return false;
       }
-      if (dbFleetFilter === "ilca6" && !isSailorOnIlca6NationalList(s)) {
-        return false;
-      }
-      if (dbFleetFilter === "dual") {
-        const hasOpti =
-          inSeries ||
-          Boolean(s.goldEntryDate) ||
-          Boolean(s.silverEntryDate) ||
-          (Boolean(String(s.sailNumber || "").trim()) &&
-            !/^SGP\s*0+$/i.test(String(s.sailNumber)));
-        if (!hasIlca || !hasOpti) return false;
-      }
-    }
-    if (dbSquadFilter !== "all") {
-      const field = natSquadFieldForPeriod(currentPeriodFromSgToday());
-      const periodVal = field
-        ? (s as Record<string, unknown>)[field]
-        : null;
-      const sq =
-        periodVal || s.natSquadStatusJul26 || s.nationalSquadStatus || "";
-      if (String(sq) !== dbSquadFilter) return false;
-    }
-    return true;
-  });
+      return true;
+    });
+  }, [sailorList, dbSearch, dbFleetFilter, dbSquadFilter]);
 
   const seriesLabelOf = (s: Parameters<typeof seriesMembershipLabel>[0]) =>
     seriesMembershipLabel(s);
@@ -264,6 +269,7 @@ export function useAdminSailors({
   };
 
   const duplicatePairs = useMemo(() => {
+    if (!isSuperadmin || !loadDuplicateReview) return [];
     const pairKey = (a: string, b: string) => [a, b].sort().join("|");
     return findDuplicateSailorPairs(
       sailorList.map((s) => ({
@@ -273,7 +279,7 @@ export function useAdminSailors({
       })),
       0.6
     ).filter((p) => !ignoredDuplicateKeys.has(pairKey(p.a.id, p.b.id)));
-  }, [sailorList, ignoredDuplicateKeys]);
+  }, [isSuperadmin, loadDuplicateReview, sailorList, ignoredDuplicateKeys]);
 
   const sortedDbSailors = useMemo(() => {
     const rows = [...filteredDbSailors];

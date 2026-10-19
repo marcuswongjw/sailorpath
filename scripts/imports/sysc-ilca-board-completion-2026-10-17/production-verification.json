@@ -1,0 +1,105 @@
+{
+  "sheets": [
+    {
+      "id": "36b0367d-e7d2-4217-a259-96c5beec871f",
+      "date": "2026-03-14",
+      "name": "Singapore Youth Sailing Championships 2026 (ILCA 4)",
+      "slug": "singapore-youth-sailing-championships-2026-ilca4",
+      "source": "https://drive.google.com/file/d/1I33FveFTEeKyfXbCSbgZQAEG7JIGUbW8/view",
+      "status": "published",
+      "endDate": "2026-03-17",
+      "entries": 70,
+      "division": "Open",
+      "boatClass": "ILCA 4",
+      "fleetSize": 70,
+      "raceCount": 12,
+      "raceScores": 840,
+      "countsForRanking": true
+    },
+    {
+      "id": "9d382ecf-c492-4aba-a4ad-0850478e7551",
+      "date": "2025-03-15",
+      "name": "Singapore Youth Sailing Championships 2025 (ILCA 4)",
+      "slug": "sysc-2025-ilca4",
+      "source": "https://drive.google.com/file/d/1c6GWM9k_V1kGGmjaI2ZkBhqRYX9V1hgC/view",
+      "status": "published",
+      "endDate": "2025-03-18",
+      "entries": 76,
+      "division": "Open",
+      "boatClass": "ILCA 4",
+      "fleetSize": 76,
+      "raceCount": 9,
+      "raceScores": 684,
+      "countsForRanking": true
+    },
+    {
+      "id": "5bdbaaff-c569-5b63-94b6-06b261b9637e",
+      "date": "2025-03-15",
+      "name": "Singapore Youth Sailing Championships 2025 (ILCA 6)",
+      "slug": "sysc-2025-ilca6",
+      "source": "https://drive.google.com/file/d/1wzeEhn66Xll6nQIF7SfPsS2QRugX2IEf/view",
+      "status": "published",
+      "endDate": "2025-03-18",
+      "entries": 19,
+      "division": "Open",
+      "boatClass": "ILCA 6",
+      "fleetSize": 19,
+      "raceCount": 10,
+      "raceScores": 190,
+      "countsForRanking": true
+    },
+    {
+      "id": "d23a4232-8f7f-5e0a-8ad3-8de07a39f7de",
+      "date": "2025-03-15",
+      "name": "Singapore Youth Sailing Championships 2025 (Techno 293, Provisional)",
+      "slug": "sysc-2025-techno293",
+      "source": "https://drive.google.com/file/d/19_QN-jMbB6vMwLcY-3T_BXvEG9ZwGlqY/view",
+      "status": "published",
+      "endDate": "2025-03-18",
+      "entries": 5,
+      "division": "Open",
+      "boatClass": "Techno 293",
+      "fleetSize": 5,
+      "raceCount": 10,
+      "raceScores": 50,
+      "countsForRanking": false
+    },
+    {
+      "id": "dc5aa1de-a403-54ba-80f1-c26dc92d8edd",
+      "date": "2025-03-15",
+      "name": "Singapore Youth Sailing Championships 2025 (iQFOiL Youth, Provisional)",
+      "slug": "sysc-2025-iqfoil-youth",
+      "source": "https://drive.google.com/file/d/19_QN-jMbB6vMwLcY-3T_BXvEG9ZwGlqY/view",
+      "status": "published",
+      "endDate": "2025-03-18",
+      "entries": 2,
+      "division": "Youth",
+      "boatClass": "iQFOiL",
+      "fleetSize": 2,
+      "raceCount": 10,
+      "raceScores": 20,
+      "countsForRanking": false
+    }
+  ],
+  "aliasOwner": {
+    "id": "b33f7ace-2a40-5394-8858-007b26ae3163",
+    "name": "Nur Zafrina Syuhada Binti Mohd Zailan"
+  },
+  "auditSheets": 5,
+  "nationalities": [
+    {
+      "id": "85972df9-0595-4195-b72b-09706875ffa0",
+      "name": "Ramakant Ramakant",
+      "nationality": "IND"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "name": "Pacharapol Rumvisai",
+      "nationality": "THA"
+    }
+  ],
+  "raceExceptions": 0,
+  "entryExceptions": 0,
+  "participantExceptions": 0,
+  "reconciliationExceptions": 0
+}

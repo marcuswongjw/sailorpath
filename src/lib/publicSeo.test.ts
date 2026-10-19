@@ -4,10 +4,10 @@ import { SAMPLE_RESULTS, SAMPLE_SAILOR } from "@/lib/sampleProfile";
 import {
   eventDatesFromText,
   eventHubTitle,
+  HUB_SITEMAP_PATHS,
   isIndexablePublicSailor,
   organizationWebsiteJsonLd,
   profilePageJsonLd,
-  publicBirthYear,
   publicResultSheetPaths,
   resultSheetFromEventSlice,
   resultSheetTitle,
@@ -50,19 +50,19 @@ describe("public share metadata", () => {
       handle: SAMPLE_SAILOR.handle,
       nationality: SAMPLE_SAILOR.nationality,
       club: SAMPLE_SAILOR.club,
-      birthYear: SAMPLE_SAILOR.dob,
       results: SAMPLE_RESULTS,
       path: "/sample",
     });
     expect(share.title).toBe("Kimberly Tan – Optimist, Singapore | SailorPath");
     expect(share.country).toBe("Singapore");
-    expect(share.birthYear).toBe(2013);
+    expect(share).not.toHaveProperty("birthYear");
     expect(share.boatClass).toBe("Optimist");
     expect(share.bestResult).toBe("1st in Optimist at Singapore National Championship 2026");
     expect(share.summary).toBe(
-      `Born 2013. ${share.bestResult}. ${share.regattaCount} regattas on record.`
+      `${share.bestResult}. ${share.regattaCount} regattas on record.`
     );
-    expect(share.summary).not.toContain("2013-08-14");
+    expect(share.summary).not.toContain("2013");
+    expect(share.summary).not.toContain("Born");
     expect(share.summary).not.toContain("August");
     expect(share.summary).not.toContain("Raffles");
     expect(share.summary).not.toContain("Dual-class");
@@ -70,28 +70,41 @@ describe("public share metadata", () => {
     const jsonLd = profilePageJsonLd(share);
     expect(jsonLd["@type"]).toBe("ProfilePage");
     expect(jsonLd.mainEntity["@type"]).toBe("Person");
-    expect(jsonLd.mainEntity.birthDate).toBe("2013");
+    expect(jsonLd.mainEntity).not.toHaveProperty("birthDate");
     const serialized = JSON.stringify(jsonLd);
-    expect(serialized).not.toContain("2013-08-14");
+    expect(serialized).not.toContain("2013");
+    expect(serialized).not.toContain("birthDate");
     expect(serialized).not.toContain("Raffles");
-    for (const key of PRIVATE_KEYS) expect(keysDeep(jsonLd).has(key)).toBe(false);
+    for (const key of [...PRIVATE_KEYS, "birthDate", "birthYear"]) {
+      expect(keysDeep(jsonLd).has(key)).toBe(false);
+    }
   });
 
-  it("keeps a birth year and drops a full date", () => {
-    expect(publicBirthYear(2013)).toBe(2013);
-    expect(publicBirthYear("2013-08-14")).toBe(2013);
-    expect(publicBirthYear("14 August 2013")).toBeNull();
-    const fromDate = sailorShareModel({
+  it("keeps a known birth year out of the description and JSON-LD", () => {
+    const share = sailorShareModel({
       name: "Ada Lim",
       handle: "ada-lim",
-      birthYear: "2014-02-02",
+      nationality: "SGP",
+      club: "Changi Sailing Club",
+      results: [
+        {
+          regattaName: "Harbour Regatta",
+          regattaDate: "2014-02-02",
+          boatClass: "Optimist",
+          rank: 2,
+          isDns: false,
+        },
+      ],
     });
-    expect(fromDate.birthYear).toBe(2014);
-    expect(fromDate.summary.startsWith("Born 2014.")).toBe(true);
-    expect(JSON.stringify(profilePageJsonLd(fromDate))).not.toContain("2014-02-02");
-    const missing = sailorShareModel({ name: "Ada Lim", handle: "ada-lim" });
-    expect(missing.birthYear).toBeNull();
-    expect(JSON.stringify(profilePageJsonLd(missing))).not.toContain("birthDate");
+    expect(share.summary).toBe("2nd in Optimist at Harbour Regatta. 1 regatta on record.");
+    expect(share.summary).not.toContain("2014");
+    expect(share.summary).not.toMatch(/born/i);
+    const jsonLd = profilePageJsonLd(share);
+    const serialized = JSON.stringify(jsonLd);
+    expect(serialized).not.toContain("birthDate");
+    expect(serialized).not.toContain("2014");
+    expect(keysDeep(jsonLd).has("birthDate")).toBe(false);
+    expect(keysDeep(jsonLd).has("birthYear")).toBe(false);
   });
 
   it("keeps a tied class when that class was sailed most recently", () => {
@@ -255,5 +268,14 @@ describe("public sitemap paths", () => {
     expect(paths).not.toContain("/sg/iqfoil");
     expect(paths).not.toContain("/sg/optimist/regattas/snsc-gold-sep-25");
     expect(paths).not.toContain("/classes/x-15");
+    expect(paths).toContain(
+      "/regattas/youth-thailand-national-sailing-championship-2026/results/optimist"
+    );
+  });
+
+  it("lists the Asian and Oceania Optimist Index and skips the old redirect", () => {
+    expect(HUB_SITEMAP_PATHS).toContain("/optimist/asian-index");
+    expect(HUB_SITEMAP_PATHS).toContain("/optimist/asian-index/methodology");
+    expect(HUB_SITEMAP_PATHS).not.toContain("/sg/optimist/asian-index");
   });
 });

@@ -1,0 +1,92 @@
+{
+  "sheets": [
+    {
+      "id": "7f0913d0-438b-59bd-86c6-52e6c8936cbc",
+      "date": "2025-10-25",
+      "name": "2025 Optimist Asian & Oceanian Championship (Optimist Overall)",
+      "slug": "2025-optimist-asian-oceanian-championship-overall",
+      "source": "https://scoring.sailti.com/public/download/overall-datetime-pdf/9799/1/20251031173911",
+      "status": "published",
+      "endDate": "2025-11-01",
+      "entries": 170,
+      "division": "Open",
+      "boatClass": "Optimist",
+      "fleetSize": 170,
+      "raceCount": 7,
+      "raceScores": 1190,
+      "countsForRanking": false
+    }
+  ],
+  "aliasOwner": {
+    "id": "6eacd878-8c53-4133-93fa-898d196bdf18",
+    "name": "Alix Nguyen-Minh"
+  },
+  "auditSheets": 1,
+  "nationalities": [
+    {
+      "id": "d41014b8-67ad-4e56-9e87-55d51612d5a8",
+      "name": "Preet Siwal",
+      "nationality": "IND"
+    },
+    {
+      "id": "b2ac2f10-1544-406e-af54-98c92a0c9c54",
+      "name": "Tomas Agea Maxin",
+      "nationality": "ESP"
+    },
+    {
+      "id": "448629c9-4150-4b57-a991-2721ad070d18",
+      "name": "Mahi Verma",
+      "nationality": "IND"
+    },
+    {
+      "id": "35164380-d568-477e-a007-5d48b1130855",
+      "name": "Daqi He",
+      "nationality": "CHN"
+    },
+    {
+      "id": "d62589f0-8e56-49df-9295-428a064c02ea",
+      "name": "Wanjia He",
+      "nationality": "CHN"
+    },
+    {
+      "id": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "name": "Hussaluk Srinakorn",
+      "nationality": "THA"
+    },
+    {
+      "id": "dde1d11b-b8e9-410f-94c7-1daee5ecdd4e",
+      "name": "Shubham Yadav",
+      "nationality": "IND"
+    },
+    {
+      "id": "fb2cf4bb-32bc-4e9e-a043-0487c30db99a",
+      "name": "Ankit singh Sisodiya",
+      "nationality": "IND"
+    },
+    {
+      "id": "c3964c71-ae91-4215-91e4-f035597ccf14",
+      "name": "Tulsi Patle",
+      "nationality": "IND"
+    },
+    {
+      "id": "50b3e0fd-0917-4cf1-b223-34ee0dcf9574",
+      "name": "Ruoqi Zhang",
+      "nationality": "CHN"
+    },
+    {
+      "id": "780fb3f3-c6a4-4a85-b95f-488dd01758db",
+      "name": "Katyayani Kaushik",
+      "nationality": "IND"
+    },
+    {
+      "id": "e164bdfd-0bbc-46fd-8f2b-46570366aacf",
+      "name": "Lukas Kiesselbach",
+      "nationality": "GER"
+    }
+  ],
+  "raceExceptions": 0,
+  "entryExceptions": 0,
+  "participantExceptions": 0,
+  "reconciliationExceptions": 0,
+  "confirmedNationalityExceptions": 0
+}

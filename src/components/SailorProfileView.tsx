@@ -312,7 +312,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         boardNumber={boardNumber}
         noc={noc}
         totalRegattasCount={results.length}
-        resultsBio={props.resultsBio}
         followControl={props.followControl}
       />
 

@@ -80,20 +80,26 @@ export function nameTokenSimilarity(a: string, b: string): number {
   return union === 0 ? 0 : inter / union;
 }
 
-/** Fraction of tokens in the shorter name that appear in the longer (containment). */
-function nameContainment(a: string, b: string): number {
-  const ta = nameTokens(a);
-  const tb = nameTokens(b);
-  if (!ta.length || !tb.length) return 0;
-  const [short, long] =
-    ta.length <= tb.length ? [ta, new Set(tb)] : [tb, new Set(ta)];
-  let hit = 0;
-  for (const t of short) if (long.has(t)) hit++;
-  return hit / short.length;
+type PreparedName = {
+  valid: boolean;
+  normalized: string;
+  key: string;
+  compact: string;
+  tokens: string[];
+  tokenSet: Set<string>;
+};
+
+function prepareName(name: string): PreparedName {
+  const normalized = normalizeName(name || "");
+  const allTokens = normalized.split(/[\s'-]+/).filter(Boolean);
+  const tokens = allTokens.filter((token) => token.length > 1);
+  const key = allTokens.sort().join(" ");
+  return { valid: Boolean(name?.trim()), normalized, key,
+    compact: key.replace(/\s/g, ""), tokens, tokenSet: new Set(tokens) };
 }
 
 /** Simple Levenshtein similarity 0–1 on compact strings (max len 64). */
-function stringSimilarity(a: string, b: string): number {
+function stringSimilarity(a: string, b: string, minimum = 0): number {
   const s = a.slice(0, 64);
   const t = b.slice(0, 64);
   if (!s.length && !t.length) return 1;
@@ -101,20 +107,26 @@ function stringSimilarity(a: string, b: string): number {
   if (s === t) return 1;
   const m = s.length;
   const n = t.length;
+  const maxLen = Math.max(m, n);
+  // A rejected edit score cannot affect a candidate above the requested band.
+  const maxDistance = Math.floor((1 - minimum) * maxLen + 1e-9);
+  if (Math.abs(m - n) > maxDistance) return 0;
   const row = new Array(n + 1);
   for (let j = 0; j <= n; j++) row[j] = j;
   for (let i = 1; i <= m; i++) {
     let prev = row[0];
     row[0] = i;
+    let rowMinimum = i;
     for (let j = 1; j <= n; j++) {
       const tmp = row[j];
       const cost = s[i - 1] === t[j - 1] ? 0 : 1;
       row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + cost);
       prev = tmp;
+      rowMinimum = Math.min(rowMinimum, row[j]);
     }
+    if (rowMinimum > maxDistance) return 0;
   }
   const dist = row[n];
-  const maxLen = Math.max(m, n);
   return 1 - dist / maxLen;
 }
 
@@ -123,15 +135,27 @@ function stringSimilarity(a: string, b: string): number {
  * Uses exact token key, jaccard, containment, and edit distance on token keys.
  */
 export function combinedNameSimilarity(a: string, b: string): number {
-  if (!a?.trim() || !b?.trim()) return 0;
-  const keyA = nameTokenKey(a);
-  const keyB = nameTokenKey(b);
-  if (keyA === keyB) return 1;
-  if (normalizeName(a) === normalizeName(b)) return 1;
+  return preparedNameSimilarity(prepareName(a), prepareName(b));
+}
 
-  const jaccard = nameTokenSimilarity(a, b);
-  const containment = nameContainment(a, b);
-  const edit = stringSimilarity(keyA.replace(/\s/g, ""), keyB.replace(/\s/g, ""));
+function preparedNameSimilarity(a: PreparedName, b: PreparedName, minimum = 0): number {
+  if (!a.valid || !b.valid) return 0;
+  if (a.key === b.key || a.normalized === b.normalized) return 1;
+  let intersection = 0;
+  for (const token of a.tokenSet) if (b.tokenSet.has(token)) intersection++;
+  const union = a.tokenSet.size + b.tokenSet.size - intersection;
+  const jaccard = union ? intersection / union : 0;
+  const [short, long] = a.tokens.length <= b.tokens.length
+    ? [a.tokens, b.tokenSet] : [b.tokens, a.tokenSet];
+  let hits = 0;
+  for (const token of short) if (long.has(token)) hits++;
+  const containment = short.length ? hits / short.length : 0;
+  const cheapScore = Math.max(jaccard, containment * 0.95, jaccard * 0.6 + containment * 0.4);
+  // Include the half-thousandth rounding margin used below. If token scores
+  // already qualify, compute the full edit score so ranking stays identical.
+  const editMinimum = cheapScore < minimum - 0.0005
+    ? Math.max(0, (minimum - 0.0005) / 0.9) : 0;
+  const edit = stringSimilarity(a.compact, b.compact, editMinimum);
   // Weight: token overlap is primary; containment helps missing middle names
   const raw = Math.max(
     jaccard,
@@ -176,19 +200,20 @@ export function findDuplicateSailorPairs(
   minSimilarity = 0.6
 ): DuplicatePair[] {
   const pairs: DuplicatePair[] = [];
+  const names = sailors.map((sailor) => prepareName(sailor.name));
   for (let i = 0; i < sailors.length; i++) {
     for (let j = i + 1; j < sailors.length; j++) {
       const a = sailors[i];
       const b = sailors[j];
-      if (!a.name?.trim() || !b.name?.trim()) continue;
+      if (!names[i].valid || !names[j].valid) continue;
 
-      let sim = combinedNameSimilarity(a.name, b.name);
+      let sim = preparedNameSimilarity(names[i], names[j], minSimilarity);
       let how = "fuzzy-name";
 
-      if (nameTokenKey(a.name) === nameTokenKey(b.name)) {
+      if (names[i].key === names[j].key) {
         sim = 1;
         how = "same-name-tokens";
-      } else if (normalizeName(a.name) === normalizeName(b.name)) {
+      } else if (names[i].normalized === names[j].normalized) {
         sim = 1;
         how = "same-normalized-name";
       }

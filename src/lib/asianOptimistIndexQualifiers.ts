@@ -25,6 +25,36 @@ export type AsianOptimistIndexQualifierSource = {
  */
 export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
   {
+    id: "optimist-worlds-2026",
+    name: "2026 IODA World Championship",
+    hostCountry: "Morocco",
+    startDate: "2026-06-18",
+    endDate: "2026-06-28",
+    officialResultsUrl:
+      "https://2026worlds.optiworld.org/en/default/races/race-resultsall",
+    officialResultsSourceName:
+      "Official World Championship overall classification",
+    sailorPathRegattaSlug: "2026-optimist-world-championship",
+    usesSailorPathResults: true,
+    resultCount: 284,
+    resultStatus: "verified",
+  },
+  {
+    id: "optimist-europeans-2026",
+    name: "2026 Optimist European Championship",
+    hostCountry: "Poland",
+    startDate: "2026-07-24",
+    endDate: "2026-07-31",
+    officialResultsUrl:
+      "https://2026europeans.optiworld.org/en/default/races/race-resultsall",
+    officialResultsSourceName:
+      "Official European Championship Boys and Girls classifications",
+    sailorPathRegattaSlug: "2026-optimist-european-championship",
+    usesSailorPathResults: true,
+    resultCount: 292,
+    resultStatus: "verified",
+  },
+  {
     id: "lysc-2026-optimist-gold",
     name: "5th Langkawi International Youth Sailing Championship — Optimist Gold",
     hostCountry: "Malaysia",
@@ -95,6 +125,69 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     sailorPathRegattaSlug: "singapore-national-sailing-championships-2026-gold",
     usesSailorPathResults: true,
     resultCount: 83,
+    resultStatus: "verified",
+  },
+  {
+    id: "hong-kong-race-week-2026-optimist-main",
+    name: "Hong Kong Race Week 2026 — Optimist Main",
+    hostCountry: "Hong Kong",
+    startDate: "2026-01-27",
+    endDate: "2026-02-01",
+    officialResultsUrl:
+      "https://www.rhkyc.org.hk/storage/app/media/Sailing/result/HONG-KONG-RACE-WEEK/2026/OptimistMain.htm",
+    officialResultsSourceName:
+      "Official Optimist Main provisional results — 1 February 2026",
+    sailorPathRegattaSlug: "hong-kong-race-week-2026",
+    usesSailorPathResults: true,
+    resultCount: 77,
+    resultStatus: "verified",
+  },
+  {
+    id: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Youth Thailand National Sailing Championship 2026 — Optimist",
+    hostCountry: "Thailand",
+    startDate: "2026-09-18",
+    endDate: "2026-09-20",
+    officialResultsUrl:
+      "https://sailingtech.in.th/preview/results/youth-thailand-2026/optimist-overall.html",
+    officialResultsSourceName:
+      "Official Youth Thailand National Sailing Championship 2026 final result sheet",
+    sailorPathRegattaSlug:
+      "youth-thailand-national-sailing-championship-2026-optimist",
+    usesSailorPathResults: true,
+    resultCount: 58,
+    resultStatus: "verified",
+  },
+  {
+    id: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "2026 Musto Australian Optimist Championship — Optimist Gold",
+    hostCountry: "Australia",
+    startDate: "2026-01-08",
+    endDate: "2026-01-15",
+    officialResultsUrl:
+      "https://sailingresults.net/sa/results/overall.aspx?ID=82277.3",
+    officialResultsSourceName:
+      "Official Australian Optimist Championship Gold final results",
+    sailorPathRegattaSlug:
+      "2026-musto-australian-optimist-championship-optimist-gold",
+    usesSailorPathResults: true,
+    resultCount: 45,
+    resultStatus: "verified",
+  },
+  {
+    id: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "2026 Toyota New Zealand Optimist National Championship — Optimist Gold",
+    hostCountry: "New Zealand",
+    startDate: "2026-04-03",
+    endDate: "2026-04-07",
+    officialResultsUrl:
+      "https://www.sailwave.com/results/NPYC/2026%20Toyota%20NZ%20Optimist%20National%20Championships%20-%20Open%20Fleet.htm",
+    officialResultsSourceName:
+      "Official Toyota NZ Optimist National Championship Gold final results",
+    sailorPathRegattaSlug:
+      "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    usesSailorPathResults: true,
+    resultCount: 43,
     resultStatus: "verified",
   },
   {

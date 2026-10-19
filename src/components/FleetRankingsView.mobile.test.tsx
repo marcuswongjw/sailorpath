@@ -114,4 +114,18 @@ describe("FleetRankingsView mobile board", () => {
     expect(snsc).toHaveAttribute("aria-pressed", "true");
     expect(screen.queryByRole("button", { name: /^Reset$/ })).not.toBeInTheDocument();
   });
+
+  it("hides a birth year when date of birth is missing", () => {
+    render(
+      <FleetRankingsView
+        fleet="Gold"
+        initialPeriod={period}
+        initialRanked={[{ ...alyssa, id: "unknown-year", name: "No Year", handle: "no-year", dob: null }]}
+      />
+    );
+
+    expect(screen.getAllByText("No Year").length).toBeGreaterThan(0);
+    expect(screen.queryByText("Born —")).not.toBeInTheDocument();
+    expect(screen.queryByText("2013")).not.toBeInTheDocument();
+  });
 });

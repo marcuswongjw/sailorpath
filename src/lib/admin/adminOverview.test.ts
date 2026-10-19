@@ -14,10 +14,25 @@ const complete = {
 };
 
 describe("buildAdminOverview", () => {
+  it("keeps upcoming and ongoing events out of overdue result queues", () => {
+    const future = { ...complete, date: "2026-12-01" };
+    const ongoing = {
+      ...complete,
+      id: "ongoing",
+      date: "2026-10-17",
+      endDate: "2026-10-19",
+    };
+    expect(
+      buildAdminOverview([future, ongoing], [], "2026-10-18").sheets,
+    ).toHaveLength(0);
+    expect(
+      buildAdminOverview([future], [], "2026-12-02").missingResults,
+    ).toHaveLength(1);
+  });
   it("uses publication readiness rules for actionable event counts", () => {
     const overview = buildAdminOverview(
       [complete],
-      [{ id: "result-1", sailorId: "s1", regattaId: "sheet-1", rank: 1 }]
+      [{ id: "result-1", sailorId: "s1", regattaId: "sheet-1", rank: 1 }],
     );
     expect(overview.ready).toHaveLength(1);
     expect(overview.missingResults).toHaveLength(0);
@@ -36,7 +51,10 @@ describe("buildAdminOverview", () => {
   });
 
   it("excludes archived sheets from every actionable overview queue", () => {
-    const overview = buildAdminOverview([{ ...complete, status: "archived" }], []);
+    const overview = buildAdminOverview(
+      [{ ...complete, status: "archived" }],
+      [],
+    );
     expect(overview.sheets).toHaveLength(0);
     expect(overview.blocked).toHaveLength(0);
     expect(overview.incomplete).toHaveLength(0);

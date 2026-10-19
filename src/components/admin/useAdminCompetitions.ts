@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, type Dispatch, type SetStateAction } from "react";
-import { parseApi } from "@/components/admin/parseApi";
+import { useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { fetchAdminRegattas } from "./adminFetch";
 import type { RegattaAdmin } from "@/types/regatta";
 
 type UseAdminCompetitionsArgs = {
@@ -23,35 +23,36 @@ export function useAdminCompetitions({
     string | null
   >(null);
   const [competitionsLoading, setCompetitionsLoading] = useState(false);
+  const [competitionsError, setCompetitionsError] = useState<string | null>(null);
+  const requestVersion = useRef(0);
 
   const openSailorResults = async (sailorId: string) => {
+    const version = ++requestVersion.current;
     setEditingResultId(null);
+    setCompetitionsError(null);
     setCompetitionsSailorId(sailorId);
     setCompetitionsLoading(true);
     try {
       // Refresh results + regattas so ILCA 4 events appear alongside Optimist
-      await Promise.all([
+      const reads = await Promise.allSettled([
         refreshResultsList(),
-        (async () => {
-          try {
-            const res = await fetch("/api/admin/regattas?all=1", {
-              credentials: "include",
-            });
-            const data = await parseApi(res);
-            if (res.ok && Array.isArray(data.regattas)) {
-              setRegattaList(data.regattas);
-            }
-          } catch {
-            /* keep existing list */
-          }
-        })(),
+        fetchAdminRegattas().then((rows) => setRegattaList(rows)),
       ]);
+      const failure = reads.find((read) => read.status === "rejected");
+      if (failure?.status === "rejected") throw failure.reason;
+    } catch (error) {
+      if (version === requestVersion.current) {
+        setCompetitionsError(error instanceof Error ? error.message : "Could not load sailor results.");
+      }
     } finally {
-      setCompetitionsLoading(false);
+      if (version === requestVersion.current) setCompetitionsLoading(false);
     }
   };
 
   const closeSailorResults = () => {
+    requestVersion.current++;
+    setCompetitionsLoading(false);
+    setCompetitionsError(null);
     setCompetitionsSailorId(null);
     setEditingResultId(null);
   };
@@ -60,6 +61,7 @@ export function useAdminCompetitions({
     competitionsSailorId,
     setCompetitionsSailorId,
     competitionsLoading,
+    competitionsError,
     openSailorResults,
     closeSailorResults,
   };

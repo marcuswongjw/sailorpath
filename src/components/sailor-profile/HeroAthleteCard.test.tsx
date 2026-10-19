@@ -62,20 +62,33 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByRole("button", { name: "Follow" })).toBeDisabled();
   });
 
-  it("shows a results bio and a follow form before sign-in when the sailor has no written bio", () => {
+  it("hides a generated results bio and still shows the follow form before sign-in", () => {
     render(
       <HeroAthleteCard
         {...defaultProps}
         displaySailor={{ ...defaultProps.displaySailor, bio: "" }}
-        resultsBio="Ethan Wong first raced at Harbour Regatta on 2 Apr 2025. Class sailed: Optimist. Best finish: 2nd of 40 at Harbour Regatta."
         followControl={{ sailorId: "s1", following: false, disabled: false, nextPath: "/sailors/ethan-wong" }}
       />
     );
 
-    expect(screen.getByText(/first raced at Harbour Regatta/)).toBeInTheDocument();
+    expect(screen.queryByText(/first raced/)).toBeNull();
     const follow = screen.getByRole("button", { name: "Follow" });
     expect(follow.closest("form")).toHaveAttribute("action", "/api/following");
     expect(follow.closest("form")?.querySelector('input[name="sailorId"]')).toHaveValue("s1");
+  });
+
+  it("hides Born when the birth year is unknown", () => {
+    const { rerender } = render(
+      <HeroAthleteCard {...defaultProps} bornYear={null} />
+    );
+    expect(screen.queryByText(/Born/)).toBeNull();
+
+    rerender(<HeroAthleteCard {...defaultProps} bornYear="—" />);
+    expect(screen.queryByText(/Born/)).toBeNull();
+
+    rerender(<HeroAthleteCard {...defaultProps} bornYear="2012" />);
+    expect(screen.getByText("2012")).toBeInTheDocument();
+    expect(screen.getByText(/Born/)).toBeInTheDocument();
   });
 
   it("renders athlete passport identity and hero metric modules", () => {

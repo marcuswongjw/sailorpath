@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
+import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
 import { resolveFleetResultSheet } from "@/lib/publicShareData";
 import { shareMetadata, sportsEventJsonLd } from "@/lib/publicSeo";
 
@@ -43,7 +44,7 @@ export default async function FleetResultsPage({
   return (
     <>
       <JsonLd data={sportsEventJsonLd(resolved.sheet)} />
-      <RegattaEventHub event={resolved.event} activeFleet={fleet} />
+      <RegattaEventHub event={await withSavedEventCopy(resolved.event)} activeFleet={fleet} />
     </>
   );
 }

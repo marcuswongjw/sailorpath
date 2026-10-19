@@ -10,7 +10,13 @@ describe("public sitemap", () => {
     );
     const urls = lists.flat().map((entry) => entry.url);
     expect(urls).toContain("https://sailorpath.com/");
+    expect(urls).toContain("https://sailorpath.com/optimist/asian-index");
+    expect(urls).toContain("https://sailorpath.com/optimist/asian-index/methodology");
+    expect(urls).not.toContain("https://sailorpath.com/sg/optimist/asian-index");
     expect(urls).toContain("https://sailorpath.com/regattas/snsc-2025/results/optimist-gold");
+    expect(urls).toContain(
+      "https://sailorpath.com/regattas/youth-thailand-national-sailing-championship-2026/results/optimist"
+    );
     expect(urls).not.toContain("https://sailorpath.com/classes/x-15");
     expect(urls.some((url) => url.includes("/log-"))).toBe(false);
     expect(urls.some((url) => url.startsWith("https://sailorpath.com/admin"))).toBe(false);

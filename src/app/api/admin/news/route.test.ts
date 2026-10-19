@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   inserts: [] as Record<string, unknown>[],
+  profiles: vi.fn(),
 }));
 
 vi.mock("@/lib/auth", () => ({
@@ -12,6 +13,9 @@ vi.mock("@/lib/adminChangeLog", () => ({ logAdminChange: vi.fn() }));
 vi.mock("@/lib/revalidatePublic", () => ({ revalidatePublicNews: vi.fn() }));
 vi.mock("@/db", () => ({
   db: {
+    select: () => ({
+      from: () => ({ where: () => ({ limit: mocks.profiles }) }),
+    }),
     insert: () => ({
       values: (values: Record<string, unknown>) => {
         mocks.inserts.push(values);
@@ -31,6 +35,11 @@ vi.mock("@/db", () => ({
 }));
 
 import { POST } from "./route";
+
+beforeEach(() => {
+  mocks.profiles.mockReset();
+  mocks.profiles.mockResolvedValue([]);
+});
 
 describe("POST /api/admin/news", () => {
   it("creates a draft rather than accepting a direct publish request", async () => {
@@ -74,5 +83,37 @@ describe("POST /api/admin/news", () => {
 
     expect(response.status).toBe(400);
     expect(mocks.inserts).toHaveLength(0);
+  });
+
+  it.each([true, false])("allows direct publish with or without a reviewer profile (%s)", async (hasProfile) => {
+    mocks.inserts.length = 0;
+    mocks.profiles.mockResolvedValue(hasProfile ? [{ id: "admin-id" }] : []);
+    const response = await POST(
+      new Request("https://admin.sailorpath.com/api/admin/news", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "publish",
+          slug: "asian-optimist-index-launch",
+          kind: "class_announcement",
+          title: "Asian Optimist Index Launch",
+          summary: "Methodology and 2026-27 event register.",
+          body: "Full article body.",
+          sourceUrl: "https://sailorpath.com/sg/optimist/asian-index",
+          sourceLabel: "SailorPath Asian Optimist Index",
+        }),
+      })
+    );
+
+    expect(response.status).toBe(201);
+    expect(mocks.inserts).toHaveLength(1);
+    expect(mocks.inserts[0]).toMatchObject({
+      status: "published",
+      slug: "asian-optimist-index-launch",
+      reviewedBy: hasProfile ? "admin-id" : null,
+      reviewedAt: expect.any(Date),
+      publishedAt: expect.any(Date),
+    });
+    expect(mocks.profiles).toHaveBeenCalledWith(1);
   });
 });

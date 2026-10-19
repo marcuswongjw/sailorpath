@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -62,13 +64,10 @@ export function AdminAuditLogPanel({
   const auditQuery = useQuery({
     queryKey: adminQueryKeys.audit(days),
     enabled: isSuperadmin,
-    queryFn: async () => {
-      const res = await fetch(
-        `/api/admin/change-log?limit=100&days=${days}`
-      );
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load audit log");
-      return (data.changes || []) as AuditRow[];
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ changes?: AuditRow[] }>(
+        `/api/admin/change-log?limit=100&days=${days}`, { signal });
+      return data.changes || [];
     },
   });
   const audit = auditQuery.data ?? [];

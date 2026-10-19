@@ -25,6 +25,7 @@ import {
 } from "./helpers";
 import { describeProfileRank } from "./rankBasis";
 import { FollowSailorButton } from "@/components/FollowSailorButton";
+import { knownBirthYearLabel } from "@/lib/age";
 import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
@@ -90,7 +91,6 @@ export interface HeroAthleteCardProps {
   noc?: string;
   totalRegattasCount?: number;
   currentNatSquad?: string | null;
-  resultsBio?: string | null;
   followControl?: {
     sailorId: string;
     following: boolean;
@@ -160,7 +160,6 @@ export function HeroAthleteCard({
   noc = "SGP",
   totalRegattasCount = 0,
   currentNatSquad,
-  resultsBio = null,
   followControl = null,
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -169,8 +168,7 @@ export function HeroAthleteCard({
 
   const activeBoatClass: "optimist" | "ilca4" =
     selectedBoatClass === "ilca4" || standingIsIlca ? "ilca4" : "optimist";
-  const writtenBio = String(displaySailor.bio || "").trim();
-  const bioParagraph = writtenBio || String(resultsBio || "").trim();
+  const bioParagraph = String(displaySailor.bio || "").trim();
   const resolvedOptimistCount =
     optimistCount ??
     (activeBoatClass === "optimist" ? totalRegattasCount : 0);
@@ -435,21 +433,27 @@ export function HeroAthleteCard({
                     "nat"
                   );
 
-                  // Age / Born Year
-                  if (bornYear) {
+                  // Age / Born Year. Unknown years stay off the card entirely.
+                  const yearLabel = knownBirthYearLabel(bornYear);
+                  const dobText = String(fullDobLabel || "").trim();
+                  const dobLabel =
+                    showFullDob && dobText && dobText !== "—" && dobText !== "-"
+                      ? dobText
+                      : null;
+                  if (yearLabel || dobLabel) {
                     push(
-                      showFullDob && fullDobLabel ? (
+                      dobLabel ? (
                         <>
                           Born{" "}
                           <span className="text-charcoal font-semibold">
-                            {fullDobLabel}
+                            {dobLabel}
                           </span>
                         </>
                       ) : (
                         <>
                           Born{" "}
                           <span className="text-charcoal font-semibold">
-                            {bornYear}
+                            {yearLabel}
                           </span>
                         </>
                       ),

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatNewsDate, getPublishedNewsArticle } from "@/lib/news";
+import { parseNewsBody } from "@/lib/newsBody";
 
 type NewsArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -47,10 +48,7 @@ export default async function NewsArticlePage({
 
   const publishedLabel = formatNewsDate(article.publishedAt);
   const updatedLabel = formatNewsDate(article.updatedAt);
-  const paragraphs = article.body
-    .split(/\n{2,}/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
+  const blocks = parseNewsBody(article.body);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
@@ -70,9 +68,27 @@ export default async function NewsArticlePage({
         <p className="mt-5 text-lg leading-8 text-slate-soft">{article.summary}</p>
 
         <div className="mt-8 space-y-5 text-base leading-8 text-charcoal">
-          {paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+          {blocks.map((block, index) =>
+            block.type === "heading" ? (
+              block.level === 2 ? (
+                <h2 key={index} className="pt-3 text-2xl font-extrabold tracking-tight text-harbour-shadow">
+                  {block.text}
+                </h2>
+              ) : (
+                <h3 key={index} className="pt-2 text-xl font-extrabold text-harbour-shadow">
+                  {block.text}
+                </h3>
+              )
+            ) : block.type === "list" ? (
+              <ul key={index} className="list-disc space-y-2 pl-6">
+                {block.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p key={index}>{block.text}</p>
+            ),
+          )}
         </div>
 
         <footer className="mt-9 border-t border-cool-veil pt-5 text-sm text-slate-soft">

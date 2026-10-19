@@ -7,14 +7,19 @@ import {
 } from "@/lib/asianOptimistIndexScoring";
 import { createAsianOptimistIndexBaseline } from "@/lib/asianOptimistIndex";
 
-describe("Asian Optimist Index provisional scoring", () => {
+describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => {
   it("connects Ilzani’s confirmed identity to both Malaysian finishes and scores only the strongest country result", () => {
     const entries = createAsianOptimistIndexProvisionalEntries();
-    const ilzani = entries.find(entry => entry.name === "Khairulilzani Afendy")!;
-    expect(ilzani).toMatchObject({ provisionalRank: 12, provisionalScore: 61.3, eligibleStarts: 2, hostCountryCount: 1 });
-    expect(ilzani.qualifierResults.map(r => r.rank).sort((a, b) => a - b)).toEqual([4, 9]);
+    const ilzani = entries.find((entry) => entry.name === "Khairulilzani Afendy")!;
+    expect(ilzani).toMatchObject({
+      provisionalRank: 38,
+      provisionalScore: 158.54,
+      eligibleStarts: 3,
+      hostCountryCount: 2,
+    });
+    expect(ilzani.qualifierResults.map((r) => r.rank).sort((a, b) => a - b)).toEqual([4, 9]);
     expect(ilzani.scoredQualifiers).toHaveLength(1);
-    expect(ilzani.scoredQualifiers[0]).toMatchObject({ rank: 4, qualifier: { shortName: "LIRP" } });
+    expect(ilzani.scoredQualifiers[0]).toMatchObject({ rank: 4, qualifier: { shortName: "2026 LIRP" } });
   });
 
   it("normalises a verified final classification to a 0–100 event score", () => {
@@ -23,98 +28,143 @@ describe("Asian Optimist Index provisional scoring", () => {
     expect(normalisedFleetScore(2, 59)).toBeCloseTo(98.275862, 6);
   });
 
-  it("scores the fixed 2025 Asian cohort with transparent qualifier coverage", () => {
+  it("scores the 175 Asian and Oceania sailors under the V1 (Beta) methodology", () => {
     const entries = createAsianOptimistIndexProvisionalEntries();
 
-    expect(entries).toHaveLength(122);
+    expect(entries).toHaveLength(175);
+
+    // Top 6 under V1 (Beta) formula (Points = E * (N - P + 1) / N)
     expect(entries.slice(0, 6).map((entry) => entry.name)).toEqual([
-      "Yaasin Syahrizan",
-      "Sorawit Naksuk",
+      "Lucas Cao",
       "Anya Zahedi",
+      "Margaux Nguyen-Minh",
       "Suthinan Nakpasom",
-      "Rachata Sadtrakulwattana",
+      "Sorawit Naksuk",
       "Rohan Maliah",
     ]);
 
-    const sorawit = entries.find((entry) => entry.name === "Sorawit Naksuk")!;
-    expect(sorawit).toMatchObject({
-      provisionalRank: 2,
-      provisionalScore: 79.6,
-      championshipScore: 100,
-      championshipPoints: 60,
-      qualifierPoints: 19.6,
-      eligibleStarts: 1,
-      hostCountryCount: 1,
-    });
-
-    const suthinan = entries.find((entry) => entry.name === "Suthinan Nakpasom")!;
-    expect(suthinan).toMatchObject({
-      provisionalRank: 4,
-      provisionalScore: 77,
-      eligibleStarts: 2,
-      hostCountryCount: 2,
-    });
-    expect(suthinan.scoredQualifiers.map((score) => score.qualifier.hostCountry)).toEqual([
-      "Thailand",
-      "Malaysia",
-    ]);
-    expect(suthinan.qualifierResults.map((score) => score.qualifier.shortName)).toEqual([
-      "LIRP",
-      "Thailand International",
-    ]);
-    expect(suthinan.scoredQualifiers[0].pointsContribution).toBeCloseTo(28, 8);
-    expect(suthinan.scoredQualifiers[1].pointsContribution).toBeCloseTo(7.8621, 4);
-
-    const yaasin = entries.find((entry) => entry.name === "Yaasin Syahrizan")!;
-    expect(yaasin).toMatchObject({
+    const lucas = entries.find((entry) => entry.name === "Lucas Cao")!;
+    expect(lucas).toMatchObject({
       provisionalRank: 1,
-      eligibleStarts: 1,
-      hostCountryCount: 1,
-    });
-    expect(yaasin.qualifierResults).toMatchObject([
-      { rank: 1, qualifier: { shortName: "LYSC", hostCountry: "Malaysia" } },
-    ]);
-
-    const wenyu = entries.find((entry) => entry.name === "Wenyu Cheng")!;
-    expect(wenyu).toMatchObject({
-      eligibleStarts: 2,
-      hostCountryCount: 1,
-      qualifierPoints: 19.6,
-    });
-    expect(wenyu.scoredQualifiers).toHaveLength(1);
-    expect(wenyu.scoredQualifiers[0]).toMatchObject({
-      rank: 1,
-      qualifier: { shortName: "SYSC", hostCountry: "Singapore" },
+      provisionalScore: 396.25,
+      championshipPoints: 263.15,
+      qualifierPoints: 133.1,
+      eligibleStarts: 4,
+      countedResultsCount: 4,
+      hostCountryCount: 4,
     });
 
     const anya = entries.find((entry) => entry.name === "Anya Zahedi")!;
     expect(anya).toMatchObject({
-      provisionalRank: 3,
-      provisionalScore: 78.5,
-      eligibleStarts: 2,
-      hostCountryCount: 1,
-      qualifierPoints: 19.6,
+      provisionalRank: 2,
+      provisionalScore: 385.6,
+      championshipPoints: 217.43,
+      qualifierPoints: 168.16,
+      eligibleStarts: 5,
+      countedResultsCount: 5,
+      hostCountryCount: 4,
     });
-    expect(anya.qualifierResults.map((score) => score.rank).sort((a, b) => a - b)).toEqual([3, 7]);
+    expect(anya.qualifierResults.map((score) => score.rank).sort((a, b) => a - b)).toEqual([3, 7, 19, 66]);
+    expect(anya.scoredQualifiers).toHaveLength(4);
 
-    const alyssa = entries.find((entry) => entry.name === "Alyssa Wong")!;
-    expect(alyssa).toMatchObject({
-      eligibleStarts: 2,
-      hostCountryCount: 1,
-      qualifierPoints: 19.6,
+    const suthinan = entries.find((entry) => entry.name === "Suthinan Nakpasom")!;
+    expect(suthinan).toMatchObject({
+      provisionalRank: 4,
+      provisionalScore: 350.47,
+      championshipPoints: 164.5,
+      qualifierPoints: 185.97,
+      eligibleStarts: 5,
+      countedResultsCount: 5,
+      hostCountryCount: 4,
     });
-    expect(alyssa.qualifierResults.map((score) => score.rank).sort((a, b) => a - b)).toEqual([1, 9]);
+    expect(suthinan.scoredQualifiers.map((score) => score.qualifier.hostCountry).sort()).toEqual([
+      "Malaysia",
+      "Morocco",
+      "Thailand",
+      "Thailand",
+    ]);
 
-    const ethan = entries.find((entry) => entry.name === "Ethan Chia")!;
-    expect(ethan).toMatchObject({
-      provisionalScore: 59.6,
-      eligibleStarts: 0,
-      hostCountryCount: 0,
+    const sorawit = entries.find((entry) => entry.name === "Sorawit Naksuk")!;
+    expect(sorawit).toMatchObject({
+      provisionalRank: 5,
+      provisionalScore: 333.31,
+      championshipPoints: 221.83,
+      qualifierPoints: 111.48,
+      eligibleStarts: 4,
+      countedResultsCount: 4,
+      hostCountryCount: 4,
+    });
+
+    const ethanChia = entries.find((entry) => entry.name === "Ethan Chia")!;
+    expect(ethanChia).toMatchObject({
+      provisionalScore: 149.12,
+      eligibleStarts: 1,
+      hostCountryCount: 1,
       qualifierPoints: 0,
+    });
+
+    // Verify Oceania sailors are included
+    const williamHarris = entries.find((entry) => entry.name === "William Harris")!;
+    expect(williamHarris).toMatchObject({
+      nationality: "AUS",
+      overallPlace: 30,
+      championshipPoints: 124.41,
+    });
+
+    const jeffreyDu = entries.find((entry) => entry.name === "Jeffrey Chenglin Du")!;
+    expect(jeffreyDu).toMatchObject({
+      nationality: "NZL",
+      overallPlace: 62,
+    });
+
+    const rubenSteel = entries.find((entry) => entry.name === "Ruben Steel")!;
+    expect(rubenSteel).toMatchObject({
+      nationality: "AUS",
+      profileHref: "/ruben-steel-0ajhhtd",
+    });
+
+    // Verify new sailors from Worlds and Europeans
+    const walterHeeley = entries.find((entry) => entry.name === "Walter Heeley")!;
+    expect(walterHeeley).toMatchObject({
+      nationality: "AUS",
+      overallPlace: null,
+      provisionalRank: 30,
+      provisionalScore: 181.55,
+      championshipPoints: 141.55,
+      profileHref: "/walter-heeley-worlds26-c34abc",
+    });
+
+    const auroraEdhouse = entries.find((entry) => entry.name === "Aurora Edhouse")!;
+    expect(auroraEdhouse).toMatchObject({
+      nationality: "NZL",
+      overallPlace: null,
+      provisionalRank: 41,
+      provisionalScore: 157.34,
+      championshipPoints: 126.64,
+      profileHref: "/aurora-edhouse-euro26-ba2f7c",
     });
   });
 
-  it("only awards inputs that belong to the fixed 2025 cohort", () => {
+  it("backfills and scores Elijah Ong across all his verified regional and championship events", () => {
+    const entries = createAsianOptimistIndexProvisionalEntries();
+    const elijah = entries.find((entry) => entry.name === "Elijah Ong")!;
+
+    expect(elijah).toMatchObject({
+      provisionalRank: 25,
+      provisionalScore: 200.48,
+      eligibleStarts: 4,
+      countedResultsCount: 4,
+      hostCountryCount: 3,
+    });
+    expect(elijah.scoredQualifiers.map((sq) => sq.qualifier.shortName).sort()).toEqual([
+      "2026 Europeans",
+      "2026 HKRW",
+      "2026 SNSC",
+      "2026 SYSC",
+    ]);
+  });
+
+  it("only awards inputs that belong to the cohort", () => {
     const cohortKeys = new Set(
       createAsianOptimistIndexBaseline().map((entry) =>
         `${entry.nationality}:${entry.name.toLowerCase().replace(/[^a-z0-9]/g, "")}`
@@ -128,14 +178,15 @@ describe("Asian Optimist Index provisional scoring", () => {
     }
   });
 
-  it("keeps the pre-Colombo release formula versioned and weighted to the championship", () => {
+  it("keeps the release configuration versioned as V1 (Beta)", () => {
     expect(ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE).toMatchObject({
-      version: "Provisional v1.0",
-      cohortSize: 122,
-      anchorWeight: 0.6,
-      qualifierEventCap: 5,
-      qualifyingResultLimit: 3,
-      qualifierWeights: [0.28, 0.08, 0.04],
+      version: "V1 (Beta)",
+      name: "SailorPath Asian and Oceania Optimist Index",
+      cohortSize: 175,
+      maxResultsCounted: 5,
+      maxGrade150: 2,
+      maxWorlds: 1,
+      maxUpperGrade: 4,
     });
   });
 });

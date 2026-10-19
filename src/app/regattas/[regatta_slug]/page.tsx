@@ -1,19 +1,24 @@
 import Link from "next/link";
 import { permanentRedirect, redirect } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
-import { resolveFleetResultSheet } from "@/lib/publicShareData";
-import { eventHubShare, eventHubTitle, shareMetadata, sportsEventJsonLd, yearFromText, resultSheetFromEventSlice } from "@/lib/publicSeo";
-import { eq } from "drizzle-orm";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
 import {
   classResultsHref,
   matchCalendarResults,
 } from "@/lib/calendar/calendarResultLinks";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
-import { db, getDatabaseUrlMeta } from "@/db";
-import { regattaEvents } from "@/db/schema";
+import { getDatabaseUrlMeta } from "@/db";
+import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
+import { resolveFleetResultSheet } from "@/lib/publicShareData";
+import {
+  eventHubShare,
+  eventHubTitle,
+  resultSheetFromEventSlice,
+  shareMetadata,
+  sportsEventJsonLd,
+  yearFromText,
+} from "@/lib/publicSeo";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
-import { applyRegattaEventCopy } from "@/lib/regattaEventCopy";
 import { getCachedPublicRegattas, getRegattaBySlug } from "@/lib/queries";
 import {
   eventHubHref,
@@ -22,22 +27,6 @@ import {
   type RegattaEventDef,
 } from "@/lib/regattaEvents";
 import type { Metadata } from "next";
-
-async function withSavedEventCopy(event: RegattaEventDef): Promise<RegattaEventDef> {
-  try {
-    const [saved] = await db
-      .select({
-        scheduleSummary: regattaEvents.scheduleSummary,
-        scoringRules: regattaEvents.scoringRules,
-      })
-      .from(regattaEvents)
-      .where(eq(regattaEvents.slug, event.slug))
-      .limit(1);
-    return applyRegattaEventCopy(event, saved);
-  } catch {
-    return event;
-  }
-}
 
 export const dynamic = "force-dynamic";
 
