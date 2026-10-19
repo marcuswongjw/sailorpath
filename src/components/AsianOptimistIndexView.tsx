@@ -40,8 +40,6 @@ export function AsianOptimistIndexView({
   filters?: AsianOptimistIndexFilterState;
 }) {
   const leaders = entries.slice(0, 3);
-  const sailorsWithQualifiers = entries.filter((entry) => entry.eligibleStarts > 0).length;
-  const totalStarts = entries.reduce((total, entry) => total + entry.eligibleStarts, 0);
 
   return (
     <main className="min-h-screen bg-sailcloth pb-16">
@@ -82,6 +80,12 @@ export function AsianOptimistIndexView({
             This is an independent analytical index published by SailorPath, not an official IODA or national federation ranking.
           </p>
           <nav aria-label="On this page" className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-bold">
+            <a href="#standings" className="underline underline-offset-2 hover:text-racing-deep">
+              Standings table
+            </a>
+            <a href="#qualifiers" className="underline underline-offset-2 hover:text-racing-deep">
+              2026 qualifying events
+            </a>
             <a href="#beta-summary" className="underline underline-offset-2 hover:text-racing-deep">
               Index in one page
             </a>
@@ -112,8 +116,10 @@ export function AsianOptimistIndexView({
           </div>
           <div className="rounded-xl border border-cool-veil bg-warm-white p-4 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Verified 2026 form</p>
-            <p className="mt-1 text-lg font-extrabold text-harbour">{sailorsWithQualifiers} sailors · {totalStarts} starts</p>
-            <p className="mt-1 text-xs text-slate-soft">Across {INDEX_QUALIFIER_COLUMNS.length} verified qualifying events today</p>
+            <p className="mt-1 text-lg font-extrabold text-harbour">
+              {entries.filter((entry) => entry.qualifierResults.length > 0).length} sailors · {entries.reduce((total, entry) => total + entry.qualifierResults.length, 0)} starts
+            </p>
+            <p className="mt-1 text-xs text-slate-soft">Across {INDEX_QUALIFIER_COLUMNS.length} verified 2026 qualifying events</p>
           </div>
         </div>
       </section>
@@ -172,7 +178,7 @@ export function AsianOptimistIndexView({
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="standings" aria-label="Index standings" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AsianOptimistIndexStandings
           entries={entries}
           qualifierColumns={INDEX_QUALIFIER_COLUMNS}
@@ -182,7 +188,7 @@ export function AsianOptimistIndexView({
         />
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
+      <section id="qualifiers" aria-label="2026 qualifying events" className="mx-auto max-w-7xl px-4 pt-7 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-cool-veil px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6">
               <div>
