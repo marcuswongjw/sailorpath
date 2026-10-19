@@ -11,8 +11,9 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
   it("connects Ilzani’s confirmed identity to both Malaysian finishes and scores only the strongest country result", () => {
     const entries = createAsianOptimistIndexProvisionalEntries();
     const ilzani = entries.find((entry) => entry.name === "Khairulilzani Afendy")!;
+    // Lyric Li Yuxuan is one Singapore entry at rank 14, so later ranks move down one.
     expect(ilzani).toMatchObject({
-      provisionalRank: 38,
+      provisionalRank: 39,
       provisionalScore: 158.54,
       eligibleStarts: 3,
       hostCountryCount: 2,
@@ -128,7 +129,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(walterHeeley).toMatchObject({
       nationality: "AUS",
       overallPlace: null,
-      provisionalRank: 30,
+      provisionalRank: 31,
       provisionalScore: 181.55,
       championshipPoints: 141.55,
       profileHref: "/walter-heeley-worlds26-c34abc",
@@ -138,7 +139,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(auroraEdhouse).toMatchObject({
       nationality: "NZL",
       overallPlace: null,
-      provisionalRank: 41,
+      provisionalRank: 42,
       provisionalScore: 157.34,
       championshipPoints: 126.64,
       profileHref: "/aurora-edhouse-euro26-ba2f7c",
@@ -150,7 +151,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     const elijah = entries.find((entry) => entry.name === "Elijah Ong")!;
 
     expect(elijah).toMatchObject({
-      provisionalRank: 25,
+      provisionalRank: 26,
       provisionalScore: 200.48,
       eligibleStarts: 4,
       countedResultsCount: 4,
