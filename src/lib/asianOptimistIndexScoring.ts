@@ -175,6 +175,30 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
     isWorlds: false,
     scoreCap: 40,
   },
+  "2026-musto-australian-optimist-championship-optimist-gold": {
+    id: "2026-musto-australian-optimist-championship-optimist-gold",
+    shortName: "2026 Australian Nationals",
+    hostCountry: "Australia",
+    hostMna: "AUS",
+    fleetSize: 45,
+    grade: 40,
+    year: 2026,
+    tier: "national",
+    isWorlds: false,
+    scoreCap: 40,
+  },
+  "2026-toyota-new-zealand-optimist-national-championship-optimist-gold": {
+    id: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    shortName: "2026 NZ Nationals",
+    hostCountry: "New Zealand",
+    hostMna: "NZL",
+    fleetSize: 43,
+    grade: 40,
+    year: 2026,
+    tier: "national",
+    isWorlds: false,
+    scoreCap: 40,
+  },
 } as const satisfies Record<string, AsianOptimistIndexScoredQualifier>;
 
 export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
@@ -190,6 +214,8 @@ export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
   // Grade 40 · National Championships
   { id: "snsc-gold-sep-26-2026-09-11", shortName: "2026 SNSC", grade: 40 },
   { id: "youth-thailand-national-sailing-championship-2026-optimist", shortName: "2026 Thailand Nationals", grade: 40 },
+  { id: "2026-musto-australian-optimist-championship-optimist-gold", shortName: "2026 Australian Nationals", grade: 40 },
+  { id: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold", shortName: "2026 NZ Nationals", grade: 40 },
 ] as const;
 
 
@@ -1238,6 +1264,152 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     name: "Pakornkiat Chaiya-o-cha",
     nationality: "THA",
     rank: 17,
+  },
+  // 2026 Musto Australian Optimist Championship (Grade 40, N=45)
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Walter Heeley",
+    nationality: "AUS",
+    rank: 1,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Nicholas Cooper",
+    nationality: "AUS",
+    rank: 2,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Toby Phillips",
+    nationality: "AUS",
+    rank: 4,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Balthazar Roche",
+    nationality: "AUS",
+    rank: 5,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Charlie Purt",
+    nationality: "AUS",
+    rank: 6,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Sebastian Tucker",
+    nationality: "AUS",
+    rank: 7,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Luca De Giosa",
+    nationality: "AUS",
+    rank: 8,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Sijia Deng",
+    nationality: "AUS",
+    rank: 12,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Emma Tomkins",
+    nationality: "AUS",
+    rank: 13,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "William Harris",
+    nationality: "AUS",
+    rank: 18,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Zachary Tait",
+    nationality: "AUS",
+    rank: 23,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Kirra Howell",
+    nationality: "AUS",
+    rank: 24,
+  },
+  {
+    qualifierId: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "Emerald Jacobsen",
+    nationality: "AUS",
+    rank: 30,
+  },
+  // 2026 Toyota New Zealand Optimist National Championship (Grade 40, N=43)
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Ally Burfoot",
+    nationality: "NZL",
+    rank: 4,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "William Handley",
+    nationality: "NZL",
+    rank: 5,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Jeffrey Chenglin Du",
+    nationality: "NZL",
+    rank: 6,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Tom Hall",
+    nationality: "NZL",
+    rank: 7,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Noah Petersen",
+    nationality: "NZL",
+    rank: 10,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Aurora Edhouse",
+    nationality: "NZL",
+    rank: 11,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Zac Loader",
+    nationality: "NZL",
+    rank: 16,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Zephyr Lane",
+    nationality: "NZL",
+    rank: 18,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Harry Strang",
+    nationality: "NZL",
+    rank: 21,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Holly Robson",
+    nationality: "NZL",
+    rank: 31,
+  },
+  {
+    qualifierId: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "Claire Bao",
+    nationality: "NZL",
+    rank: 38,
   },
 ] as const satisfies readonly AsianOptimistIndexQualifierResultInput[];
 

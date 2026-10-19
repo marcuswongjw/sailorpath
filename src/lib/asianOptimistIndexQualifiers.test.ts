@@ -5,8 +5,8 @@ import {
 } from "@/lib/asianOptimistIndexQualifiers";
 
 describe("Asian Optimist Index 2026 qualifier ledger", () => {
-  it("keeps nine verified inputs and one scheduled Thai candidate", () => {
-    expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(10);
+  it("keeps eleven verified inputs and one scheduled Thai candidate", () => {
+    expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(12);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => !qualifier.usesSailorPathResults
@@ -16,12 +16,12 @@ describe("Asian Optimist Index 2026 qualifier ledger", () => {
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => qualifier.usesSailorPathResults
       )
-    ).toHaveLength(7);
+    ).toHaveLength(9);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.map(
         (qualifier) => qualifier.resultCount
       )
-    ).toEqual([284, 292, 50, 59, 106, 65, 83, 77, 58, null]);
+    ).toEqual([284, 292, 50, 59, 106, 65, 83, 77, 58, 45, 43, null]);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.find(
         (qualifier) => qualifier.id === "eastern-seaboard-regatta-2026"

@@ -159,6 +159,38 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     resultStatus: "verified",
   },
   {
+    id: "2026-musto-australian-optimist-championship-optimist-gold",
+    name: "2026 Musto Australian Optimist Championship — Optimist Gold",
+    hostCountry: "Australia",
+    startDate: "2026-01-08",
+    endDate: "2026-01-15",
+    officialResultsUrl:
+      "https://sailingresults.net/sa/results/overall.aspx?ID=82277.3",
+    officialResultsSourceName:
+      "Official Australian Optimist Championship Gold final results",
+    sailorPathRegattaSlug:
+      "2026-musto-australian-optimist-championship-optimist-gold",
+    usesSailorPathResults: true,
+    resultCount: 45,
+    resultStatus: "verified",
+  },
+  {
+    id: "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    name: "2026 Toyota New Zealand Optimist National Championship — Optimist Gold",
+    hostCountry: "New Zealand",
+    startDate: "2026-04-03",
+    endDate: "2026-04-07",
+    officialResultsUrl:
+      "https://www.sailwave.com/results/NPYC/2026%20Toyota%20NZ%20Optimist%20National%20Championships%20-%20Open%20Fleet.htm",
+    officialResultsSourceName:
+      "Official Toyota NZ Optimist National Championship Gold final results",
+    sailorPathRegattaSlug:
+      "2026-toyota-new-zealand-optimist-national-championship-optimist-gold",
+    usesSailorPathResults: true,
+    resultCount: 43,
+    resultStatus: "verified",
+  },
+  {
     id: "eastern-seaboard-regatta-2026",
     name: "Eastern Seaboard Regatta — Optimist",
     hostCountry: "Thailand",
