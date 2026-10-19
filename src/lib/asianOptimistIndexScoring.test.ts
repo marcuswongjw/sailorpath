@@ -28,10 +28,10 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(normalisedFleetScore(2, 59)).toBeCloseTo(98.275862, 6);
   });
 
-  it("scores the 176 Asian and Oceania sailors under the V1 (Beta) methodology", () => {
+  it("scores the 175 Asian and Oceania sailors under the V1 (Beta) methodology", () => {
     const entries = createAsianOptimistIndexProvisionalEntries();
 
-    expect(entries).toHaveLength(176);
+    expect(entries).toHaveLength(175);
 
     // Top 6 under V1 (Beta) formula (Points = E * (N - P + 1) / N)
     expect(entries.slice(0, 6).map((entry) => entry.name)).toEqual([
@@ -182,7 +182,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE).toMatchObject({
       version: "V1 (Beta)",
       name: "SailorPath Asian and Oceania Optimist Index",
-      cohortSize: 176,
+      cohortSize: 175,
       maxResultsCounted: 5,
       maxGrade150: 2,
       maxWorlds: 1,
