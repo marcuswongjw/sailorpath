@@ -425,7 +425,7 @@ function AdminDashboardInner({
     const address = parseAdminArea(new URLSearchParams(currentSearch));
     if (
       address.area === "events" &&
-      isAdminEventsQueueView(address.view) &&
+      (isAdminEventsQueueView(address.view) || address.view === "board") &&
       (activeTab !== "regattas" || eventsView !== address.view)
     ) {
       return;
@@ -464,7 +464,7 @@ function AdminDashboardInner({
     if (
       activeTab === "regattas" &&
       !sheet &&
-      isAdminEventsQueueView(eventsView)
+      (isAdminEventsQueueView(eventsView) || eventsView === "board")
     ) {
       params.set("view", eventsView);
     } else if (
