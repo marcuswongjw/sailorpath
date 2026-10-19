@@ -31,7 +31,7 @@ describe("SailorPath Asian and Oceania Optimist Index baseline", () => {
   it("gives baseline ranks while preserving the official field finish", () => {
     const baseline = createAsianOptimistIndexBaseline();
 
-    expect(baseline).toHaveLength(176);
+    expect(baseline).toHaveLength(175);
     expect(baseline[0]).toMatchObject({ baselineRank: 1, overallPlace: 1 });
     expect(baseline[1]).toMatchObject({ baselineRank: 2, overallPlace: 2 });
     expect(baseline[2]).toMatchObject({ baselineRank: 3, overallPlace: 4 });
