@@ -143,6 +143,22 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     resultStatus: "verified",
   },
   {
+    id: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Youth Thailand National Sailing Championship 2026 — Optimist",
+    hostCountry: "Thailand",
+    startDate: "2026-09-18",
+    endDate: "2026-09-20",
+    officialResultsUrl:
+      "https://sailingtech.in.th/preview/results/youth-thailand-2026/optimist-overall.html",
+    officialResultsSourceName:
+      "Official Youth Thailand National Sailing Championship 2026 final result sheet",
+    sailorPathRegattaSlug:
+      "youth-thailand-national-sailing-championship-2026-optimist",
+    usesSailorPathResults: true,
+    resultCount: 58,
+    resultStatus: "verified",
+  },
+  {
     id: "eastern-seaboard-regatta-2026",
     name: "Eastern Seaboard Regatta — Optimist",
     hostCountry: "Thailand",

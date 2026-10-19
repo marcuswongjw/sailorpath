@@ -163,6 +163,18 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
     isWorlds: false,
     scoreCap: 40,
   },
+  "youth-thailand-national-sailing-championship-2026-optimist": {
+    id: "youth-thailand-national-sailing-championship-2026-optimist",
+    shortName: "2026 Thailand Nationals",
+    hostCountry: "Thailand",
+    hostMna: "THA",
+    fleetSize: 58,
+    grade: 40,
+    year: 2026,
+    tier: "national",
+    isWorlds: false,
+    scoreCap: 40,
+  },
 } as const satisfies Record<string, AsianOptimistIndexScoredQualifier>;
 
 export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
@@ -177,6 +189,7 @@ export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
   { id: "thailand-international-sailing-championships-2026", shortName: "2026 Thailand Int'l", grade: 75 },
   // Grade 40 · National Championships
   { id: "snsc-gold-sep-26-2026-09-11", shortName: "2026 SNSC", grade: 40 },
+  { id: "youth-thailand-national-sailing-championship-2026-optimist", shortName: "2026 Thailand Nationals", grade: 40 },
 ] as const;
 
 
@@ -1176,7 +1189,56 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     name: "Yunxi Jin",
     nationality: "MAC",
     rank: 65,
-  }
+  },
+  // Youth Thailand National Sailing Championship 2026 (Grade 40, N=58)
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Rachata Sadtrakulwattana",
+    nationality: "THA",
+    rank: 1,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Sorawit Naksuk",
+    nationality: "THA",
+    rank: 2,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Pariyaporn Chantarawong",
+    nationality: "THA",
+    rank: 4,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Suthinan Nakpasom",
+    nationality: "THA",
+    rank: 5,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Surapha Muangngam",
+    nationality: "THA",
+    rank: 6,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Itthichai Tiathongchai",
+    nationality: "THA",
+    rank: 9,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Thawaree Raksapun",
+    nationality: "THA",
+    rank: 11,
+  },
+  {
+    qualifierId: "youth-thailand-national-sailing-championship-2026-optimist",
+    name: "Pakornkiat Chaiya-o-cha",
+    nationality: "THA",
+    rank: 17,
+  },
 ] as const satisfies readonly AsianOptimistIndexQualifierResultInput[];
 
 export type AsianOptimistIndexQualifierScore = {
