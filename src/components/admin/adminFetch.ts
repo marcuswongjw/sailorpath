@@ -42,7 +42,13 @@ export async function adminJson<T>(
       signal: controller.signal,
       ...rest,
     });
-    const body = (await response.json()) as T & {
+    const body = (await response.json().catch(() => {
+      if (controller.signal.aborted) throw controller.signal.reason;
+      throw new AdminRequestError(
+        response.ok ? "The server returned an unreadable response. Please retry." : `Request failed (${response.status})`,
+        response.status,
+      );
+    })) as T & {
       error?: string;
       detail?: string;
     };
@@ -123,6 +129,7 @@ export async function fetchAdminResultsForRegatta(
 }
 
 export type AdminOverviewPayload = {
+  resultCounts?: Record<string, number>;
   sheets: import("@/lib/admin/adminOverview").OverviewSheet[];
   ready: import("@/lib/admin/adminOverview").OverviewSheet[];
   missingResults: import("@/lib/admin/adminOverview").OverviewSheet[];

@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { formatAdminAuditDetails, type JsonValue } from "@/lib/adminAuditDetails";
@@ -23,12 +25,10 @@ export function AdminUserChangesPanel({ isSuperadmin }: { isSuperadmin: boolean 
   const query = useQuery({
     queryKey: ["admin", "user-changes", days, email, offset],
     enabled: isSuperadmin,
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const params = new URLSearchParams({ days: String(days), email, offset: String(offset) });
-      const response = await fetch(`/api/admin/user-changes?${params}`);
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Unable to load user changes");
-      return data as { changes: Change[]; hasMore: boolean };
+      return adminJson<{ changes: Change[]; hasMore: boolean }>(
+        `/api/admin/user-changes?${params}`, { signal });
     },
   });
 

@@ -19,6 +19,8 @@ import {
 export type AdminCompetitionsPanelProps = {
   competitionsSailorId: string | null;
   competitionsLoading: boolean;
+  competitionsError?: string | null;
+  onRetry?: () => void;
   sailorList: SailorAdmin[];
   regattaList: RegattaAdmin[];
   resultsList: ResultAdmin[];
@@ -40,6 +42,8 @@ function resultClass(reg: RegattaAdmin | undefined) {
 export function AdminCompetitionsPanel({
   competitionsSailorId,
   competitionsLoading,
+  competitionsError,
+  onRetry,
   sailorList,
   regattaList,
   resultsList,
@@ -125,6 +129,13 @@ export function AdminCompetitionsPanel({
         onClick={closeSailorResults}
       />
       <div className="relative z-10 w-full sm:max-w-4xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-orange-500/30 bg-[#0c0d14] shadow-2xl p-5 sm:p-6 space-y-4">
+        {competitionsError && (
+          <div role="alert" className="rounded-lg border border-amber-400 bg-amber-50 p-3 text-sm text-amber-950">
+            Results could not refresh. Any displayed results may be out of date.
+            {onRetry && <button type="button" onClick={onRetry} disabled={competitionsLoading}
+              className="ml-3 min-h-11 font-bold underline disabled:opacity-50">Retry results</button>}
+          </div>
+        )}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div>
             <h3 className="text-base font-black text-white flex items-center gap-2">
@@ -477,7 +488,7 @@ export function AdminCompetitionsPanel({
                   </tr>
                 );
               })}
-              {!competitionsLoading && sailorResults.length === 0 && (
+              {!competitionsLoading && !competitionsError && sailorResults.length === 0 && (
                 <tr>
                   <td
                     colSpan={9}

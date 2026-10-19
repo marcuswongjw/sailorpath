@@ -334,7 +334,6 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     colOn,
     seriesLabelOf,
     best3BySailor,
-    duplicatePairs,
     bulkField,
     setBulkField,
     bulkValue,
@@ -413,7 +412,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       href="/admin?area=sailors&view=duplicates"
                       className="text-[11px] font-bold text-orange-800 hover:text-orange-900"
                     >
-                      Review duplicates ({duplicatePairs.length}) · manage different sailors
+                      Review duplicates · manage different sailors
                     </Link>
                 </div>
 

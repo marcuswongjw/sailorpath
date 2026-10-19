@@ -111,6 +111,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
       {
+        resultCounts: Object.fromEntries(resultCounts),
         sheets: overview.sheets,
         ready: overview.ready,
         missingResults: overview.missingResults,

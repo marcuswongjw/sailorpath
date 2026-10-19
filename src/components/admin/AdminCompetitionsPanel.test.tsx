@@ -38,14 +38,16 @@ const results: ResultAdmin[] = [
   { id: "r1", sailorId: "ryan", regattaId: "cup1", rank: 1 },
 ];
 
-function renderPanel() {
+function renderPanel(error?: string) {
   return render(
     <AdminCompetitionsPanel
       competitionsSailorId="ryan"
       competitionsLoading={false}
+      competitionsError={error}
+      onRetry={() => {}}
       sailorList={[sailor]}
       regattaList={regattas}
-      resultsList={results}
+      resultsList={error ? [] : results}
       editingResultId={null}
       setEditingResultId={() => {}}
       resultForm={emptyResultForm()}
@@ -58,6 +60,12 @@ function renderPanel() {
 }
 
 describe("AdminCompetitionsPanel classes", () => {
+  it("does not claim an empty history when the initial read fails", () => {
+    renderPanel("Results unavailable");
+    expect(screen.getByRole("alert")).toHaveTextContent("Results could not refresh");
+    expect(screen.getByRole("button", { name: "Retry results" })).toBeInTheDocument();
+    expect(screen.queryByText(/No competitions logged/)).not.toBeInTheDocument();
+  });
   it("puts ILCA 7 results on the ILCA 7 tab", () => {
     renderPanel();
 

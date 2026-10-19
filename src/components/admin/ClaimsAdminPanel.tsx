@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -147,27 +149,22 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
 
   const updatesQuery = useQuery({
     queryKey: ["admin", "claimed-profile-updates"],
-    enabled: isSuperadmin,
-    queryFn: async () => {
-      try {
-        const res = await fetch("/api/admin/change-log?days=30&limit=100");
-        const data = await res.json();
-        if (!res.ok) return [];
-        const allChanges = (data.changes || []) as Array<{
-          id: string;
-          createdAt: string;
-          actorEmail: string | null;
-          action: string;
-          entityType: string;
-          entityId: string | null;
-          entityLabel: string | null;
-          summary: string;
-          details: unknown;
-        }>;
-        return allChanges.filter((c) => c.action === "claimed_profile.updated");
-      } catch {
-        return [];
-      }
+    enabled: isSuperadmin && filter === "updates",
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ changes?: unknown[] }>(
+        "/api/admin/change-log?days=30&limit=100", { signal });
+      const allChanges = (data.changes || []) as Array<{
+        id: string;
+        createdAt: string;
+        actorEmail: string | null;
+        action: string;
+        entityType: string;
+        entityId: string | null;
+        entityLabel: string | null;
+        summary: string;
+        details: unknown;
+      }>;
+      return allChanges.filter((c) => c.action === "claimed_profile.updated");
     },
   });
   const claimedUpdates = updatesQuery.data || [];
@@ -297,10 +294,8 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const claimsQuery = useQuery({
     queryKey: adminQueryKeys.claims(),
     enabled: isSuperadmin,
-    queryFn: async () => {
-      const res = await fetch("/api/admin/claims");
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load claims");
+    queryFn: async ({ signal }) => {
+      const data = await adminJson<{ claims?: ClaimRow[] }>("/api/admin/claims", { signal });
       return (data.claims || []) as ClaimRow[];
     },
   });
@@ -437,7 +432,15 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
 
       {filter === "updates" ? (
         <div className="w-full space-y-3">
-          {claimedUpdates.length === 0 ? (
+          {updatesQuery.isPending ? (
+            <p role="status" className="text-sm text-slate-600">Loading profile updates…</p>
+          ) : updatesQuery.isError ? (
+            <div role="alert" className="text-sm text-rose-700">
+              Profile updates could not load.
+              <button type="button" className="ml-3 min-h-11 font-bold underline"
+                onClick={() => void updatesQuery.refetch()}>Retry updates</button>
+            </div>
+          ) : claimedUpdates.length === 0 ? (
             <AdminEmptyState
               icon={Inbox}
               title="No claimed profile updates yet"

@@ -98,6 +98,7 @@ describe("GET /api/admin/overview", () => {
       ),
     );
     expect(response.status).toBe(200);
+    expect((await response.clone().json()).resultCounts).toEqual({ "reg-1": 12, "reg-2": 0 });
     const body = await response.json();
     expect(body.duplicateCount).toBeNull();
     expect(body.generatedAt).toEqual(expect.any(String));

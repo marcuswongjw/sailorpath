@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import {
   useCallback,
   useEffect,
@@ -500,9 +502,9 @@ export function AdminRegattasPanel({
 
   useEffect(() => {
     let cancelled = false;
-    void fetch("/api/admin/regatta-events", { credentials: "include" })
-      .then((res) => res.json())
-      .then((body: { events?: SavedCalendarEvent[] }) => {
+    const controller = new AbortController();
+    void adminJson<{ events?: SavedCalendarEvent[] }>("/api/admin/regatta-events", { signal: controller.signal })
+      .then((body) => {
         if (cancelled || !Array.isArray(body.events)) return;
         const next: Record<string, SavedCalendarEvent> = {};
         for (const event of body.events) next[event.slug] = event;
@@ -513,6 +515,7 @@ export function AdminRegattasPanel({
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, []);
 
@@ -600,15 +603,14 @@ export function AdminRegattasPanel({
   useEffect(() => {
     if (!editingRegattaId || editingRegattaId === "new") return;
     const controller = new AbortController();
-    void fetch(
+    void adminJson<{ readiness?: PublicationReadiness }>(
       `/api/admin/regatta-readiness?sheet=${encodeURIComponent(editingRegattaId)}`,
       {
         credentials: "include",
         signal: controller.signal,
       },
     )
-      .then((res) => res.json())
-      .then((body: { readiness?: PublicationReadiness }) => {
+      .then((body) => {
         setReadiness(body.readiness ?? null);
       })
       .catch((err: unknown) => {
@@ -634,17 +636,13 @@ export function AdminRegattasPanel({
 
     const fetchBatchReadiness = async () => {
       try {
-        const res = await fetch(
+        const body = await adminJson<{ readinessBySheet?: Record<string, PublicationReadiness> }>(
           `/api/admin/regatta-readiness?sheets=${encodeURIComponent(ids.join(","))}`,
           {
             credentials: "include",
             signal: controller.signal,
           },
         );
-        if (!res.ok) return;
-        const body = (await res.json()) as {
-          readinessBySheet?: Record<string, PublicationReadiness>;
-        };
         if (body.readinessBySheet) {
           setCardReadiness(body.readinessBySheet);
         }

@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useCallback, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -91,11 +93,7 @@ export function AdminSuggestionsPanel({
     setBusy(true);
     setErr(null);
     try {
-      const res = await fetch("/api/admin/regatta-suggestions", {
-        credentials: "include",
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load");
+      const data = await adminJson<{ suggestions?: Suggestion[] }>("/api/admin/regatta-suggestions");
       setItems(data.suggestions || []);
       const forms: typeof promoteForm = {};
       for (const s of data.suggestions || []) {
@@ -115,15 +113,12 @@ export function AdminSuggestionsPanel({
 
   useEffect(() => {
     let ignore = false;
+    const controller = new AbortController();
     async function fetchData() {
       setBusy(true);
       setErr(null);
       try {
-        const res = await fetch("/api/admin/regatta-suggestions", {
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Failed to load");
+        const data = await adminJson<{ suggestions?: Suggestion[] }>("/api/admin/regatta-suggestions", { signal: controller.signal });
         if (!ignore) {
           setItems(data.suggestions || []);
           const forms: typeof promoteForm = {};
@@ -145,6 +140,7 @@ export function AdminSuggestionsPanel({
     fetchData();
     return () => {
       ignore = true;
+      controller.abort();
     };
   }, []);
 

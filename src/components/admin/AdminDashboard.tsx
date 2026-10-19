@@ -258,6 +258,10 @@ function AdminDashboardInner({
 
   const [activeTab, setActiveTab] = useState<AdminActiveTab>(initialNav.tab);
   const [editSubTab, setEditSubTab] = useState<AdminEditSubTab>(initialNav.sub);
+  const [eventsView, setEventsView] = useState<AdminEventsView>(() =>
+    eventsViewFrom(searchParams),
+  );
+
 
   const {
     user,
@@ -272,6 +276,7 @@ function AdminDashboardInner({
     isSuperadmin,
     activeTab,
     editSubTab,
+    eventsView,
   });
   const setSelectedRegattaIdForResultEdit =
     data.setSelectedRegattaIdForResultEdit;
@@ -319,11 +324,8 @@ function AdminDashboardInner({
     setCompetitionsSailorId: competitions.setCompetitionsSailorId,
     invalidateSailors: data.invalidateSailors,
     invalidateResults: data.invalidateResults,
-    loadRankingSummary:
-      activeTab === "analysis" ||
-      activeTab === "ilca" ||
-      (activeTab === "edit" &&
-        (editSubTab === "sailors" || editSubTab === "selection")),
+    loadDuplicateReview: activeTab === "edit" && editSubTab === "duplicates",
+    loadRankingSummary: activeTab === "edit" && editSubTab === "sailors",
   });
 
   const regattas = useAdminRegattas({
@@ -341,9 +343,6 @@ function AdminDashboardInner({
   const [importSheetId, setImportSheetId] = useState<string | null>(null);
   const [selectedEventSlug, setSelectedEventSlug] = useState<string | null>(
     () => parseAdminArea(searchParams).event,
-  );
-  const [eventsView, setEventsView] = useState<AdminEventsView>(() =>
-    eventsViewFrom(searchParams),
   );
   const currentSearch = searchParams.toString();
   const acceptedSearch = useRef(currentSearch);
@@ -744,17 +743,22 @@ function AdminDashboardInner({
 
         <div className="flex-1 flex flex-col w-full min-w-0">
           {data.dataLoadError && (
-            <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+            <div role="alert" className="mb-4 rounded-xl border border-rose-300 bg-rose-50 px-4 py-3 text-sm text-rose-900">
               {data.dataLoadError}
+              <button type="button" onClick={() => void data.retryActiveData()} disabled={data.dataLoading}
+                className="ml-3 min-h-11 font-bold underline disabled:opacity-50">
+                {data.dataLoading ? "Retrying…" : "Retry workspace"}
+              </button>
             </div>
           )}
           {data.dataLoading && (
-            <div className="mb-4 flex items-center gap-2 text-xs text-slate-400">
+            <div role="status" className="mb-4 flex items-center gap-2 text-xs text-slate-600">
               <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
-              Loading this workspace…
+              {data.dataReady ? "Refreshing this workspace…" : "Loading this workspace…"}
             </div>
           )}
 
+          {data.dataReady && <>
           {activeTab === "overview" && (
             <AdminOverviewPanel
               inboxQueueCounts={inboxQueueCounts}
@@ -768,7 +772,7 @@ function AdminDashboardInner({
               {eventsView === "board" ? (
                 <AdminBoardClassesPanel
                   regattas={data.regattaList}
-                  results={data.resultsList}
+                  results={data.hasFullResults ? data.resultsList : undefined}
                   onOpenClass={(key) => {
                     regattas.panelProps.setRegattaSearch("");
                     regattas.panelProps.setRegattaDivisionFilter("all");
@@ -816,7 +820,7 @@ function AdminDashboardInner({
                       setSelectedRegattaIdForResultEdit(sheetId);
                       setActiveTab("import");
                     }}
-                    resultsEditor={
+                    resultsEditor={data.resultsEditorReady ? (
                       <AdminResultsPanel
                         embedded
                         isSuperadmin={isSuperadmin}
@@ -825,7 +829,11 @@ function AdminDashboardInner({
                         resultsList={data.resultsList}
                         {...results.panelProps}
                       />
-                    }
+                    ) : (
+                      <p role="status" className="p-5 text-sm text-slate-600">
+                        {data.dataLoadError ? "Class results are unavailable. Use Retry workspace to try again." : "Loading class results…"}
+                      </p>
+                    )}
                     readinessRevision={JSON.stringify({
                       sheet: selectedRegatta,
                       results: data.resultsList.filter(
@@ -999,27 +1007,14 @@ function AdminDashboardInner({
               <div className="w-full min-w-0 min-h-[50vh]">
                 {areaState.area === "inbox" && (
                   <div className="w-full min-w-0 space-y-4">
-                    <div hidden={editSubTab !== "suggestions"}>
-                      {isSuperadmin ? (
-                        <AdminSuggestionsPanel
-                          onRegattaUpdated={data.patchRegattaPartial}
-                        />
-                      ) : (
-                        <p className="text-sm text-slate-500">
-                          Suggestions require superadmin.
-                        </p>
-                      )}
-                    </div>
-
-                    <div hidden={editSubTab !== "claims"}>
-                      <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
-                    </div>
-                    <div hidden={editSubTab !== "coaches"}>
-                      <CoachAccessAdminPanel isSuperadmin={isSuperadmin} />
-                    </div>
-                    <div hidden={editSubTab !== "support"}>
-                      <SupportInboxPanel isSuperadmin={isSuperadmin} />
-                    </div>
+                    {editSubTab === "suggestions" && (isSuperadmin ? (
+                      <AdminSuggestionsPanel onRegattaUpdated={data.patchRegattaPartial} />
+                    ) : (
+                      <p className="text-sm text-slate-500">Suggestions require superadmin.</p>
+                    ))}
+                    {editSubTab === "claims" && <ClaimsAdminPanel isSuperadmin={isSuperadmin} />}
+                    {editSubTab === "coaches" && <CoachAccessAdminPanel isSuperadmin={isSuperadmin} />}
+                    {editSubTab === "support" && <SupportInboxPanel isSuperadmin={isSuperadmin} />}
                   </div>
                 )}
 
@@ -1076,12 +1071,15 @@ function AdminDashboardInner({
               <AdminProductChangelogPanel auditHref="/admin?area=settings&view=audit" />
             </div>
           )}
+          </>}
         </div>
 
         {competitions.competitionsSailorId && (
           <AdminCompetitionsPanel
             competitionsSailorId={competitions.competitionsSailorId}
             competitionsLoading={competitions.competitionsLoading}
+            competitionsError={competitions.competitionsError}
+            onRetry={() => void competitions.openSailorResults(competitions.competitionsSailorId!)}
             sailorList={data.sailorList}
             regattaList={data.regattaList}
             resultsList={data.resultsList}

@@ -1,5 +1,7 @@
 "use client";
 
+import { adminJson } from "./adminFetch";
+
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { invalidateAdminSummaries } from "./invalidateAdminSummaries";
@@ -28,13 +30,11 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const messagesQuery = useQuery({
     queryKey: adminQueryKeys.support(filter),
     enabled: isSuperadmin,
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const q =
         filter === "all" ? "" : `?status=${filter === "resolved" ? "resolved" : "new"}`;
-      const res = await fetch(`/api/support${q}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load");
-      return (data.messages || []) as Msg[];
+      const data = await adminJson<{ messages?: Msg[] }>(`/api/support${q}`, { signal });
+      return data.messages || [];
     },
   });
   const messages = messagesQuery.data ?? [];
