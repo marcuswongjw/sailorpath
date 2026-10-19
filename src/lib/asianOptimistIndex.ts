@@ -2007,7 +2007,18 @@ export function asianOptimistIndexIdentityKey(name: string, nationality: string)
 }
 
 export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
-  return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.map((entry, index) => {
+  return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.flatMap((sourceEntry, index) => {
+    // Confirmed by the user on 19 October 2026: Yuxuan Li and Lyric Li
+    // Yuxuan are one SGP sailor. Keep the original source rows above for
+    // reconciliation, but combine the championship and qualifier identity.
+    if (sourceEntry.name === "Lyric Li Yuxuan" && sourceEntry.nationality === "SGP") {
+      return [];
+    }
+    const entry: AsianOptimistIndexSourceEntry =
+      sourceEntry.name === "Yuxuan Li" && sourceEntry.nationality === "CHN"
+        ? { ...sourceEntry, name: "Lyric Li Yuxuan", nationality: "SGP",
+            country: "Singapore", sailNumber: "SGP 154" }
+        : sourceEntry;
     const identityKey = asianOptimistIndexIdentityKey(entry.name, entry.nationality);
     const profile: AsianOptimistIndexProfileManifestEntry | undefined =
       ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST[
@@ -2018,7 +2029,7 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
         identityKey as keyof typeof ASIAN_OPTIMIST_INDEX_DUPLICATE_REVIEWS
       ];
 
-    return {
+    return [{
       ...entry,
       identityKey,
       baselineRank: index + 1,
@@ -2029,6 +2040,6 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
       // the public Index page from blocking on a DB lookup.
       profileHref: profile ? `/${profile.handle}` : null,
       profileReview: profileReview ?? null,
-    };
+    }];
   });
 }
