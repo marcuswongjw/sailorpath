@@ -12,14 +12,14 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     const entries = createAsianOptimistIndexProvisionalEntries();
     const ilzani = entries.find((entry) => entry.name === "Khairulilzani Afendy")!;
     expect(ilzani).toMatchObject({
-      provisionalRank: 29,
+      provisionalRank: 34,
       provisionalScore: 158.54,
       eligibleStarts: 3,
       hostCountryCount: 2,
     });
     expect(ilzani.qualifierResults.map((r) => r.rank).sort((a, b) => a - b)).toEqual([4, 9]);
     expect(ilzani.scoredQualifiers).toHaveLength(1);
-    expect(ilzani.scoredQualifiers[0]).toMatchObject({ rank: 4, qualifier: { shortName: "LIRP" } });
+    expect(ilzani.scoredQualifiers[0]).toMatchObject({ rank: 4, qualifier: { shortName: "2026 LIRP" } });
   });
 
   it("normalises a verified final classification to a 0–100 event score", () => {
@@ -35,17 +35,28 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
 
     // Top 6 under V1 (Beta) formula (Points = E * (N - P + 1) / N)
     expect(entries.slice(0, 6).map((entry) => entry.name)).toEqual([
+      "Lucas Cao",
       "Anya Zahedi",
       "Margaux Nguyen-Minh",
-      "Lucas Cao",
       "Rohan Maliah",
       "Suthinan Nakpasom",
       "Tara Maliah",
     ]);
 
+    const lucas = entries.find((entry) => entry.name === "Lucas Cao")!;
+    expect(lucas).toMatchObject({
+      provisionalRank: 1,
+      provisionalScore: 396.25,
+      championshipPoints: 263.15,
+      qualifierPoints: 133.1,
+      eligibleStarts: 4,
+      countedResultsCount: 4,
+      hostCountryCount: 4,
+    });
+
     const anya = entries.find((entry) => entry.name === "Anya Zahedi")!;
     expect(anya).toMatchObject({
-      provisionalRank: 1,
+      provisionalRank: 2,
       provisionalScore: 385.6,
       championshipPoints: 217.43,
       qualifierPoints: 168.16,
@@ -74,7 +85,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
 
     const sorawit = entries.find((entry) => entry.name === "Sorawit Naksuk")!;
     expect(sorawit).toMatchObject({
-      provisionalRank: 8,
+      provisionalRank: 9,
       provisionalScore: 294,
       championshipPoints: 221.83,
       qualifierPoints: 72.17,
@@ -116,7 +127,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(walterHeeley).toMatchObject({
       nationality: "AUS",
       overallPlace: null,
-      provisionalRank: 38,
+      provisionalRank: 47,
       provisionalScore: 141.55,
       championshipPoints: 141.55,
       profileHref: "/walter-heeley-worlds26-c34abc",
@@ -126,11 +137,30 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(auroraEdhouse).toMatchObject({
       nationality: "NZL",
       overallPlace: null,
-      provisionalRank: 52,
+      provisionalRank: 62,
       provisionalScore: 126.64,
       championshipPoints: 126.64,
       profileHref: "/aurora-edhouse-euro26-ba2f7c",
     });
+  });
+
+  it("backfills and scores Elijah Ong across all his verified regional and championship events", () => {
+    const entries = createAsianOptimistIndexProvisionalEntries();
+    const elijah = entries.find((entry) => entry.name === "Elijah Ong")!;
+
+    expect(elijah).toMatchObject({
+      provisionalRank: 22,
+      provisionalScore: 200.48,
+      eligibleStarts: 4,
+      countedResultsCount: 4,
+      hostCountryCount: 3,
+    });
+    expect(elijah.scoredQualifiers.map((sq) => sq.qualifier.shortName).sort()).toEqual([
+      "2026 Europeans",
+      "2026 HKRW",
+      "2026 SNSC",
+      "2026 SYSC",
+    ]);
   });
 
   it("only awards inputs that belong to the cohort", () => {

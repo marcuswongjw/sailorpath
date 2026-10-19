@@ -57,7 +57,7 @@ export type AsianOptimistIndexScoredQualifier = {
 export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   "optimist-worlds-2026": {
     id: "optimist-worlds-2026",
-    shortName: "Worlds",
+    shortName: "2026 Worlds",
     hostCountry: "Morocco",
     hostMna: "MAR",
     fleetSize: 284,
@@ -69,7 +69,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "optimist-europeans-2026-boys": {
     id: "optimist-europeans-2026-boys",
-    shortName: "Europeans",
+    shortName: "2026 Europeans",
     hostCountry: "Poland",
     hostMna: "POL",
     fleetSize: 170,
@@ -81,7 +81,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "optimist-europeans-2026-girls": {
     id: "optimist-europeans-2026-girls",
-    shortName: "Europeans",
+    shortName: "2026 Europeans",
     hostCountry: "Poland",
     hostMna: "POL",
     fleetSize: 122,
@@ -93,7 +93,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "lysc-2026-optimist-gold": {
     id: "lysc-2026-optimist-gold",
-    shortName: "LYSC",
+    shortName: "2026 LYSC",
     hostCountry: "Malaysia",
     hostMna: "MAS",
     fleetSize: 50,
@@ -105,7 +105,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "langkawi-international-regatta-perdana-2026": {
     id: "langkawi-international-regatta-perdana-2026",
-    shortName: "LIRP",
+    shortName: "2026 LIRP",
     hostCountry: "Malaysia",
     hostMna: "MAS",
     fleetSize: 59,
@@ -117,7 +117,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "sysc-2026-gold": {
     id: "sysc-2026-gold",
-    shortName: "SYSC",
+    shortName: "2026 SYSC",
     hostCountry: "Singapore",
     hostMna: "SGP",
     fleetSize: 106,
@@ -129,7 +129,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "thailand-international-sailing-championships-2026": {
     id: "thailand-international-sailing-championships-2026",
-    shortName: "Thailand Int'l",
+    shortName: "2026 Thailand Int'l",
     hostCountry: "Thailand",
     hostMna: "THA",
     fleetSize: 65,
@@ -141,7 +141,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "hong-kong-race-week-2026-optimist-main": {
     id: "hong-kong-race-week-2026-optimist-main",
-    shortName: "HKRW",
+    shortName: "2026 HKRW",
     hostCountry: "Hong Kong",
     hostMna: "HKG",
     fleetSize: 77,
@@ -153,7 +153,7 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
   },
   "snsc-gold-sep-26-2026-09-11": {
     id: "snsc-gold-sep-26-2026-09-11",
-    shortName: "SNSC",
+    shortName: "2026 SNSC",
     hostCountry: "Singapore",
     hostMna: "SGP",
     fleetSize: 83,
@@ -167,16 +167,16 @@ export const ASIAN_OPTIMIST_INDEX_SCORED_QUALIFIERS = {
 
 export const ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS = [
   // Grade 150 · Championships
-  { id: "optimist-worlds-2026", shortName: "Worlds", grade: 150 },
-  { id: "optimist-europeans-2026", shortName: "Europeans", grade: 150 },
+  { id: "optimist-worlds-2026", shortName: "2026 Worlds", grade: 150 },
+  { id: "optimist-europeans-2026", shortName: "2026 Europeans", grade: 150 },
   // Grade 75 · International Opens
-  { id: "hong-kong-race-week-2026-optimist-main", shortName: "HKRW", grade: 75 },
-  { id: "lysc-2026-optimist-gold", shortName: "LYSC", grade: 75 },
-  { id: "langkawi-international-regatta-perdana-2026", shortName: "LIRP", grade: 75 },
-  { id: "sysc-2026-gold", shortName: "SYSC", grade: 75 },
-  { id: "thailand-international-sailing-championships-2026", shortName: "Thailand Int'l", grade: 75 },
+  { id: "hong-kong-race-week-2026-optimist-main", shortName: "2026 HKRW", grade: 75 },
+  { id: "lysc-2026-optimist-gold", shortName: "2026 LYSC", grade: 75 },
+  { id: "langkawi-international-regatta-perdana-2026", shortName: "2026 LIRP", grade: 75 },
+  { id: "sysc-2026-gold", shortName: "2026 SYSC", grade: 75 },
+  { id: "thailand-international-sailing-championships-2026", shortName: "2026 Thailand Int'l", grade: 75 },
   // Grade 40 · National Championships
-  { id: "snsc-gold-sep-26-2026-09-11", shortName: "SNSC", grade: 40 },
+  { id: "snsc-gold-sep-26-2026-09-11", shortName: "2026 SNSC", grade: 40 },
 ] as const;
 
 
@@ -194,6 +194,7 @@ export type AsianOptimistIndexQualifierResultInput = {
  * All source-reviewed qualifying finishes for the cohort as at the release date.
  */
 export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
+  // 5th LYSC 2026 Gold (Grade 75, N=50)
   {
     qualifierId: "lysc-2026-optimist-gold",
     name: "Yaasin Syahrizan",
@@ -220,9 +221,29 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   },
   {
     qualifierId: "lysc-2026-optimist-gold",
+    name: "Lydia Lukman",
+    nationality: "MAS",
+    rank: 23,
+  },
+  {
+    qualifierId: "lysc-2026-optimist-gold",
     name: "Gon Yee Zaw",
     nationality: "MYA",
     rank: 34,
+  },
+  {
+    qualifierId: "lysc-2026-optimist-gold",
+    name: "Nicole Wong Jing Chen",
+    nationality: "SGP",
+    rank: 35,
+  },
+
+  // Langkawi International Regatta Perdana 2026 (Grade 75, N=59)
+  {
+    qualifierId: "langkawi-international-regatta-perdana-2026",
+    name: "Yaasin Syahrizan",
+    nationality: "MAS",
+    rank: 1,
   },
   {
     qualifierId: "langkawi-international-regatta-perdana-2026",
@@ -239,10 +260,42 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     rank: 4,
   },
   {
+    qualifierId: "langkawi-international-regatta-perdana-2026",
+    name: "Lydia Lukman",
+    nationality: "MAS",
+    rank: 9,
+  },
+  {
+    qualifierId: "langkawi-international-regatta-perdana-2026",
+    name: "Mia Azrania",
+    nationality: "MAS",
+    rank: 12,
+  },
+  {
+    qualifierId: "langkawi-international-regatta-perdana-2026",
+    name: "Itthichai Tiathongchai",
+    nationality: "THA",
+    rank: 15,
+  },
+  {
+    qualifierId: "langkawi-international-regatta-perdana-2026",
+    name: "PUNTHITA WEROTJANAKUL",
+    nationality: "THA",
+    rank: 30,
+  },
+
+  // Singapore Youth Sailing Championships 2026 (Grade 75, N=106)
+  {
     qualifierId: "sysc-2026-gold",
     name: "Wenyu Cheng",
     nationality: "CHN",
     rank: 1,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Ashlyn Tham Yan Lin",
+    nationality: "SGP",
+    rank: 2,
   },
   {
     qualifierId: "sysc-2026-gold",
@@ -270,9 +323,51 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   },
   {
     qualifierId: "sysc-2026-gold",
+    name: "Kevin Ho Jun Yi",
+    nationality: "SGP",
+    rank: 7,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
     name: "Alyssa Wong",
     nationality: "SGP",
     rank: 9,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Xuan Ya Tong",
+    nationality: "KSA",
+    rank: 10,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Ethan Lee",
+    nationality: "SGP",
+    rank: 11,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Pariyaporn Chantarawong",
+    nationality: "THA",
+    rank: 12,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Elijah Ong",
+    nationality: "SGP",
+    rank: 13,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Lucas Cao",
+    nationality: "SGP",
+    rank: 18,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Decimus Chan",
+    nationality: "HKG",
+    rank: 19,
   },
   {
     qualifierId: "sysc-2026-gold",
@@ -282,9 +377,51 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   },
   {
     qualifierId: "sysc-2026-gold",
+    name: "Surapha Muangngam",
+    nationality: "THA",
+    rank: 22,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Darian Huang",
+    nationality: "SGP",
+    rank: 26,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Wang Sun Chen",
+    nationality: "MAC",
+    rank: 29,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
     name: "Shringhari Roy",
     nationality: "IND",
     rank: 42,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Nicole Wong Jing Chen",
+    nationality: "SGP",
+    rank: 43,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Ravi Kumar Benneollu",
+    nationality: "IND",
+    rank: 46,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Krishna Ramakrishnan",
+    nationality: "IND",
+    rank: 47,
+  },
+  {
+    qualifierId: "sysc-2026-gold",
+    name: "Rameeza Bh Sk",
+    nationality: "IND",
+    rank: 48,
   },
   {
     qualifierId: "sysc-2026-gold",
@@ -293,16 +430,68 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     rank: 90,
   },
   {
+    qualifierId: "sysc-2026-gold",
+    name: "William Poon",
+    nationality: "INA",
+    rank: 104,
+  },
+
+  // Thailand International Sailing Championships 2026 (Grade 75, N=65)
+  {
     qualifierId: "thailand-international-sailing-championships-2026",
     name: "Suthinan Nakpasom",
     nationality: "THA",
     rank: 1,
   },
   {
+    qualifierId: "thailand-international-sailing-championships-2026",
+    name: "Thawaree Raksapun",
+    nationality: "THA",
+    rank: 2,
+  },
+  {
+    qualifierId: "thailand-international-sailing-championships-2026",
+    name: "Itthichai Tiathongchai",
+    nationality: "THA",
+    rank: 3,
+  },
+  {
+    qualifierId: "thailand-international-sailing-championships-2026",
+    name: "Pakornkiat Chaiya-o-cha",
+    nationality: "THA",
+    rank: 8,
+  },
+  {
+    qualifierId: "thailand-international-sailing-championships-2026",
+    name: "PUNTHITA WEROTJANAKUL",
+    nationality: "THA",
+    rank: 11,
+  },
+
+  // Singapore National Sailing Championships 2026 (Grade 40, N=83)
+  {
     qualifierId: "snsc-gold-sep-26-2026-09-11",
     name: "Alyssa Wong",
     nationality: "SGP",
     rank: 1,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Ashlyn Tham Yan Lin",
+    nationality: "SGP",
+    rank: 2,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Kevin Ho Jun Yi",
+    nationality: "SGP",
+    rank: 5,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Elijah Ong",
+    nationality: "SGP",
+    rank: 6,
   },
   {
     qualifierId: "snsc-gold-sep-26-2026-09-11",
@@ -318,6 +507,18 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
   },
   {
     qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Darian Huang",
+    nationality: "SGP",
+    rank: 10,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "William Poon",
+    nationality: "INA",
+    rank: 16,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
     name: "Wenyu Cheng",
     nationality: "CHN",
     rank: 18,
@@ -327,6 +528,24 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
     name: "Ethan Low",
     nationality: "SGP",
     rank: 22,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Nicole Wong Jing Chen",
+    nationality: "SGP",
+    rank: 30,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Liu Qi Heng",
+    nationality: "HKG",
+    rank: 49,
+  },
+  {
+    qualifierId: "snsc-gold-sep-26-2026-09-11",
+    name: "Lyric Li Yuxuan",
+    nationality: "SGP",
+    rank: 81,
   },
   {
     qualifierId: "optimist-worlds-2026",
