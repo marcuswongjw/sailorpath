@@ -28,7 +28,7 @@ const history = [
 const sailorPathLinks = [
   ["/sg/optimist/gold", "Singapore Optimist Gold, Best 3 of 5"],
   ["/sg/optimist/silver", "Singapore Optimist Silver, Best 3 of 5"],
-  ["/sg/optimist/selection", "Singapore Optimist selection trials"],
+  ["/sg/optimist/selection", "2026 Singapore Optimist selection trials"],
   ["/optimist/asian-index", "Asian and Oceania Optimist Index, V1 (Beta)"],
   ["/optimist/asian-index/methodology", "Index methodology"],
 ] as const;
@@ -90,9 +90,6 @@ export default function OptimistClassHub() {
         <h2 id="optimist-history-heading" className="mt-2 text-2xl font-black text-harbour-shadow">
           From a Florida pram to the International Optimist
         </h2>
-        <p className="mt-2 text-sm leading-6 text-slate-soft">
-          Both milestones come from the account published by IODA. Neither is a SailorPath ranking.
-        </p>
         <ol className="mt-5 space-y-4 border-l border-cool-veil pl-5">
           {history.map((item) => (
             <li key={item.year} className="relative">
@@ -119,8 +116,8 @@ export default function OptimistClassHub() {
           On SailorPath
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-soft">
-          Singapore Gold and Silver are Best 3 of 5 series. The Asian and Oceania Optimist Index
-          is V1 (Beta), an independent SailorPath index, not an official IODA or national federation ranking.
+          Singapore Gold and Silver Fleet Ranking. The SailorPath Asian and Oceania Optimist Index
+          is an independent SailorPath initiative, not an official index. It is currently in beta version.
         </p>
         <ul className="mt-4 flex flex-wrap gap-3">
           {sailorPathLinks.map(([href, label]) => (

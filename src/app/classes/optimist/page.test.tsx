@@ -25,8 +25,12 @@ describe("Optimist class hub", () => {
     expect(html).toContain('href="/sg/optimist/selection"');
     expect(html).toContain('href="/optimist/asian-index"');
     expect(html).toContain('href="/optimist/asian-index/methodology"');
-    expect(html).toContain("not an official IODA or national federation ranking");
-    expect(html).toContain("V1 (Beta)");
+    expect(html).toContain("2026 Singapore Optimist selection trials");
+    expect(html).toContain("Singapore Gold and Silver Fleet Ranking.");
+    expect(html).toContain(
+      "an independent SailorPath initiative, not an official index. It is currently in beta version.",
+    );
+    expect(html).not.toContain("Both milestones come from the account published by IODA.");
     expect(html).not.toContain('href="/sg/optimist/asian-index"');
     expect(html).not.toContain('href="/classes/optimist/sg/gold"');
     expect(html).not.toContain("<table");
