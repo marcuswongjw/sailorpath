@@ -17,8 +17,8 @@ const hubs = [
   {
     href: "/classes/optimist",
     name: "Optimist",
-    status: "Live standings",
-    note: "Gateway to Singapore Gold and Silver, selection trials, and the Asian and Oceania Index.",
+    status: "Class",
+    note: "The one-design pram for young sailors, with class history and links to the Singapore standings.",
   },
 ] as const;
 

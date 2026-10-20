@@ -1,38 +1,36 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Optimist class hub | SailorPath",
   description:
-    "Gateway to Singapore Optimist Gold and Silver standings, selection trials, and the SailorPath Asian and Oceania Optimist Index.",
+    "The Optimist is a single-handed one-design pram for young sailors. Class history from the International Optimist Dinghy Association, plus SailorPath links.",
   alternates: { canonical: "/classes/optimist" },
 };
 
-const products = [
+const iodaHistoryHref =
+  "https://www.optiworld.org/default/news/new/text/clark-mills-the-designer-of-the-optimist-inducted-into-us-hall-of-fame";
+
+const history = [
   {
-    href: "/sg/optimist/gold",
-    title: "Singapore Optimist Gold",
-    detail: "Best 3 of 5 series standings for the Gold fleet.",
+    year: "1947",
+    title: "Clearwater, Florida",
+    body: "Clark Mills designed the pram for the Optimist Club after Clifford McKay asked for a cheap boat children could build and sail. Mills gave the design away and took no royalties. This is class history, not a SailorPath ranking.",
   },
   {
-    href: "/sg/optimist/silver",
-    title: "Singapore Optimist Silver",
-    detail: "Best 3 of 5 series standings for the Silver fleet.",
-  },
-  {
-    href: "/optimist/asian-index",
-    title: "Asian and Oceania Optimist Index",
-    detail: "V1 (Beta). Open the live index for the current calculation.",
+    year: "1958",
+    title: "Denmark",
+    body: "Axel Damgaard took a boat home to Denmark. The rig was modified, and that boat became the International Optimist. This is class history, not a SailorPath ranking.",
   },
 ] as const;
 
-const moreLinks = [
+const sailorPathLinks = [
+  ["/sg/optimist/gold", "Singapore Optimist Gold, Best 3 of 5"],
+  ["/sg/optimist/silver", "Singapore Optimist Silver, Best 3 of 5"],
   ["/sg/optimist/selection", "Singapore Optimist selection trials"],
+  ["/optimist/asian-index", "Asian and Oceania Optimist Index, V1 (Beta)"],
   ["/optimist/asian-index/methodology", "Index methodology"],
-  ["/how-rankings-work", "How the rankings work"],
-  ["/results", "Results"],
-  ["/calendar", "Calendar"],
-  ["/sailors", "Sailors"],
 ] as const;
 
 export default function OptimistClassHub() {
@@ -43,13 +41,22 @@ export default function OptimistClassHub() {
           Class hub
         </p>
         <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">
-          Optimist on SailorPath
+          The Optimist
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-soft-aqua sm:text-lg">
-          A gateway to Optimist pages that already exist. This page does not
-          copy a standings table and it does not calculate a new rank.
+          A single-handed one-design pram for young sailors, with a sprit sail.
+          The International Optimist Dinghy Association administers the class.
         </p>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href="https://www.optiworld.org/"
+            target="_blank"
+            rel="noreferrer"
+            className="sp-primary inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold"
+          >
+            <ExternalLink className="h-4 w-4" />
+            IODA
+          </a>
           <Link
             href="/classes"
             className="inline-flex items-center gap-2 rounded-xl border border-soft-aqua/40 px-4 py-2.5 text-sm font-bold text-sailcloth hover:bg-white/10"
@@ -59,71 +66,64 @@ export default function OptimistClassHub() {
         </div>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-3" aria-label="Optimist hub status">
+      <section className="grid gap-4 md:grid-cols-2" aria-label="Optimist class description">
         <article className="rounded-2xl border border-cool-veil bg-warm-white p-5">
-          <p className="text-xs font-bold uppercase tracking-wider text-harbour">What this page is</p>
-          <p className="mt-2 text-lg font-black text-harbour-shadow">A gateway</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-harbour">The boat</p>
+          <p className="mt-2 text-lg font-black text-harbour-shadow">Closed one-design</p>
           <p className="mt-2 text-sm leading-6 text-slate-soft">
-            Rankings and results stay on their own pages. This hub only links to them.
+            IODA class rules say that, except where a variation is allowed, Optimists are alike
+            in hull, construction, weight, spars, and sail plan.
           </p>
         </article>
         <article className="rounded-2xl border border-cool-veil bg-warm-white p-5">
-          <p className="text-xs font-bold uppercase tracking-wider text-harbour">Singapore series</p>
-          <p className="mt-2 text-lg font-black text-harbour-shadow">Gold and Silver</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-harbour">Who races it</p>
+          <p className="mt-2 text-lg font-black text-harbour-shadow">Through the year they turn 15</p>
           <p className="mt-2 text-sm leading-6 text-slate-soft">
-            Each fleet uses Best 3 of 5. They are separate from the Asian and Oceania Index.
-          </p>
-        </article>
-        <article className="rounded-2xl border border-cool-veil bg-warm-white p-5">
-          <p className="text-xs font-bold uppercase tracking-wider text-harbour">Index</p>
-          <p className="mt-2 text-lg font-black text-harbour-shadow">V1 (Beta)</p>
-          <p className="mt-2 text-sm leading-6 text-slate-soft">
-            An independent SailorPath index, not an official IODA or national federation ranking.
+            IODA championship eligibility allows a sailor to enter until 31 December of the year
+            in which they turn 15. That is the IODA championship rule.
           </p>
         </article>
       </section>
 
-      <section className="space-y-4" aria-labelledby="optimist-products-heading">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Open a record</p>
-          <h2 id="optimist-products-heading" className="mt-2 text-2xl font-black text-harbour-shadow">
-            Three Optimist products
-          </h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {products.map((product) => (
-            <Link
-              key={product.href}
-              href={product.href}
-              className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-xs hover:border-harbour"
-            >
-              <h3 className="text-lg font-bold text-harbour-shadow">{product.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-soft">{product.detail}</p>
-            </Link>
-          ))}
-        </div>
-        <aside className="rounded-2xl border border-harbour/20 bg-aqua-mist p-5 sm:p-6">
-          <h2 className="text-lg font-black text-harbour-shadow">About the index</h2>
-          <p className="mt-2 text-sm leading-6 text-charcoal">
-            The SailorPath Asian and Oceania Optimist Index is an independent analytical index.
-            It is not an official IODA or national federation ranking. The live index shows who is included
-            and when it was last calculated.
-          </p>
-          <Link
-            href="/optimist/asian-index/methodology"
-            className="mt-4 inline-flex text-sm font-bold text-harbour hover:underline"
-          >
-            Read the V1 (Beta) methodology →
-          </Link>
-        </aside>
-      </section>
-
-      <section aria-labelledby="optimist-more-heading">
-        <h2 id="optimist-more-heading" className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">
-          Also on SailorPath
+      <section className="rounded-2xl border border-cool-veil bg-warm-white p-5 sm:p-6" aria-labelledby="optimist-history-heading">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Class history</p>
+        <h2 id="optimist-history-heading" className="mt-2 text-2xl font-black text-harbour-shadow">
+          From a Florida pram to the International Optimist
         </h2>
+        <p className="mt-2 text-sm leading-6 text-slate-soft">
+          Both milestones come from the account published by IODA. Neither is a SailorPath ranking.
+        </p>
+        <ol className="mt-5 space-y-4 border-l border-cool-veil pl-5">
+          {history.map((item) => (
+            <li key={item.year} className="relative">
+              <span className="absolute -left-[1.84rem] top-1.5 h-2.5 w-2.5 rounded-full bg-harbour" />
+              <p className="text-sm font-black text-harbour">{item.year}</p>
+              <h3 className="mt-0.5 text-sm font-bold text-charcoal">{item.title}</h3>
+              <p className="mt-1 text-sm leading-6 text-slate-soft">{item.body}</p>
+              <a
+                href={iodaHistoryHref}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-harbour hover:underline"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                IODA account
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section aria-labelledby="optimist-sailorpath-heading">
+        <h2 id="optimist-sailorpath-heading" className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">
+          On SailorPath
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-soft">
+          Singapore Gold and Silver are Best 3 of 5 series. The Asian and Oceania Optimist Index
+          is V1 (Beta), an independent SailorPath index, not an official IODA or national federation ranking.
+        </p>
         <ul className="mt-4 flex flex-wrap gap-3">
-          {moreLinks.map(([href, label]) => (
+          {sailorPathLinks.map(([href, label]) => (
             <li key={href}>
               <Link
                 href={href}
