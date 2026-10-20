@@ -119,17 +119,6 @@ export default async function RegattaRedirectPage({
     );
   }
 
-  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
-  if (eventSlice) {
-    permanentRedirect(
-      eventHubHref(
-        eventSlice.event.slug,
-        eventSlice.slice.key,
-        calendarView === "past" ? "past" : undefined
-      )
-    );
-  }
-
   const published = await getCachedPublicRegattas().catch(() => []);
   const saved = savedEventHubForSlug(regatta_slug, published);
   if (saved && saved.event.slices.length > 0) {
@@ -148,6 +137,17 @@ export default async function RegattaRedirectPage({
         activeFleet={fleet ?? saved.fleetKey}
         calendarView={calendarView}
       />
+    );
+  }
+
+  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
+  if (eventSlice) {
+    permanentRedirect(
+      eventHubHref(
+        eventSlice.event.slug,
+        eventSlice.slice.key,
+        calendarView === "past" ? "past" : undefined
+      )
     );
   }
 

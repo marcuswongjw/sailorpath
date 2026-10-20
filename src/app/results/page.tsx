@@ -14,9 +14,11 @@ export const revalidate = 3600;
 type Props = { searchParams: Promise<{ class?: string; country?: string; region?: string; year?: string; q?: string }> };
 
 function hrefFor(row: Awaited<ReturnType<typeof getCachedPublicRegattas>>[number], all: Awaited<ReturnType<typeof getCachedPublicRegattas>>) {
+  const explicit = savedEventHubForSlug(row.slug, all);
+  if (explicit?.fleetKey) return `/regattas/${explicit.event.slug}/results/${explicit.fleetKey}`;
   const registered = findEventSliceForRegattaSlug(row.slug);
   if (registered) return `/regattas/${registered.event.slug}/results/${registered.slice.key}`;
-  const saved = savedEventHubForSlug(row.slug, all) || groupedHubForSlug(row.slug, all);
+  const saved = groupedHubForSlug(row.slug, all);
   if (saved?.fleetKey) return `/regattas/${saved.event.slug}/results/${saved.fleetKey}`;
   return `/regattas/${encodeURIComponent(row.slug)}`;
 }
