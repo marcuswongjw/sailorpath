@@ -61,6 +61,12 @@ export function SiteFooter() {
             Sailors
           </Link>
           <Link
+            href="/classes"
+            className="hover:text-white hover:underline transition-colors"
+          >
+            Classes
+          </Link>
+          <Link
             href="/news"
             className="hover:text-white hover:underline transition-colors"
           >

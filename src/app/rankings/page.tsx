@@ -29,6 +29,12 @@ export default function RankingsHubPage() {
           <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
             Optimist
           </h2>
+          <Link
+            href="/classes/optimist"
+            className="ml-auto text-xs font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+          >
+            Class hub
+          </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Link

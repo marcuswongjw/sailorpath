@@ -8,6 +8,7 @@ const PUBLIC_SINGLE_SEGMENT_PATHS = new Set([
   "admin",
   "blog",
   "calendar",
+  "classes",
   "claim-profile",
   "following",
   "coach-tools",

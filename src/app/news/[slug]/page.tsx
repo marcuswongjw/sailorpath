@@ -91,6 +91,14 @@ export default async function NewsArticlePage({
           )}
         </div>
 
+        {article.relatedClass === "X-15" ? (
+          <p className="mt-8">
+            <Link href="/classes/x15" className="font-semibold text-harbour hover:underline">
+              Open the X-15 class hub →
+            </Link>
+          </p>
+        ) : null}
+
         <footer className="mt-9 border-t border-cool-veil pt-5 text-sm text-slate-soft">
           <p>Published by {article.authorDisplayName}.</p>
           {article.updatedAt !== article.publishedAt ? (

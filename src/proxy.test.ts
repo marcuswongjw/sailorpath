@@ -34,6 +34,8 @@ describe("proxy routing", () => {
     expect(shouldRefreshSession("/blog", false)).toBe(false);
     expect(shouldRefreshSession("/sailors", false)).toBe(false);
     expect(shouldRefreshSession("/news", false)).toBe(false);
+    expect(shouldRefreshSession("/classes", false)).toBe(false);
+    expect(shouldRefreshSession("/classes/x15", false)).toBe(false);
     expect(shouldRefreshSession("/results", false)).toBe(false);
     expect(shouldRefreshSession("/robots.txt", false)).toBe(false);
     expect(shouldRefreshSession("/", true)).toBe(true);

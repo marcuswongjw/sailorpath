@@ -57,7 +57,7 @@ const FALLBACK_ARTICLES: PublishedNewsArticle[] = [
     summary:
       "The X-15 hub brings together reviewed Ibiza and Thailand event context without publishing an unsupported ranking.",
     body:
-      "The X-15 class hub brings together reviewed Ibiza and Thailand event context with a transparent beta methodology. It does not publish a numbered ranking before official final results are available and source-linked.",
+      "The X-15 class hub brings together reviewed Ibiza and Thailand event context with a transparent beta methodology. It does not publish a numbered ranking before official final results are available and source-linked. Open the X-15 class hub for that context.",
     kind: "class_announcement",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-10-15T00:00:00.000+08:00",

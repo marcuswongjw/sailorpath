@@ -13,10 +13,14 @@ vi.mock("@/lib/adminHost", () => ({
 import { SiteFooter } from "./SiteFooter";
 
 describe("SiteFooter", () => {
-  it("does not expose the X-15 review route in public navigation", () => {
+  it("links to the class index without naming X-15", () => {
     const html = renderToStaticMarkup(<SiteFooter />);
 
+    expect(html).toContain('href="/classes"');
+    expect(html).toContain("Classes");
+    expect(html).not.toContain('href="/classes/x15"');
     expect(html).not.toContain('href="/classes/x-15"');
+    expect(html).not.toContain("X-15");
     expect(html).toContain('href="/results"');
   });
 });

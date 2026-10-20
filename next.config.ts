@@ -80,6 +80,11 @@ const nextConfig: NextConfig = {
         destination: "/sg/wingfoil",
         permanent: false,
       },
+      {
+        source: "/classes/x-15",
+        destination: "/classes/x15",
+        permanent: true,
+      },
     ];
   },
 };

@@ -17,6 +17,9 @@ describe("public sitemap", () => {
     expect(urls).toContain(
       "https://sailorpath.com/regattas/youth-thailand-national-sailing-championship-2026/results/optimist"
     );
+    expect(urls).toContain("https://sailorpath.com/classes");
+    expect(urls).toContain("https://sailorpath.com/classes/x15");
+    expect(urls).toContain("https://sailorpath.com/classes/optimist");
     expect(urls).not.toContain("https://sailorpath.com/classes/x-15");
     expect(urls.some((url) => url.includes("/log-"))).toBe(false);
     expect(urls.some((url) => url.startsWith("https://sailorpath.com/admin"))).toBe(false);

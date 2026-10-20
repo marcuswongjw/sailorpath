@@ -45,6 +45,7 @@ describe("published news article route", () => {
     expect(html).toContain("No numbered ranking is published.");
     expect(html).toContain("Organiser source");
     expect(html).toContain("https://example.com/source");
+    expect(html).toContain('href="/classes/x15"');
   });
 
   it("returns a real not-found boundary for an unknown or unpublished article", async () => {

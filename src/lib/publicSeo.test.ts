@@ -277,5 +277,9 @@ describe("public sitemap paths", () => {
     expect(HUB_SITEMAP_PATHS).toContain("/optimist/asian-index");
     expect(HUB_SITEMAP_PATHS).toContain("/optimist/asian-index/methodology");
     expect(HUB_SITEMAP_PATHS).not.toContain("/sg/optimist/asian-index");
+    expect(HUB_SITEMAP_PATHS).toContain("/classes");
+    expect(HUB_SITEMAP_PATHS).toContain("/classes/x15");
+    expect(HUB_SITEMAP_PATHS).toContain("/classes/optimist");
+    expect(HUB_SITEMAP_PATHS).not.toContain("/classes/x-15");
   });
 });
