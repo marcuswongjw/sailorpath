@@ -1361,7 +1361,7 @@ export function getSliceResultAvailability(
   if (slice.regatta) {
     const count = slice.regatta.totalFleetSize || 0;
     const isProv = slice.regatta.name.toLowerCase().includes("provisional") ||
-      /^Results are provisional as of\b/i.test(slice.regatta.scheduleNotes?.trim() || "");
+      /^(?:Results are provisional as of\b|Official source status: provisional\b)/i.test(slice.regatta.scheduleNotes?.trim() || "");
     const status: ResultAvailabilityStatus = isProv ? "provisional" : "final";
     const label = `${isProv ? "Provisional" : "Final"} · ${count} competitors`;
     return { status, competitorCount: count, label };

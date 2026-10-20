@@ -381,9 +381,7 @@ export function savedEventHubForSlug(
 
   const linked = regattas.filter(
     (row) =>
-      row.eventSlug?.toLowerCase() === eventSlug &&
-      publicFleet(row) &&
-      !findEventSliceForRegattaSlug(row.slug)
+      row.eventSlug?.toLowerCase() === eventSlug && publicFleet(row)
   );
   if (!linked.length) return null;
 
@@ -499,8 +497,6 @@ export function hubHrefForClassSlug(
     }
     return `/regattas/${direct.slug}`;
   }
-  const slice = findEventSliceForRegattaSlug(slug);
-  if (slice) return eventHubHref(slice.event.slug, slice.slice.key);
   const saved = savedEventHubForSlug(slug, regattas);
   if (saved) {
     return eventHubHref(
@@ -508,6 +504,8 @@ export function hubHrefForClassSlug(
       saved.fleetKey || saved.event.slices[0]?.key || "optimist"
     );
   }
+  const slice = findEventSliceForRegattaSlug(slug);
+  if (slice) return eventHubHref(slice.event.slug, slice.slice.key);
   const grouped = groupedHubForSlug(slug, regattas);
   if (!grouped) return null;
   return eventHubHref(
