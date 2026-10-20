@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationWebsiteJsonLd } from "@/lib/publicSeo";
 import { getLandingTotals } from "@/lib/landingStats";
 import {
   ArrowRight,
@@ -13,10 +15,21 @@ import {
   UsersRound,
 } from "lucide-react";
 
+const homeTitle = "Singapore Sailing Standings & Athlete Records | SailorPath";
+const homeDescription =
+  "Browse sailing results, Singapore class standings, upcoming and past regattas, selection trials, and sailor profiles across Optimist, ILCA, WingFoil and Techno 293.";
+
 export const metadata: Metadata = {
-  title: "Singapore Sailing Standings & Athlete Records | SailorPath",
-  description:
-    "Browse sailing results, Singapore class standings, upcoming and past regattas, selection trials, and sailor profiles across Optimist, ILCA, WingFoil and Techno 293.",
+  title: homeTitle,
+  description: homeDescription,
+  alternates: { canonical: "https://sailorpath.com/" },
+  openGraph: {
+    type: "website",
+    url: "https://sailorpath.com/",
+    title: homeTitle,
+    description: homeDescription,
+    siteName: "SailorPath",
+  },
 };
 
 export const revalidate = 3600;
@@ -75,6 +88,8 @@ export default async function HomePage() {
     { value: "Reviewed", label: "Imported race results" },
   ] as const;
   return (
+    <>
+    <JsonLd data={organizationWebsiteJsonLd()} />
     <div className="bg-sailcloth text-charcoal">
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
@@ -361,5 +376,6 @@ export default async function HomePage() {
       </section>
 
     </div>
+    </>
   );
 }

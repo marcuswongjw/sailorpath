@@ -1,20 +1,50 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
-import { getCachedPublicRegattas } from "@/lib/queries";
 import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
-import { getRegattaEvent } from "@/lib/regattaEvents";
-import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
+import { resolveFleetResultSheet } from "@/lib/publicShareData";
+import { shareMetadata, sportsEventJsonLd } from "@/lib/publicSeo";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Fleet results | SailorPath" };
 
-export default async function FleetResultsPage({ params }: { params: Promise<{ regatta_slug: string; fleet: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ regatta_slug: string; fleet: string }>;
+}): Promise<Metadata> {
   const { regatta_slug, fleet } = await params;
-  let all: Awaited<ReturnType<typeof getCachedPublicRegattas>> = [];
-  try { all = await getCachedPublicRegattas(); } catch { all = []; }
-  const grouped = getRegattaEvent(regatta_slug) ? null : (savedEventHubForSlug(regatta_slug, all) || groupedHubForSlug(regatta_slug, all));
-  const event = getRegattaEvent(regatta_slug) || grouped?.event;
-  if (!event || !event.slices.some((slice) => slice.key === fleet)) notFound();
-  return <RegattaEventHub event={await withSavedEventCopy(event)} activeFleet={fleet} />;
+  try {
+    const resolved = await resolveFleetResultSheet(regatta_slug, fleet);
+    if (!resolved) {
+      return shareMetadata({
+        title: "Results not found | SailorPath",
+        description: "This result sheet is not on SailorPath.",
+        canonicalPath: "/regattas",
+        index: false,
+      });
+    }
+    return shareMetadata(resolved.sheet);
+  } catch {
+    return {
+      title: "Fleet results | SailorPath",
+      description: "Published regatta results on SailorPath.",
+    };
+  }
+}
+
+export default async function FleetResultsPage({
+  params,
+}: {
+  params: Promise<{ regatta_slug: string; fleet: string }>;
+}) {
+  const { regatta_slug, fleet } = await params;
+  const resolved = await resolveFleetResultSheet(regatta_slug, fleet);
+  if (!resolved) notFound();
+  return (
+    <>
+      <JsonLd data={sportsEventJsonLd(resolved.sheet)} />
+      <RegattaEventHub event={await withSavedEventCopy(resolved.event)} activeFleet={fleet} />
+    </>
+  );
 }

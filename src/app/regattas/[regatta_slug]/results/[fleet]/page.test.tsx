@@ -6,7 +6,10 @@ const mocks = vi.hoisted(() => ({
   savedHub: vi.fn(),
   notFound: vi.fn(() => { throw new Error("NOT_FOUND"); }),
 }));
-vi.mock("@/db", () => ({ db: { select: mocks.select } }));
+vi.mock("@/db", () => ({
+  db: { select: mocks.select },
+  getDatabaseUrlMeta: () => false,
+}));
 vi.mock("next/navigation", () => ({ notFound: mocks.notFound }));
 vi.mock("@/lib/queries", () => ({ getCachedPublicRegattas: mocks.cached }));
 vi.mock("@/lib/regattaEvents", () => ({ getRegattaEvent: () => null }));
@@ -14,6 +17,22 @@ vi.mock("@/lib/regattaEventGroups", () => ({ savedEventHubForSlug: mocks.savedHu
 vi.mock("@/components/RegattaEventHub", () => ({ RegattaEventHub: () => null }));
 
 import FleetResultsPage from "./page";
+
+function hubProps(page: { props: { children?: unknown; event?: unknown; activeFleet?: string } }) {
+  const children = page.props.children;
+  const nodes = Array.isArray(children) ? children : [children ?? page];
+  const hub = nodes.find(
+    (node) =>
+      node &&
+      typeof node === "object" &&
+      "props" in node &&
+      node.props &&
+      typeof node.props === "object" &&
+      "event" in node.props
+  ) as { props: { event: { scheduleSummary?: string }; activeFleet?: string } } | undefined;
+  if (!hub) throw new Error("missing event hub");
+  return hub.props;
+}
 
 const event = {
   slug: "2026-optimist-world-championship",
@@ -33,20 +52,20 @@ describe("saved descriptions on fleet results", () => {
     const note = "Asian sailors only. Original world positions and the full 284-boat fleet size are retained.";
     mocks.select.mockReturnValue({ from: () => ({ where: () => ({ limit: async () => [{ scheduleSummary: note }] }) }) });
     const page = await FleetResultsPage({ params: params() });
-    expect(page.props.event.scheduleSummary).toBe(note);
-    expect(page.props.activeFleet).toBe("optimist");
+    expect(hubProps(page).event.scheduleSummary).toBe(note);
+    expect(hubProps(page).activeFleet).toBe("optimist");
   });
 
   it("retains the resolved event when no saved paragraph exists", async () => {
     mocks.select.mockReturnValue({ from: () => ({ where: () => ({ limit: async () => [] }) }) });
     const page = await FleetResultsPage({ params: params() });
-    expect(page.props.event).toEqual(event);
+    expect(hubProps(page).event).toEqual(event);
   });
 
   it("retains the event if its optional saved-copy lookup fails", async () => {
     mocks.select.mockImplementation(() => { throw new Error("unavailable"); });
     const page = await FleetResultsPage({ params: params() });
-    expect(page.props.event).toEqual(event);
+    expect(hubProps(page).event).toEqual(event);
   });
 
   it("rejects an unknown fleet before loading optional copy", async () => {

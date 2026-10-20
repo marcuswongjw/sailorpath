@@ -22,7 +22,20 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+function siteMetadataBase(): URL {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
+  if (configured && /^https?:\/\//i.test(configured)) {
+    try {
+      return new URL(configured);
+    } catch {
+      // Placeholder or malformed env values fall back to the public origin.
+    }
+  }
+  return new URL("https://sailorpath.com");
+}
+
 export const metadata: Metadata = {
+  metadataBase: siteMetadataBase(),
   title: "SailorPath | Singapore Youth Sailing Rankings & Athlete Logbooks",
   description:
     "Singapore Optimist, ILCA 4, ILCA 6, ILCA 7, WingFoil and Techno 293 standings, regatta results, and sailor records.",

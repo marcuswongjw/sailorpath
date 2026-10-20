@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { DemoNavHeader } from "@/components/demo/DemoNavHeader";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import { SampleViewControls } from "@/components/sample/SampleViewControls";
+import { profilePageJsonLd, sailorShareModel, shareMetadata } from "@/lib/publicSeo";
 import {
   DEMO_ROLE_COPY,
   SAMPLE_EQUIPMENT,
@@ -23,20 +25,24 @@ function sampleView(value: string | undefined): SampleView | "parent" | "coach" 
   return "public";
 }
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: Promise<{ view?: string }>;
-}): Promise<Metadata> {
-  const view = sampleView((await searchParams).view);
-  const title =
-    view === "sailor"
-      ? "Kimberly Tan · SGP 115 · Sailor view | SailorPath"
-      : "Kimberly Tan · SGP 115 · SailorPath Profile";
-  return {
-    title,
-    description: "Sample SailorPath profile for Kimberly Tan (SGP 115), with public and sailor views.",
-  };
+function sampleShare() {
+  return sailorShareModel({
+    name: SAMPLE_SAILOR.name,
+    handle: SAMPLE_SAILOR.handle,
+    nationality: SAMPLE_SAILOR.nationality,
+    club: SAMPLE_SAILOR.club,
+    results: SAMPLE_RESULTS,
+    path: "/sample",
+  });
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const share = sampleShare();
+  return shareMetadata({
+    title: share.title,
+    description: share.summary,
+    canonicalPath: share.path,
+  });
 }
 
 export default async function SampleProfilePage({
@@ -52,8 +58,10 @@ export default async function SampleProfilePage({
   const copy = DEMO_ROLE_COPY[role];
   const isSailor = role === "sailor";
 
+  const share = sampleShare();
   return (
     <div className="flex flex-1 flex-col bg-sailcloth">
+      <JsonLd data={profilePageJsonLd(share)} />
       <DemoNavHeader activeDemo="sailor" />
       <div className="border-b border-cool-veil bg-warm-white px-4 py-2.5">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-2 text-xs sm:flex-row sm:items-center">
