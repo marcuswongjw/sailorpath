@@ -40,6 +40,9 @@ type Fleet =
   | "green"
   | "boys"
   | "girls"
+  | "alpha"
+  | "bravo"
+  | "charlie"
   | "open"
   | "ilca4"
   | "ilca6"
@@ -107,7 +110,8 @@ function publicFleet(row: RegattaRecord): Fleet | null {
     const division = String(row.division || "").trim().toLowerCase();
     if (
       division === "main" || division === "intermediate" || division === "green" ||
-      division === "boys" || division === "girls"
+      division === "boys" || division === "girls" ||
+      division === "alpha" || division === "bravo" || division === "charlie"
     ) {
       return division;
     }
@@ -151,7 +155,8 @@ function formatDay(ymd: string): string {
 function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
   if (
     fleet === "main" || fleet === "intermediate" || fleet === "green" ||
-    fleet === "boys" || fleet === "girls"
+    fleet === "boys" || fleet === "girls" ||
+    fleet === "alpha" || fleet === "bravo" || fleet === "charlie"
   ) {
     const label = `Optimist ${fleet[0].toUpperCase()}${fleet.slice(1)}`;
     return {
@@ -266,6 +271,9 @@ const FLEET_ORDER: Fleet[] = [
   "green",
   "boys",
   "girls",
+  "alpha",
+  "bravo",
+  "charlie",
   "open",
   "ilca4",
   "ilca6",
