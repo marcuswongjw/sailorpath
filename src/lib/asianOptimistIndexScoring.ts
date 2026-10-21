@@ -26,7 +26,7 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE = {
   version: "V1 (Beta)",
   name: "SailorPath Asian and Oceania Optimist Index",
   cohortEvent: "Verified international and continental championships",
-  cohortSize: 163,
+  cohortSize: 161,
   maxResultsCounted: 5,
   maxGrade150: 2,
   maxWorlds: 1,

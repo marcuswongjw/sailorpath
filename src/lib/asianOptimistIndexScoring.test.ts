@@ -29,19 +29,19 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(normalisedFleetScore(2, 59)).toBeCloseTo(98.275862, 6);
   });
 
-  it("scores the 163 age-eligible Asian and Oceania sailors under the V1 (Beta) methodology", () => {
+  it("scores the 161 age-eligible Asian and Oceania sailors under the V1 (Beta) methodology", () => {
     const entries = createAsianOptimistIndexProvisionalEntries();
 
-    expect(entries).toHaveLength(163);
+    expect(entries).toHaveLength(161);
 
     // Overaged sailors (>15 years old in 2026, i.e. born 2010 or earlier) are removed
     expect(entries.find((entry) => entry.name === "Ethan Chia")).toBeUndefined();
     const overaged = entries.filter((e) => e.birthYear != null && e.birthYear <= 2010);
     expect(overaged).toHaveLength(0);
 
-    // Ranks are strictly consecutive from 1 to 163
+    // Ranks are strictly consecutive from 1 to 161
     expect(entries.map((e) => e.provisionalRank)).toEqual(
-      Array.from({ length: 163 }, (_, i) => i + 1)
+      Array.from({ length: 161 }, (_, i) => i + 1)
     );
 
     // Top 6 under V1 (Beta) formula (Points = E * (N - P + 1) / N)
@@ -185,7 +185,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE).toMatchObject({
       version: "V1 (Beta)",
       name: "SailorPath Asian and Oceania Optimist Index",
-      cohortSize: 163,
+      cohortSize: 161,
       maxResultsCounted: 5,
       maxGrade150: 2,
       maxWorlds: 1,

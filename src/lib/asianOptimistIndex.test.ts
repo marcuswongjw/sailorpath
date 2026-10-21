@@ -31,7 +31,7 @@ describe("SailorPath Asian and Oceania Optimist Index baseline", () => {
   it("gives baseline ranks while preserving the official field finish for age-eligible competitors", () => {
     const baseline = createAsianOptimistIndexBaseline();
 
-    expect(baseline).toHaveLength(163);
+    expect(baseline).toHaveLength(161);
     expect(baseline[0]).toMatchObject({ baselineRank: 1, overallPlace: 1 });
     // Ethan Chia (2010) is aged out (>15), so baseline[1] is Anya Zahedi (overallPlace: 4)
     expect(baseline[1]).toMatchObject({ baselineRank: 2, overallPlace: 4 });
