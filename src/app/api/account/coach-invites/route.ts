@@ -104,6 +104,7 @@ export async function POST(req: Request) {
         name: request.fullName,
         previousRole: request.role,
         nextRole: "coach",
+        eventId: `coach-request/${request.id}`,
         relation: "coach",
       });
     }

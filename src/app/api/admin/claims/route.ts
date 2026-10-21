@@ -290,6 +290,10 @@ export async function PATCH(req: Request) {
           .where(eq(sailors.id, claim.sailorId));
       }
 
+      // Repeated approvals or edits to an unchanged approved relation do not
+      // generate another welcome. The row lock serializes concurrent approvals.
+      if (claim.status === "approved" && parseClaimRelation(claim.relation) === relation
+        && roleNotice?.previousRole === roleNotice?.nextRole) roleNotice = null;
       return { claim: updated, relation, roleNotice, sailorName: target.name };
     });
     if ("error" in result) {
@@ -314,6 +318,7 @@ export async function PATCH(req: Request) {
     if (roleNotice) {
       await notifyAccountRoleChange({
         ...roleNotice,
+        eventId: `claim/${id}/${relation}`,
         sailorName,
       });
     }

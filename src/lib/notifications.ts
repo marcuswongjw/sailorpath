@@ -10,6 +10,8 @@ export async function sendResendTextEmail(input: {
   to: string | string[];
   subject: string;
   text: string;
+  html?: string;
+  idempotencyKey?: string;
 }): Promise<ResendSendResult> {
   const resendApiKey = process.env.RESEND_API_KEY?.trim();
   const recipients = (Array.isArray(input.to) ? input.to : [input.to])
@@ -17,32 +19,33 @@ export async function sendResendTextEmail(input: {
     .filter(Boolean);
   if (!resendApiKey || recipients.length === 0) return "skipped";
 
-  try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "SailorPath <notifications@sailorpath.com>",
-        to: recipients,
-        subject: input.subject,
-        text: input.text,
-      }),
-    });
-    if (!response.ok) {
-      console.warn(
-        "[sendResendTextEmail] Resend rejected the message:",
-        response.status
-      );
-      return "failed";
+  // Retry only requests protected by a stable provider idempotency key.
+  const attempts = input.idempotencyKey ? 3 : 1;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+          ...(input.idempotencyKey ? { "Idempotency-Key": input.idempotencyKey } : {}),
+        },
+        signal: AbortSignal.timeout(8_000),
+        body: JSON.stringify({
+          from: "SailorPath <notifications@sailorpath.com>", to: recipients,
+          subject: input.subject, text: input.text,
+          ...(input.html ? { html: input.html } : {}),
+        }),
+      });
+      if (response.ok) return "sent";
+      console.warn("[sendResendTextEmail] Resend rejected the message:", response.status);
+      if (response.status !== 429 && response.status < 500) return "failed";
+    } catch (error) {
+      console.warn("[sendResendTextEmail] Email send failed:", error);
     }
-    return "sent";
-  } catch (error) {
-    console.warn("[sendResendTextEmail] Email send failed:", error);
-    return "failed";
+    if (attempt + 1 < attempts) await new Promise(resolve => setTimeout(resolve, 500 * (attempt + 1)));
   }
+  return "failed";
 }
 
 export type ClaimedProfileUpdateNotice = {

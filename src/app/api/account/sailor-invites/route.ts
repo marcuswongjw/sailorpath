@@ -117,6 +117,7 @@ export async function POST(req: Request) {
     if (roleNotice) {
       await notifyAccountRoleChange({
         ...roleNotice,
+        eventId: `claim/${id}/${relation}`,
         sailorName: sailor?.name || null,
       });
     }
