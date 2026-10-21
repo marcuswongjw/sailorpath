@@ -3,13 +3,16 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { organizationWebsiteJsonLd } from "@/lib/publicSeo";
 import { getLandingTotals } from "@/lib/landingStats";
+import { getCachedPublicRegattas } from "@/lib/queries";
+import { findEventSliceForRegattaSlug } from "@/lib/regattaEvents";
+import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
+import { todayYmdSg } from "@/lib/datesSg";
+import type { RegattaRecord } from "@/lib/ranking";
 import {
   ArrowRight,
-  CalendarDays,
   ChartNoAxesColumnIncreasing,
   Check,
   Search,
-  ShieldCheck,
   Trophy,
   UserRound,
   UsersRound,
@@ -17,7 +20,7 @@ import {
 
 const homeTitle = "Singapore Sailing Standings & Athlete Records | SailorPath";
 const homeDescription =
-  "Browse sailing results, Singapore class standings, upcoming and past regattas, selection trials, and sailor profiles across Optimist, ILCA, WingFoil and Techno 293.";
+  "Browse published sailing scorecards, Singapore class standings, sailor records, upcoming regattas, and the independent Asian & Oceania Optimist Index.";
 
 export const metadata: Metadata = {
   title: homeTitle,
@@ -79,10 +82,42 @@ const classHubs = [
   },
 ] as const;
 
+function resultHref(row: RegattaRecord, rows: RegattaRecord[]): string {
+  const explicit = savedEventHubForSlug(row.slug, rows);
+  if (explicit?.fleetKey) {
+    return `/regattas/${explicit.event.slug}/results/${explicit.fleetKey}`;
+  }
+  const registered = findEventSliceForRegattaSlug(row.slug);
+  if (registered) {
+    return `/regattas/${registered.event.slug}/results/${registered.slice.key}`;
+  }
+  const grouped = groupedHubForSlug(row.slug, rows);
+  if (grouped?.fleetKey) {
+    return `/regattas/${grouped.event.slug}/results/${grouped.fleetKey}`;
+  }
+  return `/regattas/${encodeURIComponent(row.slug)}`;
+}
+
 export default async function HomePage() {
   const totals = await getLandingTotals();
+  let publicRegattas: RegattaRecord[] = [];
+  try {
+    publicRegattas = await getCachedPublicRegattas();
+  } catch {
+    // Keep the public landing page useful if a transient database read fails.
+  }
+  const today = todayYmdSg();
+  const latestResults = publicRegattas
+    .filter((row) => {
+      const endDate = String(row.endDate || row.date || "").slice(0, 10);
+      return endDate < today && Number(row.totalFleetSize || 0) > 0 && Number(row.raceCount || 0) > 0;
+    })
+    .sort((a, b) =>
+      String(b.endDate || b.date || "").localeCompare(String(a.endDate || a.date || ""))
+    )
+    .slice(0, 3);
   const stats = [
-    { value: "7", label: "Class standings available" },
+    { value: String(classHubs.length), label: "classes represented" },
     { value: totals.athletes, label: "sailors" },
     { value: totals.regattas, label: "Regatta results on record" },
     { value: "Reviewed", label: "Imported race results" },
@@ -117,11 +152,14 @@ export default async function HomePage() {
               href="/sailors"
               className="sp-primary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-8 text-[15px] font-semibold"
             >
-              Find your profile
+              Find a sailor profile
             </Link>
-            <Link href="/calendar" className="sp-secondary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-6 text-[15px] font-semibold">
-              <CalendarDays className="h-4 w-4" aria-hidden />
-              Browse regattas
+            <Link href="/results" className="sp-secondary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-6 text-[15px] font-semibold">
+              <Trophy className="h-4 w-4" aria-hidden />
+              Browse published results
+            </Link>
+            <Link href="/rankings" className="text-sm font-semibold text-harbour hover:underline sm:ml-1">
+              View rankings
             </Link>
           </div>
 
@@ -141,8 +179,8 @@ export default async function HomePage() {
               type="search"
               name="query"
               enterKeyHint="search"
-              aria-label="Search sailors and regattas"
-              placeholder="Name, sail number, club, or regatta"
+              aria-label="Search sailors"
+              placeholder="Sailor name, sail number, or club"
               className="w-full min-w-0 rounded-full border border-cool-veil bg-warm-white py-3 sm:py-3.5 pl-4 sm:pl-6 pr-14 text-sm sm:text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
             />
             <button
@@ -174,18 +212,57 @@ export default async function HomePage() {
       </section>
 
 
-      {/* ── Class hubs ──────────────────────────────────────────────────── */}
+      <section className="bg-warm-white py-12 sm:py-16" aria-labelledby="latest-results-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Fresh from the finish line</p>
+              <h2 id="latest-results-heading" className="mt-2 text-2xl font-semibold text-harbour-shadow">Latest published results</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-soft">Recently completed scorecards, shown after publication and review.</p>
+            </div>
+            <Link href="/results" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
+              All results <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+          {latestResults.length ? (
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {latestResults.map((row) => (
+                <Link
+                  key={row.id}
+                  href={resultHref(row, publicRegattas)}
+                  className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
+                >
+                  <p className="text-xs font-bold uppercase tracking-wide text-harbour">{row.boatClass || row.division || "Sailing"} · {String(row.endDate || row.date).slice(0, 10)}</p>
+                  <h3 className="mt-2 text-base font-semibold text-charcoal group-hover:text-harbour">{row.name}</h3>
+                  <p className="mt-2 text-sm text-slate-soft">{row.venue || "Venue details"}</p>
+                  <p className="mt-3 text-sm font-medium text-charcoal">{row.totalFleetSize} sailors · {row.raceCount} races</p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">
+                    Open scorecard <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-6 rounded-xl border border-dashed border-cool-veil bg-sailcloth p-6 text-sm text-slate-soft">
+              No recent published scorecards to feature right now. Browse all published results to explore the archive.
+            </p>
+          )}
+        </div>
+      </section>
+
+
+      {/* ── Singapore class records ──────────────────────────────────────── */}
       <section className="bg-warm-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-[0.04em] text-harbour">
-              Jump to your class
+              Explore Singapore classes
             </p>
             <h2 className="mt-3 text-2xl font-semibold leading-8 text-charcoal">
-              Class standings
+              Standings &amp; published results
             </h2>
             <p className="mt-3 text-base leading-6 text-slate-soft">
-              Optimist through ILCA 7, WingFoil, and Techno 293. Each class keeps its own scoring.
+              Explore Optimist, ILCA, foiling and windsurfing records, with scoring context for each class.
             </p>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -213,21 +290,22 @@ export default async function HomePage() {
 
       <section className="bg-sailcloth px-4 py-10 sm:px-6">
         <div className="mx-auto max-w-3xl rounded-xl border border-cool-veil bg-warm-white p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-harbour-shadow">One weekend. Every class result.</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Independent index · V1 beta</p>
+          <h2 className="mt-2 text-xl font-semibold text-harbour-shadow">Asian &amp; Oceania Optimist Index</h2>
           <p className="mt-3 text-sm leading-6 text-slate-soft">
-            Browse upcoming and past regattas together, filter by class, region or year,
-            and open the results for the fleet you follow. Singapore national ranking
-            eligibility is shown on Optimist, ILCA 4 and ILCA 6 class results.
+            Explore an independent analytical index built from verified results, with live beta standings and a published methodology. It is not an official IODA or national-federation ranking.
           </p>
-          <p className="mt-3 text-sm leading-6 text-slate-soft">
-            Results are added after review. Check the organiser&apos;s official notices
-            for entries, eligibility and final decisions.
-          </p>
-          <Link href="/about" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
-            About SailorPath <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+            <Link href="/optimist/asian-index" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
+              Explore the index <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link href="/optimist/asian-index/methodology" className="text-sm font-semibold text-harbour hover:underline">
+              Read the methodology
+            </Link>
+          </div>
         </div>
       </section>
+
 
       {/* ── Role segmentation ───────────────────────────────────────────── */}
       <section className="border-y border-cool-veil bg-sailcloth py-12 sm:py-16">
@@ -270,6 +348,7 @@ export default async function HomePage() {
                 <UsersRound className="h-5 w-5" aria-hidden />
               </span>
               <h3 className="mt-5 text-base font-semibold text-charcoal">For parents</h3>
+              <span className="mt-2 w-fit rounded-full bg-aqua-mist px-2.5 py-1 text-[11px] font-bold text-harbour">Private workspace · sign-in required</span>
               <p className="mt-1 text-sm font-medium text-harbour">
                 Keep progress in one view
               </p>
@@ -281,7 +360,7 @@ export default async function HomePage() {
                 href="/parent"
                 className="sp-secondary mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 px-4 text-sm font-semibold"
               >
-                Open parent dashboard
+                Explore parent tools
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </article>
@@ -292,6 +371,7 @@ export default async function HomePage() {
                 <ChartNoAxesColumnIncreasing className="h-5 w-5" aria-hidden />
               </span>
               <h3 className="mt-5 text-base font-semibold text-charcoal">For coaches</h3>
+              <span className="mt-2 w-fit rounded-full bg-aqua-mist px-2.5 py-1 text-[11px] font-bold text-harbour">Private workspace · sign-in required</span>
               <p className="mt-1 text-sm font-medium text-harbour">
                 Keep your squad in one view
               </p>
@@ -303,74 +383,11 @@ export default async function HomePage() {
                 href="/coach-tools"
                 className="sp-secondary mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 px-4 text-sm font-semibold"
               >
-                Open coach dashboard
+                Explore coach tools
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </article>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ── Search ──────────────────────────────────────────────────────── */}
-      <section className="bg-warm-white py-14 sm:py-20">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.04em] text-harbour">
-              Start with what you need
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold leading-8">
-              Find a sailor or regatta
-            </h2>
-            <p className="mt-3 max-w-md text-base leading-6 text-slate-soft">
-              Search by name, sail number or club. Claiming a profile adds private
-              tools while public results remain easy to follow.
-            </p>
-          </div>
-          <div className="sp-card p-5 sm:p-7">
-            <form action="/sailors" className="relative">
-              <Search
-                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-harbour"
-                aria-hidden
-              />
-              <input
-                type="search"
-                name="query"
-                enterKeyHint="search"
-                aria-label="Search sailors and regattas"
-                placeholder="Name, sail number, or club"
-                className="min-h-12 w-full min-w-0 rounded-lg border border-cool-mist bg-warm-white py-3 pl-12 pr-28 text-base text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="absolute right-1.5 top-1.5 min-h-9 rounded-md bg-harbour px-4 text-sm font-semibold text-sailcloth hover:bg-harbour-shadow"
-              >
-                Search
-              </button>
-            </form>
-            <div className="mt-5 grid gap-3 border-t border-cool-veil pt-5 sm:grid-cols-3">
-              <Link
-                href="/calendar"
-                className="sp-secondary inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold"
-              >
-                <CalendarDays className="h-4 w-4" aria-hidden />
-                Regattas &amp; results
-              </Link>
-              <Link
-                href="/sg/optimist/selection"
-                className="sp-secondary inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold"
-              >
-                <ShieldCheck className="h-4 w-4" aria-hidden />
-                Selection trials
-              </Link>
-              <Link
-                href="/sample"
-                className="sp-secondary inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold"
-              >
-                <UserRound className="h-4 w-4" aria-hidden />
-                View a sample profile
-              </Link>
-            </div>
           </div>
         </div>
       </section>
