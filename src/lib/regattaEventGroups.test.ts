@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { RegattaRecord } from "@/lib/ranking";
-import { getSliceResultAvailability, resolveEventSlices } from "@/lib/regattaEvents";
+import { defaultEventFleetKey, getSliceResultAvailability, resolveEventSlices } from "@/lib/regattaEvents";
 import {
   groupedHubForSlug,
   hubHrefForClassSlug,
@@ -29,7 +29,8 @@ describe("official Optimist development fleets", () => {
       row({ slug: "boat-club-88-2026-ilca4", name: "Boat Club 88 2026 — ILCA 4", date: "2026-08-08", boatClass: "ILCA 4", division: "Open", raceCount: 6, totalFleetSize: 4 }),
     ].map((sheet) => ({ ...sheet, eventSlug: "boat-club-88-2026", eventName: "Boat Club 88 2026" }));
     const hub = savedEventHubForSlug("boat-club-88-2026", sheets)!;
-    expect(hub.event.slices.map((slice) => slice.key)).toEqual(["optimist-newborn", "optimist", "ilca-4"]);
+    expect(hub.event.slices.map((slice) => slice.key)).toEqual(["optimist", "optimist-newborn", "ilca-4"]);
+    expect(defaultEventFleetKey(hub.event, resolveEventSlices(hub.event, sheets))).toBe("optimist");
     const selected = resolveEventSlices(hub.event, sheets).find((slice) => slice.def.key === "optimist-newborn");
     expect(selected?.regatta?.slug).toBe("boat-club-88-2026-newborn");
     expect(savedEventHubForSlug("boat-club-88-2026-newborn", sheets)?.fleetKey).toBe("optimist-newborn");
