@@ -25,8 +25,8 @@ describe("SearchClient mobile layout", () => {
     expect(filters.className).not.toContain("overflow-x-auto");
     expect(filters.querySelector(".flex-wrap")).toBeTruthy();
 
-    const input = screen.getByRole("searchbox", { name: "Search sailors and regattas" });
-    expect(input).toHaveAttribute("placeholder", "Name, sail number, club, or regatta");
+    const input = screen.getByRole("searchbox", { name: "Search sailors and events" });
+    expect(input).toHaveAttribute("placeholder", "Name, sail number, or club");
     expect(input.className).toContain("min-w-0");
 
     expect(screen.getByRole("button", { name: /Silver Fleet/ })).toBeInTheDocument();

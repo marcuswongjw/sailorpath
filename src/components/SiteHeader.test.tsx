@@ -15,14 +15,14 @@ vi.mock("@/components/AccountProvider", () => ({
 import { SiteHeader } from "./SiteHeader";
 
 describe("SiteHeader", () => {
-  it("keeps X-15 out of the public menu bar", () => {
+  it("links to the public Classes directory without putting individual hubs in the menu", () => {
     const html = renderToStaticMarkup(<SiteHeader />);
 
     expect(html).toContain('href="/results"');
     expect(html).toContain('href="/rankings"');
     expect(html).toContain('href="/sailors"');
     expect(html).toContain('href="/calendar"');
-    expect(html).not.toContain('href="/classes"');
+    expect(html).toContain('href="/classes"');
     expect(html).not.toContain("/classes/x15");
     expect(html).not.toContain("X-15");
   });

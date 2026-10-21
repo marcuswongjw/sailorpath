@@ -164,9 +164,9 @@ export function SearchClient({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Name, sail number, club, or regatta"
+            placeholder="Name, sail number, or club"
             enterKeyHint="search"
-            aria-label="Search sailors and regattas"
+            aria-label="Search sailors and events"
             className="w-full min-w-0 bg-transparent py-2.5 sm:py-3 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
             autoComplete="off"
             autoCorrect="off"

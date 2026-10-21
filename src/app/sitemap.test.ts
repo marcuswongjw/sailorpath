@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import sitemap, { generateSitemaps } from "./sitemap";
 
 describe("public sitemap", () => {
-  it("does not advertise the X-15 review route and does list public result sheets", async () => {
+  it("advertises the public X-15 hub and lists public result sheets", async () => {
     const ids = await generateSitemaps();
     expect(ids.map((item) => item.id)).toEqual(["hubs", "sailors", "results"]);
     const lists = await Promise.all(

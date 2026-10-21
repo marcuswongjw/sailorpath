@@ -50,6 +50,8 @@ describe("public landing page", () => {
     const html = renderToStaticMarkup(await HomePage());
 
     expect(html).toContain("Find a sailor profile");
+    expect(html).toContain("Sailing results and rankings,");
+    expect(html).toContain("race by race.");
     expect(html).toContain('action="/sailors"');
     expect(html).toContain('aria-label="Search sailors"');
     expect(html).toContain("Sailor name, sail number, or club");
@@ -89,7 +91,8 @@ describe("public landing page", () => {
     expect(html).toContain("Asian &amp; Oceania Optimist Index");
     expect(html).toContain('href="/optimist/asian-index"');
     expect(html).toContain('href="/optimist/asian-index/methodology"');
-    expect(html).not.toContain('href="/classes/x-15"');
+    expect(html).toContain('href="/classes/x15"');
+    expect(html).toContain("X-15");
     expect(html).toContain("classes represented");
   });
 

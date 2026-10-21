@@ -23,6 +23,7 @@ export const HUB_SITEMAP_PATHS = [
   "/news",
   "/classes",
   "/classes/optimist",
+  "/classes/x15",
   "/sg/optimist/gold",
   "/sg/optimist/silver",
   "/sg/optimist/selection",

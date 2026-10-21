@@ -18,6 +18,7 @@ const publicLinks = [
   ["Results", "/results"],
   ["Rankings", "/rankings"],
   ["Sailors", "/sailors"],
+  ["Classes", "/classes"],
   ["Calendar", "/calendar"],
 ] as const;
 const subscribeToHost = () => () => {};

@@ -135,9 +135,8 @@ export default async function HomePage() {
           </div>
 
           <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.75rem] font-bold leading-[1.12] text-harbour-shadow tracking-tight">
-            Singapore sailing,{" "}
+            Sailing results and rankings,{" "}
             <span className="sm:whitespace-nowrap inline-block">
-              tracked{" "}
               <span className="text-racing-orange">race by race.</span>
             </span>
           </h1>
@@ -285,6 +284,17 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
+          <Link
+            href="/classes/x15"
+            className="group mt-4 block rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
+          >
+            <p className="text-xs font-bold uppercase tracking-wide text-harbour">International class hub</p>
+            <h3 className="mt-2 text-base font-semibold text-charcoal group-hover:text-harbour">X-15</h3>
+            <p className="mt-2 text-sm leading-5 text-slate-soft">Class context, sourced history, and upcoming events. No SailorPath ranking is published at this stage.</p>
+            <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">
+              Explore the X-15 hub <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </span>
+          </Link>
         </div>
       </section>
 

@@ -14,6 +14,12 @@ const hubs = [
     status: "Class",
     note: "The one-design pram for young sailors, with class history and links to the Singapore standings.",
   },
+  {
+    href: "/classes/x15",
+    name: "X-15",
+    status: "International",
+    note: "Class context, sourced history, and upcoming events. No SailorPath ranking is published at this stage.",
+  },
 ] as const;
 
 export default function ClassesIndexPage() {
