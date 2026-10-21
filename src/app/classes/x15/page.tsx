@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "X-15 class context for the 2026 Worlds and Asian Championships, with sourced class history and no SailorPath ranking.",
   alternates: { canonical: "/classes/x15" },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: false },
 };
 
 const officialCalendarHref = "https://x-15class.org/events/";
