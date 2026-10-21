@@ -31,6 +31,7 @@ const queues = [
   ["support", "Support"],
 ] as const;
 const quickLinks = [
+  ["/admin/result-imports", "Results import inbox"],
   ["/admin?area=events&view=card", "Find an event"],
   ["/admin?area=sailors&view=directory", "Find a sailor"],
   ["/admin/news", "Write an update"],

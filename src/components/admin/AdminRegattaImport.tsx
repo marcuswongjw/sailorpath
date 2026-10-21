@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { resultRowIssues } from "@/lib/resultsWorkflow/validation";
 import Link from "next/link";
 import {
   Upload,
@@ -47,6 +48,13 @@ import {
 } from "@/lib/externalRegattaImport";
 
 type Props = {
+  remotePdfUrl?: string;
+  remotePdfSha256?: string | null;
+  initialExtraction?: {
+    rows: RegattaImportRow[];
+    meta: Partial<RegattaImportMeta>;
+    evidenceNotes?: string;
+  };
   isSuperadmin: boolean;
   onSailorsUpdated?: (sailors: SailorAdmin[]) => void;
   onRegattaUpserted?: (regatta: RegattaAdmin) => void;
@@ -158,6 +166,9 @@ type PendingImportTargetSelection = {
  * Regatta Excel import tab (self-contained state + handlers).
  */
 export function AdminRegattaImport({
+  remotePdfUrl,
+  remotePdfSha256,
+  initialExtraction,
   isSuperadmin,
   onRegattaUpserted,
   onResultsUpdated,
@@ -170,6 +181,7 @@ export function AdminRegattaImport({
 }: Props) {
   const { toast } = useFeedback();
   const fileBusy = useRef(false);
+  const [pdfSourceReviewed, setPdfSourceReviewed] = useState(false);
   const [sheetOptions, setSheetOptions] = useState<ReturnType<typeof readResultsWorkbook>>([]);
   const [sourceFilename, setSourceFilename] = useState("");
   const [selectedSheet, setSelectedSheet] = useState("");
@@ -201,12 +213,12 @@ export function AdminRegattaImport({
   const [pendingReview, setPendingReview] = useState<PendingRegattaReview | null>(null);
   const [pendingTargetSelection, setPendingTargetSelection] =
     useState<PendingImportTargetSelection | null>(null);
-  const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
+  const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>(initialExtraction?.rows || []);
   const [pdfScreenshots, setPdfScreenshots] = useState<
     { pageNumber: number; dataUrl: string }[]
   >([]);
   const [importMeta, setImportMeta] =
-    useState<RegattaImportMeta>(emptyImportMeta);
+    useState<RegattaImportMeta>(() => ({ ...emptyImportMeta(), ...initialExtraction?.meta }));
   const [selectedEventSlug, setSelectedEventSlug] = useState(
     targetEventSlug || ""
   );
@@ -259,7 +271,26 @@ export function AdminRegattaImport({
     }
   };
 
+  const readRemotePdf = async () => {
+    if (!remotePdfUrl || fileBusy.current) return;
+    fileBusy.current = true;
+    setImportBusy(true);
+    try {
+      const res = await fetch(`/api/admin/result-imports/document?url=${encodeURIComponent(remotePdfUrl)}`);
+      if (!res.ok) { const data = await res.json(); throw new Error(data.error || "PDF download failed."); }
+      const bytes = await res.arrayBuffer();
+      if (remotePdfSha256) {
+        const digest = await crypto.subtle.digest("SHA-256", bytes);
+        const hash = Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+        if (hash !== remotePdfSha256) throw new Error("The official PDF changed since discovery. Check for results again and review the new revision.");
+      }
+      await handlePdf(new File([bytes], "official-results.pdf", { type: "application/pdf" }));
+    } catch (error) { setImportStatus(error instanceof Error ? error.message : "PDF download failed."); }
+    finally { fileBusy.current = false; setImportBusy(false); }
+  };
+
   const handlePdf = async (file: File) => {
+    setPdfSourceReviewed(false);
     setImportBusy(true);
     setImportProgress(10);
     setImportStatus(`Rendering and reading “${file.name}”…`);
@@ -292,7 +323,7 @@ export function AdminRegattaImport({
       const title = parseRegattaTitle(file.name);
       const datedTitle = {
         ...title,
-        date: resolvedImportDate(title.date, null, selectedClassDate) || null,
+        date: resolvedImportDate(title.date, null, selectedClassDate || initialExtraction?.meta.date) || null,
       };
       const unnamedNote = parsed.unnamedEntries
         ? ` ${parsed.unnamedEntries} published entr${parsed.unnamedEntries === 1 ? "y has" : "ies have"} no sailor name and will count toward fleet size but will not create a profile.`
@@ -306,6 +337,7 @@ export function AdminRegattaImport({
         fleetSize: parsed.entries || parsed.rows.length,
         raceCount: parsed.raceCount || "",
         officialResultsSourceName: file.name,
+        ...(remotePdfUrl ? initialExtraction?.meta : {}),
       };
       setFullImportRows(parsed.rows);
       setPdfScreenshots(parsed.screenshots);
@@ -571,6 +603,14 @@ export function AdminRegattaImport({
   ) {
     const rowsToImport = rowsOverride || fullImportRows;
     const meta = metaOverride || importMeta;
+    if (remotePdfUrl && !pdfSourceReviewed) {
+      toast.error("Visually verify every relevant PDF page, event identity, fleet, final revision, score, and discard before importing.");
+      return;
+    }
+    if (initialExtraction) {
+      const issues = resultRowIssues(rowsToImport, Number(meta.raceCount));
+      if (issues.length) { toast.error(`Source validation failed: ${issues[0]}`); return; }
+    }
     if (!isSuperadmin) {
       toast.error("Error: 403 Forbidden. Only Superadmins can import.");
       return;
@@ -656,6 +696,8 @@ export function AdminRegattaImport({
           lifecycleConfirmed: meta.lifecycleConfirmed,
           officialResultsUrl: meta.officialResultsUrl,
           officialResultsSourceName: meta.officialResultsSourceName,
+          sourceEvidenceNotes: initialExtraction?.evidenceNotes,
+          sourceWorkflow: Boolean(initialExtraction),
           raceCount:
             meta.raceCount === "" || meta.raceCount == null
               ? null
@@ -857,6 +899,7 @@ export function AdminRegattaImport({
 
   return (
     <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
+      {remotePdfUrl && <button type="button" disabled={importBusy} onClick={readRemotePdf} className="min-h-11 rounded bg-orange-600 px-4 py-2 font-semibold text-white disabled:opacity-40">Read official PDF and show pages for review</button>}
       <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/5 w-full">
         <div className="mb-5 grid grid-cols-1 gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:grid-cols-2">
           <label className="text-xs font-bold text-slate-300">
@@ -1305,6 +1348,7 @@ export function AdminRegattaImport({
                 </div>
               </div>
             )}
+            {remotePdfUrl && <label className="flex items-start gap-2 text-sm"><input type="checkbox" checked={pdfSourceReviewed} onChange={(e) => setPdfSourceReviewed(e.target.checked)} /> I visually compared the rendered PDF pages with every extracted row, sail number, race score, scoring code, discard, gross and net total, and confirmed the event dates, fleet size and final revision.</label>}
 
             <div>
               <p className="mb-2 text-[13px] text-slate-500">

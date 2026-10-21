@@ -40,6 +40,27 @@ function upload(extra: Record<string, unknown> = {}, headers: Record<string, str
 }
 
 describe("import database transaction", () => {
+  it("rejects a workflow extraction whose scores do not reconcile before saving", async () => {
+    const response = await upload({ sourceWorkflow: true, raceCount: 1, rows: [{ name: "Alice Example", sailNumber: "123", rank: 1, total: 8, nett: 1, races: [{ raceNumber: 1, score: 1, rawValue: "1", discarded: false, scoringCode: null }] }] });
+    expect(response.status).toBe(400);
+    expect(await testDb.select().from(regattas)).toHaveLength(0);
+    expect(await testDb.select().from(sailors)).toHaveLength(0);
+  });
+  it("saves the historic source sail number and source evidence on each workflow result", async () => {
+    const response = await upload({ sourceWorkflow: true, raceCount: 1, officialResultsUrl: "https://club.example/final", officialResultsSourceName: "Final results", sourceEvidenceNotes: "Scores visually reviewed", rows: [{ name: "Alice Example", sailNumber: "123", rank: 1, total: 1, nett: 1, races: [{ raceNumber: 1, score: 1, rawValue: "1", discarded: false, scoringCode: null }] }] });
+    expect(response.status).toBe(200);
+    const [result] = await testDb.select().from(regattaResults);
+    const [sheet] = await testDb.select().from(regattas);
+    expect(sheet.status).toBe("draft");
+    expect(result).toMatchObject({ entrySailNumber: "123", officialUrl: "https://club.example/final", evidenceName: "Final results", evidenceNotes: "Scores visually reviewed; imported by test" });
+  });
+  it("does not replace published sheets through the source workflow", async () => {
+    await upload();
+    const [sheet] = await testDb.select().from(regattas);
+    const response = await upload({ sheetId: sheet.id, sourceWorkflow: true, raceCount: 1, rows: [{ name: "Alice Example", sailNumber: "123", rank: 1, total: 1, nett: 1, races: [{ raceNumber: 1, score: 1, rawValue: "1", discarded: false, scoringCode: null }] }] });
+    expect(response.status).toBe(409);
+    expect((await testDb.select().from(regattas))[0].status).toBe("published");
+  });
   it("commits a new event, competitor, result, and race together", async () => {
     expect((await upload()).status).toBe(200);
     expect(await testDb.select().from(regattas)).toHaveLength(1);
