@@ -332,7 +332,7 @@ export async function getSailorByHandle(handle: string) {
 /** Public profile lookup. Owners and admins bypass this and read fresh. */
 export const getCachedSailorByHandle = unstable_cache(
   async (handle: string) => getSailorByHandle(handle),
-  ["sailor-by-handle-v1"],
+  ["sailor-by-handle-v2"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS],
