@@ -375,6 +375,7 @@ describe("country position comparison", () => {
       ["2026-03-14", "SGP", 47], ["2026-06-18", "MAR", 219],
     ].map(([date, geography, rank]) => ({ regattaDate: String(date), geography: String(geography), rank: Number(rank), division: "Gold" }));
     const local = resultsInCountry(rows, "SGP");
+    expect(buildProfileAnalytics({}, resultsInCountry(rows, "IND")).trend).toEqual([]);
     expect(buildProfileAnalytics({}, local).trend.map((p) => p.rank)).toEqual([45, 38, 47]);
     expect(buildIlcaPositionTrend(local).map((p) => p.rank)).toEqual([45, 38, 47]);
     expect(rows).toHaveLength(6);

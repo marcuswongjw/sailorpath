@@ -1132,12 +1132,13 @@ export function useSailorProfileState({
   /** Equipment stays family/owner-private (never on public / preview-public). */
   const showEquipmentSection = ownerView || hasPrivateAccess;
 
-  // A host-country comparison is independent of a sailor's nationality.
-  const [trendCountry, setTrendCountry] = useState("SGP");
+  // Default to nationality; an explicit selection compares another host country separately.
+  const [selectedTrendCountry, setTrendCountry] = useState<string | null>(null);
+  const trendCountry = selectedTrendCountry || normalizeNationality(displaySailor.nationality) || "SGP";
   const trendCountryOptions = useMemo(() => {
-    const codes = new Set(["SGP", ...results.map((r) => normalizeGeography(r.geography)).filter(Boolean)]);
+    const codes = new Set([trendCountry, ...results.map((r) => normalizeGeography(r.geography)).filter(Boolean)]);
     return geographySelectOptions().filter((option) => codes.has(option.code));
-  }, [results]);
+  }, [results, trendCountry]);
   const countryOptimistAnalytics = useMemo(
     () => buildProfileAnalytics(displaySailor as never, resultsInCountry(classBuckets.optimist, trendCountry)),
     [displaySailor, classBuckets.optimist, trendCountry]
