@@ -15,6 +15,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import type { SailorSearchResult, RegattaSearchResult } from "@/lib/search";
+import { formatSailNumber } from "@/lib/countries";
 
 export type SearchClientProps = {
   initialQuery?: string;
@@ -467,11 +468,11 @@ export function SearchClient({
                         </span>
 
                         {/* Sail Number Badge */}
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 text-xs font-mono font-bold shrink-0">
-                          {s.sailNumber.startsWith("SGP") || s.sailNumber.startsWith("SIN")
-                            ? s.sailNumber
-                            : `SGP ${s.sailNumber}`}
-                        </span>
+                        {formatSailNumber(s.sailNumber, s.nationality) && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 text-xs font-mono font-bold shrink-0">
+                            {formatSailNumber(s.sailNumber, s.nationality)}
+                          </span>
+                        )}
 
                         {s.sailNumberIlca4 && s.sailNumberIlca4 !== s.sailNumber && (
                           <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-mono font-semibold shrink-0" title="ILCA 4 Sail Number">

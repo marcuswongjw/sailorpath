@@ -52,4 +52,54 @@ describe("SearchClient mobile layout", () => {
     expect(screen.getByText("Sailor 0")).toBeInTheDocument();
     expect(screen.queryByText("Sailor 60")).not.toBeInTheDocument();
   });
+
+  it("shows Krishna and Shreya with Indian sail-number labels", () => {
+    render(<SearchClient sailorsOnly initialSailors={[
+      { ...sailor, id: "krishna", name: "Krishna Venkitachalam Ramakrishnan", handle: "krishna", sailNumber: "1639", nationality: "IND" },
+      { ...sailor, id: "shreya", name: "Shreya Krishna Lakshminarayanan", handle: "shreya", sailNumber: "1632", nationality: "India" },
+    ]} initialRegattas={[]} />);
+    expect(screen.getByText("IND 1639")).toBeInTheDocument();
+    expect(screen.getByText("IND 1632")).toBeInTheDocument();
+    expect(screen.queryByText("SGP 1639")).not.toBeInTheDocument();
+  });
+
+  it("renders nationality-accurate sail numbers for William Handley, Andre Baou Martin, and Claire Bao", () => {
+    const internationalSailors: SailorSearchResult[] = [
+      {
+        ...sailor,
+        id: "william-handley",
+        name: "William Handley",
+        handle: "william-handley",
+        sailNumber: "NZL 4818",
+        nationality: "NZL",
+      },
+      {
+        ...sailor,
+        id: "andre-baou-martin",
+        name: "ANDRE BAOU MARTIN",
+        handle: "andre-baou-martin",
+        sailNumber: "1024",
+        nationality: "MAS",
+      },
+      {
+        ...sailor,
+        id: "claire-bao",
+        name: "Claire Bao",
+        handle: "claire-bao",
+        sailNumber: "NZL 4811",
+        nationality: "NZL",
+      },
+    ];
+
+    render(<SearchClient sailorsOnly initialSailors={internationalSailors} initialRegattas={[]} />);
+
+    expect(screen.getByText("NZL 4818")).toBeInTheDocument();
+    expect(screen.queryByText("SGP NZL 4818")).not.toBeInTheDocument();
+
+    expect(screen.getByText("MAS 1024")).toBeInTheDocument();
+    expect(screen.queryByText("SGP 1024")).not.toBeInTheDocument();
+
+    expect(screen.getByText("NZL 4811")).toBeInTheDocument();
+    expect(screen.queryByText("SGP NZL 4811")).not.toBeInTheDocument();
+  });
 });

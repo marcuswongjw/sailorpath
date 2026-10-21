@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   extractNationalityFromSailNumber,
+  formatSailNumber,
   isUnrecognizedCountry,
   nationalityFromSailNumber,
   normalizeGeography,
@@ -77,5 +78,51 @@ describe("extractNationalityFromSailNumber", () => {
     expect(extractNationalityFromSailNumber("0")).toBe(null);
     expect(extractNationalityFromSailNumber("")).toBe(null);
     expect(extractNationalityFromSailNumber(null)).toBe(null);
+  });
+});
+
+describe("formatSailNumber", () => {
+  it("formats William Handley as NZL 4818 (not SGP NZL 4818)", () => {
+    expect(formatSailNumber("NZL 4818", "NZL")).toBe("NZL 4818");
+    expect(formatSailNumber("SGP NZL 4818", "NZL")).toBe("NZL 4818");
+    expect(formatSailNumber("NZL4818", "NZL")).toBe("NZL 4818");
+  });
+
+  it("formats Andre Baou Martin as MAS 1024 (not SGP 1024)", () => {
+    expect(formatSailNumber("1024", "MAS")).toBe("MAS 1024");
+    expect(formatSailNumber("SGP 1024", "MAS")).toBe("MAS 1024");
+    expect(formatSailNumber("MAS 1024", "MAS")).toBe("MAS 1024");
+  });
+
+  it("formats Claire Bao as NZL 4811 (not SGP NZL 4811)", () => {
+    expect(formatSailNumber("NZL 4811", "NZL")).toBe("NZL 4811");
+    expect(formatSailNumber("SGP NZL 4811", "NZL")).toBe("NZL 4811");
+    expect(formatSailNumber("4811", "NZL")).toBe("NZL 4811");
+  });
+
+  it("formats Singapore sailors with SGP prefix", () => {
+    expect(formatSailNumber("4508", "SGP")).toBe("SGP 4508");
+    expect(formatSailNumber("SGP 4508", "SGP")).toBe("SGP 4508");
+    expect(formatSailNumber("SGP4508", "Singapore")).toBe("SGP 4508");
+    expect(formatSailNumber("SIN 4508", "SGP")).toBe("SGP 4508");
+    expect(formatSailNumber("4508", null)).toBe("SGP 4508");
+  });
+
+  it("normalizes other nationalities and formats with country code", () => {
+    expect(formatSailNumber("1794", "THA")).toBe("THA 1794");
+    expect(formatSailNumber("HKG253", "HKG")).toBe("HKG 253");
+    expect(formatSailNumber("253", "Hong Kong")).toBe("HKG 253");
+    expect(formatSailNumber("10", "MYA")).toBe("MYA 10");
+  });
+
+  it("returns empty string for empty, zero, or placeholder sail numbers", () => {
+    expect(formatSailNumber("0", "SGP")).toBe("");
+    expect(formatSailNumber("", "SGP")).toBe("");
+    expect(formatSailNumber(null, "SGP")).toBe("");
+    expect(formatSailNumber(undefined, "SGP")).toBe("");
+    expect(formatSailNumber("-", "SGP")).toBe("");
+    expect(formatSailNumber("N/A", "SGP")).toBe("");
+    expect(formatSailNumber("NONE4", null)).toBe("");
+    expect(formatSailNumber("TBD", "CHN")).toBe("");
   });
 });
