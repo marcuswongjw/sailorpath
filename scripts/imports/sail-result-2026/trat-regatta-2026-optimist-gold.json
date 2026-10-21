@@ -1,0 +1,3280 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 182440,
+    "url": "https://www.racingrulesofsailing.org/documents/182440",
+    "title": "Official 2026-trat-regatta result document 182440",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=2026%20Trat%20Regatta"
+  },
+  "event": {
+    "id": "5da83b8f-2063-5f39-bb69-f19cfcda1e04",
+    "slug": "trat-regatta-2026",
+    "name": "2026 Trat Regatta",
+    "startDate": "2026-04-04",
+    "endDate": "2026-04-06",
+    "venue": "Oceanfront Pier, Laem Sok, Trat",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "5d430ead-f17f-5932-88aa-d94ef5257fc5",
+    "slug": "trat-regatta-2026-optimist-gold",
+    "name": "2026 Trat Regatta — Optimist Gold",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "raceCount": 7,
+    "totalFleetSize": 25,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA88",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 23.0,
+      "nettScore": 14.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "1st",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA88",
+        "club": "YRAT",
+        "helmname": "ITTHICHAI TIATHONGCHAI",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1q1": "5.0",
+        "r2q2": "1.0",
+        "r3q3": "1.0",
+        "r4f1": "2.0",
+        "r5f2": "1.0",
+        "r6f3": "4.0",
+        "r7f4": "(9.0)",
+        "total": "23.0",
+        "nett": "14.0"
+      },
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b3f5bcae-c297-5234-b717-725cfdc1386b",
+      "participants": [
+        {
+          "id": "90ef209f-11ee-5ed4-8a2f-5f54d3519f35",
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ITTHICHAI TIATHONGCHAI; historic sail/boat number: THA88; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 23.0 and net 14.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "THANAPHA PHONGKAMNERD",
+      "sailOrBoardNumber": "THA1529",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 45.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "2nd",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1529",
+        "club": "YRAT",
+        "helmname": "THANAPHA PHONGKAMNERD",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Female",
+        "r1q1": "1.0",
+        "r2q2": "6.0",
+        "r3q3": "7.0",
+        "r4f1": "9.0",
+        "r5f2": "(12.0)",
+        "r6f3": "7.0",
+        "r7f4": "3.0",
+        "total": "45.0",
+        "nett": "33.0"
+      },
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "41bc19cc-5cae-50fd-88e2-d6b0150605d0",
+      "participants": [
+        {
+          "id": "9f345d47-d568-5015-aac8-6bb58c1b5157",
+          "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+          "sourceName": "THANAPHA PHONGKAMNERD",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANAPHA PHONGKAMNERD; historic sail/boat number: THA1529; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 45.0 and net 33.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "QIHENG LIU",
+      "sailOrBoardNumber": "236",
+      "club": "",
+      "school": null,
+      "nationality": "HKG",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 67.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "3rd",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "236",
+        "club": "",
+        "helmname": "QIHENG LIU",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1q1": "12.0",
+        "r2q2": "(33.0)",
+        "r3q3": "5.0",
+        "r4f1": "3.0",
+        "r5f2": "7.0",
+        "r6f3": "3.0",
+        "r7f4": "4.0",
+        "total": "67.0",
+        "nett": "34.0"
+      },
+      "sailorId": "04d423bc-bd18-47ad-967a-45b1ef44cefd",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "aff8103f-ce68-5b57-8797-8047366c7dd3",
+      "participants": [
+        {
+          "id": "6fff4ab6-63d6-58b8-a212-0a8a0dc4a934",
+          "sailorId": "04d423bc-bd18-47ad-967a-45b1ef44cefd",
+          "sourceName": "QIHENG LIU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: QIHENG LIU; historic sail/boat number: 236; club: ; nationality: HKG; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 67.0 and net 34.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "TRAIRAT JAROONROT",
+      "sailOrBoardNumber": "THA1876",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 53.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "4th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1876",
+        "club": "ACDC.SC",
+        "helmname": "TRAIRAT JAROONROT",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1q1": "8.0",
+        "r2q2": "(16.0)",
+        "r3q3": "9.0",
+        "r4f1": "10.0",
+        "r5f2": "3.0",
+        "r6f3": "1.0",
+        "r7f4": "6.0",
+        "total": "53.0",
+        "nett": "37.0"
+      },
+      "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "188a2977-3d03-540c-ae47-3b9d01803aa8",
+      "participants": [
+        {
+          "id": "b739a13c-5520-5d03-be01-1bb889ee97cc",
+          "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+          "sourceName": "TRAIRAT JAROONROT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TRAIRAT JAROONROT; historic sail/boat number: THA1876; club: ACDC.SC; nationality: THA; source year/age field: 2011. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 53.0 and net 37.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 5,
+      "name": "PORNYAMON SAWAENGKHUN",
+      "sailOrBoardNumber": "1935",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 50.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "5th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "1935",
+        "club": "YRAT",
+        "helmname": "PORNYAMON SAWAENGKHUN",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1q1": "4.0",
+        "r2q2": "4.0",
+        "r3q3": "(13.0)",
+        "r4f1": "1.0",
+        "r5f2": "11.0",
+        "r6f3": "12.0",
+        "r7f4": "5.0",
+        "total": "50.0",
+        "nett": "37.0"
+      },
+      "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "resultId": "adf9024c-67a9-5226-9988-27ab9b19cc84",
+      "participants": [
+        {
+          "id": "02ba0a0c-0075-596b-adc3-200aef2e995c",
+          "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+          "sourceName": "PORNYAMON SAWAENGKHUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PORNYAMON SAWAENGKHUN; historic sail/boat number: 1935; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 50.0 and net 37.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 6,
+      "name": "CANANCHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA2865",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 63.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(26.0 UFD)",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "6th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA2865",
+        "club": "YRAT",
+        "helmname": "CANANCHAI TIATHONGCHAI",
+        "nat": "",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1q1": "2.0",
+        "r2q2": "8.0",
+        "r3q3": "4.0",
+        "r4f1": "(26.0 UFD)",
+        "r5f2": "2.0",
+        "r6f3": "8.0",
+        "r7f4": "13.0",
+        "total": "63.0",
+        "nett": "37.0"
+      },
+      "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "resultId": "0161e0ed-a3c4-5ac5-aa49-5aec6fb18b62",
+      "participants": [
+        {
+          "id": "6e3f94ee-2bde-57ad-bdfc-3b95e15065d0",
+          "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "sourceName": "CANANCHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CANANCHAI TIATHONGCHAI; historic sail/boat number: THA2865; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 63.0 and net 37.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 7,
+      "name": "DHAMMAPORN ARUNO",
+      "sailOrBoardNumber": "THA369",
+      "club": "ACDC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 51.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "7th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA369",
+        "club": "ACDC",
+        "helmname": "DHAMMAPORN ARUNO",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1q1": "3.0",
+        "r2q2": "7.0",
+        "r3q3": "8.0",
+        "r4f1": "4.0",
+        "r5f2": "5.0",
+        "r6f3": "10.0",
+        "r7f4": "(14.0)",
+        "total": "51.0",
+        "nett": "37.0"
+      },
+      "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "bc9f93e1-509e-523d-a40e-72ba22ae799b",
+      "participants": [
+        {
+          "id": "bd906311-635f-535f-a69a-7c126a082003",
+          "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+          "sourceName": "DHAMMAPORN ARUNO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: DHAMMAPORN ARUNO; historic sail/boat number: THA369; club: ACDC; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 51.0 and net 37.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 8,
+      "name": "PAKORNKIAT CHAIYA-O- CHA",
+      "sailOrBoardNumber": "THA1643",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 54.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "8th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1643",
+        "club": "YRAT",
+        "helmname": "PAKORNKIAT CHAIYA-O- CHA",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1q1": "13.0",
+        "r2q2": "3.0",
+        "r3q3": "10.0",
+        "r4f1": "(14.0)",
+        "r5f2": "8.0",
+        "r6f3": "5.0",
+        "r7f4": "1.0",
+        "total": "54.0",
+        "nett": "40.0"
+      },
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3e956054-8d8a-5453-9c19-5af2dca7f2a2",
+      "participants": [
+        {
+          "id": "b25e0d83-0792-5028-85bb-e55366624903",
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA-O- CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PAKORNKIAT CHAIYA-O- CHA; historic sail/boat number: THA1643; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 54.0 and net 40.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 9,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "THA1985",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 72.0,
+      "nettScore": 55.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "9th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1985",
+        "club": "ACDC.SC",
+        "helmname": "ASHIRA PHANGRAK",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1q1": "10.0",
+        "r2q2": "(17.0)",
+        "r3q3": "2.0",
+        "r4f1": "5.0",
+        "r5f2": "9.0",
+        "r6f3": "14.0",
+        "r7f4": "15.0",
+        "total": "72.0",
+        "nett": "55.0"
+      },
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "417619d4-5331-5673-92ac-bce579204e3a",
+      "participants": [
+        {
+          "id": "e4bbe412-5bd8-5704-bcf0-f55f6ced12ab",
+          "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+          "sourceName": "ASHIRA PHANGRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ASHIRA PHANGRAK; historic sail/boat number: THA1985; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 72.0 and net 55.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 10,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACDC.sc",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 74.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "10th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1696",
+        "club": "ACDC.sc",
+        "helmname": "SURATSAYAPRON KAEWRAKUM",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1q1": "6.0",
+        "r2q2": "12.0",
+        "r3q3": "12.0",
+        "r4f1": "11.0",
+        "r5f2": "10.0",
+        "r6f3": "(15.0)",
+        "r7f4": "8.0",
+        "total": "74.0",
+        "nett": "59.0"
+      },
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "d3f49a88-764e-5324-b669-ef4afed6ef8a",
+      "participants": [
+        {
+          "id": "757450f1-a96d-55fd-b05c-f98de22a85df",
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SURATSAYAPRON KAEWRAKUM; historic sail/boat number: THA1696; club: ACDC.sc; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 74.0 and net 59.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 11,
+      "name": "Jiratiwat Peungchurn",
+      "sailOrBoardNumber": "THA 1220",
+      "club": "Yrat",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 76.0,
+      "nettScore": 60.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "11th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA 1220",
+        "club": "Yrat",
+        "helmname": "Jiratiwat Peungchurn",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1q1": "7.0",
+        "r2q2": "10.0",
+        "r3q3": "14.0",
+        "r4f1": "12.0",
+        "r5f2": "6.0",
+        "r6f3": "11.0",
+        "r7f4": "(16.0)",
+        "total": "76.0",
+        "nett": "60.0"
+      },
+      "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "07b759ad-b107-5f1f-944d-a7bbd5ccd589",
+      "participants": [
+        {
+          "id": "b733c5eb-045a-5a5e-953e-094ed08bd203",
+          "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+          "sourceName": "Jiratiwat Peungchurn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Jiratiwat Peungchurn; historic sail/boat number: THA 1220; club: Yrat; nationality: THA; source year/age field: 2012. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 76.0 and net 60.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 12,
+      "name": "ANANTACHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA3057",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 86.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "12th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA3057",
+        "club": "YRAT",
+        "helmname": "ANANTACHAI TIATHONGCHAI",
+        "nat": "",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1q1": "11.0",
+        "r2q2": "22.0",
+        "r3q3": "16.0",
+        "r4f1": "7.0",
+        "r5f2": "4.0",
+        "r6f3": "2.0",
+        "r7f4": "(24.0)",
+        "total": "86.0",
+        "nett": "62.0"
+      },
+      "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "914c5a51-7030-576d-b5c6-8d2892b34ca5",
+      "participants": [
+        {
+          "id": "3718897d-ea89-54c9-92ab-18fc0af62a8c",
+          "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "sourceName": "ANANTACHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ANANTACHAI TIATHONGCHAI; historic sail/boat number: THA3057; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 86.0 and net 62.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 13,
+      "name": "PUNYISA KAEWLEK",
+      "sailOrBoardNumber": "8754",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 86.0,
+      "nettScore": 65.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "13th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "8754",
+        "club": "RNSC",
+        "helmname": "PUNYISA KAEWLEK",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1q1": "9.0",
+        "r2q2": "2.0",
+        "r3q3": "17.0",
+        "r4f1": "(21.0)",
+        "r5f2": "14.0",
+        "r6f3": "13.0",
+        "r7f4": "10.0",
+        "total": "86.0",
+        "nett": "65.0"
+      },
+      "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "20ae12e2-0390-5511-88d2-2ae24fa6f998",
+      "participants": [
+        {
+          "id": "2c975343-9578-5d9f-bd07-6cba25d4567d",
+          "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+          "sourceName": "PUNYISA KAEWLEK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PUNYISA KAEWLEK; historic sail/boat number: 8754; club: RNSC; nationality: THA; source year/age field: 2011. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 86.0 and net 65.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 14,
+      "name": "KLAOCHANOK CHATAWATTANASOPAKUN",
+      "sailOrBoardNumber": "3935",
+      "club": "ACDC.",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 85.0,
+      "nettScore": 66.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "14th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "3935",
+        "club": "ACDC.",
+        "helmname": "KLAOCHANOK CHATAWATTANASOPAKUN",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1q1": "15.0",
+        "r2q2": "9.0",
+        "r3q3": "(19.0)",
+        "r4f1": "6.0",
+        "r5f2": "13.0",
+        "r6f3": "6.0",
+        "r7f4": "17.0",
+        "total": "85.0",
+        "nett": "66.0"
+      },
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "0b2fb48c-e77e-5403-a14b-27a8be652218",
+      "participants": [
+        {
+          "id": "64a64e13-52b9-5091-bd8d-cf48baef1fdd",
+          "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "sourceName": "KLAOCHANOK CHATAWATTANASOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KLAOCHANOK CHATAWATTANASOPAKUN; historic sail/boat number: 3935; club: ACDC.; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 85.0 and net 66.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 15,
+      "name": "THIRAWAT HANKHAM",
+      "sailOrBoardNumber": "THA198",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 84.0,
+      "nettScore": 67.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "15th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA198",
+        "club": "YRAT",
+        "helmname": "THIRAWAT HANKHAM",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1q1": "16.0",
+        "r2q2": "5.0",
+        "r3q3": "15.0",
+        "r4f1": "13.0",
+        "r5f2": "16.0",
+        "r6f3": "(17.0)",
+        "r7f4": "2.0",
+        "total": "84.0",
+        "nett": "67.0"
+      },
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "36261dbc-bf84-59ab-8e30-def5745e7854",
+      "participants": [
+        {
+          "id": "54431bee-9b3c-5dec-86d6-1b20b23028ec",
+          "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+          "sourceName": "THIRAWAT HANKHAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THIRAWAT HANKHAM; historic sail/boat number: THA198; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 84.0 and net 67.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 16,
+      "name": "NATTHANAN CHAIYA-O- CHA",
+      "sailOrBoardNumber": "THA1385",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 92.0,
+      "nettScore": 71.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "16th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1385",
+        "club": "YRAT",
+        "helmname": "NATTHANAN CHAIYA-O- CHA",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1q1": "(21.0)",
+        "r2q2": "14.0",
+        "r3q3": "6.0",
+        "r4f1": "16.0",
+        "r5f2": "15.0",
+        "r6f3": "9.0",
+        "r7f4": "11.0",
+        "total": "92.0",
+        "nett": "71.0"
+      },
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ad012aaf-1a07-5c6e-9139-ee9dcb5f3b36",
+      "participants": [
+        {
+          "id": "761ecd01-f757-57b8-89dc-776fc2437489",
+          "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+          "sourceName": "NATTHANAN CHAIYA-O- CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATTHANAN CHAIYA-O- CHA; historic sail/boat number: THA1385; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 92.0 and net 71.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 18,
+      "name": "NAPABHAT BUASUANG",
+      "sailOrBoardNumber": "1789",
+      "club": "ACDC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 124.0,
+      "nettScore": 97.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "18th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "1789",
+        "club": "ACDC",
+        "helmname": "NAPABHAT BUASUANG",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1q1": "(27.0)",
+        "r2q2": "15.0",
+        "r3q3": "18.0",
+        "r4f1": "8.0",
+        "r5f2": "17.0",
+        "r6f3": "16.0",
+        "r7f4": "23.0",
+        "total": "124.0",
+        "nett": "97.0"
+      },
+      "sailorId": "e4c77476-aeef-45b2-b905-495b594b1353",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "bb11d8d6-6981-5f9a-bf94-14df32b5788a",
+      "participants": [
+        {
+          "id": "94153396-cdac-5d8e-ac21-70f4e1eae5a0",
+          "sailorId": "e4c77476-aeef-45b2-b905-495b594b1353",
+          "sourceName": "NAPABHAT BUASUANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NAPABHAT BUASUANG; historic sail/boat number: 1789; club: ACDC; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 124.0 and net 97.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 19,
+      "name": "ARANYA KLANGMUEANG",
+      "sailOrBoardNumber": "THA 1498",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 124.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "19th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA 1498",
+        "club": "YRAT",
+        "helmname": "ARANYA KLANGMUEANG",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1q1": "18.0",
+        "r2q2": "11.0",
+        "r3q3": "(26.0)",
+        "r4f1": "19.0",
+        "r5f2": "20.0",
+        "r6f3": "23.0",
+        "r7f4": "7.0",
+        "total": "124.0",
+        "nett": "98.0"
+      },
+      "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f36b85c1-2a18-5d6f-a6e1-651e81b1491f",
+      "participants": [
+        {
+          "id": "2b0d63ca-9452-58d7-9197-76ca7be4a34c",
+          "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+          "sourceName": "ARANYA KLANGMUEANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ARANYA KLANGMUEANG; historic sail/boat number: THA 1498; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 124.0 and net 98.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 20,
+      "name": "NAPICHAYA RATTANADECAKORN",
+      "sailOrBoardNumber": "THA436",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 123.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "20th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA436",
+        "club": "YRAT",
+        "helmname": "NAPICHAYA RATTANADECAKORN",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1q1": "(25.0)",
+        "r2q2": "13.0",
+        "r3q3": "11.0",
+        "r4f1": "18.0",
+        "r5f2": "18.0",
+        "r6f3": "20.0",
+        "r7f4": "18.0",
+        "total": "123.0",
+        "nett": "98.0"
+      },
+      "sailorId": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+      "resultId": "b89afa73-bee3-518b-aab3-99bfdfdce6de",
+      "participants": [
+        {
+          "id": "37628d65-88a6-5181-819c-dabf41bddd2a",
+          "sailorId": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+          "sourceName": "NAPICHAYA RATTANADECAKORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NAPICHAYA RATTANADECAKORN; historic sail/boat number: THA436; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 123.0 and net 98.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 21,
+      "name": "Kanthee Khunmuang",
+      "sailOrBoardNumber": "THA54",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 146.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "21st",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA54",
+        "club": "SSA",
+        "helmname": "Kanthee Khunmuang",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1q1": "19.0",
+        "r2q2": "25.0",
+        "r3q3": "(27.0)",
+        "r4f1": "17.0",
+        "r5f2": "21.0",
+        "r6f3": "18.0",
+        "r7f4": "19.0",
+        "total": "146.0",
+        "nett": "119.0"
+      },
+      "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3c7189ee-9845-568a-8a8f-cd23ab09e064",
+      "participants": [
+        {
+          "id": "cddc3718-7b90-52e7-bd81-ad7db4df785d",
+          "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+          "sourceName": "Kanthee Khunmuang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Kanthee Khunmuang; historic sail/boat number: THA54; club: SSA; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 146.0 and net 119.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 22,
+      "name": "SANTHAT SUTAMKOSOL",
+      "sailOrBoardNumber": "THA1879",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 166.0,
+      "nettScore": 138.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "22nd",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1879",
+        "club": "ACDC.SC",
+        "helmname": "SANTHAT SUTAMKOSOL",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1q1": "(28.0)",
+        "r2q2": "23.0",
+        "r3q3": "23.0",
+        "r4f1": "23.0",
+        "r5f2": "22.0",
+        "r6f3": "22.0",
+        "r7f4": "25.0",
+        "total": "166.0",
+        "nett": "138.0"
+      },
+      "sailorId": "154feedb-6173-4142-8d3e-88f1567b22e7",
+      "resultId": "2e2bcff3-0219-519c-a63c-31f4ee6c8b87",
+      "participants": [
+        {
+          "id": "030e61a3-6ee0-5e07-a1f7-9199fffbc6ea",
+          "sailorId": "154feedb-6173-4142-8d3e-88f1567b22e7",
+          "sourceName": "SANTHAT SUTAMKOSOL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SANTHAT SUTAMKOSOL; historic sail/boat number: THA1879; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 166.0 and net 138.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 23,
+      "name": "Kanthon Khunmuang",
+      "sailOrBoardNumber": "THA1593",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 168.0,
+      "nettScore": 139.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "23rd",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA1593",
+        "club": "SSA",
+        "helmname": "Kanthon Khunmuang",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1q1": "(29.0)",
+        "r2q2": "24.0",
+        "r3q3": "25.0",
+        "r4f1": "22.0",
+        "r5f2": "23.0",
+        "r6f3": "25.0",
+        "r7f4": "20.0",
+        "total": "168.0",
+        "nett": "139.0"
+      },
+      "sailorId": "fe102225-248d-48a9-a92c-683cadcdbda8",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3aa1af7f-2ec9-5447-9025-8bb642eb31fa",
+      "participants": [
+        {
+          "id": "0011c212-6e25-5d7f-a9cf-28715dffee64",
+          "sailorId": "fe102225-248d-48a9-a92c-683cadcdbda8",
+          "sourceName": "Kanthon Khunmuang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Kanthon Khunmuang; historic sail/boat number: THA1593; club: SSA; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 168.0 and net 139.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 24,
+      "name": "CHAYAPHON BOONSANG",
+      "sailOrBoardNumber": "THA 228",
+      "club": "ACDC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 171.0,
+      "nettScore": 144.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "24th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "THA 228",
+        "club": "ACDC",
+        "helmname": "CHAYAPHON BOONSANG",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1q1": "26.0",
+        "r2q2": "(27.0)",
+        "r3q3": "24.0",
+        "r4f1": "24.0",
+        "r5f2": "24.0",
+        "r6f3": "24.0",
+        "r7f4": "22.0",
+        "total": "171.0",
+        "nett": "144.0"
+      },
+      "sailorId": "e4b10010-b002-4066-8025-a266795b69bb",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "78388380-4457-5538-8dad-2afe97d70845",
+      "participants": [
+        {
+          "id": "c84abf4e-8012-5d6d-b016-03fc1994fd6b",
+          "sailorId": "e4b10010-b002-4066-8025-a266795b69bb",
+          "sourceName": "CHAYAPHON BOONSANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHAYAPHON BOONSANG; historic sail/boat number: THA 228; club: ACDC; nationality: THA; source year/age field: 2014. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 171.0 and net 144.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 25,
+      "name": "NATTAPHAT POOLKLANG",
+      "sailOrBoardNumber": "1434",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 199.0,
+      "nettScore": 158.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(41.0 DNC)",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 41.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "41.0 DNC",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 41.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "41.0 DNC",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "25th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "1434",
+        "club": "ACDC.SC",
+        "helmname": "NATTAPHAT POOLKLANG",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1q1": "(41.0 DNC)",
+        "r2q2": "41.0 DNC",
+        "r3q3": "41.0 DNC",
+        "r4f1": "15.0",
+        "r5f2": "19.0",
+        "r6f3": "21.0",
+        "r7f4": "21.0",
+        "total": "199.0",
+        "nett": "158.0"
+      },
+      "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+      "resultId": "be038d39-0a2e-5797-93f8-f504b586dab9",
+      "participants": [
+        {
+          "id": "cb87f098-7fd5-5b31-ad3d-1fb637c8a695",
+          "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+          "sourceName": "NATTAPHAT POOLKLANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATTAPHAT POOLKLANG; historic sail/boat number: 1434; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1/Q1, R2/Q2, R3/Q3, R4/F1, R5/F2, R6/F3, R7/F4. Every score, code and discard preserved; gross 199.0 and net 158.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings. Partial import: 24 of 25 entries imported; 1 awaiting identity review.",
+  "importedEntryCount": 24,
+  "deferredEntryCount": 1,
+  "profilePreflight": [
+    {
+      "id": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "club": "Imported official result",
+      "name": "Punyisa Kaewlek",
+      "gender": "F",
+      "handle": "asian-unk-punyisa-ka-5c5bfa",
+      "birthYear": null,
+      "sailNumber": "1565",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "club": "ACDC.SC",
+      "name": "Ashira Phangrak",
+      "gender": "Male",
+      "handle": "ashira-phangrak-oi7odm9",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "221935"
+    },
+    {
+      "id": "e4c77476-aeef-45b2-b905-495b594b1353",
+      "club": "ACDC.SC",
+      "name": "Napabhat Buasuang",
+      "gender": "Male",
+      "handle": "napabhat-buasuang-kkc916t",
+      "birthYear": 2014,
+      "sailNumber": "1789",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "club": "YRAT",
+      "name": "Chananchai Tiathongchai",
+      "gender": "Male",
+      "handle": "chananchai-tiathongchai-e3x85l3",
+      "birthYear": 2015,
+      "sailNumber": "1991",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "club": "YRAT",
+      "name": "Jiratiwat Peungchurn",
+      "gender": "M",
+      "handle": "jiratiwat-peungchurn-9xt7lm4",
+      "birthYear": 2012,
+      "sailNumber": "1220",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "Male",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "club": "YRAT",
+      "name": "Anantachai Tiathongchai",
+      "gender": "Male",
+      "handle": "anantachai-tiathongchai-onaqh0t",
+      "birthYear": 2015,
+      "sailNumber": "1990",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-Cha",
+      "gender": "Male",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+      "club": "YRAT",
+      "name": "Napichaya Rattanadechakorn",
+      "gender": "Female",
+      "handle": "napichaya-rattanadechakorn-03dz6c6",
+      "birthYear": 2014,
+      "sailNumber": "1457",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "club": "YRAT",
+      "name": "Aranya Klangmueang",
+      "gender": "Female",
+      "handle": "aranya-klangmueang-0gxqda0",
+      "birthYear": 2014,
+      "sailNumber": "1498",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "Female",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "Male",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+      "club": "Imported official result",
+      "name": "Kanthee Khunmuang",
+      "gender": "M",
+      "handle": "asian-tha-kanthee-kh-35cbfe",
+      "birthYear": null,
+      "sailNumber": "54",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+      "club": "Imported official result",
+      "name": "Kanthon Khunmuang",
+      "gender": "M",
+      "handle": "asian-tha-kanthon-kh-e585c6",
+      "birthYear": null,
+      "sailNumber": "1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "club": "ACDC.SC",
+      "name": "Dhammaporn Aruno",
+      "gender": "Female",
+      "handle": "dhammaporn-aruno-v6gx0i8",
+      "birthYear": 2013,
+      "sailNumber": "1881",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "Female",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e4b10010-b002-4066-8025-a266795b69bb",
+      "club": "YRAT",
+      "name": "Chayaphon Boonsang",
+      "gender": "Male",
+      "handle": "chayaphon-boonsang-xpgf7p8",
+      "birthYear": 2014,
+      "sailNumber": "1954",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "154feedb-6173-4142-8d3e-88f1567b22e7",
+      "club": "Imported official result",
+      "name": "Santhat Suthamgosal",
+      "gender": "M",
+      "handle": "asian-tha-santhat-su-2e78e2",
+      "birthYear": null,
+      "sailNumber": "1879",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "Imported official result",
+      "name": "Trairat Jaroonrot",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": null,
+      "sailNumber": "1876",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "club": "YRAT",
+      "name": "Pornyamol Sawaengkhun",
+      "gender": "F",
+      "handle": "pornyamol-sawaengkhun-9e8uu7a",
+      "birthYear": 2013,
+      "sailNumber": "1900",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-Cha",
+      "gender": "Female",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "04d423bc-bd18-47ad-967a-45b1ef44cefd",
+      "club": "Royal Hong Kong Yacht Club",
+      "name": "Liu Qi Heng",
+      "gender": "M",
+      "handle": "liu-qi-heng-ey38t8o",
+      "birthYear": 2014,
+      "sailNumber": "HKG 236",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+      "club": "ACDC",
+      "name": "Natthapatr Poolklang",
+      "gender": "M",
+      "handle": "natthapatr-poolklang-thai25-9e4112",
+      "birthYear": null,
+      "sailNumber": "THA 1695",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 1,
+        "sourceName": "ITTHICHAI TIATHONGCHAI",
+        "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 2,
+        "sourceName": "THANAPHA PHONGKAMNERD",
+        "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 3,
+        "sourceName": "QIHENG LIU",
+        "sailorId": "04d423bc-bd18-47ad-967a-45b1ef44cefd",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 4,
+        "sourceName": "TRAIRAT JAROONROT",
+        "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 5,
+        "sourceName": "PORNYAMON SAWAENGKHUN",
+        "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 6,
+        "sourceName": "CANANCHAI TIATHONGCHAI",
+        "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 7,
+        "sourceName": "DHAMMAPORN ARUNO",
+        "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 8,
+        "sourceName": "PAKORNKIAT CHAIYA-O- CHA",
+        "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 9,
+        "sourceName": "ASHIRA PHANGRAK",
+        "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 10,
+        "sourceName": "SURATSAYAPRON KAEWRAKUM",
+        "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 11,
+        "sourceName": "Jiratiwat Peungchurn",
+        "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 12,
+        "sourceName": "ANANTACHAI TIATHONGCHAI",
+        "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 13,
+        "sourceName": "PUNYISA KAEWLEK",
+        "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 14,
+        "sourceName": "KLAOCHANOK CHATAWATTANASOPAKUN",
+        "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 15,
+        "sourceName": "THIRAWAT HANKHAM",
+        "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 16,
+        "sourceName": "NATTHANAN CHAIYA-O- CHA",
+        "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 18,
+        "sourceName": "NAPABHAT BUASUANG",
+        "sailorId": "e4c77476-aeef-45b2-b905-495b594b1353",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 19,
+        "sourceName": "ARANYA KLANGMUEANG",
+        "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 20,
+        "sourceName": "NAPICHAYA RATTANADECAKORN",
+        "sailorId": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 21,
+        "sourceName": "Kanthee Khunmuang",
+        "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 22,
+        "sourceName": "SANTHAT SUTAMKOSOL",
+        "sailorId": "154feedb-6173-4142-8d3e-88f1567b22e7",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 23,
+        "sourceName": "Kanthon Khunmuang",
+        "sailorId": "fe102225-248d-48a9-a92c-683cadcdbda8",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 24,
+        "sourceName": "CHAYAPHON BOONSANG",
+        "sailorId": "e4b10010-b002-4066-8025-a266795b69bb",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "trat-regatta-2026-optimist-gold",
+        "rank": 25,
+        "sourceName": "NATTAPHAT POOLKLANG",
+        "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      }
+    ]
+  },
+  "pendingEntries": [
+    {
+      "sheet": "trat-regatta-2026-optimist-gold",
+      "rank": 17,
+      "name": "JIAHE LIU",
+      "sail": "246",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    }
+  ]
+}

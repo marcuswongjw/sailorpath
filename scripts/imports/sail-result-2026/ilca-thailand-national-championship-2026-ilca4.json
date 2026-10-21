@@ -1,0 +1,5454 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+    "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+    "type": "link",
+    "visuallyReviewed": false,
+    "provisional": true,
+    "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check.",
+    "pages": [],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=ILCA%20Thailand%20National%20Championship%202026%20at%20Royal%20Varuna%20Yacht%20Club"
+  },
+  "event": {
+    "id": "d90da686-7b3e-5728-a8f5-e3fb2f06b554",
+    "slug": "ilca-thailand-national-championship-2026",
+    "name": "ILCA Thailand National Championship 2026 at Royal Varuna Yacht Club",
+    "startDate": "2026-01-24",
+    "endDate": "2026-01-26",
+    "venue": "Royal Varuna Yacht Club",
+    "organizer": "Royal Varuna Yacht Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "e001877f-bffd-55c3-a5c7-cc2803132edf",
+    "slug": "ilca-thailand-national-championship-2026-ilca4",
+    "name": "ILCA Thailand National Championship 2026 at Royal Varuna Yacht Club — ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 37,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 1,
+      "name": "HUSSALUK SRINAKORN",
+      "sailOrBoardNumber": "225982",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 27.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "1st",
+        "class": "ILCA 4",
+        "sailno": "225982",
+        "club": "YRAT",
+        "helmname": "HUSSALUK SRINAKORN",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2009",
+        "r1": "2.0",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "5.0",
+        "r5": "(10.0)",
+        "r6": "2.0",
+        "r7": "3.0",
+        "r8": "2.0",
+        "r9": "1.0",
+        "total": "27.0",
+        "nett": "17.0"
+      },
+      "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "6b3593a0-9c9b-54cf-9b50-04bdfad5abe8",
+      "participants": [
+        {
+          "id": "025aabf3-8bab-5990-922d-90a8e248158c",
+          "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+          "sourceName": "HUSSALUK SRINAKORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: HUSSALUK SRINAKORN; historic sail/boat number: 225982; club: YRAT; nationality: THA; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 27.0 and net 17.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 2,
+      "name": "PINCHANOK KLAYSOMBOON",
+      "sailOrBoardNumber": "222687",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 22.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "2nd",
+        "class": "ILCA 4",
+        "sailno": "222687",
+        "club": "YRAT",
+        "helmname": "PINCHANOK KLAYSOMBOON",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2010",
+        "r1": "1.0",
+        "r2": "3.0",
+        "r3": "3.0",
+        "r4": "1.0",
+        "r5": "2.0",
+        "r6": "(5.0)",
+        "r7": "1.0",
+        "r8": "4.0",
+        "r9": "2.0",
+        "total": "22.0",
+        "nett": "17.0"
+      },
+      "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "resultId": "a85fef1b-916d-5d60-be5a-bcca6ee8e2fa",
+      "participants": [
+        {
+          "id": "bc3cb9f4-edf0-58a6-8b73-1e5ba0b35510",
+          "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+          "sourceName": "PINCHANOK KLAYSOMBOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PINCHANOK KLAYSOMBOON; historic sail/boat number: 222687; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 22.0 and net 17.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 3,
+      "name": "YU KAI CHEN",
+      "sailOrBoardNumber": "222236",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 72.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(38.0 BFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "3rd",
+        "class": "ILCA 4",
+        "sailno": "222236",
+        "club": "RVYC",
+        "helmname": "YU KAI CHEN",
+        "nat": "TPE",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "10.0",
+        "r2": "2.0",
+        "r3": "2.0",
+        "r4": "2.0",
+        "r5": "(38.0 BFD)",
+        "r6": "3.0",
+        "r7": "2.0",
+        "r8": "6.0",
+        "r9": "7.0",
+        "total": "72.0",
+        "nett": "34.0"
+      },
+      "sailorId": "76e668c0-57c9-50d2-b8d5-abd0f966d313",
+      "resultId": "75d44727-a09f-573e-88dc-13a28b777dd5",
+      "participants": [
+        {
+          "id": "330532ad-fb03-521c-867b-37d986c5930a",
+          "sailorId": "76e668c0-57c9-50d2-b8d5-abd0f966d313",
+          "sourceName": "YU KAI CHEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: YU KAI CHEN; historic sail/boat number: 222236; club: RVYC; nationality: TPE; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 72.0 and net 34.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 4,
+      "name": "LEE SONGHA",
+      "sailOrBoardNumber": "223204",
+      "club": "KSAF",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 72.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "4th",
+        "class": "ILCA 4",
+        "sailno": "223204",
+        "club": "KSAF",
+        "helmname": "LEE SONGHA",
+        "nat": "KOR",
+        "gender": "FEMALE",
+        "yob": "2011",
+        "r1": "6.0",
+        "r2": "7.0",
+        "r3": "4.0",
+        "r4": "(29.0)",
+        "r5": "1.0",
+        "r6": "10.0",
+        "r7": "9.0",
+        "r8": "1.0",
+        "r9": "5.0",
+        "total": "72.0",
+        "nett": "43.0"
+      },
+      "sailorId": "1417d151-f47b-5780-8ab8-efbc022a440f",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e160e05d-5528-5a13-b557-27cce64e8e51",
+      "participants": [
+        {
+          "id": "5e00a204-1ced-5ca5-83e5-ef11a9919be0",
+          "sailorId": "1417d151-f47b-5780-8ab8-efbc022a440f",
+          "sourceName": "LEE SONGHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: LEE SONGHA; historic sail/boat number: 223204; club: KSAF; nationality: KOR; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 72.0 and net 43.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 5,
+      "name": "THANVISIT KITCHANASIRI",
+      "sailOrBoardNumber": "226395",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 60.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "5th",
+        "class": "ILCA 4",
+        "sailno": "226395",
+        "club": "RVYC",
+        "helmname": "THANVISIT KITCHANASIRI",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2012",
+        "r1": "3.0",
+        "r2": "4.0",
+        "r3": "5.0",
+        "r4": "3.0",
+        "r5": "(17.0)",
+        "r6": "7.0",
+        "r7": "10.0",
+        "r8": "7.0",
+        "r9": "4.0",
+        "total": "60.0",
+        "nett": "43.0"
+      },
+      "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f2d84f08-04cc-50b4-865f-5940d9820b92",
+      "participants": [
+        {
+          "id": "a192b636-359e-58d5-a5df-96331e20cdf2",
+          "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+          "sourceName": "THANVISIT KITCHANASIRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANVISIT KITCHANASIRI; historic sail/boat number: 226395; club: RVYC; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 60.0 and net 43.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 6,
+      "name": "KITCHAKHUN SOMKHANNGOEN",
+      "sailOrBoardNumber": "228917",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 69.0,
+      "nettScore": 56.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "6th",
+        "class": "ILCA 4",
+        "sailno": "228917",
+        "club": "YRAT",
+        "helmname": "KITCHAKHUN SOMKHANNGOEN",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2011",
+        "r1": "5.0",
+        "r2": "6.0",
+        "r3": "10.0",
+        "r4": "(13.0)",
+        "r5": "9.0",
+        "r6": "4.0",
+        "r7": "7.0",
+        "r8": "12.0",
+        "r9": "3.0",
+        "total": "69.0",
+        "nett": "56.0"
+      },
+      "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ded8826f-ba2c-5a46-9399-90d39c42df89",
+      "participants": [
+        {
+          "id": "2fd630f9-159b-5d93-97ba-2346a0daac92",
+          "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+          "sourceName": "KITCHAKHUN SOMKHANNGOEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KITCHAKHUN SOMKHANNGOEN; historic sail/boat number: 228917; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 69.0 and net 56.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 7,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "21621",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 77.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "7th",
+        "class": "ILCA 4",
+        "sailno": "21621",
+        "club": "YRAT",
+        "helmname": "KARIT PHRAMMANEE",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "7.0",
+        "r2": "5.0",
+        "r3": "6.0",
+        "r4": "4.0",
+        "r5": "(14.0)",
+        "r6": "11.0",
+        "r7": "12.0",
+        "r8": "10.0",
+        "r9": "8.0",
+        "total": "77.0",
+        "nett": "63.0"
+      },
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "resultId": "a2913fdb-80c9-5959-8342-dea59d04b2d1",
+      "participants": [
+        {
+          "id": "efded47b-ee9d-5d0c-a1bb-1a33f6aa5538",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "KARIT PHRAMMANEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KARIT PHRAMMANEE; historic sail/boat number: 21621; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 77.0 and net 63.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 8,
+      "name": "PACHARAPOL RUMVISAI",
+      "sailOrBoardNumber": "216489",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 108.0,
+      "nettScore": 70.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "8th",
+        "class": "ILCA 4",
+        "sailno": "216489",
+        "club": "YRAT",
+        "helmname": "PACHARAPOL RUMVISAI",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "8.0",
+        "r2": "11.0",
+        "r3": "8.0",
+        "r4": "12.0",
+        "r5": "13.0",
+        "r6": "(38.0 UFD)",
+        "r7": "4.0",
+        "r8": "5.0",
+        "r9": "9.0",
+        "total": "108.0",
+        "nett": "70.0"
+      },
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ba0f1ae7-edf3-5430-98bf-9b772411cbbf",
+      "participants": [
+        {
+          "id": "5e62eb38-9c04-5b0f-a25c-afd51a40ac87",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PACHARAPOL RUMVISAI; historic sail/boat number: 216489; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 108.0 and net 70.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 9,
+      "name": "LU ZIXI",
+      "sailOrBoardNumber": "214664",
+      "club": "VANGHANG SAILING",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 98.0,
+      "nettScore": 75.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "9th",
+        "class": "ILCA 4",
+        "sailno": "214664",
+        "club": "VANGHANG SAILING",
+        "helmname": "LU ZIXI",
+        "nat": "CHN",
+        "gender": "MALE",
+        "yob": "2009",
+        "r1": "9.0",
+        "r2": "8.0",
+        "r3": "7.0",
+        "r4": "(23.0)",
+        "r5": "16.0",
+        "r6": "8.0",
+        "r7": "5.0",
+        "r8": "9.0",
+        "r9": "13.0",
+        "total": "98.0",
+        "nett": "75.0"
+      },
+      "sailorId": "bff8a281-7801-428a-934c-3dc80816585b",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "147932e9-1b70-598d-b59c-d9e6181967ed",
+      "participants": [
+        {
+          "id": "5be5d17a-15d9-586f-9f6e-a74276772981",
+          "sailorId": "bff8a281-7801-428a-934c-3dc80816585b",
+          "sourceName": "LU ZIXI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: LU ZIXI; historic sail/boat number: 214664; club: VANGHANG SAILING; nationality: CHN; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 98.0 and net 75.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 10,
+      "name": "YINRAN CHAN",
+      "sailOrBoardNumber": "214494",
+      "club": "VANHANG SAILING",
+      "school": null,
+      "nationality": "HKG",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 122.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "10th",
+        "class": "ILCA 4",
+        "sailno": "214494",
+        "club": "VANHANG SAILING",
+        "helmname": "YINRAN CHAN",
+        "nat": "HKG",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "4.0",
+        "r2": "10.0",
+        "r3": "12.0",
+        "r4": "7.0",
+        "r5": "8.0",
+        "r6": "(38.0 UFD)",
+        "r7": "16.0",
+        "r8": "11.0",
+        "r9": "16.0",
+        "total": "122.0",
+        "nett": "84.0"
+      },
+      "sailorId": "187fbbb7-9c46-5752-a64a-57858dd86879",
+      "resultId": "47c1089f-b7ae-5b59-92a7-bef22318b2f3",
+      "participants": [
+        {
+          "id": "e4a3265b-b016-5480-9b34-771d088bad5d",
+          "sailorId": "187fbbb7-9c46-5752-a64a-57858dd86879",
+          "sourceName": "YINRAN CHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: YINRAN CHAN; historic sail/boat number: 214494; club: VANHANG SAILING; nationality: HKG; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 122.0 and net 84.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 11,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "228888",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 131.0,
+      "nettScore": 93.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "11th",
+        "class": "ILCA 4",
+        "sailno": "228888",
+        "club": "YRAT",
+        "helmname": "PAILIN JAROENPON",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2010",
+        "r1": "17.0",
+        "r2": "25.0",
+        "r3": "9.0",
+        "r4": "14.0",
+        "r5": "4.0",
+        "r6": "(38.0 UFD)",
+        "r7": "6.0",
+        "r8": "8.0",
+        "r9": "10.0",
+        "total": "131.0",
+        "nett": "93.0"
+      },
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "4ce5dcd0-03ce-50a4-aff4-5feeef029d99",
+      "participants": [
+        {
+          "id": "60c3169e-9a1c-5d0c-ab62-ea93cbf4829a",
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PAILIN JAROENPON; historic sail/boat number: 228888; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 131.0 and net 93.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 12,
+      "name": "LUKAS KIESSELBACH",
+      "sailOrBoardNumber": "221597",
+      "club": "NRV NORDDEUTSCHER REGATTAVEREIN",
+      "school": null,
+      "nationality": "GER",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 132.0,
+      "nettScore": 94.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 38.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(38.0 DSQ)",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "12th",
+        "class": "ILCA 4",
+        "sailno": "221597",
+        "club": "NRV NORDDEUTSCHER REGATTAVEREIN",
+        "helmname": "LUKAS KIESSELBACH",
+        "nat": "GER",
+        "gender": "MALE",
+        "yob": "2009",
+        "r1": "14.0",
+        "r2": "15.0",
+        "r3": "20.0",
+        "r4": "6.0",
+        "r5": "3.0",
+        "r6": "6.0",
+        "r7": "13.0",
+        "r8": "(38.0 DSQ)",
+        "r9": "17.0",
+        "total": "132.0",
+        "nett": "94.0"
+      },
+      "sailorId": "e164bdfd-0bbc-46fd-8f2b-46570366aacf",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "8591d9b0-86ab-508d-bad7-49ff20ebcd2b",
+      "participants": [
+        {
+          "id": "7d4c2188-91ab-540a-9f77-0da4268c9d2d",
+          "sailorId": "e164bdfd-0bbc-46fd-8f2b-46570366aacf",
+          "sourceName": "LUKAS KIESSELBACH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: LUKAS KIESSELBACH; historic sail/boat number: 221597; club: NRV NORDDEUTSCHER REGATTAVEREIN; nationality: GER; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 132.0 and net 94.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 13,
+      "name": "ZEPH WAN",
+      "sailOrBoardNumber": "226650",
+      "club": "SAFYC",
+      "school": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 131.0,
+      "nettScore": 96.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "13th",
+        "class": "ILCA 4",
+        "sailno": "226650",
+        "club": "SAFYC",
+        "helmname": "ZEPH WAN",
+        "nat": "SGP",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "21.0",
+        "r2": "34.0",
+        "r3": "(35.0)",
+        "r4": "8.0",
+        "r5": "12.0",
+        "r6": "1.0",
+        "r7": "11.0",
+        "r8": "3.0",
+        "r9": "6.0",
+        "total": "131.0",
+        "nett": "96.0"
+      },
+      "sailorId": "e178e8d4-02b8-470f-9235-4a451f5eb31a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3912787f-2102-5a6b-997b-309c1309fab0",
+      "participants": [
+        {
+          "id": "99f5f586-e164-51ad-81e5-3095beb2ecbf",
+          "sailorId": "e178e8d4-02b8-470f-9235-4a451f5eb31a",
+          "sourceName": "ZEPH WAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ZEPH WAN; historic sail/boat number: 226650; club: SAFYC; nationality: SGP; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 131.0 and net 96.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 14,
+      "name": "SANCHUAN WU",
+      "sailOrBoardNumber": "210812",
+      "club": "VANHANG SAILING",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 152.0,
+      "nettScore": 114.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "14th",
+        "class": "ILCA 4",
+        "sailno": "210812",
+        "club": "VANHANG SAILING",
+        "helmname": "SANCHUAN WU",
+        "nat": "CHN",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "29.0",
+        "r2": "9.0",
+        "r3": "11.0",
+        "r4": "11.0",
+        "r5": "5.0",
+        "r6": "(38.0 UFD)",
+        "r7": "21.0",
+        "r8": "16.0",
+        "r9": "12.0",
+        "total": "152.0",
+        "nett": "114.0"
+      },
+      "sailorId": "3142f40a-2106-5ac4-8f52-4afeaa160cb4",
+      "resultId": "5174e564-b52b-5f2d-bf00-032ca2224283",
+      "participants": [
+        {
+          "id": "4baa65d7-343a-5833-b10a-2d9de8471f1a",
+          "sailorId": "3142f40a-2106-5ac4-8f52-4afeaa160cb4",
+          "sourceName": "SANCHUAN WU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SANCHUAN WU; historic sail/boat number: 210812; club: VANHANG SAILING; nationality: CHN; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 152.0 and net 114.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 15,
+      "name": "LEE SU MIN",
+      "sailOrBoardNumber": "222951",
+      "club": "TONG YEONG",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 147.0,
+      "nettScore": 124.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "15th",
+        "class": "ILCA 4",
+        "sailno": "222951",
+        "club": "TONG YEONG",
+        "helmname": "LEE SU MIN",
+        "nat": "KOR",
+        "gender": "FEMALE",
+        "yob": "2010",
+        "r1": "15.0",
+        "r2": "17.0",
+        "r3": "19.0",
+        "r4": "15.0",
+        "r5": "20.0",
+        "r6": "9.0",
+        "r7": "14.0",
+        "r8": "(23.0)",
+        "r9": "15.0",
+        "total": "147.0",
+        "nett": "124.0"
+      },
+      "sailorId": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+      "resultId": "6db2a02e-bf1a-5038-94c1-61e96c0827b3",
+      "participants": [
+        {
+          "id": "57fa0b1e-890f-5856-b79d-b8bf9832a9e2",
+          "sailorId": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+          "sourceName": "LEE SU MIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: LEE SU MIN; historic sail/boat number: 222951; club: TONG YEONG; nationality: KOR; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 147.0 and net 124.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 16,
+      "name": "AUSTIN LEE",
+      "sailOrBoardNumber": "217710",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 163.0,
+      "nettScore": 125.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "16th",
+        "class": "ILCA 4",
+        "sailno": "217710",
+        "club": "RVYC",
+        "helmname": "AUSTIN LEE",
+        "nat": "TPE",
+        "gender": "MALE",
+        "yob": "2011",
+        "r1": "13.0",
+        "r2": "19.0",
+        "r3": "14.0",
+        "r4": "20.0",
+        "r5": "22.0",
+        "r6": "(38.0 UFD)",
+        "r7": "8.0",
+        "r8": "15.0",
+        "r9": "14.0",
+        "total": "163.0",
+        "nett": "125.0"
+      },
+      "sailorId": "55401544-18e4-5347-9967-69547a3cf03a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "d69b1521-89df-588b-ac86-8592034aa032",
+      "participants": [
+        {
+          "id": "d4a2d892-f54a-53c4-aa50-f47b62115d68",
+          "sailorId": "55401544-18e4-5347-9967-69547a3cf03a",
+          "sourceName": "AUSTIN LEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: AUSTIN LEE; historic sail/boat number: 217710; club: RVYC; nationality: TPE; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 163.0 and net 125.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 18,
+      "name": "LIU TZU HO",
+      "sailOrBoardNumber": "217714",
+      "club": "YUSA",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 191.0,
+      "nettScore": 153.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "18th",
+        "class": "ILCA 4",
+        "sailno": "217714",
+        "club": "YUSA",
+        "helmname": "LIU TZU HO",
+        "nat": "TPE",
+        "gender": "MALE",
+        "yob": "2009",
+        "r1": "19.0",
+        "r2": "21.0",
+        "r3": "28.0",
+        "r4": "22.0",
+        "r5": "6.0",
+        "r6": "(38.0 UFD)",
+        "r7": "22.0",
+        "r8": "24.0",
+        "r9": "11.0",
+        "total": "191.0",
+        "nett": "153.0"
+      },
+      "sailorId": "6b17e39b-16cf-50f3-ab55-ee809710b347",
+      "resultId": "3a0e9eb3-c2e8-5629-962a-0f4c35b2e0d9",
+      "participants": [
+        {
+          "id": "db08bed1-459e-522c-ad15-f992b8a9d82e",
+          "sailorId": "6b17e39b-16cf-50f3-ab55-ee809710b347",
+          "sourceName": "LIU TZU HO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: LIU TZU HO; historic sail/boat number: 217714; club: YUSA; nationality: TPE; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 191.0 and net 153.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 19,
+      "name": "REYES TAN JIT ENG",
+      "sailOrBoardNumber": "214251",
+      "club": "CHANGI SAILING CLUB",
+      "school": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 191.0,
+      "nettScore": 153.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "19th",
+        "class": "ILCA 4",
+        "sailno": "214251",
+        "club": "CHANGI SAILING CLUB",
+        "helmname": "REYES TAN JIT ENG",
+        "nat": "SGP",
+        "gender": "MALE",
+        "yob": "2011",
+        "r1": "18.0",
+        "r2": "16.0",
+        "r3": "16.0",
+        "r4": "24.0",
+        "r5": "27.0",
+        "r6": "(38.0 UFD)",
+        "r7": "19.0",
+        "r8": "13.0",
+        "r9": "20.0",
+        "total": "191.0",
+        "nett": "153.0"
+      },
+      "sailorId": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "59fc8f2b-e2f5-5475-9242-e21317fa3516",
+      "participants": [
+        {
+          "id": "d78eff80-7135-507b-9c82-4ad2cdd9827c",
+          "sailorId": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+          "sourceName": "REYES TAN JIT ENG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: REYES TAN JIT ENG; historic sail/boat number: 214251; club: CHANGI SAILING CLUB; nationality: SGP; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 191.0 and net 153.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 20,
+      "name": "KIM JUNMO",
+      "sailOrBoardNumber": "224680",
+      "club": "KSAF",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 189.0,
+      "nettScore": 157.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "20th",
+        "class": "ILCA 4",
+        "sailno": "224680",
+        "club": "KSAF",
+        "helmname": "KIM JUNMO",
+        "nat": "KOR",
+        "gender": "MALE",
+        "yob": "2012",
+        "r1": "20.0",
+        "r2": "13.0",
+        "r3": "29.0",
+        "r4": "(32.0)",
+        "r5": "18.0",
+        "r6": "15.0",
+        "r7": "24.0",
+        "r8": "14.0",
+        "r9": "24.0",
+        "total": "189.0",
+        "nett": "157.0"
+      },
+      "sailorId": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+      "resultId": "9bc9deee-92e2-5d12-a0be-740b4487c09f",
+      "participants": [
+        {
+          "id": "fa1ffc7c-a876-5936-a653-20c2f720f2de",
+          "sailorId": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+          "sourceName": "KIM JUNMO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KIM JUNMO; historic sail/boat number: 224680; club: KSAF; nationality: KOR; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 189.0 and net 157.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 21,
+      "name": "JEON HYUN WOO",
+      "sailOrBoardNumber": "215619",
+      "club": "GANGWON STATE SAILING TEAM",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 202.0,
+      "nettScore": 171.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "21st",
+        "class": "ILCA 4",
+        "sailno": "215619",
+        "club": "GANGWON STATE SAILING TEAM",
+        "helmname": "JEON HYUN WOO",
+        "nat": "KOR",
+        "gender": "FEMALE",
+        "yob": "2011",
+        "r1": "23.0",
+        "r2": "14.0",
+        "r3": "21.0",
+        "r4": "28.0",
+        "r5": "29.0",
+        "r6": "16.0",
+        "r7": "(31.0)",
+        "r8": "18.0",
+        "r9": "22.0",
+        "total": "202.0",
+        "nett": "171.0"
+      },
+      "sailorId": "190686bb-516d-43ec-a519-b0158e48f963",
+      "resultId": "8044fbac-1014-5099-aefb-6d81499db0ca",
+      "participants": [
+        {
+          "id": "a55ad7ee-2a28-5181-a837-ea2e3516b6db",
+          "sailorId": "190686bb-516d-43ec-a519-b0158e48f963",
+          "sourceName": "JEON HYUN WOO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: JEON HYUN WOO; historic sail/boat number: 215619; club: GANGWON STATE SAILING TEAM; nationality: KOR; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 202.0 and net 171.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 22,
+      "name": "JAYDEN BAI ZI XI",
+      "sailOrBoardNumber": "225261",
+      "club": "PASSION CLUB",
+      "school": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 221.0,
+      "nettScore": 183.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "22nd",
+        "class": "ILCA 4",
+        "sailno": "225261",
+        "club": "PASSION CLUB",
+        "helmname": "JAYDEN BAI ZI XI",
+        "nat": "SGP",
+        "gender": "MALE",
+        "yob": "2011",
+        "r1": "31.0",
+        "r2": "20.0",
+        "r3": "24.0",
+        "r4": "19.0",
+        "r5": "19.0",
+        "r6": "(38.0 UFD)",
+        "r7": "27.0",
+        "r8": "17.0",
+        "r9": "26.0",
+        "total": "221.0",
+        "nett": "183.0"
+      },
+      "sailorId": "3b678e7c-898f-4784-b309-d092393af6b5",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "94f78dbb-a055-536f-b3cb-d6f6c280dc55",
+      "participants": [
+        {
+          "id": "b561ab07-a4f5-5f7f-a6a4-25dbf06e55b3",
+          "sailorId": "3b678e7c-898f-4784-b309-d092393af6b5",
+          "sourceName": "JAYDEN BAI ZI XI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: JAYDEN BAI ZI XI; historic sail/boat number: 225261; club: PASSION CLUB; nationality: SGP; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 221.0 and net 183.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 23,
+      "name": "YONG RAY CHUANG",
+      "sailOrBoardNumber": "221094",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 222.0,
+      "nettScore": 184.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "23rd",
+        "class": "ILCA 4",
+        "sailno": "221094",
+        "club": "RVYC",
+        "helmname": "YONG RAY CHUANG",
+        "nat": "TPE",
+        "gender": "MALE",
+        "yob": "2011",
+        "r1": "34.0",
+        "r2": "23.0",
+        "r3": "13.0",
+        "r4": "21.0",
+        "r5": "11.0",
+        "r6": "(38.0 UFD)",
+        "r7": "23.0",
+        "r8": "30.0",
+        "r9": "29.0",
+        "total": "222.0",
+        "nett": "184.0"
+      },
+      "sailorId": "6b018765-b6a9-5682-ada3-f3002829594e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "c582dc64-08b8-51a1-a640-40d8d1680f81",
+      "participants": [
+        {
+          "id": "6571c65a-91bd-5ad9-b4de-167438782cf8",
+          "sailorId": "6b018765-b6a9-5682-ada3-f3002829594e",
+          "sourceName": "YONG RAY CHUANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: YONG RAY CHUANG; historic sail/boat number: 221094; club: RVYC; nationality: TPE; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 222.0 and net 184.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 24,
+      "name": "CAI MINGZHOU",
+      "sailOrBoardNumber": "214493",
+      "club": "VANGHANG SAILING",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 222.0,
+      "nettScore": 184.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(38.0 BFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "38.0 UFD",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "24th",
+        "class": "ILCA 4",
+        "sailno": "214493",
+        "club": "VANGHANG SAILING",
+        "helmname": "CAI MINGZHOU",
+        "nat": "CHN",
+        "gender": "MALE",
+        "yob": "2009",
+        "r1": "11.0",
+        "r2": "18.0",
+        "r3": "17.0",
+        "r4": "18.0",
+        "r5": "(38.0 BFD)",
+        "r6": "38.0 UFD",
+        "r7": "20.0",
+        "r8": "34.0",
+        "r9": "28.0",
+        "total": "222.0",
+        "nett": "184.0"
+      },
+      "sailorId": "5cee7204-4a0c-538a-aabf-9f8e5c7884bf",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "41cf9262-c7db-50d3-b904-8a7c943502ad",
+      "participants": [
+        {
+          "id": "2d0ec428-df11-509a-a01c-ccd6bc316c05",
+          "sailorId": "5cee7204-4a0c-538a-aabf-9f8e5c7884bf",
+          "sourceName": "CAI MINGZHOU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CAI MINGZHOU; historic sail/boat number: 214493; club: VANGHANG SAILING; nationality: CHN; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 222.0 and net 184.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 25,
+      "name": "PUMITUS MEE-IAMSIN",
+      "sailOrBoardNumber": "222188",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 223.0,
+      "nettScore": 190.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "25th",
+        "class": "ILCA 4",
+        "sailno": "222188",
+        "club": "YRAT",
+        "helmname": "PUMITUS MEE-IAMSIN",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "22.0",
+        "r2": "26.0",
+        "r3": "31.0",
+        "r4": "(33.0)",
+        "r5": "32.0",
+        "r6": "13.0",
+        "r7": "26.0",
+        "r8": "21.0",
+        "r9": "19.0",
+        "total": "223.0",
+        "nett": "190.0"
+      },
+      "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "a28c69c7-af49-5a6a-8491-73df9c6c385b",
+      "participants": [
+        {
+          "id": "9bb8d07d-df96-5c67-97a1-28d53c1e3d98",
+          "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+          "sourceName": "PUMITUS MEE-IAMSIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PUMITUS MEE-IAMSIN; historic sail/boat number: 222188; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 223.0 and net 190.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 26,
+      "name": "SKYE HSU",
+      "sailOrBoardNumber": "220051",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 229.0,
+      "nettScore": 191.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(38.0 DNC)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "26th",
+        "class": "ILCA 4",
+        "sailno": "220051",
+        "club": "RVYC",
+        "helmname": "SKYE HSU",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "26.0",
+        "r2": "27.0",
+        "r3": "23.0",
+        "r4": "10.0",
+        "r5": "15.0",
+        "r6": "14.0",
+        "r7": "(38.0 DNC)",
+        "r8": "38.0 DNC",
+        "r9": "38.0 DNC",
+        "total": "229.0",
+        "nett": "191.0"
+      },
+      "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "9e26d2b6-1e5b-5471-a97a-88ec274f7241",
+      "participants": [
+        {
+          "id": "cdaf1382-cc87-5ee6-a31f-ca336e8ec6ea",
+          "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+          "sourceName": "SKYE HSU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SKYE HSU; historic sail/boat number: 220051; club: RVYC; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 229.0 and net 191.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 27,
+      "name": "CHONGHAO ANSON HUANG",
+      "sailOrBoardNumber": "214677",
+      "club": "VANGHANG SAILING",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 233.0,
+      "nettScore": 195.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "27th",
+        "class": "ILCA 4",
+        "sailno": "214677",
+        "club": "VANGHANG SAILING",
+        "helmname": "CHONGHAO ANSON HUANG",
+        "nat": "CHN",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "16.0",
+        "r2": "12.0",
+        "r3": "22.0",
+        "r4": "35.0",
+        "r5": "31.0",
+        "r6": "(38.0 UFD)",
+        "r7": "28.0",
+        "r8": "19.0",
+        "r9": "32.0",
+        "total": "233.0",
+        "nett": "195.0"
+      },
+      "sailorId": "19ec1fe1-4cdb-5ee2-85c1-61bf87a1ee6d",
+      "resultId": "33b49118-5c8f-59fe-bec7-127ef298edff",
+      "participants": [
+        {
+          "id": "60c5e9ce-3246-507e-86eb-d87f6ac2681b",
+          "sailorId": "19ec1fe1-4cdb-5ee2-85c1-61bf87a1ee6d",
+          "sourceName": "CHONGHAO ANSON HUANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHONGHAO ANSON HUANG; historic sail/boat number: 214677; club: VANGHANG SAILING; nationality: CHN; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 233.0 and net 195.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 28,
+      "name": "YEH CHENYANG",
+      "sailOrBoardNumber": "225393",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 233.0,
+      "nettScore": 195.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "28th",
+        "class": "ILCA 4",
+        "sailno": "225393",
+        "club": "RVYC",
+        "helmname": "YEH CHENYANG",
+        "nat": "TPE",
+        "gender": "MALE",
+        "yob": "2012",
+        "r1": "27.0",
+        "r2": "24.0",
+        "r3": "18.0",
+        "r4": "16.0",
+        "r5": "21.0",
+        "r6": "(38.0 UFD)",
+        "r7": "34.0",
+        "r8": "32.0",
+        "r9": "23.0",
+        "total": "233.0",
+        "nett": "195.0"
+      },
+      "sailorId": "077c93a7-5bcf-5772-a7ec-fe9d0c1e1b7e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "17d35b1b-5665-5f3e-8d10-b00f052a8593",
+      "participants": [
+        {
+          "id": "480b187f-eda8-5b6b-a8b2-517874683c1a",
+          "sailorId": "077c93a7-5bcf-5772-a7ec-fe9d0c1e1b7e",
+          "sourceName": "YEH CHENYANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: YEH CHENYANG; historic sail/boat number: 225393; club: RVYC; nationality: TPE; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 233.0 and net 195.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 29,
+      "name": "THANAPORN PHOKAEW",
+      "sailOrBoardNumber": "22268",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 239.0,
+      "nettScore": 201.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(38.0 BFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "38.0 UFD",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "29th",
+        "class": "ILCA 4",
+        "sailno": "22268",
+        "club": "YRAT",
+        "helmname": "THANAPORN PHOKAEW",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2011",
+        "r1": "30.0",
+        "r2": "31.0",
+        "r3": "27.0",
+        "r4": "17.0",
+        "r5": "(38.0 BFD)",
+        "r6": "38.0 UFD",
+        "r7": "15.0",
+        "r8": "22.0",
+        "r9": "21.0",
+        "total": "239.0",
+        "nett": "201.0"
+      },
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e0a528a3-a973-5626-a84a-5ecea712e7e6",
+      "participants": [
+        {
+          "id": "8fe81e7e-14eb-5c77-9445-1ec64bbaf884",
+          "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+          "sourceName": "THANAPORN PHOKAEW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANAPORN PHOKAEW; historic sail/boat number: 22268; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 239.0 and net 201.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 30,
+      "name": "KATE LEE",
+      "sailOrBoardNumber": "214516",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 243.0,
+      "nettScore": 205.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "30th",
+        "class": "ILCA 4",
+        "sailno": "214516",
+        "club": "RVYC",
+        "helmname": "KATE LEE",
+        "nat": "TPE",
+        "gender": "FEMALE",
+        "yob": "2012",
+        "r1": "33.0",
+        "r2": "33.0",
+        "r3": "25.0",
+        "r4": "9.0",
+        "r5": "26.0",
+        "r6": "(38.0 UFD)",
+        "r7": "18.0",
+        "r8": "26.0",
+        "r9": "35.0",
+        "total": "243.0",
+        "nett": "205.0"
+      },
+      "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "a52ea139-02f5-5c70-8ef6-c91d98a817df",
+      "participants": [
+        {
+          "id": "18d72f59-35c3-5ce9-9051-051464ec7ccd",
+          "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+          "sourceName": "KATE LEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KATE LEE; historic sail/boat number: 214516; club: RVYC; nationality: TPE; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 243.0 and net 205.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 31,
+      "name": "SUWAPHAK PLUMJIT",
+      "sailOrBoardNumber": "212898",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 255.0,
+      "nettScore": 218.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "31st",
+        "class": "ILCA 4",
+        "sailno": "212898",
+        "club": "YRAT",
+        "helmname": "SUWAPHAK PLUMJIT",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2012",
+        "r1": "24.0",
+        "r2": "32.0",
+        "r3": "30.0",
+        "r4": "(37.0)",
+        "r5": "28.0",
+        "r6": "17.0",
+        "r7": "25.0",
+        "r8": "31.0",
+        "r9": "31.0",
+        "total": "255.0",
+        "nett": "218.0"
+      },
+      "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "dc9e9a7b-810a-5c90-8896-88735a7862bc",
+      "participants": [
+        {
+          "id": "106bf714-7bb9-58cd-94ff-93ab5b757c06",
+          "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+          "sourceName": "SUWAPHAK PLUMJIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SUWAPHAK PLUMJIT; historic sail/boat number: 212898; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 255.0 and net 218.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 32,
+      "name": "THITIWORADA JOHNJAITRONG",
+      "sailOrBoardNumber": "220240",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 261.0,
+      "nettScore": 223.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "32nd",
+        "class": "ILCA 4",
+        "sailno": "220240",
+        "club": "YRAT",
+        "helmname": "THITIWORADA JOHNJAITRONG",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2010",
+        "r1": "28.0",
+        "r2": "30.0",
+        "r3": "33.0",
+        "r4": "25.0",
+        "r5": "25.0",
+        "r6": "(38.0 UFD)",
+        "r7": "29.0",
+        "r8": "28.0",
+        "r9": "25.0",
+        "total": "261.0",
+        "nett": "223.0"
+      },
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "01712a8b-7db8-56b8-a7f2-814ef5abd36e",
+      "participants": [
+        {
+          "id": "7799c9c8-3649-576d-8116-29a58aa66a4d",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "THITIWORADA JOHNJAITRONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THITIWORADA JOHNJAITRONG; historic sail/boat number: 220240; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 261.0 and net 223.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 33,
+      "name": "CHERYL SITONG",
+      "sailOrBoardNumber": "214466",
+      "club": "VANHANG SAILING",
+      "school": null,
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 265.0,
+      "nettScore": 227.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(38.0 BFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "38.0 UFD",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "33rd",
+        "class": "ILCA 4",
+        "sailno": "214466",
+        "club": "VANHANG SAILING",
+        "helmname": "CHERYL SITONG",
+        "nat": "HKG",
+        "gender": "FEMALE",
+        "yob": "2011",
+        "r1": "12.0",
+        "r2": "28.0",
+        "r3": "32.0",
+        "r4": "27.0",
+        "r5": "(38.0 BFD)",
+        "r6": "38.0 UFD",
+        "r7": "30.0",
+        "r8": "33.0",
+        "r9": "27.0",
+        "total": "265.0",
+        "nett": "227.0"
+      },
+      "sailorId": "21b5d619-dc42-591b-87e9-0be3d2336594",
+      "resultId": "f3182c9b-cd7e-5a79-beae-36d084707f68",
+      "participants": [
+        {
+          "id": "35c1e081-dd27-5fc7-a946-d445fd9bbcb9",
+          "sailorId": "21b5d619-dc42-591b-87e9-0be3d2336594",
+          "sourceName": "CHERYL SITONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHERYL SITONG; historic sail/boat number: 214466; club: VANHANG SAILING; nationality: HKG; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 265.0 and net 227.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 34,
+      "name": "SEOYI AN",
+      "sailOrBoardNumber": "190953",
+      "club": "GANGWON SAILING TEAM",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 263.0,
+      "nettScore": 227.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 36.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(36.0)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "34th",
+        "class": "ILCA 4",
+        "sailno": "190953",
+        "club": "GANGWON SAILING TEAM",
+        "helmname": "SEOYI AN",
+        "nat": "KOR",
+        "gender": "FEMALE",
+        "yob": "2013",
+        "r1": "25.0",
+        "r2": "29.0",
+        "r3": "26.0",
+        "r4": "34.0",
+        "r5": "33.0",
+        "r6": "19.0",
+        "r7": "(36.0)",
+        "r8": "27.0",
+        "r9": "34.0",
+        "total": "263.0",
+        "nett": "227.0"
+      },
+      "sailorId": "40a23367-69df-42e3-8907-be4a7919fb4e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "6f37cc85-22ef-5839-8d05-6deeba60d995",
+      "participants": [
+        {
+          "id": "821ff53a-4559-53ee-8cce-89acb6f2550a",
+          "sailorId": "40a23367-69df-42e3-8907-be4a7919fb4e",
+          "sourceName": "SEOYI AN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SEOYI AN; historic sail/boat number: 190953; club: GANGWON SAILING TEAM; nationality: KOR; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 263.0 and net 227.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 35,
+      "name": "CAPUCINE LALA COLLIN",
+      "sailOrBoardNumber": "22165",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 273.0,
+      "nettScore": 238.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "35th",
+        "class": "ILCA 4",
+        "sailno": "22165",
+        "club": "RVYC",
+        "helmname": "CAPUCINE LALA COLLIN",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2011",
+        "r1": "(35.0)",
+        "r2": "35.0",
+        "r3": "34.0",
+        "r4": "30.0",
+        "r5": "24.0",
+        "r6": "18.0",
+        "r7": "35.0",
+        "r8": "29.0",
+        "r9": "33.0",
+        "total": "273.0",
+        "nett": "238.0"
+      },
+      "sailorId": "5cb993b9-4809-5192-864e-261f913b90c0",
+      "resultId": "3573bb15-e98e-5f2a-b16b-e7cdd6743607",
+      "participants": [
+        {
+          "id": "f044eac9-df37-5b2c-9ff4-0e635fd18ee0",
+          "sailorId": "5cb993b9-4809-5192-864e-261f913b90c0",
+          "sourceName": "CAPUCINE LALA COLLIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CAPUCINE LALA COLLIN; historic sail/boat number: 22165; club: RVYC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 273.0 and net 238.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 36,
+      "name": "HUANG CHI-FANG",
+      "sailOrBoardNumber": "220975",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "TPE",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 295.0,
+      "nettScore": 257.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(38.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "38.0 UFD",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "36th",
+        "class": "ILCA 4",
+        "sailno": "220975",
+        "club": "RVYC",
+        "helmname": "HUANG CHI-FANG",
+        "nat": "TPE",
+        "gender": "FEMALE",
+        "yob": "2010",
+        "r1": "(38.0 DNC)",
+        "r2": "38.0 DNC",
+        "r3": "38.0 DNC",
+        "r4": "26.0",
+        "r5": "30.0",
+        "r6": "38.0 UFD",
+        "r7": "32.0",
+        "r8": "25.0",
+        "r9": "30.0",
+        "total": "295.0",
+        "nett": "257.0"
+      },
+      "sailorId": "9bdb02cd-2d99-5a51-829a-a0bb6b8ffd24",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "cf27a48c-9a48-5a01-8b96-c3ebd09fde98",
+      "participants": [
+        {
+          "id": "aa1994cc-78cd-5878-86b6-0d057f3c22b1",
+          "sailorId": "9bdb02cd-2d99-5a51-829a-a0bb6b8ffd24",
+          "sourceName": "HUANG CHI-FANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: HUANG CHI-FANG; historic sail/boat number: 220975; club: RVYC; nationality: TPE; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 295.0 and net 257.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 37,
+      "name": "PRAPADA PEERANANTAPANYA",
+      "sailOrBoardNumber": "212815",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 304.0,
+      "nettScore": 266.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "37th",
+        "class": "ILCA 4",
+        "sailno": "212815",
+        "club": "YRAT",
+        "helmname": "PRAPADA PEERANANTAPANYA",
+        "nat": "THA",
+        "gender": "FEMALE",
+        "yob": "2012",
+        "r1": "36.0",
+        "r2": "36.0",
+        "r3": "36.0",
+        "r4": "31.0",
+        "r5": "23.0",
+        "r6": "(38.0 UFD)",
+        "r7": "33.0",
+        "r8": "35.0",
+        "r9": "36.0",
+        "total": "304.0",
+        "nett": "266.0"
+      },
+      "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "0e4068e5-f0fc-579a-9cdc-997fefa14f96",
+      "participants": [
+        {
+          "id": "114a6752-253d-5af3-b6a5-022c3cd31f0c",
+          "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+          "sourceName": "PRAPADA PEERANANTAPANYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PRAPADA PEERANANTAPANYA; historic sail/boat number: 212815; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 304.0 and net 266.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    }
+  ],
+  "publicSummary": "Official source status: provisional. Every race, discard and scoring code retained. Does not count for Singapore national rankings. Partial import: 36 of 37 entries imported; 1 awaiting identity review.",
+  "importedEntryCount": 36,
+  "deferredEntryCount": 1,
+  "profilePreflight": [
+    {
+      "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+      "club": "YRAT",
+      "name": "Kiitchakhun Somkhanngoen",
+      "gender": "Male",
+      "handle": "kiitchakhun-somkhanngoen-sw3gwyp",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225917"
+    },
+    {
+      "id": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "club": "YRAT",
+      "name": "Suwaphak Plumjit",
+      "gender": "Female",
+      "handle": "suwaphak-plumjit-8glzaqs",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222589"
+    },
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "Female",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "3b678e7c-898f-4784-b309-d092393af6b5",
+      "club": "Raffles Marina",
+      "name": "Jayden Zi Xi Bai",
+      "gender": "M",
+      "handle": "jayden-zi-xi-bai-065358",
+      "birthYear": 2011,
+      "sailNumber": "225261",
+      "nationality": "SGP",
+      "sailNumberIlca4": "225261"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": null,
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "club": "YRAT",
+      "name": "Hussaluk Srinakorn",
+      "gender": "M",
+      "handle": "hussaluk-srinakorn-2pumyyp",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+      "club": "Changi Sailing Club",
+      "name": "Reyes Jit Eng Tan",
+      "gender": "M",
+      "handle": "tan-reyes-jit-eng-fzahuzd",
+      "birthYear": 2011,
+      "sailNumber": "4712",
+      "nationality": "SGP",
+      "sailNumberIlca4": "214251"
+    },
+    {
+      "id": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "club": "YRAT",
+      "name": "Thanaporn Phokaew",
+      "gender": "F",
+      "handle": "thanaporn-phokaew-2zbw4z0",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225426"
+    },
+    {
+      "id": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "club": "YRAT",
+      "name": "Pinchanok Klaysomboon",
+      "gender": "F",
+      "handle": "pinchanok-klaysomboon-ofynlxk",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "N/A",
+      "name": "Karit Phrammanee",
+      "gender": null,
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "club": "YRAT/RVYC",
+      "name": "Prapada Peeranantapanya",
+      "gender": "Female",
+      "handle": "prapada-peeranantapanya-rz13syo",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "223567"
+    },
+    {
+      "id": "bff8a281-7801-428a-934c-3dc80816585b",
+      "club": "CSC",
+      "name": "Lu Zixi",
+      "gender": "M",
+      "handle": "historical-2024-csc-ilca4-jan-2024-18d7373c7fd0",
+      "birthYear": null,
+      "sailNumber": "93",
+      "nationality": "CHN",
+      "sailNumberIlca4": "214813"
+    },
+    {
+      "id": "e178e8d4-02b8-470f-9235-4a451f5eb31a",
+      "club": "PAssion Wave",
+      "name": "Zeph Wan",
+      "gender": "M",
+      "handle": "zeph-wan",
+      "birthYear": 2010,
+      "sailNumber": "122",
+      "nationality": "SGP",
+      "sailNumberIlca4": "226650"
+    },
+    {
+      "id": "e164bdfd-0bbc-46fd-8f2b-46570366aacf",
+      "club": "Changi Sailing Club",
+      "name": "Lukas Kiesselbach",
+      "gender": "M",
+      "handle": "lukas-kiesselbach-fylbfoc",
+      "birthYear": 2009,
+      "sailNumber": "221597",
+      "nationality": "GER",
+      "sailNumberIlca4": "221597"
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "190686bb-516d-43ec-a519-b0158e48f963",
+      "club": "Imported official result",
+      "name": "Hyunwoo Jeon",
+      "gender": "M",
+      "handle": "asian-kor-hyunwoo-je-6ae6db",
+      "birthYear": 2011,
+      "sailNumber": "590",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "40a23367-69df-42e3-8907-be4a7919fb4e",
+      "club": "Imported official result",
+      "name": "Seoyi An",
+      "gender": "F",
+      "handle": "asian-kor-seoyi-an-4eb55a",
+      "birthYear": 2013,
+      "sailNumber": "586",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f61896f2-3906-5258-82bc-494e2573ebfc",
+      "club": "RVYC",
+      "name": "Skye Hsu",
+      "gender": null,
+      "handle": "skye-hsu-thai25-f61896",
+      "birthYear": null,
+      "sailNumber": "102",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "club": "RVYC",
+      "name": "Thanvisit Kitchanasiri",
+      "gender": "M",
+      "handle": "thanvisit-kitchanasiri-thai25-278c69",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "226395"
+    },
+    {
+      "id": "187fbbb7-9c46-5752-a64a-57858dd86879",
+      "club": "VANHANG SAILING",
+      "name": "Yinran Chen",
+      "gender": "M",
+      "handle": "yinran-chen-thai25-187fbb",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "HKG",
+      "sailNumberIlca4": "214494"
+    },
+    {
+      "id": "5cee7204-4a0c-538a-aabf-9f8e5c7884bf",
+      "club": "VANHANG SAILING",
+      "name": "Cai Ming Zhou",
+      "gender": "M",
+      "handle": "cai-ming-zhou-thai25-5cee72",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "CHN",
+      "sailNumberIlca4": "214493"
+    },
+    {
+      "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "club": "YRAT",
+      "name": "Pumitus Mee-Iamsin",
+      "gender": "M",
+      "handle": "pumitus-mee-iamsin-thai25-4f1eb5",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "208539"
+    },
+    {
+      "id": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "club": "RVYC",
+      "name": "Kate Lee",
+      "gender": "F",
+      "handle": "kate-lee-thai25-977155",
+      "birthYear": null,
+      "sailNumber": "TPE 318",
+      "nationality": "TPE",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1417d151-f47b-5780-8ab8-efbc022a440f",
+      "club": "GANGWON SAILING CLUB",
+      "name": "Lee Songha",
+      "gender": "F",
+      "handle": "lee-songha-thai25-1417d1",
+      "birthYear": null,
+      "sailNumber": "KOR 520",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6b018765-b6a9-5682-ada3-f3002829594e",
+      "club": "RVYC",
+      "name": "Yong Ray Chuang",
+      "gender": "M",
+      "handle": "yong-ray-chuang-thai25-6b0187",
+      "birthYear": null,
+      "sailNumber": "TPE 323",
+      "nationality": "TPE",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "55401544-18e4-5347-9967-69547a3cf03a",
+      "club": "RVYC",
+      "name": "Austin Lee",
+      "gender": "M",
+      "handle": "austin-lee-thai25-554015",
+      "birthYear": null,
+      "sailNumber": "TPE 315",
+      "nationality": "TPE",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "077c93a7-5bcf-5772-a7ec-fe9d0c1e1b7e",
+      "club": "RVYC",
+      "name": "Yeh Chen Yang",
+      "gender": "M",
+      "handle": "yeh-chen-yang-thai25-077c93",
+      "birthYear": null,
+      "sailNumber": "422",
+      "nationality": "TPE",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9bdb02cd-2d99-5a51-829a-a0bb6b8ffd24",
+      "club": "RVYC",
+      "name": "Huang Chi Fang",
+      "gender": "F",
+      "handle": "huang-chi-fang-thai25-9bdb02",
+      "birthYear": null,
+      "sailNumber": "306",
+      "nationality": "TPE",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+      "name": "Kim Jun Mo",
+      "handle": "kim-jun-mo-sr26-0d87c7",
+      "sailNumber": "",
+      "sailNumberIlca4": "224680",
+      "nationality": "KOR",
+      "gender": "M",
+      "club": "KSAF",
+      "birthYear": null
+    },
+    {
+      "id": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+      "name": "Lee Soo Min",
+      "handle": "lee-soo-min-sr26-c43c92",
+      "sailNumber": "",
+      "sailNumberIlca4": "222951",
+      "nationality": "KOR",
+      "gender": "F",
+      "club": "KSAF",
+      "birthYear": null
+    },
+    {
+      "id": "76e668c0-57c9-50d2-b8d5-abd0f966d313",
+      "name": "Yu Kai Chen",
+      "handle": "yu-kai-chen-sr26-76e668",
+      "sailNumber": "",
+      "sailNumberIlca4": "222236",
+      "nationality": "TPE",
+      "gender": "M",
+      "club": "RVYC",
+      "birthYear": null
+    },
+    {
+      "id": "3142f40a-2106-5ac4-8f52-4afeaa160cb4",
+      "name": "Sanchuan Wu",
+      "handle": "sanchuan-wu-sr26-3142f4",
+      "sailNumber": "",
+      "sailNumberIlca4": "210812",
+      "nationality": "CHN",
+      "gender": "M",
+      "club": "VANHANG SAILING",
+      "birthYear": null
+    },
+    {
+      "id": "6b17e39b-16cf-50f3-ab55-ee809710b347",
+      "name": "Liu Tzu Ho",
+      "handle": "liu-tzu-ho-sr26-6b17e3",
+      "sailNumber": "",
+      "sailNumberIlca4": "217714",
+      "nationality": "TPE",
+      "gender": "M",
+      "club": "YUSA",
+      "birthYear": null
+    },
+    {
+      "id": "19ec1fe1-4cdb-5ee2-85c1-61bf87a1ee6d",
+      "name": "Chonghao Anson Huang",
+      "handle": "chonghao-anson-huang-sr26-19ec1f",
+      "sailNumber": "",
+      "sailNumberIlca4": "214677",
+      "nationality": "CHN",
+      "gender": "M",
+      "club": "VANGHANG SAILING",
+      "birthYear": null
+    },
+    {
+      "id": "21b5d619-dc42-591b-87e9-0be3d2336594",
+      "name": "Cheryl Sitong",
+      "handle": "cheryl-sitong-sr26-21b5d6",
+      "sailNumber": "",
+      "sailNumberIlca4": "214466",
+      "nationality": "HKG",
+      "gender": "F",
+      "club": "VANHANG SAILING",
+      "birthYear": null
+    },
+    {
+      "id": "5cb993b9-4809-5192-864e-261f913b90c0",
+      "name": "Capucine Lala Collin",
+      "handle": "capucine-lala-collin-sr26-5cb993",
+      "sailNumber": "",
+      "sailNumberIlca4": "22165",
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RVYC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 1,
+        "sourceName": "HUSSALUK SRINAKORN",
+        "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 2,
+        "sourceName": "PINCHANOK KLAYSOMBOON",
+        "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 3,
+        "sourceName": "YU KAI CHEN",
+        "sailorId": "76e668c0-57c9-50d2-b8d5-abd0f966d313",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 4,
+        "sourceName": "LEE SONGHA",
+        "sailorId": "1417d151-f47b-5780-8ab8-efbc022a440f",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 5,
+        "sourceName": "THANVISIT KITCHANASIRI",
+        "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 6,
+        "sourceName": "KITCHAKHUN SOMKHANNGOEN",
+        "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 7,
+        "sourceName": "KARIT PHRAMMANEE",
+        "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 8,
+        "sourceName": "PACHARAPOL RUMVISAI",
+        "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 9,
+        "sourceName": "LU ZIXI",
+        "sailorId": "bff8a281-7801-428a-934c-3dc80816585b",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 10,
+        "sourceName": "YINRAN CHAN",
+        "sailorId": "187fbbb7-9c46-5752-a64a-57858dd86879",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 11,
+        "sourceName": "PAILIN JAROENPON",
+        "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 12,
+        "sourceName": "LUKAS KIESSELBACH",
+        "sailorId": "e164bdfd-0bbc-46fd-8f2b-46570366aacf",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 13,
+        "sourceName": "ZEPH WAN",
+        "sailorId": "e178e8d4-02b8-470f-9235-4a451f5eb31a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 14,
+        "sourceName": "SANCHUAN WU",
+        "sailorId": "3142f40a-2106-5ac4-8f52-4afeaa160cb4",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 15,
+        "sourceName": "LEE SU MIN",
+        "sailorId": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 16,
+        "sourceName": "AUSTIN LEE",
+        "sailorId": "55401544-18e4-5347-9967-69547a3cf03a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 18,
+        "sourceName": "LIU TZU HO",
+        "sailorId": "6b17e39b-16cf-50f3-ab55-ee809710b347",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 19,
+        "sourceName": "REYES TAN JIT ENG",
+        "sailorId": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 20,
+        "sourceName": "KIM JUNMO",
+        "sailorId": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 21,
+        "sourceName": "JEON HYUN WOO",
+        "sailorId": "190686bb-516d-43ec-a519-b0158e48f963",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 22,
+        "sourceName": "JAYDEN BAI ZI XI",
+        "sailorId": "3b678e7c-898f-4784-b309-d092393af6b5",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 23,
+        "sourceName": "YONG RAY CHUANG",
+        "sailorId": "6b018765-b6a9-5682-ada3-f3002829594e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 24,
+        "sourceName": "CAI MINGZHOU",
+        "sailorId": "5cee7204-4a0c-538a-aabf-9f8e5c7884bf",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 25,
+        "sourceName": "PUMITUS MEE-IAMSIN",
+        "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 26,
+        "sourceName": "SKYE HSU",
+        "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 27,
+        "sourceName": "CHONGHAO ANSON HUANG",
+        "sailorId": "19ec1fe1-4cdb-5ee2-85c1-61bf87a1ee6d",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 28,
+        "sourceName": "YEH CHENYANG",
+        "sailorId": "077c93a7-5bcf-5772-a7ec-fe9d0c1e1b7e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 29,
+        "sourceName": "THANAPORN PHOKAEW",
+        "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 30,
+        "sourceName": "KATE LEE",
+        "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 31,
+        "sourceName": "SUWAPHAK PLUMJIT",
+        "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 32,
+        "sourceName": "THITIWORADA JOHNJAITRONG",
+        "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 33,
+        "sourceName": "CHERYL SITONG",
+        "sailorId": "21b5d619-dc42-591b-87e9-0be3d2336594",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 34,
+        "sourceName": "SEOYI AN",
+        "sailorId": "40a23367-69df-42e3-8907-be4a7919fb4e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 35,
+        "sourceName": "CAPUCINE LALA COLLIN",
+        "sailorId": "5cb993b9-4809-5192-864e-261f913b90c0",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 36,
+        "sourceName": "HUANG CHI-FANG",
+        "sailorId": "9bdb02cd-2d99-5a51-829a-a0bb6b8ffd24",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "ilca-thailand-national-championship-2026-ilca4",
+        "rank": 37,
+        "sourceName": "PRAPADA PEERANANTAPANYA",
+        "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      }
+    ]
+  },
+  "pendingEntries": [
+    {
+      "sheet": "ilca-thailand-national-championship-2026-ilca4",
+      "rank": 17,
+      "name": "HENRY ZOU",
+      "sail": "214613",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    }
+  ]
+}

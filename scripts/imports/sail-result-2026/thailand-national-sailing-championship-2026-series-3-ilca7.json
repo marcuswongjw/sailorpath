@@ -1,0 +1,511 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 195056,
+    "url": "https://www.racingrulesofsailing.org/documents/195056",
+    "title": "Official thailand-national-sailing-championship-2026-3rd-event result document 195056",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Thailand%20National%20Sailing%20Championship%202026%20-%203rd%20Event"
+  },
+  "event": {
+    "id": "b06b1e34-f9e2-4b9f-a798-03cdfcb28fbf",
+    "slug": "thailand-national-sailing-championship-2026-series-3",
+    "name": "Thailand National Sailing Championship 2026 — Series 3",
+    "startDate": "2026-05-08",
+    "endDate": "2026-05-10",
+    "venue": "Yacht Racing Association of Thailand, Sattahip, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": true
+  },
+  "sheet": {
+    "id": "0bdfafd6-2128-5c72-88be-e6ccfc637a11",
+    "slug": "thailand-national-sailing-championship-2026-series-3-ilca7",
+    "name": "Thailand National Sailing Championship 2026 - 3rd Event — ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 3,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "thailand-national-sailing-championship-2026-3rd-event",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 195056,
+        "url": "https://www.racingrulesofsailing.org/documents/195056",
+        "title": "Official thailand-national-sailing-championship-2026-3rd-event result document 195056",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "PRAKASIT HONGPRADAB",
+      "sailOrBoardNumber": "211365",
+      "club": "RTNYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1983,
+      "sourceBirthYear": "1983",
+      "grossScore": 12.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(4.0 RET)",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "ILCA 7",
+        "sailnumber": "211365",
+        "club": "RTNYC",
+        "helmname": "PRAKASIT HONGPRADAB",
+        "country": "",
+        "yob": "1983",
+        "gender": "Male",
+        "r1": "1.0",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "1.0",
+        "r7": "1.0",
+        "r8": "1.0",
+        "r9": "(4.0 RET)",
+        "total": "12.0",
+        "nett": "8.0"
+      },
+      "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "resultId": "2dc86c63-6dde-5c54-b7e0-a41e32f91091",
+      "participants": [
+        {
+          "id": "515c1b2c-4216-5669-91d2-c293d0b520fb",
+          "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+          "sourceName": "PRAKASIT HONGPRADAB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PRAKASIT HONGPRADAB; historic sail/boat number: 211365; club: RTNYC; nationality: THA; source year/age field: 1983. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 12.0 and net 8.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "thailand-national-sailing-championship-2026-3rd-event",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 195056,
+        "url": "https://www.racingrulesofsailing.org/documents/195056",
+        "title": "Official thailand-national-sailing-championship-2026-3rd-event result document 195056",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "Pradit Phulsarikij",
+      "sailOrBoardNumber": "163218",
+      "club": "Bueng Nong Bon",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1973,
+      "sourceBirthYear": "1973",
+      "grossScore": 17.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "ILCA 7",
+        "sailnumber": "163218",
+        "club": "Bueng Nong Bon",
+        "helmname": "Pradit Phulsarikij",
+        "country": "",
+        "yob": "1973",
+        "gender": "Male",
+        "r1": "(2.0)",
+        "r2": "2.0",
+        "r3": "2.0",
+        "r4": "2.0",
+        "r5": "2.0",
+        "r6": "2.0",
+        "r7": "2.0",
+        "r8": "2.0",
+        "r9": "1.0",
+        "total": "17.0",
+        "nett": "15.0"
+      },
+      "sailorId": "7989f954-92eb-50c4-818a-a5635ed42923",
+      "resultId": "51c8c506-5c55-5676-af3e-6893afd9538c",
+      "participants": [
+        {
+          "id": "0383b346-4d34-586e-b606-f45cb28de14f",
+          "sailorId": "7989f954-92eb-50c4-818a-a5635ed42923",
+          "sourceName": "Pradit Phulsarikij",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Pradit Phulsarikij; historic sail/boat number: 163218; club: Bueng Nong Bon; nationality: THA; source year/age field: 1973. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 17.0 and net 15.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "thailand-national-sailing-championship-2026-3rd-event",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 195056,
+        "url": "https://www.racingrulesofsailing.org/documents/195056",
+        "title": "Official thailand-national-sailing-championship-2026-3rd-event result document 195056",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "Georgii Pimkin",
+      "sailOrBoardNumber": "221201",
+      "club": "Phuket yacht club",
+      "school": null,
+      "nationality": "AIN",
+      "gender": "M",
+      "officialBirthYear": 1987,
+      "sourceBirthYear": "1987",
+      "grossScore": 36.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(4.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "ILCA 7",
+        "sailnumber": "221201",
+        "club": "Phuket yacht club",
+        "helmname": "Georgii Pimkin",
+        "country": "",
+        "yob": "1987",
+        "gender": "Male",
+        "r1": "(4.0 DNC)",
+        "r2": "4.0 DNC",
+        "r3": "4.0 DNC",
+        "r4": "4.0 DNC",
+        "r5": "4.0 DNC",
+        "r6": "4.0 DNC",
+        "r7": "4.0 DNC",
+        "r8": "4.0 DNC",
+        "r9": "4.0 DNC",
+        "total": "36.0",
+        "nett": "32.0"
+      },
+      "sailorId": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+      "resultId": "9bba927d-2221-5d80-a9f8-4b3a1f467250",
+      "participants": [
+        {
+          "id": "4d680a78-c759-539f-8a35-26c7ea774637",
+          "sailorId": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+          "sourceName": "Georgii Pimkin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Georgii Pimkin; historic sail/boat number: 221201; club: Phuket yacht club; nationality: AIN; source year/age field: 1987. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 36.0 and net 32.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 3,
+  "deferredEntryCount": 0,
+  "profilePreflight": [],
+  "newProfiles": [
+    {
+      "id": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "name": "Prakasit Hongpradab",
+      "handle": "prakasit-hongpradab-sr26-6fb151",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC",
+      "birthYear": null
+    },
+    {
+      "id": "7989f954-92eb-50c4-818a-a5635ed42923",
+      "name": "Pradit Phulsarikij",
+      "handle": "pradit-phulsarikij-sr26-7989f9",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "NBWSC",
+      "birthYear": null
+    },
+    {
+      "id": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+      "name": "Georgii Pimkin",
+      "handle": "georgii-pimkin-sr26-1769cf",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "AIN",
+      "gender": "M",
+      "club": "Phuket yacht club",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "thailand-national-sailing-championship-2026-series-3-ilca7",
+        "rank": 1,
+        "sourceName": "PRAKASIT HONGPRADAB",
+        "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "thailand-national-sailing-championship-2026-series-3-ilca7",
+        "rank": 2,
+        "sourceName": "Pradit Phulsarikij",
+        "sailorId": "7989f954-92eb-50c4-818a-a5635ed42923",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "thailand-national-sailing-championship-2026-series-3-ilca7",
+        "rank": 3,
+        "sourceName": "Georgii Pimkin",
+        "sailorId": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

@@ -1,0 +1,1056 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 197632,
+    "url": "https://www.racingrulesofsailing.org/documents/197632",
+    "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 2,
+    "pages": [
+      2
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=EGAT%20and%20YRAT%20Regatta%202026"
+  },
+  "event": {
+    "id": "22bea0ad-b225-5532-a930-e0a5bd33da17",
+    "slug": "egat-and-yrat-regatta-2026",
+    "name": "EGAT and YRAT Regatta 2026",
+    "startDate": "2026-07-04",
+    "endDate": "2026-07-08",
+    "venue": "Rajjaprabha Dam, Surat Thani",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "28e32d7a-2de6-5628-a0b6-6797f3bc0eb2",
+    "slug": "egat-and-yrat-regatta-2026-ilca4",
+    "name": "EGAT and YRAT Regatta 2026 — ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 10,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 1,
+      "name": "PACHARAPOL RUMVISAI",
+      "sailOrBoardNumber": "7",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "1st",
+        "class": "ILCA 4",
+        "sailno": "7",
+        "club": "YRAT",
+        "helmname": "PACHARAPOL RUMVISAI",
+        "helmagegroup": "2010",
+        "helmsex": "MALE",
+        "r1": "1.0",
+        "r2": "1.0",
+        "r3": "7.0",
+        "r4": "2.0",
+        "r5": "3.0",
+        "r6": "4.0",
+        "total": "18.0",
+        "nett": "18.0"
+      },
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "de7160cc-45b6-5eb1-a744-efe74b1ddf0d",
+      "participants": [
+        {
+          "id": "2b8514fd-aaae-5af3-8335-30cc8c1a9776",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PACHARAPOL RUMVISAI; historic sail/boat number: 7; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 18.0 and net 18.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 2,
+      "name": "THANAPORN PHOKAEW",
+      "sailOrBoardNumber": "6",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "2nd",
+        "class": "ILCA 4",
+        "sailno": "6",
+        "club": "YRAT",
+        "helmname": "THANAPORN PHOKAEW",
+        "helmagegroup": "2011",
+        "helmsex": "FEMALE",
+        "r1": "9.0",
+        "r2": "6.0",
+        "r3": "2.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "1.0",
+        "total": "20.0",
+        "nett": "20.0"
+      },
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f534396c-041f-50a9-8fb4-67f194ca7f02",
+      "participants": [
+        {
+          "id": "e66ce410-d5bb-50e5-8ceb-068d6e27ccb2",
+          "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+          "sourceName": "THANAPORN PHOKAEW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANAPORN PHOKAEW; historic sail/boat number: 6; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 20.0 and net 20.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 3,
+      "name": "PRAPADA PEERANANTAPANYA",
+      "sailOrBoardNumber": "9",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "3rd",
+        "class": "ILCA 4",
+        "sailno": "9",
+        "club": "YRAT",
+        "helmname": "PRAPADA PEERANANTAPANYA",
+        "helmagegroup": "2012",
+        "helmsex": "FEMALE",
+        "r1": "2.0",
+        "r2": "3.0",
+        "r3": "4.0",
+        "r4": "7.0",
+        "r5": "2.0",
+        "r6": "2.0",
+        "total": "20.0",
+        "nett": "20.0"
+      },
+      "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "be98ff26-1bf7-5add-a4ed-5f66706154aa",
+      "participants": [
+        {
+          "id": "acbb0cfa-1ee4-52e9-b97e-a687466882db",
+          "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+          "sourceName": "PRAPADA PEERANANTAPANYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PRAPADA PEERANANTAPANYA; historic sail/boat number: 9; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 20.0 and net 20.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 4,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "3",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 27.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "4th",
+        "class": "ILCA 4",
+        "sailno": "3",
+        "club": "YRAT",
+        "helmname": "NATTHAPONG NEELASAVEE",
+        "helmagegroup": "2011",
+        "helmsex": "MALE",
+        "r1": "4.0",
+        "r2": "2.0",
+        "r3": "3.0",
+        "r4": "5.0",
+        "r5": "5.0",
+        "r6": "8.0",
+        "total": "27.0",
+        "nett": "27.0"
+      },
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "abafccdc-216c-5fad-a299-e130ec410ac9",
+      "participants": [
+        {
+          "id": "3f61881b-33f5-5c4c-9542-b5768690dbdb",
+          "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+          "sourceName": "NATTHAPONG NEELASAVEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATTHAPONG NEELASAVEE; historic sail/boat number: 3; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 27.0 and net 27.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 5,
+      "name": "THITIWORADA JONJAITONG",
+      "sailOrBoardNumber": "4",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 30.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "5th",
+        "class": "ILCA 4",
+        "sailno": "4",
+        "club": "YRAT",
+        "helmname": "THITIWORADA JONJAITONG",
+        "helmagegroup": "2010",
+        "helmsex": "FEMALE",
+        "r1": "3.0",
+        "r2": "8.0",
+        "r3": "6.0",
+        "r4": "6.0",
+        "r5": "4.0",
+        "r6": "3.0",
+        "total": "30.0",
+        "nett": "30.0"
+      },
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "resultId": "4d333d77-8098-59d2-af03-8831fd3f52c5",
+      "participants": [
+        {
+          "id": "826bca74-4a63-5fb2-b183-bae0fd4421c9",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "THITIWORADA JONJAITONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THITIWORADA JONJAITONG; historic sail/boat number: 4; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 30.0 and net 30.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 8,
+      "name": "ALISA SINGSA",
+      "sailOrBoardNumber": "1",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 42.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "8th",
+        "class": "ILCA 4",
+        "sailno": "1",
+        "club": "YRAT",
+        "helmname": "ALISA SINGSA",
+        "helmagegroup": "2011",
+        "helmsex": "FEMALE",
+        "r1": "5.0",
+        "r2": "5.0",
+        "r3": "5.0",
+        "r4": "9.0",
+        "r5": "9.0",
+        "r6": "9.0",
+        "total": "42.0",
+        "nett": "42.0"
+      },
+      "sailorId": "63a7e1f8-1611-56a3-81fb-579c478ab51a",
+      "resultId": "2c2154ed-fa89-5309-9da2-67c408f8b8c8",
+      "participants": [
+        {
+          "id": "3453dd50-7124-5c44-8f5e-44578ec6469c",
+          "sailorId": "63a7e1f8-1611-56a3-81fb-579c478ab51a",
+          "sourceName": "ALISA SINGSA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ALISA SINGSA; historic sail/boat number: 1; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 42.0 and net 42.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 9,
+      "name": "TADOL RATINUKULKIT",
+      "sailOrBoardNumber": "10",
+      "club": "OMJ",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 49.0,
+      "nettScore": 49.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "9th",
+        "class": "ILCA 4",
+        "sailno": "10",
+        "club": "OMJ",
+        "helmname": "TADOL RATINUKULKIT",
+        "helmagegroup": "2011",
+        "helmsex": "MALE",
+        "r1": "10.0",
+        "r2": "9.0",
+        "r3": "8.0",
+        "r4": "8.0",
+        "r5": "7.0",
+        "r6": "7.0",
+        "total": "49.0",
+        "nett": "49.0"
+      },
+      "sailorId": "d72c67c6-b26b-5023-8072-64dca2034616",
+      "resultId": "f851ba85-87a1-56d7-ba7f-8810077e0505",
+      "participants": [
+        {
+          "id": "df89e0cd-afbd-5ced-82d3-62ba949d382d",
+          "sailorId": "d72c67c6-b26b-5023-8072-64dca2034616",
+          "sourceName": "TADOL RATINUKULKIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TADOL RATINUKULKIT; historic sail/boat number: 10; club: OMJ; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 49.0 and net 49.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 10,
+      "name": "PIYAPAT TIATHONGCHAI",
+      "sailOrBoardNumber": "8",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": null,
+      "grossScore": 61.0,
+      "nettScore": 61.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "11.0 RET",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "10th",
+        "class": "ILCA 4",
+        "sailno": "8",
+        "club": "ACDC.SC",
+        "helmname": "PIYAPAT TIATHONGCHAI",
+        "helmagegroup": "",
+        "helmsex": "FEMALE",
+        "r1": "8.0",
+        "r2": "11.0 RET",
+        "r3": "11.0 DNC",
+        "r4": "11.0 DNC",
+        "r5": "10.0",
+        "r6": "10.0",
+        "total": "61.0",
+        "nett": "61.0"
+      },
+      "sailorId": "98786c00-1b5f-5272-98bf-14a3d4c0c3a1",
+      "resultId": "2b461009-1f33-5101-9665-a5c36ee50f3a",
+      "participants": [
+        {
+          "id": "13e37705-7681-5c31-8c00-3b36f5e06ca3",
+          "sailorId": "98786c00-1b5f-5272-98bf-14a3d4c0c3a1",
+          "sourceName": "PIYAPAT TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PIYAPAT TIATHONGCHAI; historic sail/boat number: 8; club: ACDC.SC; nationality: THA; source year/age field: blank. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 61.0 and net 61.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings. Partial import: 8 of 10 entries imported; 2 awaiting identity review.",
+  "importedEntryCount": 8,
+  "deferredEntryCount": 2,
+  "profilePreflight": [
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "Female",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": null,
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "club": "YRAT",
+      "name": "Natthapong Neelasavee",
+      "gender": "Male",
+      "handle": "natthapong-neelasavee-91q0rru",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222071"
+    },
+    {
+      "id": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "club": "YRAT",
+      "name": "Thanaporn Phokaew",
+      "gender": "F",
+      "handle": "thanaporn-phokaew-2zbw4z0",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225426"
+    },
+    {
+      "id": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "club": "YRAT/RVYC",
+      "name": "Prapada Peeranantapanya",
+      "gender": "Female",
+      "handle": "prapada-peeranantapanya-rz13syo",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "223567"
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "d72c67c6-b26b-5023-8072-64dca2034616",
+      "name": "Tadol Ratinukulkit",
+      "handle": "tadol-ratinukulkit-sr26-d72c67",
+      "sailNumber": "",
+      "sailNumberIlca4": "202649",
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTFYC",
+      "birthYear": null
+    },
+    {
+      "id": "63a7e1f8-1611-56a3-81fb-579c478ab51a",
+      "name": "Alisa Singsa",
+      "handle": "alisa-singsa-sr26-63a7e1",
+      "sailNumber": "",
+      "sailNumberIlca4": "1",
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    },
+    {
+      "id": "98786c00-1b5f-5272-98bf-14a3d4c0c3a1",
+      "name": "Piyapat Tiathongchai",
+      "handle": "piyapat-tiathongchai-sr26-98786c",
+      "sailNumber": "",
+      "sailNumberIlca4": "8",
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC.SC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 1,
+        "sourceName": "PACHARAPOL RUMVISAI",
+        "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 2,
+        "sourceName": "THANAPORN PHOKAEW",
+        "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 3,
+        "sourceName": "PRAPADA PEERANANTAPANYA",
+        "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 4,
+        "sourceName": "NATTHAPONG NEELASAVEE",
+        "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 5,
+        "sourceName": "THITIWORADA JONJAITONG",
+        "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 8,
+        "sourceName": "ALISA SINGSA",
+        "sailorId": "63a7e1f8-1611-56a3-81fb-579c478ab51a",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 9,
+        "sourceName": "TADOL RATINUKULKIT",
+        "sailorId": "d72c67c6-b26b-5023-8072-64dca2034616",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "egat-and-yrat-regatta-2026-ilca4",
+        "rank": 10,
+        "sourceName": "PIYAPAT TIATHONGCHAI",
+        "sailorId": "98786c00-1b5f-5272-98bf-14a3d4c0c3a1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": [
+    {
+      "sheet": "egat-and-yrat-regatta-2026-ilca4",
+      "rank": 6,
+      "name": "NATIDEJ TERMTAKULWATTANA",
+      "sail": "2",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    },
+    {
+      "sheet": "egat-and-yrat-regatta-2026-ilca4",
+      "rank": 7,
+      "name": "PHACHARAPOL MUNWONG",
+      "sail": "5",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    }
+  ]
+}

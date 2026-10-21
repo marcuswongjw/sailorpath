@@ -1,0 +1,766 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 182439,
+    "url": "https://www.racingrulesofsailing.org/documents/182439",
+    "title": "Official 2026-trat-regatta result document 182439",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=2026%20Trat%20Regatta"
+  },
+  "event": {
+    "id": "5da83b8f-2063-5f39-bb69-f19cfcda1e04",
+    "slug": "trat-regatta-2026",
+    "name": "2026 Trat Regatta",
+    "startDate": "2026-04-04",
+    "endDate": "2026-04-06",
+    "venue": "Oceanfront Pier, Laem Sok, Trat",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "3d68a70a-b763-5479-aed5-966aaaef90cd",
+    "slug": "trat-regatta-2026-ilca7",
+    "name": "2026 Trat Regatta — ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 8,
+    "totalFleetSize": 5,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "Mr.PRAKASIT HONGPRADAB",
+      "sailOrBoardNumber": "211365",
+      "club": "ROYAL THAI NAVY",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1983,
+      "sourceBirthYear": "1983",
+      "grossScore": 8.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "ILCA 7 (Open)",
+        "sailno": "211365",
+        "club": "ROYAL THAI NAVY",
+        "helmname": "Mr.PRAKASIT HONGPRADAB",
+        "nat": "THA",
+        "yob": "1983",
+        "helmsex": "Male",
+        "r1": "(1.0)",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "1.0",
+        "r7": "1.0",
+        "r8": "1.0",
+        "total": "8.0",
+        "nett": "7.0"
+      },
+      "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "resultId": "6a8c9005-941c-56f5-8c04-7096e195d962",
+      "participants": [
+        {
+          "id": "b9f86b40-e566-58c6-a1ca-347d2fa36ce0",
+          "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+          "sourceName": "Mr.PRAKASIT HONGPRADAB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Mr.PRAKASIT HONGPRADAB; historic sail/boat number: 211365; club: ROYAL THAI NAVY; nationality: THA; source year/age field: 1983. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 8.0 and net 7.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "NITHATSANA RODHNUN",
+      "sailOrBoardNumber": "THA180177",
+      "club": "RTN",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1957,
+      "sourceBirthYear": "1957",
+      "grossScore": 16.0,
+      "nettScore": 14.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "ILCA 7 (Open)",
+        "sailno": "THA180177",
+        "club": "RTN",
+        "helmname": "NITHATSANA RODHNUN",
+        "nat": "THA",
+        "yob": "1957",
+        "helmsex": "Male",
+        "r1": "(2.0)",
+        "r2": "2.0",
+        "r3": "2.0",
+        "r4": "2.0",
+        "r5": "2.0",
+        "r6": "2.0",
+        "r7": "2.0",
+        "r8": "2.0",
+        "total": "16.0",
+        "nett": "14.0"
+      },
+      "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+      "resultId": "8307a8f8-0a69-5a42-b8ed-34a380646bbf",
+      "participants": [
+        {
+          "id": "1877612f-a0f1-51ea-9c61-082e60652686",
+          "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+          "sourceName": "NITHATSANA RODHNUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NITHATSANA RODHNUN; historic sail/boat number: THA180177; club: RTN; nationality: THA; source year/age field: 1957. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 16.0 and net 14.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "CHANCHAI TEERAPITTAYANON",
+      "sailOrBoardNumber": "168",
+      "club": "RTN",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": null,
+      "grossScore": 26.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "ILCA 7 (Open)",
+        "sailno": "168",
+        "club": "RTN",
+        "helmname": "CHANCHAI TEERAPITTAYANON",
+        "nat": "THA",
+        "yob": "",
+        "helmsex": "Male",
+        "r1": "3.0",
+        "r2": "3.0",
+        "r3": "3.0",
+        "r4": "(5.0)",
+        "r5": "3.0",
+        "r6": "3.0",
+        "r7": "3.0",
+        "r8": "3.0",
+        "total": "26.0",
+        "nett": "21.0"
+      },
+      "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+      "resultId": "ed137a02-edf0-590c-b8ba-efb1f0d8a7ee",
+      "participants": [
+        {
+          "id": "7d6578b2-8f5b-535d-ba25-61bab6602e8e",
+          "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+          "sourceName": "CHANCHAI TEERAPITTAYANON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHANCHAI TEERAPITTAYANON; historic sail/boat number: 168; club: RTN; nationality: THA; source year/age field: blank. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 26.0 and net 21.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "KAWIN PHECHRAK",
+      "sailOrBoardNumber": "1",
+      "club": "TSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 33.0,
+      "nettScore": 28.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "class": "ILCA 7 (Open)",
+        "sailno": "1",
+        "club": "TSC",
+        "helmname": "KAWIN PHECHRAK",
+        "nat": "THA",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "4.0",
+        "r2": "4.0",
+        "r3": "4.0",
+        "r4": "4.0",
+        "r5": "4.0",
+        "r6": "4.0",
+        "r7": "(5.0)",
+        "r8": "4.0",
+        "total": "33.0",
+        "nett": "28.0"
+      },
+      "sailorId": "de656835-8553-582b-9ef0-5afbfe331df6",
+      "resultId": "e32e875b-14f8-5320-aade-b5fbe949068a",
+      "participants": [
+        {
+          "id": "a14fccad-3eb6-59bb-aacb-ba49dbdbbb79",
+          "sailorId": "de656835-8553-582b-9ef0-5afbfe331df6",
+          "sourceName": "KAWIN PHECHRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KAWIN PHECHRAK; historic sail/boat number: 1; club: TSC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 33.0 and net 28.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 5,
+      "name": "PIYANAT POOLKLANG",
+      "sailOrBoardNumber": "174476",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1972,
+      "sourceBirthYear": "1972",
+      "grossScore": 40.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "5th",
+        "class": "ILCA 7 (Open)",
+        "sailno": "174476",
+        "club": "ACDC.SC",
+        "helmname": "PIYANAT POOLKLANG",
+        "nat": "THA",
+        "yob": "1972",
+        "helmsex": "Male",
+        "r1": "(6.0 DNC)",
+        "r2": "6.0 DNC",
+        "r3": "6.0 DNC",
+        "r4": "3.0",
+        "r5": "5.0",
+        "r6": "5.0",
+        "r7": "4.0",
+        "r8": "5.0",
+        "total": "40.0",
+        "nett": "34.0"
+      },
+      "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+      "resultId": "1ba4aed2-5e32-573c-95e3-3adb2769afbc",
+      "participants": [
+        {
+          "id": "18f9c3a7-0659-51c9-ba23-3c13aa8b92e4",
+          "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+          "sourceName": "PIYANAT POOLKLANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PIYANAT POOLKLANG; historic sail/boat number: 174476; club: ACDC.SC; nationality: THA; source year/age field: 1972. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 40.0 and net 34.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 5,
+  "deferredEntryCount": 0,
+  "profilePreflight": [],
+  "newProfiles": [
+    {
+      "id": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "name": "Prakasit Hongpradab",
+      "handle": "prakasit-hongpradab-sr26-6fb151",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC",
+      "birthYear": null
+    },
+    {
+      "id": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+      "name": "Chanchai Teerapittayanon",
+      "handle": "chanchai-teerapittayanon-sr26-81fa31",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC",
+      "birthYear": null
+    },
+    {
+      "id": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+      "name": "Nithasn Rodhnun",
+      "handle": "cdr-nithasn-rodhnun-sr26-0788d7",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC",
+      "birthYear": null
+    },
+    {
+      "id": "de656835-8553-582b-9ef0-5afbfe331df6",
+      "name": "Kawin Phechrak",
+      "handle": "kawin-phechrak-sr26-de6568",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "TSC",
+      "birthYear": null
+    },
+    {
+      "id": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+      "name": "Piyanat Poolklang",
+      "handle": "piyanat-poolklang-sr26-516019",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "ACDC.SC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "trat-regatta-2026-ilca7",
+        "rank": 1,
+        "sourceName": "Mr.PRAKASIT HONGPRADAB",
+        "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "trat-regatta-2026-ilca7",
+        "rank": 2,
+        "sourceName": "NITHATSANA RODHNUN",
+        "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "trat-regatta-2026-ilca7",
+        "rank": 3,
+        "sourceName": "CHANCHAI TEERAPITTAYANON",
+        "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "trat-regatta-2026-ilca7",
+        "rank": 4,
+        "sourceName": "KAWIN PHECHRAK",
+        "sailorId": "de656835-8553-582b-9ef0-5afbfe331df6",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "trat-regatta-2026-ilca7",
+        "rank": 5,
+        "sourceName": "PIYANAT POOLKLANG",
+        "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

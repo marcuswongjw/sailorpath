@@ -1,0 +1,511 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 180534,
+    "url": "https://www.racingrulesofsailing.org/documents/180534",
+    "title": "Official capitan-s-cup-bc88 result document 180534",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Capitan%27s%20Cup%20BC88"
+  },
+  "event": {
+    "id": "7d19a7bb-7d99-5e90-9010-bbe7ff188710",
+    "slug": "capitans-cup-bc88-2026",
+    "name": "Capitan's Cup BC88 2026",
+    "startDate": "2026-03-21",
+    "endDate": "2026-03-23",
+    "venue": "Boat Club 88 (Thailand), Sittahip, Chonburi",
+    "organizer": "Boat Club 88",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "2c3c4744-ed59-5ed5-a70b-17bb09cd7181",
+    "slug": "capitans-cup-bc88-2026-ilca7",
+    "name": "Capitan's Cup BC88 2026 — ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 3,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "PRAKASIT HONGPRADAB",
+      "sailOrBoardNumber": "211365",
+      "club": "RTN",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1983,
+      "sourceBirthYear": "1983",
+      "grossScore": 10.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "ILCA 7",
+        "sailno": "211365",
+        "club": "RTN",
+        "helmname": "PRAKASIT HONGPRADAB",
+        "nat": "",
+        "yob": "1983",
+        "helmsex": "Male",
+        "r1": "1.0",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "(2.0)",
+        "r7": "1.0",
+        "r8": "1.0",
+        "r9": "1.0",
+        "total": "10.0",
+        "nett": "8.0"
+      },
+      "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "resultId": "78292013-903a-5938-a7df-ca0aedb739de",
+      "participants": [
+        {
+          "id": "36efb07b-3cec-5d50-9e7a-57493ebe109f",
+          "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+          "sourceName": "PRAKASIT HONGPRADAB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PRAKASIT HONGPRADAB; historic sail/boat number: 211365; club: RTN; nationality: THA; source year/age field: 1983. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 10.0 and net 8.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "Georgii Pimkin",
+      "sailOrBoardNumber": "221201",
+      "club": "Phuket yacht club",
+      "school": null,
+      "nationality": "AIN",
+      "gender": "M",
+      "officialBirthYear": 1987,
+      "sourceBirthYear": "1987",
+      "grossScore": 21.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": "OCS",
+          "discarded": true,
+          "raw": "(4.0 OCS)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "4.0 UFD",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "ILCA 7",
+        "sailno": "221201",
+        "club": "Phuket yacht club",
+        "helmname": "Georgii Pimkin",
+        "nat": "",
+        "yob": "1987",
+        "helmsex": "Male",
+        "r1": "(4.0 OCS)",
+        "r2": "2.0",
+        "r3": "2.0",
+        "r4": "2.0",
+        "r5": "2.0",
+        "r6": "1.0",
+        "r7": "4.0 UFD",
+        "r8": "2.0",
+        "r9": "2.0",
+        "total": "21.0",
+        "nett": "17.0"
+      },
+      "sailorId": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+      "resultId": "fb6a82d0-e66d-54cd-ab9e-969b18940e53",
+      "participants": [
+        {
+          "id": "77f45098-1704-53fa-bd90-11cc03b95cc7",
+          "sailorId": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+          "sourceName": "Georgii Pimkin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Georgii Pimkin; historic sail/boat number: 221201; club: Phuket yacht club; nationality: AIN; source year/age field: 1987. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 21.0 and net 17.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "TEEKATAT DANGPRATUM",
+      "sailOrBoardNumber": "13",
+      "club": "RTNYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 31.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(4.0 DNC)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "4.0 DNC",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "ILCA 7",
+        "sailno": "13",
+        "club": "RTNYC",
+        "helmname": "TEEKATAT DANGPRATUM",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "2.0",
+        "r2": "3.0",
+        "r3": "3.0",
+        "r4": "3.0",
+        "r5": "(4.0 DNC)",
+        "r6": "4.0 DNC",
+        "r7": "4.0 DNC",
+        "r8": "4.0 DNC",
+        "r9": "4.0 DNC",
+        "total": "31.0",
+        "nett": "27.0"
+      },
+      "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+      "resultId": "b2162735-976c-5184-8386-618cd7e26bb8",
+      "participants": [
+        {
+          "id": "5cc5c6ba-aec7-5d59-ae35-d518e256b96f",
+          "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+          "sourceName": "TEEKATAT DANGPRATUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TEEKATAT DANGPRATUM; historic sail/boat number: 13; club: RTNYC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 31.0 and net 27.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 3,
+  "deferredEntryCount": 0,
+  "profilePreflight": [],
+  "newProfiles": [
+    {
+      "id": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "name": "Prakasit Hongpradab",
+      "handle": "prakasit-hongpradab-sr26-6fb151",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC",
+      "birthYear": null
+    },
+    {
+      "id": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+      "name": "Georgii Pimkin",
+      "handle": "georgii-pimkin-sr26-1769cf",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "AIN",
+      "gender": "M",
+      "club": "Phuket yacht club",
+      "birthYear": null
+    },
+    {
+      "id": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+      "name": "Teekatat Dangpratum",
+      "handle": "teekatat-dangpratum-sr26-9b4038",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca7",
+        "rank": 1,
+        "sourceName": "PRAKASIT HONGPRADAB",
+        "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca7",
+        "rank": 2,
+        "sourceName": "Georgii Pimkin",
+        "sailorId": "1769cfd5-8fd3-5458-af3b-5ecbb2c8bdf2",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca7",
+        "rank": 3,
+        "sourceName": "TEEKATAT DANGPRATUM",
+        "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

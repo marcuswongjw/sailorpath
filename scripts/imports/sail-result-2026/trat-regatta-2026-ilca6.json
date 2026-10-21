@@ -1,0 +1,484 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 182439,
+    "url": "https://www.racingrulesofsailing.org/documents/182439",
+    "title": "Official 2026-trat-regatta result document 182439",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=2026%20Trat%20Regatta"
+  },
+  "event": {
+    "id": "5da83b8f-2063-5f39-bb69-f19cfcda1e04",
+    "slug": "trat-regatta-2026",
+    "name": "2026 Trat Regatta",
+    "startDate": "2026-04-04",
+    "endDate": "2026-04-06",
+    "venue": "Oceanfront Pier, Laem Sok, Trat",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "d90f3cad-8909-5e20-8939-251d09c0a31a",
+    "slug": "trat-regatta-2026-ilca6",
+    "name": "2026 Trat Regatta — ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 8,
+    "totalFleetSize": 3,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "PATCHAREE SRINGAM",
+      "sailOrBoardNumber": "225984",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2003,
+      "sourceBirthYear": "2003",
+      "grossScore": 9.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "ILCA 6 (Open)",
+        "sailno": "225984",
+        "club": "YRAT",
+        "helmname": "PATCHAREE SRINGAM",
+        "nat": "THA",
+        "yob": "2003",
+        "helmsex": "Female",
+        "r1": "1.0",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "1.0",
+        "r7": "1.0",
+        "r8": "(2.0)",
+        "total": "9.0",
+        "nett": "7.0"
+      },
+      "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "resultId": "fb178214-a6f2-5499-8bba-6c2158827647",
+      "participants": [
+        {
+          "id": "e819338c-1064-5948-9706-ca39620f7de5",
+          "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+          "sourceName": "PATCHAREE SRINGAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PATCHAREE SRINGAM; historic sail/boat number: 225984; club: YRAT; nationality: THA; source year/age field: 2003. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 9.0 and net 7.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "PARANEE MUANGNGAM",
+      "sailOrBoardNumber": "220240",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2007,
+      "sourceBirthYear": "2007",
+      "grossScore": 19.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "ILCA 6 (Open)",
+        "sailno": "220240",
+        "club": "YRAT",
+        "helmname": "PARANEE MUANGNGAM",
+        "nat": "THA",
+        "yob": "2007",
+        "helmsex": "Female",
+        "r1": "2.0",
+        "r2": "2.0",
+        "r3": "(3.0)",
+        "r4": "3.0",
+        "r5": "2.0",
+        "r6": "3.0",
+        "r7": "3.0",
+        "r8": "1.0",
+        "total": "19.0",
+        "nett": "16.0"
+      },
+      "sailorId": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+      "resultId": "0d28e603-09b9-5694-84c2-9e06a8aef33a",
+      "participants": [
+        {
+          "id": "37251ee8-3f79-5fbd-9b3e-ad6324d339df",
+          "sailorId": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+          "sourceName": "PARANEE MUANGNGAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PARANEE MUANGNGAM; historic sail/boat number: 220240; club: YRAT; nationality: THA; source year/age field: 2007. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 19.0 and net 16.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 182439,
+        "url": "https://www.racingrulesofsailing.org/documents/182439",
+        "title": "Official 2026-trat-regatta result document 182439",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "AUEANGKUN JADSANAM",
+      "sailOrBoardNumber": "9",
+      "club": "Oceanfront Sailing",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 21.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(4.0 UFD)",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "ILCA 6 (Open)",
+        "sailno": "9",
+        "club": "Oceanfront Sailing",
+        "helmname": "AUEANGKUN JADSANAM",
+        "nat": "THA",
+        "yob": "2009",
+        "helmsex": "Male",
+        "r1": "3.0",
+        "r2": "3.0",
+        "r3": "2.0",
+        "r4": "2.0",
+        "r5": "3.0",
+        "r6": "2.0",
+        "r7": "2.0",
+        "r8": "(4.0 UFD)",
+        "total": "21.0",
+        "nett": "17.0"
+      },
+      "sailorId": "2b2f3955-49bf-5a67-8643-70307409f211",
+      "resultId": "9718fed9-eeff-52eb-b90c-a30a8b43c894",
+      "participants": [
+        {
+          "id": "c8140280-5534-5e67-8ad7-6d149a91c55a",
+          "sailorId": "2b2f3955-49bf-5a67-8643-70307409f211",
+          "sourceName": "AUEANGKUN JADSANAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: AUEANGKUN JADSANAM; historic sail/boat number: 9; club: Oceanfront Sailing; nationality: THA; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 21.0 and net 17.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 3,
+  "deferredEntryCount": 0,
+  "profilePreflight": [],
+  "newProfiles": [
+    {
+      "id": "2b2f3955-49bf-5a67-8643-70307409f211",
+      "name": "Aueangkun Jadsanam",
+      "handle": "aueangkun-jadsanam-sr26-2b2f39",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "Oceanfront",
+      "birthYear": null
+    },
+    {
+      "id": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "name": "Patcharee Sringam",
+      "handle": "patcharee-sringam-sr26-7dbdb6",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    },
+    {
+      "id": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+      "name": "Paranee Muangngam",
+      "handle": "paranee-muangngam-sr26-92b23e",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "trat-regatta-2026-ilca6",
+        "rank": 1,
+        "sourceName": "PATCHAREE SRINGAM",
+        "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "trat-regatta-2026-ilca6",
+        "rank": 2,
+        "sourceName": "PARANEE MUANGNGAM",
+        "sailorId": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "trat-regatta-2026-ilca6",
+        "rank": 3,
+        "sourceName": "AUEANGKUN JADSANAM",
+        "sailorId": "2b2f3955-49bf-5a67-8643-70307409f211",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

@@ -1,0 +1,12 @@
+{
+  "commit": "16cd66b0080f357594a8d5a0b5a54b3d80403a15",
+  "deployment": "dpl_GFEAWrWCfsw48DkwdfcZjy9eZwXp",
+  "state": "READY",
+  "aliases": [
+    "sailorpath.com",
+    "admin.sailorpath.com"
+  ],
+  "mainOptimistDefault": true,
+  "partialNoticeVerified": true,
+  "relevantTestsPassed": 53
+}

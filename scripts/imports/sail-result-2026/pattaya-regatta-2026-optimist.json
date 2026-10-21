@@ -1,0 +1,2168 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 193750,
+    "url": "https://www.racingrulesofsailing.org/documents/193750",
+    "title": "Official pattaya-regatta-2026 result document 193750",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Pattaya%20Regatta%202026"
+  },
+  "event": {
+    "id": "b777822c-cd68-5ffe-a9cf-c3a81696116e",
+    "slug": "pattaya-regatta-2026",
+    "name": "Pattaya Regatta 2026",
+    "startDate": "2026-06-12",
+    "endDate": "2026-06-14",
+    "venue": "Jomtien Beach Pattaya",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "c46f262d-de7b-5646-b563-ee95a76c7725",
+    "slug": "pattaya-regatta-2026-optimist",
+    "name": "Pattaya Regatta 2026 — Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 17,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "88",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 8.0,
+      "nettScore": 5.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "1st",
+        "class": "OPTIMIST",
+        "sailno": "88",
+        "club": "YRAT",
+        "helmname": "ITTHICHAI TIATHONGCHAI",
+        "nat": "",
+        "helmagegroup": "2013",
+        "helmsex": "Male",
+        "r1": "1.0",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "(3.0)",
+        "r5": "1.0",
+        "r6": "1.0",
+        "total": "8.0",
+        "nett": "5.0"
+      },
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b2f832b2-c2d0-53d9-991d-6ecc83162aa2",
+      "participants": [
+        {
+          "id": "5756a520-5589-5a18-a13d-703a207bb359",
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ITTHICHAI TIATHONGCHAI; historic sail/boat number: 88; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 8.0 and net 5.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "1985",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 23.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "2nd",
+        "class": "OPTIMIST",
+        "sailno": "1985",
+        "club": "ACDC.SC",
+        "helmname": "ASHIRA PHANGRAK",
+        "nat": "",
+        "helmagegroup": "2013",
+        "helmsex": "Male",
+        "r1": "2.0",
+        "r2": "2.0",
+        "r3": "3.0",
+        "r4": "4.0",
+        "r5": "4.0",
+        "r6": "(8.0)",
+        "total": "23.0",
+        "nett": "15.0"
+      },
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e2e4a6e1-a38f-5ec1-bdbe-10a0174842f9",
+      "participants": [
+        {
+          "id": "3c487a1d-1846-5184-9075-e281b0aa693a",
+          "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+          "sourceName": "ASHIRA PHANGRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ASHIRA PHANGRAK; historic sail/boat number: 1985; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 23.0 and net 15.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "ANANTACHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "3057",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 23.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "3rd",
+        "class": "OPTIMIST",
+        "sailno": "3057",
+        "club": "YRAT",
+        "helmname": "ANANTACHAI TIATHONGCHAI",
+        "nat": "",
+        "helmagegroup": "2015",
+        "helmsex": "Male",
+        "r1": "3.0",
+        "r2": "(6.0)",
+        "r3": "2.0",
+        "r4": "5.0",
+        "r5": "3.0",
+        "r6": "4.0",
+        "total": "23.0",
+        "nett": "17.0"
+      },
+      "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b8d29870-4100-5989-a149-14090b0fe0cd",
+      "participants": [
+        {
+          "id": "8bb08467-7758-5d55-a737-7d2039d6dd9a",
+          "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "sourceName": "ANANTACHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ANANTACHAI TIATHONGCHAI; historic sail/boat number: 3057; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 23.0 and net 17.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "DHAMMAPORN ARUNO",
+      "sailOrBoardNumber": "1888",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 26.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "4th",
+        "class": "OPTIMIST",
+        "sailno": "1888",
+        "club": "ACDC.SC",
+        "helmname": "DHAMMAPORN ARUNO",
+        "nat": "",
+        "helmagegroup": "2013",
+        "helmsex": "Female",
+        "r1": "(8.0)",
+        "r2": "3.0",
+        "r3": "4.0",
+        "r4": "2.0",
+        "r5": "6.0",
+        "r6": "3.0",
+        "total": "26.0",
+        "nett": "18.0"
+      },
+      "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "77447bba-fa54-5820-a83f-9fb5ef42ce77",
+      "participants": [
+        {
+          "id": "8efcd0e7-d0a3-5b52-afb9-7b077937363b",
+          "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+          "sourceName": "DHAMMAPORN ARUNO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: DHAMMAPORN ARUNO; historic sail/boat number: 1888; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 26.0 and net 18.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 5,
+      "name": "CHANANCHAI. TIATHONGCHAI",
+      "sailOrBoardNumber": "2865",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 30.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "5th",
+        "class": "OPTIMIST",
+        "sailno": "2865",
+        "club": "YRAT",
+        "helmname": "CHANANCHAI. TIATHONGCHAI",
+        "nat": "",
+        "helmagegroup": "2015",
+        "helmsex": "Male",
+        "r1": "5.0",
+        "r2": "(9.0)",
+        "r3": "6.0",
+        "r4": "1.0",
+        "r5": "2.0",
+        "r6": "7.0",
+        "total": "30.0",
+        "nett": "21.0"
+      },
+      "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "9bfd967d-6b54-5f82-9d56-4764e26ace67",
+      "participants": [
+        {
+          "id": "4cdfb749-ba47-52fb-b422-7e8f21cab4b5",
+          "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "sourceName": "CHANANCHAI. TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHANANCHAI. TIATHONGCHAI; historic sail/boat number: 2865; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 30.0 and net 21.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 6,
+      "name": "CHUHAN ZHANG",
+      "sailOrBoardNumber": "1947",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 29.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(7.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "6th",
+        "class": "OPTIMIST",
+        "sailno": "1947",
+        "club": "ACDC.SC",
+        "helmname": "CHUHAN ZHANG",
+        "nat": "",
+        "helmagegroup": "2014",
+        "helmsex": "Female",
+        "r1": "6.0",
+        "r2": "4.0",
+        "r3": "5.0",
+        "r4": "(7.0)",
+        "r5": "5.0",
+        "r6": "2.0",
+        "total": "29.0",
+        "nett": "22.0"
+      },
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "a008f0ab-60cb-5de7-8e48-e044af3b8479",
+      "participants": [
+        {
+          "id": "52c0ac1f-79dd-55da-a092-9f575d5cb14d",
+          "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+          "sourceName": "CHUHAN ZHANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHUHAN ZHANG; historic sail/boat number: 1947; club: ACDC.SC; nationality: CHN; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 29.0 and net 22.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 7,
+      "name": "Klaochanok Chatawattanasopakun",
+      "sailOrBoardNumber": "3935",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 37.0,
+      "nettScore": 28.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "7th",
+        "class": "OPTIMIST",
+        "sailno": "3935",
+        "club": "ACDC.SC",
+        "helmname": "Klaochanok Chatawattanasopakun",
+        "nat": "",
+        "helmagegroup": "2013",
+        "helmsex": "Female",
+        "r1": "4.0",
+        "r2": "5.0",
+        "r3": "7.0",
+        "r4": "6.0",
+        "r5": "(9.0)",
+        "r6": "6.0",
+        "total": "37.0",
+        "nett": "28.0"
+      },
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "89c05ce6-c748-503f-ac98-3a6155444b13",
+      "participants": [
+        {
+          "id": "61e484e1-61b3-508e-8813-696bb80b9ffd",
+          "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "sourceName": "Klaochanok Chatawattanasopakun",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Klaochanok Chatawattanasopakun; historic sail/boat number: 3935; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 37.0 and net 28.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 8,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "1696",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 45.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "8th",
+        "class": "OPTIMIST",
+        "sailno": "1696",
+        "club": "ACDC.SC",
+        "helmname": "SURATSAYAPRON KAEWRAKUM",
+        "nat": "",
+        "helmagegroup": "2013",
+        "helmsex": "Female",
+        "r1": "7.0",
+        "r2": "7.0",
+        "r3": "(11.0)",
+        "r4": "8.0",
+        "r5": "7.0",
+        "r6": "5.0",
+        "total": "45.0",
+        "nett": "34.0"
+      },
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ba49fe49-6071-5c2a-8851-2f769d1e3e32",
+      "participants": [
+        {
+          "id": "3e4a2fdc-d823-5217-9bb1-d3c003b57a38",
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SURATSAYAPRON KAEWRAKUM; historic sail/boat number: 1696; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 45.0 and net 34.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 9,
+      "name": "Netchanok Chatawattanasopakul",
+      "sailOrBoardNumber": "1644",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 55.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "9th",
+        "class": "OPTIMIST",
+        "sailno": "1644",
+        "club": "ACDC.SC",
+        "helmname": "Netchanok Chatawattanasopakul",
+        "nat": "",
+        "helmagegroup": "2015",
+        "helmsex": "Female",
+        "r1": "9.0",
+        "r2": "(10.0)",
+        "r3": "9.0",
+        "r4": "9.0",
+        "r5": "8.0",
+        "r6": "10.0",
+        "total": "55.0",
+        "nett": "45.0"
+      },
+      "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+      "resultId": "26467a5c-f934-5030-89cf-4855e803addd",
+      "participants": [
+        {
+          "id": "7d8f3b3a-729c-5d92-83c7-387ca7487665",
+          "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+          "sourceName": "Netchanok Chatawattanasopakul",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Netchanok Chatawattanasopakul; historic sail/boat number: 1644; club: ACDC.SC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 55.0 and net 45.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 10,
+      "name": "NAPABHAT BUASUANG",
+      "sailOrBoardNumber": "1789",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 58.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "10th",
+        "class": "OPTIMIST",
+        "sailno": "1789",
+        "club": "ACDC.SC",
+        "helmname": "NAPABHAT BUASUANG",
+        "nat": "",
+        "helmagegroup": "2014",
+        "helmsex": "",
+        "r1": "11.0",
+        "r2": "8.0",
+        "r3": "8.0",
+        "r4": "10.0",
+        "r5": "(12.0)",
+        "r6": "9.0",
+        "total": "58.0",
+        "nett": "46.0"
+      },
+      "sailorId": "e4c77476-aeef-45b2-b905-495b594b1353",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "31c61324-8581-5469-87a0-3b8a6945951b",
+      "participants": [
+        {
+          "id": "1de2ff0a-96da-5c28-be9b-12c9fba51d75",
+          "sailorId": "e4c77476-aeef-45b2-b905-495b594b1353",
+          "sourceName": "NAPABHAT BUASUANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NAPABHAT BUASUANG; historic sail/boat number: 1789; club: ACDC.SC; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 58.0 and net 46.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 11,
+      "name": "CHATTAPAT SOMPRASONG",
+      "sailOrBoardNumber": "1234",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 72.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "11th",
+        "class": "OPTIMIST",
+        "sailno": "1234",
+        "club": "ACDC.SC",
+        "helmname": "CHATTAPAT SOMPRASONG",
+        "nat": "",
+        "helmagegroup": "2015",
+        "helmsex": "Male",
+        "r1": "10.0",
+        "r2": "11.0",
+        "r3": "10.0",
+        "r4": "(18.0 DNC)",
+        "r5": "11.0",
+        "r6": "12.0",
+        "total": "72.0",
+        "nett": "54.0"
+      },
+      "sailorId": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f1e369e6-2fe0-5fd2-be5b-0f27f7239115",
+      "participants": [
+        {
+          "id": "d7007357-3bb6-570e-bd62-38dfc6beaaad",
+          "sailorId": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+          "sourceName": "CHATTAPAT SOMPRASONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHATTAPAT SOMPRASONG; historic sail/boat number: 1234; club: ACDC.SC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 72.0 and net 54.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 12,
+      "name": "Dhan Chintanaseri Suksantinunt",
+      "sailOrBoardNumber": "1464",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 82.0,
+      "nettScore": 64.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "12th",
+        "class": "OPTIMIST",
+        "sailno": "1464",
+        "club": "SSA",
+        "helmname": "Dhan Chintanaseri Suksantinunt",
+        "nat": "",
+        "helmagegroup": "2016",
+        "helmsex": "",
+        "r1": "14.0",
+        "r2": "13.0",
+        "r3": "13.0",
+        "r4": "(18.0 DNC)",
+        "r5": "10.0",
+        "r6": "14.0",
+        "total": "82.0",
+        "nett": "64.0"
+      },
+      "sailorId": "768b3680-930d-4a1c-82d9-5dea9717701a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "351a3a6c-4f5d-5186-b04c-d34245a1bb54",
+      "participants": [
+        {
+          "id": "39ea7784-5aad-5dd7-b2c2-665ea0f7b0d1",
+          "sailorId": "768b3680-930d-4a1c-82d9-5dea9717701a",
+          "sourceName": "Dhan Chintanaseri Suksantinunt",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Dhan Chintanaseri Suksantinunt; historic sail/boat number: 1464; club: SSA; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 82.0 and net 64.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 13,
+      "name": "KONGPHOP HUPKRATHOKE",
+      "sailOrBoardNumber": "1555",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 82.0,
+      "nettScore": 64.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "13th",
+        "class": "OPTIMIST",
+        "sailno": "1555",
+        "club": "ACDC.SC",
+        "helmname": "KONGPHOP HUPKRATHOKE",
+        "nat": "",
+        "helmagegroup": "2015",
+        "helmsex": "Male",
+        "r1": "12.0",
+        "r2": "12.0",
+        "r3": "15.0",
+        "r4": "(18.0 DNC)",
+        "r5": "14.0",
+        "r6": "11.0",
+        "total": "82.0",
+        "nett": "64.0"
+      },
+      "sailorId": "10138610-378f-4b31-99c2-075944acabda",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "6ed71cf5-2de7-5b3f-9b50-103ad605620d",
+      "participants": [
+        {
+          "id": "64a0854d-2e29-581d-891f-b72891b80440",
+          "sailorId": "10138610-378f-4b31-99c2-075944acabda",
+          "sourceName": "KONGPHOP HUPKRATHOKE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KONGPHOP HUPKRATHOKE; historic sail/boat number: 1555; club: ACDC.SC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 82.0 and net 64.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 14,
+      "name": "THEE PARINYANITIKUN",
+      "sailOrBoardNumber": "199",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 87.0,
+      "nettScore": 69.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "14th",
+        "class": "OPTIMIST",
+        "sailno": "199",
+        "club": "SSA",
+        "helmname": "THEE PARINYANITIKUN",
+        "nat": "",
+        "helmagegroup": "2017",
+        "helmsex": "",
+        "r1": "13.0",
+        "r2": "14.0",
+        "r3": "14.0",
+        "r4": "(18.0 DNC)",
+        "r5": "13.0",
+        "r6": "15.0",
+        "total": "87.0",
+        "nett": "69.0"
+      },
+      "sailorId": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "17ea66d4-a2d0-59f4-a44b-222cec6ba581",
+      "participants": [
+        {
+          "id": "4c3fcdbb-07e6-5b50-ab0f-85ed8dbcc048",
+          "sailorId": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+          "sourceName": "THEE PARINYANITIKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THEE PARINYANITIKUN; historic sail/boat number: 199; club: SSA; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 87.0 and net 69.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 15,
+      "name": "SETTHAWIT YODMANEE",
+      "sailOrBoardNumber": "181",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 91.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "15th",
+        "class": "OPTIMIST",
+        "sailno": "181",
+        "club": "ACDC.SC",
+        "helmname": "SETTHAWIT YODMANEE",
+        "nat": "",
+        "helmagegroup": "2017",
+        "helmsex": "",
+        "r1": "(18.0 DNC)",
+        "r2": "15.0",
+        "r3": "12.0",
+        "r4": "18.0 DNC",
+        "r5": "15.0",
+        "r6": "13.0",
+        "total": "91.0",
+        "nett": "73.0"
+      },
+      "sailorId": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "9b74cf5f-a1b2-596f-bed6-59b9f92ca754",
+      "participants": [
+        {
+          "id": "82940599-67e6-511b-b0ba-ecd78a0b64e0",
+          "sailorId": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+          "sourceName": "SETTHAWIT YODMANEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SETTHAWIT YODMANEE; historic sail/boat number: 181; club: ACDC.SC; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 91.0 and net 73.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 16,
+      "name": "THANIYADA KAEWRAKUM",
+      "sailOrBoardNumber": "187",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 104.0,
+      "nettScore": 86.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "16th",
+        "class": "OPTIMIST",
+        "sailno": "187",
+        "club": "ACDC.SC",
+        "helmname": "THANIYADA KAEWRAKUM",
+        "nat": "",
+        "helmagegroup": "2018",
+        "helmsex": "",
+        "r1": "(18.0 DNC)",
+        "r2": "18.0 DNC",
+        "r3": "16.0",
+        "r4": "18.0 DNC",
+        "r5": "16.0",
+        "r6": "18.0 DNC",
+        "total": "104.0",
+        "nett": "86.0"
+      },
+      "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+      "resultId": "616a77b3-bd34-5a3c-b2cc-064c3d9724c0",
+      "participants": [
+        {
+          "id": "cbed3d4c-71d6-5d2d-b2bf-8a564c0f9465",
+          "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+          "sourceName": "THANIYADA KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANIYADA KAEWRAKUM; historic sail/boat number: 187; club: ACDC.SC; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 104.0 and net 86.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "pattaya-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "source": {
+        "id": 193750,
+        "url": "https://www.racingrulesofsailing.org/documents/193750",
+        "title": "Official pattaya-regatta-2026 result document 193750",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 17,
+      "name": "Suphasin julpon",
+      "sailOrBoardNumber": "644",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 107.0,
+      "nettScore": 89.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(18.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "18.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "17th",
+        "class": "OPTIMIST",
+        "sailno": "644",
+        "club": "ACDC.SC",
+        "helmname": "Suphasin julpon",
+        "nat": "",
+        "helmagegroup": "2017",
+        "helmsex": "",
+        "r1": "(18.0 DNC)",
+        "r2": "18.0 DNC",
+        "r3": "17.0",
+        "r4": "18.0 DNC",
+        "r5": "18.0 DNC",
+        "r6": "18.0 DNC",
+        "total": "107.0",
+        "nett": "89.0"
+      },
+      "sailorId": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3fdc89bd-beb5-58d2-83a4-f323772bdb60",
+      "participants": [
+        {
+          "id": "3fae4434-08f5-5716-9b1c-ffa9eef6baa3",
+          "sailorId": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+          "sourceName": "Suphasin julpon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Suphasin julpon; historic sail/boat number: 644; club: ACDC.SC; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 107.0 and net 89.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 17,
+  "deferredEntryCount": 0,
+  "profilePreflight": [
+    {
+      "id": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "club": "ACDC.SC",
+      "name": "Ashira Phangrak",
+      "gender": "Male",
+      "handle": "ashira-phangrak-oi7odm9",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "221935"
+    },
+    {
+      "id": "e4c77476-aeef-45b2-b905-495b594b1353",
+      "club": "ACDC.SC",
+      "name": "Napabhat Buasuang",
+      "gender": "Male",
+      "handle": "napabhat-buasuang-kkc916t",
+      "birthYear": 2014,
+      "sailNumber": "1789",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "club": "YRAT",
+      "name": "Chananchai Tiathongchai",
+      "gender": "Male",
+      "handle": "chananchai-tiathongchai-e3x85l3",
+      "birthYear": 2015,
+      "sailNumber": "1991",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "Male",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "club": "YRAT",
+      "name": "Anantachai Tiathongchai",
+      "gender": "Male",
+      "handle": "anantachai-tiathongchai-onaqh0t",
+      "birthYear": 2015,
+      "sailNumber": "1990",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "Female",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+      "club": "ACDC.SC",
+      "name": "Chattapat Somprasong",
+      "gender": "Male",
+      "handle": "chattapat-somprasong-yhx7ypz",
+      "birthYear": 2015,
+      "sailNumber": "1234",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+      "club": "YRAT",
+      "name": "Setthawit Yodmanee",
+      "gender": "Male",
+      "handle": "setthawit-yodmanee-jdvl8az",
+      "birthYear": 2017,
+      "sailNumber": "878",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "768b3680-930d-4a1c-82d9-5dea9717701a",
+      "club": "SSA",
+      "name": "Dhan Chintanaseri Suksantinunt",
+      "gender": "Male",
+      "handle": "dhan-chintanaseri-suksantinunt-3pq1rbq",
+      "birthYear": 2016,
+      "sailNumber": "1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8b594c37-db52-4549-a765-f51fd619238d",
+      "club": "ACDC.SC",
+      "name": "Netchanok Chatawattanasopakun",
+      "gender": "Female",
+      "handle": "netchanok-chatawattanasopakun-b63j9ly",
+      "birthYear": 2015,
+      "sailNumber": "1644",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "club": "ACDC.SC",
+      "name": "Dhammaporn Aruno",
+      "gender": "Female",
+      "handle": "dhammaporn-aruno-v6gx0i8",
+      "birthYear": 2013,
+      "sailNumber": "1881",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+      "club": "SSA",
+      "name": "Thee Parinyanitikun",
+      "gender": "Male",
+      "handle": "thee-parinyanitikun-iopp2jx",
+      "birthYear": 2017,
+      "sailNumber": "199",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "club": "ACDC.SC",
+      "name": "Chuhan Zhang",
+      "gender": "Female",
+      "handle": "chuhan-zhang-oes2i91",
+      "birthYear": 2014,
+      "sailNumber": "1947",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+      "club": "ACDC.SC",
+      "name": "Suphasin Julpon",
+      "gender": "M",
+      "handle": "suphasin-julpon-thai26-2c5cda",
+      "birthYear": null,
+      "sailNumber": "THA644",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "10138610-378f-4b31-99c2-075944acabda",
+      "club": "ACDC.SC",
+      "name": "Kongphop Hupkrathoke",
+      "gender": "M",
+      "handle": "kongphop-hupkrathoke-tnc26-10138610",
+      "birthYear": null,
+      "sailNumber": "THA 1555",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+      "name": "Thaniyada Kaewrakum",
+      "handle": "thaniyada-kaewrakum-sr26-dc0265",
+      "sailNumber": "THA1484",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC. SC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 1,
+        "sourceName": "ITTHICHAI TIATHONGCHAI",
+        "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 2,
+        "sourceName": "ASHIRA PHANGRAK",
+        "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 3,
+        "sourceName": "ANANTACHAI TIATHONGCHAI",
+        "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 4,
+        "sourceName": "DHAMMAPORN ARUNO",
+        "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 5,
+        "sourceName": "CHANANCHAI. TIATHONGCHAI",
+        "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 6,
+        "sourceName": "CHUHAN ZHANG",
+        "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 7,
+        "sourceName": "Klaochanok Chatawattanasopakun",
+        "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 8,
+        "sourceName": "SURATSAYAPRON KAEWRAKUM",
+        "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 9,
+        "sourceName": "Netchanok Chatawattanasopakul",
+        "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 10,
+        "sourceName": "NAPABHAT BUASUANG",
+        "sailorId": "e4c77476-aeef-45b2-b905-495b594b1353",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 11,
+        "sourceName": "CHATTAPAT SOMPRASONG",
+        "sailorId": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 12,
+        "sourceName": "Dhan Chintanaseri Suksantinunt",
+        "sailorId": "768b3680-930d-4a1c-82d9-5dea9717701a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 13,
+        "sourceName": "KONGPHOP HUPKRATHOKE",
+        "sailorId": "10138610-378f-4b31-99c2-075944acabda",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 14,
+        "sourceName": "THEE PARINYANITIKUN",
+        "sailorId": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 15,
+        "sourceName": "SETTHAWIT YODMANEE",
+        "sailorId": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 16,
+        "sourceName": "THANIYADA KAEWRAKUM",
+        "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "pattaya-regatta-2026-optimist",
+        "rank": 17,
+        "sourceName": "Suphasin julpon",
+        "sailorId": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

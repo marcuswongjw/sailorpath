@@ -1,0 +1,5644 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 180534,
+    "url": "https://www.racingrulesofsailing.org/documents/180534",
+    "title": "Official capitan-s-cup-bc88 result document 180534",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 2,
+    "pages": [
+      2,
+      3
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Capitan%27s%20Cup%20BC88"
+  },
+  "event": {
+    "id": "7d19a7bb-7d99-5e90-9010-bbe7ff188710",
+    "slug": "capitans-cup-bc88-2026",
+    "name": "Capitan's Cup BC88 2026",
+    "startDate": "2026-03-21",
+    "endDate": "2026-03-23",
+    "venue": "Boat Club 88 (Thailand), Sittahip, Chonburi",
+    "organizer": "Boat Club 88",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "41b58e8a-e6d0-5f6b-862d-dbbbc05ea220",
+    "slug": "capitans-cup-bc88-2026-optimist-gold",
+    "name": "Capitan's Cup BC88 2026 — Optimist Gold",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "raceCount": 9,
+    "totalFleetSize": 37,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 1,
+      "name": "SORAWIT NAKSUK",
+      "sailOrBoardNumber": "THA1493",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 42.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1493",
+        "club": "YRAT",
+        "helmname": "SORAWIT NAKSUK",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "4.0",
+        "r2": "3.0",
+        "r3": "2.0",
+        "r4": "4.0",
+        "r5": "2.0",
+        "r6": "2.0",
+        "r7": "(16.0)",
+        "r8": "5.0",
+        "r9": "4.0",
+        "total": "42.0",
+        "nett": "26.0"
+      },
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "dad50418-ab81-5cc8-ab21-cc53a021373b",
+      "participants": [
+        {
+          "id": "b8f09375-f813-5080-b03c-f8adb9a919aa",
+          "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+          "sourceName": "SORAWIT NAKSUK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SORAWIT NAKSUK; historic sail/boat number: THA1493; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 42.0 and net 26.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 2,
+      "name": "PARIYAPORN CHANTARAWONG",
+      "sailOrBoardNumber": "THA1610",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 71.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1610",
+        "club": "YRAT",
+        "helmname": "PARIYAPORN CHANTARAWONG",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1": "8.0",
+        "r2": "4.0",
+        "r3": "1.0",
+        "r4": "(38.0 UFD)",
+        "r5": "3.0",
+        "r6": "3.0",
+        "r7": "5.0",
+        "r8": "4.0",
+        "r9": "5.0",
+        "total": "71.0",
+        "nett": "33.0"
+      },
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "db816df1-dd80-5fd6-a163-f65f5d403906",
+      "participants": [
+        {
+          "id": "08d19c22-e803-5eac-ae80-3bdae1fcb0c8",
+          "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+          "sourceName": "PARIYAPORN CHANTARAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PARIYAPORN CHANTARAWONG; historic sail/boat number: THA1610; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 71.0 and net 33.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 3,
+      "name": "Surapha maungngam",
+      "sailOrBoardNumber": "THA1941",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 64.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1941",
+        "club": "YRAT",
+        "helmname": "Surapha maungngam",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1": "3.0",
+        "r2": "(18.0)",
+        "r3": "3.0",
+        "r4": "3.0",
+        "r5": "17.0",
+        "r6": "1.0",
+        "r7": "1.0",
+        "r8": "3.0",
+        "r9": "15.0",
+        "total": "64.0",
+        "nett": "46.0"
+      },
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "resultId": "83096dea-1405-5705-b438-ca93ad96540d",
+      "participants": [
+        {
+          "id": "3d80713e-f7a2-5aaa-846e-64357f9e7902",
+          "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "sourceName": "Surapha maungngam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Surapha maungngam; historic sail/boat number: THA1941; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 64.0 and net 46.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 4,
+      "name": "ANANTACHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "Tha3057",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 76.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "Tha3057",
+        "club": "YRAT",
+        "helmname": "ANANTACHAI TIATHONGCHAI",
+        "nat": "",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "5.0",
+        "r2": "(23.0)",
+        "r3": "10.0",
+        "r4": "6.0",
+        "r5": "11.0",
+        "r6": "4.0",
+        "r7": "14.0",
+        "r8": "1.0",
+        "r9": "2.0",
+        "total": "76.0",
+        "nett": "53.0"
+      },
+      "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "8744eee4-5ddc-510c-a64b-5df81444d021",
+      "participants": [
+        {
+          "id": "7eca393f-697c-56d2-bf9c-8168d9afbcce",
+          "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "sourceName": "ANANTACHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ANANTACHAI TIATHONGCHAI; historic sail/boat number: Tha3057; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 76.0 and net 53.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 5,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA1322",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 75.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "5th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1322",
+        "club": "YRAT",
+        "helmname": "ITTHICHAI TIATHONGCHAI",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1": "(22.0)",
+        "r2": "7.0",
+        "r3": "11.0",
+        "r4": "12.0",
+        "r5": "5.0",
+        "r6": "8.0",
+        "r7": "3.0",
+        "r8": "6.0",
+        "r9": "1.0",
+        "total": "75.0",
+        "nett": "53.0"
+      },
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ec7dc776-3ebf-556e-9365-eebeff9224b7",
+      "participants": [
+        {
+          "id": "2168efad-e687-549c-9e6d-827d4b88607e",
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ITTHICHAI TIATHONGCHAI; historic sail/boat number: THA1322; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 75.0 and net 53.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 6,
+      "name": "PAKORNKIAT CHAIYA-O- CHA",
+      "sailOrBoardNumber": "THA1643",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 81.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "6th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1643",
+        "club": "YRAT",
+        "helmname": "PAKORNKIAT CHAIYA-O- CHA",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "1.0",
+        "r2": "17.0",
+        "r3": "4.0",
+        "r4": "1.0",
+        "r5": "(27.0)",
+        "r6": "5.0",
+        "r7": "11.0",
+        "r8": "9.0",
+        "r9": "6.0",
+        "total": "81.0",
+        "nett": "54.0"
+      },
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "acb8b689-7a46-54cc-b28f-24fbf29a9c0b",
+      "participants": [
+        {
+          "id": "9a8d5ee8-22db-5f5e-8ac3-9480447635be",
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA-O- CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PAKORNKIAT CHAIYA-O- CHA; historic sail/boat number: THA1643; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 81.0 and net 54.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 7,
+      "name": "Punthita Werotjanakul",
+      "sailOrBoardNumber": "THA 1888",
+      "club": "UWC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 95.0,
+      "nettScore": 57.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(38.0 DNC)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "7th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 1888",
+        "club": "UWC",
+        "helmname": "Punthita Werotjanakul",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Female",
+        "r1": "2.0",
+        "r2": "2.0",
+        "r3": "6.0",
+        "r4": "8.0",
+        "r5": "7.0",
+        "r6": "6.0",
+        "r7": "(38.0 DNC)",
+        "r8": "10.0",
+        "r9": "16.0",
+        "total": "95.0",
+        "nett": "57.0"
+      },
+      "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "20d1ccb6-1c86-50dd-b1a6-eecc428abee5",
+      "participants": [
+        {
+          "id": "4db1a3f1-19f8-5ee8-81ff-8d4f13cf88a0",
+          "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+          "sourceName": "Punthita Werotjanakul",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Punthita Werotjanakul; historic sail/boat number: THA 1888; club: UWC; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 95.0 and net 57.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 8,
+      "name": "JIN YUEYAN",
+      "sailOrBoardNumber": "CHN7709",
+      "club": "SHENZHEN Linghang",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 79.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "CHN7709",
+        "club": "SHENZHEN Linghang",
+        "helmname": "JIN YUEYAN",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Female",
+        "r1": "10.0",
+        "r2": "1.0",
+        "r3": "(20.0)",
+        "r4": "7.0",
+        "r5": "6.0",
+        "r6": "11.0",
+        "r7": "2.0",
+        "r8": "14.0",
+        "r9": "8.0",
+        "total": "79.0",
+        "nett": "59.0"
+      },
+      "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+      "resultId": "73ceae90-5f28-5cb7-a954-6154b4c090c7",
+      "participants": [
+        {
+          "id": "5ed41800-3e73-5953-ac60-96f5ff8ec2e2",
+          "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+          "sourceName": "JIN YUEYAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: JIN YUEYAN; historic sail/boat number: CHN7709; club: SHENZHEN Linghang; nationality: CHN; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 79.0 and net 59.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 9,
+      "name": "RACHATA SADTAKOOLWATTANA",
+      "sailOrBoardNumber": "THA1963",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 83.0,
+      "nettScore": 64.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "9th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1963",
+        "club": "YRAT",
+        "helmname": "RACHATA SADTAKOOLWATTANA",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "7.0",
+        "r2": "8.0",
+        "r3": "(19.0)",
+        "r4": "14.0",
+        "r5": "4.0",
+        "r6": "16.0",
+        "r7": "10.0",
+        "r8": "2.0",
+        "r9": "3.0",
+        "total": "83.0",
+        "nett": "64.0"
+      },
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "resultId": "0084d71a-5c83-5efb-99a3-f3f87685447b",
+      "participants": [
+        {
+          "id": "635f1ce8-7d49-5278-b26a-ef2ac38797b7",
+          "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+          "sourceName": "RACHATA SADTAKOOLWATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: RACHATA SADTAKOOLWATTANA; historic sail/boat number: THA1963; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 83.0 and net 64.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 10,
+      "name": "WICHAYAPORN SAKSRIKLOM",
+      "sailOrBoardNumber": "THA 1794",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 113.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "10th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 1794",
+        "club": "YRAT",
+        "helmname": "WICHAYAPORN SAKSRIKLOM",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1": "12.0",
+        "r2": "5.0",
+        "r3": "(28.0)",
+        "r4": "11.0",
+        "r5": "13.0",
+        "r6": "10.0",
+        "r7": "13.0",
+        "r8": "11.0",
+        "r9": "10.0",
+        "total": "113.0",
+        "nett": "85.0"
+      },
+      "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "eb9439a6-2124-5755-9810-306eddb2dd3b",
+      "participants": [
+        {
+          "id": "f4e6ddd6-0b5e-50c8-914c-d30fecadb52b",
+          "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+          "sourceName": "WICHAYAPORN SAKSRIKLOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: WICHAYAPORN SAKSRIKLOM; historic sail/boat number: THA 1794; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 113.0 and net 85.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 11,
+      "name": "DHAMMAPORN ARUNO",
+      "sailOrBoardNumber": "THA1881",
+      "club": "ACDC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 127.0,
+      "nettScore": 101.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "11th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1881",
+        "club": "ACDC",
+        "helmname": "DHAMMAPORN ARUNO",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "(26.0)",
+        "r2": "15.0",
+        "r3": "17.0",
+        "r4": "10.0",
+        "r5": "9.0",
+        "r6": "12.0",
+        "r7": "6.0",
+        "r8": "12.0",
+        "r9": "20.0",
+        "total": "127.0",
+        "nett": "101.0"
+      },
+      "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "76443789-885a-5a23-a018-a3806f99fe39",
+      "participants": [
+        {
+          "id": "b5ffd0d1-f296-5077-a837-54da4bab2b94",
+          "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+          "sourceName": "DHAMMAPORN ARUNO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: DHAMMAPORN ARUNO; historic sail/boat number: THA1881; club: ACDC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 127.0 and net 101.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 12,
+      "name": "THAWAREE RAKSAPAN",
+      "sailOrBoardNumber": "THA 1253",
+      "club": "RTFYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 146.0,
+      "nettScore": 108.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(38.0 DSQ)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "12th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 1253",
+        "club": "RTFYC",
+        "helmname": "THAWAREE RAKSAPAN",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "(38.0 DSQ)",
+        "r2": "25.0",
+        "r3": "5.0",
+        "r4": "13.0",
+        "r5": "18.0",
+        "r6": "9.0",
+        "r7": "12.0",
+        "r8": "15.0",
+        "r9": "11.0",
+        "total": "146.0",
+        "nett": "108.0"
+      },
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "25b3b18c-8287-57aa-bf46-8b250a78403e",
+      "participants": [
+        {
+          "id": "2e1dd40c-41e9-5836-bc83-aaac7bf0b96a",
+          "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+          "sourceName": "THAWAREE RAKSAPAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THAWAREE RAKSAPAN; historic sail/boat number: THA 1253; club: RTFYC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 146.0 and net 108.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 13,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA 1987",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 149.0,
+      "nettScore": 111.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "13th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 1987",
+        "club": "YRAT",
+        "helmname": "SUTHINAN NAKPASOM",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "14.0",
+        "r2": "9.0",
+        "r3": "8.0",
+        "r4": "(38.0 UFD)",
+        "r5": "1.0",
+        "r6": "30.0",
+        "r7": "22.0",
+        "r8": "13.0",
+        "r9": "14.0",
+        "total": "149.0",
+        "nett": "111.0"
+      },
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "fc7f2ad4-f066-5e00-906d-27bc6b0682bf",
+      "participants": [
+        {
+          "id": "2a026e13-6c3f-5566-aa9f-6ea09a1ee6d1",
+          "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+          "sourceName": "SUTHINAN NAKPASOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SUTHINAN NAKPASOM; historic sail/boat number: THA 1987; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 149.0 and net 111.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 14,
+      "name": "CHANANCHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA2865",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 142.0,
+      "nettScore": 117.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "14th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA2865",
+        "club": "YRAT",
+        "helmname": "CHANANCHAI TIATHONGCHAI",
+        "nat": "",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "11.0",
+        "r2": "22.0",
+        "r3": "23.0",
+        "r4": "5.0",
+        "r5": "12.0",
+        "r6": "(25.0)",
+        "r7": "20.0",
+        "r8": "17.0",
+        "r9": "7.0",
+        "total": "142.0",
+        "nett": "117.0"
+      },
+      "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "64d39927-0d94-56c0-84d7-d9106cdcb144",
+      "participants": [
+        {
+          "id": "6d88072e-06a1-54bb-9b98-ae5ecbfec07a",
+          "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "sourceName": "CHANANCHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHANANCHAI TIATHONGCHAI; historic sail/boat number: THA2865; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 142.0 and net 117.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 15,
+      "name": "CHUHAN ZHANG",
+      "sailOrBoardNumber": "THA1935",
+      "club": "ACDC. SC",
+      "school": null,
+      "nationality": "CHN",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 157.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(38.0 DNC)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "15th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1935",
+        "club": "ACDC. SC",
+        "helmname": "CHUHAN ZHANG",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1": "18.0",
+        "r2": "12.0",
+        "r3": "13.0",
+        "r4": "20.0",
+        "r5": "(38.0 DNC)",
+        "r6": "28.0",
+        "r7": "4.0",
+        "r8": "7.0",
+        "r9": "17.0",
+        "total": "157.0",
+        "nett": "119.0"
+      },
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "933a5084-9866-507c-b762-c5e779d50f89",
+      "participants": [
+        {
+          "id": "6a4a7232-a001-592d-aef1-21c80a963058",
+          "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+          "sourceName": "CHUHAN ZHANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHUHAN ZHANG; historic sail/boat number: THA1935; club: ACDC. SC; nationality: CHN; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 157.0 and net 119.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 16,
+      "name": "TRAIRAT JAROONROT",
+      "sailOrBoardNumber": "THA1876",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 159.0,
+      "nettScore": 121.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 38.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(38.0 DSQ)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "38.0 UFD",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "16th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1876",
+        "club": "ACDC.SC",
+        "helmname": "TRAIRAT JAROONROT",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "6.0",
+        "r2": "(38.0 DSQ)",
+        "r3": "7.0",
+        "r4": "38.0 UFD",
+        "r5": "21.0",
+        "r6": "23.0",
+        "r7": "9.0",
+        "r8": "8.0",
+        "r9": "9.0",
+        "total": "159.0",
+        "nett": "121.0"
+      },
+      "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "bea5c528-4cc5-59c6-97d1-f7220f5a9ed9",
+      "participants": [
+        {
+          "id": "73c3ffdb-3f98-5ff4-adb0-8ad50b10a34a",
+          "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+          "sourceName": "TRAIRAT JAROONROT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TRAIRAT JAROONROT; historic sail/boat number: THA1876; club: ACDC.SC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 159.0 and net 121.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 17,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "THA395",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 154.0,
+      "nettScore": 126.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "17th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA395",
+        "club": "YRAT",
+        "helmname": "NATTHAPONG NEELASAVEE",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "19.0",
+        "r2": "13.0",
+        "r3": "21.0",
+        "r4": "2.0",
+        "r5": "15.0",
+        "r6": "20.0",
+        "r7": "(28.0)",
+        "r8": "23.0",
+        "r9": "13.0",
+        "total": "154.0",
+        "nett": "126.0"
+      },
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "6f339585-1c81-5d6f-8f1b-29c635fd7a30",
+      "participants": [
+        {
+          "id": "66e56fd8-2cbb-5260-a3fc-b8afaf6c65c1",
+          "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+          "sourceName": "NATTHAPONG NEELASAVEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATTHAPONG NEELASAVEE; historic sail/boat number: THA395; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 154.0 and net 126.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 18,
+      "name": "Thanapha Phongkamnerd",
+      "sailOrBoardNumber": "THA1529",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 170.0,
+      "nettScore": 136.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 34.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(34.0)",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "18th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1529",
+        "club": "YRAT",
+        "helmname": "Thanapha Phongkamnerd",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Female",
+        "r1": "24.0",
+        "r2": "6.0",
+        "r3": "30.0",
+        "r4": "15.0",
+        "r5": "10.0",
+        "r6": "15.0",
+        "r7": "24.0",
+        "r8": "(34.0)",
+        "r9": "12.0",
+        "total": "170.0",
+        "nett": "136.0"
+      },
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "c54c82d2-33b6-552d-8f33-0e4ec99a79ee",
+      "participants": [
+        {
+          "id": "1bb32260-599e-5e0a-b1b2-878e7564cc1b",
+          "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+          "sourceName": "Thanapha Phongkamnerd",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thanapha Phongkamnerd; historic sail/boat number: THA1529; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 170.0 and net 136.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 19,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "THA 1985",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 177.0,
+      "nettScore": 144.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "19th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 1985",
+        "club": "ACDC.SC",
+        "helmname": "ASHIRA PHANGRAK",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "29.0",
+        "r2": "19.0",
+        "r3": "22.0",
+        "r4": "9.0",
+        "r5": "23.0",
+        "r6": "7.0",
+        "r7": "7.0",
+        "r8": "(33.0)",
+        "r9": "28.0",
+        "total": "177.0",
+        "nett": "144.0"
+      },
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "resultId": "e1f83186-9897-5a25-87a2-258cc54f6f4e",
+      "participants": [
+        {
+          "id": "e3a6c10b-c9da-5a52-9fa5-c305630fe289",
+          "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+          "sourceName": "ASHIRA PHANGRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ASHIRA PHANGRAK; historic sail/boat number: THA 1985; club: ACDC.SC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 177.0 and net 144.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 20,
+      "name": "PORNYAMON SAWAENGKHUN",
+      "sailOrBoardNumber": "THA1900",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 176.0,
+      "nettScore": 144.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "20th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1900",
+        "club": "YRAT",
+        "helmname": "PORNYAMON SAWAENGKHUN",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "20.0",
+        "r2": "28.0",
+        "r3": "18.0",
+        "r4": "19.0",
+        "r5": "8.0",
+        "r6": "14.0",
+        "r7": "21.0",
+        "r8": "16.0",
+        "r9": "(32.0)",
+        "total": "176.0",
+        "nett": "144.0"
+      },
+      "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "resultId": "8f1e63b0-bde5-5cd4-8d47-794be8d18b89",
+      "participants": [
+        {
+          "id": "92c82253-d613-5bfb-a6d5-1be38de20482",
+          "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+          "sourceName": "PORNYAMON SAWAENGKHUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PORNYAMON SAWAENGKHUN; historic sail/boat number: THA1900; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 176.0 and net 144.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 21,
+      "name": "Andries Kosuge",
+      "sailOrBoardNumber": "1394",
+      "club": "UWC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 173.0,
+      "nettScore": 144.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "21st",
+        "class": "Optimist Gold Fleet",
+        "sailno": "1394",
+        "club": "UWC",
+        "helmname": "Andries Kosuge",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1": "27.0",
+        "r2": "11.0",
+        "r3": "14.0",
+        "r4": "22.0",
+        "r5": "16.0",
+        "r6": "13.0",
+        "r7": "15.0",
+        "r8": "(29.0)",
+        "r9": "26.0",
+        "total": "173.0",
+        "nett": "144.0"
+      },
+      "sailorId": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "efeefb73-1c89-54bb-a5d5-5804c24deda9",
+      "participants": [
+        {
+          "id": "81eefc87-fb14-5ccc-b9c8-a2f4a0fecdb4",
+          "sailorId": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+          "sourceName": "Andries Kosuge",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Andries Kosuge; historic sail/boat number: 1394; club: UWC; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 173.0 and net 144.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 22,
+      "name": "Theerakan Klaysomboon",
+      "sailOrBoardNumber": "THA1932",
+      "club": "ACDC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 179.0,
+      "nettScore": 148.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "22nd",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1932",
+        "club": "ACDC",
+        "helmname": "Theerakan Klaysomboon",
+        "nat": "",
+        "yob": "2015",
+        "helmsex": "Female",
+        "r1": "16.0",
+        "r2": "21.0",
+        "r3": "9.0",
+        "r4": "23.0",
+        "r5": "26.0",
+        "r6": "18.0",
+        "r7": "8.0",
+        "r8": "27.0",
+        "r9": "(31.0)",
+        "total": "179.0",
+        "nett": "148.0"
+      },
+      "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f8b3008b-1cda-5cc3-be2a-f5818aa47abd",
+      "participants": [
+        {
+          "id": "c5c867ea-08ea-533f-b20e-15614ca8b59e",
+          "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+          "sourceName": "Theerakan Klaysomboon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Theerakan Klaysomboon; historic sail/boat number: THA1932; club: ACDC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 179.0 and net 148.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 23,
+      "name": "Naimakron Jangkittiyarat",
+      "sailOrBoardNumber": "THA 7211",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 194.0,
+      "nettScore": 167.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "23rd",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 7211",
+        "club": "YRAT",
+        "helmname": "Naimakron Jangkittiyarat",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1": "17.0",
+        "r2": "26.0",
+        "r3": "(27.0)",
+        "r4": "21.0",
+        "r5": "14.0",
+        "r6": "26.0",
+        "r7": "26.0",
+        "r8": "18.0",
+        "r9": "19.0",
+        "total": "194.0",
+        "nett": "167.0"
+      },
+      "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f31cb512-b58c-5356-bc0e-95c38c58cedf",
+      "participants": [
+        {
+          "id": "ee963441-e48d-5cbd-8836-0a82ce4f6ee6",
+          "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+          "sourceName": "Naimakron Jangkittiyarat",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Naimakron Jangkittiyarat; historic sail/boat number: THA 7211; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 194.0 and net 167.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 24,
+      "name": "Suchanya Kaminthong",
+      "sailOrBoardNumber": "THA 253",
+      "club": "NAC3SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 209.0,
+      "nettScore": 177.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "24th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 253",
+        "club": "NAC3SC",
+        "helmname": "Suchanya Kaminthong",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1": "23.0",
+        "r2": "14.0",
+        "r3": "31.0",
+        "r4": "16.0",
+        "r5": "19.0",
+        "r6": "(32.0)",
+        "r7": "29.0",
+        "r8": "21.0",
+        "r9": "24.0",
+        "total": "209.0",
+        "nett": "177.0"
+      },
+      "sailorId": "fdb5520d-f181-4d5a-ad46-8157fd378a1a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "725d3e23-cfd6-56b8-9483-fda054fd0b12",
+      "participants": [
+        {
+          "id": "4fa8922c-5764-5f87-8254-79da656b7140",
+          "sailorId": "fdb5520d-f181-4d5a-ad46-8157fd378a1a",
+          "sourceName": "Suchanya Kaminthong",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Suchanya Kaminthong; historic sail/boat number: THA 253; club: NAC3SC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 209.0 and net 177.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 25,
+      "name": "Jiratiwat Peungchurn",
+      "sailOrBoardNumber": "THA1220",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 217.0,
+      "nettScore": 184.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "25th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1220",
+        "club": "YRAT",
+        "helmname": "Jiratiwat Peungchurn",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "21.0",
+        "r2": "20.0",
+        "r3": "15.0",
+        "r4": "24.0",
+        "r5": "28.0",
+        "r6": "21.0",
+        "r7": "31.0",
+        "r8": "24.0",
+        "r9": "(33.0)",
+        "total": "217.0",
+        "nett": "184.0"
+      },
+      "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "9b5f067c-6cda-522f-8e28-59a412586e11",
+      "participants": [
+        {
+          "id": "4f6559f6-35c9-5b1c-8d0a-7077de465445",
+          "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+          "sourceName": "Jiratiwat Peungchurn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Jiratiwat Peungchurn; historic sail/boat number: THA1220; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 217.0 and net 184.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 26,
+      "name": "AMARIN JUNTAJON",
+      "sailOrBoardNumber": "THA1936",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 218.0,
+      "nettScore": 185.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "26th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1936",
+        "club": "YRAT",
+        "helmname": "AMARIN JUNTAJON",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1": "9.0",
+        "r2": "(33.0)",
+        "r3": "29.0",
+        "r4": "17.0",
+        "r5": "25.0",
+        "r6": "33.0",
+        "r7": "32.0",
+        "r8": "22.0",
+        "r9": "18.0",
+        "total": "218.0",
+        "nett": "185.0"
+      },
+      "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "15d15e45-adea-58e7-87db-5f66e0551bb9",
+      "participants": [
+        {
+          "id": "8b43ffee-8535-545b-a63a-b4f918a56961",
+          "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+          "sourceName": "AMARIN JUNTAJON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: AMARIN JUNTAJON; historic sail/boat number: THA1936; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 218.0 and net 185.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 27,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACDC. SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 223.0,
+      "nettScore": 185.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "27th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1696",
+        "club": "ACDC. SC",
+        "helmname": "SURATSAYAPRON KAEWRAKUM",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "15.0",
+        "r2": "24.0",
+        "r3": "34.0",
+        "r4": "(38.0 UFD)",
+        "r5": "22.0",
+        "r6": "19.0",
+        "r7": "17.0",
+        "r8": "31.0",
+        "r9": "23.0",
+        "total": "223.0",
+        "nett": "185.0"
+      },
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "d78b0fd6-224a-5095-9bf5-9be4a48aac5d",
+      "participants": [
+        {
+          "id": "60d1e37c-2865-51a5-a114-98ef6d2ad801",
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SURATSAYAPRON KAEWRAKUM; historic sail/boat number: THA1696; club: ACDC. SC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 223.0 and net 185.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 28,
+      "name": "Punyisa Kaewlek",
+      "sailOrBoardNumber": "8754",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 228.0,
+      "nettScore": 196.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "28th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "8754",
+        "club": "RNSC",
+        "helmname": "Punyisa Kaewlek",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1": "25.0",
+        "r2": "(32.0)",
+        "r3": "25.0",
+        "r4": "18.0",
+        "r5": "32.0",
+        "r6": "22.0",
+        "r7": "25.0",
+        "r8": "20.0",
+        "r9": "29.0",
+        "total": "228.0",
+        "nett": "196.0"
+      },
+      "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "02295c54-0117-5d5b-9e4a-e8986da84725",
+      "participants": [
+        {
+          "id": "4774c3cf-89bc-5a96-bf7f-a8033b3adb96",
+          "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+          "sourceName": "Punyisa Kaewlek",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Punyisa Kaewlek; historic sail/boat number: 8754; club: RNSC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 228.0 and net 196.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 29,
+      "name": "Thirawat Hankham",
+      "sailOrBoardNumber": "THA198",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 235.0,
+      "nettScore": 199.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(36.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "29th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA198",
+        "club": "YRAT",
+        "helmname": "Thirawat Hankham",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1": "13.0",
+        "r2": "35.0",
+        "r3": "(36.0)",
+        "r4": "29.0",
+        "r5": "30.0",
+        "r6": "17.0",
+        "r7": "18.0",
+        "r8": "32.0",
+        "r9": "25.0",
+        "total": "235.0",
+        "nett": "199.0"
+      },
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b4b64da5-673e-5e7a-817a-728f4ee13740",
+      "participants": [
+        {
+          "id": "020414bf-530b-5763-a15d-df5a7f324280",
+          "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+          "sourceName": "Thirawat Hankham",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thirawat Hankham; historic sail/boat number: THA198; club: YRAT; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 235.0 and net 199.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 30,
+      "name": "KLAOCHANOK CHATAWATTANASOPAKUN",
+      "sailOrBoardNumber": "THA3935",
+      "club": "AC.DC.",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 235.0,
+      "nettScore": 200.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "30th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA3935",
+        "club": "AC.DC.",
+        "helmname": "KLAOCHANOK CHATAWATTANASOPAKUN",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "30.0",
+        "r2": "27.0",
+        "r3": "12.0",
+        "r4": "26.0",
+        "r5": "20.0",
+        "r6": "(35.0)",
+        "r7": "33.0",
+        "r8": "25.0",
+        "r9": "27.0",
+        "total": "235.0",
+        "nett": "200.0"
+      },
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f0918f73-e7eb-561c-98ae-b5d5fbac5a91",
+      "participants": [
+        {
+          "id": "8e7767b5-d7a1-5b18-927f-149c5dfd5f47",
+          "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "sourceName": "KLAOCHANOK CHATAWATTANASOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KLAOCHANOK CHATAWATTANASOPAKUN; historic sail/boat number: THA3935; club: AC.DC.; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 235.0 and net 200.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 31,
+      "name": "NIRADA SASIWATTANAPORN",
+      "sailOrBoardNumber": "THA 1925",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 257.0,
+      "nettScore": 219.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(38.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "31st",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA 1925",
+        "club": "YRAT",
+        "helmname": "NIRADA SASIWATTANAPORN",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1": "33.0",
+        "r2": "10.0",
+        "r3": "16.0",
+        "r4": "(38.0 DNC)",
+        "r5": "38.0 DNC",
+        "r6": "38.0 DNC",
+        "r7": "19.0",
+        "r8": "30.0",
+        "r9": "35.0",
+        "total": "257.0",
+        "nett": "219.0"
+      },
+      "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e631df38-65c5-5074-a6f1-427ae07974fc",
+      "participants": [
+        {
+          "id": "dde61101-f2c6-5867-9129-cf35f130d39f",
+          "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+          "sourceName": "NIRADA SASIWATTANAPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NIRADA SASIWATTANAPORN; historic sail/boat number: THA 1925; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 257.0 and net 219.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 32,
+      "name": "NATTHANAN CHAIYA-O- CHA",
+      "sailOrBoardNumber": "THA1246",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 260.0,
+      "nettScore": 222.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(38.0 DSQ)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "32nd",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA1246",
+        "club": "YRAT",
+        "helmname": "NATTHANAN CHAIYA-O- CHA",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Female",
+        "r1": "(38.0 DSQ)",
+        "r2": "34.0",
+        "r3": "35.0",
+        "r4": "27.0",
+        "r5": "29.0",
+        "r6": "29.0",
+        "r7": "27.0",
+        "r8": "19.0",
+        "r9": "22.0",
+        "total": "260.0",
+        "nett": "222.0"
+      },
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "c85255a9-a47f-526e-ba96-0cb8451bf595",
+      "participants": [
+        {
+          "id": "b140cd0c-1f0a-55e6-b6d9-37da285873a1",
+          "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+          "sourceName": "NATTHANAN CHAIYA-O- CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATTHANAN CHAIYA-O- CHA; historic sail/boat number: THA1246; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 260.0 and net 222.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 33,
+      "name": "Nopadol Tokpo",
+      "sailOrBoardNumber": "125",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 259.0,
+      "nettScore": 224.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "33rd",
+        "class": "Optimist Gold Fleet",
+        "sailno": "125",
+        "club": "RNSC",
+        "helmname": "Nopadol Tokpo",
+        "nat": "",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "32.0",
+        "r2": "29.0",
+        "r3": "26.0",
+        "r4": "28.0",
+        "r5": "31.0",
+        "r6": "27.0",
+        "r7": "30.0",
+        "r8": "(35.0)",
+        "r9": "21.0",
+        "total": "259.0",
+        "nett": "224.0"
+      },
+      "sailorId": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "500d1780-ed74-5716-a51f-0b134f3f8aac",
+      "participants": [
+        {
+          "id": "ab7532b9-2496-56ce-aeee-58e47f9d50be",
+          "sailorId": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+          "sourceName": "Nopadol Tokpo",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Nopadol Tokpo; historic sail/boat number: 125; club: RNSC; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 259.0 and net 224.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 34,
+      "name": "Kanthee Khunmuang",
+      "sailOrBoardNumber": "THA54",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 261.0,
+      "nettScore": 227.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(34.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "34th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA54",
+        "club": "SSA",
+        "helmname": "Kanthee Khunmuang",
+        "nat": "",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1": "31.0",
+        "r2": "30.0",
+        "r3": "32.0",
+        "r4": "25.0",
+        "r5": "24.0",
+        "r6": "(34.0)",
+        "r7": "23.0",
+        "r8": "28.0",
+        "r9": "34.0",
+        "total": "261.0",
+        "nett": "227.0"
+      },
+      "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f3da19d8-d65c-538d-b080-9d315a223daa",
+      "participants": [
+        {
+          "id": "d0ea58bd-b6b9-5a9b-b8dc-d06b568e2c63",
+          "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+          "sourceName": "Kanthee Khunmuang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Kanthee Khunmuang; historic sail/boat number: THA54; club: SSA; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 261.0 and net 227.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 35,
+      "name": "Charlie Basnet",
+      "sailOrBoardNumber": "723",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 292.0,
+      "nettScore": 255.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "35th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "723",
+        "club": "RNSC",
+        "helmname": "Charlie Basnet",
+        "nat": "",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "34.0",
+        "r2": "36.0",
+        "r3": "(37.0)",
+        "r4": "30.0",
+        "r5": "34.0",
+        "r6": "31.0",
+        "r7": "34.0",
+        "r8": "26.0",
+        "r9": "30.0",
+        "total": "292.0",
+        "nett": "255.0"
+      },
+      "sailorId": "02f7450f-b247-49cf-ba12-2f33a7f0642e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b37618b8-215e-5e16-ad88-8b17b1dbadbd",
+      "participants": [
+        {
+          "id": "cb05b767-3ae9-58cf-8258-f44a219e0d0a",
+          "sailorId": "02f7450f-b247-49cf-ba12-2f33a7f0642e",
+          "sourceName": "Charlie Basnet",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Charlie Basnet; historic sail/boat number: 723; club: RNSC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 292.0 and net 255.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 36,
+      "name": "Master Levy Apichai Wiedmann",
+      "sailOrBoardNumber": "THA5555",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 296.0,
+      "nettScore": 258.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(38.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 38.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "38.0 DNC",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "36th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "THA5555",
+        "club": "RVYC",
+        "helmname": "Master Levy Apichai Wiedmann",
+        "nat": "",
+        "yob": "2013",
+        "helmsex": "Male",
+        "r1": "28.0",
+        "r2": "16.0",
+        "r3": "24.0",
+        "r4": "(38.0 DNC)",
+        "r5": "38.0 DNC",
+        "r6": "38.0 DNC",
+        "r7": "38.0 DNC",
+        "r8": "38.0 DNC",
+        "r9": "38.0 DNC",
+        "total": "296.0",
+        "nett": "258.0"
+      },
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "90f670bc-8704-5e56-8a16-d7f3f27e7b2d",
+      "participants": [
+        {
+          "id": "371e45cb-354b-5f7d-ac51-ecaa2d4adedb",
+          "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+          "sourceName": "Master Levy Apichai Wiedmann",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Master Levy Apichai Wiedmann; historic sail/boat number: THA5555; club: RVYC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 296.0 and net 258.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 37,
+      "name": "Kulpichet Phanchang",
+      "sailOrBoardNumber": "69",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 301.0,
+      "nettScore": 263.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(38.0 UFD)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "37th",
+        "class": "Optimist Gold Fleet",
+        "sailno": "69",
+        "club": "RNSC",
+        "helmname": "Kulpichet Phanchang",
+        "nat": "",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "35.0",
+        "r2": "31.0",
+        "r3": "33.0",
+        "r4": "(38.0 UFD)",
+        "r5": "33.0",
+        "r6": "24.0",
+        "r7": "35.0",
+        "r8": "36.0",
+        "r9": "36.0",
+        "total": "301.0",
+        "nett": "263.0"
+      },
+      "sailorId": "97050c23-371f-427e-a571-e20486cbb936",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ab5cf3cc-6558-5bd0-817e-2a33cb27d8d7",
+      "participants": [
+        {
+          "id": "78949f78-8132-510d-b1d8-faf3d4b03b00",
+          "sailorId": "97050c23-371f-427e-a571-e20486cbb936",
+          "sourceName": "Kulpichet Phanchang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Kulpichet Phanchang; historic sail/boat number: 69; club: RNSC; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 301.0 and net 263.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 37,
+  "deferredEntryCount": 0,
+  "profilePreflight": [
+    {
+      "id": "988b923b-6960-4d5e-be75-d53c32295492",
+      "club": "YRAT",
+      "name": "Wichayaporn Saksriklom",
+      "gender": "Female",
+      "handle": "wichayaporn-saksriklom-lf81guh",
+      "birthYear": 2014,
+      "sailNumber": "1794",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "97050c23-371f-427e-a571-e20486cbb936",
+      "club": "Imported official result",
+      "name": "Kulpichet Phanchang",
+      "gender": "M",
+      "handle": "asian-unk-kulpichet--69140d",
+      "birthYear": null,
+      "sailNumber": "69",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "club": "RTFYC",
+      "name": "Naimakron Jangkittiyarat",
+      "gender": "Male",
+      "handle": "naimakron-jangkittiyarat-rtbu36u",
+      "birthYear": 2013,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+      "club": "Imported official result",
+      "name": "Nopadol Tokpo",
+      "gender": "M",
+      "handle": "asian-unk-nopadol-to-6defdd",
+      "birthYear": null,
+      "sailNumber": "125",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "club": "Imported official result",
+      "name": "Punyisa Kaewlek",
+      "gender": "F",
+      "handle": "asian-unk-punyisa-ka-5c5bfa",
+      "birthYear": null,
+      "sailNumber": "1565",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "club": "ACDC.SC",
+      "name": "Ashira Phangrak",
+      "gender": "Male",
+      "handle": "ashira-phangrak-oi7odm9",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "221935"
+    },
+    {
+      "id": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+      "club": "Nantong Zilang",
+      "name": "Yueyan Jin",
+      "gender": null,
+      "handle": "yueyan-jin-zbqbb4k",
+      "birthYear": null,
+      "sailNumber": "7709",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "club": "YRAT",
+      "name": "Chananchai Tiathongchai",
+      "gender": "Male",
+      "handle": "chananchai-tiathongchai-e3x85l3",
+      "birthYear": 2015,
+      "sailNumber": "1991",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "club": "YRAT",
+      "name": "Jiratiwat Peungchurn",
+      "gender": "M",
+      "handle": "jiratiwat-peungchurn-9xt7lm4",
+      "birthYear": 2012,
+      "sailNumber": "1220",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "Male",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "club": "YRAT",
+      "name": "Anantachai Tiathongchai",
+      "gender": "Male",
+      "handle": "anantachai-tiathongchai-onaqh0t",
+      "birthYear": 2015,
+      "sailNumber": "1990",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-Cha",
+      "gender": "Male",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "Female",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "02f7450f-b247-49cf-ba12-2f33a7f0642e",
+      "club": "Imported official result",
+      "name": "Charlie Basnet",
+      "gender": "M",
+      "handle": "asian-tha-charlie-ba-750403",
+      "birthYear": null,
+      "sailNumber": "711",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "club": "YRAT",
+      "name": "Natthapong Neelasavee",
+      "gender": "Male",
+      "handle": "natthapong-neelasavee-91q0rru",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222071"
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "Male",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+      "club": "Imported official result",
+      "name": "Andries Kosuge",
+      "gender": "M",
+      "handle": "asian-tha-andries-ko-4bbf2d",
+      "birthYear": null,
+      "sailNumber": "1394",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "club": "YRAT",
+      "name": "Sorawit Naksuk",
+      "gender": "M",
+      "handle": "sorawit-naksuk-812d4t4",
+      "birthYear": 2012,
+      "sailNumber": "1493",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "club": "YRAT",
+      "name": "Rachata Sadtrakulwatanna",
+      "gender": "M",
+      "handle": "rachata-sadtrakulwatanna-823ho68",
+      "birthYear": 2011,
+      "sailNumber": "1963",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+      "club": "Imported official result",
+      "name": "Kanthee Khunmuang",
+      "gender": "M",
+      "handle": "asian-tha-kanthee-kh-35cbfe",
+      "birthYear": null,
+      "sailNumber": "54",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "club": "YRAT",
+      "name": "Surapha Muangngam",
+      "gender": "F",
+      "handle": "surapha-muangngam-8gw2ruy",
+      "birthYear": 2011,
+      "sailNumber": "1941",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "club": "Imported official result",
+      "name": "Levy Apichai Wiedmann",
+      "gender": "M",
+      "handle": "asian-tha-levy-apich-debd2f",
+      "birthYear": null,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "club": "ACDC.SC",
+      "name": "Dhammaporn Aruno",
+      "gender": "Female",
+      "handle": "dhammaporn-aruno-v6gx0i8",
+      "birthYear": 2013,
+      "sailNumber": "1881",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "club": "YRAT",
+      "name": "Amarin Juntajon",
+      "gender": "Male",
+      "handle": "amarin-juntajon-6j5cgat",
+      "birthYear": 2013,
+      "sailNumber": "1584",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "Female",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "Imported official result",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": null,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "club": "RTFYC",
+      "name": "Thawaree Raksapun",
+      "gender": "Female",
+      "handle": "thawaree-raksapun-sd0d5wz",
+      "birthYear": 2013,
+      "sailNumber": "1459",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "Male",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fdb5520d-f181-4d5a-ad46-8157fd378a1a",
+      "club": "Imported official result",
+      "name": "Suchanya Kaminthong",
+      "gender": "F",
+      "handle": "asian-tha-suchanya-k-3cf3c3",
+      "birthYear": null,
+      "sailNumber": "253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "Imported official result",
+      "name": "Trairat Jaroonrot",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": null,
+      "sailNumber": "1876",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "club": "ACDC.SC",
+      "name": "Theerakan Klaysomboon",
+      "gender": "F",
+      "handle": "theerakan-klaysomboon-fy1ms14",
+      "birthYear": 2015,
+      "sailNumber": "THA 1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "club": "YRAT",
+      "name": "Pornyamol Sawaengkhun",
+      "gender": "F",
+      "handle": "pornyamol-sawaengkhun-9e8uu7a",
+      "birthYear": 2013,
+      "sailNumber": "1900",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-Cha",
+      "gender": "Female",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "club": "ACDC.SC",
+      "name": "Chuhan Zhang",
+      "gender": "Female",
+      "handle": "chuhan-zhang-oes2i91",
+      "birthYear": 2014,
+      "sailNumber": "1947",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "Punthita Werotjanakul",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 1,
+        "sourceName": "SORAWIT NAKSUK",
+        "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 2,
+        "sourceName": "PARIYAPORN CHANTARAWONG",
+        "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 3,
+        "sourceName": "Surapha maungngam",
+        "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 4,
+        "sourceName": "ANANTACHAI TIATHONGCHAI",
+        "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 5,
+        "sourceName": "ITTHICHAI TIATHONGCHAI",
+        "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 6,
+        "sourceName": "PAKORNKIAT CHAIYA-O- CHA",
+        "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 7,
+        "sourceName": "Punthita Werotjanakul",
+        "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 8,
+        "sourceName": "JIN YUEYAN",
+        "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 9,
+        "sourceName": "RACHATA SADTAKOOLWATTANA",
+        "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 10,
+        "sourceName": "WICHAYAPORN SAKSRIKLOM",
+        "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 11,
+        "sourceName": "DHAMMAPORN ARUNO",
+        "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 12,
+        "sourceName": "THAWAREE RAKSAPAN",
+        "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 13,
+        "sourceName": "SUTHINAN NAKPASOM",
+        "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 14,
+        "sourceName": "CHANANCHAI TIATHONGCHAI",
+        "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 15,
+        "sourceName": "CHUHAN ZHANG",
+        "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 16,
+        "sourceName": "TRAIRAT JAROONROT",
+        "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 17,
+        "sourceName": "NATTHAPONG NEELASAVEE",
+        "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 18,
+        "sourceName": "Thanapha Phongkamnerd",
+        "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 19,
+        "sourceName": "ASHIRA PHANGRAK",
+        "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 20,
+        "sourceName": "PORNYAMON SAWAENGKHUN",
+        "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 21,
+        "sourceName": "Andries Kosuge",
+        "sailorId": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 22,
+        "sourceName": "Theerakan Klaysomboon",
+        "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 23,
+        "sourceName": "Naimakron Jangkittiyarat",
+        "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 24,
+        "sourceName": "Suchanya Kaminthong",
+        "sailorId": "fdb5520d-f181-4d5a-ad46-8157fd378a1a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 25,
+        "sourceName": "Jiratiwat Peungchurn",
+        "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 26,
+        "sourceName": "AMARIN JUNTAJON",
+        "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 27,
+        "sourceName": "SURATSAYAPRON KAEWRAKUM",
+        "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 28,
+        "sourceName": "Punyisa Kaewlek",
+        "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 29,
+        "sourceName": "Thirawat Hankham",
+        "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 30,
+        "sourceName": "KLAOCHANOK CHATAWATTANASOPAKUN",
+        "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 31,
+        "sourceName": "NIRADA SASIWATTANAPORN",
+        "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 32,
+        "sourceName": "NATTHANAN CHAIYA-O- CHA",
+        "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 33,
+        "sourceName": "Nopadol Tokpo",
+        "sailorId": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 34,
+        "sourceName": "Kanthee Khunmuang",
+        "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 35,
+        "sourceName": "Charlie Basnet",
+        "sailorId": "02f7450f-b247-49cf-ba12-2f33a7f0642e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 36,
+        "sourceName": "Master Levy Apichai Wiedmann",
+        "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-optimist-gold",
+        "rank": 37,
+        "sourceName": "Kulpichet Phanchang",
+        "sailorId": "97050c23-371f-427e-a571-e20486cbb936",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

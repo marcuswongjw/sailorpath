@@ -1,0 +1,452 @@
+[
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/acdc-cup-international-sailing-championship-2026-ilca4.json",
+    "event": "acdc-cup-international-sailing-championship-2026",
+    "sheet": "acdc-cup-international-sailing-championship-2026-ilca4",
+    "status": "published",
+    "competitors": 23,
+    "raceCount": 12,
+    "individualRaceScores": 276,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/acdc-cup-international-sailing-championship-2026-ilca6.json",
+    "event": "acdc-cup-international-sailing-championship-2026",
+    "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+    "status": "published",
+    "competitors": 7,
+    "raceCount": 12,
+    "individualRaceScores": 84,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/acdc-cup-international-sailing-championship-2026-ilca7.json",
+    "event": "acdc-cup-international-sailing-championship-2026",
+    "sheet": "acdc-cup-international-sailing-championship-2026-ilca7",
+    "status": "published",
+    "competitors": 7,
+    "raceCount": 12,
+    "individualRaceScores": 84,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/acdc-cup-international-sailing-championship-2026-optimist-newborn.json",
+    "event": "acdc-cup-international-sailing-championship-2026",
+    "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+    "status": "published",
+    "competitors": 42,
+    "raceCount": 8,
+    "individualRaceScores": 336,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/acdc-sailing-cup-2026-ilca4.json",
+    "event": "acdc-sailing-cup-2026",
+    "sheet": "acdc-sailing-cup-2026-ilca4",
+    "status": "published",
+    "competitors": 16,
+    "raceCount": 4,
+    "individualRaceScores": 64,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/acdc-sailing-cup-2026-optimist-newborn.json",
+    "event": "acdc-sailing-cup-2026",
+    "sheet": "acdc-sailing-cup-2026-optimist-newborn",
+    "status": "published",
+    "competitors": 24,
+    "raceCount": 4,
+    "individualRaceScores": 96,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/boat-club-88-sailing-regatta-2026-ilca4.json",
+    "event": "boat-club-88-sailing-regatta-2026",
+    "sheet": "boat-club-88-sailing-regatta-2026-ilca4",
+    "status": "published",
+    "competitors": 4,
+    "raceCount": 6,
+    "individualRaceScores": 24,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/boat-club-88-sailing-regatta-2026-ilca6.json",
+    "event": "boat-club-88-sailing-regatta-2026",
+    "sheet": "boat-club-88-sailing-regatta-2026-ilca6",
+    "status": "published",
+    "competitors": 3,
+    "raceCount": 6,
+    "individualRaceScores": 18,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/boat-club-88-sailing-regatta-2026-optimist-newborn.json",
+    "event": "boat-club-88-sailing-regatta-2026",
+    "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+    "status": "published",
+    "competitors": 10,
+    "raceCount": 4,
+    "individualRaceScores": 40,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/boat-club-88-sailing-regatta-2026-optimist.json",
+    "event": "boat-club-88-sailing-regatta-2026",
+    "sheet": "boat-club-88-sailing-regatta-2026-optimist",
+    "status": "published",
+    "competitors": 24,
+    "raceCount": 6,
+    "individualRaceScores": 144,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/capitans-cup-bc88-2026-ilca4.json",
+    "event": "capitans-cup-bc88-2026",
+    "sheet": "capitans-cup-bc88-2026-ilca4",
+    "status": "published",
+    "competitors": 10,
+    "raceCount": 9,
+    "individualRaceScores": 90,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/capitans-cup-bc88-2026-ilca6.json",
+    "event": "capitans-cup-bc88-2026",
+    "sheet": "capitans-cup-bc88-2026-ilca6",
+    "status": "published",
+    "competitors": 5,
+    "raceCount": 9,
+    "individualRaceScores": 45,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/capitans-cup-bc88-2026-ilca7.json",
+    "event": "capitans-cup-bc88-2026",
+    "sheet": "capitans-cup-bc88-2026-ilca7",
+    "status": "published",
+    "competitors": 3,
+    "raceCount": 9,
+    "individualRaceScores": 27,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/capitans-cup-bc88-2026-optimist-gold.json",
+    "event": "capitans-cup-bc88-2026",
+    "sheet": "capitans-cup-bc88-2026-optimist-gold",
+    "status": "published",
+    "competitors": 37,
+    "raceCount": 9,
+    "individualRaceScores": 333,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/capitans-cup-bc88-2026-optimist-silver.json",
+    "event": "capitans-cup-bc88-2026",
+    "sheet": "capitans-cup-bc88-2026-optimist-silver",
+    "status": "published",
+    "competitors": 33,
+    "raceCount": 8,
+    "individualRaceScores": 264,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/childrens-day-regatta-2026-ilca4.json",
+    "event": "childrens-day-regatta-2026",
+    "sheet": "childrens-day-regatta-2026-ilca4",
+    "status": "published",
+    "competitors": 20,
+    "raceCount": 6,
+    "individualRaceScores": 120,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/childrens-day-regatta-2026-optimist-newborn.json",
+    "event": "childrens-day-regatta-2026",
+    "sheet": "childrens-day-regatta-2026-optimist-newborn",
+    "status": "published",
+    "competitors": 27,
+    "raceCount": 6,
+    "individualRaceScores": 162,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/childrens-day-regatta-2026-optimist.json",
+    "event": "childrens-day-regatta-2026",
+    "sheet": "childrens-day-regatta-2026-optimist",
+    "status": "published",
+    "competitors": 60,
+    "raceCount": 6,
+    "individualRaceScores": 360,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/egat-and-yrat-regatta-2026-ilca4.json",
+    "event": "egat-and-yrat-regatta-2026",
+    "sheet": "egat-and-yrat-regatta-2026-ilca4",
+    "status": "published",
+    "competitors": 8,
+    "raceCount": 6,
+    "individualRaceScores": 48,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/egat-and-yrat-regatta-2026-ilca6.json",
+    "event": "egat-and-yrat-regatta-2026",
+    "sheet": "egat-and-yrat-regatta-2026-ilca6",
+    "status": "published",
+    "competitors": 10,
+    "raceCount": 6,
+    "individualRaceScores": 60,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/egat-and-yrat-regatta-2026-optimist.json",
+    "event": "egat-and-yrat-regatta-2026",
+    "sheet": "egat-and-yrat-regatta-2026-optimist",
+    "status": "published",
+    "competitors": 46,
+    "raceCount": 6,
+    "individualRaceScores": 276,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/ilca-thailand-national-championship-2026-ilca4.json",
+    "event": "ilca-thailand-national-championship-2026",
+    "sheet": "ilca-thailand-national-championship-2026-ilca4",
+    "status": "published",
+    "competitors": 36,
+    "raceCount": 9,
+    "individualRaceScores": 324,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/ilca-thailand-national-championship-2026-ilca6.json",
+    "event": "ilca-thailand-national-championship-2026",
+    "sheet": "ilca-thailand-national-championship-2026-ilca6",
+    "status": "published",
+    "competitors": 33,
+    "raceCount": 9,
+    "individualRaceScores": 297,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/ilca-thailand-national-championship-2026-ilca7.json",
+    "event": "ilca-thailand-national-championship-2026",
+    "sheet": "ilca-thailand-national-championship-2026-ilca7",
+    "status": "published",
+    "competitors": 32,
+    "raceCount": 9,
+    "individualRaceScores": 288,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/optimist-asian-oceanian-thailand-selection-trials-2026-optimist.json",
+    "event": "optimist-asian-oceanian-thailand-selection-trials-2026",
+    "sheet": "optimist-asian-oceanian-thailand-selection-trials-2026-optimist",
+    "status": "published",
+    "competitors": 25,
+    "raceCount": 3,
+    "individualRaceScores": 75,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/pattaya-regatta-2026-ilca4.json",
+    "event": "pattaya-regatta-2026",
+    "sheet": "pattaya-regatta-2026-ilca4",
+    "status": "published",
+    "competitors": 10,
+    "raceCount": 6,
+    "individualRaceScores": 60,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/pattaya-regatta-2026-ilca6.json",
+    "event": "pattaya-regatta-2026",
+    "sheet": "pattaya-regatta-2026-ilca6",
+    "status": "published",
+    "competitors": 5,
+    "raceCount": 6,
+    "individualRaceScores": 30,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/pattaya-regatta-2026-ilca7.json",
+    "event": "pattaya-regatta-2026",
+    "sheet": "pattaya-regatta-2026-ilca7",
+    "status": "published",
+    "competitors": 6,
+    "raceCount": 6,
+    "individualRaceScores": 36,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/pattaya-regatta-2026-optimist.json",
+    "event": "pattaya-regatta-2026",
+    "sheet": "pattaya-regatta-2026-optimist",
+    "status": "published",
+    "competitors": 17,
+    "raceCount": 6,
+    "individualRaceScores": 102,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/ranong-regatta-sailing-championship-2026-optimist-newborn.json",
+    "event": "ranong-regatta-sailing-championship-2026",
+    "sheet": "ranong-regatta-sailing-championship-2026-optimist-newborn",
+    "status": "published",
+    "competitors": 26,
+    "raceCount": 7,
+    "individualRaceScores": 182,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/ranong-regatta-sailing-championship-2026-optimist.json",
+    "event": "ranong-regatta-sailing-championship-2026",
+    "sheet": "ranong-regatta-sailing-championship-2026-optimist",
+    "status": "published",
+    "competitors": 32,
+    "raceCount": 8,
+    "individualRaceScores": 256,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-international-sailing-championships-2026-ilca4.json",
+    "event": "thailand-international-sailing-championships-2026",
+    "sheet": "thailand-international-sailing-championships-2026-ilca4",
+    "status": "published",
+    "competitors": 17,
+    "raceCount": 12,
+    "individualRaceScores": 204,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-international-sailing-championships-2026-ilca6.json",
+    "event": "thailand-international-sailing-championships-2026",
+    "sheet": "thailand-international-sailing-championships-2026-ilca6",
+    "status": "published",
+    "competitors": 10,
+    "raceCount": 12,
+    "individualRaceScores": 120,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-international-sailing-championships-2026-ilca7.json",
+    "event": "thailand-international-sailing-championships-2026",
+    "sheet": "thailand-international-sailing-championships-2026-ilca7",
+    "status": "published",
+    "competitors": 3,
+    "raceCount": 12,
+    "individualRaceScores": 36,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-national-sailing-championship-2026-series-3-ilca4.json",
+    "event": "thailand-national-sailing-championship-2026-series-3",
+    "sheet": "thailand-national-sailing-championship-2026-series-3-ilca4",
+    "status": "published",
+    "competitors": 16,
+    "raceCount": 9,
+    "individualRaceScores": 144,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-national-sailing-championship-2026-series-3-ilca6.json",
+    "event": "thailand-national-sailing-championship-2026-series-3",
+    "sheet": "thailand-national-sailing-championship-2026-series-3-ilca6",
+    "status": "published",
+    "competitors": 5,
+    "raceCount": 9,
+    "individualRaceScores": 45,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-national-sailing-championship-2026-series-3-ilca7.json",
+    "event": "thailand-national-sailing-championship-2026-series-3",
+    "sheet": "thailand-national-sailing-championship-2026-series-3-ilca7",
+    "status": "published",
+    "competitors": 3,
+    "raceCount": 9,
+    "individualRaceScores": 27,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-national-sailing-championship-2026-series-3-optimist-gold.json",
+    "event": "thailand-national-sailing-championship-2026-series-3",
+    "sheet": "thailand-national-sailing-championship-2026-series-3-optimist-gold",
+    "status": "published",
+    "competitors": 24,
+    "raceCount": 9,
+    "individualRaceScores": 216,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/thailand-national-sailing-championship-2026-series-3-optimist-silver.json",
+    "event": "thailand-national-sailing-championship-2026-series-3",
+    "sheet": "thailand-national-sailing-championship-2026-series-3-optimist-silver",
+    "status": "published",
+    "competitors": 42,
+    "raceCount": 9,
+    "individualRaceScores": 378,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/trat-regatta-2026-ilca4.json",
+    "event": "trat-regatta-2026",
+    "sheet": "trat-regatta-2026-ilca4",
+    "status": "published",
+    "competitors": 5,
+    "raceCount": 8,
+    "individualRaceScores": 40,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/trat-regatta-2026-ilca6.json",
+    "event": "trat-regatta-2026",
+    "sheet": "trat-regatta-2026-ilca6",
+    "status": "published",
+    "competitors": 3,
+    "raceCount": 8,
+    "individualRaceScores": 24,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/trat-regatta-2026-ilca7.json",
+    "event": "trat-regatta-2026",
+    "sheet": "trat-regatta-2026-ilca7",
+    "status": "published",
+    "competitors": 5,
+    "raceCount": 8,
+    "individualRaceScores": 40,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/trat-regatta-2026-optimist-gold.json",
+    "event": "trat-regatta-2026",
+    "sheet": "trat-regatta-2026-optimist-gold",
+    "status": "published",
+    "competitors": 24,
+    "raceCount": 7,
+    "individualRaceScores": 168,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/trat-regatta-2026-optimist-green.json",
+    "event": "trat-regatta-2026",
+    "sheet": "trat-regatta-2026-optimist-green",
+    "status": "published",
+    "competitors": 15,
+    "raceCount": 7,
+    "individualRaceScores": 105,
+    "validated": true
+  },
+  {
+    "manifest": "/Users/marcus/Documents/GitHub/sailorpath/scripts/imports/sail-result-2026/vega-rudder-long-distance-2026-optimist.json",
+    "event": "vega-rudder-long-distance-2026",
+    "sheet": "vega-rudder-long-distance-2026-optimist",
+    "status": "published",
+    "competitors": 55,
+    "raceCount": 1,
+    "individualRaceScores": 55,
+    "validated": true
+  }
+]

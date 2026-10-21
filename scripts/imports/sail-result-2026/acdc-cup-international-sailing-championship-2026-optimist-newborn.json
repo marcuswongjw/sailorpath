@@ -1,0 +1,6063 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 200606,
+    "url": "https://www.racingrulesofsailing.org/documents/200606",
+    "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1,
+      2,
+      3
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=ACDC%20Cup%20International%20Sailing%20Championship%202026"
+  },
+  "event": {
+    "id": "74dc5740-d039-542d-94c3-53eb9d47d68a",
+    "slug": "acdc-cup-international-sailing-championship-2026",
+    "name": "ACDC Cup International Sailing Championship 2026",
+    "startDate": "2026-07-29",
+    "endDate": "2026-08-01",
+    "venue": "Sattahip, Chonburi, Thailand",
+    "organizer": "Air and Coastal Defense Command Sailing Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": true
+  },
+  "sheet": {
+    "id": "45a98623-d723-54a1-8539-3e3a193918ad",
+    "slug": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+    "name": "ACDC Cup International Sailing Championship 2026 — Optimist Newborn",
+    "boatClass": "Optimist",
+    "division": "Newborn",
+    "raceCount": 8,
+    "totalFleetSize": 45,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "NAPAT LADSOWHAE",
+      "sailOrBoardNumber": "1279",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 48.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "track": "E1522",
+        "class": "Optimist New Born",
+        "sailno": "1279",
+        "club": "YRAT",
+        "helmname": "NAPAT LADSOWHAE",
+        "nat": "THA",
+        "yob": "2017",
+        "sex": "Female",
+        "r1": "1.0",
+        "r2": "3.0",
+        "r3": "4.0",
+        "r4": "7.0",
+        "r5": "1.0",
+        "r6": "(15.0)",
+        "r7": "5.0",
+        "r8": "12.0",
+        "total": "48.0",
+        "nett": "33.0"
+      },
+      "sailorId": "a58d8928-2693-4a99-a36c-693cda63fd03",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e83bb475-a722-5e4f-8881-5bdfc2634f3a",
+      "participants": [
+        {
+          "id": "8d58124e-7f80-585e-a729-407fca0d4c32",
+          "sailorId": "a58d8928-2693-4a99-a36c-693cda63fd03",
+          "sourceName": "NAPAT LADSOWHAE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NAPAT LADSOWHAE; historic sail/boat number: 1279; club: YRAT; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 48.0 and net 33.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "PITIPHAT PAPHAWANNASRI",
+      "sailOrBoardNumber": "THA1827",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 83.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(46.0 UFD)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "track": "E1534",
+        "class": "Optimist New Born",
+        "sailno": "THA1827",
+        "club": "YRAT",
+        "helmname": "PITIPHAT PAPHAWANNASRI",
+        "nat": "THA",
+        "yob": "2014",
+        "sex": "Male",
+        "r1": "4.0",
+        "r2": "2.0",
+        "r3": "(46.0 UFD)",
+        "r4": "1.0",
+        "r5": "3.0",
+        "r6": "12.0",
+        "r7": "2.0",
+        "r8": "13.0",
+        "total": "83.0",
+        "nett": "37.0"
+      },
+      "sailorId": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+      "resultId": "291b6a6b-fa1b-512a-8e42-c2d4a3557343",
+      "participants": [
+        {
+          "id": "8dca8f39-3800-59b6-b5be-a79cbf2e7b45",
+          "sailorId": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+          "sourceName": "PITIPHAT PAPHAWANNASRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PITIPHAT PAPHAWANNASRI; historic sail/boat number: THA1827; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 83.0 and net 37.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "CHAYUT PHUNNARUNGSI",
+      "sailOrBoardNumber": "THA1259",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 59.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "track": "E1510",
+        "class": "Optimist New Born",
+        "sailno": "THA1259",
+        "club": "YRAT",
+        "helmname": "CHAYUT PHUNNARUNGSI",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "7.0",
+        "r2": "6.0",
+        "r3": "(17.0)",
+        "r4": "2.0",
+        "r5": "4.0",
+        "r6": "5.0",
+        "r7": "1.0",
+        "r8": "17.0",
+        "total": "59.0",
+        "nett": "42.0"
+      },
+      "sailorId": "1a3a6f55-afa6-41ba-8ecd-f898eeb7a567",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "25a8f994-f214-524f-a3da-793ab63892a2",
+      "participants": [
+        {
+          "id": "34d81681-11fa-5a6d-84cc-143b1e907af1",
+          "sailorId": "1a3a6f55-afa6-41ba-8ecd-f898eeb7a567",
+          "sourceName": "CHAYUT PHUNNARUNGSI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHAYUT PHUNNARUNGSI; historic sail/boat number: THA1259; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 59.0 and net 42.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 5,
+      "name": "TEWMEK CHULAGASYENA",
+      "sailOrBoardNumber": "THA1771",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 65.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "5th",
+        "track": "E1543",
+        "class": "Optimist New Born",
+        "sailno": "THA1771",
+        "club": "YRAT",
+        "helmname": "TEWMEK CHULAGASYENA",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "2.0",
+        "r2": "7.0",
+        "r3": "12.0",
+        "r4": "10.0",
+        "r5": "2.0",
+        "r6": "7.0",
+        "r7": "4.0",
+        "r8": "(21.0)",
+        "total": "65.0",
+        "nett": "44.0"
+      },
+      "sailorId": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "0c2a0450-462e-5154-b7ce-8158d9d977fa",
+      "participants": [
+        {
+          "id": "01ff81a3-d109-53c3-9caa-877677369bb3",
+          "sailorId": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+          "sourceName": "TEWMEK CHULAGASYENA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TEWMEK CHULAGASYENA; historic sail/boat number: THA1771; club: YRAT; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 65.0 and net 44.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 6,
+      "name": "THANAPHOL LERTRUNGAMORN",
+      "sailOrBoardNumber": "THA1441",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 97.0,
+      "nettScore": 51.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(46.0 UFD)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "6th",
+        "track": "E1546",
+        "class": "Optimist New Born",
+        "sailno": "THA1441",
+        "club": "SST",
+        "helmname": "THANAPHOL LERTRUNGAMORN",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "6.0",
+        "r2": "4.0",
+        "r3": "(46.0 UFD)",
+        "r4": "9.0",
+        "r5": "10.0",
+        "r6": "1.0",
+        "r7": "19.0",
+        "r8": "2.0",
+        "total": "97.0",
+        "nett": "51.0"
+      },
+      "sailorId": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "a1b5acef-d17c-50ea-a1ae-3f2cc2a96e30",
+      "participants": [
+        {
+          "id": "045fede9-ccb9-5a9d-b059-7c05cf1af0a2",
+          "sailorId": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+          "sourceName": "THANAPHOL LERTRUNGAMORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANAPHOL LERTRUNGAMORN; historic sail/boat number: THA1441; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 97.0 and net 51.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 7,
+      "name": "KACHAMON THONGROD",
+      "sailOrBoardNumber": "1565",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 67.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "7th",
+        "track": "E1513",
+        "class": "Optimist New Born",
+        "sailno": "1565",
+        "club": "RNSC",
+        "helmname": "KACHAMON THONGROD",
+        "nat": "THA",
+        "yob": "2013",
+        "sex": "Female",
+        "r1": "5.0",
+        "r2": "11.0",
+        "r3": "2.0",
+        "r4": "(14.0)",
+        "r5": "8.0",
+        "r6": "8.0",
+        "r7": "12.0",
+        "r8": "7.0",
+        "total": "67.0",
+        "nett": "53.0"
+      },
+      "sailorId": "ed63f110-a4be-57c1-936f-bf71f861dc38",
+      "resultId": "a73f9f78-1652-5bc5-a5e9-f7e35d76077e",
+      "participants": [
+        {
+          "id": "20caf9cd-a0f6-5571-8a53-507f6a84237a",
+          "sailorId": "ed63f110-a4be-57c1-936f-bf71f861dc38",
+          "sourceName": "KACHAMON THONGROD",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KACHAMON THONGROD; historic sail/boat number: 1565; club: RNSC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 67.0 and net 53.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 8,
+      "name": "LAPATRADA BOONSOPAWONG",
+      "sailOrBoardNumber": "THA1193",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 85.0,
+      "nettScore": 68.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "track": "E1519",
+        "class": "Optimist New Born",
+        "sailno": "THA1193",
+        "club": "SST",
+        "helmname": "LAPATRADA BOONSOPAWONG",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "(17.0)",
+        "r2": "15.0",
+        "r3": "10.0",
+        "r4": "6.0",
+        "r5": "17.0",
+        "r6": "6.0",
+        "r7": "10.0",
+        "r8": "4.0",
+        "total": "85.0",
+        "nett": "68.0"
+      },
+      "sailorId": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+      "resultId": "acb5b739-17ce-5c12-830d-a32aabdc61b4",
+      "participants": [
+        {
+          "id": "b6ef180b-79d2-57ab-a5e6-462d5f0bffc3",
+          "sailorId": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+          "sourceName": "LAPATRADA BOONSOPAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: LAPATRADA BOONSOPAWONG; historic sail/boat number: THA1193; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 85.0 and net 68.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 10,
+      "name": "ALEX JAMES DE RENNES",
+      "sailOrBoardNumber": "2015",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 119.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "10th",
+        "track": "E1505",
+        "class": "Optimist New Born",
+        "sailno": "2015",
+        "club": "SST",
+        "helmname": "ALEX JAMES DE RENNES",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "1.0",
+        "r4": "4.0",
+        "r5": "12.0",
+        "r6": "2.0",
+        "r7": "7.0",
+        "r8": "1.0",
+        "total": "119.0",
+        "nett": "73.0"
+      },
+      "sailorId": "34ccfd20-b960-40f5-a0af-f869921ee415",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "dbcbfb48-8508-5461-b667-98e497cc8c90",
+      "participants": [
+        {
+          "id": "6283aadc-ea8d-54d4-938d-56fcc68087ba",
+          "sailorId": "34ccfd20-b960-40f5-a0af-f869921ee415",
+          "sourceName": "ALEX JAMES DE RENNES",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ALEX JAMES DE RENNES; historic sail/boat number: 2015; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 119.0 and net 73.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 11,
+      "name": "TEEJUTHA THONGTHIEM",
+      "sailOrBoardNumber": "1484",
+      "club": "YART",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 94.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "11th",
+        "track": "E1542",
+        "class": "Optimist New Born",
+        "sailno": "1484",
+        "club": "YART",
+        "helmname": "TEEJUTHA THONGTHIEM",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "(20.0)",
+        "r2": "8.0",
+        "r3": "3.0",
+        "r4": "16.0",
+        "r5": "7.0",
+        "r6": "16.0",
+        "r7": "8.0",
+        "r8": "16.0",
+        "total": "94.0",
+        "nett": "74.0"
+      },
+      "sailorId": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "49fedb41-bdef-5f0b-866f-3a6ba4a5892c",
+      "participants": [
+        {
+          "id": "14d79ea6-54eb-5b43-a692-9499fc2f5e7f",
+          "sailorId": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+          "sourceName": "TEEJUTHA THONGTHIEM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TEEJUTHA THONGTHIEM; historic sail/boat number: 1484; club: YART; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 94.0 and net 74.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 12,
+      "name": "KITDANUPHON THAMSAP",
+      "sailOrBoardNumber": "THA544",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 106.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "12th",
+        "track": "E1515",
+        "class": "Optimist New Born",
+        "sailno": "THA544",
+        "club": "YRAT",
+        "helmname": "KITDANUPHON THAMSAP",
+        "nat": "THA",
+        "yob": "2018",
+        "sex": "Male",
+        "r1": "(21.0)",
+        "r2": "9.0",
+        "r3": "14.0",
+        "r4": "13.0",
+        "r5": "11.0",
+        "r6": "13.0",
+        "r7": "6.0",
+        "r8": "19.0",
+        "total": "106.0",
+        "nett": "85.0"
+      },
+      "sailorId": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "da6b0982-db0e-5a27-af8e-328bf7be4617",
+      "participants": [
+        {
+          "id": "b35947c7-a10f-5423-a8ff-707127e61cd6",
+          "sailorId": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+          "sourceName": "KITDANUPHON THAMSAP",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KITDANUPHON THAMSAP; historic sail/boat number: THA544; club: YRAT; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 106.0 and net 85.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 13,
+      "name": "MYAT TOE KHANT",
+      "sailOrBoardNumber": "MYA343",
+      "club": "YSC",
+      "school": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 144.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNS",
+          "discarded": true,
+          "raw": "(46.0 DNS)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "46.0 UFD",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "13th",
+        "track": "E1588",
+        "class": "Optimist New Born",
+        "sailno": "MYA343",
+        "club": "YSC",
+        "helmname": "MYAT TOE KHANT",
+        "nat": "MYA",
+        "yob": "2018",
+        "sex": "Male",
+        "r1": "8.0",
+        "r2": "18.0",
+        "r3": "6.0",
+        "r4": "8.0",
+        "r5": "9.0",
+        "r6": "3.0",
+        "r7": "(46.0 DNS)",
+        "r8": "46.0 UFD",
+        "total": "144.0",
+        "nett": "98.0"
+      },
+      "sailorId": "8be18336-f5b0-5bc5-997a-a00dc81ed922",
+      "resultId": "5998182d-6e6e-50a0-a964-1c812484ea41",
+      "participants": [
+        {
+          "id": "f5a7fabd-1256-5ce2-9da8-2730b9641826",
+          "sailorId": "8be18336-f5b0-5bc5-997a-a00dc81ed922",
+          "sourceName": "MYAT TOE KHANT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MYAT TOE KHANT; historic sail/boat number: MYA343; club: YSC; nationality: MYA; source year/age field: 2018. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 144.0 and net 98.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 14,
+      "name": "NARAD PROMJIT",
+      "sailOrBoardNumber": "4459",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 124.0,
+      "nettScore": 102.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "14th",
+        "track": "E1524",
+        "class": "Optimist New Born",
+        "sailno": "4459",
+        "club": "SSA",
+        "helmname": "NARAD PROMJIT",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "11.0",
+        "r2": "10.0",
+        "r3": "9.0",
+        "r4": "18.0",
+        "r5": "(22.0)",
+        "r6": "19.0",
+        "r7": "15.0",
+        "r8": "20.0",
+        "total": "124.0",
+        "nett": "102.0"
+      },
+      "sailorId": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "d0df4f42-fa4c-5546-ba03-8cc0c5a4e4de",
+      "participants": [
+        {
+          "id": "c10efc6c-dac1-53c7-831f-9c3c550a92c1",
+          "sailorId": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+          "sourceName": "NARAD PROMJIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NARAD PROMJIT; historic sail/boat number: 4459; club: SSA; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 124.0 and net 102.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 15,
+      "name": "ATHITACH PANYA",
+      "sailOrBoardNumber": "THA4519",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 141.0,
+      "nettScore": 116.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "15th",
+        "track": "E1507",
+        "class": "Optimist New Born",
+        "sailno": "THA4519",
+        "club": "SST",
+        "helmname": "ATHITACH PANYA",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "(25.0)",
+        "r2": "23.0",
+        "r3": "13.0",
+        "r4": "20.0",
+        "r5": "24.0",
+        "r6": "10.0",
+        "r7": "20.0",
+        "r8": "6.0",
+        "total": "141.0",
+        "nett": "116.0"
+      },
+      "sailorId": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+      "resultId": "f3c7dd32-5cef-5aba-a607-b0da0f41e1d6",
+      "participants": [
+        {
+          "id": "0b95c968-d4b4-5445-bf91-b0118fa4dba8",
+          "sailorId": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+          "sourceName": "ATHITACH PANYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ATHITACH PANYA; historic sail/boat number: THA4519; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 141.0 and net 116.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 16,
+      "name": "TAVIN CHARUSADHIRAKUL",
+      "sailOrBoardNumber": "14",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 139.0,
+      "nettScore": 116.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "16th",
+        "track": "E1541",
+        "class": "Optimist New Born",
+        "sailno": "14",
+        "club": "SST",
+        "helmname": "TAVIN CHARUSADHIRAKUL",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "(23.0)",
+        "r2": "22.0",
+        "r3": "18.0",
+        "r4": "22.0",
+        "r5": "18.0",
+        "r6": "9.0",
+        "r7": "16.0",
+        "r8": "11.0",
+        "total": "139.0",
+        "nett": "116.0"
+      },
+      "sailorId": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+      "resultId": "18c9adef-04de-5761-92bb-14ba9ce9695e",
+      "participants": [
+        {
+          "id": "cde11fe1-39c9-590a-8eb1-83d4ac1a5f81",
+          "sailorId": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+          "sourceName": "TAVIN CHARUSADHIRAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TAVIN CHARUSADHIRAKUL; historic sail/boat number: 14; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 139.0 and net 116.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 17,
+      "name": "KONGKIDAKORN PHUTPHITHAK",
+      "sailOrBoardNumber": "1901",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 142.0,
+      "nettScore": 117.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "17th",
+        "track": "E1517",
+        "class": "Optimist New Born",
+        "sailno": "1901",
+        "club": "RNSC",
+        "helmname": "KONGKIDAKORN PHUTPHITHAK",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "16.0",
+        "r2": "(25.0)",
+        "r3": "16.0",
+        "r4": "23.0",
+        "r5": "6.0",
+        "r6": "14.0",
+        "r7": "17.0",
+        "r8": "25.0",
+        "total": "142.0",
+        "nett": "117.0"
+      },
+      "sailorId": "d4015062-9510-5ecf-ae0e-030581922658",
+      "resultId": "86d5f2c7-63c6-56dd-bf0d-774a627f6cc5",
+      "participants": [
+        {
+          "id": "b630174b-e98b-5b62-9b93-2cbc32b97f99",
+          "sailorId": "d4015062-9510-5ecf-ae0e-030581922658",
+          "sourceName": "KONGKIDAKORN PHUTPHITHAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KONGKIDAKORN PHUTPHITHAK; historic sail/boat number: 1901; club: RNSC; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 142.0 and net 117.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 18,
+      "name": "NATNICHA SOMWONGIN",
+      "sailOrBoardNumber": "THA1434",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 166.0,
+      "nettScore": 120.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(46.0 UFD)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "18th",
+        "track": "E1525",
+        "class": "Optimist New Born",
+        "sailno": "THA1434",
+        "club": "YRAT",
+        "helmname": "NATNICHA SOMWONGIN",
+        "nat": "THA",
+        "yob": "2017",
+        "sex": "Female",
+        "r1": "13.0",
+        "r2": "17.0",
+        "r3": "(46.0 UFD)",
+        "r4": "15.0",
+        "r5": "16.0",
+        "r6": "23.0",
+        "r7": "18.0",
+        "r8": "18.0",
+        "total": "166.0",
+        "nett": "120.0"
+      },
+      "sailorId": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e7de6db2-405b-5c21-8f7d-d66afe080dcd",
+      "participants": [
+        {
+          "id": "1ccb647f-354e-5f88-bcef-36ab8f3550e0",
+          "sailorId": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+          "sourceName": "NATNICHA SOMWONGIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATNICHA SOMWONGIN; historic sail/boat number: THA1434; club: YRAT; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 166.0 and net 120.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 19,
+      "name": "PHUTTHASORN KLAIMUK",
+      "sailOrBoardNumber": "THA20",
+      "club": "ACDC. SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 157.0,
+      "nettScore": 122.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "19th",
+        "track": "E1533",
+        "class": "Optimist New Born",
+        "sailno": "THA20",
+        "club": "ACDC. SC",
+        "helmname": "PHUTTHASORN KLAIMUK",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "12.0",
+        "r2": "13.0",
+        "r3": "22.0",
+        "r4": "11.0",
+        "r5": "21.0",
+        "r6": "(35.0)",
+        "r7": "21.0",
+        "r8": "22.0",
+        "total": "157.0",
+        "nett": "122.0"
+      },
+      "sailorId": "816e7865-0b0a-433f-9964-476e127f5f12",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "cfd1d550-0eff-5665-b773-f55bd6077477",
+      "participants": [
+        {
+          "id": "da7bec4f-13e3-5b9c-8a1c-cad5748859a3",
+          "sailorId": "816e7865-0b0a-433f-9964-476e127f5f12",
+          "sourceName": "PHUTTHASORN KLAIMUK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PHUTTHASORN KLAIMUK; historic sail/boat number: THA20; club: ACDC. SC; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 157.0 and net 122.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 20,
+      "name": "KAOKATU",
+      "sailOrBoardNumber": "118",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 153.0,
+      "nettScore": 126.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "20th",
+        "track": "E1526",
+        "class": "Optimist New Born",
+        "sailno": "118",
+        "club": "RNSC",
+        "helmname": "KAOKATU",
+        "nat": "THA",
+        "yob": "2013",
+        "sex": "Male",
+        "r1": "14.0",
+        "r2": "12.0",
+        "r3": "(27.0)",
+        "r4": "17.0",
+        "r5": "26.0",
+        "r6": "21.0",
+        "r7": "13.0",
+        "r8": "23.0",
+        "total": "153.0",
+        "nett": "126.0"
+      },
+      "sailorId": "0beb80e2-278d-5bee-9dac-6acb3b8bff82",
+      "resultId": "d237437b-0e1c-51dc-ae48-61eebbf0c821",
+      "participants": [
+        {
+          "id": "2ddec10f-bca1-50b2-9301-75478162ff1d",
+          "sailorId": "0beb80e2-278d-5bee-9dac-6acb3b8bff82",
+          "sourceName": "KAOKATU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KAOKATU; historic sail/boat number: 118; club: RNSC; nationality: THA; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 153.0 and net 126.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 21,
+      "name": "SHERMAN AYE",
+      "sailOrBoardNumber": "MYA380",
+      "club": "YSC",
+      "school": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 175.0,
+      "nettScore": 129.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNS",
+          "discarded": true,
+          "raw": "(46.0 DNS)",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "46.0 UFD",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "21st",
+        "track": "E1612",
+        "class": "Optimist New Born",
+        "sailno": "MYA380",
+        "club": "YSC",
+        "helmname": "SHERMAN AYE",
+        "nat": "MYA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "10.0",
+        "r2": "24.0",
+        "r3": "8.0",
+        "r4": "3.0",
+        "r5": "14.0",
+        "r6": "24.0",
+        "r7": "(46.0 DNS)",
+        "r8": "46.0 UFD",
+        "total": "175.0",
+        "nett": "129.0"
+      },
+      "sailorId": "4f705fec-c1a1-5341-b860-2696671f406a",
+      "resultId": "b00936ce-290d-55d5-b22c-4ca9a6356a38",
+      "participants": [
+        {
+          "id": "3f871190-95ad-5649-bb18-3578b5b0dd2a",
+          "sailorId": "4f705fec-c1a1-5341-b860-2696671f406a",
+          "sourceName": "SHERMAN AYE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SHERMAN AYE; historic sail/boat number: MYA380; club: YSC; nationality: MYA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 175.0 and net 129.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 22,
+      "name": "HEIN THANT SAW",
+      "sailOrBoardNumber": "MYA385",
+      "club": "YSC",
+      "school": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 175.0,
+      "nettScore": 129.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "46.0 DNF",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "22nd",
+        "track": "E1570",
+        "class": "Optimist New Born",
+        "sailno": "MYA385",
+        "club": "YSC",
+        "helmname": "HEIN THANT SAW",
+        "nat": "MYA",
+        "yob": "2014",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "19.0",
+        "r3": "7.0",
+        "r4": "19.0",
+        "r5": "46.0 DNF",
+        "r6": "18.0",
+        "r7": "11.0",
+        "r8": "9.0",
+        "total": "175.0",
+        "nett": "129.0"
+      },
+      "sailorId": "e5524ab4-3e31-5604-8b1a-ba33034756aa",
+      "resultId": "7e472d52-1789-5e7f-87ed-9ce424558f0b",
+      "participants": [
+        {
+          "id": "fd8a2c07-dd91-5f87-9593-6a56e03b3df3",
+          "sailorId": "e5524ab4-3e31-5604-8b1a-ba33034756aa",
+          "sourceName": "HEIN THANT SAW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: HEIN THANT SAW; historic sail/boat number: MYA385; club: YSC; nationality: MYA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 175.0 and net 129.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 23,
+      "name": "THANADON DETHANSATIT",
+      "sailOrBoardNumber": "THA1291",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 181.0,
+      "nettScore": 135.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(46.0 UFD)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "23rd",
+        "track": "E1544",
+        "class": "Optimist New Born",
+        "sailno": "THA1291",
+        "club": "SST",
+        "helmname": "THANADON DETHANSATIT",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "19.0",
+        "r2": "14.0",
+        "r3": "(46.0 UFD)",
+        "r4": "46.0 DNC",
+        "r5": "15.0",
+        "r6": "17.0",
+        "r7": "14.0",
+        "r8": "10.0",
+        "total": "181.0",
+        "nett": "135.0"
+      },
+      "sailorId": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e53824f6-91d9-5c19-8184-9ec5bff0fcc6",
+      "participants": [
+        {
+          "id": "0af5e849-da89-5c32-bbd6-907f30e0e831",
+          "sailorId": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+          "sourceName": "THANADON DETHANSATIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANADON DETHANSATIT; historic sail/boat number: THA1291; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 181.0 and net 135.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 24,
+      "name": "THAWAN SRISAYYON",
+      "sailOrBoardNumber": "THA166",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 166.0,
+      "nettScore": 138.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "24th",
+        "track": "E1550",
+        "class": "Optimist New Born",
+        "sailno": "THA166",
+        "club": "SST",
+        "helmname": "THAWAN SRISAYYON",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "24.0",
+        "r2": "21.0",
+        "r3": "11.0",
+        "r4": "26.0",
+        "r5": "25.0",
+        "r6": "(28.0)",
+        "r7": "28.0",
+        "r8": "3.0",
+        "total": "166.0",
+        "nett": "138.0"
+      },
+      "sailorId": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "59254e74-8d2d-5df0-ac53-1356d8274279",
+      "participants": [
+        {
+          "id": "30f7e619-f170-5d20-803a-2d222f66ca65",
+          "sailorId": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+          "sourceName": "THAWAN SRISAYYON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THAWAN SRISAYYON; historic sail/boat number: THA166; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 166.0 and net 138.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 25,
+      "name": "WANNASUT TANGVIMONWUTIWONG",
+      "sailOrBoardNumber": "33",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 184.0,
+      "nettScore": 156.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "25th",
+        "track": "E1553",
+        "class": "Optimist New Born",
+        "sailno": "33",
+        "club": "SST",
+        "helmname": "WANNASUT TANGVIMONWUTIWONG",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "(28.0)",
+        "r2": "27.0",
+        "r3": "15.0",
+        "r4": "21.0",
+        "r5": "20.0",
+        "r6": "22.0",
+        "r7": "27.0",
+        "r8": "24.0",
+        "total": "184.0",
+        "nett": "156.0"
+      },
+      "sailorId": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+      "resultId": "a39c5317-41e2-5ed8-b239-7fb5bef4e2c8",
+      "participants": [
+        {
+          "id": "04d59b14-9272-5c4b-800a-cbd8d7cc51fc",
+          "sailorId": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+          "sourceName": "WANNASUT TANGVIMONWUTIWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: WANNASUT TANGVIMONWUTIWONG; historic sail/boat number: 33; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 184.0 and net 156.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 26,
+      "name": "NANNAPHATSON PHETRAK",
+      "sailOrBoardNumber": "1499",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 200.0,
+      "nettScore": 166.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(34.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "26th",
+        "track": "E1521",
+        "class": "Optimist New Born",
+        "sailno": "1499",
+        "club": "RNSC",
+        "helmname": "NANNAPHATSON PHETRAK",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "27.0",
+        "r2": "29.0",
+        "r3": "21.0",
+        "r4": "(34.0)",
+        "r5": "19.0",
+        "r6": "27.0",
+        "r7": "29.0",
+        "r8": "14.0",
+        "total": "200.0",
+        "nett": "166.0"
+      },
+      "sailorId": "20594379-d5e6-5f3e-b8f6-1c2af4908315",
+      "resultId": "391badc8-d8c0-5e19-9612-f5a64cbe8f5a",
+      "participants": [
+        {
+          "id": "0c89d0b6-077d-523c-aef6-c6b2c0dfe2c0",
+          "sailorId": "20594379-d5e6-5f3e-b8f6-1c2af4908315",
+          "sourceName": "NANNAPHATSON PHETRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NANNAPHATSON PHETRAK; historic sail/boat number: 1499; club: RNSC; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 200.0 and net 166.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 27,
+      "name": "PORPIANG SAE-UY",
+      "sailOrBoardNumber": "169",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 219.0,
+      "nettScore": 181.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(38.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "27th",
+        "track": "E1536",
+        "class": "Optimist New Born",
+        "sailno": "169",
+        "club": "RNSC",
+        "helmname": "PORPIANG SAE-UY",
+        "nat": "THA",
+        "yob": "2014",
+        "sex": "Female",
+        "r1": "15.0",
+        "r2": "16.0",
+        "r3": "20.0",
+        "r4": "29.0",
+        "r5": "37.0",
+        "r6": "(38.0)",
+        "r7": "31.0",
+        "r8": "33.0",
+        "total": "219.0",
+        "nett": "181.0"
+      },
+      "sailorId": "c6cd1022-1325-516a-823c-c3a99a67d455",
+      "resultId": "52b3f795-ec70-5455-8bdc-032ded2ffbc1",
+      "participants": [
+        {
+          "id": "117aecf2-26b1-5481-8fbc-6ba1fd4baf9c",
+          "sailorId": "c6cd1022-1325-516a-823c-c3a99a67d455",
+          "sourceName": "PORPIANG SAE-UY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PORPIANG SAE-UY; historic sail/boat number: 169; club: RNSC; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 219.0 and net 181.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 29,
+      "name": "PEEMMAPAT SUEBWONGNAT",
+      "sailOrBoardNumber": "13",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 234.0,
+      "nettScore": 188.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "29th",
+        "track": "E1532",
+        "class": "Optimist New Born",
+        "sailno": "13",
+        "club": "SST",
+        "helmname": "PEEMMAPAT SUEBWONGNAT",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "31.0",
+        "r2": "(46.0 DNC)",
+        "r3": "23.0",
+        "r4": "25.0",
+        "r5": "27.0",
+        "r6": "20.0",
+        "r7": "34.0",
+        "r8": "28.0",
+        "total": "234.0",
+        "nett": "188.0"
+      },
+      "sailorId": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+      "resultId": "9455e7e0-9bb5-5a21-ba29-a7d0ab02eba8",
+      "participants": [
+        {
+          "id": "5d5b732a-565e-5f1b-9473-2cfb435e3347",
+          "sailorId": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+          "sourceName": "PEEMMAPAT SUEBWONGNAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PEEMMAPAT SUEBWONGNAT; historic sail/boat number: 13; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 234.0 and net 188.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 30,
+      "name": "CHAIMONGKON PIROM",
+      "sailOrBoardNumber": "17",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 223.0,
+      "nettScore": 190.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "30th",
+        "track": "E1509",
+        "class": "Optimist New Born",
+        "sailno": "17",
+        "club": "SST",
+        "helmname": "CHAIMONGKON PIROM",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "32.0",
+        "r2": "(33.0)",
+        "r3": "28.0",
+        "r4": "28.0",
+        "r5": "30.0",
+        "r6": "32.0",
+        "r7": "32.0",
+        "r8": "8.0",
+        "total": "223.0",
+        "nett": "190.0"
+      },
+      "sailorId": "586f049f-8f51-50fe-9aa0-c059c6898071",
+      "resultId": "8e4fa69c-22f3-5918-88cb-9ee32be5b06c",
+      "participants": [
+        {
+          "id": "02e519a9-f7b0-5851-99f5-3aca140d5599",
+          "sailorId": "586f049f-8f51-50fe-9aa0-c059c6898071",
+          "sourceName": "CHAIMONGKON PIROM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHAIMONGKON PIROM; historic sail/boat number: 17; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 223.0 and net 190.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 31,
+      "name": "ORNRANATH INTAPAT",
+      "sailOrBoardNumber": "39",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 240.0,
+      "nettScore": 194.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "31st",
+        "track": "E1530",
+        "class": "Optimist New Born",
+        "sailno": "39",
+        "club": "SST",
+        "helmname": "ORNRANATH INTAPAT",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Female",
+        "r1": "(46.0 DNC)",
+        "r2": "26.0",
+        "r3": "24.0",
+        "r4": "27.0",
+        "r5": "23.0",
+        "r6": "26.0",
+        "r7": "22.0",
+        "r8": "46.0 DNC",
+        "total": "240.0",
+        "nett": "194.0"
+      },
+      "sailorId": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+      "resultId": "032a1f21-bfe6-5b16-8f8a-dcd53be63bf5",
+      "participants": [
+        {
+          "id": "37cd46a9-d1fd-579a-b0a2-633fe3ece905",
+          "sailorId": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+          "sourceName": "ORNRANATH INTAPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ORNRANATH INTAPAT; historic sail/boat number: 39; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 240.0 and net 194.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 32,
+      "name": "NATNATEE PHIPANICH",
+      "sailOrBoardNumber": "11",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 264.0,
+      "nettScore": 218.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "32nd",
+        "track": "E1527",
+        "class": "Optimist New Born",
+        "sailno": "11",
+        "club": "YRAT",
+        "helmname": "NATNATEE PHIPANICH",
+        "nat": "THA",
+        "yob": "2017",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "32.0",
+        "r3": "25.0",
+        "r4": "39.0",
+        "r5": "40.0",
+        "r6": "31.0",
+        "r7": "25.0",
+        "r8": "26.0",
+        "total": "264.0",
+        "nett": "218.0"
+      },
+      "sailorId": "f0755dca-49d2-415e-8623-12ff3291b73f",
+      "resultId": "accb01fc-bd1f-5ed4-a0cd-06c17436ff18",
+      "participants": [
+        {
+          "id": "71277b7d-621b-5e8a-9714-450d5434d795",
+          "sailorId": "f0755dca-49d2-415e-8623-12ff3291b73f",
+          "sourceName": "NATNATEE PHIPANICH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATNATEE PHIPANICH; historic sail/boat number: 11; club: YRAT; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 264.0 and net 218.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 33,
+      "name": "MUNGKORN KANGWAL",
+      "sailOrBoardNumber": "69",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 265.0,
+      "nettScore": 219.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "33rd",
+        "track": "E1520",
+        "class": "Optimist New Born",
+        "sailno": "69",
+        "club": "RNSC",
+        "helmname": "MUNGKORN KANGWAL",
+        "nat": "THA",
+        "yob": "2014",
+        "sex": "Male",
+        "r1": "26.0",
+        "r2": "28.0",
+        "r3": "29.0",
+        "r4": "33.0",
+        "r5": "36.0",
+        "r6": "30.0",
+        "r7": "37.0",
+        "r8": "(46.0 DNC)",
+        "total": "265.0",
+        "nett": "219.0"
+      },
+      "sailorId": "76374cc7-be36-5143-880d-1779dc7a53a2",
+      "resultId": "8d2726aa-36c4-5225-af64-a2f8c24e4143",
+      "participants": [
+        {
+          "id": "3e7ff660-f8d8-5f04-bd41-bf6d342f935c",
+          "sailorId": "76374cc7-be36-5143-880d-1779dc7a53a2",
+          "sourceName": "MUNGKORN KANGWAL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MUNGKORN KANGWAL; historic sail/boat number: 69; club: RNSC; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 265.0 and net 219.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 34,
+      "name": "THANIYADA KAEWRAKUM",
+      "sailOrBoardNumber": "THA1484",
+      "club": "ACDC. SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 266.0,
+      "nettScore": 220.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(46.0 UFD)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "34th",
+        "track": "E1548",
+        "class": "Optimist New Born",
+        "sailno": "THA1484",
+        "club": "ACDC. SC",
+        "helmname": "THANIYADA KAEWRAKUM",
+        "nat": "THA",
+        "yob": "2018",
+        "sex": "Female",
+        "r1": "30.0",
+        "r2": "30.0",
+        "r3": "(46.0 UFD)",
+        "r4": "31.0",
+        "r5": "34.0",
+        "r6": "37.0",
+        "r7": "24.0",
+        "r8": "34.0",
+        "total": "266.0",
+        "nett": "220.0"
+      },
+      "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+      "resultId": "31edf9b6-7c43-5d35-a00c-2b850b9e038a",
+      "participants": [
+        {
+          "id": "3eed2132-a345-5356-a512-016b1506541b",
+          "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+          "sourceName": "THANIYADA KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANIYADA KAEWRAKUM; historic sail/boat number: THA1484; club: ACDC. SC; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 266.0 and net 220.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 35,
+      "name": "NATNAN AESOMNUEK",
+      "sailOrBoardNumber": "67",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 271.0,
+      "nettScore": 225.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "35th",
+        "track": "E1514",
+        "class": "Optimist New Born",
+        "sailno": "67",
+        "club": "RNSC",
+        "helmname": "NATNAN AESOMNUEK",
+        "nat": "THA",
+        "yob": "2018",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "31.0",
+        "r3": "19.0",
+        "r4": "36.0",
+        "r5": "38.0",
+        "r6": "40.0",
+        "r7": "30.0",
+        "r8": "31.0",
+        "total": "271.0",
+        "nett": "225.0"
+      },
+      "sailorId": "6a4451dd-ff66-5008-ba1f-04c8e8e443b1",
+      "resultId": "f4866354-7fcf-5367-8a47-ced9204331f6",
+      "participants": [
+        {
+          "id": "b7a7bf55-b9a9-5459-982c-676f6b17d889",
+          "sailorId": "6a4451dd-ff66-5008-ba1f-04c8e8e443b1",
+          "sourceName": "NATNAN AESOMNUEK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATNAN AESOMNUEK; historic sail/boat number: 67; club: RNSC; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 271.0 and net 225.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 36,
+      "name": "TRAIKHUN TONGLUNG",
+      "sailOrBoardNumber": "THA3332",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 294.0,
+      "nettScore": 248.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "46.0 UFD",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "36th",
+        "track": "E1552",
+        "class": "Optimist New Born",
+        "sailno": "THA3332",
+        "club": "SST",
+        "helmname": "TRAIKHUN TONGLUNG",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "46.0 UFD",
+        "r4": "30.0",
+        "r5": "31.0",
+        "r6": "33.0",
+        "r7": "35.0",
+        "r8": "27.0",
+        "total": "294.0",
+        "nett": "248.0"
+      },
+      "sailorId": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+      "resultId": "e5491acf-686b-5d7e-a8c8-2f58d2a970fb",
+      "participants": [
+        {
+          "id": "82d825b7-f3fb-5a1d-8373-ace601c5ae16",
+          "sailorId": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+          "sourceName": "TRAIKHUN TONGLUNG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TRAIKHUN TONGLUNG; historic sail/boat number: THA3332; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 294.0 and net 248.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 37,
+      "name": "NATTHASIRI KITKHONG",
+      "sailOrBoardNumber": "2243",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 301.0,
+      "nettScore": 255.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "37th",
+        "track": "E1528",
+        "class": "Optimist New Born",
+        "sailno": "2243",
+        "club": "RNSC",
+        "helmname": "NATTHASIRI KITKHONG",
+        "nat": "THA",
+        "yob": "2014",
+        "sex": "Female",
+        "r1": "9.0",
+        "r2": "(46.0 DNC)",
+        "r3": "46.0 DNC",
+        "r4": "46.0 DNC",
+        "r5": "46.0 DNC",
+        "r6": "46.0 DNC",
+        "r7": "33.0",
+        "r8": "29.0",
+        "total": "301.0",
+        "nett": "255.0"
+      },
+      "sailorId": "ce999b81-8f03-5556-b78d-81300e737d53",
+      "resultId": "97496e3e-80af-5e26-bc32-c92c3d917289",
+      "participants": [
+        {
+          "id": "e71d781d-bbeb-55b5-aa33-189a804d3940",
+          "sailorId": "ce999b81-8f03-5556-b78d-81300e737d53",
+          "sourceName": "NATTHASIRI KITKHONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATTHASIRI KITKHONG; historic sail/boat number: 2243; club: RNSC; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 301.0 and net 255.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 38,
+      "name": "THATIKA SARANROM",
+      "sailOrBoardNumber": "1",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 302.0,
+      "nettScore": 256.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "38th",
+        "track": "E1549",
+        "class": "Optimist New Born",
+        "sailno": "1",
+        "club": "SST",
+        "helmname": "THATIKA SARANROM",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "26.0",
+        "r4": "37.0",
+        "r5": "29.0",
+        "r6": "34.0",
+        "r7": "38.0",
+        "r8": "46.0 DNC",
+        "total": "302.0",
+        "nett": "256.0"
+      },
+      "sailorId": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+      "resultId": "67c1d31a-e3aa-5cfc-a286-52a947967094",
+      "participants": [
+        {
+          "id": "0ce6ed5f-406f-5757-bd14-95fbf2e80b3c",
+          "sailorId": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+          "sourceName": "THATIKA SARANROM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THATIKA SARANROM; historic sail/boat number: 1; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 302.0 and net 256.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 39,
+      "name": "THANAKRIT BUNPRASIT",
+      "sailOrBoardNumber": "639",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 303.0,
+      "nettScore": 257.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "39th",
+        "track": "E1545",
+        "class": "Optimist New Born",
+        "sailno": "639",
+        "club": "RNSC",
+        "helmname": "THANAKRIT BUNPRASIT",
+        "nat": "THA",
+        "yob": "2015",
+        "sex": "Male",
+        "r1": "29.0",
+        "r2": "(46.0 DNC)",
+        "r3": "46.0 DNC",
+        "r4": "46.0 DNC",
+        "r5": "28.0",
+        "r6": "39.0",
+        "r7": "23.0",
+        "r8": "46.0 DNC",
+        "total": "303.0",
+        "nett": "257.0"
+      },
+      "sailorId": "971f3527-fc85-5e9f-aad3-993742229caa",
+      "resultId": "16d584a7-0b5e-5bab-b067-13f17f1084a0",
+      "participants": [
+        {
+          "id": "4524c39d-3cae-533f-87ad-09ded49d26d6",
+          "sailorId": "971f3527-fc85-5e9f-aad3-993742229caa",
+          "sourceName": "THANAKRIT BUNPRASIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANAKRIT BUNPRASIT; historic sail/boat number: 639; club: RNSC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 303.0 and net 257.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 40,
+      "name": "SORAN GHOSAIRI",
+      "sailOrBoardNumber": "10",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 306.0,
+      "nettScore": 260.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "40th",
+        "track": "E1539",
+        "class": "Optimist New Born",
+        "sailno": "10",
+        "club": "SST",
+        "helmname": "SORAN GHOSAIRI",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "33.0",
+        "r4": "35.0",
+        "r5": "35.0",
+        "r6": "29.0",
+        "r7": "36.0",
+        "r8": "46.0 DNC",
+        "total": "306.0",
+        "nett": "260.0"
+      },
+      "sailorId": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+      "resultId": "cf8a77f4-936b-58ab-acb8-2476eedb17a3",
+      "participants": [
+        {
+          "id": "b6dc2acf-4281-53eb-85a5-ce7e76ed36e7",
+          "sailorId": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+          "sourceName": "SORAN GHOSAIRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SORAN GHOSAIRI; historic sail/boat number: 10; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 306.0 and net 260.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 41,
+      "name": "JIRA MANOMAIPHAN",
+      "sailOrBoardNumber": "3",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 324.0,
+      "nettScore": 278.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "46.0 DNS",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "41st",
+        "track": "E1512",
+        "class": "Optimist New Born",
+        "sailno": "3",
+        "club": "SST",
+        "helmname": "JIRA MANOMAIPHAN",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "30.0",
+        "r4": "32.0",
+        "r5": "32.0",
+        "r6": "46.0 DNS",
+        "r7": "46.0 DNC",
+        "r8": "46.0 DNC",
+        "total": "324.0",
+        "nett": "278.0"
+      },
+      "sailorId": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+      "resultId": "a126b44c-1dab-58dd-8732-49bd069d69d7",
+      "participants": [
+        {
+          "id": "28a1035c-45e5-592a-b155-f3db41e91066",
+          "sailorId": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+          "sourceName": "JIRA MANOMAIPHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: JIRA MANOMAIPHAN; historic sail/boat number: 3; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 324.0 and net 278.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 42,
+      "name": "NUSAKARN MUSIKABOONLERT",
+      "sailOrBoardNumber": "28",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 324.0,
+      "nettScore": 278.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "42nd",
+        "track": "E1529",
+        "class": "Optimist New Born",
+        "sailno": "28",
+        "club": "SST",
+        "helmname": "NUSAKARN MUSIKABOONLERT",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "31.0",
+        "r4": "38.0",
+        "r5": "39.0",
+        "r6": "46.0 DNC",
+        "r7": "46.0 DNC",
+        "r8": "32.0",
+        "total": "324.0",
+        "nett": "278.0"
+      },
+      "sailorId": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+      "resultId": "1fca23f7-2bf1-5e68-931e-9a683792d043",
+      "participants": [
+        {
+          "id": "e6d4446a-f4aa-5a1a-a014-37ec8e02c7b3",
+          "sailorId": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+          "sourceName": "NUSAKARN MUSIKABOONLERT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NUSAKARN MUSIKABOONLERT; historic sail/boat number: 28; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 324.0 and net 278.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 43,
+      "name": "WEERANAT NOOCHAN",
+      "sailOrBoardNumber": "1449",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2019,
+      "sourceBirthYear": "2019",
+      "grossScore": 347.0,
+      "nettScore": 301.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "46.0 DSQ",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "43rd",
+        "track": "E1554",
+        "class": "Optimist New Born",
+        "sailno": "1449",
+        "club": "RNSC",
+        "helmname": "WEERANAT NOOCHAN",
+        "nat": "THA",
+        "yob": "2019",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "46.0 DNC",
+        "r4": "46.0 DNC",
+        "r5": "46.0 DSQ",
+        "r6": "25.0",
+        "r7": "46.0 DNC",
+        "r8": "46.0 DNC",
+        "total": "347.0",
+        "nett": "301.0"
+      },
+      "sailorId": "f21f34c1-831b-5741-86e9-69f0e52b225c",
+      "resultId": "609867e6-e4b5-582d-98af-0ec36e6dba48",
+      "participants": [
+        {
+          "id": "f62bd0e9-c2ae-51b5-adca-4795880d0e33",
+          "sailorId": "f21f34c1-831b-5741-86e9-69f0e52b225c",
+          "sourceName": "WEERANAT NOOCHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: WEERANAT NOOCHAN; historic sail/boat number: 1449; club: RNSC; nationality: THA; source year/age field: 2019. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 347.0 and net 301.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 44,
+      "name": "PRATCHAYA BUNPASIT",
+      "sailOrBoardNumber": "119",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2019,
+      "sourceBirthYear": "2019",
+      "grossScore": 368.0,
+      "nettScore": 322.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "46.0 DNS",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "44th",
+        "track": "E1537",
+        "class": "Optimist New Born",
+        "sailno": "119",
+        "club": "RNSC",
+        "helmname": "PRATCHAYA BUNPASIT",
+        "nat": "THA",
+        "yob": "2019",
+        "sex": "Male",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "46.0 DNC",
+        "r4": "46.0 DNC",
+        "r5": "46.0 DNC",
+        "r6": "46.0 DNS",
+        "r7": "46.0 DNC",
+        "r8": "46.0 DNC",
+        "total": "368.0",
+        "nett": "322.0"
+      },
+      "sailorId": "b860b67e-137f-5431-8999-95b4dd0eda8f",
+      "resultId": "14bec04f-7f1f-5742-9afb-5d94c6fd873c",
+      "participants": [
+        {
+          "id": "f69f0d6f-dbaf-56c2-97b4-ce5ca3231d32",
+          "sailorId": "b860b67e-137f-5431-8999-95b4dd0eda8f",
+          "sourceName": "PRATCHAYA BUNPASIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PRATCHAYA BUNPASIT; historic sail/boat number: 119; club: RNSC; nationality: THA; source year/age field: 2019. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 368.0 and net 322.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 200606,
+        "url": "https://www.racingrulesofsailing.org/documents/200606",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200606",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 44,
+      "name": "ARISSARA RATANA ARPORN",
+      "sailOrBoardNumber": "",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 368.0,
+      "nettScore": 322.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(46.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "46.0 DNC",
+          "sourceRaceLabel": "R8"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "44th",
+        "track": "E1506",
+        "class": "Optimist New Born",
+        "sailno": "",
+        "club": "SST",
+        "helmname": "ARISSARA RATANA ARPORN",
+        "nat": "THA",
+        "yob": "2016",
+        "sex": "Female",
+        "r1": "(46.0 DNC)",
+        "r2": "46.0 DNC",
+        "r3": "46.0 DNC",
+        "r4": "46.0 DNC",
+        "r5": "46.0 DNC",
+        "r6": "46.0 DNC",
+        "r7": "46.0 DNC",
+        "r8": "46.0 DNC",
+        "total": "368.0",
+        "nett": "322.0"
+      },
+      "sailorId": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "dcf57f2c-2f10-5a62-a748-272e2785435f",
+      "participants": [
+        {
+          "id": "5366df93-763a-5904-826b-6af938f9bead",
+          "sailorId": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+          "sourceName": "ARISSARA RATANA ARPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: ARISSARA RATANA ARPORN; historic sail/boat number: blank in source; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8. Every score, code and discard preserved; gross 368.0 and net 322.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings. Partial import: 42 of 45 entries imported; 3 awaiting identity review.",
+  "importedEntryCount": 42,
+  "deferredEntryCount": 3,
+  "profilePreflight": [
+    {
+      "id": "a58d8928-2693-4a99-a36c-693cda63fd03",
+      "club": "YRAT",
+      "name": "Napat Ladsowhae",
+      "gender": "Female",
+      "handle": "napat-ladsowhae-84tq4nu",
+      "birthYear": 2017,
+      "sailNumber": "1279",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+      "club": "YRAT",
+      "name": "Tewmek Chulagasyena",
+      "gender": "Male",
+      "handle": "tewmek-chulagasyena-ztu8lnq",
+      "birthYear": 2016,
+      "sailNumber": "1771",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+      "club": "YRAT",
+      "name": "Pitipat Paphawannasri",
+      "gender": "Male",
+      "handle": "pitipat-paphawannasri-glihk3d",
+      "birthYear": 2014,
+      "sailNumber": "1827",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+      "club": "YRAT",
+      "name": "Teejutha Thongthiem",
+      "gender": "Male",
+      "handle": "teejutha-thongthiem-hj4s26n",
+      "birthYear": 2015,
+      "sailNumber": "1484",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f0755dca-49d2-415e-8623-12ff3291b73f",
+      "club": "YRAT",
+      "name": "Natnathee Peepanich",
+      "gender": "Male",
+      "handle": "natnathee-peepanich-uplm49g",
+      "birthYear": 2017,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "816e7865-0b0a-433f-9964-476e127f5f12",
+      "club": "ACDC.SC",
+      "name": "Phutthasorn Klaimuk",
+      "gender": "Female",
+      "handle": "phutthasorn-klaimuk-jkt3b9i",
+      "birthYear": 2016,
+      "sailNumber": "20",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+      "club": "YRAT",
+      "name": "Natnicha Somwongin",
+      "gender": "Female",
+      "handle": "natnicha-somwongin-e3n0ee9",
+      "birthYear": 2017,
+      "sailNumber": "1434",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1a3a6f55-afa6-41ba-8ecd-f898eeb7a567",
+      "club": "YRAT",
+      "name": "Chayut Phunnarungsi",
+      "gender": "Male",
+      "handle": "chayut-phunnarungsi-sfy532f",
+      "birthYear": 2015,
+      "sailNumber": "1259",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+      "club": "YRAT",
+      "name": "Kitdanuphon Thamsap",
+      "gender": "Male",
+      "handle": "kitdanuphon-thamsap-09hfubv",
+      "birthYear": 2018,
+      "sailNumber": "544",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f705fec-c1a1-5341-b860-2696671f406a",
+      "club": "N/A",
+      "name": "Sherman",
+      "gender": null,
+      "handle": "sherman-mya380",
+      "birthYear": null,
+      "sailNumber": "MYA380",
+      "nationality": "MYA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+      "club": "SSA",
+      "name": "Narad Promjit",
+      "gender": "F",
+      "handle": "narad-promjit-thai26-0afe2e",
+      "birthYear": null,
+      "sailNumber": "216",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+      "club": "SST",
+      "name": "Thanaphol Lertrungamorn",
+      "gender": "M",
+      "handle": "thanaphol-lertrungamorn-tnc26-0ae5e520",
+      "birthYear": null,
+      "sailNumber": "THA1193",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "34ccfd20-b960-40f5-a0af-f869921ee415",
+      "club": "SST",
+      "name": "Alex James De Rennes",
+      "gender": "M",
+      "handle": "alex-james-de-rennes-tnc26-34ccfd20",
+      "birthYear": null,
+      "sailNumber": "2015",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+      "club": "SST",
+      "name": "Thawan Srisayyon",
+      "gender": "F",
+      "handle": "thawan-srisayyon-tnc26-e6546dfe",
+      "birthYear": null,
+      "sailNumber": "39",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+      "club": "SST",
+      "name": "Thanadon Dethansatit",
+      "gender": "M",
+      "handle": "thanadon-dethansatit-tnc26-95cd4a20",
+      "birthYear": null,
+      "sailNumber": "1291",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+      "club": "SST",
+      "name": "Arissara Ratanaarporn",
+      "gender": "F",
+      "handle": "arissara-ratanaarporn-tnc26-dcc276c2",
+      "birthYear": null,
+      "sailNumber": "4519",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "ed63f110-a4be-57c1-936f-bf71f861dc38",
+      "name": "Kachamon Thongrod",
+      "handle": "kachamon-thongrod-sr26-ed63f1",
+      "sailNumber": "1565",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+      "name": "Lapatrada Boonsopawong",
+      "handle": "lapatrada-boonsopawong-sr26-6da26b",
+      "sailNumber": "THA1193",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "8be18336-f5b0-5bc5-997a-a00dc81ed922",
+      "name": "Myat Toe Khant",
+      "handle": "myat-toe-khant-sr26-8be183",
+      "sailNumber": "MYA343",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": null
+    },
+    {
+      "id": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+      "name": "Athitach Panya",
+      "handle": "athitach-panya-sr26-30da5d",
+      "sailNumber": "THA4519",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+      "name": "Tavin Charusadhirakul",
+      "handle": "tavin-charusadhirakul-sr26-d7be9d",
+      "sailNumber": "14",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "d4015062-9510-5ecf-ae0e-030581922658",
+      "name": "Kongkidakorn Phutphithak",
+      "handle": "kongkidakorn-phutphithak-sr26-d40150",
+      "sailNumber": "1901",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "0beb80e2-278d-5bee-9dac-6acb3b8bff82",
+      "name": "Kaokatu",
+      "handle": "kaokatu-sr26-0beb80",
+      "sailNumber": "118",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "e5524ab4-3e31-5604-8b1a-ba33034756aa",
+      "name": "Hein Thant Saw",
+      "handle": "hein-thant-saw-sr26-e5524a",
+      "sailNumber": "MYA385",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": null
+    },
+    {
+      "id": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+      "name": "Wannasut Tangvimonwutiwong",
+      "handle": "wannasut-tangvimonwutiwong-sr26-78011f",
+      "sailNumber": "33",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "20594379-d5e6-5f3e-b8f6-1c2af4908315",
+      "name": "Nannaphatson Phetrak",
+      "handle": "nannaphatson-phetrak-sr26-205943",
+      "sailNumber": "1499",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "c6cd1022-1325-516a-823c-c3a99a67d455",
+      "name": "Porpiang Sae-Uy",
+      "handle": "porpiang-sae-uy-sr26-c6cd10",
+      "sailNumber": "169",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+      "name": "Peemmapat Suebwongnat",
+      "handle": "peemmapat-suebwongnat-sr26-f136e4",
+      "sailNumber": "13",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "586f049f-8f51-50fe-9aa0-c059c6898071",
+      "name": "Chaimongkon Pirom",
+      "handle": "chaimongkon-pirom-sr26-586f04",
+      "sailNumber": "17",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+      "name": "Ornranath Intapat",
+      "handle": "ornranath-intapat-sr26-982f68",
+      "sailNumber": "39",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "76374cc7-be36-5143-880d-1779dc7a53a2",
+      "name": "Mungkorn Kangwal",
+      "handle": "mungkorn-kangwal-sr26-76374c",
+      "sailNumber": "69",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+      "name": "Thaniyada Kaewrakum",
+      "handle": "thaniyada-kaewrakum-sr26-dc0265",
+      "sailNumber": "THA1484",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC. SC",
+      "birthYear": null
+    },
+    {
+      "id": "6a4451dd-ff66-5008-ba1f-04c8e8e443b1",
+      "name": "Natnan Aesomnuek",
+      "handle": "natnan-aesomnuek-sr26-6a4451",
+      "sailNumber": "67",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+      "name": "Traikhun Tonglung",
+      "handle": "traikhun-tonglung-sr26-17c135",
+      "sailNumber": "THA3332",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "ce999b81-8f03-5556-b78d-81300e737d53",
+      "name": "Natthasiri Kitkhong",
+      "handle": "natthasiri-kitkhong-sr26-ce999b",
+      "sailNumber": "2243",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+      "name": "Thatika Saranrom",
+      "handle": "thatika-saranrom-sr26-bd4a51",
+      "sailNumber": "1",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "971f3527-fc85-5e9f-aad3-993742229caa",
+      "name": "Thanakrit Bunprasit",
+      "handle": "thanakrit-bunprasit-sr26-971f35",
+      "sailNumber": "639",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+      "name": "Soran Ghosairi",
+      "handle": "soran-ghosairi-sr26-233c25",
+      "sailNumber": "10",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+      "name": "Jira Manomaiphan",
+      "handle": "jira-manomaiphan-sr26-8a225d",
+      "sailNumber": "3",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+      "name": "Nusakarn Musikaboonlert",
+      "handle": "nusakarn-musikaboonlert-sr26-b47d24",
+      "sailNumber": "28",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "f21f34c1-831b-5741-86e9-69f0e52b225c",
+      "name": "Weeranat Noochan",
+      "handle": "weeranat-noochan-sr26-f21f34",
+      "sailNumber": "1449",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    },
+    {
+      "id": "b860b67e-137f-5431-8999-95b4dd0eda8f",
+      "name": "Pratchaya Bunpasit",
+      "handle": "pratchaya-bunpasit-sr26-b860b6",
+      "sailNumber": "119",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RNSC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 2,
+        "sourceName": "NAPAT LADSOWHAE",
+        "sailorId": "a58d8928-2693-4a99-a36c-693cda63fd03",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 3,
+        "sourceName": "PITIPHAT PAPHAWANNASRI",
+        "sailorId": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 4,
+        "sourceName": "CHAYUT PHUNNARUNGSI",
+        "sailorId": "1a3a6f55-afa6-41ba-8ecd-f898eeb7a567",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 5,
+        "sourceName": "TEWMEK CHULAGASYENA",
+        "sailorId": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 6,
+        "sourceName": "THANAPHOL LERTRUNGAMORN",
+        "sailorId": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 7,
+        "sourceName": "KACHAMON THONGROD",
+        "sailorId": "ed63f110-a4be-57c1-936f-bf71f861dc38",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 8,
+        "sourceName": "LAPATRADA BOONSOPAWONG",
+        "sailorId": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 10,
+        "sourceName": "ALEX JAMES DE RENNES",
+        "sailorId": "34ccfd20-b960-40f5-a0af-f869921ee415",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 11,
+        "sourceName": "TEEJUTHA THONGTHIEM",
+        "sailorId": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 12,
+        "sourceName": "KITDANUPHON THAMSAP",
+        "sailorId": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 13,
+        "sourceName": "MYAT TOE KHANT",
+        "sailorId": "8be18336-f5b0-5bc5-997a-a00dc81ed922",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 14,
+        "sourceName": "NARAD PROMJIT",
+        "sailorId": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 15,
+        "sourceName": "ATHITACH PANYA",
+        "sailorId": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 16,
+        "sourceName": "TAVIN CHARUSADHIRAKUL",
+        "sailorId": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 17,
+        "sourceName": "KONGKIDAKORN PHUTPHITHAK",
+        "sailorId": "d4015062-9510-5ecf-ae0e-030581922658",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 18,
+        "sourceName": "NATNICHA SOMWONGIN",
+        "sailorId": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 19,
+        "sourceName": "PHUTTHASORN KLAIMUK",
+        "sailorId": "816e7865-0b0a-433f-9964-476e127f5f12",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 20,
+        "sourceName": "KAOKATU",
+        "sailorId": "0beb80e2-278d-5bee-9dac-6acb3b8bff82",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 21,
+        "sourceName": "SHERMAN AYE",
+        "sailorId": "4f705fec-c1a1-5341-b860-2696671f406a",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 22,
+        "sourceName": "HEIN THANT SAW",
+        "sailorId": "e5524ab4-3e31-5604-8b1a-ba33034756aa",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 23,
+        "sourceName": "THANADON DETHANSATIT",
+        "sailorId": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 24,
+        "sourceName": "THAWAN SRISAYYON",
+        "sailorId": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 25,
+        "sourceName": "WANNASUT TANGVIMONWUTIWONG",
+        "sailorId": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 26,
+        "sourceName": "NANNAPHATSON PHETRAK",
+        "sailorId": "20594379-d5e6-5f3e-b8f6-1c2af4908315",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 27,
+        "sourceName": "PORPIANG SAE-UY",
+        "sailorId": "c6cd1022-1325-516a-823c-c3a99a67d455",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 29,
+        "sourceName": "PEEMMAPAT SUEBWONGNAT",
+        "sailorId": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 30,
+        "sourceName": "CHAIMONGKON PIROM",
+        "sailorId": "586f049f-8f51-50fe-9aa0-c059c6898071",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 31,
+        "sourceName": "ORNRANATH INTAPAT",
+        "sailorId": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 32,
+        "sourceName": "NATNATEE PHIPANICH",
+        "sailorId": "f0755dca-49d2-415e-8623-12ff3291b73f",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 33,
+        "sourceName": "MUNGKORN KANGWAL",
+        "sailorId": "76374cc7-be36-5143-880d-1779dc7a53a2",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 34,
+        "sourceName": "THANIYADA KAEWRAKUM",
+        "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 35,
+        "sourceName": "NATNAN AESOMNUEK",
+        "sailorId": "6a4451dd-ff66-5008-ba1f-04c8e8e443b1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 36,
+        "sourceName": "TRAIKHUN TONGLUNG",
+        "sailorId": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 37,
+        "sourceName": "NATTHASIRI KITKHONG",
+        "sailorId": "ce999b81-8f03-5556-b78d-81300e737d53",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 38,
+        "sourceName": "THATIKA SARANROM",
+        "sailorId": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 39,
+        "sourceName": "THANAKRIT BUNPRASIT",
+        "sailorId": "971f3527-fc85-5e9f-aad3-993742229caa",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 40,
+        "sourceName": "SORAN GHOSAIRI",
+        "sailorId": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 41,
+        "sourceName": "JIRA MANOMAIPHAN",
+        "sailorId": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 42,
+        "sourceName": "NUSAKARN MUSIKABOONLERT",
+        "sailorId": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 43,
+        "sourceName": "WEERANAT NOOCHAN",
+        "sailorId": "f21f34c1-831b-5741-86e9-69f0e52b225c",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 44,
+        "sourceName": "PRATCHAYA BUNPASIT",
+        "sailorId": "b860b67e-137f-5431-8999-95b4dd0eda8f",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+        "rank": 44,
+        "sourceName": "ARISSARA RATANA ARPORN",
+        "sailorId": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      }
+    ]
+  },
+  "pendingEntries": [
+    {
+      "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+      "rank": 1,
+      "name": "SAOBOON THAVEEBUNRUNGRUENG",
+      "sail": "1900",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    },
+    {
+      "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+      "rank": 9,
+      "name": "PIYANGKUN NIYOM",
+      "sail": "THA88",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    },
+    {
+      "sheet": "acdc-cup-international-sailing-championship-2026-optimist-newborn",
+      "rank": 28,
+      "name": "PARKPOOM SAE-UY",
+      "sail": "522",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    }
+  ]
+}

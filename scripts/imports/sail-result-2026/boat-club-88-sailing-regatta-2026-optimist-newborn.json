@@ -1,0 +1,1107 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+    "title": "Boat Club 88 Sailing Regatta 2026",
+    "type": "link",
+    "visuallyReviewed": false,
+    "provisional": false,
+    "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+    "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found.",
+    "pages": [],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Boat%20Club%2088%20Sailing%20Regatta%202026"
+  },
+  "event": {
+    "id": "cb66d412-e409-507e-a5cb-d72c3e52b6a2",
+    "slug": "boat-club-88-sailing-regatta-2026",
+    "name": "Boat Club 88 Sailing Regatta 2026",
+    "startDate": "2026-08-08",
+    "endDate": "2026-08-09",
+    "venue": "Boat Club 88 (Thailand), Sittahip, Chonburi",
+    "organizer": "Boat Club 88",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "ac68a5e4-9297-538a-9a1d-b92489c244a2",
+    "slug": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+    "name": "Boat Club 88 Sailing Regatta 2026 — Optimist Newborn",
+    "boatClass": "Optimist",
+    "division": "Newborn",
+    "raceCount": 4,
+    "totalFleetSize": 10,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 1,
+      "name": "PITIPAT PAPHAWANNASRI",
+      "sailOrBoardNumber": "THA1827",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 6.0,
+      "nettScore": 6.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "1st",
+        "sailno": "THA1827",
+        "club": "YRAT",
+        "helmname": "PITIPAT PAPHAWANNASRI",
+        "nat": "THA",
+        "yob": "2014",
+        "helmsex": "Male",
+        "r1": "1.0",
+        "r2": "2.0",
+        "r3": "1.0",
+        "r4": "2.0",
+        "total": "6.0",
+        "nett": "6.0"
+      },
+      "sailorId": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "fbd6911a-7a4f-5a4b-b3ec-d2b510d1d14e",
+      "participants": [
+        {
+          "id": "d3d2ac25-22a0-586c-941f-efc7d4c33625",
+          "sailorId": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+          "sourceName": "PITIPAT PAPHAWANNASRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PITIPAT PAPHAWANNASRI; historic sail/boat number: THA1827; club: YRAT; nationality: THA; source year/age field: 2014. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 6.0 and net 6.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 2,
+      "name": "PIYANGKUN MOOLPRASERT",
+      "sailOrBoardNumber": "1936",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 9.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "2nd",
+        "sailno": "1936",
+        "club": "YRAT",
+        "helmname": "PIYANGKUN MOOLPRASERT",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "3.0",
+        "r2": "1.0",
+        "r3": "4.0",
+        "r4": "1.0",
+        "total": "9.0",
+        "nett": "9.0"
+      },
+      "sailorId": "c83f716e-c881-4c35-8c91-fb934d7b6cf4",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f76b92ab-2b52-5616-9fa4-ac6d88ecdf00",
+      "participants": [
+        {
+          "id": "322ff820-a7c4-5f1b-963b-19a93729bba2",
+          "sailorId": "c83f716e-c881-4c35-8c91-fb934d7b6cf4",
+          "sourceName": "PIYANGKUN MOOLPRASERT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PIYANGKUN MOOLPRASERT; historic sail/boat number: 1936; club: YRAT; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 9.0 and net 9.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 3,
+      "name": "TEWMEK CHULAGASYENA",
+      "sailOrBoardNumber": "THA 1771",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "3rd",
+        "sailno": "THA 1771",
+        "club": "YRAT",
+        "helmname": "TEWMEK CHULAGASYENA",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "2.0",
+        "r2": "3.0",
+        "r3": "2.0",
+        "r4": "4.0",
+        "total": "11.0",
+        "nett": "11.0"
+      },
+      "sailorId": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "10d7704b-8c26-5f80-8867-92080d2c1d29",
+      "participants": [
+        {
+          "id": "ee54877f-0da4-5bc2-8730-ba4264cecb10",
+          "sailorId": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+          "sourceName": "TEWMEK CHULAGASYENA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TEWMEK CHULAGASYENA; historic sail/boat number: THA 1771; club: YRAT; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 11.0 and net 11.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 4,
+      "name": "TEEJUTHA THONGTHIEM",
+      "sailOrBoardNumber": "THA1484",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 17.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "4th",
+        "sailno": "THA1484",
+        "club": "YRAT",
+        "helmname": "TEEJUTHA THONGTHIEM",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "4.0",
+        "r2": "5.0",
+        "r3": "5.0",
+        "r4": "3.0",
+        "total": "17.0",
+        "nett": "17.0"
+      },
+      "sailorId": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "53deddaf-54ab-5dbb-85a1-c97b1d64ce70",
+      "participants": [
+        {
+          "id": "df5d5f4f-f629-59e5-a800-e66ee2c66cc5",
+          "sailorId": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+          "sourceName": "TEEJUTHA THONGTHIEM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TEEJUTHA THONGTHIEM; historic sail/boat number: THA1484; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 17.0 and net 17.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 5,
+      "name": "NATNICHA SOMWONGIN",
+      "sailOrBoardNumber": "THA1434",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "5th",
+        "sailno": "THA1434",
+        "club": "YRAT",
+        "helmname": "NATNICHA SOMWONGIN",
+        "nat": "THA",
+        "yob": "2017",
+        "helmsex": "Female",
+        "r1": "5.0",
+        "r2": "6.0",
+        "r3": "3.0",
+        "r4": "7.0",
+        "total": "21.0",
+        "nett": "21.0"
+      },
+      "sailorId": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3965d9ea-0e44-5ce5-80fb-258b54032fc7",
+      "participants": [
+        {
+          "id": "55e93769-7262-5668-a9b3-056f069eb610",
+          "sailorId": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+          "sourceName": "NATNICHA SOMWONGIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATNICHA SOMWONGIN; historic sail/boat number: THA1434; club: YRAT; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 21.0 and net 21.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 6,
+      "name": "KITDANUPHON THAMSAP",
+      "sailOrBoardNumber": "THA544",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "6th",
+        "sailno": "THA544",
+        "club": "YRAT",
+        "helmname": "KITDANUPHON THAMSAP",
+        "nat": "THA",
+        "yob": "2018",
+        "helmsex": "Male",
+        "r1": "6.0",
+        "r2": "4.0",
+        "r3": "6.0",
+        "r4": "5.0",
+        "total": "21.0",
+        "nett": "21.0"
+      },
+      "sailorId": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "fdbe2a98-11c0-5ad9-b8fd-7c247ab507e5",
+      "participants": [
+        {
+          "id": "153ea749-57cc-585e-93d2-8d59903ceece",
+          "sailorId": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+          "sourceName": "KITDANUPHON THAMSAP",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KITDANUPHON THAMSAP; historic sail/boat number: THA544; club: YRAT; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 21.0 and net 21.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 7,
+      "name": "SUPHASIN JULPON",
+      "sailOrBoardNumber": "THA644",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 30.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "7th",
+        "sailno": "THA644",
+        "club": "ACDC.SC",
+        "helmname": "SUPHASIN JULPON",
+        "nat": "THA",
+        "yob": "2017",
+        "helmsex": "Male",
+        "r1": "7.0",
+        "r2": "8.0",
+        "r3": "9.0",
+        "r4": "6.0",
+        "total": "30.0",
+        "nett": "30.0"
+      },
+      "sailorId": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "883d76f1-9b49-5ebc-90e9-5747800894ed",
+      "participants": [
+        {
+          "id": "847de9c8-4bdb-5a7e-b829-6971e43cd287",
+          "sailorId": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+          "sourceName": "SUPHASIN JULPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SUPHASIN JULPON; historic sail/boat number: THA644; club: ACDC.SC; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 30.0 and net 30.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 8,
+      "name": "THANIYADA KAEWRAKUM",
+      "sailOrBoardNumber": "THA1484",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "8th",
+        "sailno": "THA1484",
+        "club": "ACDC.SC",
+        "helmname": "THANIYADA KAEWRAKUM",
+        "nat": "THA",
+        "yob": "2018",
+        "helmsex": "Female",
+        "r1": "8.0",
+        "r2": "7.0",
+        "r3": "8.0",
+        "r4": "8.0",
+        "total": "31.0",
+        "nett": "31.0"
+      },
+      "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+      "resultId": "baea7103-c721-5241-911e-f91dd84ced39",
+      "participants": [
+        {
+          "id": "bd3dbce6-44d1-5968-869d-9250d5e45c66",
+          "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+          "sourceName": "THANIYADA KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THANIYADA KAEWRAKUM; historic sail/boat number: THA1484; club: ACDC.SC; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 31.0 and net 31.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 9,
+      "name": "NATNATEE PEEPANICH",
+      "sailOrBoardNumber": "THA11",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 34.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "9th",
+        "sailno": "THA11",
+        "club": "YRAT",
+        "helmname": "NATNATEE PEEPANICH",
+        "nat": "THA",
+        "yob": "2017",
+        "helmsex": "Male",
+        "r1": "9.0",
+        "r2": "9.0",
+        "r3": "7.0",
+        "r4": "9.0",
+        "total": "34.0",
+        "nett": "34.0"
+      },
+      "sailorId": "f0755dca-49d2-415e-8623-12ff3291b73f",
+      "resultId": "fd42bddd-140e-5b6e-b814-36d60198fe22",
+      "participants": [
+        {
+          "id": "919ab47f-4c45-545c-a1df-bf0869bbed00",
+          "sailorId": "f0755dca-49d2-415e-8623-12ff3291b73f",
+          "sourceName": "NATNATEE PEEPANICH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: NATNATEE PEEPANICH; historic sail/boat number: THA11; club: YRAT; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 34.0 and net 34.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "boat-club-88-sailing-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "url": "https://sailingtech.in.th/preview/results/boat-club-88/optimist.htm",
+        "title": "Boat Club 88 Sailing Regatta 2026",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": false,
+        "statusText": "Results are final as of 10:13 on August 10, 2026 Optimist Results",
+        "pdfSearch": "Organiser notice board, published results links, and web search checked; no official result PDF found."
+      },
+      "rank": 10,
+      "name": "THITAREE NAKPASOM",
+      "sailOrBoardNumber": "THA1599",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 44.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC",
+          "sourceRaceLabel": "R4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "10th",
+        "sailno": "THA1599",
+        "club": "YRAT",
+        "helmname": "THITAREE NAKPASOM",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Female",
+        "r1": "11.0 DNC",
+        "r2": "11.0 DNC",
+        "r3": "11.0 DNC",
+        "r4": "11.0 DNC",
+        "total": "44.0",
+        "nett": "44.0"
+      },
+      "sailorId": "f0d3b033-04cb-4f9c-9990-0052a25aec57",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "8a9c7796-dcbb-5d61-ba73-c5d63884076c",
+      "participants": [
+        {
+          "id": "315eb20c-53b4-5ec1-8458-a2e046fe6029",
+          "sailorId": "f0d3b033-04cb-4f9c-9990-0052a25aec57",
+          "sourceName": "THITAREE NAKPASOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THITAREE NAKPASOM; historic sail/boat number: THA1599; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4. Every score, code and discard preserved; gross 44.0 and net 44.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 10,
+  "deferredEntryCount": 0,
+  "profilePreflight": [
+    {
+      "id": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+      "club": "YRAT",
+      "name": "Tewmek Chulagasyena",
+      "gender": "Male",
+      "handle": "tewmek-chulagasyena-ztu8lnq",
+      "birthYear": 2016,
+      "sailNumber": "1771",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+      "club": "YRAT",
+      "name": "Pitipat Paphawannasri",
+      "gender": "Male",
+      "handle": "pitipat-paphawannasri-glihk3d",
+      "birthYear": 2014,
+      "sailNumber": "1827",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+      "club": "YRAT",
+      "name": "Teejutha Thongthiem",
+      "gender": "Male",
+      "handle": "teejutha-thongthiem-hj4s26n",
+      "birthYear": 2015,
+      "sailNumber": "1484",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f0755dca-49d2-415e-8623-12ff3291b73f",
+      "club": "YRAT",
+      "name": "Natnathee Peepanich",
+      "gender": "Male",
+      "handle": "natnathee-peepanich-uplm49g",
+      "birthYear": 2017,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+      "club": "YRAT",
+      "name": "Natnicha Somwongin",
+      "gender": "Female",
+      "handle": "natnicha-somwongin-e3n0ee9",
+      "birthYear": 2017,
+      "sailNumber": "1434",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+      "club": "YRAT",
+      "name": "Kitdanuphon Thamsap",
+      "gender": "Male",
+      "handle": "kitdanuphon-thamsap-09hfubv",
+      "birthYear": 2018,
+      "sailNumber": "544",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c83f716e-c881-4c35-8c91-fb934d7b6cf4",
+      "club": "YRAT",
+      "name": "Piyangkun Moolprasert",
+      "gender": "Male",
+      "handle": "piyangkun-moolprasert-f9xlv3b",
+      "birthYear": 2016,
+      "sailNumber": "1936",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+      "club": "ACDC.SC",
+      "name": "Suphasin Julpon",
+      "gender": "M",
+      "handle": "suphasin-julpon-thai26-2c5cda",
+      "birthYear": null,
+      "sailNumber": "THA644",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f0d3b033-04cb-4f9c-9990-0052a25aec57",
+      "club": "YRAT",
+      "name": "Thitaree Nakpasom",
+      "gender": "F",
+      "handle": "thitaree-nakpasom-tnc26-f0d3b033",
+      "birthYear": null,
+      "sailNumber": "711",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+      "name": "Thaniyada Kaewrakum",
+      "handle": "thaniyada-kaewrakum-sr26-dc0265",
+      "sailNumber": "THA1484",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC. SC",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 1,
+        "sourceName": "PITIPAT PAPHAWANNASRI",
+        "sailorId": "7efdd2b0-bd08-4529-afef-3ebfe91fcb06",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 2,
+        "sourceName": "PIYANGKUN MOOLPRASERT",
+        "sailorId": "c83f716e-c881-4c35-8c91-fb934d7b6cf4",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 3,
+        "sourceName": "TEWMEK CHULAGASYENA",
+        "sailorId": "3ad792e4-52ba-4efe-8285-89deb8b551ba",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 4,
+        "sourceName": "TEEJUTHA THONGTHIEM",
+        "sailorId": "965facf1-7eb4-4987-9a6b-ea92fc47df6b",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 5,
+        "sourceName": "NATNICHA SOMWONGIN",
+        "sailorId": "87eb31af-65e7-4cf0-b68b-8a7578c4b06d",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 6,
+        "sourceName": "KITDANUPHON THAMSAP",
+        "sailorId": "83ea77ef-6eb5-4311-81bf-0657ec04c095",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 7,
+        "sourceName": "SUPHASIN JULPON",
+        "sailorId": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 8,
+        "sourceName": "THANIYADA KAEWRAKUM",
+        "sailorId": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 9,
+        "sourceName": "NATNATEE PEEPANICH",
+        "sailorId": "f0755dca-49d2-415e-8623-12ff3291b73f",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "boat-club-88-sailing-regatta-2026-optimist-newborn",
+        "rank": 10,
+        "sourceName": "THITAREE NAKPASOM",
+        "sailorId": "f0d3b033-04cb-4f9c-9990-0052a25aec57",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

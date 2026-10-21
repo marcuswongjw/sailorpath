@@ -3,6 +3,22 @@ import { describe, expect, it } from "vitest";
 import { PublicRegattaResults } from "./PublicRegattaResults";
 
 describe("PublicRegattaResults", () => {
+  it("shows the imported count and official fleet size when identities are deferred", () => {
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults accent="orange" totalFleetSize={4} results={[]} pendingIdentityReview />
+    );
+    expect(html).toContain('role="status"');
+    expect(html).toContain("Partial import: 0 of 4 entries are shown.");
+    expect(html).toContain("4 entries await sailor identity review.");
+  });
+
+  it("does not imply an identity hold for ordinary result tables", () => {
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults accent="orange" totalFleetSize={4} results={[]} />
+    );
+    expect(html).not.toContain("Partial import:");
+  });
+
   it("renders every race and preserves discard and penalty notation", () => {
     const html = renderToStaticMarkup(
       <PublicRegattaResults

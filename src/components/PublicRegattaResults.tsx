@@ -18,6 +18,7 @@ type Props = {
   totalFleetSize: number;
   raceCount?: number | null;
   accent: "orange" | "sky";
+  pendingIdentityReview?: boolean;
 };
 
 type SortKey = "rank" | "name" | "nationality" | "gender" | "birthYear" | "total" | "nett";
@@ -155,6 +156,7 @@ export function PublicRegattaResults({
   results,
   totalFleetSize,
   accent,
+  pendingIdentityReview = false,
 }: Props) {
   const colors = accentClasses[accent];
 
@@ -430,6 +432,12 @@ export function PublicRegattaResults({
 
   return (
     <>
+      {pendingIdentityReview && results.length < totalFleetSize && (
+        <p role="status" className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+          Partial import: {results.length} of {totalFleetSize} entries are shown.{" "}
+          {totalFleetSize - results.length} entries await sailor identity review.
+        </p>
+      )}
       {mobileList}
       {desktopTable}
     </>

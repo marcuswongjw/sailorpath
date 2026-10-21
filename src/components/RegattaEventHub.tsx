@@ -321,6 +321,7 @@ async function DbSlicePanel({
           totalFleetSize={regatta.totalFleetSize}
           raceCount={regatta.raceCount}
           accent={accent}
+          pendingIdentityReview={regatta.scheduleNotes?.includes("awaiting identity review")}
         />
       )}
       <p className="text-[13px] text-[var(--sp-charcoal)]">

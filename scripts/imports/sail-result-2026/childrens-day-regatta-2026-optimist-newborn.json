@@ -1,0 +1,3396 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 172817,
+    "url": "https://www.racingrulesofsailing.org/documents/172817",
+    "title": "Official children-s-day-regatta-2026 result document 172817",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 3,
+    "pages": [
+      3,
+      4
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Children%27s%20Day%20Regatta%202026"
+  },
+  "event": {
+    "id": "cbe1b00c-fd6c-549e-b7d3-7a87f955963d",
+    "slug": "childrens-day-regatta-2026",
+    "name": "Children's Day Regatta 2026",
+    "startDate": "2026-01-16",
+    "endDate": "2026-01-18",
+    "venue": "Yacht Racing Association Of Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "9b937415-fcd7-5fe6-8ada-729af5d05baa",
+    "slug": "childrens-day-regatta-2026-optimist-newborn",
+    "name": "Children's Day Regatta 2026 — Optimist Newborn",
+    "boatClass": "Optimist",
+    "division": "Newborn",
+    "raceCount": 6,
+    "totalFleetSize": 27,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 1,
+      "name": "PAVARISA KAEWLEK",
+      "sailOrBoardNumber": "1254",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 15.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "Optimist Newborn",
+        "sailno": "1254",
+        "club": "RNSC",
+        "helmname": "PAVARISA KAEWLEK",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Female",
+        "r1": "3.0",
+        "r2": "3.0",
+        "r3": "(6.0)",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "1.0",
+        "total": "15.0",
+        "nett": "9.0"
+      },
+      "sailorId": "57afc0b5-a27a-486a-84e1-ef59120d492c",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "3cc6a4b0-e87c-5dac-b432-5532c11285fc",
+      "participants": [
+        {
+          "id": "08f576f0-d8ca-588b-85ae-5ecbf87bd3f9",
+          "sailorId": "57afc0b5-a27a-486a-84e1-ef59120d492c",
+          "sourceName": "PAVARISA KAEWLEK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PAVARISA KAEWLEK; historic sail/boat number: 1254; club: RNSC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 15.0 and net 9.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 2,
+      "name": "Pawnrapat Meewuttisom",
+      "sailOrBoardNumber": "THA1449",
+      "club": "RNSC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 16.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "Optimist Newborn",
+        "sailno": "THA1449",
+        "club": "RNSC",
+        "helmname": "Pawnrapat Meewuttisom",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "2.0",
+        "r2": "2.0",
+        "r3": "3.0",
+        "r4": "(4.0)",
+        "r5": "2.0",
+        "r6": "3.0",
+        "total": "16.0",
+        "nett": "12.0"
+      },
+      "sailorId": "324e747a-fbc3-429c-adaf-a96431a1cc73",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "28e4c58e-e663-5714-89b0-df67799d4163",
+      "participants": [
+        {
+          "id": "2631bbf7-9b25-5225-bd91-0716e9d23794",
+          "sailorId": "324e747a-fbc3-429c-adaf-a96431a1cc73",
+          "sourceName": "Pawnrapat Meewuttisom",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Pawnrapat Meewuttisom; historic sail/boat number: THA1449; club: RNSC; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 16.0 and net 12.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 3,
+      "name": "MR. ALEX JAMES DE RENNES",
+      "sailOrBoardNumber": "THA 1291",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 47.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "Optimist Newborn",
+        "sailno": "THA 1291",
+        "club": "SST",
+        "helmname": "MR. ALEX JAMES DE RENNES",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "1.0",
+        "r2": "(28.0 DNC)",
+        "r3": "1.0",
+        "r4": "3.0",
+        "r5": "5.0",
+        "r6": "9.0",
+        "total": "47.0",
+        "nett": "19.0"
+      },
+      "sailorId": "34ccfd20-b960-40f5-a0af-f869921ee415",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "650a95ca-09b6-5f54-bff0-e7648e42cb22",
+      "participants": [
+        {
+          "id": "7644c3fc-efe0-5f77-bd5e-4a4e06a0dc67",
+          "sailorId": "34ccfd20-b960-40f5-a0af-f869921ee415",
+          "sourceName": "MR. ALEX JAMES DE RENNES",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. ALEX JAMES DE RENNES; historic sail/boat number: THA 1291; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 47.0 and net 19.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 4,
+      "name": "Dhan Chintanaseri Suksantinunt",
+      "sailOrBoardNumber": "THA1771",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 54.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "class": "Optimist Newborn",
+        "sailno": "THA1771",
+        "club": "SSA",
+        "helmname": "Dhan Chintanaseri Suksantinunt",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "5.0",
+        "r2": "6.0",
+        "r3": "11.0",
+        "r4": "2.0",
+        "r5": "(28.0 UFD)",
+        "r6": "2.0",
+        "total": "54.0",
+        "nett": "26.0"
+      },
+      "sailorId": "768b3680-930d-4a1c-82d9-5dea9717701a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "97f56f6b-33ab-5c8e-b758-74a15b2efaed",
+      "participants": [
+        {
+          "id": "6f8aee62-eb6d-5341-b154-b6afed7526c3",
+          "sailorId": "768b3680-930d-4a1c-82d9-5dea9717701a",
+          "sourceName": "Dhan Chintanaseri Suksantinunt",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Dhan Chintanaseri Suksantinunt; historic sail/boat number: THA1771; club: SSA; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 54.0 and net 26.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 5,
+      "name": "CHATTAPAT SOMPRASONG",
+      "sailOrBoardNumber": "THA1593",
+      "club": "AC/DC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 35.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "5th",
+        "class": "Optimist Newborn",
+        "sailno": "THA1593",
+        "club": "AC/DC",
+        "helmname": "CHATTAPAT SOMPRASONG",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "6.0",
+        "r2": "5.0",
+        "r3": "5.0",
+        "r4": "5.0",
+        "r5": "(9.0)",
+        "r6": "5.0",
+        "total": "35.0",
+        "nett": "26.0"
+      },
+      "sailorId": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "36a8d983-04a3-533e-81a3-5940c27a5b80",
+      "participants": [
+        {
+          "id": "c16d4c3b-cbd5-5c81-809e-35a56ac98b85",
+          "sailorId": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+          "sourceName": "CHATTAPAT SOMPRASONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHATTAPAT SOMPRASONG; historic sail/boat number: THA1593; club: AC/DC; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 35.0 and net 26.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 6,
+      "name": "Natkritta Boonsang",
+      "sailOrBoardNumber": "THA 12",
+      "club": "ACDC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 37.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "6th",
+        "class": "Optimist Newborn",
+        "sailno": "THA 12",
+        "club": "ACDC",
+        "helmname": "Natkritta Boonsang",
+        "nat": "THA",
+        "yob": "2017",
+        "helmsex": "Female",
+        "r1": "(10.0)",
+        "r2": "4.0",
+        "r3": "7.0",
+        "r4": "9.0",
+        "r5": "3.0",
+        "r6": "4.0",
+        "total": "37.0",
+        "nett": "27.0"
+      },
+      "sailorId": "1e889e8d-dac7-4f91-a542-733afdadf74a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "fca58159-0f31-5d85-96db-2ed52e483b1f",
+      "participants": [
+        {
+          "id": "0a6d054d-1f57-553f-ba5f-42117c233243",
+          "sailorId": "1e889e8d-dac7-4f91-a542-733afdadf74a",
+          "sourceName": "Natkritta Boonsang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Natkritta Boonsang; historic sail/boat number: THA 12; club: ACDC; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 37.0 and net 27.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 7,
+      "name": "MR. THANAPHOL LERTRUNGAMORN",
+      "sailOrBoardNumber": "3",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 46.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "7th",
+        "class": "Optimist Newborn",
+        "sailno": "3",
+        "club": "SST",
+        "helmname": "MR. THANAPHOL LERTRUNGAMORN",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "4.0",
+        "r2": "1.0",
+        "r3": "2.0",
+        "r4": "11.0",
+        "r5": "(14.0)",
+        "r6": "14.0",
+        "total": "46.0",
+        "nett": "32.0"
+      },
+      "sailorId": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "e7567ae9-ccc8-53b2-af4a-992327069f80",
+      "participants": [
+        {
+          "id": "64f7a359-a835-5a12-b08d-e5b2befaef2b",
+          "sailorId": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+          "sourceName": "MR. THANAPHOL LERTRUNGAMORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. THANAPHOL LERTRUNGAMORN; historic sail/boat number: 3; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 46.0 and net 32.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 8,
+      "name": "MR. TAVIN CHARUSADHIRAKUL",
+      "sailOrBoardNumber": "17",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 44.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "class": "Optimist Newborn",
+        "sailno": "17",
+        "club": "SST",
+        "helmname": "MR. TAVIN CHARUSADHIRAKUL",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "8.0",
+        "r2": "8.0",
+        "r3": "4.0",
+        "r4": "6.0",
+        "r5": "8.0",
+        "r6": "(10.0)",
+        "total": "44.0",
+        "nett": "34.0"
+      },
+      "sailorId": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+      "resultId": "2ccde26d-0871-5e7c-b171-01fdb5ad0426",
+      "participants": [
+        {
+          "id": "8f87beb5-57fe-5915-a2b8-ef3377f1af43",
+          "sailorId": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+          "sourceName": "MR. TAVIN CHARUSADHIRAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. TAVIN CHARUSADHIRAKUL; historic sail/boat number: 17; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 44.0 and net 34.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 9,
+      "name": "Narad Promjit",
+      "sailOrBoardNumber": "8 RED",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 43.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "9th",
+        "class": "Optimist Newborn",
+        "sailno": "8 RED",
+        "club": "SSA",
+        "helmname": "Narad Promjit",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "7.0",
+        "r2": "7.0",
+        "r3": "(8.0)",
+        "r4": "8.0",
+        "r5": "7.0",
+        "r6": "6.0",
+        "total": "43.0",
+        "nett": "35.0"
+      },
+      "sailorId": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "4ab751c1-41f3-5a5b-abca-2aaa3750a23e",
+      "participants": [
+        {
+          "id": "2b489eb3-3b89-56ed-b5d3-690e151936e8",
+          "sailorId": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+          "sourceName": "Narad Promjit",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Narad Promjit; historic sail/boat number: 8 RED; club: SSA; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 43.0 and net 35.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 10,
+      "name": "MISS ARISSARA RATANA- ARPORN",
+      "sailOrBoardNumber": "THA 4519",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 59.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "10th",
+        "class": "Optimist Newborn",
+        "sailno": "THA 4519",
+        "club": "SST",
+        "helmname": "MISS ARISSARA RATANA- ARPORN",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "(14.0)",
+        "r2": "10.0",
+        "r3": "10.0",
+        "r4": "13.0",
+        "r5": "4.0",
+        "r6": "8.0",
+        "total": "59.0",
+        "nett": "45.0"
+      },
+      "sailorId": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f3ee89c9-153c-576c-811a-0887c88432a3",
+      "participants": [
+        {
+          "id": "38d50497-57b5-5a43-8373-5cae152c6fe7",
+          "sailorId": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+          "sourceName": "MISS ARISSARA RATANA- ARPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS ARISSARA RATANA- ARPORN; historic sail/boat number: THA 4519; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 59.0 and net 45.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 11,
+      "name": "MISS LAPATRADA BOONSOPAWONG",
+      "sailOrBoardNumber": "THA1193",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 77.0,
+      "nettScore": 49.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "11th",
+        "class": "Optimist Newborn",
+        "sailno": "THA1193",
+        "club": "SST",
+        "helmname": "MISS LAPATRADA BOONSOPAWONG",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "12.0",
+        "r2": "(28.0 DNC)",
+        "r3": "12.0",
+        "r4": "12.0",
+        "r5": "6.0",
+        "r6": "7.0",
+        "total": "77.0",
+        "nett": "49.0"
+      },
+      "sailorId": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+      "resultId": "d20b5254-3898-5d37-9749-d47d99da6a6f",
+      "participants": [
+        {
+          "id": "12a88332-e053-53d7-82e1-e772eed2c471",
+          "sailorId": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+          "sourceName": "MISS LAPATRADA BOONSOPAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS LAPATRADA BOONSOPAWONG; historic sail/boat number: THA1193; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 77.0 and net 49.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 12,
+      "name": "MR. ATHITACH PANYA",
+      "sailOrBoardNumber": "10",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 69.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "12th",
+        "class": "Optimist Newborn",
+        "sailno": "10",
+        "club": "SST",
+        "helmname": "MR. ATHITACH PANYA",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "9.0",
+        "r2": "9.0",
+        "r3": "(15.0)",
+        "r4": "15.0",
+        "r5": "10.0",
+        "r6": "11.0",
+        "total": "69.0",
+        "nett": "54.0"
+      },
+      "sailorId": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+      "resultId": "6fac1708-1915-5e06-97b9-1410a08ada8d",
+      "participants": [
+        {
+          "id": "f8f2f42f-b69d-516a-b643-f238ad192d47",
+          "sailorId": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+          "sourceName": "MR. ATHITACH PANYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. ATHITACH PANYA; historic sail/boat number: 10; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 69.0 and net 54.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 13,
+      "name": "Thanchanok Thammajaruk",
+      "sailOrBoardNumber": "THA226",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 84.0,
+      "nettScore": 56.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "13th",
+        "class": "Optimist Newborn",
+        "sailno": "THA226",
+        "club": "YRAT",
+        "helmname": "Thanchanok Thammajaruk",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Female",
+        "r1": "11.0",
+        "r2": "11.0",
+        "r3": "9.0",
+        "r4": "7.0",
+        "r5": "(28.0 UFD)",
+        "r6": "18.0",
+        "total": "84.0",
+        "nett": "56.0"
+      },
+      "sailorId": "e6346805-2d51-49f8-acfb-b6bf1f1afc47",
+      "resultId": "3536b1b2-1d43-59e6-a674-abb9c459cb88",
+      "participants": [
+        {
+          "id": "52e439c0-2f4a-58d6-91ba-d6d381e938b8",
+          "sailorId": "e6346805-2d51-49f8-acfb-b6bf1f1afc47",
+          "sourceName": "Thanchanok Thammajaruk",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thanchanok Thammajaruk; historic sail/boat number: THA226; club: YRAT; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 84.0 and net 56.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 14,
+      "name": "MR. WANNASUT TANGVIMONWUTIWONG",
+      "sailOrBoardNumber": "33",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 94.0,
+      "nettScore": 66.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "14th",
+        "class": "Optimist Newborn",
+        "sailno": "33",
+        "club": "SST",
+        "helmname": "MR. WANNASUT TANGVIMONWUTIWONG",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "(28.0 DNF)",
+        "r2": "15.0",
+        "r3": "17.0",
+        "r4": "10.0",
+        "r5": "11.0",
+        "r6": "13.0",
+        "total": "94.0",
+        "nett": "66.0"
+      },
+      "sailorId": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+      "resultId": "3cb5f5be-a787-5c7e-a86b-6342b0de5971",
+      "participants": [
+        {
+          "id": "6bf9cffa-33be-52c7-9444-ea9096ea6fe7",
+          "sailorId": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+          "sourceName": "MR. WANNASUT TANGVIMONWUTIWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. WANNASUT TANGVIMONWUTIWONG; historic sail/boat number: 33; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 94.0 and net 66.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 15,
+      "name": "Chiradej Leungthongkam",
+      "sailOrBoardNumber": "THA365",
+      "club": "Sattahip sailing club",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2018,
+      "sourceBirthYear": "2018",
+      "grossScore": 88.0,
+      "nettScore": 69.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "15th",
+        "class": "Optimist Newborn",
+        "sailno": "THA365",
+        "club": "Sattahip sailing club",
+        "helmname": "Chiradej Leungthongkam",
+        "nat": "THA",
+        "yob": "2018",
+        "helmsex": "Male",
+        "r1": "(19.0)",
+        "r2": "12.0",
+        "r3": "14.0",
+        "r4": "19.0",
+        "r5": "12.0",
+        "r6": "12.0",
+        "total": "88.0",
+        "nett": "69.0"
+      },
+      "sailorId": "214e19d2-eca3-4224-a65e-d56249b1e197",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "d3728950-c1a0-5c63-9207-86f191f1dd10",
+      "participants": [
+        {
+          "id": "402aae09-791b-5851-94ec-2adc4ad61e48",
+          "sailorId": "214e19d2-eca3-4224-a65e-d56249b1e197",
+          "sourceName": "Chiradej Leungthongkam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Chiradej Leungthongkam; historic sail/boat number: THA365; club: Sattahip sailing club; nationality: THA; source year/age field: 2018. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 88.0 and net 69.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 16,
+      "name": "MR.THANADON DETHANSATIT",
+      "sailOrBoardNumber": "7",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 101.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "16th",
+        "class": "Optimist Newborn",
+        "sailno": "7",
+        "club": "SST",
+        "helmname": "MR.THANADON DETHANSATIT",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "13.0",
+        "r2": "(28.0 DNC)",
+        "r3": "13.0",
+        "r4": "16.0",
+        "r5": "15.0",
+        "r6": "16.0",
+        "total": "101.0",
+        "nett": "73.0"
+      },
+      "sailorId": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b1388030-7b70-55c2-96a1-930838ae840f",
+      "participants": [
+        {
+          "id": "9c467061-d2d1-5d10-a2c4-903f72773093",
+          "sailorId": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+          "sourceName": "MR.THANADON DETHANSATIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR.THANADON DETHANSATIT; historic sail/boat number: 7; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 101.0 and net 73.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 17,
+      "name": "MR. SORAN GHOSAIRI",
+      "sailOrBoardNumber": "1 RED",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 120.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "17th",
+        "class": "Optimist Newborn",
+        "sailno": "1 RED",
+        "club": "SST",
+        "helmname": "MR. SORAN GHOSAIRI",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "15.0",
+        "r2": "13.0",
+        "r3": "18.0",
+        "r4": "18.0",
+        "r5": "(28.0 DNC)",
+        "r6": "28.0 DNC",
+        "total": "120.0",
+        "nett": "92.0"
+      },
+      "sailorId": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+      "resultId": "9fcdadd5-d3ea-5fc0-b364-eb5d83bb4433",
+      "participants": [
+        {
+          "id": "7eb4a296-f392-514b-9efe-3710cc2e18c0",
+          "sailorId": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+          "sourceName": "MR. SORAN GHOSAIRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. SORAN GHOSAIRI; historic sail/boat number: 1 RED; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 120.0 and net 92.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 18,
+      "name": "Setthawit yodmanee",
+      "sailOrBoardNumber": "181",
+      "club": "yrat",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 120.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "18th",
+        "class": "Optimist Newborn",
+        "sailno": "181",
+        "club": "yrat",
+        "helmname": "Setthawit yodmanee",
+        "nat": "THA",
+        "yob": "2017",
+        "helmsex": "Male",
+        "r1": "20.0",
+        "r2": "(28.0 DNC)",
+        "r3": "16.0",
+        "r4": "22.0",
+        "r5": "17.0",
+        "r6": "17.0",
+        "total": "120.0",
+        "nett": "92.0"
+      },
+      "sailorId": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "6a81b971-9c80-5433-9ba8-81954b0d0996",
+      "participants": [
+        {
+          "id": "eb4e20a7-d8c9-50b9-a174-ab5592181b69",
+          "sailorId": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+          "sourceName": "Setthawit yodmanee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Setthawit yodmanee; historic sail/boat number: 181; club: yrat; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 120.0 and net 92.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 19,
+      "name": "MISS ORNRANATH INTAPAT",
+      "sailOrBoardNumber": "38",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 126.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "19th",
+        "class": "Optimist Newborn",
+        "sailno": "38",
+        "club": "SST",
+        "helmname": "MISS ORNRANATH INTAPAT",
+        "nat": "THA",
+        "yob": "2015",
+        "helmsex": "Female",
+        "r1": "21.0",
+        "r2": "(28.0 DNC)",
+        "r3": "28.0 DNC",
+        "r4": "17.0",
+        "r5": "13.0",
+        "r6": "19.0",
+        "total": "126.0",
+        "nett": "98.0"
+      },
+      "sailorId": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+      "resultId": "e2105407-1376-5266-9610-80905c2a631d",
+      "participants": [
+        {
+          "id": "b629cc55-2da1-5ddb-b6cb-9c8d18e10020",
+          "sailorId": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+          "sourceName": "MISS ORNRANATH INTAPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS ORNRANATH INTAPAT; historic sail/boat number: 38; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 126.0 and net 98.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 20,
+      "name": "MISS THAWAN SRISAYYON",
+      "sailOrBoardNumber": "2",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 126.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "20th",
+        "class": "Optimist Newborn",
+        "sailno": "2",
+        "club": "SST",
+        "helmname": "MISS THAWAN SRISAYYON",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "23.0",
+        "r2": "14.0",
+        "r3": "19.0",
+        "r4": "14.0",
+        "r5": "(28.0 DNC)",
+        "r6": "28.0 DNC",
+        "total": "126.0",
+        "nett": "98.0"
+      },
+      "sailorId": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f0bf5652-3fdc-5335-8084-e1f75bbb0000",
+      "participants": [
+        {
+          "id": "02abf371-c6e7-5011-a46b-c3d771bd0043",
+          "sailorId": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+          "sourceName": "MISS THAWAN SRISAYYON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS THAWAN SRISAYYON; historic sail/boat number: 2; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 126.0 and net 98.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 21,
+      "name": "Thee Parinyanitikun",
+      "sailOrBoardNumber": "6",
+      "club": "SSA",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 133.0,
+      "nettScore": 105.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "21st",
+        "class": "Optimist Newborn",
+        "sailno": "6",
+        "club": "SSA",
+        "helmname": "Thee Parinyanitikun",
+        "nat": "THA",
+        "yob": "2017",
+        "helmsex": "Male",
+        "r1": "22.0",
+        "r2": "(28.0 DNC)",
+        "r3": "28.0 DNC",
+        "r4": "24.0",
+        "r5": "16.0",
+        "r6": "15.0",
+        "total": "133.0",
+        "nett": "105.0"
+      },
+      "sailorId": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "4d3fb70f-1f6b-53ac-a4e7-ac7101c8285e",
+      "participants": [
+        {
+          "id": "8d0d3d66-7fb4-57e4-a7ec-037b7e1e2537",
+          "sailorId": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+          "sourceName": "Thee Parinyanitikun",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thee Parinyanitikun; historic sail/boat number: 6; club: SSA; nationality: THA; source year/age field: 2017. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 133.0 and net 105.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 22,
+      "name": "MISS THATIKA SARANROM",
+      "sailOrBoardNumber": "9",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 142.0,
+      "nettScore": 114.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "22nd",
+        "class": "Optimist Newborn",
+        "sailno": "9",
+        "club": "SST",
+        "helmname": "MISS THATIKA SARANROM",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "17.0",
+        "r2": "16.0",
+        "r3": "(28.0 DNC)",
+        "r4": "25.0",
+        "r5": "28.0 DNC",
+        "r6": "28.0 DNC",
+        "total": "142.0",
+        "nett": "114.0"
+      },
+      "sailorId": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+      "resultId": "6d3832c4-e1d4-5489-8c42-fbfbb2fcfb7a",
+      "participants": [
+        {
+          "id": "816ae87c-cb29-5094-b9ff-78179211b598",
+          "sailorId": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+          "sourceName": "MISS THATIKA SARANROM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS THATIKA SARANROM; historic sail/boat number: 9; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 142.0 and net 114.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 23,
+      "name": "MR. PEEMMAPAT SUEBWONGNAT",
+      "sailOrBoardNumber": "1 BLACK",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 148.0,
+      "nettScore": 120.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "23rd",
+        "class": "Optimist Newborn",
+        "sailno": "1 BLACK",
+        "club": "SST",
+        "helmname": "MR. PEEMMAPAT SUEBWONGNAT",
+        "nat": "THS",
+        "yob": "2015",
+        "helmsex": "Male",
+        "r1": "16.0",
+        "r2": "(28.0 DNC)",
+        "r3": "28.0 DNC",
+        "r4": "20.0",
+        "r5": "28.0 DNC",
+        "r6": "28.0 DNC",
+        "total": "148.0",
+        "nett": "120.0"
+      },
+      "sailorId": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+      "resultId": "ff161a4c-b025-5ed1-b3b8-4749d2e274b9",
+      "participants": [
+        {
+          "id": "1f10efe0-d9bd-51c4-892f-815b786d73ee",
+          "sailorId": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+          "sourceName": "MR. PEEMMAPAT SUEBWONGNAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. PEEMMAPAT SUEBWONGNAT; historic sail/boat number: 1 BLACK; club: SST; nationality: THA; source year/age field: 2015. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 148.0 and net 120.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 24,
+      "name": "MISS NUSAKARN MUSIKABOONLERT",
+      "sailOrBoardNumber": "15",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 157.0,
+      "nettScore": 129.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(28.0 DNC)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "28.0 DNS",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "24th",
+        "class": "Optimist Newborn",
+        "sailno": "15",
+        "club": "SST",
+        "helmname": "MISS NUSAKARN MUSIKABOONLERT",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "18.0",
+        "r2": "(28.0 DNC)",
+        "r3": "28.0 DNS",
+        "r4": "27.0",
+        "r5": "28.0 DNC",
+        "r6": "28.0 DNC",
+        "total": "157.0",
+        "nett": "129.0"
+      },
+      "sailorId": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+      "resultId": "9465b833-2749-5cef-a732-a87a8ea58c57",
+      "participants": [
+        {
+          "id": "59f71d12-ad53-562c-b99a-8d7a1742d3f5",
+          "sailorId": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+          "sourceName": "MISS NUSAKARN MUSIKABOONLERT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS NUSAKARN MUSIKABOONLERT; historic sail/boat number: 15; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 157.0 and net 129.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 25,
+      "name": "MISS JIRA MANOMAIPHAN",
+      "sailOrBoardNumber": "11",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 161.0,
+      "nettScore": 133.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "25th",
+        "class": "Optimist Newborn",
+        "sailno": "11",
+        "club": "SST",
+        "helmname": "MISS JIRA MANOMAIPHAN",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1": "(28.0 DNF)",
+        "r2": "28.0 DNC",
+        "r3": "28.0 DNC",
+        "r4": "21.0",
+        "r5": "28.0 DNC",
+        "r6": "28.0 DNC",
+        "total": "161.0",
+        "nett": "133.0"
+      },
+      "sailorId": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+      "resultId": "d5ce4b46-3c22-58f1-ba20-ed93e1c781d0",
+      "participants": [
+        {
+          "id": "e3b8148d-570e-5e41-8347-c2d6d662aaf0",
+          "sailorId": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+          "sourceName": "MISS JIRA MANOMAIPHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MISS JIRA MANOMAIPHAN; historic sail/boat number: 11; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 161.0 and net 133.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 26,
+      "name": "MR. TRAIKHUN TONGLUANG",
+      "sailOrBoardNumber": "28",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 163.0,
+      "nettScore": 135.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "28.0 DNS",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "26th",
+        "class": "Optimist Newborn",
+        "sailno": "28",
+        "club": "SST",
+        "helmname": "MR. TRAIKHUN TONGLUANG",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "(28.0 DNF)",
+        "r2": "28.0 DNC",
+        "r3": "28.0 DNS",
+        "r4": "23.0",
+        "r5": "28.0 DNC",
+        "r6": "28.0 DNC",
+        "total": "163.0",
+        "nett": "135.0"
+      },
+      "sailorId": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+      "resultId": "9bf5446d-0ca1-5c6f-8b8a-c48185e24721",
+      "participants": [
+        {
+          "id": "d5402524-3105-518a-a070-268b9913d319",
+          "sailorId": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+          "sourceName": "MR. TRAIKHUN TONGLUANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. TRAIKHUN TONGLUANG; historic sail/boat number: 28; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 163.0 and net 135.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "Optimist",
+      "division": "Newborn",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 4
+      },
+      "rank": 27,
+      "name": "MR. CHAIMONGKON PIROM",
+      "sailOrBoardNumber": "1 GREEN",
+      "club": "SST",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 166.0,
+      "nettScore": 138.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "28.0 DNC",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "27th",
+        "class": "Optimist Newborn",
+        "sailno": "1 GREEN",
+        "club": "SST",
+        "helmname": "MR. CHAIMONGKON PIROM",
+        "nat": "THA",
+        "yob": "2016",
+        "helmsex": "Male",
+        "r1": "(28.0 DNF)",
+        "r2": "28.0 DNC",
+        "r3": "28.0 DNC",
+        "r4": "26.0",
+        "r5": "28.0 DNC",
+        "r6": "28.0 DNC",
+        "total": "166.0",
+        "nett": "138.0"
+      },
+      "sailorId": "586f049f-8f51-50fe-9aa0-c059c6898071",
+      "resultId": "a9ece0d7-2781-5581-9376-143bccac7b67",
+      "participants": [
+        {
+          "id": "919ab667-2eab-591d-8c11-66a9714dff58",
+          "sailorId": "586f049f-8f51-50fe-9aa0-c059c6898071",
+          "sourceName": "MR. CHAIMONGKON PIROM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MR. CHAIMONGKON PIROM; historic sail/boat number: 1 GREEN; club: SST; nationality: THA; source year/age field: 2016. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 166.0 and net 138.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 27,
+  "deferredEntryCount": 0,
+  "profilePreflight": [
+    {
+      "id": "1e889e8d-dac7-4f91-a542-733afdadf74a",
+      "club": "YRAT",
+      "name": "Natkritta Boonsang",
+      "gender": "Female",
+      "handle": "natkritta-boonsang-sbmfkm6",
+      "birthYear": 2017,
+      "sailNumber": "1478",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "57afc0b5-a27a-486a-84e1-ef59120d492c",
+      "club": "Imported official result",
+      "name": "Pavarisa Kaewlek",
+      "gender": "F",
+      "handle": "asian-unk-pavarisa-k-ab0677",
+      "birthYear": null,
+      "sailNumber": "1953",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "324e747a-fbc3-429c-adaf-a96431a1cc73",
+      "club": "Imported official result",
+      "name": "Pawnrapat Meewuttisom",
+      "gender": "F",
+      "handle": "asian-unk-pawnrapat--52be9b",
+      "birthYear": null,
+      "sailNumber": "695",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+      "club": "ACDC.SC",
+      "name": "Chattapat Somprasong",
+      "gender": "Male",
+      "handle": "chattapat-somprasong-yhx7ypz",
+      "birthYear": 2015,
+      "sailNumber": "1234",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+      "club": "YRAT",
+      "name": "Setthawit Yodmanee",
+      "gender": "Male",
+      "handle": "setthawit-yodmanee-jdvl8az",
+      "birthYear": 2017,
+      "sailNumber": "878",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "214e19d2-eca3-4224-a65e-d56249b1e197",
+      "club": "YRAT",
+      "name": "Chiradej Leungthongkam",
+      "gender": "Male",
+      "handle": "chiradej-leungthongkam-kro1ws3",
+      "birthYear": 2018,
+      "sailNumber": "365",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "768b3680-930d-4a1c-82d9-5dea9717701a",
+      "club": "SSA",
+      "name": "Dhan Chintanaseri Suksantinunt",
+      "gender": "Male",
+      "handle": "dhan-chintanaseri-suksantinunt-3pq1rbq",
+      "birthYear": 2016,
+      "sailNumber": "1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+      "club": "SSA",
+      "name": "Thee Parinyanitikun",
+      "gender": "Male",
+      "handle": "thee-parinyanitikun-iopp2jx",
+      "birthYear": 2017,
+      "sailNumber": "199",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e6346805-2d51-49f8-acfb-b6bf1f1afc47",
+      "club": "YRAT",
+      "name": "Thanchanok Thamajaruk",
+      "gender": "Female",
+      "handle": "thanchanok-thamajaruk-9yyeov5",
+      "birthYear": 2015,
+      "sailNumber": "226",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+      "club": "SSA",
+      "name": "Narad Promjit",
+      "gender": "F",
+      "handle": "narad-promjit-thai26-0afe2e",
+      "birthYear": null,
+      "sailNumber": "216",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+      "club": "SST",
+      "name": "Thanaphol Lertrungamorn",
+      "gender": "M",
+      "handle": "thanaphol-lertrungamorn-tnc26-0ae5e520",
+      "birthYear": null,
+      "sailNumber": "THA1193",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "34ccfd20-b960-40f5-a0af-f869921ee415",
+      "club": "SST",
+      "name": "Alex James De Rennes",
+      "gender": "M",
+      "handle": "alex-james-de-rennes-tnc26-34ccfd20",
+      "birthYear": null,
+      "sailNumber": "2015",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+      "club": "SST",
+      "name": "Thawan Srisayyon",
+      "gender": "F",
+      "handle": "thawan-srisayyon-tnc26-e6546dfe",
+      "birthYear": null,
+      "sailNumber": "39",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+      "club": "SST",
+      "name": "Thanadon Dethansatit",
+      "gender": "M",
+      "handle": "thanadon-dethansatit-tnc26-95cd4a20",
+      "birthYear": null,
+      "sailNumber": "1291",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+      "club": "SST",
+      "name": "Arissara Ratanaarporn",
+      "gender": "F",
+      "handle": "arissara-ratanaarporn-tnc26-dcc276c2",
+      "birthYear": null,
+      "sailNumber": "4519",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+      "name": "Lapatrada Boonsopawong",
+      "handle": "lapatrada-boonsopawong-sr26-6da26b",
+      "sailNumber": "THA1193",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+      "name": "Athitach Panya",
+      "handle": "athitach-panya-sr26-30da5d",
+      "sailNumber": "THA4519",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+      "name": "Tavin Charusadhirakul",
+      "handle": "tavin-charusadhirakul-sr26-d7be9d",
+      "sailNumber": "14",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+      "name": "Wannasut Tangvimonwutiwong",
+      "handle": "wannasut-tangvimonwutiwong-sr26-78011f",
+      "sailNumber": "33",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+      "name": "Peemmapat Suebwongnat",
+      "handle": "peemmapat-suebwongnat-sr26-f136e4",
+      "sailNumber": "13",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "586f049f-8f51-50fe-9aa0-c059c6898071",
+      "name": "Chaimongkon Pirom",
+      "handle": "chaimongkon-pirom-sr26-586f04",
+      "sailNumber": "17",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+      "name": "Ornranath Intapat",
+      "handle": "ornranath-intapat-sr26-982f68",
+      "sailNumber": "39",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+      "name": "Traikhun Tonglung",
+      "handle": "traikhun-tonglung-sr26-17c135",
+      "sailNumber": "THA3332",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+      "name": "Thatika Saranrom",
+      "handle": "thatika-saranrom-sr26-bd4a51",
+      "sailNumber": "1",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+      "name": "Soran Ghosairi",
+      "handle": "soran-ghosairi-sr26-233c25",
+      "sailNumber": "10",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+      "name": "Jira Manomaiphan",
+      "handle": "jira-manomaiphan-sr26-8a225d",
+      "sailNumber": "3",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    },
+    {
+      "id": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+      "name": "Nusakarn Musikaboonlert",
+      "handle": "nusakarn-musikaboonlert-sr26-b47d24",
+      "sailNumber": "28",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SST",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 1,
+        "sourceName": "PAVARISA KAEWLEK",
+        "sailorId": "57afc0b5-a27a-486a-84e1-ef59120d492c",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 2,
+        "sourceName": "Pawnrapat Meewuttisom",
+        "sailorId": "324e747a-fbc3-429c-adaf-a96431a1cc73",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 3,
+        "sourceName": "MR. ALEX JAMES DE RENNES",
+        "sailorId": "34ccfd20-b960-40f5-a0af-f869921ee415",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 4,
+        "sourceName": "Dhan Chintanaseri Suksantinunt",
+        "sailorId": "768b3680-930d-4a1c-82d9-5dea9717701a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 5,
+        "sourceName": "CHATTAPAT SOMPRASONG",
+        "sailorId": "1b6eb642-a669-4bdc-8f1f-1d01d7b7e41e",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 6,
+        "sourceName": "Natkritta Boonsang",
+        "sailorId": "1e889e8d-dac7-4f91-a542-733afdadf74a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 7,
+        "sourceName": "MR. THANAPHOL LERTRUNGAMORN",
+        "sailorId": "0ae5e520-693e-4437-8595-d3c9f2f66a5a",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 8,
+        "sourceName": "MR. TAVIN CHARUSADHIRAKUL",
+        "sailorId": "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 9,
+        "sourceName": "Narad Promjit",
+        "sailorId": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 10,
+        "sourceName": "MISS ARISSARA RATANA- ARPORN",
+        "sailorId": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 11,
+        "sourceName": "MISS LAPATRADA BOONSOPAWONG",
+        "sailorId": "6da26bf5-4240-5aa4-9379-b39438d4efa1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 12,
+        "sourceName": "MR. ATHITACH PANYA",
+        "sailorId": "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 13,
+        "sourceName": "Thanchanok Thammajaruk",
+        "sailorId": "e6346805-2d51-49f8-acfb-b6bf1f1afc47",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 14,
+        "sourceName": "MR. WANNASUT TANGVIMONWUTIWONG",
+        "sailorId": "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 15,
+        "sourceName": "Chiradej Leungthongkam",
+        "sailorId": "214e19d2-eca3-4224-a65e-d56249b1e197",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 16,
+        "sourceName": "MR.THANADON DETHANSATIT",
+        "sailorId": "95cd4a20-3be1-4292-8e31-f568e4937f12",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 17,
+        "sourceName": "MR. SORAN GHOSAIRI",
+        "sailorId": "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 18,
+        "sourceName": "Setthawit yodmanee",
+        "sailorId": "8c67fc05-1caf-434c-88a5-71ad35c4fba0",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 19,
+        "sourceName": "MISS ORNRANATH INTAPAT",
+        "sailorId": "982f681b-af4b-5cdd-80e6-9380f284ce41",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 20,
+        "sourceName": "MISS THAWAN SRISAYYON",
+        "sailorId": "e6546dfe-c32b-4bac-bde7-a6e862a0e6dc",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 21,
+        "sourceName": "Thee Parinyanitikun",
+        "sailorId": "f49c46b2-1104-4950-ae41-4c378e94cf09",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 22,
+        "sourceName": "MISS THATIKA SARANROM",
+        "sailorId": "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 23,
+        "sourceName": "MR. PEEMMAPAT SUEBWONGNAT",
+        "sailorId": "f136e4db-dae9-50d4-8459-8d1b79a985af",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 24,
+        "sourceName": "MISS NUSAKARN MUSIKABOONLERT",
+        "sailorId": "b47d2495-8950-5246-88fa-99fa5c61bc36",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 25,
+        "sourceName": "MISS JIRA MANOMAIPHAN",
+        "sailorId": "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 26,
+        "sourceName": "MR. TRAIKHUN TONGLUANG",
+        "sailorId": "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-optimist-newborn",
+        "rank": 27,
+        "sourceName": "MR. CHAIMONGKON PIROM",
+        "sailorId": "586f049f-8f51-50fe-9aa0-c059c6898071",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

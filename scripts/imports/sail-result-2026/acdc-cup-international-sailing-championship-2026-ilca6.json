@@ -1,0 +1,1320 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 200613,
+    "url": "https://www.racingrulesofsailing.org/documents/200613",
+    "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 2,
+    "pages": [
+      2,
+      3
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=ACDC%20Cup%20International%20Sailing%20Championship%202026"
+  },
+  "event": {
+    "id": "74dc5740-d039-542d-94c3-53eb9d47d68a",
+    "slug": "acdc-cup-international-sailing-championship-2026",
+    "name": "ACDC Cup International Sailing Championship 2026",
+    "startDate": "2026-07-29",
+    "endDate": "2026-08-01",
+    "venue": "Sattahip, Chonburi, Thailand",
+    "organizer": "Air and Coastal Defense Command Sailing Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": true
+  },
+  "sheet": {
+    "id": "86e147fd-aad6-5047-a274-8bdeb1c69068",
+    "slug": "acdc-cup-international-sailing-championship-2026-ilca6",
+    "name": "ACDC Cup International Sailing Championship 2026 — ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 12,
+    "totalFleetSize": 8,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 1,
+      "name": "PUTTARAKSA IMRAKSA",
+      "sailOrBoardNumber": "22266",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 15.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "track": "E1656",
+        "class": "ILCA 6",
+        "sailno": "22266",
+        "club": "YRAT",
+        "helmname": "PUTTARAKSA IMRAKSA",
+        "nat": "",
+        "yob": "2006",
+        "sex": "Female",
+        "r1": "(2.0)",
+        "r2": "(2.0)",
+        "r3": "1.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "1.0",
+        "r7": "1.0",
+        "r8": "1.0",
+        "r9": "2.0",
+        "r10": "1.0",
+        "r11": "1.0",
+        "r12": "1.0",
+        "total": "15.0",
+        "nett": "11.0"
+      },
+      "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+      "resultId": "ca1e3eb0-5916-5b46-af22-b3b038a25090",
+      "participants": [
+        {
+          "id": "760e81c3-4fc6-5db6-aa5b-c07644165dc0",
+          "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+          "sourceName": "PUTTARAKSA IMRAKSA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PUTTARAKSA IMRAKSA; historic sail/boat number: 22266; club: YRAT; nationality: THA; source year/age field: 2006. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 15.0 and net 11.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 3,
+      "name": "PATTARAKORN POONPAT",
+      "sailOrBoardNumber": "6",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 38.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "track": "E1647",
+        "class": "ILCA 6",
+        "sailno": "6",
+        "club": "ACDC.SC",
+        "helmname": "PATTARAKORN POONPAT",
+        "nat": "",
+        "yob": "2012",
+        "sex": "Male",
+        "r1": "3.0",
+        "r2": "(4.0)",
+        "r3": "3.0",
+        "r4": "(4.0)",
+        "r5": "2.0",
+        "r6": "3.0",
+        "r7": "3.0",
+        "r8": "4.0",
+        "r9": "3.0",
+        "r10": "4.0",
+        "r11": "2.0",
+        "r12": "3.0",
+        "total": "38.0",
+        "nett": "30.0"
+      },
+      "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "600f7a9f-8def-5435-986b-cb24b400462f",
+      "participants": [
+        {
+          "id": "739f88fa-f9a7-576b-a5d7-97ecbedef959",
+          "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+          "sourceName": "PATTARAKORN POONPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PATTARAKORN POONPAT; historic sail/boat number: 6; club: ACDC.SC; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 38.0 and net 30.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 4,
+      "name": "THITIWORADA JOHNJAITRONG",
+      "sailOrBoardNumber": "190935",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 52.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(9.0 DNC)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "track": "E1659",
+        "class": "ILCA 6",
+        "sailno": "190935",
+        "club": "YRAT",
+        "helmname": "THITIWORADA JOHNJAITRONG",
+        "nat": "",
+        "yob": "2010",
+        "sex": "Female",
+        "r1": "4.0",
+        "r2": "(5.0)",
+        "r3": "5.0",
+        "r4": "(9.0 DNC)",
+        "r5": "3.0",
+        "r6": "4.0",
+        "r7": "4.0",
+        "r8": "3.0",
+        "r9": "5.0",
+        "r10": "3.0",
+        "r11": "3.0",
+        "r12": "4.0",
+        "total": "52.0",
+        "nett": "38.0"
+      },
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "be174277-568a-5289-8793-792107123913",
+      "participants": [
+        {
+          "id": "3ee2d16c-25b2-5056-9699-1319146d93d4",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "THITIWORADA JOHNJAITRONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: THITIWORADA JOHNJAITRONG; historic sail/boat number: 190935; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 52.0 and net 38.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 5,
+      "name": "SUWAPHAK PLUMJIT",
+      "sailOrBoardNumber": "8",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 52.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "5th",
+        "track": "E1657",
+        "class": "ILCA 6",
+        "sailno": "8",
+        "club": "YRAT",
+        "helmname": "SUWAPHAK PLUMJIT",
+        "nat": "",
+        "yob": "2012",
+        "sex": "Female",
+        "r1": "(5.0)",
+        "r2": "3.0",
+        "r3": "4.0",
+        "r4": "2.0",
+        "r5": "4.0",
+        "r6": "(5.0)",
+        "r7": "5.0",
+        "r8": "5.0",
+        "r9": "4.0",
+        "r10": "5.0",
+        "r11": "5.0",
+        "r12": "5.0",
+        "total": "52.0",
+        "nett": "42.0"
+      },
+      "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "aa1650d1-0171-5c60-8242-a1d39f4c3bf9",
+      "participants": [
+        {
+          "id": "035275aa-0254-54ac-8e7c-a420e77794f7",
+          "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+          "sourceName": "SUWAPHAK PLUMJIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: SUWAPHAK PLUMJIT; historic sail/boat number: 8; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 52.0 and net 42.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 6,
+      "name": "PICHALEE HUNGSAVANUS",
+      "sailOrBoardNumber": "217445",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 71.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "6th",
+        "track": "E1686",
+        "class": "ILCA 6",
+        "sailno": "217445",
+        "club": "ACDC.SC",
+        "helmname": "PICHALEE HUNGSAVANUS",
+        "nat": "",
+        "yob": "2010",
+        "sex": "Female",
+        "r1": "(6.0)",
+        "r2": "(6.0)",
+        "r3": "6.0",
+        "r4": "5.0",
+        "r5": "6.0",
+        "r6": "6.0",
+        "r7": "6.0",
+        "r8": "6.0",
+        "r9": "6.0",
+        "r10": "6.0",
+        "r11": "6.0",
+        "r12": "6.0",
+        "total": "71.0",
+        "nett": "59.0"
+      },
+      "sailorId": "07faac7e-53ea-54b3-8d4d-8077fb2e2a4c",
+      "resultId": "a45253b9-5ceb-51b8-8f10-a64ce27fb873",
+      "participants": [
+        {
+          "id": "faa9cbda-c601-5faa-8d5f-27d4c148c534",
+          "sailorId": "07faac7e-53ea-54b3-8d4d-8077fb2e2a4c",
+          "sourceName": "PICHALEE HUNGSAVANUS",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PICHALEE HUNGSAVANUS; historic sail/boat number: 217445; club: ACDC.SC; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 71.0 and net 59.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 7,
+      "name": "TARATORN SUCONDRAMARN",
+      "sailOrBoardNumber": "220240",
+      "club": "ACDC.SC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": null,
+      "grossScore": 93.0,
+      "nettScore": 75.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(9.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(9.0 RET)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "9.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "9.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "9.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "7th",
+        "track": "E1658",
+        "class": "ILCA 6",
+        "sailno": "220240",
+        "club": "ACDC.SC",
+        "helmname": "TARATORN SUCONDRAMARN",
+        "nat": "",
+        "yob": "",
+        "sex": "Male",
+        "r1": "(9.0 DNC)",
+        "r2": "(9.0 RET)",
+        "r3": "9.0 DNC",
+        "r4": "6.0",
+        "r5": "7.0",
+        "r6": "9.0 DNC",
+        "r7": "9.0 DNC",
+        "r8": "7.0",
+        "r9": "7.0",
+        "r10": "7.0",
+        "r11": "7.0",
+        "r12": "7.0",
+        "total": "93.0",
+        "nett": "75.0"
+      },
+      "sailorId": "389cee00-cbb6-5b54-80ed-5d814f86701d",
+      "resultId": "bd5288af-2d46-5b0f-a2e5-a9e998f573fe",
+      "participants": [
+        {
+          "id": "05f66238-45c4-59ee-8b89-4e711b147edc",
+          "sailorId": "389cee00-cbb6-5b54-80ed-5d814f86701d",
+          "sourceName": "TARATORN SUCONDRAMARN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: TARATORN SUCONDRAMARN; historic sail/boat number: 220240; club: ACDC.SC; nationality: THA; source year/age field: blank. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 93.0 and net 75.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "acdc-cup-international-sailing-championship-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 200613,
+        "url": "https://www.racingrulesofsailing.org/documents/200613",
+        "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 3
+      },
+      "rank": 8,
+      "name": "MOHAMMAD SYAHIERADHAM BIN RAIMAN",
+      "sailOrBoardNumber": "219283",
+      "club": "Sail'a'",
+      "school": null,
+      "nationality": "MAS",
+      "gender": "M",
+      "officialBirthYear": 2007,
+      "sourceBirthYear": "2007",
+      "grossScore": 108.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(9.0 DSQ)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(9.0 DSQ)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 9.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "9.0 DSQ",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "track": "E1654",
+        "class": "ILCA 6",
+        "sailno": "219283",
+        "club": "Sail'a'",
+        "helmname": "MOHAMMAD SYAHIERADHAM BIN RAIMAN",
+        "nat": "",
+        "yob": "2007",
+        "sex": "Male",
+        "r1": "(9.0 DSQ)",
+        "r2": "(9.0 DSQ)",
+        "r3": "9.0 DSQ",
+        "r4": "9.0 DSQ",
+        "r5": "9.0 DSQ",
+        "r6": "9.0 DSQ",
+        "r7": "9.0 DSQ",
+        "r8": "9.0 DSQ",
+        "r9": "9.0 DSQ",
+        "r10": "9.0 DSQ",
+        "r11": "9.0 DSQ",
+        "r12": "9.0 DSQ",
+        "total": "108.0",
+        "nett": "90.0"
+      },
+      "sailorId": "76b64bcc-6b88-515a-8759-89e4c015ca3d",
+      "resultId": "f977fdf9-a807-5a09-9565-9a6d5b053ad1",
+      "participants": [
+        {
+          "id": "e42785fb-1e97-5442-9950-69bc6ec15a2e",
+          "sailorId": "76b64bcc-6b88-515a-8759-89e4c015ca3d",
+          "sourceName": "MOHAMMAD SYAHIERADHAM BIN RAIMAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: MOHAMMAD SYAHIERADHAM BIN RAIMAN; historic sail/boat number: 219283; club: Sail'a'; nationality: MAS; source year/age field: 2007. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12. Every score, code and discard preserved; gross 108.0 and net 90.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings. Partial import: 7 of 8 entries imported; 1 awaiting identity review.",
+  "importedEntryCount": 7,
+  "deferredEntryCount": 1,
+  "profilePreflight": [
+    {
+      "id": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "club": "YRAT",
+      "name": "Suwaphak Plumjit",
+      "gender": "Female",
+      "handle": "suwaphak-plumjit-8glzaqs",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222589"
+    },
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "Female",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "club": "ACDC.SC",
+      "name": "Pattarakorn Poonpat",
+      "gender": null,
+      "handle": "pattarakorn-poonpat-oe44pao",
+      "birthYear": 2012,
+      "sailNumber": "88",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "5191c60e-3586-5a0d-b103-5512d9e35440",
+      "name": "Puttaraksa Imraksa",
+      "handle": "puttaraksa-imraksa-sr26-5191c6",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    },
+    {
+      "id": "07faac7e-53ea-54b3-8d4d-8077fb2e2a4c",
+      "name": "Pichalee Hungsavanus",
+      "handle": "pichalee-hungsavanus-sr26-07faac",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC.SC",
+      "birthYear": null
+    },
+    {
+      "id": "389cee00-cbb6-5b54-80ed-5d814f86701d",
+      "name": "Taratorn Sucondramarn",
+      "handle": "taratorn-sucondramarn-sr26-389cee",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "ACDC.SC",
+      "birthYear": null
+    },
+    {
+      "id": "76b64bcc-6b88-515a-8759-89e4c015ca3d",
+      "name": "Mohammad Syahieradham Bin Raiman",
+      "handle": "mohammad-syahieradham-bin-raiman-sr26-76b64b",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "MAS",
+      "gender": "M",
+      "club": "Sail'a'",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 1,
+        "sourceName": "PUTTARAKSA IMRAKSA",
+        "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 3,
+        "sourceName": "PATTARAKORN POONPAT",
+        "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 4,
+        "sourceName": "THITIWORADA JOHNJAITRONG",
+        "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 5,
+        "sourceName": "SUWAPHAK PLUMJIT",
+        "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 6,
+        "sourceName": "PICHALEE HUNGSAVANUS",
+        "sailorId": "07faac7e-53ea-54b3-8d4d-8077fb2e2a4c",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 7,
+        "sourceName": "TARATORN SUCONDRAMARN",
+        "sailorId": "389cee00-cbb6-5b54-80ed-5d814f86701d",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+        "rank": 8,
+        "sourceName": "MOHAMMAD SYAHIERADHAM BIN RAIMAN",
+        "sailorId": "76b64bcc-6b88-515a-8759-89e4c015ca3d",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": [
+    {
+      "sheet": "acdc-cup-international-sailing-championship-2026-ilca6",
+      "rank": 2,
+      "name": "NUR HAFIZAHANANI BINTI ZAILAN",
+      "sail": "224712",
+      "reason": "Deferred identity review; excluded per user instruction to import unaffected results first."
+    }
+  ]
+}

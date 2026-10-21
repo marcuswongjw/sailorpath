@@ -1,0 +1,813 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 180534,
+    "url": "https://www.racingrulesofsailing.org/documents/180534",
+    "title": "Official capitan-s-cup-bc88 result document 180534",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Capitan%27s%20Cup%20BC88"
+  },
+  "event": {
+    "id": "7d19a7bb-7d99-5e90-9010-bbe7ff188710",
+    "slug": "capitans-cup-bc88-2026",
+    "name": "Capitan's Cup BC88 2026",
+    "startDate": "2026-03-21",
+    "endDate": "2026-03-23",
+    "venue": "Boat Club 88 (Thailand), Sittahip, Chonburi",
+    "organizer": "Boat Club 88",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "643f5f8e-5d0f-578f-9dc9-ce4420c1ba9a",
+    "slug": "capitans-cup-bc88-2026-ilca6",
+    "name": "Capitan's Cup BC88 2026 — ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 5,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "Noppassorn Khunboonjan",
+      "sailOrBoardNumber": "9",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 17.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": "OCS",
+          "discarded": true,
+          "raw": "(6.0 OCS)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "ILCA 6",
+        "sailno": "9",
+        "club": "YRAT",
+        "helmname": "Noppassorn Khunboonjan",
+        "nat": "",
+        "yob": "2006",
+        "helmsex": "Female",
+        "r1": "(6.0 OCS)",
+        "r2": "1.0",
+        "r3": "1.0",
+        "r4": "2.0",
+        "r5": "2.0",
+        "r6": "1.0",
+        "r7": "2.0",
+        "r8": "1.0",
+        "r9": "1.0",
+        "total": "17.0",
+        "nett": "11.0"
+      },
+      "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "ad8a2d48-f9f1-5e95-bd04-a1eda8a80f3e",
+      "participants": [
+        {
+          "id": "9b5b3ac2-056f-5460-b6c6-89ddb0e57054",
+          "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+          "sourceName": "Noppassorn Khunboonjan",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Noppassorn Khunboonjan; historic sail/boat number: 9; club: YRAT; nationality: THA; source year/age field: 2006. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 17.0 and net 11.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "Thorfun Boonnak",
+      "sailOrBoardNumber": "THA22266",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 14.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "ILCA 6",
+        "sailno": "THA22266",
+        "club": "YRAT",
+        "helmname": "Thorfun Boonnak",
+        "nat": "",
+        "yob": "2005",
+        "helmsex": "Female",
+        "r1": "1.0",
+        "r2": "(2.0)",
+        "r3": "2.0",
+        "r4": "1.0",
+        "r5": "1.0",
+        "r6": "2.0",
+        "r7": "1.0",
+        "r8": "2.0",
+        "r9": "2.0",
+        "total": "14.0",
+        "nett": "12.0"
+      },
+      "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "resultId": "50224820-c999-5b16-bcf0-cca0cc27b440",
+      "participants": [
+        {
+          "id": "9b1af615-078f-54e4-be73-a38f0422495b",
+          "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+          "sourceName": "Thorfun Boonnak",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thorfun Boonnak; historic sail/boat number: THA22266; club: YRAT; nationality: THA; source year/age field: 2005. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 14.0 and net 12.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "Nichawan Nithithongsakul",
+      "sailOrBoardNumber": "1",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 26.0,
+      "nettScore": 23.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "ILCA 6",
+        "sailno": "1",
+        "club": "YRAT",
+        "helmname": "Nichawan Nithithongsakul",
+        "nat": "",
+        "yob": "2008",
+        "helmsex": "Female",
+        "r1": "2.0",
+        "r2": "(3.0)",
+        "r3": "3.0",
+        "r4": "3.0",
+        "r5": "3.0",
+        "r6": "3.0",
+        "r7": "3.0",
+        "r8": "3.0",
+        "r9": "3.0",
+        "total": "26.0",
+        "nett": "23.0"
+      },
+      "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+      "resultId": "f3a7b751-b49e-59fd-877f-b8061b2a7064",
+      "participants": [
+        {
+          "id": "9c48621c-dad3-55cd-a9bd-329b279d244f",
+          "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+          "sourceName": "Nichawan Nithithongsakul",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Nichawan Nithithongsakul; historic sail/boat number: 1; club: YRAT; nationality: THA; source year/age field: 2008. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 26.0 and net 23.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "Marion Grace Montgomery",
+      "sailOrBoardNumber": "222660",
+      "club": "YRAT/RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 54.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "class": "ILCA 6",
+        "sailno": "222660",
+        "club": "YRAT/RVYC",
+        "helmname": "Marion Grace Montgomery",
+        "nat": "",
+        "yob": "2008",
+        "helmsex": "Female",
+        "r1": "(6.0 DNC)",
+        "r2": "6.0 DNC",
+        "r3": "6.0 DNC",
+        "r4": "6.0 DNC",
+        "r5": "6.0 DNC",
+        "r6": "6.0 DNC",
+        "r7": "6.0 DNC",
+        "r8": "6.0 DNC",
+        "r9": "6.0 DNC",
+        "total": "54.0",
+        "nett": "48.0"
+      },
+      "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "resultId": "5dd7d9a4-6551-522a-ac1b-a4b23fd373d6",
+      "participants": [
+        {
+          "id": "376073dc-f556-5a48-ba01-b8d60010f57b",
+          "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+          "sourceName": "Marion Grace Montgomery",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Marion Grace Montgomery; historic sail/boat number: 222660; club: YRAT/RVYC; nationality: THA; source year/age field: 2008. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 54.0 and net 48.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "capitan-s-cup-bc88",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 180534,
+        "url": "https://www.racingrulesofsailing.org/documents/180534",
+        "title": "Official capitan-s-cup-bc88 result document 180534",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "Patcharee Sringam",
+      "sailOrBoardNumber": "225984",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2003,
+      "sourceBirthYear": "2003",
+      "grossScore": 54.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6.0 DNC)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6.0 DNC",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "class": "ILCA 6",
+        "sailno": "225984",
+        "club": "YRAT",
+        "helmname": "Patcharee Sringam",
+        "nat": "",
+        "yob": "2003",
+        "helmsex": "Female",
+        "r1": "(6.0 DNC)",
+        "r2": "6.0 DNC",
+        "r3": "6.0 DNC",
+        "r4": "6.0 DNC",
+        "r5": "6.0 DNC",
+        "r6": "6.0 DNC",
+        "r7": "6.0 DNC",
+        "r8": "6.0 DNC",
+        "r9": "6.0 DNC",
+        "total": "54.0",
+        "nett": "48.0"
+      },
+      "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "resultId": "7a25d62b-56b3-5d55-8615-75bb6e116a7c",
+      "participants": [
+        {
+          "id": "aa4babcf-53d9-56e7-a2bc-6ca4b95b526b",
+          "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+          "sourceName": "Patcharee Sringam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Patcharee Sringam; historic sail/boat number: 225984; club: YRAT; nationality: THA; source year/age field: 2003. Source race labels: R1, R2, R3, R4, R5, R6, R7, R8, R9. Every score, code and discard preserved; gross 54.0 and net 48.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 5,
+  "deferredEntryCount": 0,
+  "profilePreflight": [
+    {
+      "id": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "club": "Yacht Racing Association of Thailand",
+      "name": "Noppassorn Khunboonjan",
+      "gender": "F",
+      "handle": "noppassorn-khunboonjan-69917e4211",
+      "birthYear": null,
+      "sailNumber": "217427",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+      "name": "Nichawan Nithithongsakul",
+      "handle": "nichawan-nithithongsakul-sr26-846c6c",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    },
+    {
+      "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "name": "Thorfun Boonnak",
+      "handle": "thorfun-boonnak-sr26-5cfe0b",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    },
+    {
+      "id": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "name": "Marion Grace Montgomery",
+      "handle": "marion-grace-montgomery-sr26-0f33df",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT/RVYC",
+      "birthYear": null
+    },
+    {
+      "id": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "name": "Patcharee Sringam",
+      "handle": "patcharee-sringam-sr26-7dbdb6",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca6",
+        "rank": 1,
+        "sourceName": "Noppassorn Khunboonjan",
+        "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca6",
+        "rank": 2,
+        "sourceName": "Thorfun Boonnak",
+        "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca6",
+        "rank": 3,
+        "sourceName": "Nichawan Nithithongsakul",
+        "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca6",
+        "rank": 4,
+        "sourceName": "Marion Grace Montgomery",
+        "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "capitans-cup-bc88-2026-ilca6",
+        "rank": 4,
+        "sourceName": "Patcharee Sringam",
+        "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}

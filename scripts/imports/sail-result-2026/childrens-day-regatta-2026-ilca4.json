@@ -1,0 +1,2532 @@
+{
+  "batch": "sail-result-2026-2026-10-22",
+  "officialSource": {
+    "id": 172817,
+    "url": "https://www.racingrulesofsailing.org/documents/172817",
+    "title": "Official children-s-day-regatta-2026 result document 172817",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=Children%27s%20Day%20Regatta%202026"
+  },
+  "event": {
+    "id": "cbe1b00c-fd6c-549e-b7d3-7a87f955963d",
+    "slug": "childrens-day-regatta-2026",
+    "name": "Children's Day Regatta 2026",
+    "startDate": "2026-01-16",
+    "endDate": "2026-01-18",
+    "venue": "Yacht Racing Association Of Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "sheet": {
+    "id": "06aa8aa8-e0ba-5d2f-b491-8c7ceec90ad8",
+    "slug": "childrens-day-regatta-2026-ilca4",
+    "name": "Children's Day Regatta 2026 — ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 20,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 1,
+      "name": "PACHARAPOL. RUMVISAI",
+      "sailOrBoardNumber": "THA216489",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 34.0,
+      "nettScore": 13.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(21.0 UFD)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "1st",
+        "class": "ILCA 4",
+        "sailno": "THA216489",
+        "club": "YRAT",
+        "helmname": "PACHARAPOL. RUMVISAI",
+        "nat": "THA",
+        "yob": "2010",
+        "helmsex": "Male",
+        "r1": "1.0",
+        "r2": "2.0",
+        "r3": "6.0",
+        "r4": "1.0",
+        "r5": "(21.0 UFD)",
+        "r6": "3.0",
+        "total": "34.0",
+        "nett": "13.0"
+      },
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "4bcdcdb7-1431-599a-bdd4-4cb2acf79a70",
+      "participants": [
+        {
+          "id": "278fa94c-73b0-538e-8f63-14bbdd7e09e2",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL. RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PACHARAPOL. RUMVISAI; historic sail/boat number: THA216489; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 34.0 and net 13.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 2,
+      "name": "Thanvisit Kitchanasiri",
+      "sailOrBoardNumber": "226395",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 26.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "2nd",
+        "class": "ILCA 4",
+        "sailno": "226395",
+        "club": "RVYC",
+        "helmname": "Thanvisit Kitchanasiri",
+        "nat": "THA",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "2.0",
+        "r2": "1.0",
+        "r3": "4.0",
+        "r4": "5.0",
+        "r5": "(10.0)",
+        "r6": "4.0",
+        "total": "26.0",
+        "nett": "16.0"
+      },
+      "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "9e6d4844-5ef8-5b04-afde-e8081c0eed24",
+      "participants": [
+        {
+          "id": "70577f39-a45e-5e2c-ab01-ff27e95d621c",
+          "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+          "sourceName": "Thanvisit Kitchanasiri",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thanvisit Kitchanasiri; historic sail/boat number: 226395; club: RVYC; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 26.0 and net 16.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 3,
+      "name": "KITCHAKHUN SOMKHANNGOEN",
+      "sailOrBoardNumber": "228917",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 27.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "3rd",
+        "class": "ILCA 4",
+        "sailno": "228917",
+        "club": "YRAT",
+        "helmname": "KITCHAKHUN SOMKHANNGOEN",
+        "nat": "THA",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "3.0",
+        "r2": "(9.0)",
+        "r3": "2.0",
+        "r4": "4.0",
+        "r5": "3.0",
+        "r6": "6.0",
+        "total": "27.0",
+        "nett": "18.0"
+      },
+      "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "f27fee99-6318-58fc-801b-e33b4674055c",
+      "participants": [
+        {
+          "id": "0a1942f4-65ba-5fa7-9e8a-1868be78eecf",
+          "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+          "sourceName": "KITCHAKHUN SOMKHANNGOEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: KITCHAKHUN SOMKHANNGOEN; historic sail/boat number: 228917; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 27.0 and net 18.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 4,
+      "name": "PINCHANOK KLAYSOMBOON",
+      "sailOrBoardNumber": "THA212687",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 27.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "4th",
+        "class": "ILCA 4",
+        "sailno": "THA212687",
+        "club": "YRAT",
+        "helmname": "PINCHANOK KLAYSOMBOON",
+        "nat": "THA",
+        "yob": "2010",
+        "helmsex": "Female",
+        "r1": "6.0",
+        "r2": "4.0",
+        "r3": "3.0",
+        "r4": "3.0",
+        "r5": "2.0",
+        "r6": "(9.0)",
+        "total": "27.0",
+        "nett": "18.0"
+      },
+      "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "resultId": "bc227f7e-31ea-5708-884c-c14a140ce8c8",
+      "participants": [
+        {
+          "id": "bea5e5a8-a174-55dc-9552-5cd6f287fe15",
+          "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+          "sourceName": "PINCHANOK KLAYSOMBOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PINCHANOK KLAYSOMBOON; historic sail/boat number: THA212687; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 27.0 and net 18.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 5,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "225985",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 32.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "5th",
+        "class": "ILCA 4",
+        "sailno": "225985",
+        "club": "YRAT",
+        "helmname": "PAILIN JAROENPON",
+        "nat": "THA",
+        "yob": "2010",
+        "helmsex": "Female",
+        "r1": "5.0",
+        "r2": "5.0",
+        "r3": "1.0",
+        "r4": "8.0",
+        "r5": "1.0",
+        "r6": "(12.0)",
+        "total": "32.0",
+        "nett": "20.0"
+      },
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "d3595602-5f9d-5354-8201-63cfb39f7132",
+      "participants": [
+        {
+          "id": "efaf3e05-915b-5d77-a486-2b19e88c8a44",
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PAILIN JAROENPON; historic sail/boat number: 225985; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 32.0 and net 20.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 6,
+      "name": "Alexander Ross",
+      "sailOrBoardNumber": "THA212041",
+      "club": "Rvyc",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 42.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "6th",
+        "class": "ILCA 4",
+        "sailno": "THA212041",
+        "club": "Rvyc",
+        "helmname": "Alexander Ross",
+        "nat": "THA",
+        "yob": "2009",
+        "helmsex": "Male",
+        "r1": "4.0",
+        "r2": "8.0",
+        "r3": "9.0",
+        "r4": "2.0",
+        "r5": "(11.0)",
+        "r6": "8.0",
+        "total": "42.0",
+        "nett": "31.0"
+      },
+      "sailorId": "20dfff42-b4fa-5f34-b5ae-fbeafe975aa5",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "dfc6dd13-0db2-5488-a341-3e13e6e7557c",
+      "participants": [
+        {
+          "id": "c60a2fcd-93d1-5031-9011-56838d6f66ba",
+          "sailorId": "20dfff42-b4fa-5f34-b5ae-fbeafe975aa5",
+          "sourceName": "Alexander Ross",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Alexander Ross; historic sail/boat number: THA212041; club: Rvyc; nationality: THA; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 42.0 and net 31.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 7,
+      "name": "Thanaporn Phokaew",
+      "sailOrBoardNumber": "THA 22268",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 46.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "7th",
+        "class": "ILCA 4",
+        "sailno": "THA 22268",
+        "club": "YRAT",
+        "helmname": "Thanaporn Phokaew",
+        "nat": "THA",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1": "10.0",
+        "r2": "10.0",
+        "r3": "8.0",
+        "r4": "(11.0)",
+        "r5": "6.0",
+        "r6": "1.0",
+        "total": "46.0",
+        "nett": "35.0"
+      },
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "0ee1c7b5-81c1-5e91-9f9c-5da4aaa1abdb",
+      "participants": [
+        {
+          "id": "61ab86ec-566b-5b3f-94a3-2d446822947f",
+          "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+          "sourceName": "Thanaporn Phokaew",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Thanaporn Phokaew; historic sail/boat number: THA 22268; club: YRAT; nationality: THA; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 46.0 and net 35.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 8,
+      "name": "Hussaluk",
+      "sailOrBoardNumber": "THA217453",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 49.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "class": "ILCA 4",
+        "sailno": "THA217453",
+        "club": "YRAT",
+        "helmname": "Hussaluk",
+        "nat": "THA",
+        "yob": "2009",
+        "helmsex": "Male",
+        "r1": "9.0",
+        "r2": "6.0",
+        "r3": "5.0",
+        "r4": "(14.0)",
+        "r5": "4.0",
+        "r6": "11.0",
+        "total": "49.0",
+        "nett": "35.0"
+      },
+      "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "resultId": "b014266a-3c0d-539f-9479-6f2a4d2d5dae",
+      "participants": [
+        {
+          "id": "63de604b-7b1b-5a7b-bd64-80bc4bb76256",
+          "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+          "sourceName": "Hussaluk",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Hussaluk; historic sail/boat number: THA217453; club: YRAT; nationality: THA; source year/age field: 2009. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 49.0 and net 35.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 9,
+      "name": "Kim Jun Mo",
+      "sailOrBoardNumber": "224680",
+      "club": "KSAF",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 49.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "9th",
+        "class": "ILCA 4",
+        "sailno": "224680",
+        "club": "KSAF",
+        "helmname": "Kim Jun Mo",
+        "nat": "KOR",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "7.0",
+        "r2": "7.0",
+        "r3": "12.0",
+        "r4": "(13.0)",
+        "r5": "8.0",
+        "r6": "2.0",
+        "total": "49.0",
+        "nett": "36.0"
+      },
+      "sailorId": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+      "resultId": "ebbf6582-c435-5d1a-8b7d-7b68a79fa8fd",
+      "participants": [
+        {
+          "id": "b9975bf4-3d70-507f-a381-1b663989cc46",
+          "sailorId": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+          "sourceName": "Kim Jun Mo",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Kim Jun Mo; historic sail/boat number: 224680; club: KSAF; nationality: KOR; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 49.0 and net 36.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 10,
+      "name": "Karit Phrammanee",
+      "sailOrBoardNumber": "128105",
+      "club": "Yrat",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 59.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(21.0 DSQ)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "10th",
+        "class": "ILCA 4",
+        "sailno": "128105",
+        "club": "Yrat",
+        "helmname": "Karit Phrammanee",
+        "nat": "THA",
+        "yob": "2010",
+        "helmsex": "Male",
+        "r1": "8.0",
+        "r2": "3.0",
+        "r3": "(21.0 DSQ)",
+        "r4": "10.0",
+        "r5": "7.0",
+        "r6": "10.0",
+        "total": "59.0",
+        "nett": "38.0"
+      },
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "resultId": "744c08e0-f646-5e43-a0e9-1c0c53194aa8",
+      "participants": [
+        {
+          "id": "b3657b9b-7e4a-54a8-897d-1683d51e5516",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "Karit Phrammanee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Karit Phrammanee; historic sail/boat number: 128105; club: Yrat; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 59.0 and net 38.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 11,
+      "name": "Lee Song Ha",
+      "sailOrBoardNumber": "223204",
+      "club": "KSAF",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 63.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "11th",
+        "class": "ILCA 4",
+        "sailno": "223204",
+        "club": "KSAF",
+        "helmname": "Lee Song Ha",
+        "nat": "KOR",
+        "yob": "2011",
+        "helmsex": "Female",
+        "r1": "14.0",
+        "r2": "12.0",
+        "r3": "10.0",
+        "r4": "7.0",
+        "r5": "(15.0)",
+        "r6": "5.0",
+        "total": "63.0",
+        "nett": "48.0"
+      },
+      "sailorId": "1417d151-f47b-5780-8ab8-efbc022a440f",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "2be26048-e074-5ef9-a235-444d81e879c6",
+      "participants": [
+        {
+          "id": "106c8bc4-64b9-5faa-b62b-b07338ecc2f2",
+          "sailorId": "1417d151-f47b-5780-8ab8-efbc022a440f",
+          "sourceName": "Lee Song Ha",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Lee Song Ha; historic sail/boat number: 223204; club: KSAF; nationality: KOR; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 63.0 and net 48.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 12,
+      "name": "Lee Soo Min",
+      "sailOrBoardNumber": "222951",
+      "club": "KSAF",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 73.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(21.0 UFD)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "21.0 UFD",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "12th",
+        "class": "ILCA 4",
+        "sailno": "222951",
+        "club": "KSAF",
+        "helmname": "Lee Soo Min",
+        "nat": "KOR",
+        "yob": "2010",
+        "helmsex": "Female",
+        "r1": "11.0",
+        "r2": "(21.0 UFD)",
+        "r3": "7.0",
+        "r4": "6.0",
+        "r5": "21.0 UFD",
+        "r6": "7.0",
+        "total": "73.0",
+        "nett": "52.0"
+      },
+      "sailorId": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+      "resultId": "82a35f26-4a91-5164-aea2-f26d2c0e1118",
+      "participants": [
+        {
+          "id": "5be2dd38-2af1-5bc9-bcf6-b4496d6fec97",
+          "sailorId": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+          "sourceName": "Lee Soo Min",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Lee Soo Min; historic sail/boat number: 222951; club: KSAF; nationality: KOR; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 73.0 and net 52.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 13,
+      "name": "Prapada Peeranantapanya",
+      "sailOrBoardNumber": "THA212815",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 71.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "13th",
+        "class": "ILCA 4",
+        "sailno": "THA212815",
+        "club": "YRAT",
+        "helmname": "Prapada Peeranantapanya",
+        "nat": "THA",
+        "yob": "2012",
+        "helmsex": "Female",
+        "r1": "12.0",
+        "r2": "14.0",
+        "r3": "(17.0)",
+        "r4": "9.0",
+        "r5": "5.0",
+        "r6": "14.0",
+        "total": "71.0",
+        "nett": "54.0"
+      },
+      "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "42d49f54-3c74-58be-8e02-80077351e29c",
+      "participants": [
+        {
+          "id": "f2550259-b5a7-5638-a07e-c6e08f3ad5c9",
+          "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+          "sourceName": "Prapada Peeranantapanya",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Prapada Peeranantapanya; historic sail/boat number: THA212815; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 71.0 and net 54.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 14,
+      "name": "Skye",
+      "sailOrBoardNumber": "THA225985",
+      "club": "Rvyc",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 82.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "14th",
+        "class": "ILCA 4",
+        "sailno": "THA225985",
+        "club": "Rvyc",
+        "helmname": "Skye",
+        "nat": "THA",
+        "yob": "2010",
+        "helmsex": "Male",
+        "r1": "(19.0)",
+        "r2": "11.0",
+        "r3": "11.0",
+        "r4": "15.0",
+        "r5": "13.0",
+        "r6": "13.0",
+        "total": "82.0",
+        "nett": "63.0"
+      },
+      "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+      "resultId": "4ce76edc-6eb9-559c-a290-2d98c20e9650",
+      "participants": [
+        {
+          "id": "2690a9c7-7cc4-54e8-9d77-d5c9290ce568",
+          "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+          "sourceName": "Skye",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Skye; historic sail/boat number: THA225985; club: Rvyc; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 82.0 and net 63.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 15,
+      "name": "CHITIPAT SAINUMKHEAW",
+      "sailOrBoardNumber": "217459",
+      "club": "RTFYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 88.0,
+      "nettScore": 69.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "15th",
+        "class": "ILCA 4",
+        "sailno": "217459",
+        "club": "RTFYC",
+        "helmname": "CHITIPAT SAINUMKHEAW",
+        "nat": "THA",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "16.0",
+        "r2": "13.0",
+        "r3": "14.0",
+        "r4": "12.0",
+        "r5": "14.0",
+        "r6": "(19.0)",
+        "total": "88.0",
+        "nett": "69.0"
+      },
+      "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "90076014-2396-5151-a3b3-42fafb347d7e",
+      "participants": [
+        {
+          "id": "3768542f-6e1c-5ff4-a0f3-4a51e1667d73",
+          "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+          "sourceName": "CHITIPAT SAINUMKHEAW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: CHITIPAT SAINUMKHEAW; historic sail/boat number: 217459; club: RTFYC; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 88.0 and net 69.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 16,
+      "name": "Suwaphak Plumjit",
+      "sailOrBoardNumber": "Tha212898",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 92.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "16th",
+        "class": "ILCA 4",
+        "sailno": "Tha212898",
+        "club": "YRAT",
+        "helmname": "Suwaphak Plumjit",
+        "nat": "THA",
+        "yob": "2012",
+        "helmsex": "Female",
+        "r1": "15.0",
+        "r2": "16.0",
+        "r3": "15.0",
+        "r4": "16.0",
+        "r5": "12.0",
+        "r6": "(18.0)",
+        "total": "92.0",
+        "nett": "74.0"
+      },
+      "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "b3c326ba-556e-5adc-9e6e-f3add952cc52",
+      "participants": [
+        {
+          "id": "aa9ab91f-1e7e-5b31-85c9-d4d6b39deb64",
+          "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+          "sourceName": "Suwaphak Plumjit",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Suwaphak Plumjit; historic sail/boat number: Tha212898; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 92.0 and net 74.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 17,
+      "name": "Jeon Hyunwoo",
+      "sailOrBoardNumber": "215619",
+      "club": "gangwon",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 97.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "17th",
+        "class": "ILCA 4",
+        "sailno": "215619",
+        "club": "gangwon",
+        "helmname": "Jeon Hyunwoo",
+        "nat": "KOR",
+        "yob": "2011",
+        "helmsex": "Male",
+        "r1": "17.0",
+        "r2": "15.0",
+        "r3": "13.0",
+        "r4": "(20.0)",
+        "r5": "16.0",
+        "r6": "16.0",
+        "total": "97.0",
+        "nett": "77.0"
+      },
+      "sailorId": "190686bb-516d-43ec-a519-b0158e48f963",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "de34bcca-923e-5b4d-870e-966347c07309",
+      "participants": [
+        {
+          "id": "eff287f5-9d36-5821-b823-e3217848a956",
+          "sailorId": "190686bb-516d-43ec-a519-b0158e48f963",
+          "sourceName": "Jeon Hyunwoo",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Jeon Hyunwoo; historic sail/boat number: 215619; club: gangwon; nationality: KOR; source year/age field: 2011. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 97.0 and net 77.0 reconciled. Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 18,
+      "name": "PUMITUS MEE-IAMSIN",
+      "sailOrBoardNumber": "THA217322",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 100.0,
+      "nettScore": 81.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "18th",
+        "class": "ILCA 4",
+        "sailno": "THA217322",
+        "club": "YRAT",
+        "helmname": "PUMITUS MEE-IAMSIN",
+        "nat": "THA",
+        "yob": "2010",
+        "helmsex": "Male",
+        "r1": "13.0",
+        "r2": "17.0",
+        "r3": "16.0",
+        "r4": "(19.0)",
+        "r5": "18.0",
+        "r6": "17.0",
+        "total": "100.0",
+        "nett": "81.0"
+      },
+      "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "identityBasis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year.",
+      "resultId": "a5ff0f44-96e2-5bec-a99a-fb4fe2bdec1d",
+      "participants": [
+        {
+          "id": "e7dbc8e8-4b93-53ac-890c-e4fb76bb7bbd",
+          "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+          "sourceName": "PUMITUS MEE-IAMSIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: PUMITUS MEE-IAMSIN; historic sail/boat number: THA217322; club: YRAT; nationality: THA; source year/age field: 2010. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 100.0 and net 81.0 reconciled. Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 19,
+      "name": "Peerapat yaponha",
+      "sailOrBoardNumber": "THA215073",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 102.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "21.0 DNE",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "19th",
+        "class": "ILCA 4",
+        "sailno": "THA215073",
+        "club": "YRAT",
+        "helmname": "Peerapat yaponha",
+        "nat": "THA",
+        "yob": "2012",
+        "helmsex": "Male",
+        "r1": "(18.0)",
+        "r2": "18.0",
+        "r3": "18.0",
+        "r4": "18.0",
+        "r5": "9.0",
+        "r6": "21.0 DNE",
+        "total": "102.0",
+        "nett": "84.0"
+      },
+      "sailorId": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+      "resultId": "4ec11b68-c882-5598-a2bd-61bebcb8e111",
+      "participants": [
+        {
+          "id": "2aa7c8c2-fae5-5121-9e1b-15d8e4afb3c6",
+          "sailorId": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+          "sourceName": "Peerapat yaponha",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: Peerapat yaponha; historic sail/boat number: THA215073; club: YRAT; nationality: THA; source year/age field: 2012. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 102.0 and net 84.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    },
+    {
+      "eventKey": "children-s-day-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 172817,
+        "url": "https://www.racingrulesofsailing.org/documents/172817",
+        "title": "Official children-s-day-regatta-2026 result document 172817",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 20,
+      "name": "an seoyi",
+      "sailOrBoardNumber": "190953",
+      "club": "gangwon",
+      "school": null,
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 109.0,
+      "nettScore": 88.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(21.0 UFD)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "20th",
+        "class": "ILCA 4",
+        "sailno": "190953",
+        "club": "gangwon",
+        "helmname": "an seoyi",
+        "nat": "KOR",
+        "yob": "2013",
+        "helmsex": "Female",
+        "r1": "20.0",
+        "r2": "(21.0 UFD)",
+        "r3": "19.0",
+        "r4": "17.0",
+        "r5": "17.0",
+        "r6": "15.0",
+        "total": "109.0",
+        "nett": "88.0"
+      },
+      "sailorId": "47cfa169-dc99-599b-b90c-020a461aef30",
+      "resultId": "7debf135-84a5-5ebf-ab04-45000f579770",
+      "participants": [
+        {
+          "id": "68963f10-003f-5cbc-a7b5-94839dd555ea",
+          "sailorId": "47cfa169-dc99-599b-b90c-020a461aef30",
+          "sourceName": "an seoyi",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source name: an seoyi; historic sail/boat number: 190953; club: gangwon; nationality: KOR; source year/age field: 2013. Source race labels: R1, R2, R3, R4, R5, R6. Every score, code and discard preserved; gross 109.0 and net 88.0 reconciled. Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+    }
+  ],
+  "publicSummary": "Official source status: final. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "importedEntryCount": 20,
+  "deferredEntryCount": 0,
+  "profilePreflight": [
+    {
+      "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+      "club": "YRAT",
+      "name": "Kiitchakhun Somkhanngoen",
+      "gender": "Male",
+      "handle": "kiitchakhun-somkhanngoen-sw3gwyp",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225917"
+    },
+    {
+      "id": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "club": "YRAT",
+      "name": "Suwaphak Plumjit",
+      "gender": "Female",
+      "handle": "suwaphak-plumjit-8glzaqs",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222589"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": null,
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "club": "YRAT",
+      "name": "Hussaluk Srinakorn",
+      "gender": "M",
+      "handle": "hussaluk-srinakorn-2pumyyp",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "club": "YRAT",
+      "name": "Thanaporn Phokaew",
+      "gender": "F",
+      "handle": "thanaporn-phokaew-2zbw4z0",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225426"
+    },
+    {
+      "id": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "club": "YRAT",
+      "name": "Pinchanok Klaysomboon",
+      "gender": "F",
+      "handle": "pinchanok-klaysomboon-ofynlxk",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "N/A",
+      "name": "Karit Phrammanee",
+      "gender": null,
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "club": "YRAT/RVYC",
+      "name": "Prapada Peeranantapanya",
+      "gender": "Female",
+      "handle": "prapada-peeranantapanya-rz13syo",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "223567"
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "190686bb-516d-43ec-a519-b0158e48f963",
+      "club": "Imported official result",
+      "name": "Hyunwoo Jeon",
+      "gender": "M",
+      "handle": "asian-kor-hyunwoo-je-6ae6db",
+      "birthYear": 2011,
+      "sailNumber": "590",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "20dfff42-b4fa-5f34-b5ae-fbeafe975aa5",
+      "club": "RVYC",
+      "name": "Alexander Ross",
+      "gender": null,
+      "handle": "alexander-ross-thai25-20dfff",
+      "birthYear": null,
+      "sailNumber": "102",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f61896f2-3906-5258-82bc-494e2573ebfc",
+      "club": "RVYC",
+      "name": "Skye Hsu",
+      "gender": null,
+      "handle": "skye-hsu-thai25-f61896",
+      "birthYear": null,
+      "sailNumber": "102",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "club": "RVYC",
+      "name": "Thanvisit Kitchanasiri",
+      "gender": "M",
+      "handle": "thanvisit-kitchanasiri-thai25-278c69",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "226395"
+    },
+    {
+      "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "club": "YRAT",
+      "name": "Pumitus Mee-Iamsin",
+      "gender": "M",
+      "handle": "pumitus-mee-iamsin-thai25-4f1eb5",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "208539"
+    },
+    {
+      "id": "1417d151-f47b-5780-8ab8-efbc022a440f",
+      "club": "GANGWON SAILING CLUB",
+      "name": "Lee Songha",
+      "gender": "F",
+      "handle": "lee-songha-thai25-1417d1",
+      "birthYear": null,
+      "sailNumber": "KOR 520",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "club": "RTFYC",
+      "name": "Chitipat Sainumkheaw",
+      "gender": "M",
+      "handle": "chitipat-sainumkheaw-thai25-c6fe76",
+      "birthYear": null,
+      "sailNumber": "THA 1859",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+      "name": "Peerapat Yaponha",
+      "handle": "peerapat-yaponha-sr26-70a6f3",
+      "sailNumber": "",
+      "sailNumberIlca4": "THA222685",
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "birthYear": null
+    },
+    {
+      "id": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+      "name": "Kim Jun Mo",
+      "handle": "kim-jun-mo-sr26-0d87c7",
+      "sailNumber": "",
+      "sailNumberIlca4": "224680",
+      "nationality": "KOR",
+      "gender": "M",
+      "club": "KSAF",
+      "birthYear": null
+    },
+    {
+      "id": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+      "name": "Lee Soo Min",
+      "handle": "lee-soo-min-sr26-c43c92",
+      "sailNumber": "",
+      "sailNumberIlca4": "222951",
+      "nationality": "KOR",
+      "gender": "F",
+      "club": "KSAF",
+      "birthYear": null
+    },
+    {
+      "id": "47cfa169-dc99-599b-b90c-020a461aef30",
+      "name": "An Seoyi",
+      "handle": "an-seoyi-sr26-47cfa1",
+      "sailNumber": "",
+      "sailNumberIlca4": "190953",
+      "nationality": "KOR",
+      "gender": "F",
+      "club": "gangwon",
+      "birthYear": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact existing names/accepted aliases and individually reviewed identity variants; ambiguous cases deferred.",
+    "decisions": [
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 1,
+        "sourceName": "PACHARAPOL. RUMVISAI",
+        "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 2,
+        "sourceName": "Thanvisit Kitchanasiri",
+        "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 3,
+        "sourceName": "KITCHAKHUN SOMKHANNGOEN",
+        "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 4,
+        "sourceName": "PINCHANOK KLAYSOMBOON",
+        "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 5,
+        "sourceName": "PAILIN JAROENPON",
+        "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 6,
+        "sourceName": "Alexander Ross",
+        "sailorId": "20dfff42-b4fa-5f34-b5ae-fbeafe975aa5",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 7,
+        "sourceName": "Thanaporn Phokaew",
+        "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 8,
+        "sourceName": "Hussaluk",
+        "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 9,
+        "sourceName": "Kim Jun Mo",
+        "sailorId": "0d87c76a-54be-5d3d-acfe-8ce144c04ca1",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 10,
+        "sourceName": "Karit Phrammanee",
+        "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 11,
+        "sourceName": "Lee Song Ha",
+        "sailorId": "1417d151-f47b-5780-8ab8-efbc022a440f",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 12,
+        "sourceName": "Lee Soo Min",
+        "sailorId": "c43c92c7-4890-5d5d-9f9e-b938fc455ad6",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 13,
+        "sourceName": "Prapada Peeranantapanya",
+        "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 14,
+        "sourceName": "Skye",
+        "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 15,
+        "sourceName": "CHITIPAT SAINUMKHEAW",
+        "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 16,
+        "sourceName": "Suwaphak Plumjit",
+        "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 17,
+        "sourceName": "Jeon Hyunwoo",
+        "sailorId": "190686bb-516d-43ec-a519-b0158e48f963",
+        "basis": "Individually reviewed official full-name spelling/alias, nationality, age/gender and historic equipment evidence across this batch and existing result history. Existing profile metadata retained unchanged."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 18,
+        "sourceName": "PUMITUS MEE-IAMSIN",
+        "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+        "basis": "Unique exact normalized full name or existing reviewed alias; compatible nationality, gender and recorded birth year."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 19,
+        "sourceName": "Peerapat yaponha",
+        "sailorId": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      },
+      {
+        "sheet": "childrens-day-regatta-2026-ilca4",
+        "rank": 20,
+        "sourceName": "an seoyi",
+        "sailorId": "47cfa169-dc99-599b-b90c-020a461aef30",
+        "basis": "Distinct official identity with no confirmed existing profile match; no date of birth invented. Exact normalized full names reused across this batch; independently corroborated spelling variants recorded separately."
+      }
+    ]
+  },
+  "pendingEntries": []
+}
