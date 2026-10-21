@@ -1,5 +1,5 @@
 import { and, eq, sql } from "drizzle-orm";
-import { db, pgSql } from "@/db";
+import { db, databasePool } from "@/db";
 import { adminChangeLog, profiles, sailorClaims, sailors } from "@/db/schema";
 import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 import { logAdminChange } from "@/lib/adminChangeLog";
@@ -31,4 +31,4 @@ try {
     console.log(JSON.stringify({ operation: "approved_welcome", claimId: id, status }));
     if (status !== "sent") throw new Error("The email service did not accept the welcome.");
   }
-} finally { await pgSql.end({ timeout: 5 }); }
+} finally { await databasePool.end(); }
