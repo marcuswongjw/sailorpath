@@ -1,6 +1,7 @@
 import {
   ASIAN_OPTIMIST_INDEX_EVENT,
   createAsianOptimistIndexBaseline,
+  isOptimistAgeEligible,
   type AsianOptimistIndexEntry,
 } from "@/lib/asianOptimistIndex";
 import {
@@ -25,7 +26,7 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE = {
   version: "V1 (Beta)",
   name: "SailorPath Asian and Oceania Optimist Index",
   cohortEvent: "Verified international and continental championships",
-  cohortSize: 175,
+  cohortSize: 163,
   maxResultsCounted: 5,
   maxGrade150: 2,
   maxWorlds: 1,
@@ -1581,7 +1582,9 @@ export function createAsianOptimistIndexProvisionalEntries(
     qualifiersBySailor.set(key, [...(qualifiersBySailor.get(key) ?? []), score]);
   }
 
-  const scored = baseline.map((entry) => {
+  const eligibleBaseline = baseline.filter((entry) => isOptimistAgeEligible(entry.birthYear, 2026));
+
+  const scored = eligibleBaseline.map((entry) => {
     const anchorPoints = entry.overallPlace != null
       ? asianIndexPoints(
           150,

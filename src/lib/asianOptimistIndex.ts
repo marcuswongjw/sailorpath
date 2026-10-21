@@ -2006,7 +2006,32 @@ export function asianOptimistIndexIdentityKey(name: string, nationality: string)
   return `${nationality.toUpperCase()}:${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
 }
 
-export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
+/**
+ * Age-eligibility for the Optimist class in a given calendar year.
+ * Under IODA Class Rule 4.3.1 and the Asian & Oceania Optimist Index specification,
+ * a sailor remains eligible through 31 December of the calendar year in which they turn 15.
+ * Sailors turning 16 or older (i.e. birthYear <= rankingYear - 16) are overaged (>15 years old).
+ */
+export function isOptimistAgeEligible(
+  birthYear: number | null | undefined,
+  rankingYear: number = 2026
+): boolean {
+  if (birthYear == null) return true;
+  return rankingYear - birthYear <= 15;
+}
+
+export type AsianOptimistIndexBaselineOptions = {
+  /** When true, includes overaged/aged-out competitors for founding reconciliation. Default: false. */
+  includeOveraged?: boolean;
+  rankingYear?: number;
+};
+
+export function createAsianOptimistIndexBaseline(
+  options: AsianOptimistIndexBaselineOptions = {}
+): AsianOptimistIndexEntry[] {
+  const { includeOveraged = false, rankingYear = 2026 } = options;
+  let currentRank = 0;
+
   return ASIAN_OPTIMIST_INDEX_SOURCE_ENTRIES.flatMap((sourceEntry, index) => {
     // Confirmed by the user on 19 October 2026: Yuxuan Li and Lyric Li
     // Yuxuan are one SGP sailor. Keep the original source rows above for
@@ -2029,12 +2054,20 @@ export function createAsianOptimistIndexBaseline(): AsianOptimistIndexEntry[] {
         identityKey as keyof typeof ASIAN_OPTIMIST_INDEX_DUPLICATE_REVIEWS
       ];
 
+    const birthYear = profile?.birthYear ?? null;
+
+    if (!includeOveraged && !isOptimistAgeEligible(birthYear, rankingYear)) {
+      return [];
+    }
+
+    currentRank++;
+
     return [{
       ...entry,
       identityKey,
-      baselineRank: index + 1,
+      baselineRank: includeOveraged ? index + 1 : currentRank,
       displayName: profile?.displayName ?? entry.name,
-      birthYear: profile?.birthYear ?? null,
+      birthYear,
       // Every source-cohort identity has an existing SailorPath profile or a
       // deterministic import handle. Keeping this manifest static prevents
       // the public Index page from blocking on a DB lookup.

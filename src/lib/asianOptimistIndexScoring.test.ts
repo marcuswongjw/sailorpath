@@ -29,10 +29,20 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(normalisedFleetScore(2, 59)).toBeCloseTo(98.275862, 6);
   });
 
-  it("scores the 175 Asian and Oceania sailors under the V1 (Beta) methodology", () => {
+  it("scores the 163 age-eligible Asian and Oceania sailors under the V1 (Beta) methodology", () => {
     const entries = createAsianOptimistIndexProvisionalEntries();
 
-    expect(entries).toHaveLength(175);
+    expect(entries).toHaveLength(163);
+
+    // Overaged sailors (>15 years old in 2026, i.e. born 2010 or earlier) are removed
+    expect(entries.find((entry) => entry.name === "Ethan Chia")).toBeUndefined();
+    const overaged = entries.filter((e) => e.birthYear != null && e.birthYear <= 2010);
+    expect(overaged).toHaveLength(0);
+
+    // Ranks are strictly consecutive from 1 to 163
+    expect(entries.map((e) => e.provisionalRank)).toEqual(
+      Array.from({ length: 163 }, (_, i) => i + 1)
+    );
 
     // Top 6 under V1 (Beta) formula (Points = E * (N - P + 1) / N)
     expect(entries.slice(0, 6).map((entry) => entry.name)).toEqual([
@@ -94,14 +104,6 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
       eligibleStarts: 4,
       countedResultsCount: 4,
       hostCountryCount: 4,
-    });
-
-    const ethanChia = entries.find((entry) => entry.name === "Ethan Chia")!;
-    expect(ethanChia).toMatchObject({
-      provisionalScore: 149.12,
-      eligibleStarts: 1,
-      hostCountryCount: 1,
-      qualifierPoints: 0,
     });
 
     // Verify Oceania sailors are included
@@ -183,7 +185,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
     expect(ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE).toMatchObject({
       version: "V1 (Beta)",
       name: "SailorPath Asian and Oceania Optimist Index",
-      cohortSize: 175,
+      cohortSize: 163,
       maxResultsCounted: 5,
       maxGrade150: 2,
       maxWorlds: 1,

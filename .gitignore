@@ -54,3 +54,4 @@ tmp/
 # Supabase CLI temp
 supabase/.temp/
 
+scratch/

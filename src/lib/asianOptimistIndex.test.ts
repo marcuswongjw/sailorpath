@@ -28,8 +28,18 @@ describe("SailorPath Asian and Oceania Optimist Index baseline", () => {
     });
   });
 
-  it("gives baseline ranks while preserving the official field finish", () => {
+  it("gives baseline ranks while preserving the official field finish for age-eligible competitors", () => {
     const baseline = createAsianOptimistIndexBaseline();
+
+    expect(baseline).toHaveLength(163);
+    expect(baseline[0]).toMatchObject({ baselineRank: 1, overallPlace: 1 });
+    // Ethan Chia (2010) is aged out (>15), so baseline[1] is Anya Zahedi (overallPlace: 4)
+    expect(baseline[1]).toMatchObject({ baselineRank: 2, overallPlace: 4 });
+    expect(baseline.every((entry) => entry.birthYear == null || entry.birthYear > 2010)).toBe(true);
+  });
+
+  it("preserves the complete 175-sailor founding baseline when includeOveraged is enabled", () => {
+    const baseline = createAsianOptimistIndexBaseline({ includeOveraged: true });
 
     expect(baseline).toHaveLength(175);
     expect(baseline[0]).toMatchObject({ baselineRank: 1, overallPlace: 1 });
@@ -40,7 +50,7 @@ describe("SailorPath Asian and Oceania Optimist Index baseline", () => {
   });
 
   it("links every founding sailor to the persisted SailorPath profile handle", () => {
-    const baseline = createAsianOptimistIndexBaseline();
+    const baseline = createAsianOptimistIndexBaseline({ includeOveraged: true });
 
     expect(baseline.every((entry) => entry.profileHref?.startsWith("/"))).toBe(true);
     expect(baseline.find((entry) => entry.name === "Sorawit Naksuk")).toMatchObject({
