@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  SINGAPORE_WINGFOIL_REGATTAS,
   parseWingfoilScreenshotFilename,
   computeWingfoilNett,
   recalculateScoreboard,
@@ -14,6 +15,18 @@ import {
   type WingfoilSailorResult,
   type WingfoilRegatta,
 } from "./wingfoil";
+
+describe("reviewed historical identities", () => {
+  it("keeps young male wingfoiler Ange Chew distinct from Angel Chew", () => {
+    const rows = SINGAPORE_WINGFOIL_REGATTAS.flatMap(regatta => regatta.results ?? [])
+      .filter(row => row.name === "Ange Chew");
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.every(row => row.gender === "M")).toBe(true);
+    const nationals = SINGAPORE_WINGFOIL_REGATTAS.find(row => row.id === "snsc-2025-wingfoil")
+      ?.results?.find(row => row.name === "Ange Chew");
+    expect(nationals).toMatchObject({ rank: 4, sailNumber: "123", grossScore: 45, nettScore: 37 });
+  });
+});
 
 describe("parseWingfoilScreenshotFilename", () => {
   it("extracts regatta name and ISO date correctly", () => {
