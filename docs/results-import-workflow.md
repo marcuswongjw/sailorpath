@@ -98,3 +98,22 @@ and one future event. Confirm:
 Keep unattended publication disabled until real source coverage and revision
 behaviour have been validated. The next iteration can add trusted site adapters
 and a separately authorized automatic import policy for proven source formats.
+
+## Add an upcoming regatta from its event URL
+
+In Admin → Events, choose **New event**, paste the official event webpage URL,
+and choose **Extract event details**. The form fills supported structured event
+metadata and explicit readable event facts: title, date range, venue, organiser,
+sailing classes, description, notice board/Notice of Race and registration links.
+Missing or ambiguous details stay blank and are flagged. Old editions are flagged
+with their actual source dates rather than relabelled as the current year.
+
+Review the populated fields and choose **Save event** to publish the calendar
+entry. Extraction itself writes no calendar or results data. A newly saved
+URL-derived event retains its source URL for the results import inbox. Class
+results sheets are added separately when needed. Duplicate-update choices keep
+the existing event's other metadata, following the existing admin behaviour.
+
+The reader accepts public HTTPS HTML pages and uses the same DNS, redirect,
+size and timeout checks as the results crawler. PDF-only, blocked, and entirely
+JavaScript-rendered event pages may require manual completion of the form.
