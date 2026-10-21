@@ -1,0 +1,5552 @@
+{
+  "class_a": [
+    {
+      "rank": 1,
+      "ent": 32,
+      "sail": "3375",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "久保田 夏実",
+      "name_romaji": "Natsumi Kubota",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 17.0,
+      "exclude": 4.0,
+      "net": 13.0,
+      "sailor_id": "0c3ea04a-905c-45f1-abb7-a4a917e7da14",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "ent": 36,
+      "sail": "3356",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "村中 菜々",
+      "name_romaji": "Nana Muranaka",
+      "grade": 7,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 24.0,
+      "exclude": 8.0,
+      "net": 16.0,
+      "sailor_id": "5f6d71a5-1dc3-599c-b9be-377150d4dd3a",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "ent": 43,
+      "sail": "3489",
+      "club": "広島セーリングスクール",
+      "name_kanji": "井上 はる",
+      "name_romaji": "Haru Inoue",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 33.0,
+      "exclude": 13.0,
+      "net": 20.0,
+      "sailor_id": "e36afcc6-d8af-589b-88a8-fa608d94a470",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "ent": 50,
+      "sail": "3441",
+      "club": "博多ハイクアウツジュニアヨットクラブ",
+      "name_kanji": "山本 健瑚",
+      "name_romaji": "Kengo Yamamoto",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 37.0,
+      "exclude": 16.0,
+      "net": 21.0,
+      "sailor_id": "5630e6fd-a5f6-537f-8754-461b642feccd",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "ent": 56,
+      "sail": "3455",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "安藤 果帆",
+      "name_romaji": "Kafuu Andou",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 52.0,
+      "exclude": 15.0,
+      "net": 37.0,
+      "sailor_id": "5fd47d5e-bc45-545d-8daa-0cc63bc1c84e",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "ent": 27,
+      "sail": "3430",
+      "club": "B&G別府海洋クラブ",
+      "name_kanji": "笠木 蓮斗",
+      "name_romaji": "Rento Kasagi",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 63.0,
+      "exclude": 17.0,
+      "net": 46.0,
+      "sailor_id": "f0bd203e-94f4-5484-8ddf-cbdd19aab450",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "ent": 61,
+      "sail": "3415",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "坂口 美結",
+      "name_romaji": "Miyu Sakaguchi",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 61.0,
+      "exclude": 14.0,
+      "net": 47.0,
+      "sailor_id": "823c8645-7014-5734-8a89-0aa2a1739d46",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "ent": 34,
+      "sail": "3434",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "檜垣 菜々子",
+      "name_romaji": "Nanako Higaki",
+      "grade": 8,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 71.0,
+      "exclude": 17.0,
+      "net": 54.0,
+      "sailor_id": "c764b218-e565-5b0b-905e-d56b0c7d4a9d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "ent": 7,
+      "sail": "3458",
+      "club": "和歌山ジュニアヨットクラブ",
+      "name_kanji": "栗本 悠里",
+      "name_romaji": "Yuri Kurimoto",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 72.0,
+      "exclude": 16.0,
+      "net": 56.0,
+      "sailor_id": "c0a8cdf2-00af-5908-bb52-6f52f8d26e21",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "ent": 41,
+      "sail": "3344",
+      "club": "広島セーリングスクール",
+      "name_kanji": "竹内 海聖",
+      "name_romaji": "Kaisei Takeuchi",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 72.0,
+      "exclude": 15.0,
+      "net": 57.0,
+      "sailor_id": "2b82f965-5e0d-5063-bb05-b3f1cf099740",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "ent": 9,
+      "sail": "3472",
+      "club": "真野浜セーリングクラブ",
+      "name_kanji": "吉岡 祐月",
+      "name_romaji": "Yuzuki Yoshioka",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 87.0,
+      "exclude": 24.0,
+      "net": 63.0,
+      "sailor_id": "e373e71d-025b-55b0-acf6-ce6dfb8eb06c",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "ent": 63,
+      "sail": "3417",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "永見 波奈",
+      "name_romaji": "Hana Nagami",
+      "grade": 8,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 120.0,
+      "exclude": 43.0,
+      "net": 77.0,
+      "sailor_id": "ed754d7e-169a-587a-9cd6-d8ca4eb79027",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "ent": 19,
+      "sail": "3232",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "岩﨑 楓太",
+      "name_romaji": "Futa Iwasaki",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 104.0,
+      "exclude": 19.0,
+      "net": 85.0,
+      "sailor_id": "ff62d4d8-c48a-587d-ab98-b19b551126cb",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "ent": 26,
+      "sail": "3463",
+      "club": "B&G別府海洋クラブ",
+      "name_kanji": "青山 大志",
+      "name_romaji": "Taishi Aoyama",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 169.0,
+      "exclude": 65.0,
+      "net": 104.0,
+      "sailor_id": "dcc54f4d-b617-5465-a02a-e9374cf448c8",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 65.0,
+          "scoringCode": "DSQ",
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "ent": 37,
+      "sail": "3270",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "木下 純希",
+      "name_romaji": "Atsuki Kinoshita",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 142.0,
+      "exclude": 30.0,
+      "net": 112.0,
+      "sailor_id": "95ea388f-2aa4-5d67-97ba-2ad363d82c94",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "ent": 35,
+      "sail": "3163",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "宮﨑 咲帆",
+      "name_romaji": "Saho Miyazaki",
+      "grade": 8,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 177.0,
+      "exclude": 65.0,
+      "net": 112.0,
+      "sailor_id": "e9654b43-fcbb-59f6-9ca2-6d95eea04675",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 65.0,
+          "scoringCode": "NSC",
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "ent": 6,
+      "sail": "2988",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "name_kanji": "宮地 雄大",
+      "name_romaji": "Yudai Miyaji",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 145.0,
+      "exclude": 31.0,
+      "net": 114.0,
+      "sailor_id": "561c0b8a-613a-5e0d-8674-79b1debe2ebb",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "ent": 14,
+      "sail": "3510",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "渡邉 幹人",
+      "name_romaji": "Mikito Watanabe",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 157.0,
+      "exclude": 40.0,
+      "net": 117.0,
+      "sailor_id": "5c3eff3d-3a16-506c-96de-861b6cb9abd9",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "ent": 52,
+      "sail": "3476",
+      "club": "博多ハイクアウツジュニアヨットクラブ",
+      "name_kanji": "宮崎 心桜",
+      "name_romaji": "Koharu Miyazaki",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 159.0,
+      "exclude": 38.0,
+      "net": 121.0,
+      "sailor_id": "659a7737-50cd-5c70-ae0b-7827574aac17",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "ent": 25,
+      "sail": "3345",
+      "club": "サウスセーリングクラブ",
+      "name_kanji": "仲山 結夏",
+      "name_romaji": "Yuika Nakayama",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 156.0,
+      "exclude": 33.0,
+      "net": 123.0,
+      "sailor_id": "046f010b-9c1c-5f1a-9646-267d9b5a36a5",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "ent": 48,
+      "sail": "3395",
+      "club": "琵琶湖ジュニアヨットクラブ",
+      "name_kanji": "廣田 穣",
+      "name_romaji": "Jo Hirota",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 184.0,
+      "exclude": 56.0,
+      "net": 128.0,
+      "sailor_id": "1ceeb9fd-977e-5c55-bec1-1a0b14846e1b",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "ent": 64,
+      "sail": "3404",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "今村 颯人",
+      "name_romaji": "Hayato Imamura",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 175.0,
+      "exclude": 46.0,
+      "net": 129.0,
+      "sailor_id": "2e9a2d64-59c9-58e5-93c7-060df21e4417",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "ent": 44,
+      "sail": "3283",
+      "club": "広島セーリングスクール",
+      "name_kanji": "汐川 陸人",
+      "name_romaji": "Rikuto Shiokawa",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 195.0,
+      "exclude": 54.0,
+      "net": 141.0,
+      "sailor_id": "6c64e8bd-d1a0-526e-b66e-88ba470b4c1d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "ent": 17,
+      "sail": "3437",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "川北 華子",
+      "name_romaji": "Hanako Kawakita",
+      "grade": 8,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 173.0,
+      "exclude": 32.0,
+      "net": 141.0,
+      "sailor_id": "b7d594e0-5ac0-5eb9-91eb-47f115074104",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "ent": 42,
+      "sail": "3422",
+      "club": "広島セーリングスクール",
+      "name_kanji": "宮武 大我",
+      "name_romaji": "Taiga Miyatake",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 183.0,
+      "exclude": 40.0,
+      "net": 143.0,
+      "sailor_id": "234b96c7-73e8-59f9-832d-6d9015917659",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "ent": 46,
+      "sail": "3470",
+      "club": "広島セーリングスクール",
+      "name_kanji": "井上 豊海",
+      "name_romaji": "Toyomi Inoue",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 209.0,
+      "exclude": 65.0,
+      "net": 144.0,
+      "sailor_id": "136afe66-3153-513f-b61e-20a2225c0bfb",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 65.0,
+          "scoringCode": "DSQ",
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "ent": 58,
+      "sail": "3426",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "澤村 真之介",
+      "name_romaji": "Shinnosuke Sawamura",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 216.0,
+      "exclude": 60.0,
+      "net": 156.0,
+      "sailor_id": "e210f42c-f575-5e8a-8546-db86dbeb9f7e",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 60.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "ent": 23,
+      "sail": "3449",
+      "club": "宮津ジュニアヨットクラブ",
+      "name_kanji": "枝 大耀",
+      "name_romaji": "Hiroaki Eda",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 223.0,
+      "exclude": 65.0,
+      "net": 158.0,
+      "sailor_id": "1ebfc70d-f150-581f-92fd-df32debbae3e",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 65.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "ent": 49,
+      "sail": "2930",
+      "club": "琵琶湖ジュニアヨットクラブ",
+      "name_kanji": "廣田 士",
+      "name_romaji": "Tsukasa Hirota",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 197.0,
+      "exclude": 34.0,
+      "net": 163.0,
+      "sailor_id": "7ab84ead-c647-53b3-b905-4045acfac377",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "ent": 16,
+      "sail": "3275",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "岡﨑 亘作",
+      "name_romaji": "Kosaku Okazaki",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 214.0,
+      "exclude": 47.0,
+      "net": 167.0,
+      "sailor_id": "328e9f20-6d65-5279-b4ae-41eb8565343d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "ent": 18,
+      "sail": "3392",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "山内 琉太郎",
+      "name_romaji": "Ryuutarou Yamauchi",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 215.0,
+      "exclude": 45.0,
+      "net": 170.0,
+      "sailor_id": "bfb6cdc3-693b-59fe-920f-dfa21ea37457",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "ent": 45,
+      "sail": "3224",
+      "club": "広島セーリングスクール",
+      "name_kanji": "宮武 一心",
+      "name_romaji": "Isshin Miyatake",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 219.0,
+      "exclude": 43.0,
+      "net": 176.0,
+      "sailor_id": "a0d33c75-883c-55a1-91ad-8159b07b5b0d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "ent": 40,
+      "sail": "3239",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "井上 仁希",
+      "name_romaji": "Hitoki Inoue",
+      "grade": 4,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 228.0,
+      "exclude": 49.0,
+      "net": 179.0,
+      "sailor_id": "293dfa2f-e955-5053-9a92-d846f5a93164",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "ent": 62,
+      "sail": "3416",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "山口 凌平",
+      "name_romaji": "Ryohei Yamaguchi",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 221.0,
+      "exclude": 38.0,
+      "net": 183.0,
+      "sailor_id": "4e0c0402-8c97-5d4e-a1ec-eb057942d1f0",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "ent": 55,
+      "sail": "3325",
+      "club": "博多ハイクアウツジュニアヨットクラブ",
+      "name_kanji": "朴 智勛",
+      "name_romaji": "Chikun Boku",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 225.0,
+      "exclude": 41.0,
+      "net": 184.0,
+      "sailor_id": "f75f35c4-9c00-5652-ad25-3d420f1a624c",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 36,
+      "ent": 2,
+      "sail": "3491",
+      "club": "一社）石垣海洋少年団＆石垣ジュニアヨットクラブ",
+      "name_kanji": "宮永 聖汰朗",
+      "name_romaji": "Sotarou Miyanaga",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 235.0,
+      "exclude": 48.0,
+      "net": 187.0,
+      "sailor_id": "68613c6a-8e51-584c-96b3-f898b9e9418d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 37,
+      "ent": 5,
+      "sail": "3326",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "name_kanji": "豊田 慧",
+      "name_romaji": "Satoshi Toyota",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 241.0,
+      "exclude": 52.0,
+      "net": 189.0,
+      "sailor_id": "83f74d6f-42e8-52fe-a8d4-1a5b2c9cb6c4",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 38,
+      "ent": 57,
+      "sail": "3257",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "高﨑 勘太",
+      "name_romaji": "Kanta Takasaki",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 250.0,
+      "exclude": 55.0,
+      "net": 195.0,
+      "sailor_id": "6b6f8f4a-3108-5288-af73-f67f3009f4de",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 39,
+      "ent": 51,
+      "sail": "3280",
+      "club": "博多ハイクアウツジュニアヨットクラブ",
+      "name_kanji": "山本 千華",
+      "name_romaji": "Chika Yamamoto",
+      "grade": 5,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 244.0,
+      "exclude": 47.0,
+      "net": 197.0,
+      "sailor_id": "911910db-2a56-5f9b-9c94-f344c68357bf",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 40,
+      "ent": 13,
+      "sail": "3171",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "冨岡 奏馬",
+      "name_romaji": "Soma Tomioka",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 248.0,
+      "exclude": 46.0,
+      "net": 202.0,
+      "sailor_id": "2f1b2e31-5c69-5fd5-b56d-81eb700672ee",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 41,
+      "ent": 59,
+      "sail": "3347",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "中野 嘉隆",
+      "name_romaji": "Yoshitaka Nakano",
+      "grade": 4,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 283.0,
+      "exclude": 56.0,
+      "net": 227.0,
+      "sailor_id": "296aede8-004f-5c15-aa46-40339ad01e1b",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 42,
+      "ent": 8,
+      "sail": "3131",
+      "club": "和歌山ジュニアヨットクラブ",
+      "name_kanji": "榎本 昊透",
+      "name_romaji": "Sorato Enomoto",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 288.0,
+      "exclude": 52.0,
+      "net": 236.0,
+      "sailor_id": "563ad55d-8ce5-5ebf-81ab-14b11ce05bc9",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 43,
+      "ent": 60,
+      "sail": "3399",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "山本 小華",
+      "name_romaji": "Kohana Yamamoto",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 295.0,
+      "exclude": 54.0,
+      "net": 241.0,
+      "sailor_id": "80cae78d-cb51-5d1f-8430-b43a54c1143f",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 44,
+      "ent": 12,
+      "sail": "3252",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "岩﨑 蒼",
+      "name_romaji": "Aoi Iwasaki",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 317.0,
+      "exclude": 63.0,
+      "net": 254.0,
+      "sailor_id": "dd8236c3-b48d-5324-adcf-f7d91bf45666",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 63.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 63.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 45,
+      "ent": 20,
+      "sail": "3471",
+      "club": "玄海セーリングジュニアクラブ",
+      "name_kanji": "金子 和生",
+      "name_romaji": "Kai Kaneko",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 308.0,
+      "exclude": 50.0,
+      "net": 258.0,
+      "sailor_id": "ab978d87-be24-57db-a016-2189e7ee493f",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 46,
+      "ent": 53,
+      "sail": "3240",
+      "club": "博多ハイクアウツジュニアヨットクラブ",
+      "name_kanji": "宮崎 翔太",
+      "name_romaji": "Shota Miyazaki",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 320.0,
+      "exclude": 58.0,
+      "net": 262.0,
+      "sailor_id": "0dd9ad90-2a03-5e0e-908b-cdc671b86a4c",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 39.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 47,
+      "ent": 15,
+      "sail": "3251",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "下村 英昭",
+      "name_romaji": "Hideaki Shimomura",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 328.0,
+      "exclude": 65.0,
+      "net": 263.0,
+      "sailor_id": "480ebee0-7617-5942-ac38-521a36cb6531",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 65.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 48,
+      "ent": 54,
+      "sail": "3085",
+      "club": "博多ハイクアウツジュニアヨットクラブ",
+      "name_kanji": "山口 駿太郎",
+      "name_romaji": "Shuntarou Yamaguchi",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 331.0,
+      "exclude": 65.0,
+      "net": 266.0,
+      "sailor_id": "3722533b-b04f-5ba3-8cd3-4ed5d1af6585",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 65.0,
+          "scoringCode": "DSQ",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 62.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 49,
+      "ent": 39,
+      "sail": "3311",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "宮﨑 一帆",
+      "name_romaji": "Kazuho Miyazaki",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 327.0,
+      "exclude": 55.0,
+      "net": 272.0,
+      "sailor_id": "a803d5b6-4b1b-589e-a69a-5eb8c513a528",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 50,
+      "ent": 1,
+      "sail": "3490",
+      "club": "一社）石垣海洋少年団＆石垣ジュニアヨットクラブ",
+      "name_kanji": "石垣 直太郎",
+      "name_romaji": "Naotarou Ishigaki",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 336.0,
+      "exclude": 58.0,
+      "net": 278.0,
+      "sailor_id": "f91b86e6-bb0b-5a9a-9fc8-a96b17bbd49d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 51,
+      "ent": 33,
+      "sail": "3368",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "越智 祥史",
+      "name_romaji": "Yukihito Ochi",
+      "grade": 9,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 338.0,
+      "exclude": 59.0,
+      "net": 279.0,
+      "sailor_id": "29480d71-1e0b-52f7-8fcf-262754e9fb47",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 52,
+      "ent": 38,
+      "sail": "3314",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "木村 奏太",
+      "name_romaji": "Sota Kimura",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 346.0,
+      "exclude": 65.0,
+      "net": 281.0,
+      "sailor_id": "ad2f058a-0396-5b6a-9e82-b5249393fec3",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 65.0,
+          "scoringCode": "DNC",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 65.0,
+          "scoringCode": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 38.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 61.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 53,
+      "ent": 22,
+      "sail": "3276",
+      "club": "玄海セーリングジュニアクラブ",
+      "name_kanji": "中川 楓香",
+      "name_romaji": "Fuka Nakagawa",
+      "grade": 7,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 342.0,
+      "exclude": 61.0,
+      "net": 281.0,
+      "sailor_id": "c6b57c5c-01cc-5e9c-ada6-363a17c702c0",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 61.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 43.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 54,
+      "ent": 31,
+      "sail": "3237",
+      "club": "Ｂ＆Ｇハウステンボス町ジュニア海洋クラブ",
+      "name_kanji": "ヴァンドｳーセン 元",
+      "name_romaji": "Ken Vandouusen",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 349.0,
+      "exclude": 53.0,
+      "net": 296.0,
+      "sailor_id": "8a2ee680-494a-5686-adb9-4015b20f0a76",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 55,
+      "ent": 47,
+      "sail": "3272",
+      "club": "広島セーリングスクール",
+      "name_kanji": "合田 光希",
+      "name_romaji": "Mitsuki Gouda",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 366.0,
+      "exclude": 65.0,
+      "net": 301.0,
+      "sailor_id": "44230f67-3406-527a-9540-b01c9517ca4f",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 65.0,
+          "scoringCode": "DSQ",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 61.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 56,
+      "ent": 24,
+      "sail": "2767",
+      "club": "宮津ジュニアヨットクラブ",
+      "name_kanji": "枝 大真",
+      "name_romaji": "Haruma Eda",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 364.0,
+      "exclude": 60.0,
+      "net": 304.0,
+      "sailor_id": "2db7b7f0-d035-557c-9f76-5adb83a10664",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 60.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 48.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 57,
+      "ent": 29,
+      "sail": "3186",
+      "club": "B&G時津海洋クラブ",
+      "name_kanji": "松尾 昂",
+      "name_romaji": "Asahi Matsuo",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 364.0,
+      "exclude": 60.0,
+      "net": 304.0,
+      "sailor_id": "6ddf0abd-ae26-5b95-86d9-ae4c2120fc2b",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 50.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 60.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 58,
+      "ent": 11,
+      "sail": "3044",
+      "club": "鹿児島ジュニアヨットクラブ",
+      "name_kanji": "前薗 冬真",
+      "name_romaji": "Toma Maesono",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 379.0,
+      "exclude": 65.0,
+      "net": 314.0,
+      "sailor_id": "70d0c56c-4095-5534-b367-a6166d734c22",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 45.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 47.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 52.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 65.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 59,
+      "ent": 30,
+      "sail": "3105",
+      "club": "B&G時津海洋クラブ",
+      "name_kanji": "吉良 駿之介",
+      "name_romaji": "Shunnosuke Kira",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 381.0,
+      "exclude": 65.0,
+      "net": 316.0,
+      "sailor_id": "a5bbe96a-ee3d-5695-858c-17c8b43d6b90",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 49.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 63.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 60.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 40.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 65.0,
+          "scoringCode": "DSQ",
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 60,
+      "ent": 21,
+      "sail": "3279",
+      "club": "玄海セーリングジュニアクラブ",
+      "name_kanji": "松浦 美虹",
+      "name_romaji": "Miko Matsuura",
+      "grade": 9,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 396.0,
+      "exclude": 65.0,
+      "net": 331.0,
+      "sailor_id": "be45b088-bfbe-5660-b147-f0dbc2786ba2",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 65.0,
+          "scoringCode": "DNC",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 65.0,
+          "scoringCode": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 60.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 42.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 61,
+      "ent": 10,
+      "sail": "3042",
+      "club": "鹿児島ジュニアヨットクラブ",
+      "name_kanji": "合志 心凪",
+      "name_romaji": "Minagi Koshi",
+      "grade": 8,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 399.0,
+      "exclude": 62.0,
+      "net": 337.0,
+      "sailor_id": "f61f3ce8-4511-565d-89c3-4957d873b82b",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 51.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 62.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 61.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 62,
+      "ent": 28,
+      "sail": "3110",
+      "club": "B＆G新居浜海洋クラブ",
+      "name_kanji": "梅村 旺来",
+      "name_romaji": "Ouki Umemura",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 404.0,
+      "exclude": 65.0,
+      "net": 339.0,
+      "sailor_id": "d039c011-e3d2-5e4e-8ced-1ca85a3e71e4",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 65.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 62.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 55.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 65.0,
+          "scoringCode": "NSC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 44.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 63,
+      "ent": 4,
+      "sail": "3102",
+      "club": "B&G松山海洋クラブ",
+      "name_kanji": "王 詢之",
+      "name_romaji": "Junshi Ou",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 407.0,
+      "exclude": 64.0,
+      "net": 343.0,
+      "sailor_id": "b1e4fd3c-5d4f-5bda-b847-848263191516",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 64.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 56.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 60.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 54.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 64,
+      "ent": 3,
+      "sail": "3104",
+      "club": "B&G松山海洋クラブ",
+      "name_kanji": "髙橋 実言",
+      "name_romaji": "Mikoto Takahashi",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 416.0,
+      "exclude": 64.0,
+      "net": 352.0,
+      "sailor_id": "696c994c-5f41-5ddf-b180-70b2c5f40b9f",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 61.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 59.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 57.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 58.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    }
+  ],
+  "class_b": [
+    {
+      "rank": 1,
+      "ent": 29,
+      "sail": "3406",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "安達 陸",
+      "name_romaji": "Riku Adachi",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 15.0,
+      "exclude": 4.0,
+      "net": 11.0,
+      "sailor_id": "17385aeb-afc4-52a4-8f9b-7ed80ec70b73",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "ent": 14,
+      "sail": "3434",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "檜垣 麻衣子",
+      "name_romaji": "Maiko Higaki",
+      "grade": 6,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 15.0,
+      "exclude": 3.0,
+      "net": 12.0,
+      "sailor_id": "d4749289-b2f3-5607-9ae1-fa33bdbcdad5",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "ent": 23,
+      "sail": "3408",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "久保田 聖",
+      "name_romaji": "Atsushi Kubota",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 35.0,
+      "exclude": 8.0,
+      "net": 27.0,
+      "sailor_id": "53d19e4a-4ca4-5cc8-b637-32a195361b3c",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "ent": 17,
+      "sail": "3178",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "大平 碧波",
+      "name_romaji": "Aoha Oohira",
+      "grade": 4,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 46.0,
+      "exclude": 15.0,
+      "net": 31.0,
+      "sailor_id": "ce4ae904-7a57-570a-97cf-738e72df4cfb",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "ent": 18,
+      "sail": "239",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "下村 航大",
+      "name_romaji": "Kodai Shimomura",
+      "grade": 4,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 55.0,
+      "exclude": 18.0,
+      "net": 37.0,
+      "sailor_id": "a695679e-6669-5758-b472-0de56b552d3a",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "ent": 5,
+      "sail": "3250",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "城石 靖春",
+      "name_romaji": "Yasuharu Shiroishi",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 54.0,
+      "exclude": 17.0,
+      "net": 37.0,
+      "sailor_id": "3c9f092c-76ef-56f9-a0c9-7e858a2450be",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "ent": 25,
+      "sail": "3419",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "山手 絵万",
+      "name_romaji": "Ema Yamate",
+      "grade": 7,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 53.0,
+      "exclude": 15.0,
+      "net": 38.0,
+      "sailor_id": "151993ac-0601-503e-8931-61459413489f",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "ent": 27,
+      "sail": "3420",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "山本 周",
+      "name_romaji": "Amane Yamamoto",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 53.0,
+      "exclude": 11.0,
+      "net": 42.0,
+      "sailor_id": "7323557f-08b2-5fcd-a0c6-965bc4fb5ba2",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "ent": 26,
+      "sail": "3418",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "山手 文太郎",
+      "name_romaji": "Buntarou Yamate",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 84.0,
+      "exclude": 31.0,
+      "net": 53.0,
+      "sailor_id": "5af2bcfc-6aaf-56dc-8b53-5ed1e322ef7f",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "ent": 16,
+      "sail": "3462",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "中澤 はな",
+      "name_romaji": "Hana Nakazawa",
+      "grade": 5,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 88.0,
+      "exclude": 31.0,
+      "net": 57.0,
+      "sailor_id": "9ca50e97-0c1a-528c-8aee-77d3752d6e9c",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "ent": 20,
+      "sail": "2942",
+      "club": "広島セーリングスクール",
+      "name_kanji": "辻野 陽真",
+      "name_romaji": "Youma Tsujino",
+      "grade": 4,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 96.0,
+      "exclude": 31.0,
+      "net": 65.0,
+      "sailor_id": "8972d9cd-8a0c-5848-b586-34f49cb7680a",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "ent": 24,
+      "sail": "3286",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "澤村 莉帆",
+      "name_romaji": "Riho Sawamura",
+      "grade": 4,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 92.0,
+      "exclude": 21.0,
+      "net": 71.0,
+      "sailor_id": "914e5690-a53e-57f6-845b-d6a855de33af",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "ent": 15,
+      "sail": "3427",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "伊豆丸 巧",
+      "name_romaji": "Takumi Izumaru",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 106.0,
+      "exclude": 31.0,
+      "net": 75.0,
+      "sailor_id": "86f35eee-b2b0-55d2-9f95-b25bf3939762",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "ent": 3,
+      "sail": "3364",
+      "club": "鹿児島ジュニアヨットクラブ",
+      "name_kanji": "迫 宗摩",
+      "name_romaji": "Soma Sako",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 100.0,
+      "exclude": 19.0,
+      "net": 81.0,
+      "sailor_id": "f0f73b54-a171-5968-a9a5-b8d3bdbedcda",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "ent": 12,
+      "sail": "2619",
+      "club": "B&G時津海洋クラブ",
+      "name_kanji": "植木 慶修",
+      "name_romaji": "Keishuu Ueki",
+      "grade": 4,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 104.0,
+      "exclude": 23.0,
+      "net": 81.0,
+      "sailor_id": "63f38113-ed71-5337-b0fb-cd047c6e0f5c",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "ent": 28,
+      "sail": "3243",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "田上 莉佳子",
+      "name_romaji": "Rikako Tagami",
+      "grade": 5,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 115.0,
+      "exclude": 31.0,
+      "net": 84.0,
+      "sailor_id": "16983245-a74f-5b1c-811c-f9287c03e699",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "ent": 7,
+      "sail": "3463",
+      "club": "B&G別府海洋クラブ",
+      "name_kanji": "鵜飼 花丸",
+      "name_romaji": "Hanamaru Ukai",
+      "grade": 3,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 124.0,
+      "exclude": 31.0,
+      "net": 93.0,
+      "sailor_id": "161cc46a-9659-58d3-be97-0aaf1605dc07",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "ent": 19,
+      "sail": "2986",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "name_kanji": "田中 環",
+      "name_romaji": "Tamaki Tanaka",
+      "grade": 4,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 118.0,
+      "exclude": 22.0,
+      "net": 96.0,
+      "sailor_id": "390a1506-cdbf-598e-bffe-6c77a50bfbad",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "ent": 13,
+      "sail": "2618",
+      "club": "B&G時津海洋クラブ",
+      "name_kanji": "深堀 一真",
+      "name_romaji": "Kazuma Fukahori",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 127.0,
+      "exclude": 25.0,
+      "net": 102.0,
+      "sailor_id": "73892d6c-7f16-5b32-aff0-0d717f85edde",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": true
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "ent": 10,
+      "sail": "3004",
+      "club": "北九州ジュニアヨットクラブ",
+      "name_kanji": "櫻井 綺乃",
+      "name_romaji": "Ayano Sakurai",
+      "grade": 6,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 136.0,
+      "exclude": 31.0,
+      "net": 105.0,
+      "sailor_id": "15ddf966-8cd9-5da9-8192-6cfa3f09e0cf",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "ent": 11,
+      "sail": "2616",
+      "club": "B&G時津海洋クラブ",
+      "name_kanji": "松尾 歩",
+      "name_romaji": "Ayumu Matsuo",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 133.0,
+      "exclude": 23.0,
+      "net": 110.0,
+      "sailor_id": "6775e734-c818-53c9-8fad-e8bd749e2740",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "ent": 4,
+      "sail": "2819",
+      "club": "鹿児島ジュニアヨットクラブ",
+      "name_kanji": "迫 拓摩",
+      "name_romaji": "Takuma Sako",
+      "grade": 6,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 133.0,
+      "exclude": 22.0,
+      "net": 111.0,
+      "sailor_id": "1b120673-9333-56cd-93cc-177139ee9000",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "ent": 6,
+      "sail": "3172",
+      "club": "B&G高松海洋クラブ",
+      "name_kanji": "長尾 優希",
+      "name_romaji": "Yuki Nagao",
+      "grade": 7,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 154.0,
+      "exclude": 31.0,
+      "net": 123.0,
+      "sailor_id": "c62bc809-1e57-5653-899a-737a1b8a4349",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "ent": 1,
+      "sail": "3102",
+      "club": "B&G松山海洋クラブ",
+      "name_kanji": "王 博之",
+      "name_romaji": "Hiroshi Ou",
+      "grade": 3,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 159.0,
+      "exclude": 31.0,
+      "net": 128.0,
+      "sailor_id": "a441ee16-32a6-5559-8e28-0f3f0b0abb07",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "ent": 22,
+      "sail": "2664",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "name_kanji": "長山 花純",
+      "name_romaji": "Kasumi Nagayama",
+      "grade": 4,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 164.0,
+      "exclude": 28.0,
+      "net": 136.0,
+      "sailor_id": "c140fbe4-211e-592a-a28f-431cfa7aa4b0",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "ent": 21,
+      "sail": "3225",
+      "club": "広島セーリングスクール",
+      "name_kanji": "汐川 帆香",
+      "name_romaji": "Honoka Shiokawa",
+      "grade": 2,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 199.0,
+      "exclude": 31.0,
+      "net": 168.0,
+      "sailor_id": "07228aa1-03fb-5eac-9292-ca54fb5f4921",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "ent": 30,
+      "sail": "9",
+      "club": "一社)福岡セーリングクラブ",
+      "name_kanji": "入江 瑞穂",
+      "name_romaji": "Mizuho Irie",
+      "grade": 5,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 201.0,
+      "exclude": 31.0,
+      "net": 170.0,
+      "sailor_id": "d7d4caf7-b0ae-5bbb-ba73-abae87cbbd16",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "scoringCode": "STP",
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "scoringCode": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "ent": 9,
+      "sail": "1",
+      "club": "B＆G新居浜海洋クラブ",
+      "name_kanji": "峰平 多喜子",
+      "name_romaji": "Takiko Minehira",
+      "grade": 3,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 202.0,
+      "exclude": 31.0,
+      "net": 171.0,
+      "sailor_id": "1d6a7924-ff83-5128-9e2d-a07a3cb10e9d",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "DNC",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "ent": 2,
+      "sail": "2983",
+      "club": "B&G松山海洋クラブ",
+      "name_kanji": "田中 美咲",
+      "name_romaji": "Misaki Tanaka",
+      "grade": 3,
+      "gender": "F",
+      "nationality": "JPN",
+      "gross": 209.6,
+      "exclude": 31.0,
+      "net": 178.6,
+      "sailor_id": "f2659406-cdbc-55fb-b6bb-760cd11e2d0e",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.6,
+          "scoringCode": "STP",
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "scoringCode": "DNC",
+          "discarded": false
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "ent": 8,
+      "sail": "3059",
+      "club": "B&G別府海洋クラブ",
+      "name_kanji": "湯浅 汰一",
+      "name_romaji": "Taichi Yuasa",
+      "grade": 2,
+      "gender": "M",
+      "nationality": "JPN",
+      "gross": 215.0,
+      "exclude": 31.0,
+      "net": 184.0,
+      "sailor_id": "ffea3548-0341-59c3-9e67-2f78872746af",
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "scoringCode": "UFD",
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "scoringCode": "RET",
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "scoringCode": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "scoringCode": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "scoringCode": "DNF",
+          "discarded": false
+        }
+      ]
+    }
+  ]
+}
