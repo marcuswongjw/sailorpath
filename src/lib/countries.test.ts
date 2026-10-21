@@ -14,6 +14,9 @@ describe("normalizeGeography", () => {
     expect(normalizeGeography("sg")).toBe("SGP");
     expect(normalizeGeography("SGP")).toBe("SGP");
     expect(normalizeGeography("Malaysia")).toBe("MAS");
+    expect(normalizeGeography("Morocco")).toBe("MAR");
+    expect(normalizeGeography("MA")).toBe("MAR");
+    expect(nationalitySelectOptions()).toContainEqual({ code: "MAR", name: "Morocco" });
   });
 });
 

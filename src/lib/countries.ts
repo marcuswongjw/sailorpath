@@ -351,6 +351,7 @@ export const ISO2_TO_NOC: Record<string, string> = {
   BH: "BRN",
   KW: "KUW",
   OM: "OMA",
+  MA: "MAR",
   IL: "ISR",
   EG: "EGY",
   HR: "CRO",
