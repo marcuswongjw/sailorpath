@@ -38,6 +38,7 @@ type Fleet =
   | "main"
   | "intermediate"
   | "green"
+  | "newborn"
   | "boys"
   | "girls"
   | "alpha"
@@ -111,7 +112,7 @@ function publicFleet(row: RegattaRecord): Fleet | null {
   if (classKey === "optimist") {
     const division = String(row.division || "").trim().toLowerCase();
     if (
-      division === "main" || division === "intermediate" || division === "green" ||
+      division === "main" || division === "intermediate" || division === "green" || division === "newborn" ||
       division === "boys" || division === "girls" ||
       division === "alpha" || division === "bravo" || division === "charlie"
     ) {
@@ -165,7 +166,7 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
     };
   }
   if (
-    fleet === "main" || fleet === "intermediate" || fleet === "green" ||
+    fleet === "main" || fleet === "intermediate" || fleet === "green" || fleet === "newborn" ||
     fleet === "boys" || fleet === "girls" ||
     fleet === "alpha" || fleet === "bravo" || fleet === "charlie"
   ) {
@@ -280,6 +281,7 @@ const FLEET_ORDER: Fleet[] = [
   "main",
   "intermediate",
   "green",
+  "newborn",
   "boys",
   "girls",
   "alpha",
