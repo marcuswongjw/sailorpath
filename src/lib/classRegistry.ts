@@ -16,7 +16,8 @@ export type SailingClassKey =
   | "techno293"
   | "iqfoil"
   | "windsurfing"
-  | "29er";
+  | "29er"
+  | "420";
 
 export type SailingClassDefinition = {
   key: SailingClassKey;
@@ -30,6 +31,13 @@ export type SailingClassDefinition = {
 };
 
 export const SAILING_CLASS_REGISTRY: readonly SailingClassDefinition[] = [
+  {
+    key: "420",
+    label: "420",
+    aliases: ["420", "int420", "international420"],
+    supportsNationalRanking: false,
+    fixedOpenDivision: true,
+  },
   {
     key: "optimist",
     label: "Optimist",
@@ -144,6 +152,7 @@ export function resolveSailingClass(
     "windsurfing",
     "techno293",
     "29er",
+    "420",
     "optimist",
   ];
   for (const key of priority) {

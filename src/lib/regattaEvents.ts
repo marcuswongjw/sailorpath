@@ -40,6 +40,7 @@ export type RegattaEventSliceDef = {
     | "techno293"
     | "windsurfing"
     | "29er"
+    | "420"
     | "iqfoil";
   /**
    * Regattas-table slice: lowercased regatta slug must contain every token.
@@ -1223,6 +1224,10 @@ export function isRegattaLinkedToEventSlice(
       name.includes("ilca 7") ||
       name.includes("ilca7")
     );
+  }
+
+  if (slice.series === "420") {
+    return ["420", "int420", "international420"].includes(boat.toLowerCase().replace(/[^a-z0-9]/g, ""));
   }
 
   if (slice.series === "29er") {

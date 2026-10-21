@@ -522,3 +522,29 @@ describe("hubHrefForClassSlug aliases", () => {
     );
   });
 });
+
+
+describe("Eastern Seaboard 420 crew results", () => {
+  const sheets = [
+    { boatClass: "Optimist", suffix: "optimist", size: 78 },
+    { boatClass: "ILCA 4", suffix: "ilca4", size: 48 },
+    { boatClass: "ILCA 6", suffix: "ilca6", size: 12 },
+    { boatClass: "420", suffix: "420", size: 5 },
+  ].map(({ boatClass, suffix, size }) => row({
+    slug: `eastern-seaboard-regatta-2025-${suffix}`,
+    name: `17th Eastern Seaboard Regatta 2025 — ${boatClass}`,
+    date: "2025-10-22", boatClass, totalFleetSize: size,
+    division: "Open", eventSlug: "eastern-seaboard-regatta-2025",
+  }));
+  it("shows the 420 sheet beside all three single-handed classes", () => {
+    const hub = savedEventHubForSlug("eastern-seaboard-regatta-2025", sheets)!;
+    expect(hub.event.slices.map((slice) => slice.key)).toEqual(["optimist", "ilca-4", "ilca-6", "420"]);
+    expect(resolveEventSlices(hub.event, sheets).map((slice) => slice.regatta?.boatClass)).toEqual(["Optimist", "ILCA 4", "ILCA 6", "420"]);
+    expect(hubHrefForClassSlug("eastern-seaboard-regatta-2025-420", sheets)).toBe("/regattas/eastern-seaboard-regatta-2025?fleet=420");
+  });
+  it("does not classify a 420-only sheet as Optimist", () => {
+    const hub = savedEventHubForSlug(sheets[3].slug, [sheets[3]])!;
+    expect(hub.event.slices).toMatchObject([{ key: "420", series: "420", label: "420" }]);
+    expect(resolveEventSlices(hub.event, [sheets[3]])[0].regatta?.slug).toBe(sheets[3].slug);
+  });
+});
