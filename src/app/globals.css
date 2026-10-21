@@ -1,6 +1,31 @@
 @import "tailwindcss";
 @import "../../tokens/sailorpath.tokens.css";
 
+/* Official portraits retain their original pixels; frame faces inside avatar boxes. */
+img[src*="/athlete-portraits/team-singapore/"] {
+  object-fit: cover;
+  object-position: 50% 0%;
+  transform: scale(1.65);
+  transform-origin: 50% 0%;
+}
+
+/* These source portraits include more of the body and need a closer headshot. */
+img[src*="/athlete-portraits/team-singapore/ian-goh."],
+img[src*="/athlete-portraits/team-singapore/isaac-goh."],
+img[src*="/athlete-portraits/team-singapore/keira-marie-carlyle."] {
+  transform: scale(2.3);
+  transform-origin: 50% 12%;
+}
+
+img[src*="/athlete-portraits/team-singapore/cheryl-yong-heng-xi."] {
+  transform: scale(2.8);
+  transform-origin: 50% 30%;
+}
+
+img[src*="/athlete-portraits/team-singapore/jayson-tan-jian-sen."] {
+  object-position: 80% 0%;
+}
+
 :root {
   --sp-harbour: var(--sp-color-teal);
   --sp-harbour-shadow: var(--sp-color-teal-deep);
