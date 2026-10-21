@@ -2,6 +2,7 @@
  * Derived stats for the public sailor profile (new gold vs established gold).
  */
 
+import { normalizeGeography } from "@/lib/countries";
 import { regattaCountsForRanking } from "@/lib/ranking";
 
 export type ProfileResult = {
@@ -51,6 +52,13 @@ export type ProfileResult = {
     rawValue?: string;
   }>;
 };
+
+/** Keep a position comparison within one host country; unknown locations are excluded. */
+export function resultsInCountry(results: ProfileResult[], country: string): ProfileResult[] {
+  const code = normalizeGeography(country);
+  if (!code) return [];
+  return results.filter((result) => normalizeGeography(result.geography) === code);
+}
 
 export type ProfileObservation = {
   id?: string;
