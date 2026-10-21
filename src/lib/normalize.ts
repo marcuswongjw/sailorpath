@@ -45,6 +45,59 @@ export function normalizeOptionalText(v: unknown): string | null {
 }
 
 /**
+ * Ensures sailor names are cleanly formatted and never stored in full ALL CAPS.
+ * If a name or word is ALL CAPS, converts to Proper / Title Case while respecting:
+ * - Common Malaysian/Singaporean patronymics and abbreviations (Bin, Binti, Binte, b., bt, Mohd, Muhd, Md)
+ * - Hyphenated names (e.g. Chaiya-o-cha)
+ * - Apostrophes (e.g. O'Shea, Nurul 'Afiya)
+ * Preserves intentional mixed casing if already mixed (e.g. McDonald, HoYeung).
+ */
+export function normalizeSailorName(name: string | null | undefined): string {
+  if (!name || typeof name !== "string") return "";
+  const trimmed = name.trim().replace(/\s+/g, " ");
+  if (!trimmed) return "";
+
+  const lowercaseParticles = new Set(["van", "der", "von", "de", "del", "da", "di", "du", "la", "le"]);
+
+  return trimmed.split(" ").map((word, index) => {
+    if (word.includes("-")) {
+      return word.split("-").map((part, pIdx) => {
+        if (part.toLowerCase() === "o" && pIdx > 0) return "o";
+        return normalizeSailorName(part);
+      }).join("-");
+    }
+
+    const lower = word.toLowerCase();
+    if (lower === "b." || lower === "b") return "b.";
+    if (lower === "bt" || lower === "bt.") return "bt";
+    if (lower === "md" || lower === "md.") return "Md";
+    if (lower === "mohd" || lower === "mohd.") return "Mohd";
+    if (lower === "muhd" || lower === "muhd.") return "Muhd";
+    if (lower === "bin") return "Bin";
+    if (lower === "binti") return "Binti";
+    if (lower === "binte") return "Binte";
+
+    if (word.includes("'")) {
+      const parts = word.split("'");
+      return parts.map(p => p ? p.charAt(0).toUpperCase() + p.slice(1).toLowerCase() : "").join("'");
+    }
+
+    // Transform if word is completely uppercase (and has at least one letter)
+    if (word === word.toUpperCase() && /[A-Z]/.test(word)) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }
+
+    // Capitalize words that are completely lowercase unless they are recognized particles
+    if (word === word.toLowerCase() && /[a-z]/.test(word)) {
+      if (index > 0 && lowercaseParticles.has(word)) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    return word;
+  }).join(" ");
+}
+
+/**
  * Accept full DOB (YYYY-MM-DD / Excel serial) or birth year only (2013).
  * Year-only becomes YYYY-01-01. Empty → null.
  */

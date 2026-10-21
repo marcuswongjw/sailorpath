@@ -23,6 +23,7 @@ import {
 } from "@/lib/publicSailor";
 import { resolveProfileAccess } from "@/lib/viewAs";
 import { canManageSailor } from "@/lib/claimAccess";
+import { formatSailNumber } from "@/lib/countries";
 import { getProfileFollowState } from "@/lib/followedSailorsQuery";
 import { isExplicitGuest, isSgpNationality } from "@/lib/seriesMembership";
 
@@ -112,7 +113,7 @@ export default async function SailorProfilePage({
           </p>
           {(publicSailor.sailNumber || publicSailor.sailNumberIlca4 || publicSailor.boardNumber) && (
             <p className="mt-2 text-sm font-semibold">
-              {[publicSailor.sailNumber && `Sail ${publicSailor.sailNumber}`, publicSailor.sailNumberIlca4 && `ILCA ${publicSailor.sailNumberIlca4}`, publicSailor.boardNumber && `Board ${publicSailor.boardNumber}`].filter(Boolean).join(" · ")}
+              {[publicSailor.sailNumber && `Sail ${formatSailNumber(publicSailor.sailNumber, publicSailor.nationality) || publicSailor.sailNumber}`, publicSailor.sailNumberIlca4 && `ILCA ${publicSailor.sailNumberIlca4}`, publicSailor.boardNumber && `Board ${publicSailor.boardNumber}`].filter(Boolean).join(" · ")}
             </p>
           )}
           {publicSailor.bio && <p className="mt-4 whitespace-pre-line text-sm">{publicSailor.bio}</p>}

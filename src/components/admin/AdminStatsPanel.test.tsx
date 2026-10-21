@@ -12,6 +12,15 @@ const stats: AdminStatsPayload = {
   traffic7d: {profileViews: 0, rankingViews: 0, searches: 0, sampleViews: 0, adminOpens: 0},
   ops: {supportNew: 0, daysSinceLastImport: 60, lastImportAt: null, rankingRegattas: 10},
   dataTrust: {sailorsTotal: 100, missingDob: 80, missingOrPlaceholderSail: 20},
+  demographics: {
+    sailorsTotal: 100,
+    sailorsWithResults: 90,
+    nationalitiesCount: 12,
+    resultsTotal: 450,
+    classesCount: 3,
+    topNationalities: [{ country: "SGP", count: 80 }],
+    boatClasses: [{ className: "Optimist", regattaCount: 5, resultCount: 400, sailorCount: 85 }],
+  },
   accounts: {registered: 0, confirmed: 0, signedInLast7d: 0, authSessions: 0, recent: []},
 };
 function mount() {

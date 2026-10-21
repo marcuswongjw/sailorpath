@@ -301,6 +301,16 @@ describe("PATCH /api/admin/claims transactional unlink", () => {
     expect(notifyAccountRoleChange).not.toHaveBeenCalled();
   });
 
+
+  it("does not resend a welcome on repeated approval or an unchanged relation edit", async () => {
+    expect((await patch({ id: pendingClaimId, status: "approved", relation: "parent" })).status).toBe(200);
+    expect(notifyAccountRoleChange).toHaveBeenCalledTimes(1);
+    vi.mocked(notifyAccountRoleChange).mockClear();
+    expect((await patch({ id: pendingClaimId, status: "approved", relation: "parent" })).status).toBe(200);
+    expect((await patch({ id: pendingClaimId, relation: "parent" })).status).toBe(200);
+    expect(notifyAccountRoleChange).not.toHaveBeenCalled();
+  });
+
   it("approves a secondary account without replacing the primary owner", async () => {
     expect((await patch({ id: pendingClaimId, status: "approved", relation: "parent" })).status).toBe(200);
     expect((await savedClaim(pendingClaimId)).status).toBe("approved");

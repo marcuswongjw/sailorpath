@@ -50,3 +50,7 @@ tmp/
 .claude/
 .manus/
 .work/
+
+# Supabase CLI temp
+supabase/.temp/
+

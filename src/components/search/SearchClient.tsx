@@ -15,6 +15,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import type { SailorSearchResult, RegattaSearchResult } from "@/lib/search";
+import { formatSailNumber } from "@/lib/countries";
 
 export type SearchClientProps = {
   initialQuery?: string;
@@ -163,9 +164,9 @@ export function SearchClient({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Name, sail number, club, or regatta"
+            placeholder="Name, sail number, or club"
             enterKeyHint="search"
-            aria-label="Search sailors and regattas"
+            aria-label="Search sailors and events"
             className="w-full min-w-0 bg-transparent py-2.5 sm:py-3 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
             autoComplete="off"
             autoCorrect="off"
@@ -467,11 +468,11 @@ export function SearchClient({
                         </span>
 
                         {/* Sail Number Badge */}
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 text-xs font-mono font-bold shrink-0">
-                          {s.sailNumber.startsWith("SGP") || s.sailNumber.startsWith("SIN")
-                            ? s.sailNumber
-                            : `SGP ${s.sailNumber}`}
-                        </span>
+                        {formatSailNumber(s.sailNumber, s.nationality) && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 text-xs font-mono font-bold shrink-0">
+                            {formatSailNumber(s.sailNumber, s.nationality)}
+                          </span>
+                        )}
 
                         {s.sailNumberIlca4 && s.sailNumberIlca4 !== s.sailNumber && (
                           <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-mono font-semibold shrink-0" title="ILCA 4 Sail Number">

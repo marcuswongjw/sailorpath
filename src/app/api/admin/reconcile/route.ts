@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResultParticipants, regattaResults, sailorAliases, sailors } from "@/db/schema";
+import { normalizeSailorName } from "@/lib/normalize";
 
 export async function POST(req: Request) {
   try {
@@ -34,7 +35,7 @@ export async function POST(req: Request) {
       const [created] = await db
         .insert(sailors)
         .values({
-          name: rawName,
+          name: normalizeSailorName(rawName),
           handle,
           sailNumber: "SGP 000",
           club: "N/A",

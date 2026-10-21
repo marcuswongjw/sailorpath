@@ -1,0 +1,6323 @@
+{
+  "batch": "thai-regattas-2025-2026-10-21",
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/129767",
+    "title": "Results 2025 Admiral's Cup at Royal Varuna Yacht Club 2025.pdf",
+    "type": "pdf",
+    "publicationStatus": "provisional",
+    "statusAsOf": "17:06 on 10 February 2025",
+    "visuallyReviewed": true,
+    "pdfFile": ".work/thai-regattas-2025/pdfs/admirals-results.pdf",
+    "dateBasis": "Official amended NoR document 127292, pages 1–2: 6–10 February 2025, racing 7–10 February.",
+    "comparisonFile": "scripts/imports/thai-regattas-2025/source-comparison.json"
+  },
+  "event": {
+    "id": "6c9bdeb4-a065-5595-8670-738f9bf43b58",
+    "slug": "admirals-cup-2025",
+    "name": "Admiral's Cup 2025",
+    "startDate": "2025-02-06",
+    "endDate": "2025-02-10",
+    "classes": [
+      "Optimist"
+    ],
+    "venue": "Royal Varuna Yacht Club, Pattaya, Thailand",
+    "organizer": "Royal Varuna Yacht Club"
+  },
+  "sheet": {
+    "id": "28dc94ae-eaa4-5add-8a72-4686127b48fe",
+    "slug": "admirals-cup-2025-optimist-gold",
+    "name": "Admiral's Cup 2025 — Optimist Gold",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "raceCount": 11,
+    "totalFleetSize": 51,
+    "countsForRanking": false,
+    "status": "published",
+    "discardCount": 1,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "THA 1253",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "grossScore": 52.0,
+      "nettScore": 39.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "09b6347c-e994-5b09-9ff7-0e3dc642f9b0"
+        }
+      ],
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "resultId": "24b25418-6b74-5217-85ae-6da9500708df",
+      "evidenceNotes": "Official provisional source: PAILIN JAROENPON; historic sail/boat THA 1253; source club YRAT; source nationality THA; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 2,
+      "name": "NATTAPON CHAILOB",
+      "sailOrBoardNumber": "THA 1774",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "grossScore": 90.0,
+      "nettScore": 55.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+          "sourceName": "NATTAPON CHAILOB",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "8cf29392-b34f-5329-bf22-ae7c93ffeaa6"
+        }
+      ],
+      "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "resultId": "be4fb8e6-7d9a-5a09-9f01-3feb2e668b8e",
+      "evidenceNotes": "Official provisional source: NATTAPON CHAILOB; historic sail/boat THA 1774; source club YRAT; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 3,
+      "name": "ADISON EIN",
+      "sailOrBoardNumber": "THA 1945",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "grossScore": 88.0,
+      "nettScore": 56.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+          "sourceName": "ADISON EIN",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "3a12df68-8a25-5bb6-b407-5bceec49d187"
+        }
+      ],
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "resultId": "3e17c1b6-f317-569b-9ab4-e7b9c9f0d5e2",
+      "evidenceNotes": "Official provisional source: ADISON EIN; historic sail/boat THA 1945; source club YRAT; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 4,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "THA 1289",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "grossScore": 74.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "KARIT PHRAMMANEE",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "4eb2a30e-69e0-5c61-b7df-6a78093e737c"
+        }
+      ],
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "resultId": "44151343-b443-54cd-8fc8-9aa411e90dfb",
+      "evidenceNotes": "Official provisional source: KARIT PHRAMMANEE; historic sail/boat THA 1289; source club YRAT; source nationality THA; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 5,
+      "name": "RACHATA SADTRAKULWATTANA",
+      "sailOrBoardNumber": "THA 1963",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "grossScore": 81.0,
+      "nettScore": 66.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+          "sourceName": "RACHATA SADTRAKULWATTANA",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "8a55cdee-d052-5d16-83fa-f7e650365f33"
+        }
+      ],
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "resultId": "4fa99c57-8be3-5eac-a7dd-484cfc22ea95",
+      "evidenceNotes": "Official provisional source: RACHATA SADTRAKULWATTANA; historic sail/boat THA 1963; source club YRAT; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 6,
+      "name": "PARIYAPORN CHANTRAWONG",
+      "sailOrBoardNumber": "THA 1223",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "grossScore": 112.0,
+      "nettScore": 66.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 46.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(46.0)"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+          "sourceName": "PARIYAPORN CHANTRAWONG",
+          "basis": "One-letter surname spelling omission; exact THA 1223, female born 2011 and YRAT.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "9c42c3f3-67fd-598f-8668-d4313ce26fd1"
+        }
+      ],
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "resultId": "c7e2322b-5f81-527d-94cd-9ac876c8d052",
+      "evidenceNotes": "Official provisional source: PARIYAPORN CHANTRAWONG; historic sail/boat THA 1223; source club YRAT; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. One-letter surname spelling omission; exact THA 1223, female born 2011 and YRAT. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 7,
+      "name": "PANUDAT POLPOOL",
+      "sailOrBoardNumber": "THA 1905",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 99.0,
+      "nettScore": 71.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+          "sourceName": "PANUDAT POLPOOL",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "9f13e214-0575-5f3e-9247-1f8fc5b51ac1"
+        }
+      ],
+      "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "resultId": "2282ca11-cacb-5236-9f16-fe88da1ee986",
+      "evidenceNotes": "Official provisional source: PANUDAT POLPOOL; historic sail/boat THA 1905; source club YRAT; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 8,
+      "name": "JESSICA LIU",
+      "sailOrBoardNumber": "HKG 238",
+      "club": "RHKYC",
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "grossScore": 121.0,
+      "nettScore": 75.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(46.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "efbf3e52-e103-455f-af07-e182b5280b3c",
+          "sourceName": "JESSICA LIU",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "5292da19-12d8-5297-9682-6ce2b0a3116f"
+        }
+      ],
+      "sailorId": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "resultId": "199a54b1-cff4-5246-bc4f-36d9931cef7f",
+      "evidenceNotes": "Official provisional source: JESSICA LIU; historic sail/boat HKG 238; source club RHKYC; source nationality HKG; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 9,
+      "name": "KHAMIS NASSER SALEH SALIM AL MASHAIKHI",
+      "sailOrBoardNumber": "OMA 310",
+      "club": "OMAN SAIL",
+      "nationality": "OMA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "grossScore": 101.0,
+      "nettScore": 82.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "ed81e3a8-13bf-4379-bcc5-5b358a1438f2",
+          "sourceName": "KHAMIS NASSER SALEH SALIM AL MASHAIKHI",
+          "basis": "Expanded patronymic and Mashaikhi/Meshaikhi transliteration. Unique OMA Khamis Al Meshaikhi profile; independent official GCC result identifies Khamis Nasser Al Mashaikhi with OMA310. Historic 310 preserved; existing official Asian Championship 321 retained.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "33042e07-809c-5aa2-a1b1-65cf1ede61e7"
+        }
+      ],
+      "sailorId": "ed81e3a8-13bf-4379-bcc5-5b358a1438f2",
+      "resultId": "897f7fa8-f41a-589c-b076-0af4026d42d8",
+      "evidenceNotes": "Official provisional source: KHAMIS NASSER SALEH SALIM AL MASHAIKHI; historic sail/boat OMA 310; source club OMAN SAIL; source nationality OMA; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Expanded patronymic and Mashaikhi/Meshaikhi transliteration. Unique OMA Khamis Al Meshaikhi profile; independent official GCC result identifies Khamis Nasser Al Mashaikhi with OMA310. Historic 310 preserved; existing official Asian Championship 321 retained. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 10,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA 1987",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 107.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+          "sourceName": "SUTHINAN NAKPASOM",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "8e507626-e1b5-56f5-bda8-17bfcac9a43b"
+        }
+      ],
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "resultId": "114eb2b9-975d-5bfb-aa37-c7c1839c2e92",
+      "evidenceNotes": "Official provisional source: SUTHINAN NAKPASOM; historic sail/boat THA 1987; source club YRAT; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 11,
+      "name": "ANYA ZAHEDI",
+      "sailOrBoardNumber": "SGP 4724",
+      "club": "RAFFLES MARINA",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 120.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "1acfd3b9-1a1e-4312-8037-0b02e57622f5",
+          "sourceName": "ANYA ZAHEDI",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "18b6d22e-b466-5c48-a59b-07e894001c4f"
+        }
+      ],
+      "sailorId": "1acfd3b9-1a1e-4312-8037-0b02e57622f5",
+      "resultId": "b357d3a4-204c-5e29-b11e-1dc66b63593c",
+      "evidenceNotes": "Official provisional source: ANYA ZAHEDI; historic sail/boat SGP 4724; source club RAFFLES MARINA; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 12,
+      "name": "SURAPHA MUANGNGAM",
+      "sailOrBoardNumber": "THA 1941",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "grossScore": 118.0,
+      "nettScore": 94.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "sourceName": "SURAPHA MUANGNGAM",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "800f751f-d883-5bec-84fb-f37d6a7f4a45"
+        }
+      ],
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "resultId": "abeb0f0a-abcb-5987-9048-5d6457884905",
+      "evidenceNotes": "Official provisional source: SURAPHA MUANGNGAM; historic sail/boat THA 1941; source club YRAT; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 13,
+      "name": "ASHLYN THAM",
+      "sailOrBoardNumber": "SGP 4452",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "grossScore": 154.0,
+      "nettScore": 102.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "f6fdc628-334e-4b4c-80d0-137741381922",
+          "sourceName": "ASHLYN THAM",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "068ab9be-43a0-5e80-b459-3aa6c21ff387"
+        }
+      ],
+      "sailorId": "f6fdc628-334e-4b4c-80d0-137741381922",
+      "resultId": "910a7f6d-7bd7-5502-8241-b1ca8abf9c74",
+      "evidenceNotes": "Official provisional source: ASHLYN THAM; historic sail/boat SGP 4452; source club RVYC; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 14,
+      "name": "JIRATIP MUTIPHAN",
+      "sailOrBoardNumber": "THA 1985",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "grossScore": 155.0,
+      "nettScore": 103.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(52.0 UFD)"
+        },
+        {
+          "raceNumber": 11,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+          "sourceName": "JIRATIP MUTIPHAN",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "457d0e4c-7535-5f4a-84ac-08266a330253"
+        }
+      ],
+      "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "resultId": "18b5eef9-ce16-5d2b-806c-108c767129f9",
+      "evidenceNotes": "Official provisional source: JIRATIP MUTIPHAN; historic sail/boat THA 1985; source club YRAT; source nationality THA; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 15,
+      "name": "JUDY WANG",
+      "sailOrBoardNumber": "TPE 316",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "grossScore": 195.0,
+      "nettScore": 151.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "sourcePage": 1,
+      "participants": [
+        {
+          "sailorId": "18596206-043a-5593-9e35-40c05af8c210",
+          "sourceName": "JUDY WANG",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "78d19788-4cf9-524a-95cd-d808023d0ec7"
+        }
+      ],
+      "sailorId": "18596206-043a-5593-9e35-40c05af8c210",
+      "resultId": "dce9add1-9262-5b5f-8ed3-88e351018d5b",
+      "evidenceNotes": "Official provisional source: JUDY WANG; historic sail/boat TPE 316; source club RVYC; source nationality TPE; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 16,
+      "name": "ELIJAH ONG",
+      "sailOrBoardNumber": "SGP 3950",
+      "club": "SSF",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "grossScore": 215.0,
+      "nettScore": 163.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "20a011f0-320f-4c70-86e4-660de7a7438e",
+          "sourceName": "ELIJAH ONG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "05b13b2a-3cf0-5ac8-ba2e-2486e6e5f7a3"
+        }
+      ],
+      "sailorId": "20a011f0-320f-4c70-86e4-660de7a7438e",
+      "resultId": "be885b42-b00b-5de4-af52-dd15fac6d773",
+      "evidenceNotes": "Official provisional source: ELIJAH ONG; historic sail/boat SGP 3950; source club SSF; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 17,
+      "name": "YI KAI KAYDEN TAN",
+      "sailOrBoardNumber": "SGP 3104",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "grossScore": 215.0,
+      "nettScore": 163.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(52.0 UFD)"
+        },
+        {
+          "raceNumber": 11,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "920db738-dded-439f-872f-fe1327ca123d",
+          "sourceName": "YI KAI KAYDEN TAN",
+          "basis": "Full-name token order; exact SGP 3104, male born 2010.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "112ca46b-825a-5900-bbc1-b412fc712577"
+        }
+      ],
+      "sailorId": "920db738-dded-439f-872f-fe1327ca123d",
+      "resultId": "defa3c1c-3dd5-58cf-b835-546c4de15347",
+      "evidenceNotes": "Official provisional source: YI KAI KAYDEN TAN; historic sail/boat SGP 3104; source club SAFYC; source nationality SGP; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Full-name token order; exact SGP 3104, male born 2010. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 18,
+      "name": "CHANYACHART ITTTIVORAKUL",
+      "sailOrBoardNumber": "THA 1887",
+      "club": "ACDC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 206.0,
+      "nettScore": 163.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 43.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(43.0)"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+          "sourceName": "CHANYACHART ITTTIVORAKUL",
+          "basis": "Extra T spelling; exact THA 1887 and ACDC.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "769345b7-e520-5026-b742-4c79404d05d9"
+        }
+      ],
+      "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "resultId": "bc6cb884-d4be-5658-90b4-e67aa6f10b19",
+      "evidenceNotes": "Official provisional source: CHANYACHART ITTTIVORAKUL; historic sail/boat THA 1887; source club ACDC; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Extra T spelling; exact THA 1887 and ACDC. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 19,
+      "name": "TARA MALIAH",
+      "sailOrBoardNumber": "HKG 184",
+      "club": "RHKYC",
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "grossScore": 216.0,
+      "nettScore": 164.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(52.0 DNC)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        },
+        {
+          "raceNumber": 11,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "bcb9374d-c256-4add-9abe-98b7832706cc",
+          "sourceName": "TARA MALIAH",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "5c7a5707-f293-55cf-b7bc-f05b6fe3989e"
+        }
+      ],
+      "sailorId": "bcb9374d-c256-4add-9abe-98b7832706cc",
+      "resultId": "cc681047-e075-59d8-899d-0eed27b26689",
+      "evidenceNotes": "Official provisional source: TARA MALIAH; historic sail/boat HKG 184; source club RHKYC; source nationality HKG; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 20,
+      "name": "ALYSSA WONG",
+      "sailOrBoardNumber": "SGP 3396",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 213.0,
+      "nettScore": 169.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44.0)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "bd4018cd-2bd7-4a5d-bf15-5ea37f71ef21",
+          "sourceName": "ALYSSA WONG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "94f2de13-445d-560b-b802-f63edc006243"
+        }
+      ],
+      "sailorId": "bd4018cd-2bd7-4a5d-bf15-5ea37f71ef21",
+      "resultId": "8c78d9d9-ada6-5cc8-b454-bdd91754c3f8",
+      "evidenceNotes": "Official provisional source: ALYSSA WONG; historic sail/boat SGP 3396; source club SAFYC; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 21,
+      "name": "PUNTHITA WEROTJANAKUL",
+      "sailOrBoardNumber": "THA 1888",
+      "club": "UWC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "grossScore": 222.0,
+      "nettScore": 177.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+          "sourceName": "PUNTHITA WEROTJANAKUL",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "47db6f07-0ca2-57b1-8682-6a41b5654c20"
+        }
+      ],
+      "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "resultId": "58675846-5b87-5c88-b8e0-61a300899f2f",
+      "evidenceNotes": "Official provisional source: PUNTHITA WEROTJANAKUL; historic sail/boat THA 1888; source club UWC; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 22,
+      "name": "PRIN KANTHARAK",
+      "sailOrBoardNumber": "THA 1291",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 223.0,
+      "nettScore": 178.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+          "sourceName": "PRIN KANTHARAK",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "f0a1cb16-a7c3-523e-8855-c4fedd34ab73"
+        }
+      ],
+      "sailorId": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+      "resultId": "06f0ffd7-0a25-54cd-a37d-d689875838be",
+      "evidenceNotes": "Official provisional source: PRIN KANTHARAK; historic sail/boat THA 1291; source club YRAT; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 23,
+      "name": "DAMIEN HUANG",
+      "sailOrBoardNumber": "SGP 3300",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 233.0,
+      "nettScore": 181.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+          "sourceName": "DAMIEN HUANG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "728fa405-b725-59ad-9ec4-08f9b41d39bc"
+        }
+      ],
+      "sailorId": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+      "resultId": "f77b5492-8ef7-543e-a253-de44d85bd02a",
+      "evidenceNotes": "Official provisional source: DAMIEN HUANG; historic sail/boat SGP 3300; source club SAFYC; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 24,
+      "name": "SORAWIT NAKSUK",
+      "sailOrBoardNumber": "THA 1772",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 230.0,
+      "nettScore": 183.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 47.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(47.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+          "sourceName": "SORAWIT NAKSUK",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "5aa262cc-e779-52ca-94fb-23fca06281d1"
+        }
+      ],
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "resultId": "e05904fb-e625-5bd8-9017-1b6fd92428ab",
+      "evidenceNotes": "Official provisional source: SORAWIT NAKSUK; historic sail/boat THA 1772; source club YRAT; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 25,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "THA 395",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "grossScore": 238.0,
+      "nettScore": 196.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 42.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(42.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+          "sourceName": "NATTHAPONG NEELASAVEE",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "0226441e-f7a8-53d6-abba-6ff656ab4fa4"
+        }
+      ],
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "resultId": "a156cf3f-28bf-5979-9416-edf1ee544fea",
+      "evidenceNotes": "Official provisional source: NATTHAPONG NEELASAVEE; historic sail/boat THA 395; source club YRAT; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 26,
+      "name": "PATTARAKORN POONPAT",
+      "sailOrBoardNumber": "THA 88",
+      "club": "ACDC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 237.0,
+      "nettScore": 200.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37.0)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+          "sourceName": "PATTARAKORN POONPAT",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "b7b238fe-29d8-56c7-93e5-2298e6364c3d"
+        }
+      ],
+      "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "resultId": "e0777589-cefd-5a93-ad80-f4b62fb40770",
+      "evidenceNotes": "Official provisional source: PATTARAKORN POONPAT; historic sail/boat THA 88; source club ACDC; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 27,
+      "name": "SITIRA'IDAH BTE MOHD AIRUDIN",
+      "sailOrBoardNumber": "SGP 112",
+      "club": "PA VENTURE",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 241.0,
+      "nettScore": 201.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "1b1b2689-e69d-4f29-84f2-71ce2b5dd7d2",
+          "sourceName": "SITIRA'IDAH BTE MOHD AIRUDIN",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "f217f8cd-9f3f-5870-a7ac-dbc6f8fa6c7b"
+        }
+      ],
+      "sailorId": "1b1b2689-e69d-4f29-84f2-71ce2b5dd7d2",
+      "resultId": "5e8ec929-27c3-586c-8b5f-7eabbc8a1002",
+      "evidenceNotes": "Official provisional source: SITIRA'IDAH BTE MOHD AIRUDIN; historic sail/boat SGP 112; source club PA VENTURE; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 28,
+      "name": "NATHANIEL KAIDEN NG",
+      "sailOrBoardNumber": "SGP 3344",
+      "club": "PW",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 257.0,
+      "nettScore": 205.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 52.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(52.0 RET)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "85b13b47-1e45-462b-b214-870e38a706c9",
+          "sourceName": "NATHANIEL KAIDEN NG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "5094a939-0d36-5ad3-b1ff-e9cf059ce906"
+        }
+      ],
+      "sailorId": "85b13b47-1e45-462b-b214-870e38a706c9",
+      "resultId": "a18a839f-bf28-565f-8cd6-06b7586fcfbf",
+      "evidenceNotes": "Official provisional source: NATHANIEL KAIDEN NG; historic sail/boat SGP 3344; source club PW; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 29,
+      "name": "ELLIOT GOH",
+      "sailOrBoardNumber": "SGP 3103",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "grossScore": 254.0,
+      "nettScore": 207.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 47.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(47.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "f5cb0571-0e18-425d-a967-fc09df6bf42d",
+          "sourceName": "ELLIOT GOH",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "e798f3cc-4b94-5c2f-8ab8-fcaf02a81c85"
+        }
+      ],
+      "sailorId": "f5cb0571-0e18-425d-a967-fc09df6bf42d",
+      "resultId": "52f13769-f5f9-51bd-b871-b4b1fa62e620",
+      "evidenceNotes": "Official provisional source: ELLIOT GOH; historic sail/boat SGP 3103; source club SAFYC; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 30,
+      "name": "KEVIN HO",
+      "sailOrBoardNumber": "SGP 3118",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 261.0,
+      "nettScore": 209.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(52.0 UFD)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "3310f5f2-8b8e-4f71-9ad7-2e03f1202cd9",
+          "sourceName": "KEVIN HO",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "30b554a2-78f0-574b-92aa-5a11bd6bec16"
+        }
+      ],
+      "sailorId": "3310f5f2-8b8e-4f71-9ad7-2e03f1202cd9",
+      "resultId": "2ef0e209-c61f-5a8c-899c-ba848b002394",
+      "evidenceNotes": "Official provisional source: KEVIN HO; historic sail/boat SGP 3118; source club SAFYC; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 31,
+      "name": "CHUHAN ZHANG",
+      "sailOrBoardNumber": "THA 1582",
+      "club": "ACDC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "grossScore": 279.0,
+      "nettScore": 238.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 41.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(41.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+          "sourceName": "CHUHAN ZHANG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "e45f981f-39f8-5b68-91c4-350aab8702a6"
+        }
+      ],
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "resultId": "c35f3500-ce00-56d8-8c6d-2348ffb8cdd1",
+      "evidenceNotes": "Official provisional source: CHUHAN ZHANG; historic sail/boat THA 1582; source club ACDC; source nationality THA; source YOB 2014. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 32,
+      "name": "LEVY WIEDMANN",
+      "sailOrBoardNumber": "THA 1464",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "grossScore": 278.0,
+      "nettScore": 238.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+          "sourceName": "LEVY WIEDMANN",
+          "basis": "Existing official historical alias LEVY WIEDMANN; Eastern source THA 996 male born 2013 and RVYC. Admiral historical 1464 preserved separately; distinct from female Kanyapat.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "7dd33a13-773e-56c2-a978-79fdc0cbe264"
+        }
+      ],
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "resultId": "df8ca84d-a4b2-5701-bc83-28a7f1220178",
+      "evidenceNotes": "Official provisional source: LEVY WIEDMANN; historic sail/boat THA 1464; source club RVYC; source nationality THA; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Existing official historical alias LEVY WIEDMANN; Eastern source THA 996 male born 2013 and RVYC. Admiral historical 1464 preserved separately; distinct from female Kanyapat. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 33,
+      "name": "ROHAN MALIAH",
+      "sailOrBoardNumber": "HKG 173",
+      "club": "RHKYC",
+      "nationality": "HKG",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "grossScore": 299.0,
+      "nettScore": 247.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        },
+        {
+          "raceNumber": 10,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        },
+        {
+          "raceNumber": 11,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "21fee251-d07b-4f4b-be01-efead0178e57",
+          "sourceName": "ROHAN MALIAH",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "21c60f12-fa24-553c-bf81-6385c44a9960"
+        }
+      ],
+      "sailorId": "21fee251-d07b-4f4b-be01-efead0178e57",
+      "resultId": "d33bc009-bff4-564d-a115-f974b2c1b678",
+      "evidenceNotes": "Official provisional source: ROHAN MALIAH; historic sail/boat HKG 173; source club RHKYC; source nationality HKG; source YOB 2014. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 34,
+      "name": "OLIVIA CHEONG",
+      "sailOrBoardNumber": "SGP 102",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 301.0,
+      "nettScore": 249.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 52.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(52.0 RET)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "87729379-5818-422b-a299-6e934d910c63",
+          "sourceName": "OLIVIA CHEONG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "85fe152e-4e1a-561d-a843-401a18f902fe"
+        }
+      ],
+      "sailorId": "87729379-5818-422b-a299-6e934d910c63",
+      "resultId": "be6fe392-e4c4-5c2a-ab66-f8d492c9c441",
+      "evidenceNotes": "Official provisional source: OLIVIA CHEONG; historic sail/boat SGP 102; source club SAFYC; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 35,
+      "name": "HADEEL YOUSUF JAMIL THUNAI AL MUSHAIFRI",
+      "sailOrBoardNumber": "OMA 313",
+      "club": "OMAN SAIL",
+      "nationality": "OMA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "grossScore": 297.0,
+      "nettScore": 253.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "c522825b-efc4-47f6-8a48-a3becbf051e7",
+          "sourceName": "HADEEL YOUSUF JAMIL THUNAI AL MUSHAIFRI",
+          "basis": "Expanded patronymic with identical Hadeel/Al Mushaifri, OMA female, unique existing official Asian Championship identity. Historic 313 retained without overwriting 322.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "3ad74add-38cc-5a80-a9c4-95ca19176411"
+        }
+      ],
+      "sailorId": "c522825b-efc4-47f6-8a48-a3becbf051e7",
+      "resultId": "ba6e91c0-0fd7-5e23-91b2-34fa4d26e641",
+      "evidenceNotes": "Official provisional source: HADEEL YOUSUF JAMIL THUNAI AL MUSHAIFRI; historic sail/boat OMA 313; source club OMAN SAIL; source nationality OMA; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Expanded patronymic with identical Hadeel/Al Mushaifri, OMA female, unique existing official Asian Championship identity. Historic 313 retained without overwriting 322. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 36,
+      "name": "PAKORNKIAT CHAIYA- O-CHA",
+      "sailOrBoardNumber": "THA 1643",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 303.0,
+      "nettScore": 256.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 47.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(47.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA- O-CHA",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "2e738272-9272-5909-ab8a-0657ad988e37"
+        }
+      ],
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "resultId": "e791409a-18a6-52c9-b6d9-d7c4e1dbe4d9",
+      "evidenceNotes": "Official provisional source: PAKORNKIAT CHAIYA- O-CHA; historic sail/boat THA 1643; source club YRAT; source nationality THA; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 37,
+      "name": "TATIGUN HOMCHONG",
+      "sailOrBoardNumber": "THA 1759",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "grossScore": 308.0,
+      "nettScore": 258.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 50.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(50.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+          "sourceName": "TATIGUN HOMCHONG",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "75ca9ec5-ab63-5b29-aa10-e61ce53f561b"
+        }
+      ],
+      "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "resultId": "1d6f833a-f7ab-5a47-8bf0-9ac5191982e0",
+      "evidenceNotes": "Official provisional source: TATIGUN HOMCHONG; historic sail/boat THA 1759; source club YRAT; source nationality THA; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 38,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA 2865",
+      "club": "ACDC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "grossScore": 306.0,
+      "nettScore": 261.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 52.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "52.0 DNE"
+        },
+        {
+          "raceNumber": 8,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)"
+        },
+        {
+          "raceNumber": 11,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI TIATHONGCHAI",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "1fdff607-4680-57c4-80e4-2af5ba35aa91"
+        }
+      ],
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "resultId": "82ece92a-9dce-58ab-a39c-94768c3d3215",
+      "evidenceNotes": "Official provisional source: ITTHICHAI TIATHONGCHAI; historic sail/boat THA 2865; source club ACDC; source nationality THA; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 39,
+      "name": "LOW JAYE",
+      "sailOrBoardNumber": "SGP 3179",
+      "club": "PA",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 325.0,
+      "nettScore": 274.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 51.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(51.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        }
+      ],
+      "sourcePage": 2,
+      "participants": [
+        {
+          "sailorId": "6d09c87b-e211-5986-b999-46245d4083b1",
+          "sourceName": "LOW JAYE",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "e03d7675-1f57-50c2-9a86-f7d948e59b89"
+        }
+      ],
+      "sailorId": "6d09c87b-e211-5986-b999-46245d4083b1",
+      "resultId": "873bb1d3-6ec5-5516-a6f7-aa7fab65648d",
+      "evidenceNotes": "Official provisional source: LOW JAYE; historic sail/boat SGP 3179; source club PA; source nationality SGP; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 40,
+      "name": "PAKIN WONGRATANACHOT",
+      "sailOrBoardNumber": "THA 1954",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "grossScore": 324.0,
+      "nettScore": 280.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44.0)"
+        },
+        {
+          "raceNumber": 11,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+          "sourceName": "PAKIN WONGRATANACHOT",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "eb77cca2-959d-5cc9-bfa4-2b12b057aa37"
+        }
+      ],
+      "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "resultId": "337dcdc7-7ed5-5bf8-b347-1955bd0a348e",
+      "evidenceNotes": "Official provisional source: PAKIN WONGRATANACHOT; historic sail/boat THA 1954; source club RTFYC; source nationality THA; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 41,
+      "name": "GEMMA CHEN HUAN HENG",
+      "sailOrBoardNumber": "SGP 4729",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "grossScore": 333.0,
+      "nettScore": 287.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 46.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(46.0)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "688cc8ae-873e-40a3-9bc4-7d05a496994a",
+          "sourceName": "GEMMA CHEN HUAN HENG",
+          "basis": "Existing official entry alias Gemma Chen Huan Heng and exact SGP 4729, female. Profile DOB 1905 not used for assignment or overwritten; official 2012 year retained on result.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "a21b99e6-78df-5f12-a5b8-a62cd50b229f"
+        }
+      ],
+      "sailorId": "688cc8ae-873e-40a3-9bc4-7d05a496994a",
+      "resultId": "349872bb-7124-573f-96f5-469458980ccf",
+      "evidenceNotes": "Official provisional source: GEMMA CHEN HUAN HENG; historic sail/boat SGP 4729; source club RVYC; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Existing official entry alias Gemma Chen Huan Heng and exact SGP 4729, female. Profile DOB 1905 not used for assignment or overwritten; official 2012 year retained on result. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 42,
+      "name": "JAIRUS TEO",
+      "sailOrBoardNumber": "SGP 4073",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 345.0,
+      "nettScore": 293.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "97ef7d2f-9b92-4750-94d4-af96e3d7b3a8",
+          "sourceName": "JAIRUS TEO",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "a61646b3-a16d-52bb-990e-9199b06462d1"
+        }
+      ],
+      "sailorId": "97ef7d2f-9b92-4750-94d4-af96e3d7b3a8",
+      "resultId": "408eb68a-688b-5802-b3bf-f372ebec1f3e",
+      "evidenceNotes": "Official provisional source: JAIRUS TEO; historic sail/boat SGP 4073; source club RVYC; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 43,
+      "name": "KAELYN DAYNA ZHI YI SOH",
+      "sailOrBoardNumber": "SGP 3113",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "grossScore": 348.0,
+      "nettScore": 296.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+          "sourceName": "KAELYN DAYNA ZHI YI SOH",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "a87285f7-5610-580b-886e-1414227453a3"
+        }
+      ],
+      "sailorId": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+      "resultId": "5fa19b37-0c2f-5958-b885-2dd044af0fe1",
+      "evidenceNotes": "Official provisional source: KAELYN DAYNA ZHI YI SOH; historic sail/boat SGP 3113; source club SAFYC; source nationality SGP; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 44,
+      "name": "KRISHNA VENKITACHALAM RAMAKRISHNAN",
+      "sailOrBoardNumber": "IND 1639",
+      "club": "ROYAL MADRAS YATCH CLUB",
+      "nationality": "IND",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "grossScore": 346.0,
+      "nettScore": 297.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 49.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(49.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "5acf2723-193a-4697-a38b-d5d23302bef3",
+          "sourceName": "KRISHNA VENKITACHALAM RAMAKRISHNAN",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "c74e31ed-2aaa-5d1c-a94b-68a56e925ba5"
+        }
+      ],
+      "sailorId": "5acf2723-193a-4697-a38b-d5d23302bef3",
+      "resultId": "3f0fbee8-e7e1-5827-ba88-d76e81ed1218",
+      "evidenceNotes": "Official provisional source: KRISHNA VENKITACHALAM RAMAKRISHNAN; historic sail/boat IND 1639; source club ROYAL MADRAS YATCH CLUB; source nationality IND; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 45,
+      "name": "CHARLES SHING CHAK KONG",
+      "sailOrBoardNumber": "SGP 716",
+      "club": "SSF",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "grossScore": 345.0,
+      "nettScore": 298.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 47.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(47.0)"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+          "sourceName": "CHARLES SHING CHAK KONG",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "28267f41-67c2-5e04-90cf-c237c1585096"
+        }
+      ],
+      "sailorId": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+      "resultId": "8c44ad40-5155-5c6b-8db4-35a6500bf9c0",
+      "evidenceNotes": "Official provisional source: CHARLES SHING CHAK KONG; historic sail/boat SGP 716; source club SSF; source nationality SGP; source YOB 2014. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 46,
+      "name": "ETHAN ZHI REN LOW",
+      "sailOrBoardNumber": "SGP 3855",
+      "club": "SSF",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "grossScore": 351.0,
+      "nettScore": 299.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(52.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "5439be9a-9c0f-455f-80e5-9ea30658aa2e",
+          "sourceName": "ETHAN ZHI REN LOW",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "e40cdeaf-1bd6-50d6-86ef-4bf5895a1fbd"
+        }
+      ],
+      "sailorId": "5439be9a-9c0f-455f-80e5-9ea30658aa2e",
+      "resultId": "c9b49874-601b-518b-b1d8-b71ac1b4e9b6",
+      "evidenceNotes": "Official provisional source: ETHAN ZHI REN LOW; historic sail/boat SGP 3855; source club SSF; source nationality SGP; source YOB 2014. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 47,
+      "name": "TARTEEL ZAID AL-ABD AEDULLAH AL-HASANI",
+      "sailOrBoardNumber": "OMA 311",
+      "club": "OMAN SAIL",
+      "nationality": "OMA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "grossScore": 352.6,
+      "nettScore": 300.6,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 47.6,
+          "code": "SCP",
+          "discarded": false,
+          "raw": "47.6 SCP"
+        },
+        {
+          "raceNumber": 11,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "09429d47-67b4-4953-b50c-c5da84fed18c",
+          "sourceName": "TARTEEL ZAID AL-ABD AEDULLAH AL-HASANI",
+          "basis": "Expanded patronymic with identical Tarteel/Al Hasani, OMA female born 2010. Independent 2025 African results identify Tarteel Al Hasani with OMA311; existing Asian result uses323. Preserve both historic numbers.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "9c030a21-e728-5c1f-af7d-be1cdc4435df"
+        }
+      ],
+      "sailorId": "09429d47-67b4-4953-b50c-c5da84fed18c",
+      "resultId": "224b267c-6665-5e67-baa5-adc91d80246f",
+      "evidenceNotes": "Official provisional source: TARTEEL ZAID AL-ABD AEDULLAH AL-HASANI; historic sail/boat OMA 311; source club OMAN SAIL; source nationality OMA; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Expanded patronymic with identical Tarteel/Al Hasani, OMA female born 2010. Independent 2025 African results identify Tarteel Al Hasani with OMA311; existing Asian result uses323. Preserve both historic numbers. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 48,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA 1696",
+      "club": "ACDC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 360.0,
+      "nettScore": 308.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "4d07766e-096d-5b38-a1f6-aef97ed5202f"
+        }
+      ],
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "resultId": "8dccdc65-44a3-5cdd-b7d6-5b6974b34871",
+      "evidenceNotes": "Official provisional source: SURATSAYAPRON KAEWRAKUM; historic sail/boat THA 1696; source club ACDC; source nationality THA; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 49,
+      "name": "KATE LEE",
+      "sailOrBoardNumber": "TPE 318",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "grossScore": 361.0,
+      "nettScore": 309.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(52.0 DNC)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        },
+        {
+          "raceNumber": 11,
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "52.0 DNC"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+          "sourceName": "KATE LEE",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "5aa55833-c145-536c-9a5e-7ad28185918d"
+        }
+      ],
+      "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "resultId": "979ba1ae-30fa-5cbb-9b08-bb208b06eaad",
+      "evidenceNotes": "Official provisional source: KATE LEE; historic sail/boat TPE 318; source club RVYC; source nationality TPE; source YOB 2012. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 50,
+      "name": "THAWAREE RAKSAPUN",
+      "sailOrBoardNumber": "THA 198",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "grossScore": 371.0,
+      "nettScore": 319.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(52.0 BFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+          "sourceName": "THAWAREE RAKSAPUN",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "9f890824-f32e-59e7-a3c4-daea0cc71a25"
+        }
+      ],
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "resultId": "5a528ed4-f85a-5c5e-812f-a3036748c1ab",
+      "evidenceNotes": "Official provisional source: THAWAREE RAKSAPUN; historic sail/boat THA 198; source club YRAT; source nationality THA; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    },
+    {
+      "rank": 51,
+      "name": "RACHEL LIM",
+      "sailOrBoardNumber": "SGP 3197",
+      "club": "SAFYC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "grossScore": 386.0,
+      "nettScore": 337.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 49.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(49.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0"
+        }
+      ],
+      "sourcePage": 3,
+      "participants": [
+        {
+          "sailorId": "122e6875-e9e7-4ea3-9989-8049f67f373e",
+          "sourceName": "RACHEL LIM",
+          "basis": "Shortened name with exact SGP 3197, female born 2014 and SAFYC.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "02c7b7db-5a9a-53c2-a4b0-e7f6d2937314"
+        }
+      ],
+      "sailorId": "122e6875-e9e7-4ea3-9989-8049f67f373e",
+      "resultId": "af9b76ca-0c5c-515d-af1f-589a0ccfe74e",
+      "evidenceNotes": "Official provisional source: RACHEL LIM; historic sail/boat SGP 3197; source club SAFYC; source nationality SGP; source YOB 2014. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Shortened name with exact SGP 3197, female born 2014 and SAFYC. R1–R5 = Q1–Q5; R6–R11 = F1–F6; retain fleet rank within Gold/Silver, not fabricated overall rank."
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "name": "Nattapon Chailob",
+      "handle": "nattapon-chailob-thai25-2480fe",
+      "sailNumber": "THA 1774",
+      "sailNumberIlca4": null,
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "name": "Jiratip Mutiphan",
+      "handle": "jiratip-mutiphan-thai25-5cd22c",
+      "sailNumber": "THA 1985",
+      "sailNumberIlca4": "9",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "18596206-043a-5593-9e35-40c05af8c210",
+      "name": "Judy Wang",
+      "handle": "judy-wang-thai25-185962",
+      "sailNumber": "TPE 316",
+      "sailNumberIlca4": null,
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "F",
+      "birthYear": null
+    },
+    {
+      "id": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+      "name": "Prin Kantharak",
+      "handle": "prin-kantharak-thai25-83d3c9",
+      "sailNumber": "THA 1291",
+      "sailNumberIlca4": null,
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "name": "Tatigun Homchong",
+      "handle": "tatigun-homchong-thai25-21f21e",
+      "sailNumber": "THA 1759",
+      "sailNumberIlca4": null,
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "6d09c87b-e211-5986-b999-46245d4083b1",
+      "name": "Low Jaye",
+      "handle": "low-jaye-thai25-6d09c8",
+      "sailNumber": "SGP 3179",
+      "sailNumberIlca4": null,
+      "club": "PA",
+      "nationality": "SGP",
+      "gender": "F",
+      "birthYear": null
+    },
+    {
+      "id": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "name": "Pakin Wongratanachot",
+      "handle": "pakin-wongratanachot-thai25-7c7d0b",
+      "sailNumber": "THA 1954",
+      "sailNumberIlca4": null,
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "name": "Kate Lee",
+      "handle": "kate-lee-thai25-977155",
+      "sailNumber": "TPE 318",
+      "sailNumberIlca4": null,
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "F",
+      "birthYear": null
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "1acfd3b9-1a1e-4312-8037-0b02e57622f5",
+      "club": "PAssion Wave",
+      "name": "Anya Alessia Zahedi",
+      "gender": "F",
+      "handle": "anya-alessia-zahedi",
+      "birthYear": 2013,
+      "sailNumber": "4724",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "85b13b47-1e45-462b-b214-870e38a706c9",
+      "club": "PAssion Wave",
+      "name": "Nathaniel Kaiden Ng",
+      "gender": "M",
+      "handle": "nathaniel-kaiden-ng",
+      "birthYear": 2012,
+      "sailNumber": "3344",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+      "club": "Changi Sailing Club",
+      "name": "Charles Kong Shing Chak",
+      "gender": "M",
+      "handle": "charles-kong-shing-chak",
+      "birthYear": 2014,
+      "sailNumber": "716",
+      "nationality": "SGP",
+      "sailNumberIlca4": "227676"
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "club": "RHKYC",
+      "name": "Jessica Liu",
+      "gender": "F",
+      "handle": "jessica-liu-dzgkrka",
+      "birthYear": null,
+      "sailNumber": "238",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+      "club": "SAF Yacht Club",
+      "name": "Damien Huang",
+      "gender": "M",
+      "handle": "damien-huang",
+      "birthYear": 2012,
+      "sailNumber": "3300",
+      "nationality": "SGP",
+      "sailNumberIlca4": "97"
+    },
+    {
+      "id": "688cc8ae-873e-40a3-9bc4-7d05a496994a",
+      "club": "Others",
+      "name": "Gemma Chen Huang Heng",
+      "gender": "F",
+      "handle": "gemma-chen-huang-heng",
+      "birthYear": 1905,
+      "sailNumber": "4729",
+      "nationality": "SGP",
+      "sailNumberIlca4": "43"
+    },
+    {
+      "id": "5439be9a-9c0f-455f-80e5-9ea30658aa2e",
+      "club": "SAF Yacht Club",
+      "name": "Ethan Low Zhi Ren",
+      "gender": "M",
+      "handle": "ethan-low-zhi-ren",
+      "birthYear": 2014,
+      "sailNumber": "3855",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "920db738-dded-439f-872f-fe1327ca123d",
+      "club": "SAFYC",
+      "name": "Tan Yi Kai Kayden",
+      "gender": "M",
+      "handle": "tan-yi-kai-kayden",
+      "birthYear": 2010,
+      "sailNumber": "3104",
+      "nationality": "SGP",
+      "sailNumberIlca4": "197424"
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "Male",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-cha",
+      "gender": "Male",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1b1b2689-e69d-4f29-84f2-71ce2b5dd7d2",
+      "club": "PAssion Wave",
+      "name": "Siti Raidah Binte Mohd Airudin",
+      "gender": "F",
+      "handle": "siti-ra-idah-binte-mohd-airudin",
+      "birthYear": 2013,
+      "sailNumber": "3181",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f6fdc628-334e-4b4c-80d0-137741381922",
+      "club": "PAssion Wave",
+      "name": "Ashlyn Tham Yan Lin",
+      "gender": "F",
+      "handle": "tham-yan-lin-ashlyn",
+      "birthYear": 2012,
+      "sailNumber": "4452",
+      "nationality": "SGP",
+      "sailNumberIlca4": "10"
+    },
+    {
+      "id": "c522825b-efc4-47f6-8a48-a3becbf051e7",
+      "club": "Imported official result",
+      "name": "Hadeel Al Mushaifri",
+      "gender": "F",
+      "handle": "asian-oma-hadeel-al--4654b6",
+      "birthYear": null,
+      "sailNumber": "322",
+      "nationality": "OMA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ed81e3a8-13bf-4379-bcc5-5b358a1438f2",
+      "club": "Imported official result",
+      "name": "Khamis Al Meshaikhi",
+      "gender": "M",
+      "handle": "asian-oma-khamis-al--d98d6b",
+      "birthYear": null,
+      "sailNumber": "321",
+      "nationality": "OMA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f5cb0571-0e18-425d-a967-fc09df6bf42d",
+      "club": "SAF Yacht Club",
+      "name": "Elliot Goh",
+      "gender": "M",
+      "handle": "elliot-goh",
+      "birthYear": 2013,
+      "sailNumber": "3103",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bd4018cd-2bd7-4a5d-bf15-5ea37f71ef21",
+      "club": "SAF Yacht Club",
+      "name": "Alyssa Wong Li Lin",
+      "gender": "F",
+      "handle": "alyssa-wong-li-lin",
+      "birthYear": 2013,
+      "sailNumber": "3396",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "21fee251-d07b-4f4b-be01-efead0178e57",
+      "club": "Royal Hong Kong Yacht Club",
+      "name": "Rohan Maliah",
+      "gender": "M",
+      "handle": "rohan-maliah-ivt1lz6",
+      "birthYear": 2014,
+      "sailNumber": "197",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "club": "YRAT",
+      "name": "Natthapong Neelasavee",
+      "gender": "Male",
+      "handle": "natthapong-neelasavee-91q0rru",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222071"
+    },
+    {
+      "id": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "club": "YRAT",
+      "name": "Sorawit Naksuk",
+      "gender": "M",
+      "handle": "sorawit-naksuk-812d4t4",
+      "birthYear": 2012,
+      "sailNumber": "1493",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "club": "YRAT",
+      "name": "Rachata Sadtrakulwatanna",
+      "gender": "M",
+      "handle": "rachata-sadtrakulwatanna-823ho68",
+      "birthYear": 2011,
+      "sailNumber": "1963",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bcb9374d-c256-4add-9abe-98b7832706cc",
+      "club": "Hong Kong Optimist Dinghy Association",
+      "name": "Tara Maliah",
+      "gender": "F",
+      "handle": "tara-maliah-j0xd6t3",
+      "birthYear": null,
+      "sailNumber": "522",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "club": "YRAT",
+      "name": "Surapha Muangngam",
+      "gender": "F",
+      "handle": "surapha-muangngam-8gw2ruy",
+      "birthYear": 2011,
+      "sailNumber": "1941",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "club": "Imported official result",
+      "name": "Levy Apichai Wiedmann",
+      "gender": "M",
+      "handle": "asian-tha-levy-apich-debd2f",
+      "birthYear": null,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "N/A",
+      "name": "Karit Phrammanee",
+      "gender": null,
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3310f5f2-8b8e-4f71-9ad7-2e03f1202cd9",
+      "club": "SAF Yacht Club",
+      "name": "Kevin Ho Jun Yi",
+      "gender": "M",
+      "handle": "kevin-ho-jun-yi",
+      "birthYear": 2012,
+      "sailNumber": "3118",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "97ef7d2f-9b92-4750-94d4-af96e3d7b3a8",
+      "club": "SAF Yacht Club",
+      "name": "Jairus Teo Xin Jie",
+      "gender": "M",
+      "handle": "jairus-teo-xin-jie",
+      "birthYear": 2012,
+      "sailNumber": "4073",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "club": "RTFYC",
+      "name": "Thawaree Raksapun",
+      "gender": "Female",
+      "handle": "thawaree-raksapun-sd0d5wz",
+      "birthYear": 2013,
+      "sailNumber": "1459",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "Male",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "87729379-5818-422b-a299-6e934d910c63",
+      "club": "SAF Yacht Club",
+      "name": "Cheong Ting Jia Olivia",
+      "gender": "F",
+      "handle": "cheong-ting-jia-olivia",
+      "birthYear": 2013,
+      "sailNumber": "102",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "122e6875-e9e7-4ea3-9989-8049f67f373e",
+      "club": "SAF Yacht Club",
+      "name": "Rachel Lim Qian Hui",
+      "gender": "F",
+      "handle": "rachel-lim-qian-hui",
+      "birthYear": 2014,
+      "sailNumber": "3197",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+      "club": "SAF Yacht Club",
+      "name": "Kaelyn Dayna Soh Zhi Yi",
+      "gender": "F",
+      "handle": "kaelyn-dayna-soh-zhi-yi",
+      "birthYear": 2012,
+      "sailNumber": "3113",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "20a011f0-320f-4c70-86e4-660de7a7438e",
+      "club": "SAF Yacht Club",
+      "name": "Elijah Ong",
+      "gender": "M",
+      "handle": "elijah-ong",
+      "birthYear": 2013,
+      "sailNumber": "3950",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5acf2723-193a-4697-a38b-d5d23302bef3",
+      "club": "YAI",
+      "name": "Krishna Venkitachalam Ramakrishnan",
+      "gender": "M",
+      "handle": "krishna-venkitachalam-ramakrishnan-94z5qb6",
+      "birthYear": 2012,
+      "sailNumber": "1639",
+      "nationality": "IND",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "club": "ACDC.SC",
+      "name": "Chuhan Zhang",
+      "gender": "Female",
+      "handle": "chuhan-zhang-oes2i91",
+      "birthYear": 2014,
+      "sailNumber": "1947",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "club": "N/A",
+      "name": "Panudat Polpool",
+      "gender": null,
+      "handle": "panudat-polpool-hkrw-2c3a79",
+      "birthYear": null,
+      "sailNumber": "1295",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "club": "N/A",
+      "name": "Chanyachart Ittivorakul",
+      "gender": null,
+      "handle": "chanyachart-ittivorakul-hkrw-863b5d",
+      "birthYear": null,
+      "sailNumber": "1887",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "club": "YRAT",
+      "name": "Adison Ein",
+      "gender": "M",
+      "handle": "adison-ein-f5kv46b",
+      "birthYear": 2011,
+      "sailNumber": "1945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "Punthita Werotjanakul",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "club": "ACDC.SC",
+      "name": "Pattarakorn Poonpat",
+      "gender": null,
+      "handle": "pattarakorn-poonpat-oe44pao",
+      "birthYear": 2012,
+      "sailNumber": "88",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "09429d47-67b4-4953-b50c-c5da84fed18c",
+      "club": "Imported official result",
+      "name": "Tarteel Al Hasani",
+      "gender": "F",
+      "handle": "asian-oma-tarteel-al-05a14c",
+      "birthYear": 2010,
+      "sailNumber": "323",
+      "nationality": "OMA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "publicSummary": "Official source status: provisional. Checked against the organiser-published source. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "identityReview": [
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 1,
+      "sourceName": "PAILIN JAROENPON",
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "profileName": "Pailin Jaroenpon",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 2,
+      "sourceName": "NATTAPON CHAILOB",
+      "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "profileName": "Nattapon Chailob",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 3,
+      "sourceName": "ADISON EIN",
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "profileName": "Adison Ein",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 4,
+      "sourceName": "KARIT PHRAMMANEE",
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "profileName": "Karit Phrammanee",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 5,
+      "sourceName": "RACHATA SADTRAKULWATTANA",
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "profileName": "Rachata Sadtrakulwatanna",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 6,
+      "sourceName": "PARIYAPORN CHANTRAWONG",
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "profileName": "Pariyaporn Chantarawong",
+      "basis": "One-letter surname spelling omission; exact THA 1223, female born 2011 and YRAT."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 7,
+      "sourceName": "PANUDAT POLPOOL",
+      "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "profileName": "Panudat Polpool",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 8,
+      "sourceName": "JESSICA LIU",
+      "sailorId": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "profileName": "JESSICA LIU",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 9,
+      "sourceName": "KHAMIS NASSER SALEH SALIM AL MASHAIKHI",
+      "sailorId": "ed81e3a8-13bf-4379-bcc5-5b358a1438f2",
+      "profileName": "Khamis Al Meshaikhi",
+      "basis": "Expanded patronymic and Mashaikhi/Meshaikhi transliteration. Unique OMA Khamis Al Meshaikhi profile; independent official GCC result identifies Khamis Nasser Al Mashaikhi with OMA310. Historic 310 preserved; existing official Asian Championship 321 retained."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 10,
+      "sourceName": "SUTHINAN NAKPASOM",
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "profileName": "Suthinan Nakpasom",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 11,
+      "sourceName": "ANYA ZAHEDI",
+      "sailorId": "1acfd3b9-1a1e-4312-8037-0b02e57622f5",
+      "profileName": "Anya Alessia Zahedi",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 12,
+      "sourceName": "SURAPHA MUANGNGAM",
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "profileName": "Surapha Muangngam",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 13,
+      "sourceName": "ASHLYN THAM",
+      "sailorId": "f6fdc628-334e-4b4c-80d0-137741381922",
+      "profileName": "Ashlyn Tham Yan Lin",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 14,
+      "sourceName": "JIRATIP MUTIPHAN",
+      "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "profileName": "Jiratip Mutiphan",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 15,
+      "sourceName": "JUDY WANG",
+      "sailorId": "18596206-043a-5593-9e35-40c05af8c210",
+      "profileName": "Judy Wang",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 16,
+      "sourceName": "ELIJAH ONG",
+      "sailorId": "20a011f0-320f-4c70-86e4-660de7a7438e",
+      "profileName": "Elijah Ong",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 17,
+      "sourceName": "YI KAI KAYDEN TAN",
+      "sailorId": "920db738-dded-439f-872f-fe1327ca123d",
+      "profileName": "Tan Yi Kai Kayden",
+      "basis": "Full-name token order; exact SGP 3104, male born 2010."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 18,
+      "sourceName": "CHANYACHART ITTTIVORAKUL",
+      "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "profileName": "Chanyachart Ittivorakul",
+      "basis": "Extra T spelling; exact THA 1887 and ACDC."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 19,
+      "sourceName": "TARA MALIAH",
+      "sailorId": "bcb9374d-c256-4add-9abe-98b7832706cc",
+      "profileName": "Tara Maliah",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 20,
+      "sourceName": "ALYSSA WONG",
+      "sailorId": "bd4018cd-2bd7-4a5d-bf15-5ea37f71ef21",
+      "profileName": "Alyssa Wong Li Lin",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 21,
+      "sourceName": "PUNTHITA WEROTJANAKUL",
+      "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "profileName": "PUNTHITA WEROTJANAKUL",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 22,
+      "sourceName": "PRIN KANTHARAK",
+      "sailorId": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+      "profileName": "Prin Kantharak",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 23,
+      "sourceName": "DAMIEN HUANG",
+      "sailorId": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+      "profileName": "Damien Huang",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 24,
+      "sourceName": "SORAWIT NAKSUK",
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "profileName": "Sorawit Naksuk",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 25,
+      "sourceName": "NATTHAPONG NEELASAVEE",
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "profileName": "Natthapong Neelasavee",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 26,
+      "sourceName": "PATTARAKORN POONPAT",
+      "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "profileName": "Pattarakorn Poonpat",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 27,
+      "sourceName": "SITIRA'IDAH BTE MOHD AIRUDIN",
+      "sailorId": "1b1b2689-e69d-4f29-84f2-71ce2b5dd7d2",
+      "profileName": "Siti Raidah Binte Mohd Airudin",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 28,
+      "sourceName": "NATHANIEL KAIDEN NG",
+      "sailorId": "85b13b47-1e45-462b-b214-870e38a706c9",
+      "profileName": "Nathaniel Kaiden Ng",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 29,
+      "sourceName": "ELLIOT GOH",
+      "sailorId": "f5cb0571-0e18-425d-a967-fc09df6bf42d",
+      "profileName": "Elliot Goh",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 30,
+      "sourceName": "KEVIN HO",
+      "sailorId": "3310f5f2-8b8e-4f71-9ad7-2e03f1202cd9",
+      "profileName": "Kevin Ho Jun Yi",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 31,
+      "sourceName": "CHUHAN ZHANG",
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "profileName": "Chuhan Zhang",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 32,
+      "sourceName": "LEVY WIEDMANN",
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "profileName": "Levy Apichai Wiedmann",
+      "basis": "Existing official historical alias LEVY WIEDMANN; Eastern source THA 996 male born 2013 and RVYC. Admiral historical 1464 preserved separately; distinct from female Kanyapat."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 33,
+      "sourceName": "ROHAN MALIAH",
+      "sailorId": "21fee251-d07b-4f4b-be01-efead0178e57",
+      "profileName": "Rohan Maliah",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 34,
+      "sourceName": "OLIVIA CHEONG",
+      "sailorId": "87729379-5818-422b-a299-6e934d910c63",
+      "profileName": "Cheong Ting Jia Olivia",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 35,
+      "sourceName": "HADEEL YOUSUF JAMIL THUNAI AL MUSHAIFRI",
+      "sailorId": "c522825b-efc4-47f6-8a48-a3becbf051e7",
+      "profileName": "Hadeel Al Mushaifri",
+      "basis": "Expanded patronymic with identical Hadeel/Al Mushaifri, OMA female, unique existing official Asian Championship identity. Historic 313 retained without overwriting 322."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 36,
+      "sourceName": "PAKORNKIAT CHAIYA- O-CHA",
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "profileName": "Pakornkiat Chaiya-o-cha",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 37,
+      "sourceName": "TATIGUN HOMCHONG",
+      "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "profileName": "Tatigun Homchong",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 38,
+      "sourceName": "ITTHICHAI TIATHONGCHAI",
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "profileName": "Itthichai Tiathongchai",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 39,
+      "sourceName": "LOW JAYE",
+      "sailorId": "6d09c87b-e211-5986-b999-46245d4083b1",
+      "profileName": "Low Jaye",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 40,
+      "sourceName": "PAKIN WONGRATANACHOT",
+      "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "profileName": "Pakin Wongratanachot",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 41,
+      "sourceName": "GEMMA CHEN HUAN HENG",
+      "sailorId": "688cc8ae-873e-40a3-9bc4-7d05a496994a",
+      "profileName": "Gemma Chen Huang Heng",
+      "basis": "Existing official entry alias Gemma Chen Huan Heng and exact SGP 4729, female. Profile DOB 1905 not used for assignment or overwritten; official 2012 year retained on result."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 42,
+      "sourceName": "JAIRUS TEO",
+      "sailorId": "97ef7d2f-9b92-4750-94d4-af96e3d7b3a8",
+      "profileName": "Jairus Teo Xin Jie",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 43,
+      "sourceName": "KAELYN DAYNA ZHI YI SOH",
+      "sailorId": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+      "profileName": "Kaelyn Dayna Soh Zhi Yi",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 44,
+      "sourceName": "KRISHNA VENKITACHALAM RAMAKRISHNAN",
+      "sailorId": "5acf2723-193a-4697-a38b-d5d23302bef3",
+      "profileName": "Krishna Venkitachalam Ramakrishnan",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 45,
+      "sourceName": "CHARLES SHING CHAK KONG",
+      "sailorId": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+      "profileName": "Charles Kong Shing Chak",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 46,
+      "sourceName": "ETHAN ZHI REN LOW",
+      "sailorId": "5439be9a-9c0f-455f-80e5-9ea30658aa2e",
+      "profileName": "Ethan Low Zhi Ren",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 47,
+      "sourceName": "TARTEEL ZAID AL-ABD AEDULLAH AL-HASANI",
+      "sailorId": "09429d47-67b4-4953-b50c-c5da84fed18c",
+      "profileName": "Tarteel Al Hasani",
+      "basis": "Expanded patronymic with identical Tarteel/Al Hasani, OMA female born 2010. Independent 2025 African results identify Tarteel Al Hasani with OMA311; existing Asian result uses323. Preserve both historic numbers."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 48,
+      "sourceName": "SURATSAYAPRON KAEWRAKUM",
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "profileName": "SURATSAYAPRON KAEWRAKUM",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 49,
+      "sourceName": "KATE LEE",
+      "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "profileName": "Kate Lee",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 50,
+      "sourceName": "THAWAREE RAKSAPUN",
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "profileName": "Thawaree Raksapun",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "admirals-cup-2025-optimist-gold",
+      "rank": 51,
+      "sourceName": "RACHEL LIM",
+      "sailorId": "122e6875-e9e7-4ea3-9989-8049f67f373e",
+      "profileName": "Rachel Lim Qian Hui",
+      "basis": "Shortened name with exact SGP 3197, female born 2014 and SAFYC."
+    }
+  ]
+}

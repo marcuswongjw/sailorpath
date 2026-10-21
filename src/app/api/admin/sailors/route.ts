@@ -16,7 +16,7 @@ import {
 } from "@/lib/datesSg";
 import { runSailorAction } from "@/lib/adminSailorActions";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
-import { optimistSailNumberForProfile } from "@/lib/normalize";
+import { normalizeSailorName, optimistSailNumberForProfile } from "@/lib/normalize";
 import { extractNationalityFromSailNumber } from "@/lib/countries";
 import {
   SailorCreateSchema,
@@ -188,7 +188,7 @@ export async function POST(req: Request) {
     const fromSailNat = extractNationalityFromSailNumber(body.sailNumber as string);
 
     const values: Record<string, unknown> = {
-      name: body.name,
+      name: normalizeSailorName(body.name),
       handle,
       sailNumber: cleanSail,
       boardNumber:
@@ -387,6 +387,9 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul27",
     ] as const) {
       if (body[f] !== undefined) patch[f] = sailorPatchTextValue(f, body[f]);
+    }
+    if (body.name !== undefined) {
+      patch.name = normalizeSailorName(body.name);
     }
     if (body.sailNumber !== undefined) {
       const clean = optimistSailNumberForProfile(body.sailNumber);

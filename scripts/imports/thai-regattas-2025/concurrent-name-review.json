@@ -1,0 +1,434 @@
+[
+  {
+    "sheet": "admirals-cup-2025-optimist-gold",
+    "id": "efbf3e52-e103-455f-af07-e182b5280b3c",
+    "before": {
+      "id": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "club": "RHKYC",
+      "name": "JESSICA LIU",
+      "gender": "F",
+      "handle": "jessica-liu-dzgkrka",
+      "birthYear": null,
+      "sailNumber": "238",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "club": "RHKYC",
+      "name": "Jessica Liu",
+      "gender": "F",
+      "handle": "jessica-liu-dzgkrka",
+      "birthYear": null,
+      "sailNumber": "238",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "admirals-cup-2025-optimist-gold",
+    "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+    "before": {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "admirals-cup-2025-optimist-gold",
+    "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+    "before": {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "PUNTHITA WEROTJANAKUL",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "Punthita Werotjanakul",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "012ca05a-4f76-4d80-8f49-afffe983966f",
+    "before": {
+      "id": "012ca05a-4f76-4d80-8f49-afffe983966f",
+      "club": "Imported official result",
+      "name": "ANDRE BAOU MARTIN",
+      "gender": "M",
+      "handle": "asian-mas-andre-baou-d41bb8",
+      "birthYear": null,
+      "sailNumber": "1024",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "012ca05a-4f76-4d80-8f49-afffe983966f",
+      "club": "Imported official result",
+      "name": "Andre Baou Martin",
+      "gender": "M",
+      "handle": "asian-mas-andre-baou-d41bb8",
+      "birthYear": null,
+      "sailNumber": "1024",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "ff8172b4-8dc8-41c3-83a7-4022e268071a",
+    "before": {
+      "id": "ff8172b4-8dc8-41c3-83a7-4022e268071a",
+      "club": "Imported official result",
+      "name": "MACY MOSOM SIKAYUN",
+      "gender": "F",
+      "handle": "asian-mas-macy-mosom-902545",
+      "birthYear": null,
+      "sailNumber": "1023",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "ff8172b4-8dc8-41c3-83a7-4022e268071a",
+      "club": "Imported official result",
+      "name": "Macy Mosom Sikayun",
+      "gender": "F",
+      "handle": "asian-mas-macy-mosom-902545",
+      "birthYear": null,
+      "sailNumber": "1023",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "f18d7672-ba0b-4686-9aaf-556c8a39387e",
+    "before": {
+      "id": "f18d7672-ba0b-4686-9aaf-556c8a39387e",
+      "club": "Imported official result",
+      "name": "MUHAMMAD ABQAARI IRHAM BIN ADAM",
+      "gender": "M",
+      "handle": "asian-mas-muhammad-a-7f2a4d",
+      "birthYear": null,
+      "sailNumber": "1022",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "f18d7672-ba0b-4686-9aaf-556c8a39387e",
+      "club": "Imported official result",
+      "name": "Muhammad Abqaari Irham Bin Adam",
+      "gender": "M",
+      "handle": "asian-mas-muhammad-a-7f2a4d",
+      "birthYear": null,
+      "sailNumber": "1022",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "b7e64db8-0d81-4b8b-8904-f4e6b57735e1",
+    "before": {
+      "id": "b7e64db8-0d81-4b8b-8904-f4e6b57735e1",
+      "club": "Imported official result",
+      "name": "MUHAMMAD HARITH QAISER BIN AHMAD MOKHDAS",
+      "gender": "M",
+      "handle": "asian-mas-muhammad-h-20c5d5",
+      "birthYear": null,
+      "sailNumber": "1139",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "b7e64db8-0d81-4b8b-8904-f4e6b57735e1",
+      "club": "Imported official result",
+      "name": "Muhammad Harith Qaiser Bin Ahmad Mokhdas",
+      "gender": "M",
+      "handle": "asian-mas-muhammad-h-20c5d5",
+      "birthYear": null,
+      "sailNumber": "1139",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "a1bb3db7-fb14-4510-b7f7-a890fd0ca31c",
+    "before": {
+      "id": "a1bb3db7-fb14-4510-b7f7-a890fd0ca31c",
+      "club": "SSA",
+      "name": "PAPUNGKORN KONGPRECHASAKUL",
+      "gender": "M",
+      "handle": "papungkorn-kongprechasakul-tnc26-a1bb3db7",
+      "birthYear": null,
+      "sailNumber": "THA64",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "a1bb3db7-fb14-4510-b7f7-a890fd0ca31c",
+      "club": "SSA",
+      "name": "Papungkorn Kongprechasakul",
+      "gender": "M",
+      "handle": "papungkorn-kongprechasakul-tnc26-a1bb3db7",
+      "birthYear": null,
+      "sailNumber": "THA64",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "e7fe94b9-dfe0-4237-91e2-33c793171867",
+    "before": {
+      "id": "e7fe94b9-dfe0-4237-91e2-33c793171867",
+      "club": "Imported official result",
+      "name": "NATALIE WONG QIAO EN",
+      "gender": "F",
+      "handle": "asian-mas-natalie-wo-e6b0ec",
+      "birthYear": null,
+      "sailNumber": "1127",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "e7fe94b9-dfe0-4237-91e2-33c793171867",
+      "club": "Imported official result",
+      "name": "Natalie Wong Qiao En",
+      "gender": "F",
+      "handle": "asian-mas-natalie-wo-e6b0ec",
+      "birthYear": null,
+      "sailNumber": "1127",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "2bc77167-59b7-453b-a959-b01d2d516972",
+    "before": {
+      "id": "2bc77167-59b7-453b-a959-b01d2d516972",
+      "club": "Imported official result",
+      "name": "ZIQRI LUQMAN BIN ZAINAL",
+      "gender": "M",
+      "handle": "asian-mas-ziqri-luqm-1c66b0",
+      "birthYear": null,
+      "sailNumber": "1137",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "2bc77167-59b7-453b-a959-b01d2d516972",
+      "club": "Imported official result",
+      "name": "Ziqri Luqman Bin Zainal",
+      "gender": "M",
+      "handle": "asian-mas-ziqri-luqm-1c66b0",
+      "birthYear": null,
+      "sailNumber": "1137",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+    "before": {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "Imported official result",
+      "name": "NIRADA SASIWATTANAPORN",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": null,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "Imported official result",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": null,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "de564928-6def-4b4a-96df-17358fdfc7c5",
+    "before": {
+      "id": "de564928-6def-4b4a-96df-17358fdfc7c5",
+      "club": "Imported official result",
+      "name": "PROUD PARINTARAKUL",
+      "gender": "F",
+      "handle": "asian-tha-proud-pari-0161e8",
+      "birthYear": null,
+      "sailNumber": "935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "de564928-6def-4b4a-96df-17358fdfc7c5",
+      "club": "Imported official result",
+      "name": "Proud Parintarakul",
+      "gender": "F",
+      "handle": "asian-tha-proud-pari-0161e8",
+      "birthYear": null,
+      "sailNumber": "935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+    "before": {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+    "before": {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "Imported official result",
+      "name": "TRAIRAT JAROONROT",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": null,
+      "sailNumber": "1876",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "Imported official result",
+      "name": "Trairat Jaroonrot",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": null,
+      "sailNumber": "1876",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "eastern-seaboard-regatta-2025-optimist",
+    "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+    "before": {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "PUNTHITA WEROTJANAKUL",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "Punthita Werotjanakul",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  },
+  {
+    "sheet": "admirals-cup-2025-optimist-silver",
+    "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+    "before": {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "Imported official result",
+      "name": "NIRADA SASIWATTANAPORN",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": null,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "after": {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "Imported official result",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": null,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    "review": "Concurrent display-name casing correction only; all identity fields unchanged. Preserve current capitalization."
+  }
+]

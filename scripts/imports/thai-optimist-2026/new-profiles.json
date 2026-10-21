@@ -1,0 +1,254 @@
+[
+  {
+    "id": "433063e8-3178-50b1-8b3e-68470a3e8cc6",
+    "name": "Kittiphat Sachato",
+    "handle": "kittiphat-sachato-thai26-433063",
+    "sail_number": "NZL4529",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "6f14e233-8f50-504f-9f2e-0d2b03655c85",
+    "name": "Baramee Connoi",
+    "handle": "baramee-connoi-thai26-6f14e2",
+    "sail_number": "THA20",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+    "name": "Panuwat Sriroy",
+    "handle": "panuwat-sriroy-thai26-034cb0",
+    "sail_number": "TH 678",
+    "club": "YRAT",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "81620549-758e-5209-9f80-4ac3f7cedbbf",
+    "name": "Phacharapol Munwong",
+    "handle": "phacharapol-munwong-thai26-816205",
+    "sail_number": "THA1255",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "ad441d27-47bd-533d-961a-346809d9ceba",
+    "name": "Cheerawit Saiyaluxana",
+    "handle": "cheerawit-saiyaluxana-thai26-ad441d",
+    "sail_number": "THA1899",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "ba7eba1c-42d5-5035-839c-91d10145cf3c",
+    "name": "Theetawat Manitpornsut",
+    "handle": "theetawat-manitpornsut-thai26-ba7eba",
+    "sail_number": "1835",
+    "club": "RTFYC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "dfefca66-a570-5f96-bec6-eb566501bdbb",
+    "name": "Duangdeuen Wichai",
+    "handle": "duangdeuen-wichai-thai26-dfefca",
+    "sail_number": "8881",
+    "club": "RNSC",
+    "nationality": "THA",
+    "gender": "F"
+  },
+  {
+    "id": "b140ab56-69d0-5ec2-ba11-b294eff28bdb",
+    "name": "Yang Junkai",
+    "handle": "yang-junkai-thai26-b140ab",
+    "sail_number": "CHN167",
+    "club": "Qingdao",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "90b395b8-0ae1-5cbc-b7e4-df3dc28b168e",
+    "name": "Li Zhouhang",
+    "handle": "li-zhouhang-thai26-90b395",
+    "sail_number": "CHN 800",
+    "club": "Chrngdu",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "d9625b56-c8ce-5f12-966c-85b474958b55",
+    "name": "Huang Yanbo",
+    "handle": "huang-yanbo-thai26-d9625b",
+    "sail_number": "CHN 818",
+    "club": "Chrngdu",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "d0704e48-f450-5d36-8428-5f01c283d86e",
+    "name": "Gu Haoyi",
+    "handle": "gu-haoyi-thai26-d0704e",
+    "sail_number": "2",
+    "club": "Qingdao",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "9362d146-9d82-57c9-b5d7-29a0fc66b082",
+    "name": "Chen Le",
+    "handle": "chen-le-thai26-9362d1",
+    "sail_number": "CHN 889",
+    "club": "Chrngdu",
+    "nationality": "CHN",
+    "gender": "F"
+  },
+  {
+    "id": "bf0d5c86-8336-5945-927e-e9cc7999bfd8",
+    "name": "Song Zhucran",
+    "handle": "song-zhucran-thai26-bf0d5c",
+    "sail_number": "3839",
+    "club": "Qingdao",
+    "nationality": "CHN",
+    "gender": "F"
+  },
+  {
+    "id": "df71e85b-aff3-51b1-b351-9b83a52ac19a",
+    "name": "Cao Yufeng",
+    "handle": "cao-yufeng-thai26-df71e8",
+    "sail_number": "71",
+    "club": "Qingdao",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "42ebbd48-1090-52fe-a3dd-735ab98ef6bb",
+    "name": "Liang Tailer",
+    "handle": "liang-tailer-thai26-42ebbd",
+    "sail_number": "CHN 879",
+    "club": "Chrngdu",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "2c5cda5d-cbfe-5eea-9d56-121203448b4f",
+    "name": "Suphasin Julpon",
+    "handle": "suphasin-julpon-thai26-2c5cda",
+    "sail_number": "THA644",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "cb81b157-b2ea-5b9a-8e6d-201777826f50",
+    "name": "Joshua Ananda Kurtz",
+    "handle": "joshua-ananda-kurtz-thai26-cb81b1",
+    "sail_number": "1258",
+    "club": "RVYC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "64442880-a775-5b7a-9d13-08a9cc5e45e4",
+    "name": "Mingqian Wu",
+    "handle": "mingqian-wu-thai26-644428",
+    "sail_number": "774",
+    "club": "RVYC",
+    "nationality": "CHN",
+    "gender": "M"
+  },
+  {
+    "id": "fdc27789-fa73-57f3-889a-b6baf8711377",
+    "name": "Chae Won Kim",
+    "handle": "chae-won-kim-thai26-fdc277",
+    "sail_number": "552",
+    "club": "GANG WON STATE SAILING TEAM",
+    "nationality": "KOR",
+    "gender": "F"
+  },
+  {
+    "id": "297d4ae4-e6e4-523f-bbe1-86660370ad87",
+    "name": "Kim Jung Woo",
+    "handle": "kim-jung-woo-thai26-297d4a",
+    "sail_number": "519",
+    "club": "GANGWON STATE SAILING TEAM",
+    "nationality": "KOR",
+    "gender": "M"
+  },
+  {
+    "id": "e547b0c9-a0c5-5a5f-9063-18de5eefbb72",
+    "name": "Hui Wing Au",
+    "handle": "hui-wing-au-thai26-e547b0",
+    "sail_number": "918",
+    "club": "ELITE SAILING ACADEMY",
+    "nationality": "HKG",
+    "gender": "M"
+  },
+  {
+    "id": "c35d01a0-29b3-5057-97e5-5929965b5b3b",
+    "name": "Eric Revill",
+    "handle": "eric-revill-thai26-c35d01",
+    "sail_number": "67",
+    "club": "RVYC",
+    "nationality": "THA",
+    "gender": "M"
+  },
+  {
+    "id": "efb5ac82-c70e-5254-b913-bdaaa5ff6261",
+    "name": "Yi Sum Tan",
+    "handle": "yi-sum-tan-thai26-efb5ac",
+    "sail_number": "9216",
+    "club": "ELITE SAILING ACADEMY",
+    "nationality": "HKG",
+    "gender": "M"
+  },
+  {
+    "id": "e862331e-b4f6-55e8-9a68-bd418a09d0f8",
+    "name": "Yejun Bbang",
+    "handle": "yejun-bbang-thai26-e86233",
+    "sail_number": "520",
+    "club": "GANGWON STATE SAILING TEAM",
+    "nationality": "KOR",
+    "gender": "M"
+  },
+  {
+    "id": "fc0c8ce3-6255-5780-a6f3-469c85d2f009",
+    "name": "Wai Lok Torres Wong",
+    "handle": "wai-lok-torres-wong-thai26-fc0c8c",
+    "sail_number": "968",
+    "club": "ELITE SAILING ACADEMY",
+    "nationality": "HKG",
+    "gender": "M"
+  },
+  {
+    "id": "0afe2eb8-d54f-5707-bccb-dcb01f56f569",
+    "name": "Narad Promjit",
+    "handle": "narad-promjit-thai26-0afe2e",
+    "sail_number": "216",
+    "club": "SSA",
+    "nationality": "THA",
+    "gender": "F"
+  },
+  {
+    "id": "3b9f6c7a-40dd-598a-b297-eb8258252fee",
+    "name": "Yoogaon",
+    "handle": "yoogaon-thai26-3b9f6c",
+    "sail_number": "273",
+    "club": "GANGWON STATESAILNG CLUB",
+    "nationality": "KOR",
+    "gender": "F"
+  },
+  {
+    "id": "6f60ba18-c0b7-5468-8fa3-b27f75422aec",
+    "name": "Baramee Sonnual",
+    "handle": "baramee-sonnual-thai26-6f60ba",
+    "sail_number": "195",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M"
+  }
+]

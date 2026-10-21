@@ -299,6 +299,7 @@ export async function PATCH(req: Request) {
         name: result.requesterName,
         previousRole: result.requesterRole,
         nextRole: "coach",
+        eventId: `coach-request/${id}`,
         relation: "coach",
       });
     }

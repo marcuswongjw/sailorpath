@@ -1,0 +1,30 @@
+[
+  {
+    "event": "CSC Monthly Dinghy Race \u2014 27 October 2024",
+    "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-27-october-2024",
+    "httpStatus": 200,
+    "resultsTableVisible": true,
+    "monthlyEventHeadingVisible": true
+  },
+  {
+    "event": "CSC Monthly Dinghy Race \u2014 28 September 2025",
+    "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025",
+    "httpStatus": 200,
+    "resultsTableVisible": true,
+    "monthlyEventHeadingVisible": true
+  },
+  {
+    "event": "CSC Monthly Dinghy Race \u2014 25 May 2025",
+    "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025",
+    "httpStatus": 200,
+    "resultsTableVisible": true,
+    "monthlyEventHeadingVisible": true
+  },
+  {
+    "event": "CSC Monthly Dinghy Race \u2014 26 April 2026",
+    "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026",
+    "httpStatus": 200,
+    "resultsTableVisible": false,
+    "monthlyEventHeadingVisible": false
+  }
+]

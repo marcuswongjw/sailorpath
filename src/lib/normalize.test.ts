@@ -5,6 +5,7 @@ import {
   normalizeDob,
   normalizeOptionalText,
   normalizeSailNumber,
+  normalizeSailorName,
   optimistSailNumberForProfile,
   toNumber,
 } from "./normalize";
@@ -63,5 +64,65 @@ describe("normalize helpers", () => {
   it("excelDateToIso parses DD/MM/YYYY and ISO", () => {
     expect(excelDateToIso("2026-07-01")).toBe("2026-07-01");
     expect(excelDateToIso("02/03/2013")).toBe("2013-03-02");
+  });
+
+  describe("normalizeSailorName", () => {
+    it("converts all-caps names to title case", () => {
+      expect(normalizeSailorName("ANDRE BAOU MARTIN")).toBe("Andre Baou Martin");
+      expect(normalizeSailorName("ASHER LOW")).toBe("Asher Low");
+      expect(normalizeSailorName("CHLOE KONG")).toBe("Chloe Kong");
+      expect(normalizeSailorName("PROUD PARINTARAKUL")).toBe("Proud Parintarakul");
+      expect(normalizeSailorName("XU JIAYAN")).toBe("Xu Jiayan");
+    });
+
+    it("respects Malay/Singaporean patronymics and abbreviations", () => {
+      expect(normalizeSailorName("AMZAR SYAABAN BIN MOHD NOOR AZMAN")).toBe(
+        "Amzar Syaaban Bin Mohd Noor Azman"
+      );
+      expect(normalizeSailorName("NUR AMNI IRDINA BINTI NORHISAM")).toBe(
+        "Nur Amni Irdina Binti Norhisam"
+      );
+      expect(normalizeSailorName("AHMAD IRFAN DANIAL B. AHMAD ZULMA")).toBe(
+        "Ahmad Irfan Danial b. Ahmad Zulma"
+      );
+      expect(normalizeSailorName("HANIS NAJIHAH BT YUSRI HERMAN")).toBe(
+        "Hanis Najihah bt Yusri Herman"
+      );
+      expect(normalizeSailorName("IRFAN YUSRAN BIN MD SAID")).toBe(
+        "Irfan Yusran Bin Md Said"
+      );
+      expect(normalizeSailorName("MUHD AIMAN BIN MANGSOR")).toBe(
+        "Muhd Aiman Bin Mangsor"
+      );
+    });
+
+    it("handles hyphenated and apostrophe names", () => {
+      expect(normalizeSailorName("NATTHANAN CHAIYA-O-CHA")).toBe(
+        "Natthanan Chaiya-o-Cha"
+      );
+      expect(normalizeSailorName("NURUL 'AFIYA BINTE MOHAMED SHAHROM")).toBe(
+        "Nurul 'Afiya Binte Mohamed Shahrom"
+      );
+    });
+
+    it("capitalizes accidental all-lowercase words while respecting particles", () => {
+      expect(normalizeSailorName("faith ng")).toBe("Faith Ng");
+      expect(normalizeSailorName("Hayden tan")).toBe("Hayden Tan");
+      expect(normalizeSailorName("Abigail Wut Yi chiang")).toBe("Abigail Wut Yi Chiang");
+      expect(normalizeSailorName("Dani Pieter Mahmoud van Olphen")).toBe("Dani Pieter Mahmoud van Olphen");
+      expect(normalizeSailorName("de Silva")).toBe("De Silva");
+    });
+
+    it("leaves already-properly-cased names untouched", () => {
+      expect(normalizeSailorName("Ryan Lo Jun Han")).toBe("Ryan Lo Jun Han");
+      expect(normalizeSailorName("HoYeung Choi")).toBe("HoYeung Choi");
+      expect(normalizeSailorName("McDonald")).toBe("McDonald");
+    });
+
+    it("handles empty or nullish values gracefully", () => {
+      expect(normalizeSailorName("")).toBe("");
+      expect(normalizeSailorName(null)).toBe("");
+      expect(normalizeSailorName(undefined)).toBe("");
+    });
   });
 });

@@ -13,6 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import type { SailorSearchResult, RegattaSearchResult } from "@/lib/search";
+import { formatSailNumber } from "@/lib/countries";
 
 export type QuickSearchModalProps = {
   isOpen: boolean;
@@ -261,11 +262,13 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
                               <span className={`text-xs font-bold truncate ${isSelected ? "text-white" : "text-slate-900"}`}>
                                 {s.name}
                               </span>
-                              <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
-                                isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-700"
-                              }`}>
-                                {s.sailNumber.startsWith("SGP") ? s.sailNumber : `SGP ${s.sailNumber}`}
-                              </span>
+                              {formatSailNumber(s.sailNumber, s.nationality) && (
+                                <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                                  isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-700"
+                                }`}>
+                                  {formatSailNumber(s.sailNumber, s.nationality)}
+                                </span>
+                              )}
                               {s.boardNumber && s.boardNumber !== "0" && (
                                 <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
                                   isSelected ? "bg-white/20 text-white" : "bg-sky-50 text-sky-900"

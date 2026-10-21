@@ -22,6 +22,9 @@ export type ProfileOverviewTabProps = {
   trendMode: ProfileMode;
   trendGoldEntry: string | null;
   trendCaption: string;
+  trendCountry: string;
+  setTrendCountry: (country: string) => void;
+  trendCountryOptions: { code: string; name: string }[];
   activeResultsList: ProfileResult[];
   primaryIsIlca: boolean;
   onNavigateTab: (tab: string) => void;
@@ -45,6 +48,9 @@ export function ProfileOverviewTab({
   trendMode,
   trendGoldEntry,
   trendCaption,
+  trendCountry,
+  setTrendCountry,
+  trendCountryOptions,
   activeResultsList,
   primaryIsIlca,
   onNavigateTab,
@@ -89,6 +95,9 @@ export function ProfileOverviewTab({
           trendMode={trendMode}
           trendGoldEntry={trendGoldEntry}
           trendCaption={trendCaption}
+          trendCountry={trendCountry}
+          setTrendCountry={setTrendCountry}
+          trendCountryOptions={trendCountryOptions}
         />
       </div>
 

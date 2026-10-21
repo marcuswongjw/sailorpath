@@ -1,0 +1,1517 @@
+{
+  "batch": "thai-regattas-2025-2026-10-21",
+  "officialSource": {
+    "url": "https://jpvm.org/results/2025/rvyc/Results.html",
+    "title": "17th Eastern Seaboard Regatta — Royal Varuna Yacht Club 2025",
+    "type": "link",
+    "publicationStatus": "provisional",
+    "statusAsOf": "16:29 on 26 October 2025",
+    "visuallyReviewed": true,
+    "pdfSearch": "Searched Royal Varuna 2025 page, official notice board 11574, organiser-linked jpvm result page and web queries for official final results PDF; no result PDF or later final revision found. HTML corroboration only; not PDF-verified.",
+    "dateBasis": "Official amended NoR document 152769 pages 1–2 and Royal Varuna 2025 event page: 22–26 October; racing 23–26 October.",
+    "comparisonFile": "scripts/imports/thai-regattas-2025/source-comparison.json"
+  },
+  "event": {
+    "id": "c93501c8-a65c-507e-8826-6cfb77d663c1",
+    "slug": "eastern-seaboard-regatta-2025",
+    "name": "17th Eastern Seaboard Regatta 2025",
+    "startDate": "2025-10-22",
+    "endDate": "2025-10-26",
+    "classes": [
+      "Optimist",
+      "ILCA 4",
+      "ILCA 6",
+      "420"
+    ],
+    "venue": "Royal Varuna Yacht Club, Pattaya, Thailand",
+    "organizer": "Royal Varuna Yacht Club"
+  },
+  "sheet": {
+    "id": "cede4f24-be73-51f1-ab3e-f19857c95887",
+    "slug": "eastern-seaboard-regatta-2025-ilca6",
+    "name": "17th Eastern Seaboard Regatta 2025 — ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 11,
+    "totalFleetSize": 12,
+    "countsForRanking": false,
+    "status": "published",
+    "discardCount": 1,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "TON RATTANA",
+      "sailOrBoardNumber": "222180",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "grossScore": 17.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+          "sourceName": "TON RATTANA",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "56a84fdc-4bfe-5350-a67d-f49e1f3814e5"
+        }
+      ],
+      "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+      "resultId": "6fff2187-607b-54b6-a5a8-684ce0b83ab3",
+      "evidenceNotes": "Official provisional source: TON RATTANA; historic sail/boat 222180; source club RVYC; source nationality THA; source YOB 2008. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 2,
+      "name": "YIXIU LUO",
+      "sailOrBoardNumber": "210703",
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "grossScore": 30.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "850d22a6-c404-5711-b0ab-e99507659b38",
+          "sourceName": "YIXIU LUO",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "4d222be4-8a24-5d92-a07c-4d126e84d0b2"
+        }
+      ],
+      "sailorId": "850d22a6-c404-5711-b0ab-e99507659b38",
+      "resultId": "9e761e25-d278-5d38-be1d-72db9c115422",
+      "evidenceNotes": "Official provisional source: YIXIU LUO; historic sail/boat 210703; source club VANHANG SAILING; source nationality CHN; source YOB 2009. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 3,
+      "name": "LIJIAN ZHONG",
+      "sailOrBoardNumber": "214663",
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2007,
+      "grossScore": 36.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "94e28ba6-4b15-5aae-a801-777e30efd6a8",
+          "sourceName": "LIJIAN ZHONG",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "dab59a08-f118-5764-ba25-8d4f6a810c91"
+        }
+      ],
+      "sailorId": "94e28ba6-4b15-5aae-a801-777e30efd6a8",
+      "resultId": "b9bb672a-7c9f-5621-b89d-ebd16c3f64e1",
+      "evidenceNotes": "Official provisional source: LIJIAN ZHONG; historic sail/boat 214663; source club VANHANG SAILING; source nationality CHN; source YOB 2007. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 4,
+      "name": "CHEN YU SHIN",
+      "sailOrBoardNumber": "213037",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "grossScore": 49.0,
+      "nettScore": 39.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "27cdb9d1-3035-5a39-b85a-94533038a886",
+          "sourceName": "CHEN YU SHIN",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "d79c2665-ac1d-5dab-bd4b-7ecc9c4b41fb"
+        }
+      ],
+      "sailorId": "27cdb9d1-3035-5a39-b85a-94533038a886",
+      "resultId": "6086b0cb-40a6-5ccd-8469-f6d4aeed8cfd",
+      "evidenceNotes": "Official provisional source: CHEN YU SHIN; historic sail/boat 213037; source club RVYC; source nationality TPE; source YOB 2008. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 5,
+      "name": "YIMING WU",
+      "sailOrBoardNumber": "214250",
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "grossScore": 56.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "471946e4-4cdb-5541-aa11-255fcc0f38bc",
+          "sourceName": "YIMING WU",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "3e1824bd-16ed-5be7-a391-40b192d442b8"
+        }
+      ],
+      "sailorId": "471946e4-4cdb-5541-aa11-255fcc0f38bc",
+      "resultId": "6588210c-56ea-52b7-b960-9179a9071c29",
+      "evidenceNotes": "Official provisional source: YIMING WU; historic sail/boat 214250; source club VANHANG SAILING; source nationality CHN; source YOB 2009. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 6,
+      "name": "JAYDEN TEO",
+      "sailOrBoardNumber": "214813",
+      "club": "SINGAPORE SAILING FEDERATION",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "grossScore": 74.0,
+      "nettScore": 64.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "21872802-7a58-4994-98cf-cfd93066af10",
+          "sourceName": "JAYDEN TEO",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "5a13f4da-03cc-58d6-a3ef-508efbab34e6"
+        }
+      ],
+      "sailorId": "21872802-7a58-4994-98cf-cfd93066af10",
+      "resultId": "bcd1ab22-35bc-546e-a7d9-7d4147f9590d",
+      "evidenceNotes": "Official provisional source: JAYDEN TEO; historic sail/boat 214813; source club SINGAPORE SAILING FEDERATION; source nationality SGP; source YOB 2009. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "rank": 7,
+      "name": "DARREN LAI",
+      "sailOrBoardNumber": "222256",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "grossScore": 88.0,
+      "nettScore": 75.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 13.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(13.0 RET)"
+        },
+        {
+          "raceNumber": 11,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "8065d18f-d94f-4961-b18f-d126676ce052",
+          "sourceName": "DARREN LAI",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "47ca115c-08e1-5a95-8ca8-71605de78e5e"
+        }
+      ],
+      "sailorId": "8065d18f-d94f-4961-b18f-d126676ce052",
+      "resultId": "40962495-b502-56cf-9c06-a3f457b4d5fd",
+      "evidenceNotes": "Official provisional source: DARREN LAI; historic sail/boat 222256; source club RVYC; source nationality SGP; source YOB 2011. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "rank": 8,
+      "name": "ADAM LWAN CARRAZ",
+      "sailOrBoardNumber": "196770",
+      "club": "SABAH",
+      "nationality": "MAS",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "grossScore": 95.0,
+      "nettScore": 82.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(13.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "42b8bae3-8035-58e9-8efd-b67e3597a437",
+          "sourceName": "ADAM LWAN CARRAZ",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "b3f7e785-ac58-5e20-b31f-6b3b845a0353"
+        }
+      ],
+      "sailorId": "42b8bae3-8035-58e9-8efd-b67e3597a437",
+      "resultId": "832adea2-6e8d-51be-ae52-ca250e1204d4",
+      "evidenceNotes": "Official provisional source: ADAM LWAN CARRAZ; historic sail/boat 196770; source club SABAH; source nationality MAS; source YOB 2009. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 9,
+      "name": "YUFAN TAO",
+      "sailOrBoardNumber": "214659",
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "grossScore": 97.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(13.0 DSQ)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "7b944a18-0371-56e6-976d-9f7df74d87bc",
+          "sourceName": "YUFAN TAO",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "006a4aec-6fbc-5bac-8a76-02d28494dab9"
+        }
+      ],
+      "sailorId": "7b944a18-0371-56e6-976d-9f7df74d87bc",
+      "resultId": "58e8ffe4-315c-5044-b0df-727cf9a206f1",
+      "evidenceNotes": "Official provisional source: YUFAN TAO; historic sail/boat 214659; source club VANHANG SAILING; source nationality CHN; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 10,
+      "name": "ZETI IRDINA BINTI ZAINAL",
+      "sailOrBoardNumber": "196769",
+      "club": "SABAH",
+      "nationality": "MAS",
+      "gender": "F",
+      "officialBirthYear": 2007,
+      "grossScore": 98.0,
+      "nettScore": 86.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "aa32a80e-daae-5beb-81f4-47f68f292b92",
+          "sourceName": "ZETI IRDINA BINTI ZAINAL",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "6081ffbd-0c0b-5ac2-aed5-0c23b871ba0d"
+        }
+      ],
+      "sailorId": "aa32a80e-daae-5beb-81f4-47f68f292b92",
+      "resultId": "a1028d29-afc1-5d37-8748-506c384085ad",
+      "evidenceNotes": "Official provisional source: ZETI IRDINA BINTI ZAINAL; historic sail/boat 196769; source club SABAH; source nationality MAS; source YOB 2007. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "rank": 11,
+      "name": "LOW XIAN RUI DARIUS",
+      "sailOrBoardNumber": "8",
+      "club": "PASSION WAVE EAST COAST",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "grossScore": 110.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "8ec46c01-1663-4341-9c77-40da9edfe4ce",
+          "sourceName": "LOW XIAN RUI DARIUS",
+          "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "ebeebe3d-ec58-5c3c-b802-181ca6db6724"
+        }
+      ],
+      "sailorId": "8ec46c01-1663-4341-9c77-40da9edfe4ce",
+      "resultId": "b8b51c69-59ab-5cb5-86b6-50a45b46d755",
+      "evidenceNotes": "Official provisional source: LOW XIAN RUI DARIUS; historic sail/boat 8; source club PASSION WAVE EAST COAST; source nationality SGP; source YOB 2010. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "rank": 12,
+      "name": "WILIAM MARSH",
+      "sailOrBoardNumber": "216212",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "grossScore": 119.3,
+      "nettScore": 106.3,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(13.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "13.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "13.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "13.0 DNC"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "13.0 DNC"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 12.3,
+          "code": "10%",
+          "discarded": false,
+          "raw": "12.3 10%"
+        }
+      ],
+      "participants": [
+        {
+          "sailorId": "695ca6a9-5d55-50bf-ae5b-51dfb8c36d2d",
+          "sourceName": "WILIAM MARSH",
+          "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented.",
+          "role": "solo",
+          "displayOrder": 1,
+          "id": "143f487a-7d1c-564f-bf74-ee9d1bfb350d"
+        }
+      ],
+      "sailorId": "695ca6a9-5d55-50bf-ae5b-51dfb8c36d2d",
+      "resultId": "705ebc9d-b88d-5337-b673-9f9da01d50ef",
+      "evidenceNotes": "Official provisional source: WILIAM MARSH; historic sail/boat 216212; source club RVYC; source nationality THA; source YOB 2013. All 11 races, scoring codes and one discard preserved; gross/net reconciled. Verified means checked against this source, not a finality claim. No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "717ef058-5716-5951-a848-0723f95e8f28",
+      "name": "Ton Rattana",
+      "handle": "ton-rattana-thai25-717ef0",
+      "sailNumber": "222180",
+      "sailNumberIlca4": null,
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "850d22a6-c404-5711-b0ab-e99507659b38",
+      "name": "Yixiu Luo",
+      "handle": "yixiu-luo-thai25-850d22",
+      "sailNumber": "210703",
+      "sailNumberIlca4": null,
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "94e28ba6-4b15-5aae-a801-777e30efd6a8",
+      "name": "Lijian Zhong",
+      "handle": "lijian-zhong-thai25-94e28b",
+      "sailNumber": "214663",
+      "sailNumberIlca4": null,
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "27cdb9d1-3035-5a39-b85a-94533038a886",
+      "name": "Chen Yu Shin",
+      "handle": "chen-yu-shin-thai25-27cdb9",
+      "sailNumber": "213037",
+      "sailNumberIlca4": null,
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "471946e4-4cdb-5541-aa11-255fcc0f38bc",
+      "name": "Yiming Wu",
+      "handle": "yiming-wu-thai25-471946",
+      "sailNumber": "214250",
+      "sailNumberIlca4": null,
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "42b8bae3-8035-58e9-8efd-b67e3597a437",
+      "name": "Adam Lwan Carraz",
+      "handle": "adam-lwan-carraz-thai25-42b8ba",
+      "sailNumber": "196770",
+      "sailNumberIlca4": null,
+      "club": "SABAH",
+      "nationality": "MAS",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "7b944a18-0371-56e6-976d-9f7df74d87bc",
+      "name": "Yufan Tao",
+      "handle": "yufan-tao-thai25-7b944a",
+      "sailNumber": "214659",
+      "sailNumberIlca4": null,
+      "club": "VANHANG SAILING",
+      "nationality": "CHN",
+      "gender": "M",
+      "birthYear": null
+    },
+    {
+      "id": "aa32a80e-daae-5beb-81f4-47f68f292b92",
+      "name": "Zeti Irdina Binti Zainal",
+      "handle": "zeti-irdina-binti-zainal-thai25-aa32a8",
+      "sailNumber": "196769",
+      "sailNumberIlca4": null,
+      "club": "SABAH",
+      "nationality": "MAS",
+      "gender": "F",
+      "birthYear": null
+    },
+    {
+      "id": "695ca6a9-5d55-50bf-ae5b-51dfb8c36d2d",
+      "name": "Wiliam Marsh",
+      "handle": "wiliam-marsh-thai25-695ca6",
+      "sailNumber": "216212",
+      "sailNumberIlca4": null,
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "birthYear": null
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "8065d18f-d94f-4961-b18f-d126676ce052",
+      "club": "RVYC",
+      "name": "Darren Lai",
+      "gender": "M",
+      "handle": "darren-lai-jdz3rv5",
+      "birthYear": null,
+      "sailNumber": "222257",
+      "nationality": "SGP",
+      "sailNumberIlca4": "SGP 222256"
+    },
+    {
+      "id": "8ec46c01-1663-4341-9c77-40da9edfe4ce",
+      "club": "PA",
+      "name": "Darius Low Xian Rui",
+      "gender": "M",
+      "handle": "darius-low-xian-rui-jbyo9tw",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "SGP185203"
+    },
+    {
+      "id": "21872802-7a58-4994-98cf-cfd93066af10",
+      "club": "PAssion Wave",
+      "name": "Jayden Teo Yuan Zhe",
+      "gender": "M",
+      "handle": "jayden-teo-yuan-zhe-22csicy",
+      "birthYear": null,
+      "sailNumber": "228158",
+      "nationality": "SGP",
+      "sailNumberIlca4": "214813"
+    }
+  ],
+  "publicSummary": "Official source status: provisional. Checked against the organiser-published source. Every race, discard and scoring code retained. Does not count for Singapore national rankings.",
+  "identityReview": [
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 1,
+      "sourceName": "TON RATTANA",
+      "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+      "profileName": "Ton Rattana",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 2,
+      "sourceName": "YIXIU LUO",
+      "sailorId": "850d22a6-c404-5711-b0ab-e99507659b38",
+      "profileName": "Yixiu Luo",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 3,
+      "sourceName": "LIJIAN ZHONG",
+      "sailorId": "94e28ba6-4b15-5aae-a801-777e30efd6a8",
+      "profileName": "Lijian Zhong",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 4,
+      "sourceName": "CHEN YU SHIN",
+      "sailorId": "27cdb9d1-3035-5a39-b85a-94533038a886",
+      "profileName": "Chen Yu Shin",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 5,
+      "sourceName": "YIMING WU",
+      "sailorId": "471946e4-4cdb-5541-aa11-255fcc0f38bc",
+      "profileName": "Yiming Wu",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 6,
+      "sourceName": "JAYDEN TEO",
+      "sailorId": "21872802-7a58-4994-98cf-cfd93066af10",
+      "profileName": "Jayden Teo Yuan Zhe",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 7,
+      "sourceName": "DARREN LAI",
+      "sailorId": "8065d18f-d94f-4961-b18f-d126676ce052",
+      "profileName": "Darren Lai",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 8,
+      "sourceName": "ADAM LWAN CARRAZ",
+      "sailorId": "42b8bae3-8035-58e9-8efd-b67e3597a437",
+      "profileName": "Adam Lwan Carraz",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 9,
+      "sourceName": "YUFAN TAO",
+      "sailorId": "7b944a18-0371-56e6-976d-9f7df74d87bc",
+      "profileName": "Yufan Tao",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 10,
+      "sourceName": "ZETI IRDINA BINTI ZAINAL",
+      "sailorId": "aa32a80e-daae-5beb-81f4-47f68f292b92",
+      "profileName": "Zeti Irdina Binti Zainal",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 11,
+      "sourceName": "LOW XIAN RUI DARIUS",
+      "sailorId": "8ec46c01-1663-4341-9c77-40da9edfe4ce",
+      "profileName": "Darius Low Xian Rui",
+      "basis": "Unique exact normalized official name or existing alias with compatible recorded gender and birth year"
+    },
+    {
+      "sheet": "eastern-seaboard-regatta-2025-ilca6",
+      "rank": 12,
+      "sourceName": "WILIAM MARSH",
+      "sailorId": "695ca6a9-5d55-50bf-ae5b-51dfb8c36d2d",
+      "profileName": "Wiliam Marsh",
+      "basis": "No existing exact name/accepted alias or independently corroborated variant. Preserve distinct official identity; no birth date invented."
+    }
+  ]
+}

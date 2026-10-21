@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   buildIlcaKeyStats,
+  buildIlcaPositionTrend,
+  resultsInCountry,
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
@@ -353,5 +355,39 @@ describe("ilcaHighPointsForResult", () => {
         isDns: true,
       })
     ).toBe(0);
+  });
+});
+
+
+describe("country position comparison", () => {
+  it("matches host-country aliases and excludes overseas and unknown locations", () => {
+    const rows = ["SG", "SGP", "Singapore", "IND", "THA", null].map((geography, i) => ({ id: String(i), geography }));
+    expect(resultsInCountry(rows, "SGP").map((r) => r.id)).toEqual(["0", "1", "2"]);
+    expect(resultsInCountry(rows, "India").map((r) => r.id)).toEqual(["3"]);
+    expect(resultsInCountry(rows, "")).toEqual([]);
+    expect(rows).toHaveLength(6);
+  });
+
+  it("keeps Krishna's Singapore finishes together without changing international history", () => {
+    const rows = [
+      ["2024-08-31", "SGP", 45], ["2025-09-06", "SGP", 38],
+      ["2025-10-25", "OMA", 81], ["2026-02-20", "THA", 10],
+      ["2026-03-14", "SGP", 47], ["2026-06-18", "MAR", 219],
+    ].map(([date, geography, rank]) => ({ regattaDate: String(date), geography: String(geography), rank: Number(rank), division: "Gold" }));
+    const local = resultsInCountry(rows, "SGP");
+    expect(buildProfileAnalytics({}, resultsInCountry(rows, "IND")).trend).toEqual([]);
+    expect(buildProfileAnalytics({}, local).trend.map((p) => p.rank)).toEqual([45, 38, 47]);
+    expect(buildIlcaPositionTrend(local).map((p) => p.rank)).toEqual([45, 38, 47]);
+    expect(rows).toHaveLength(6);
+  });
+
+  it("filters the country before taking the latest ten finishes for every class", () => {
+    const rows = Array.from({length: 24}, (_, i) => ({
+      regattaDate: `2026-01-${String(i + 1).padStart(2, "0")}`,
+      rank: i + 1, geography: i < 12 ? "SGP" : "THA", division: "Gold",
+    }));
+    const local = resultsInCountry(rows, "SGP");
+    expect(buildProfileAnalytics({}, local).trend.map((p) => p.rank)).toEqual([3,4,5,6,7,8,9,10,11,12]);
+    expect(buildIlcaPositionTrend(local).map((p) => p.rank)).toEqual([3,4,5,6,7,8,9,10,11,12]);
   });
 });

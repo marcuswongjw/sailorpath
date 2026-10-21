@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { geographySelectOptions, normalizeGeography } from "@/lib/countries";
 import { normalizeNationality } from "@/lib/seriesMembership";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
@@ -17,6 +18,7 @@ import {
   buildIlcaPositionTrend,
   buildProfileAnalytics,
   mergeStandingScoresIntoTrend,
+  resultsInCountry,
   optimistLeftYear,
   prefersIlcaFirstProfile,
   profileBoatClassGroup,
@@ -1130,45 +1132,49 @@ export function useSailorProfileState({
   /** Equipment stays family/owner-private (never on public / preview-public). */
   const showEquipmentSection = ownerView || hasPrivateAccess;
 
-  // ILCA position trend (Open fleet) — shown for ILCA-only or dual-class ILCA tab
+  // Default to nationality; an explicit selection compares another host country separately.
+  const [selectedTrendCountry, setTrendCountry] = useState<string | null>(null);
+  const trendCountry = selectedTrendCountry || normalizeNationality(displaySailor.nationality) || "SGP";
+  const trendCountryOptions = useMemo(() => {
+    const codes = new Set([trendCountry, ...results.map((r) => normalizeGeography(r.geography)).filter(Boolean)]);
+    return geographySelectOptions().filter((option) => codes.has(option.code));
+  }, [results, trendCountry]);
+  const countryOptimistAnalytics = useMemo(
+    () => buildProfileAnalytics(displaySailor as never, resultsInCountry(classBuckets.optimist, trendCountry)),
+    [displaySailor, classBuckets.optimist, trendCountry]
+  );
   const ilcaTrendPoints = useMemo(
-    () => buildIlcaPositionTrend(ilca4Results as ProfileResult[]),
-    [ilca4Results]
+    () => buildIlcaPositionTrend(resultsInCountry(ilca4Results as ProfileResult[], trendCountry)),
+    [ilca4Results, trendCountry]
   );
   const showIlcaTrend =
     !onBoardClass && (primaryIsIlca || (dualClass && resultsTab === "ilca4"));
   const boardTrendPoints = useMemo(
-    () => (onBoardClass ? buildIlcaPositionTrend(activeBoardResults) : []),
-    [onBoardClass, activeBoardResults]
+    () => (onBoardClass ? buildIlcaPositionTrend(resultsInCountry(activeBoardResults, trendCountry)) : []),
+    [onBoardClass, activeBoardResults, trendCountry]
   );
-  /** Merge series-standing DNS (missed ranking events) into Optimist trend. */
+  // Only merge standing slots whose event location is known to match this country.
   const optimistTrendPoints = useMemo(() => {
-    const standing = initialSeriesStanding;
-    if (!standing?.rScores?.length) return analytics.trend;
-    const fleet =
-      String(standing.fleet || "").toLowerCase() === "gold"
-        ? ("Gold" as const)
-        : ("Silver" as const);
-    return mergeStandingScoresIntoTrend(
-      analytics.trend,
-      standing.rScores,
-      fleet
-    );
-  }, [analytics.trend, initialSeriesStanding]);
+    const localIds = new Set(resultsInCountry(classBuckets.optimist, trendCountry).map((r) => r.regattaId));
+    const scores = initialSeriesStanding?.rScores?.filter((score) => localIds.has(score.regattaId));
+    const fleet = String(initialSeriesStanding?.fleet || "").toLowerCase() === "gold" ? "Gold" : "Silver";
+    return mergeStandingScoresIntoTrend(countryOptimistAnalytics.trend, scores, fleet);
+  }, [countryOptimistAnalytics.trend, initialSeriesStanding, classBuckets.optimist, trendCountry]);
   const trendPoints = onBoardClass
     ? boardTrendPoints
     : showIlcaTrend
       ? ilcaTrendPoints
       : optimistTrendPoints;
-  const trendMode = onBoardClass || showIlcaTrend ? ("other" as const) : analytics.mode;
-  const trendGoldEntry = onBoardClass || showIlcaTrend ? null : analytics.goldEntryDate;
-  const trendCaption = onBoardClass
+  const trendMode = onBoardClass || showIlcaTrend ? ("other" as const) : countryOptimistAnalytics.mode;
+  const trendGoldEntry = onBoardClass || showIlcaTrend ? null : countryOptimistAnalytics.goldEntryDate;
+  const trendCountryName = trendCountryOptions.find((option) => option.code === trendCountry)?.name || trendCountry;
+  const trendCaption = ` · ${trendCountryName} regattas only` + (onBoardClass
     ? ` · last 10 ${selectedClassLabel} events`
     : showIlcaTrend
       ? " · last 10 ILCA 4 regattas"
-      : analytics.mode === "established_gold"
+      : countryOptimistAnalytics.mode === "established_gold"
         ? " · last 10 gold events"
-        : " · last 10 regattas (incl. DNS)";
+        : " · last 10 regattas (incl. DNS)");
 
   // System + owner journey milestones (Optimist + ILCA results for first ILCA 4)
   const displayJourney = useMemo(() => {
@@ -1343,6 +1349,9 @@ export function useSailorProfileState({
     trendMode,
     trendGoldEntry,
     trendCaption,
+    trendCountry,
+    setTrendCountry,
+    trendCountryOptions,
     displayJourney,
     isUnclaimedProfile,
     showUnclaimedBanner,

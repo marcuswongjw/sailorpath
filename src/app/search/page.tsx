@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SearchFilters } from "@/components/search/SearchFilters";
 import { unifiedSearch, type RegattaSearchResult, type SailorSearchResult } from "@/lib/search";
+import { formatSailNumber } from "@/lib/countries";
 
 type SearchParams = {
   q?: string;
@@ -81,7 +82,7 @@ export default async function SearchPage({
           <Link key={sailor.id} href={`/sailors/${encodeURIComponent(sailor.handle)}`} className="block rounded-2xl border border-cool-veil bg-warm-white p-5 transition hover:border-harbour/50">
             <h3 className="text-lg font-bold text-harbour-shadow">{sailor.name}</h3>
             <p className="mt-1 text-sm text-slate-soft">
-              {[sailor.sailNumber, sailor.club, sailor.nationality, sailor.activeFleet].filter(Boolean).join(" · ")}
+              {[formatSailNumber(sailor.sailNumber, sailor.nationality), sailor.club, sailor.nationality, sailor.activeFleet].filter(Boolean).join(" · ")}
             </p>
           </Link>
         )) : (

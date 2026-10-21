@@ -48,6 +48,17 @@ describe("search page", () => {
     expect(html).not.toContain("Loading page");
   });
 
+  it("formats Krishna's sail number with his recorded nationality on server-rendered results", async () => {
+    search.mockResolvedValue({ sailors: [{
+      id: "krishna", name: "Krishna Venkitachalam Ramakrishnan", handle: "krishna",
+      sailNumber: "1639", sailNumberIlca4: null, boardNumber: null, club: "YAI",
+      nationality: "IND", activeFleet: null, score: 1,
+    }], regattas: [], total: 1 });
+    const html = renderToStaticMarkup(await SearchPage({ searchParams: Promise.resolve({ q: "krish" }) }));
+    expect(html).toContain("IND 1639");
+    expect(html).not.toContain("SGP 1639");
+  });
+
   it("sets a query-specific title", async () => {
     const metadata = await generateMetadata({ searchParams: Promise.resolve({ q: "SGP 115" }) });
     expect(metadata.title).toBe("Search “SGP 115” | SailorPath");

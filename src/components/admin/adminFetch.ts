@@ -136,6 +136,7 @@ export type AdminOverviewPayload = {
   blocked: import("@/lib/admin/adminOverview").OverviewSheet[];
   incomplete: import("@/lib/admin/adminOverview").OverviewSheet[];
   duplicateCount: number | null;
+  demographics?: import("@/lib/adminStats").PlatformDemographics;
   generatedAt?: string;
   counts: {
     ready: number;

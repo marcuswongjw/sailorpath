@@ -162,6 +162,9 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     trendMode,
     trendGoldEntry,
     trendCaption,
+    trendCountry,
+    setTrendCountry,
+    trendCountryOptions,
     displayJourney,
     showUnclaimedBanner,
   } = useSailorProfileState(props);
@@ -375,6 +378,9 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           trendMode={trendMode}
           trendGoldEntry={trendGoldEntry}
           trendCaption={trendCaption}
+          trendCountry={trendCountry}
+          setTrendCountry={setTrendCountry}
+          trendCountryOptions={trendCountryOptions}
           activeResultsList={activeResultsList}
           primaryIsIlca={primaryIsIlca}
           classLabel={onBoardClass ? selectedClassLabel : undefined}

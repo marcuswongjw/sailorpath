@@ -351,6 +351,7 @@ export const ISO2_TO_NOC: Record<string, string> = {
   BH: "BRN",
   KW: "KUW",
   OM: "OMA",
+  MA: "MAR",
   IL: "ISR",
   EG: "EGY",
   HR: "CRO",
@@ -617,6 +618,73 @@ export function countryLabelForIso2(code: string | null | undefined): string {
   if (!code) return "—";
   const c = COUNTRIES.find((x) => x.code === code.toUpperCase());
   return c ? `${c.code} — ${c.name}` : code;
+}
+
+/**
+ * Format a sailor's sail number with their nationality prefix.
+ *
+ * Sail numbers in sailing are numbers prefixed with the sailor's country NOC code.
+ * (e.g. "NZL 4818", "MAS 1024", "SGP 4508").
+ *
+ * Rules:
+ * 1. Empty, "0", "-", "—", "N/A", or placeholder text ("NONE4", "TBD") returns "".
+ * 2. If the sail number already contains an accidental double prefix (e.g. "SGP NZL 4818"),
+ *    strips the redundant leading "SGP" / "SIN" so only "NZL 4818" is retained.
+ * 3. If the sail number already starts with a recognized 2-3 letter country code
+ *    followed by numbers (e.g. "NZL 4818", "NZL4818", "MAS 1024", "SGP 115", "SIN 115"),
+ *    normalizes legacy "SIN" to "SGP" and ensures a single space between country and digits.
+ * 4. If the sailor's nationality is known and is non-SGP, but the sail number was stored with
+ *    "SGP <digits>" or "SIN <digits>" (due to legacy default or import), it replaces the SGP
+ *    prefix with the sailor's true nationality (e.g. "SGP 1024" for a MAS sailor -> "MAS 1024").
+ * 5. If the sail number is pure digits or numbers (e.g. "1024", "4818", "3029"),
+ *    attaches the sailor's nationality code (e.g. "MAS 1024", "NZL 4818", "SGP 3029").
+ *    If no nationality is provided, defaults to "SGP".
+ */
+export function formatSailNumber(
+  sailNumber: string | null | undefined,
+  nationality?: string | null
+): string {
+  if (!sailNumber) return "";
+  const raw = String(sailNumber).trim().replace(/^#\s*/, "");
+  if (
+    !raw ||
+    raw === "-" ||
+    raw === "—" ||
+    raw === "0" ||
+    /^n\/?a$/i.test(raw) ||
+    /^(none|tbd|tbc|null|nil)\d*$/i.test(raw)
+  ) {
+    return "";
+  }
+
+  // 1. Strip duplicate country codes like "SGP NZL 4818" -> "NZL 4818"
+  const doubleMatch = raw.match(/^(?:SGP|SIN)\s+([A-Za-z]{2,3}\s*\d+.*)$/i);
+  const cleanRaw = doubleMatch ? doubleMatch[1].trim() : raw;
+
+  const sailorNoc = normalizeNationalityCode(nationality);
+
+  // 2. Check if cleanRaw starts with a 2-3 letter country code followed by digits
+  const codeMatch = cleanRaw.match(/^([A-Za-z]{2,3})\s*(\d.*)$/);
+  if (codeMatch) {
+    const rawCode = codeMatch[1].toUpperCase();
+    const code = rawCode === "SIN" ? "SGP" : rawCode;
+    const digits = codeMatch[2].trim();
+
+    // If the code is SGP/SIN but the sailor is explicitly from another country,
+    // use their actual nationality (e.g. MAS 1024 instead of SGP 1024)
+    if ((code === "SGP" || rawCode === "SIN") && sailorNoc && sailorNoc !== "SGP") {
+      return `${sailorNoc} ${digits}`;
+    }
+
+    return `${code} ${digits}`;
+  }
+
+  // 3. Digits without prefix: require at least one digit
+  const hasDigits = /\d/.test(cleanRaw);
+  if (!hasDigits) return "";
+
+  const noc = sailorNoc || "SGP";
+  return `${noc} ${cleanRaw}`;
 }
 
 export function nationalityLabelForCode(code: string | null | undefined): string {

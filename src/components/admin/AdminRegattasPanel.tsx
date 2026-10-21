@@ -1,6 +1,8 @@
 "use client";
 
 import { adminJson } from "./adminFetch";
+import { EventUrlAutofill } from "./EventUrlAutofill";
+import { emptyEventUrlDraft, calendarDraftSaveBody } from "@/lib/calendar/eventUrlDraft";
 
 import {
   useCallback,
@@ -238,12 +240,8 @@ export function AdminRegattasPanel({
   >("details");
   const [showCalendarForm, setShowCalendarForm] = useState(false);
   const [creatingEvent, setCreatingEvent] = useState(false);
-  const [newEvent, setNewEvent] = useState({
-    name: "",
-    startDate: "",
-    endDate: "",
-    venue: "",
-  });
+  const [newEvent, setNewEvent] = useState(emptyEventUrlDraft);
+  const [extractingEvent, setExtractingEvent] = useState(false);
   const [publishingId, setPublishingId] = useState<string | null>(null);
   const [linkingSheetId, setLinkingSheetId] = useState<string | null>(null);
   const [linkTargets, setLinkTargets] = useState<Record<string, string>>({});
@@ -678,6 +676,7 @@ export function AdminRegattasPanel({
   const createLock = useRef(false);
 
   const createEvent = async () => {
+    if (extractingEvent) return;
     if (!isSuperadmin) {
       toast.error("Only a superadmin can create an event.");
       return;
@@ -688,6 +687,7 @@ export function AdminRegattasPanel({
       toast.error("An event needs a name and a start date.");
       return;
     }
+    if (newEvent.endDate && newEvent.endDate < startDate) { toast.error("End date must be on or after the start date."); return; }
     if (createLock.current) return;
     createLock.current = true;
     const input = {
@@ -745,7 +745,7 @@ export function AdminRegattasPanel({
           method: "PATCH",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+          body: JSON.stringify(calendarDraftSaveBody(body, newEvent)),
         });
         const data = await res.json().catch(() => ({}));
         return { res, data };
@@ -769,9 +769,15 @@ export function AdminRegattasPanel({
         throw new Error(sent.data.error || "Could not create the event");
       }
       const saved = sent.data.event as SavedCalendarEvent;
+      if (newEvent.sourceUrl && plan.body.create !== false) {
+        try {
+          const linked = await fetch("/api/admin/result-imports", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "configure", eventId: saved.id, eventUrl: newEvent.sourceUrl, enabled: true }) });
+          if (!linked.ok) throw new Error("Source link was not saved");
+        } catch { toast.info("Event saved. Add its source URL in the results import inbox before running results checks."); }
+      }
       setSavedEvents((prev) => ({ ...prev, [saved.slug]: saved }));
       setCreatingEvent(false);
-      setNewEvent({ name: "", startDate: "", endDate: "", venue: "" });
+      setNewEvent(emptyEventUrlDraft());
       setSelectedEventSlug(saved.slug);
       toast.success(
         plan.body.create === false
@@ -956,6 +962,8 @@ export function AdminRegattasPanel({
             A name and start date create the weekend. Add classes after it is
             saved.
           </p>
+          <EventUrlAutofill onExtract={setNewEvent} onBusyChange={setExtractingEvent} />
+          <fieldset disabled={calendarSaving || extractingEvent}>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <label className="text-xs font-bold text-slate-800">
               Name
@@ -1001,6 +1009,8 @@ export function AdminRegattasPanel({
                 className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
               />
             </label>
+            {([ ["organizer", "Organiser"], ["classes", "Sailing classes (comma separated)"], ["norUrl", "Official event / notice board URL"], ["registrationUrl", "Registration link"] ] as const).map(([key, label]) => <label key={key} className="text-xs font-bold text-slate-800">{label}<input type={key.endsWith("Url") ? "url" : "text"} value={newEvent[key]} onChange={(event) => setNewEvent({ ...newEvent, [key]: event.target.value })} className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900" /></label>)}
+            <label className="text-xs font-bold text-slate-800 sm:col-span-2">Description<textarea value={newEvent.scheduleSummary} maxLength={2000} rows={3} onChange={(event) => setNewEvent({ ...newEvent, scheduleSummary: event.target.value })} className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900" /></label>
           </div>
           <div className="mt-3 flex gap-2">
             <button
@@ -1018,6 +1028,7 @@ export function AdminRegattasPanel({
               Cancel
             </button>
           </div>
+          </fieldset>
         </form>
       ) : null}
 

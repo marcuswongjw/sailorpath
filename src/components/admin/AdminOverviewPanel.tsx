@@ -31,6 +31,7 @@ const queues = [
   ["support", "Support"],
 ] as const;
 const quickLinks = [
+  ["/admin/result-imports", "Results import inbox"],
   ["/admin?area=events&view=card", "Find an event"],
   ["/admin?area=sailors&view=directory", "Find a sailor"],
   ["/admin/news", "Write an update"],
@@ -277,6 +278,108 @@ export function AdminOverviewPanel({
               })}
             </ul>
           </section>
+          {events.data?.demographics ? (
+            <section className={panel} aria-labelledby="platform-coverage-heading">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div>
+                  <h2
+                    id="platform-coverage-heading"
+                    className="font-bold text-slate-900"
+                  >
+                    Platform Scale & Demographics
+                  </h2>
+                  <p className="mt-0.5 text-xs text-slate-500">
+                    Active competitive fleet size, international representation and supported boat classes.
+                  </p>
+                </div>
+                <Link
+                  href="/admin?area=insights&view=metrics"
+                  className="text-xs font-semibold text-harbour hover:underline"
+                >
+                  Full metrics →
+                </Link>
+              </div>
+
+              {/* Top 4 Metrics Grid */}
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="rounded-lg bg-slate-50 p-3">
+                  <p className="text-xs font-medium text-slate-500">Unique Sailors</p>
+                  <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
+                    {events.data.demographics.sailorsTotal.toLocaleString()}
+                  </p>
+                  <p className="mt-0.5 text-[10px] font-medium text-emerald-600">100% active competitors</p>
+                </div>
+                <div className="rounded-lg bg-slate-50 p-3">
+                  <p className="text-xs font-medium text-slate-500">Nationalities</p>
+                  <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
+                    {events.data.demographics.nationalitiesCount.toLocaleString()}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Global representation</p>
+                </div>
+                <div className="rounded-lg bg-slate-50 p-3">
+                  <p className="text-xs font-medium text-slate-500">Boat & Board Classes</p>
+                  <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
+                    {events.data.demographics.classesCount.toLocaleString()}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">With verified results</p>
+                </div>
+                <div className="rounded-lg bg-slate-50 p-3">
+                  <p className="text-xs font-medium text-slate-500">Recorded Results</p>
+                  <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
+                    {events.data.demographics.resultsTotal.toLocaleString()}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Scored race finishes</p>
+                </div>
+              </div>
+
+              {/* Top Nationalities Badges */}
+              {events.data.demographics.topNationalities?.length ? (
+                <div className="mt-4">
+                  <p className="text-xs font-semibold text-slate-600">Top Nationalities:</p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {events.data.demographics.topNationalities.map((item) => (
+                      <span
+                        key={item.country}
+                        className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 text-xs text-slate-700"
+                      >
+                        <span className="font-semibold">{item.country}:</span>
+                        <span className="tabular-nums">{item.count.toLocaleString()}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Boat Classes Breakdown */}
+              {events.data.demographics.boatClasses?.length ? (
+                <div className="mt-4 border-t border-slate-100 pt-3">
+                  <p className="text-xs font-semibold text-slate-600">Classes with Results:</p>
+                  <div className="mt-2 max-h-52 overflow-y-auto overflow-x-auto rounded-lg border border-slate-100">
+                    <table className="w-full text-left text-xs text-slate-700">
+                      <thead className="sticky top-0 bg-slate-50 text-slate-500">
+                        <tr className="border-b border-slate-100">
+                          <th className="py-1.5 px-3 font-semibold">Class</th>
+                          <th className="py-1.5 px-3 text-right font-semibold">Regattas</th>
+                          <th className="py-1.5 px-3 text-right font-semibold">Results</th>
+                          <th className="py-1.5 px-3 text-right font-semibold">Sailors</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {events.data.demographics.boatClasses.map((cls) => (
+                          <tr key={cls.className} className="hover:bg-slate-50/60">
+                            <td className="py-1.5 px-3 font-medium text-slate-900">{cls.className}</td>
+                            <td className="py-1.5 px-3 text-right tabular-nums text-slate-600">{cls.regattaCount.toLocaleString()}</td>
+                            <td className="py-1.5 px-3 text-right tabular-nums font-semibold text-slate-900">{cls.resultCount.toLocaleString()}</td>
+                            <td className="py-1.5 px-3 text-right tabular-nums text-slate-600">{cls.sailorCount.toLocaleString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : null}
+            </section>
+          ) : null}
           <section className={panel} aria-labelledby="today-events-heading">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h2

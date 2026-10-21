@@ -1,0 +1,3000 @@
+{
+  "batch": "thai-optimist-2026-10-20",
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/191515",
+    "title": "ACDC Sailing Cup 2026",
+    "visuallyReviewed": true,
+    "type": "pdf",
+    "provisional": false,
+    "pdfFile": ".work/thai-optimist-2026/pdfs/acdc-sailing-cup.pdf",
+    "publicationStatus": "final",
+    "comparisonFile": "scripts/imports/thai-optimist-2026/source-comparison.json"
+  },
+  "event": {
+    "slug": "acdc-sailing-cup-2026",
+    "startDate": "2026-05-30",
+    "endDate": "2026-05-31",
+    "venue": "Sattahip, Chonburi, Thailand",
+    "organizer": "Air and Coastal Defense Command Sailing Club",
+    "id": "d1863bb4-fe11-59d2-82b0-171a6e7c6a4c",
+    "name": "ACDC Sailing Cup 2026"
+  },
+  "sheet": {
+    "slug": "acdc-sailing-cup-2026-optimist",
+    "name": "ACDC Sailing Cup 2026 — Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "raceCount": 4,
+    "totalFleetSize": 52,
+    "countsForRanking": false,
+    "status": "published",
+    "discardCount": 0,
+    "id": "a8c376d5-be68-586d-8ab9-54cd1e65b1e6",
+    "existing": false
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "SORAWIT NAKSUK",
+      "sailOrBoardNumber": "THA1493",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 7.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "3bae3e2b-e3dd-52c5-8e13-f0bbc0987d03",
+      "participantId": "abb7c080-03f2-5f4b-a4b0-eba095831111",
+      "evidenceNotes": "Official final result: SORAWIT NAKSUK; historic sail THA1493; official club YRAT; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 2,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA 1987",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "665aa706-a856-5e23-b115-4f254bf0eada",
+      "participantId": "ad66ec61-9be6-57f5-8f39-6fb9cdd6eade",
+      "evidenceNotes": "Official final result: SUTHINAN NAKPASOM; historic sail THA 1987; official club YRAT; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 3,
+      "name": "RACHATA SADTRAKULWATTANA",
+      "sailOrBoardNumber": "THA1963",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 27.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "4904ebe3-b056-5105-9a77-8dd74d9fa456",
+      "participantId": "702348e3-54a3-5319-a429-738669624f44",
+      "evidenceNotes": "Official final result: RACHATA SADTRAKULWATTANA; historic sail THA1963; official club YRAT; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 4,
+      "name": "DHAMMAPORN ARUNO",
+      "sailOrBoardNumber": "THA1888",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 32.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "b1441330-560a-5a44-b686-07d451e984d3",
+      "participantId": "9838f151-b6da-595c-9fbb-44672e74e174",
+      "evidenceNotes": "Official final result: DHAMMAPORN ARUNO; historic sail THA1888; official club ACDC.SC; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 5,
+      "name": "NATTAPON TOUTTACHON",
+      "sailOrBoardNumber": "THA1246",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 33.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "sailorId": "cb7dd15b-b058-430c-88e5-fe0c3a31830e",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "b9c34cbe-d734-55c1-a564-d61f160216b1",
+      "participantId": "44bc6969-149f-54d8-9260-c2e263850696",
+      "evidenceNotes": "Official final result: NATTAPON TOUTTACHON; historic sail THA1246; official club YRAT; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 6,
+      "name": "Surapha maungngam",
+      "sailOrBoardNumber": "THA1941",
+      "club": "YRAY",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 33.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "identityBasis": "Minor given-name transliteration; same THA 1941, gender and 2011 year.",
+      "resultId": "e7797c57-e9cd-5eba-ae0d-d72091fa7999",
+      "participantId": "111cd695-d79d-586f-b4ec-81b7bbe69cc7",
+      "evidenceNotes": "Official final result: Surapha maungngam; historic sail THA1941; official club YRAY; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Minor given-name transliteration; same THA 1941, gender and 2011 year."
+    },
+    {
+      "rank": 7,
+      "name": "Thawaree Raksapun",
+      "sailOrBoardNumber": "THA1459",
+      "club": "RTFYC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 37.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "8e504213-730a-580b-8e48-63ae67c69459",
+      "participantId": "6bb16247-fe08-5cb8-b7c4-e00005d463d0",
+      "evidenceNotes": "Official final result: Thawaree Raksapun; historic sail THA1459; official club RTFYC; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 8,
+      "name": "PORNYAMOL SAWAENGKHUN",
+      "sailOrBoardNumber": "THA1900",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 37.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "7fc35227-e1b3-565e-b69d-e713063d20cd",
+      "participantId": "20d0d292-9bd2-5958-90e9-dfe7f66204e5",
+      "evidenceNotes": "Official final result: PORNYAMOL SAWAENGKHUN; historic sail THA1900; official club YRAT; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 9,
+      "name": "PAKORNKIAT CHAIYA-O- CHA",
+      "sailOrBoardNumber": "THA1905",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 37.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "01620b0e-7a54-582e-aaf5-68dcebdbaf52",
+      "participantId": "4dc4604c-865e-5966-9212-0e0b240a64e6",
+      "evidenceNotes": "Official final result: PAKORNKIAT CHAIYA-O- CHA; historic sail THA1905; official club YRAT; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 10,
+      "name": "WICHAYAPORN SAKSRIKLOM",
+      "sailOrBoardNumber": "THA1794",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 41.0,
+      "nettScore": 41.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "5ce5abbe-1bc0-5bdc-be24-b98c04e7643e",
+      "participantId": "ac8a0a54-16a1-5947-a794-cf0cb0f4f50c",
+      "evidenceNotes": "Official final result: WICHAYAPORN SAKSRIKLOM; historic sail THA1794; official club YRAT; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 11,
+      "name": "CHANANCHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA2865",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 47.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "9837a975-b854-58d2-b5d2-63ea87baf7a5",
+      "participantId": "49461771-8aef-50cd-a55c-ecd830726577",
+      "evidenceNotes": "Official final result: CHANANCHAI TIATHONGCHAI; historic sail THA2865; official club YRAT; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 12,
+      "name": "PARIYAPORN CHANTARAWONG",
+      "sailOrBoardNumber": "THA1610",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 62.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "2f9df4c2-5ae7-5f6c-a019-8d2c5aeaf396",
+      "participantId": "9b47fac6-d9ff-5509-986c-dfb4405e5561",
+      "evidenceNotes": "Official final result: PARIYAPORN CHANTARAWONG; historic sail THA1610; official club YRAT; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 13,
+      "name": "Naimakron Jangkittiyarat",
+      "sailOrBoardNumber": "THA 7211",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 65.0,
+      "nettScore": 65.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "da98a190-be02-557f-87f3-2661aaaa638a",
+      "participantId": "0ac8765c-7b40-5178-932d-eb31219a5be2",
+      "evidenceNotes": "Official final result: Naimakron Jangkittiyarat; historic sail THA 7211; official club YRAT; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 14,
+      "name": "THEERAKAN KLAYSOMBOON",
+      "sailOrBoardNumber": "THA1935",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 66.0,
+      "nettScore": 66.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "53109f0d-5d2e-55ba-9007-a0d791d82269",
+      "participantId": "d56ec010-9f1a-56aa-9547-403d5f5ca7dd",
+      "evidenceNotes": "Official final result: THEERAKAN KLAYSOMBOON; historic sail THA1935; official club ACDC.SC; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 15,
+      "name": "ANANTACHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA3057",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 74.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "0ef42398-b390-5ead-8722-47d550929727",
+      "participantId": "796e8758-66fb-5e84-bebd-2383f98d77d5",
+      "evidenceNotes": "Official final result: ANANTACHAI TIATHONGCHAI; historic sail THA3057; official club YRAT; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 16,
+      "name": "CHUHAN ZHANG",
+      "sailOrBoardNumber": "THA1947",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "CHN",
+      "officialBirthYear": 2014,
+      "grossScore": 80.0,
+      "nettScore": 80.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "7775ebad-2a49-5ef8-9a92-5e8a5dc3635e",
+      "participantId": "bc6af42e-ae89-5e9e-af1e-e56de6ab05d4",
+      "evidenceNotes": "Official final result: CHUHAN ZHANG; historic sail THA1947; official club ACDC.SC; official nationality CHN; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 17,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "THA1985",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 82.0,
+      "nettScore": 82.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "ad7554fb-9b3f-58a1-afce-9d01d0f95668",
+      "participantId": "b390463d-bd73-5eaf-92d0-1bc4fb43c909",
+      "evidenceNotes": "Official final result: ASHIRA PHANGRAK; historic sail THA1985; official club ACDC.SC; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 18,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA88",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 84.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "53.0 UFD"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "250cc1f6-8c93-59fc-bd60-c8d1a5b7daf5",
+      "participantId": "96c49b6b-4f97-51bf-b9cf-195d1989dbec",
+      "evidenceNotes": "Official final result: ITTHICHAI TIATHONGCHAI; historic sail THA88; official club YRAT; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 19,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 84.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "f03f2ee5-d7bc-5a5b-be0e-5e58d9e1499f",
+      "participantId": "9006aad9-54a3-532c-92be-0093b9fada90",
+      "evidenceNotes": "Official final result: SURATSAYAPRON KAEWRAKUM; historic sail THA1696; official club ACDC.SC; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 20,
+      "name": "Klaochanok Chatawattanasopakun",
+      "sailOrBoardNumber": "THA3935",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 84.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        }
+      ],
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "61a4fa3d-1f9a-5698-bfae-ae53cd0641bf",
+      "participantId": "79342f6c-9123-5242-9544-fbea1ae13d0e",
+      "evidenceNotes": "Official final result: Klaochanok Chatawattanasopakun; historic sail THA3935; official club ACDC.SC; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 21,
+      "name": "NAPICHAYA RATTANADECHAKORN",
+      "sailOrBoardNumber": "THA1457",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 85.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "sailorId": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "153caa43-cdf3-5735-9109-6b09f4d590e3",
+      "participantId": "642a247f-8708-5c69-a0fb-73bdf0ef5bd6",
+      "evidenceNotes": "Official final result: NAPICHAYA RATTANADECHAKORN; historic sail THA1457; official club YRAT; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 22,
+      "name": "Hirunsira Munkhongpornpaiboon",
+      "sailOrBoardNumber": "THA932",
+      "club": "RTFYC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 87.0,
+      "nettScore": 87.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        }
+      ],
+      "sailorId": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "4b65ab38-43aa-5d21-819f-c5c84d337041",
+      "participantId": "c0022668-1d91-5bb9-ae3d-590f4ff95eef",
+      "evidenceNotes": "Official final result: Hirunsira Munkhongpornpaiboon; historic sail THA932; official club RTFYC; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 23,
+      "name": "Pimpisa Devahastin Na Ayudhya",
+      "sailOrBoardNumber": "THA194",
+      "club": "RTFYC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2016,
+      "grossScore": 90.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "sailorId": "976342b7-69ec-4200-8e46-684855939591",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "f5fc31dd-7d72-5c87-932a-a5228c44f040",
+      "participantId": "f6a654e9-6979-591f-8156-5e5a1b37fbfb",
+      "evidenceNotes": "Official final result: Pimpisa Devahastin Na Ayudhya; historic sail THA194; official club RTFYC; official nationality THA; official YOB 2016. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 24,
+      "name": "NATTHANAN CHAIYA-O- CHA",
+      "sailOrBoardNumber": "THA1385",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 94.0,
+      "nettScore": 94.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "9cf984be-29ac-5fd8-a7fb-8bc81bc98d90",
+      "participantId": "a64c5b04-338a-51cc-9071-1367afd123e1",
+      "evidenceNotes": "Official final result: NATTHANAN CHAIYA-O- CHA; historic sail THA1385; official club YRAT; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 25,
+      "name": "THANAPHA PHONGKAMNERD",
+      "sailOrBoardNumber": "THA1529",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 97.0,
+      "nettScore": 97.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "facee438-875d-5f3c-9bef-f34854b1733f",
+      "participantId": "48b78a1f-2b6c-5950-97f4-d06a2505ca42",
+      "evidenceNotes": "Official final result: THANAPHA PHONGKAMNERD; historic sail THA1529; official club YRAT; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 26,
+      "name": "Aranya Klangmueang",
+      "sailOrBoardNumber": "THA1498",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 97.0,
+      "nettScore": 97.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        }
+      ],
+      "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "891bc128-1b94-5f27-95f6-ea882f816af8",
+      "participantId": "c9bfc122-b36b-525a-96fc-9ab336565f41",
+      "evidenceNotes": "Official final result: Aranya Klangmueang; historic sail THA1498; official club YRAT; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 27,
+      "name": "Netchanok Chatawattanasopakul",
+      "sailOrBoardNumber": "THA1644",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 107.0,
+      "nettScore": 107.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        }
+      ],
+      "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+      "identityBasis": "Surname final-letter variant; same THA 1644, gender and 2015 year.",
+      "resultId": "5338e657-f637-5e9a-9a9e-40b0636891e6",
+      "participantId": "d2c9d611-4276-541b-ab3d-f61a8491ae37",
+      "evidenceNotes": "Official final result: Netchanok Chatawattanasopakul; historic sail THA1644; official club ACDC.SC; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Surname final-letter variant; same THA 1644, gender and 2015 year."
+    },
+    {
+      "rank": 28,
+      "name": "ARUNEE RAKSAPUN",
+      "sailOrBoardNumber": "THA1945",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 108.0,
+      "nettScore": 108.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "41bbeb59-c718-50c2-a505-34e0494b4eed",
+      "participantId": "3c5aca50-f1bc-5d49-b2cc-f0de7a7518e7",
+      "evidenceNotes": "Official final result: ARUNEE RAKSAPUN; historic sail THA1945; official club YRAT; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 29,
+      "name": "LEVY WIEDMANN",
+      "sailOrBoardNumber": "THA996RED",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": null,
+      "grossScore": 110.0,
+      "nettScore": 110.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "53.0 UFD"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "identityBasis": "Shortened name; same THA 996 (RED boat label), male and RVYC; distinct from female Kanyapat using 996.",
+      "resultId": "427caf93-153a-5e54-aeef-4fde886e1cdb",
+      "participantId": "9f016933-ad99-58d1-97b8-cdde0060c753",
+      "evidenceNotes": "Official final result: LEVY WIEDMANN; historic sail THA996RED; official club YRAT; official nationality THA; official YOB not stated. Every race, score code and discard retained; gross/net reconciled. Shortened name; same THA 996 (RED boat label), male and RVYC; distinct from female Kanyapat using 996."
+    },
+    {
+      "rank": 30,
+      "name": "TRAIRAT JAROONROT",
+      "sailOrBoardNumber": "THA1876",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 112.0,
+      "nettScore": 112.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "53.0 RET"
+        }
+      ],
+      "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "86cdf6e2-7cef-507b-8aa2-d280f38c2406",
+      "participantId": "3e54f6cc-e7fb-5979-8839-e2eba7a6666e",
+      "evidenceNotes": "Official final result: TRAIRAT JAROONROT; historic sail THA1876; official club ACDC.SC; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 31,
+      "name": "THIRAWAT HANKHAM",
+      "sailOrBoardNumber": "198",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 113.0,
+      "nettScore": 113.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "9f28120f-39f0-5a64-bf29-409215349225",
+      "participantId": "d6223264-2246-5836-8f15-1e3186199b09",
+      "evidenceNotes": "Official final result: THIRAWAT HANKHAM; historic sail 198; official club YRAT; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 32,
+      "name": "Kanyapat pisoottiwong",
+      "sailOrBoardNumber": "THA996",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 119.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        }
+      ],
+      "sailorId": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "40e955a4-a4b1-5d82-9d34-85ea7b1124d4",
+      "participantId": "417ee33d-c21a-51c4-8edd-17b375f936b2",
+      "evidenceNotes": "Official final result: Kanyapat pisoottiwong; historic sail THA996; official club YRAT; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 33,
+      "name": "Jiratiwat Peungchurn",
+      "sailOrBoardNumber": "THA1220",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 121.0,
+      "nettScore": 121.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        }
+      ],
+      "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "0c9222e1-229f-5e05-9557-22a973206b46",
+      "participantId": "6c4a1a42-80f7-5f44-948b-fcc1c09124b7",
+      "evidenceNotes": "Official final result: Jiratiwat Peungchurn; historic sail THA1220; official club YRAT; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 34,
+      "name": "KYAN TAN",
+      "sailOrBoardNumber": "SGP4712",
+      "club": "RVYC",
+      "school": null,
+      "gender": "M",
+      "nationality": "SGP",
+      "officialBirthYear": 2015,
+      "grossScore": 124.0,
+      "nettScore": 124.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "53.0 UFD"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "sailorId": "60ea1195-0d40-470a-b7c9-4cfa16ac3517",
+      "identityBasis": "Short name; exact SGP 4712, male and 2015 year. Other SGP 4712 profile Reyes Tan has a different name and 2011 year.",
+      "resultId": "5eb3d7ef-6bbb-5c4b-b2c9-0a2a091d377f",
+      "participantId": "8f0eae66-3190-5cb5-b762-1557b224a1d4",
+      "evidenceNotes": "Official final result: KYAN TAN; historic sail SGP4712; official club RVYC; official nationality SGP; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Short name; exact SGP 4712, male and 2015 year. Other SGP 4712 profile Reyes Tan has a different name and 2011 year."
+    },
+    {
+      "rank": 35,
+      "name": "AMARIN JUNTAJON",
+      "sailOrBoardNumber": "THA1936",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2013,
+      "grossScore": 126.0,
+      "nettScore": 126.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        }
+      ],
+      "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "3fd1628c-5413-59ae-883d-1356a6fce624",
+      "participantId": "44670914-4bd1-5531-b616-f3375104bcd8",
+      "evidenceNotes": "Official final result: AMARIN JUNTAJON; historic sail THA1936; official club YRAT; official nationality THA; official YOB 2013. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 36,
+      "name": "Charlie Basnet",
+      "sailOrBoardNumber": "THA711",
+      "club": "RNSC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 129.0,
+      "nettScore": 129.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        }
+      ],
+      "sailorId": "02f7450f-b247-49cf-ba12-2f33a7f0642e",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "78941f7c-f4eb-5144-b80a-3b6471f4163b",
+      "participantId": "94ecc5f3-9b0e-52c9-961a-10bd5b568b84",
+      "evidenceNotes": "Official final result: Charlie Basnet; historic sail THA711; official club RNSC; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 37,
+      "name": "Tasanatham Suthamgosal",
+      "sailOrBoardNumber": "THA1979",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 139.0,
+      "nettScore": 139.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        }
+      ],
+      "sailorId": "7a475df7-bc47-43cf-bab3-815222279ece",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "508e38d9-4802-5898-bcfe-c90ecc93fcc9",
+      "participantId": "0932f463-bc7a-5a0c-b173-7f75aff67c06",
+      "evidenceNotes": "Official final result: Tasanatham Suthamgosal; historic sail THA1979; official club ACDC.SC; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 38,
+      "name": "Santhat Suthamgosal",
+      "sailOrBoardNumber": "THA1879",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 149.0,
+      "nettScore": 149.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        }
+      ],
+      "sailorId": "154feedb-6173-4142-8d3e-88f1567b22e7",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "da267254-9f3a-55f0-8d20-d1f5eab7822e",
+      "participantId": "80f5626c-dbf4-57b4-95b8-3493a085ddb5",
+      "evidenceNotes": "Official final result: Santhat Suthamgosal; historic sail THA1879; official club ACDC.SC; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 39,
+      "name": "KITTIPHAT SACHATO",
+      "sailOrBoardNumber": "NZL4529",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 193.0,
+      "nettScore": 193.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "433063e8-3178-50b1-8b3e-68470a3e8cc6",
+      "identityBasis": "No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented.",
+      "resultId": "11363c67-3a8a-51a8-ba1b-15cb1686ec81",
+      "participantId": "ae9f3561-dc16-5130-b6fe-36467b4a33a1",
+      "evidenceNotes": "Official final result: KITTIPHAT SACHATO; historic sail NZL4529; official club ACDC.SC; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented."
+    },
+    {
+      "rank": 40,
+      "name": "BARAMEE CONNOI",
+      "sailOrBoardNumber": "THA20",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2015,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "6f14e233-8f50-504f-9f2e-0d2b03655c85",
+      "identityBasis": "No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented.",
+      "resultId": "12e17b7c-9b98-5aa8-be8a-6a541bf8f608",
+      "participantId": "51e6fb83-467c-5295-a8ec-e8151feae2a6",
+      "evidenceNotes": "Official final result: BARAMEE CONNOI; historic sail THA20; official club ACDC.SC; official nationality THA; official YOB 2015. Every race, score code and discard retained; gross/net reconciled. No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented."
+    },
+    {
+      "rank": 40,
+      "name": "PANUWAT SRIROY",
+      "sailOrBoardNumber": "TH 678",
+      "club": "YRAT",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+      "identityBasis": "No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented.",
+      "resultId": "601d5186-692d-56e5-a0fc-29da9241db63",
+      "participantId": "008a6374-5e7d-5fd4-9acc-dd33e9cd77ac",
+      "evidenceNotes": "Official final result: PANUWAT SRIROY; historic sail TH 678; official club YRAT; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented."
+    },
+    {
+      "rank": 40,
+      "name": "Suchanya Kaminthong",
+      "sailOrBoardNumber": "THA722",
+      "club": "NAC3SC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "fdb5520d-f181-4d5a-ad46-8157fd378a1a",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "f7de72d6-3cc8-5bd7-a38a-362feb691866",
+      "participantId": "4d5bb464-b19e-5ac6-af02-18dbba3ced02",
+      "evidenceNotes": "Official final result: Suchanya Kaminthong; historic sail THA722; official club NAC3SC; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 40,
+      "name": "PHACHARAPOL MUNWONG",
+      "sailOrBoardNumber": "THA1255",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "81620549-758e-5209-9f80-4ac3f7cedbbf",
+      "identityBasis": "No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented.",
+      "resultId": "fe86bffb-d357-53a8-97f6-a1896154519f",
+      "participantId": "a967a2f5-3392-5f14-8f97-a924178b8716",
+      "evidenceNotes": "Official final result: PHACHARAPOL MUNWONG; historic sail THA1255; official club ACDC.SC; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented."
+    },
+    {
+      "rank": 40,
+      "name": "NIRADA SASIWATTANAPORN",
+      "sailOrBoardNumber": "THA1925",
+      "club": "YRAT",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "e55bcb5e-01a3-507f-9eec-25ed05cfa260",
+      "participantId": "b1245682-2991-5ae4-93ba-7ef026ee344c",
+      "evidenceNotes": "Official final result: NIRADA SASIWATTANAPORN; historic sail THA1925; official club YRAT; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 40,
+      "name": "Punyisa Kaewlek",
+      "sailOrBoardNumber": "8754",
+      "club": "RNSC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "892c3269-21e2-5583-a70e-9140220ec00d",
+      "participantId": "7c66ae5a-1fa7-5e2b-8d4c-7b79484568d6",
+      "evidenceNotes": "Official final result: Punyisa Kaewlek; historic sail 8754; official club RNSC; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 40,
+      "name": "Kulpichet Phanchang",
+      "sailOrBoardNumber": "8888",
+      "club": "RNSC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "97050c23-371f-427e-a571-e20486cbb936",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "cb7ee893-ebdf-5704-b137-aee455e5ee43",
+      "participantId": "1b327d5e-8585-52bc-80b9-357ceffc7a9a",
+      "evidenceNotes": "Official final result: Kulpichet Phanchang; historic sail 8888; official club RNSC; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 40,
+      "name": "Punthita Werotjanakul",
+      "sailOrBoardNumber": "THA1888",
+      "club": "UWC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "cbbb508d-a274-5685-8eb3-f4e34a29fd61",
+      "participantId": "297a8883-ce07-556f-bae9-82099c5b704d",
+      "evidenceNotes": "Official final result: Punthita Werotjanakul; historic sail THA1888; official club UWC; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 40,
+      "name": "Cheerawit Saiyaluxana",
+      "sailOrBoardNumber": "THA1899",
+      "club": "ACDC.SC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2016,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "ad441d27-47bd-533d-961a-346809d9ceba",
+      "identityBasis": "No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented.",
+      "resultId": "9d4fdcfe-1225-52bf-b0aa-4b7aa056d1f2",
+      "participantId": "54f7af0c-943f-5015-ac09-439deab41b52",
+      "evidenceNotes": "Official final result: Cheerawit Saiyaluxana; historic sail THA1899; official club ACDC.SC; official nationality THA; official YOB 2016. Every race, score code and discard retained; gross/net reconciled. No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented."
+    },
+    {
+      "rank": 40,
+      "name": "Theetawat Manitpornsut",
+      "sailOrBoardNumber": "1835",
+      "club": "RTFYC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2014,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "ba7eba1c-42d5-5035-839c-91d10145cf3c",
+      "identityBasis": "No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented.",
+      "resultId": "57539623-41c5-5bda-b009-8688ce59e3a3",
+      "participantId": "c335d440-41a3-50b5-8b95-cf4845ea902d",
+      "evidenceNotes": "Official final result: Theetawat Manitpornsut; historic sail 1835; official club RTFYC; official nationality THA; official YOB 2014. Every race, score code and discard retained; gross/net reconciled. No existing exact name/alias or compatible reviewed variant found; distinct new profile from official result. No DOB invented."
+    },
+    {
+      "rank": 40,
+      "name": "Nopadol Tokpo",
+      "sailOrBoardNumber": "8884",
+      "club": "RNSC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "f8b64512-a29c-5f18-b80a-72c2025ed966",
+      "participantId": "658acabd-f431-541d-b3db-7d564c09d02d",
+      "evidenceNotes": "Official final result: Nopadol Tokpo; historic sail 8884; official club RNSC; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    },
+    {
+      "rank": 40,
+      "name": "Duangdeuen Wichai",
+      "sailOrBoardNumber": "8881",
+      "club": "RNSC",
+      "school": null,
+      "gender": "F",
+      "nationality": "THA",
+      "officialBirthYear": 2011,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "dfefca66-a570-5f96-bec6-eb566501bdbb",
+      "identityBasis": "User confirmed Duangdeuen Wichai / Duangduean Wichat are the same sailor on 20 October 2026.",
+      "resultId": "0f8580fa-8622-57fe-aebb-1b5b043f871c",
+      "participantId": "4953ea66-ce5f-54f5-bd57-67dd6445a1df",
+      "evidenceNotes": "Official final result: Duangdeuen Wichai; historic sail 8881; official club RNSC; official nationality THA; official YOB 2011. Every race, score code and discard retained; gross/net reconciled. User confirmed Duangdeuen Wichai / Duangduean Wichat are the same sailor on 20 October 2026."
+    },
+    {
+      "rank": 40,
+      "name": "Natthakit Jongrak",
+      "sailOrBoardNumber": "8882",
+      "club": "RNSC",
+      "school": null,
+      "gender": "M",
+      "nationality": "THA",
+      "officialBirthYear": 2012,
+      "grossScore": 212.0,
+      "nettScore": 212.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "53.0 DNC"
+        }
+      ],
+      "sailorId": "9d7339ce-8bae-46eb-bae6-f6a2c7791e65",
+      "identityBasis": "Unique exact normalized official name or existing alias, compatible gender",
+      "resultId": "c137c47d-5862-5861-8be5-605f1e33cd45",
+      "participantId": "16e6b6da-434e-562a-b00c-c2ebbd555062",
+      "evidenceNotes": "Official final result: Natthakit Jongrak; historic sail 8882; official club RNSC; official nationality THA; official YOB 2012. Every race, score code and discard retained; gross/net reconciled. Unique exact normalized official name or existing alias, compatible gender"
+    }
+  ],
+  "dateBasis": "Official notice board first-day result 191242 dated 30 May and final-day PDF 191515 dated 31 May; site heading 7–8 May conflicts with its own result date 31 May. Use official 30–31 May.",
+  "newProfiles": [
+    {
+      "id": "433063e8-3178-50b1-8b3e-68470a3e8cc6",
+      "name": "Kittiphat Sachato",
+      "handle": "kittiphat-sachato-thai26-433063",
+      "sail_number": "NZL4529",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M"
+    },
+    {
+      "id": "6f14e233-8f50-504f-9f2e-0d2b03655c85",
+      "name": "Baramee Connoi",
+      "handle": "baramee-connoi-thai26-6f14e2",
+      "sail_number": "THA20",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M"
+    },
+    {
+      "id": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+      "name": "Panuwat Sriroy",
+      "handle": "panuwat-sriroy-thai26-034cb0",
+      "sail_number": "TH 678",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M"
+    },
+    {
+      "id": "81620549-758e-5209-9f80-4ac3f7cedbbf",
+      "name": "Phacharapol Munwong",
+      "handle": "phacharapol-munwong-thai26-816205",
+      "sail_number": "THA1255",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M"
+    },
+    {
+      "id": "ad441d27-47bd-533d-961a-346809d9ceba",
+      "name": "Cheerawit Saiyaluxana",
+      "handle": "cheerawit-saiyaluxana-thai26-ad441d",
+      "sail_number": "THA1899",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M"
+    },
+    {
+      "id": "ba7eba1c-42d5-5035-839c-91d10145cf3c",
+      "name": "Theetawat Manitpornsut",
+      "handle": "theetawat-manitpornsut-thai26-ba7eba",
+      "sail_number": "1835",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M"
+    },
+    {
+      "id": "dfefca66-a570-5f96-bec6-eb566501bdbb",
+      "name": "Duangdeuen Wichai",
+      "handle": "duangdeuen-wichai-thai26-dfefca",
+      "sail_number": "8881",
+      "club": "RNSC",
+      "nationality": "THA",
+      "gender": "F"
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "988b923b-6960-4d5e-be75-d53c32295492",
+      "club": "YRAT",
+      "name": "Wichayaporn Saksriklom",
+      "gender": "Female",
+      "handle": "wichayaporn-saksriklom-lf81guh",
+      "birthYear": 2014,
+      "sailNumber": "1794",
+      "nationality": "THA"
+    },
+    {
+      "id": "97050c23-371f-427e-a571-e20486cbb936",
+      "club": "Imported official result",
+      "name": "Kulpichet Phanchang",
+      "gender": "M",
+      "handle": "asian-unk-kulpichet--69140d",
+      "birthYear": null,
+      "sailNumber": "69",
+      "nationality": "THA"
+    },
+    {
+      "id": "9d7339ce-8bae-46eb-bae6-f6a2c7791e65",
+      "club": "Imported official result",
+      "name": "Natthakit Jongrak",
+      "gender": "M",
+      "handle": "asian-unk-natthakit--bc326a",
+      "birthYear": null,
+      "sailNumber": "5911",
+      "nationality": "THA"
+    },
+    {
+      "id": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+      "club": "YRAT",
+      "name": "Kanyapat Pisoottiwong",
+      "gender": "Female",
+      "handle": "kanyapat-pisoottiwong-6sr2pun",
+      "birthYear": 2015,
+      "sailNumber": "996",
+      "nationality": "THA"
+    },
+    {
+      "id": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "club": "RTFYC",
+      "name": "Naimakron Jangkittiyarat",
+      "gender": "Male",
+      "handle": "naimakron-jangkittiyarat-rtbu36u",
+      "birthYear": 2013,
+      "sailNumber": "7111",
+      "nationality": "THA"
+    },
+    {
+      "id": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+      "club": "Imported official result",
+      "name": "Nopadol Tokpo",
+      "gender": "M",
+      "handle": "asian-unk-nopadol-to-6defdd",
+      "birthYear": null,
+      "sailNumber": "125",
+      "nationality": "THA"
+    },
+    {
+      "id": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "club": "Imported official result",
+      "name": "Punyisa Kaewlek",
+      "gender": "F",
+      "handle": "asian-unk-punyisa-ka-5c5bfa",
+      "birthYear": null,
+      "sailNumber": "1565",
+      "nationality": "THA"
+    },
+    {
+      "id": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "club": "ACDC.SC",
+      "name": "Ashira Phangrak",
+      "gender": "Male",
+      "handle": "ashira-phangrak-oi7odm9",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA"
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA"
+    },
+    {
+      "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "club": "YRAT",
+      "name": "Chananchai Tiathongchai",
+      "gender": "Male",
+      "handle": "chananchai-tiathongchai-e3x85l3",
+      "birthYear": 2015,
+      "sailNumber": "1991",
+      "nationality": "THA"
+    },
+    {
+      "id": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "club": "YRAT",
+      "name": "Jiratiwat Peungchurn",
+      "gender": "M",
+      "handle": "jiratiwat-peungchurn-9xt7lm4",
+      "birthYear": 2012,
+      "sailNumber": "1220",
+      "nationality": "THA"
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "Male",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA"
+    },
+    {
+      "id": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+      "club": "RTNYC",
+      "name": "Hirunsira Munkhongpornpaiboon",
+      "gender": "Male",
+      "handle": "hirunsira-munkhongpornpaiboon-enjhoth",
+      "birthYear": 2015,
+      "sailNumber": "932",
+      "nationality": "THA"
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-cha",
+      "gender": "Male",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA"
+    },
+    {
+      "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "club": "YRAT",
+      "name": "Anantachai Tiathongchai",
+      "gender": "Male",
+      "handle": "anantachai-tiathongchai-onaqh0t",
+      "birthYear": 2015,
+      "sailNumber": "1990",
+      "nationality": "THA"
+    },
+    {
+      "id": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+      "club": "YRAT",
+      "name": "Napichaya Rattanadechakorn",
+      "gender": "Female",
+      "handle": "napichaya-rattanadechakorn-03dz6c6",
+      "birthYear": 2014,
+      "sailNumber": "1457",
+      "nationality": "THA"
+    },
+    {
+      "id": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "club": "RTFYC",
+      "name": "Arunee Raksapun",
+      "gender": "Female",
+      "handle": "arunee-raksapun-u24jkub",
+      "birthYear": 2015,
+      "sailNumber": "945",
+      "nationality": "THA"
+    },
+    {
+      "id": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "club": "YRAT",
+      "name": "Aranya Klangmueang",
+      "gender": "Female",
+      "handle": "aranya-klangmueang-0gxqda0",
+      "birthYear": 2014,
+      "sailNumber": "1498",
+      "nationality": "THA"
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "Female",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA"
+    },
+    {
+      "id": "02f7450f-b247-49cf-ba12-2f33a7f0642e",
+      "club": "Imported official result",
+      "name": "Charlie Basnet",
+      "gender": "M",
+      "handle": "asian-tha-charlie-ba-750403",
+      "birthYear": null,
+      "sailNumber": "711",
+      "nationality": "THA"
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "Male",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA"
+    },
+    {
+      "id": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "club": "YRAT",
+      "name": "Sorawit Naksuk",
+      "gender": "M",
+      "handle": "sorawit-naksuk-812d4t4",
+      "birthYear": 2012,
+      "sailNumber": "1493",
+      "nationality": "THA"
+    },
+    {
+      "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "club": "YRAT",
+      "name": "Rachata Sadtrakulwatanna",
+      "gender": "M",
+      "handle": "rachata-sadtrakulwatanna-823ho68",
+      "birthYear": 2011,
+      "sailNumber": "1963",
+      "nationality": "THA"
+    },
+    {
+      "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "club": "YRAT",
+      "name": "Surapha Muangngam",
+      "gender": "F",
+      "handle": "surapha-muangngam-8gw2ruy",
+      "birthYear": 2011,
+      "sailNumber": "1941",
+      "nationality": "THA"
+    },
+    {
+      "id": "8b594c37-db52-4549-a765-f51fd619238d",
+      "club": "ACDC.SC",
+      "name": "Netchanok Chatawattanasopakun",
+      "gender": "Female",
+      "handle": "netchanok-chatawattanasopakun-b63j9ly",
+      "birthYear": 2015,
+      "sailNumber": "1644",
+      "nationality": "THA"
+    },
+    {
+      "id": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "club": "Imported official result",
+      "name": "Levy Apichai Wiedmann",
+      "gender": "M",
+      "handle": "asian-tha-levy-apich-debd2f",
+      "birthYear": null,
+      "sailNumber": "996",
+      "nationality": "THA"
+    },
+    {
+      "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "club": "ACDC.SC",
+      "name": "Dhammaporn Aruno",
+      "gender": "Female",
+      "handle": "dhammaporn-aruno-v6gx0i8",
+      "birthYear": 2013,
+      "sailNumber": "1881",
+      "nationality": "THA"
+    },
+    {
+      "id": "976342b7-69ec-4200-8e46-684855939591",
+      "club": "YRAT",
+      "name": "Pimpisa Devahastin Na Ayudhya",
+      "gender": "Female",
+      "handle": "pimpisa-devahastin-na-ayudhya-7yvd7vy",
+      "birthYear": 2016,
+      "sailNumber": "1539",
+      "nationality": "THA"
+    },
+    {
+      "id": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "club": "YRAT",
+      "name": "Amarin Juntajon",
+      "gender": "Male",
+      "handle": "amarin-juntajon-6j5cgat",
+      "birthYear": 2013,
+      "sailNumber": "1584",
+      "nationality": "THA"
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "Female",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA"
+    },
+    {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "Imported official result",
+      "name": "NIRADA SASIWATTANAPORN",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": null,
+      "sailNumber": "1925",
+      "nationality": "THA"
+    },
+    {
+      "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "club": "RTFYC",
+      "name": "Thawaree Raksapun",
+      "gender": "Female",
+      "handle": "thawaree-raksapun-sd0d5wz",
+      "birthYear": 2013,
+      "sailNumber": "1459",
+      "nationality": "THA"
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "Male",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA"
+    },
+    {
+      "id": "cb7dd15b-b058-430c-88e5-fe0c3a31830e",
+      "club": "YRAT",
+      "name": "Nattapon Touttachon",
+      "gender": "Male",
+      "handle": "nattapon-touttachon-bvpmt73",
+      "birthYear": 2011,
+      "sailNumber": "1859",
+      "nationality": "THA"
+    },
+    {
+      "id": "154feedb-6173-4142-8d3e-88f1567b22e7",
+      "club": "Imported official result",
+      "name": "Santhat Suthamgosal",
+      "gender": "M",
+      "handle": "asian-tha-santhat-su-2e78e2",
+      "birthYear": null,
+      "sailNumber": "1879",
+      "nationality": "THA"
+    },
+    {
+      "id": "fdb5520d-f181-4d5a-ad46-8157fd378a1a",
+      "club": "Imported official result",
+      "name": "SUCHANYA KAMINTHONG",
+      "gender": "F",
+      "handle": "asian-tha-suchanya-k-3cf3c3",
+      "birthYear": null,
+      "sailNumber": "253",
+      "nationality": "THA"
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "Imported official result",
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": null,
+      "sailNumber": "1696",
+      "nationality": "THA"
+    },
+    {
+      "id": "7a475df7-bc47-43cf-bab3-815222279ece",
+      "club": "Imported official result",
+      "name": "Tasanatham Suthamgosal",
+      "gender": "M",
+      "handle": "asian-tha-tasanatham-481c84",
+      "birthYear": null,
+      "sailNumber": "1979",
+      "nationality": "THA"
+    },
+    {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "Imported official result",
+      "name": "TRAIRAT JAROONROT",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": null,
+      "sailNumber": "1876",
+      "nationality": "THA"
+    },
+    {
+      "id": "60ea1195-0d40-470a-b7c9-4cfa16ac3517",
+      "club": "SAF Yacht Club",
+      "name": "Kyan Tan Chun Hong",
+      "gender": "M",
+      "handle": "kyan-tan-chun-hong",
+      "birthYear": 2015,
+      "sailNumber": "4712",
+      "nationality": "SGP"
+    },
+    {
+      "id": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "club": "ACDC.SC",
+      "name": "Theerakan Klaysomboon",
+      "gender": "F",
+      "handle": "theerakan-klaysomboon-fy1ms14",
+      "birthYear": 2015,
+      "sailNumber": "THA 1593",
+      "nationality": "THA"
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-cha",
+      "gender": "Female",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA"
+    },
+    {
+      "id": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "club": "YRAT",
+      "name": "Pornyamol Sawaengkhun",
+      "gender": "F",
+      "handle": "pornyamol-sawaengkhun-9e8uu7a",
+      "birthYear": 2013,
+      "sailNumber": "1900",
+      "nationality": "THA"
+    },
+    {
+      "id": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "club": "ACDC.SC",
+      "name": "Chuhan Zhang",
+      "gender": "Female",
+      "handle": "chuhan-zhang-oes2i91",
+      "birthYear": 2014,
+      "sailNumber": "1947",
+      "nationality": "CHN"
+    },
+    {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "PUNTHITA WEROTJANAKUL",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA"
+    }
+  ],
+  "publicSummary": "Official Optimist overall results. The organiser labels these results final."
+}

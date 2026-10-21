@@ -10,10 +10,11 @@ beforeEach(async () => {
   database = new PGlite();
   await database.exec(`
     create table sailors (parent_id text, current_fleet text, silver_entry_date date,
-      gold_entry_date date, drop_date date, dob date, sail_number text);
+      gold_entry_date date, drop_date date, dob date, sail_number text, nationality text);
     create table sailor_claims (status text);
     create table support_messages (status text);
-    create table regattas (counts_for_ranking boolean);
+    create table regattas (id text, counts_for_ranking boolean, boat_class text);
+    create table regatta_results (id text, regatta_id text, sailor_id text);
     create table usage_events (created_at timestamptz, session_id text, event_type text);
     create table profiles (id text, full_name text, role text);
     create schema auth;

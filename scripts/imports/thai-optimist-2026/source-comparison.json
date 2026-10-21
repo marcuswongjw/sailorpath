@@ -1,0 +1,467 @@
+{
+  "acdc-sailing-cup": {
+    "rows": 52,
+    "differences": [
+      {
+        "row": 6,
+        "officialName": "Surapha maungngam",
+        "differences": {
+          "name": {
+            "official": "Surapha maungngam",
+            "siteCell": "SURAPHA MUANGNGAM THA1941 F"
+          }
+        }
+      }
+    ]
+  },
+  "acdc-international": {
+    "rows": 75,
+    "differences": [
+      {
+        "row": 7,
+        "officialName": "SURAPHA MAUNGNGAM",
+        "differences": {
+          "name": {
+            "official": "SURAPHA MAUNGNGAM",
+            "siteCell": "SURAPHA MUANGNGAM THA1941 F"
+          }
+        }
+      },
+      {
+        "row": 50,
+        "officialName": "NAY MIN HTET",
+        "differences": {
+          "R1": {
+            "official": [
+              76.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          },
+          "R2": {
+            "official": [
+              76.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 60,
+        "officialName": "KANYAPAT PISOOTTIWONG",
+        "differences": {
+          "R4": {
+            "official": [
+              76.0,
+              "DNS",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          },
+          "R5": {
+            "official": [
+              76.0,
+              "DNS",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 71,
+        "officialName": "TAMMACHAT SRIOPAS",
+        "differences": {
+          "R1": {
+            "official": [
+              76.0,
+              "DNS",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          },
+          "R2": {
+            "official": [
+              76.0,
+              "DNS",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 74,
+        "officialName": "LIANG TAILER",
+        "differences": {
+          "R2": {
+            "official": [
+              76.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          },
+          "R7": {
+            "official": [
+              76.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 75,
+        "officialName": "SUPHASIN JULPON",
+        "differences": {
+          "R3": {
+            "official": [
+              76.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              76.0,
+              null,
+              true
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "thailand-international": {
+    "rows": 65,
+    "differences": [
+      {
+        "row": 6,
+        "officialName": "MUHAMMAD ANAS ARYAN BIN MOHD NOOR RIDZUA",
+        "differences": {
+          "total": {
+            "official": 227.8,
+            "site": 228.0
+          },
+          "net": {
+            "official": 95.8,
+            "site": 96.0
+          }
+        }
+      },
+      {
+        "row": 13,
+        "officialName": "NATALIE WONG QIAO EN",
+        "differences": {
+          "total": {
+            "official": 243.8,
+            "site": 244.0
+          },
+          "net": {
+            "official": 141.8,
+            "site": 142.0
+          }
+        }
+      },
+      {
+        "row": 21,
+        "officialName": "LUO AMY AIWEI",
+        "differences": {
+          "nationality": {
+            "official": "CHN",
+            "site": "HKG"
+          }
+        }
+      },
+      {
+        "row": 27,
+        "officialName": "ANANTACHAI TIATHONGCHAI",
+        "differences": {
+          "R4": {
+            "official": [
+              66.0,
+              "RET",
+              true
+            ],
+            "site": [
+              66.0,
+              null,
+              true
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "admirals-cup": {
+    "rows": 70,
+    "differences": [
+      {
+        "row": 2,
+        "officialName": "RACHATA SADTRAKULWATTANA",
+        "differences": {
+          "R3": {
+            "official": [
+              71.0,
+              "RET",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 4,
+        "officialName": "SURAPHA MAUNGNGAM",
+        "differences": {
+          "name": {
+            "official": "SURAPHA MAUNGNGAM",
+            "siteCell": "SURAPHA MUANGNGAM 1941 F"
+          }
+        }
+      },
+      {
+        "row": 24,
+        "officialName": "AMARIN JUNTAJON",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 38,
+        "officialName": "NIRADA SASIWATTANAPORN",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 52,
+        "officialName": "NAIMAKRON JANGKITTIYARAT",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 53,
+        "officialName": "SARUTIYA RATTANADECHAKORN",
+        "differences": {
+          "R10": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 58,
+        "officialName": "PROUD PARINTARAKUL",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 62,
+        "officialName": "YI SUM TAN",
+        "differences": {
+          "R2": {
+            "official": [
+              71.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 64,
+        "officialName": "WAI LOK TORRES WONG",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 65,
+        "officialName": "TASANATHAM SUTHAMGOSAL",
+        "differences": {
+          "R3": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 67,
+        "officialName": "YOOGAON",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 69,
+        "officialName": "SAETTHAWIT YODMANEE",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNF",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      },
+      {
+        "row": 70,
+        "officialName": "BARAMEE SONNUAL",
+        "differences": {
+          "R1": {
+            "official": [
+              71.0,
+              "DNC",
+              true
+            ],
+            "site": [
+              71.0,
+              null,
+              true
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "thailandExistingAudit": {
+    "entries": 65,
+    "raceScores": 780,
+    "differences": []
+  }
+}

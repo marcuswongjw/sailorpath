@@ -1,0 +1,57 @@
+{
+  "reviewedAt": "2026-10-21",
+  "admirals": {
+    "source": "https://www.racingrulesofsailing.org/documents/129767",
+    "publicationStatus": "provisional as of 17:06 10 February 2025",
+    "dateEvidence": "Official amended NoR127292 pages1–2; event6–10 February, racing7–10 February",
+    "pdfPagesVisuallyInspected": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "fleets": {
+      "Gold": 51,
+      "Silver": 51
+    },
+    "raceCount": 11,
+    "discards": 1,
+    "comparison": "PDF pages rendered and visually read before secondary table extraction. All102 records reconcile gross/net and11 race cells. Fleets remain separate with official fleet ranks; Q1–Q5/F1–F6 mapping retained. Page breaks partially clip repeated header/metadata display; embedded table cells checked against readable continuation, sail prefixes and official competitor source. No score arithmetic discrepancies."
+  },
+  "eastern": {
+    "source": "https://jpvm.org/results/2025/rvyc/Results.html",
+    "officialLinkProvenance": "https://www.varuna.org/2025 RESULTS link and official notice board11574 Results link",
+    "publicationStatus": "provisional as of16:29 26 October2025",
+    "pdfCorroboration": false,
+    "pdfSearch": [
+      "Royal Varuna2025 event page",
+      "Official notice board11574 all Event Documents",
+      "Organiser-linked jpvm result sheet",
+      "Web searches: 17th Eastern Seaboard2025 results PDF, final results PDF, site:jpvm.org/results/2025/rvyc PDF"
+    ],
+    "visualReview": "Organiser-linked HTML visited and all143 result rows visually reviewed through class tables: ILCA4 rows1–48, ILCA6 rows1–12,420 rows1–5,Optimist rows1–78. Every race cell programmatically reconciles to gross/net. 10% penalties preserved as numeric score plus literal10% code. No results PDF or later final revision located; not PDF-verified.",
+    "dateEvidence": "Official amended NoR152769 pages1–2 and Royal Varuna2025 page:22–26 October; racing23–26 October.",
+    "fleets": {
+      "Optimist": 78,
+      "ILCA 4": 48,
+      "ILCA 6": 12,
+      "420": 5
+    },
+    "raceCount": 11,
+    "discards": 1
+  },
+  "identityCautions": [
+    "User confirmed Jiratip/Jirathip Mutiphan are one sailor. Consolidated newly imported ILCA4 identity into canonical Jiratip; score rows unchanged and both aliases retained. Full before snapshots in production merge audit.",
+    "User confirmed Natthapatr/Natthaphatr Poolklang are one sailor. Both 2025 result rows assigned to canonical Natthapatr; both spellings retained as aliases.",
+    "Mohammed Ziyad Al Qasimi is distinct from Mohammed Al Balushi despite historical shared OMA305; independent Oman Winter Cup report lists both sailors.",
+    "Nigel and Gemma profiles have1905 DOB values. Exact sail/name/aliases support linking; profiles untouched. Official youth birth years retained only on historical result rows.",
+    "No profile merges, parent links, nationalities or historical sail numbers overwritten."
+  ],
+  "sourceHashes": {
+    "admirals-results.pdf": "b688b8d26304d63e96c2148ec702cc6562c70c3871b7b5c09818a4046f0b8e91",
+    "admirals-nor.pdf": "4ec6eed9209e999dd2ee1081adf29a896b90a244e29f528c4a7d320489c7e0e1",
+    "eastern-nor.pdf": "542bd0a1d94949b090345592e48154dd4e3aa7d64943e6736b885c5799c534c1",
+    "eastern-results.html": "e1388dfb5c2d73feb98ce257edd2f66d7afeee0fc13e13cffcbe7bbc4828afee"
+  }
+}

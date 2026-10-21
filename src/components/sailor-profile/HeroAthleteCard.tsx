@@ -26,6 +26,7 @@ import {
 import { describeProfileRank } from "./rankBasis";
 import { FollowSailorButton } from "@/components/FollowSailorButton";
 import { knownBirthYearLabel } from "@/lib/age";
+import { formatSailNumber } from "@/lib/countries";
 import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
@@ -372,9 +373,10 @@ export function HeroAthleteCard({
                   ) {
                     push(
                       <span className="tabular-nums font-bold text-harbour-shadow">
-                        {sailDisplay.includes(" ")
-                          ? sailDisplay
-                          : `${noc} ${sailDisplay}`}
+                        {formatSailNumber(sailDisplay, displaySailor.nationality) ||
+                          (sailDisplay.includes(" ")
+                            ? sailDisplay
+                            : `${noc} ${sailDisplay}`)}
                       </span>,
                       "opt-sail"
                     );

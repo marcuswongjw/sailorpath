@@ -14,6 +14,7 @@ import {
   jsonb,
 } from "drizzle-orm/pg-core";
 import type { JsonValue } from "@/lib/adminAuditDetails";
+import type { ResultsScan } from "@/lib/resultsWorkflow/types";
 
 export const profiles = pgTable("profiles", {
   id: uuid("id").primaryKey().notNull(),
@@ -404,6 +405,24 @@ export const regattaEventDeletions = pgTable("regatta_event_deletions", {
   slug: text("slug").primaryKey().notNull(),
   deletedAt: timestamp("deleted_at", { withTimezone: true }).defaultNow().notNull(),
 }).enableRLS();
+
+/** Private crawler state; no client-role policies or grants. */
+export const resultImportMonitors = pgTable("result_import_monitors", {
+  eventId: uuid("event_id").primaryKey().references(() => regattaEvents.id, { onDelete: "cascade" }),
+  eventUrl: text("event_url"),
+  enabled: boolean("enabled").notNull().default(true),
+  checkedAt: timestamp("checked_at", { withTimezone: true }),
+  report: jsonb("report").$type<ResultsScan>(),
+}).enableRLS();
+
+/** Each changed extraction is retained, rather than overwriting the evidence. */
+export const resultImportScans = pgTable("result_import_scans", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  eventId: uuid("event_id").notNull().references(() => regattaEvents.id, { onDelete: "cascade" }),
+  fingerprint: text("fingerprint").notNull(),
+  report: jsonb("report").$type<ResultsScan>().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({ eventFingerprint: unique().on(table.eventId, table.fingerprint) })).enableRLS();
 
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),

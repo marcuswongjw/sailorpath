@@ -139,6 +139,99 @@ export function AdminStatsPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               />
             </div>
           </section>
+          <section aria-labelledby="demographics-heading" className="space-y-4">
+            <h2
+              id="demographics-heading"
+              className="text-base font-bold text-slate-900"
+            >
+              Platform Scale & Demographics
+            </h2>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <Metric
+                label="Unique sailors"
+                value={number(stats.demographics?.sailorsTotal ?? stats.dataTrust.sailorsTotal)}
+                hint="Verified competitive sailors in database"
+              />
+              <Metric
+                label="Nationalities represented"
+                value={number(stats.demographics?.nationalitiesCount)}
+                hint="Countries across Asia, Europe and Oceania"
+              />
+              <Metric
+                label="Classes with results"
+                value={number(stats.demographics?.classesCount)}
+                hint="Supported boat and board classes"
+              />
+              <Metric
+                label="Recorded results"
+                value={number(stats.demographics?.resultsTotal)}
+                hint="Individual scored race entries"
+              />
+            </div>
+
+            {/* Top Nationalities Badges */}
+            {stats.demographics?.topNationalities?.length ? (
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <h3 className="text-sm font-semibold text-slate-900">
+                  Top Sailor Nationalities
+                </h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {stats.demographics.topNationalities.map((item) => (
+                    <span
+                      key={item.country}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-800"
+                    >
+                      <span className="font-bold">{item.country}:</span>
+                      <span>{item.count.toLocaleString()}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {/* Classes with Results Table */}
+            {stats.demographics?.boatClasses?.length ? (
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <h3 className="text-sm font-semibold text-slate-900">
+                  Boat & Board Classes with Results
+                </h3>
+                <p className="mt-1 text-xs text-slate-500">
+                  Distribution of regattas, total race finishes, and participating sailors per class.
+                </p>
+                <div className="mt-3 overflow-x-auto">
+                  <table className="w-full text-left text-sm text-slate-800">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-xs font-semibold text-slate-500">
+                        <th className="py-2 pr-4">Class</th>
+                        <th className="py-2 px-4 text-right">Regattas</th>
+                        <th className="py-2 px-4 text-right">Results</th>
+                        <th className="py-2 pl-4 text-right">Sailors</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {stats.demographics.boatClasses.map((cls) => (
+                        <tr key={cls.className} className="hover:bg-slate-50/50">
+                          <td className="py-2.5 pr-4 font-semibold text-slate-900">
+                            {cls.className}
+                          </td>
+                          <td className="py-2.5 px-4 text-right tabular-nums text-slate-600">
+                            {cls.regattaCount.toLocaleString()}
+                          </td>
+                          <td className="py-2.5 px-4 text-right tabular-nums font-medium text-slate-900">
+                            {cls.resultCount.toLocaleString()}
+                          </td>
+                          <td className="py-2.5 pl-4 text-right tabular-nums text-slate-600">
+                            {cls.sailorCount.toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : null}
+          </section>
+
           <section aria-labelledby="adoption-heading">
             <h2
               id="adoption-heading"

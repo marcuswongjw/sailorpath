@@ -7,6 +7,7 @@ import { regattas, regattaResults, sailors } from "@/db/schema";
 import { desc, sql } from "drizzle-orm";
 import { buildAdminOverview } from "@/lib/admin/adminOverview";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
+import { getPlatformDemographics } from "@/lib/adminStats";
 
 export const dynamic = "force-dynamic";
 
@@ -104,6 +105,7 @@ export async function GET(request: Request) {
     }
 
     const overview = buildAdminOverview(regattaRows, resultCounts);
+    const demographics = await getPlatformDemographics();
     // Existing consumers retain the combined response. Daily event checks do
     // not wait for the independent identity scan.
     const duplicates =
@@ -118,6 +120,7 @@ export async function GET(request: Request) {
         blocked: overview.blocked,
         incomplete: overview.incomplete,
         duplicateCount: duplicates,
+        demographics,
         generatedAt: new Date().toISOString(),
         counts: {
           ready: overview.ready.length,

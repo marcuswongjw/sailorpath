@@ -1,0 +1,64 @@
+[
+  {
+    "url": "https://sailorpath.com/regattas/admirals-cup-2025/results/optimist-gold",
+    "status": 200,
+    "provisional": true,
+    "race11_visible": true,
+    "source_name_visible": true,
+    "official_evidence": true,
+    "canonical_provisional_status": true,
+    "provisional_badges": true
+  },
+  {
+    "url": "https://sailorpath.com/regattas/admirals-cup-2025/results/optimist-silver",
+    "status": 200,
+    "provisional": true,
+    "race11_visible": true,
+    "source_name_visible": true,
+    "official_evidence": true,
+    "canonical_provisional_status": true,
+    "provisional_badges": true
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2025/results/optimist",
+    "status": 200,
+    "provisional": true,
+    "race11_visible": true,
+    "source_name_visible": true,
+    "official_evidence": true,
+    "canonical_provisional_status": true,
+    "provisional_badges": true
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2025/results/ilca-4",
+    "status": 200,
+    "provisional": true,
+    "race11_visible": true,
+    "source_name_visible": true,
+    "official_evidence": true,
+    "canonical_provisional_status": true,
+    "provisional_badges": true
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2025/results/ilca-6",
+    "status": 200,
+    "provisional": true,
+    "race11_visible": true,
+    "source_name_visible": true,
+    "official_evidence": true,
+    "canonical_provisional_status": true,
+    "provisional_badges": true
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2025/results/420",
+    "status": 200,
+    "provisional": true,
+    "race11_visible": true,
+    "source_name_visible": true,
+    "official_evidence": true,
+    "four_class_tabs": true,
+    "both_crew_names": true,
+    "canonical_provisional_status": true,
+    "provisional_badges": true
+  }
+]

@@ -9,6 +9,21 @@
 
 import { pgSql } from "@/db";
 
+export type PlatformDemographics = {
+  sailorsTotal: number;
+  sailorsWithResults: number;
+  nationalitiesCount: number;
+  resultsTotal: number;
+  classesCount: number;
+  topNationalities: Array<{ country: string; count: number }>;
+  boatClasses: Array<{
+    className: string;
+    regattaCount: number;
+    resultCount: number;
+    sailorCount: number;
+  }>;
+};
+
 export type AdminStatsPayload = {
   generatedAt: string;
   cacheSeconds: number;
@@ -38,6 +53,7 @@ export type AdminStatsPayload = {
     missingDob: number;
     missingOrPlaceholderSail: number;
   };
+  demographics: PlatformDemographics;
   accounts: {
     registered: number;
     confirmed: number;
@@ -102,6 +118,77 @@ function num(v: unknown): number {
 
 function daysBetween(from: Date, to: Date): number {
   return Math.max(0, Math.floor((to.getTime() - from.getTime()) / 86_400_000));
+}
+
+export async function getPlatformDemographics(): Promise<PlatformDemographics> {
+  try {
+    const [countsRow, nationalityRows, classRows] = await Promise.all([
+      withStatsQueryTimeout(pgSql`
+        select
+          (select count(*)::int from public.sailors) as sailors_total,
+          (select count(distinct nationality)::int from public.sailors) as nationalities_total,
+          (select count(*)::int from public.regatta_results) as results_total,
+          (select count(distinct sailor_id)::int from public.regatta_results) as sailors_with_results
+      `),
+      withStatsQueryTimeout(pgSql`
+        select coalesce(nationality, 'Unknown') as country, count(*)::int as count
+        from public.sailors
+        group by coalesce(nationality, 'Unknown')
+        order by count(*) desc
+        limit 10
+      `),
+      withStatsQueryTimeout(pgSql`
+        select
+          r.boat_class as class_name,
+          count(distinct r.id)::int as regattas,
+          count(rr.id)::int as results,
+          count(distinct rr.sailor_id)::int as sailors
+        from public.regattas r
+        join public.regatta_results rr on rr.regatta_id = r.id
+        group by r.boat_class
+        order by count(rr.id) desc
+      `),
+    ]);
+
+    const cr = countsRow[0] ?? {};
+    const sailorsTotal = num(cr.sailors_total);
+    const nationalitiesTotal = num(cr.nationalities_total);
+    const resultsTotal = num(cr.results_total);
+    const sailorsWithResults = num(cr.sailors_with_results);
+
+    const topNationalities = (nationalityRows ?? []).map((r) => ({
+      country: String(r.country || "Unknown"),
+      count: num(r.count),
+    }));
+
+    const boatClasses = (classRows ?? []).map((r) => ({
+      className: String(r.class_name || "Unassigned"),
+      regattaCount: num(r.regattas),
+      resultCount: num(r.results),
+      sailorCount: num(r.sailors),
+    }));
+
+    return {
+      sailorsTotal,
+      sailorsWithResults,
+      nationalitiesCount: nationalitiesTotal,
+      resultsTotal,
+      classesCount: boatClasses.length,
+      topNationalities,
+      boatClasses,
+    };
+  } catch (error) {
+    console.warn("[admin/stats] Demographics metrics unavailable", error);
+    return {
+      sailorsTotal: 0,
+      sailorsWithResults: 0,
+      nationalitiesCount: 0,
+      resultsTotal: 0,
+      classesCount: 0,
+      topNationalities: [],
+      boatClasses: [],
+    };
+  }
 }
 
 /**
@@ -313,6 +400,8 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
     authAccountsOk = false;
   }
 
+  const demographics = await getPlatformDemographics();
+
   return {
     generatedAt: now.toISOString(),
     cacheSeconds: CACHE_SECONDS,
@@ -342,6 +431,7 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
       missingDob: num(row.missing_dob),
       missingOrPlaceholderSail: num(row.missing_sail),
     },
+    demographics,
     accounts: {
       registered,
       confirmed,

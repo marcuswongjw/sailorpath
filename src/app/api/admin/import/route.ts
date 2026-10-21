@@ -28,6 +28,7 @@ import {
   normalizeDob,
   normalizeOptionalText,
   normalizeSailNumber,
+  normalizeSailorName,
   toNumber,
 } from "@/lib/normalize";
 import { makeGuestHandle, slugify } from "@/lib/slug";
@@ -51,6 +52,7 @@ import { isAnyIlcaClass, ILCA_MIN_RACES_FOR_RANKING } from "@/lib/ilcaRanking";
 import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
+import { resultRowIssues } from "@/lib/resultsWorkflow/validation";
 import { findWithinFileDuplicates, MAX_DUPLICATE_FLAGS } from "@/lib/importDuplicates";
 import {
   NEW_IMPORT_TARGET,
@@ -577,6 +579,12 @@ export async function POST(req: Request) {
       );
     }
 
+    if (body.sourceWorkflow === true) {
+      const issues = resultRowIssues(parsedRows, Number(raceCountRaw));
+      if (parsedRows.length !== rows.length || Number(totalFleetSize) !== parsedRows.length) issues.push("The complete official fleet must be present.");
+      if (issues.length) return NextResponse.json({ error: issues[0] }, { status: 400 });
+    }
+
     const cleanRows: Array<(typeof parsedRows)[number] & { rank: number }> = [];
     for (const [index, row] of parsedRows.entries()) {
       const rank = asRank(row.rank, `row ${index + 1} rank`);
@@ -740,7 +748,7 @@ export async function POST(req: Request) {
         );
       }
     }
-    const lifecycle = requestedLifecycle || "published";
+    const lifecycle = body.sourceWorkflow === true ? "draft" : requestedLifecycle || "published";
     let ranking = requiresExplicitMetadata || externalPolicy.forcesNonRanking
       ? false
       : countsForRanking === false || countsForRanking === true
@@ -825,6 +833,9 @@ export async function POST(req: Request) {
       : targetResolution.kind === "target"
         ? targetResolution.target
         : null;
+    if (body.sourceWorkflow === true && existingTarget?.status === "published") {
+      return NextResponse.json({ error: "This sheet is already published. Review corrections through the existing results workflow; the pilot cannot replace a published sheet." }, { status: 409 });
+    }
     const officialResultsUrlForImport =
       officialResultsUrl ?? existingTarget?.officialResultsUrl ?? null;
     const officialResultsSourceNameForImport =
@@ -1119,6 +1130,12 @@ export async function POST(req: Request) {
         gender: string | null;
         birthYear: number | null;
         nationality: string | null;
+        entrySailNumber: string | null;
+        officialUrl: string | null;
+        evidenceUrl: string | null;
+        evidenceName: string | null;
+        evidenceType: "link" | null;
+        evidenceNotes: string | null;
         verificationStatus?: "self_reported" | "pending_review" | "verified" | "rejected";
         verifiedAt?: Date | null;
       }[] = [];
@@ -1177,6 +1194,12 @@ export async function POST(req: Request) {
         const sailMatches = row.sailNumber
           ? sailorsByClassSailNumber.get(row.sailNumber) || []
           : [];
+        if (body.sourceWorkflow === true && exactHits.length > 1) {
+          const disambiguated = exactHits.filter((s) => sailMatches.some((match) => match.id === s.id));
+          if (disambiguated.length !== 1) throw new ImportConflictError(`Ambiguous identity for ${row.name}. Resolve the sailor profiles before importing.`);
+          exactHits.splice(0, exactHits.length, disambiguated[0]);
+        }
+        if (body.sourceWorkflow === true && !matchedByExactName && hit?.sailor) throw new ImportConflictError(`Identity review required for ${row.name}. No changes were saved.`);
         // A unique sail number is not an identity when the name differs.
         // Linking it used to store the other person's name as an alias.
         if (
@@ -1249,7 +1272,7 @@ export async function POST(req: Request) {
           const newGuestId = randomUUID();
           const guestRecord = {
             id: newGuestId,
-            name: row.name,
+            name: normalizeSailorName(row.name),
             handle,
             sailNumber:
               createIsIlca4 || createIsBoard
@@ -1558,6 +1581,12 @@ export async function POST(req: Request) {
           gender: gNorm,
           birthYear,
           nationality: resultNat,
+          entrySailNumber: row.sailNumber,
+          officialUrl: officialResultsUrlForImport,
+          evidenceUrl: officialResultsUrlForImport,
+          evidenceName: officialResultsSourceNameForImport,
+          evidenceType: officialResultsUrlForImport ? "link" : null,
+          evidenceNotes: typeof body.sourceEvidenceNotes === "string" ? `${body.sourceEvidenceNotes.trim().slice(0, 3500)}; imported by ${auth.userId}` : null,
           verificationStatus: "verified",
           verifiedAt: new Date(),
         });
@@ -1588,6 +1617,7 @@ export async function POST(req: Request) {
           keptResultIndex.set(result.sailorId, index);
           return;
         }
+        if (body.sourceWorkflow === true) throw new ImportConflictError("Two source rows resolved to the same sailor. Resolve the identities before importing; no changes were saved.");
         if (
           !isExactNameMatch(
             pendingSourceNames[previous],
@@ -1796,6 +1826,12 @@ export async function POST(req: Request) {
                     gender: sql`excluded.gender`,
                     birthYear: sql`excluded.birth_year`,
                     nationality: sql`excluded.nationality`,
+                    entrySailNumber: sql`coalesce(excluded.entry_sail_number, regatta_results.entry_sail_number)`,
+                    officialUrl: sql`coalesce(excluded.official_url, regatta_results.official_url)`,
+                    evidenceUrl: sql`coalesce(excluded.evidence_url, regatta_results.evidence_url)`,
+                    evidenceName: sql`coalesce(excluded.evidence_name, regatta_results.evidence_name)`,
+                    evidenceType: sql`coalesce(excluded.evidence_type, regatta_results.evidence_type)`,
+                    evidenceNotes: sql`coalesce(excluded.evidence_notes, regatta_results.evidence_notes)`,
                     verificationStatus: sql`excluded.verification_status`,
                     verifiedAt: sql`COALESCE(excluded.verified_at, now())`,
                     updatedAt: sql`now()`,
@@ -1821,7 +1857,7 @@ export async function POST(req: Request) {
                 )
               );
             const nameBySailorId = new Map(
-              sailorList.map((sailor) => [sailor.id, sailor.name])
+              pendingResults.map((result, index) => [result.sailorId, pendingSourceNames[index]])
             );
             const participantRows = storedForParticipants.flatMap((row) => {
               const sourceName = (nameBySailorId.get(row.sailorId) || "").trim();

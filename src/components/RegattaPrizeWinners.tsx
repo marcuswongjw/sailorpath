@@ -9,6 +9,7 @@ import {
   type RegattaPrizeSchedule,
 } from "@/lib/regattaPrizes";
 import { getOptimistSailNumber } from "@/lib/optimistSailNumberMap";
+import { formatSailNumber as formatSailNumberBase } from "@/lib/countries";
 
 type Props = {
   schedule: RegattaPrizeSchedule;
@@ -67,7 +68,8 @@ function winnerRowTint(rank: number): string {
  */
 export function formatSailNumber(
   rawSailNumber?: string | number | null,
-  sailorName?: string
+  sailorName?: string,
+  nationality?: string | null
 ): string | null {
   let num = rawSailNumber ? String(rawSailNumber).trim() : "";
   if (!num && sailorName) {
@@ -75,17 +77,7 @@ export function formatSailNumber(
     if (found) num = found;
   }
   if (!num) return null;
-  num = num.replace(/^#\s*/, "").trim();
-
-  // If already prefixed by a 3-letter country code (e.g. SGP 2059, SGP2059, SIN 2059)
-  const codeMatch = num.match(/^([A-Za-z]{3})\s*(.+)$/);
-  if (codeMatch) {
-    const code = codeMatch[1].toUpperCase() === "SIN" ? "SGP" : codeMatch[1].toUpperCase();
-    return `${code} ${codeMatch[2].trim()}`;
-  }
-
-  // Pure digits or code -> "SGP <num>"
-  return `SGP ${num}`;
+  return formatSailNumberBase(num, nationality) || null;
 }
 
 function WinnerRow({
@@ -97,7 +89,7 @@ function WinnerRow({
 }) {
   const { bg, fg } = medalStyle(w.rank);
   const tint = winnerRowTint(w.rank);
-  const sailNo = formatSailNumber(w.sailNumber, w.sailorName);
+  const sailNo = formatSailNumber(w.sailNumber, w.sailorName, w.nationality);
 
   return (
     <div

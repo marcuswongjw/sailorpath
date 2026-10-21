@@ -1,0 +1,152 @@
+{
+  "monthlyEventsRemainingInDatabase": 0,
+  "monthlySheetsRemainingInDatabase": 0,
+  "otherCSCEventsRetained": 15,
+  "publicChecks": [
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-27-october-2024",
+      "httpStatus": 200,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025",
+      "httpStatus": 200,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025",
+      "httpStatus": 200,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026",
+      "httpStatus": 200,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-27-october-2024/results/ilca-4",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-27-october-2024/results/ilca-6",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-27-october-2024/results/optimist-charlie",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025/results/optimist-alpha",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025/results/ilca-6",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025/results/ilca-4",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025/results/optimist-bravo",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-28-september-2025/results/optimist-charlie",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025/results/ilca-4",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025/results/ilca-6",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025/results/optimist-alpha",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025/results/optimist-bravo",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-25-may-2025/results/optimist-charlie",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026/results/ilca-4",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026/results/ilca-6",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026/results/optimist-alpha",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026/results/ilca-7",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/regattas/csc-monthly-dinghy-race-26-april-2026/results/optimist-bravo",
+      "httpStatus": 404,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/calendar?view=past&q=CSC+Monthly",
+      "httpStatus": 308,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    },
+    {
+      "url": "https://sailorpath.com/results?q=CSC+Monthly",
+      "httpStatus": 200,
+      "resultsTableVisible": false,
+      "monthlyEventLinks": []
+    }
+  ],
+  "exceptions": []
+}

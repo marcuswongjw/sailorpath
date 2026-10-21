@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21",
+  "userAnswer": "Treat each pair as one sailor",
+  "pairs": [
+    {
+      "sourceNames": [
+        "Jirathip Mutiphan",
+        "Jiratip Mutiphan"
+      ],
+      "canonicalProfile": {
+        "id": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+        "name": "Jiratip Mutiphan",
+        "handle": "jiratip-mutiphan-thai25-5cd22c",
+        "sailNumber": "THA 1985",
+        "sailNumberIlca4": "9",
+        "club": "YRAT",
+        "nationality": "THA",
+        "gender": "M",
+        "birthYear": null
+      }
+    },
+    {
+      "sourceNames": [
+        "Natthaphatr Poolklang",
+        "Natthapatr Poolklang"
+      ],
+      "canonicalProfile": {
+        "id": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+        "name": "Natthapatr Poolklang",
+        "handle": "natthapatr-poolklang-thai25-9e4112",
+        "sailNumber": "THA 1695",
+        "sailNumberIlca4": null,
+        "club": "ACDC",
+        "nationality": "THA",
+        "gender": "M",
+        "birthYear": null
+      }
+    }
+  ]
+}

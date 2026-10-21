@@ -42,6 +42,9 @@ type Props = {
   trendMode: ProfileMode;
   trendGoldEntry: string | null;
   trendCaption: string;
+  trendCountry: string;
+  setTrendCountry: (country: string) => void;
+  trendCountryOptions: { code: string; name: string }[];
 };
 
 /** Read-only performance cards kept separate from profile editing state. */
@@ -57,6 +60,9 @@ export function ProfilePerformanceSummary({
   trendMode,
   trendGoldEntry,
   trendCaption,
+  trendCountry,
+  setTrendCountry,
+  trendCountryOptions,
 }: Props) {
   return (
     <>
@@ -138,6 +144,18 @@ export function ProfilePerformanceSummary({
           <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
             Position trend
           </h2>
+          <label className="mt-3 flex items-center gap-2 text-sm text-charcoal">
+            Regatta country
+            <select
+              value={trendCountry}
+              onChange={(event) => setTrendCountry(event.target.value)}
+              className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth px-2 py-1.5"
+            >
+              {trendCountryOptions.map((option) => (
+                <option key={option.code} value={option.code}>{option.name}</option>
+              ))}
+            </select>
+          </label>
           <p className="text-[12px] text-slate-soft mt-0.5 mb-4 font-medium">
             Finishing position by regatta (lower is better)
             {trendCaption}
@@ -151,8 +169,8 @@ export function ProfilePerformanceSummary({
           ) : (
             <p className="text-sm text-neutral-500 py-6 text-center leading-relaxed">
               {trendPoints.length === 1
-                ? "One finish so far — the chart appears after a second ranked result."
-                : "No ranked finishes yet to chart. Results and series DNS will show here once they land."}
+                ? "One finish in this country — the chart appears after a second ranked result."
+                : "No ranked finishes in this country yet. Overseas results remain in the results history."}
             </p>
           )}
         </section>

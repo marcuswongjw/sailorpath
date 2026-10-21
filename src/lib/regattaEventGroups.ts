@@ -50,7 +50,8 @@ type Fleet =
   | "wingfoil"
   | "techno293"
   | "iqfoil"
-  | "windsurfing";
+  | "windsurfing"
+  | "420";
 
 function compactClass(value: string): string {
   return value.toLowerCase().replace(/[\s._-]+/g, "");
@@ -92,6 +93,7 @@ function publicFleet(row: RegattaRecord): Fleet | null {
   if (isIlcaSeriesClass(boat, "ILCA 6")) return "ilca6";
   if (isIlcaSeriesClass(boat, "ILCA 7")) return "ilca7";
   if (classKey === "wingfoil") return "wingfoil";
+  if (classKey === "420") return "420";
   // Techno 293 contains "29". Classify it before the 29er exclusion.
   if (classKey === "techno293" || mentionsTechno(row)) return "techno293";
   if (classKey === "iqfoil") return "iqfoil";
@@ -153,6 +155,15 @@ function formatDay(ymd: string): string {
 }
 
 function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
+  if (fleet === "420") {
+    return {
+      key: "420",
+      label: "420",
+      series: "420",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: "420",
+    };
+  }
   if (
     fleet === "main" || fleet === "intermediate" || fleet === "green" ||
     fleet === "boys" || fleet === "girls" ||
@@ -278,6 +289,7 @@ const FLEET_ORDER: Fleet[] = [
   "ilca4",
   "ilca6",
   "ilca7",
+  "420",
   "wingfoil",
   "techno293",
   "iqfoil",

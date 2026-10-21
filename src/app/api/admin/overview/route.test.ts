@@ -52,6 +52,7 @@ vi.mock("@/lib/auth", () => ({
 
 vi.mock("@/db", () => ({
   ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
+  pgSql: vi.fn().mockResolvedValue([]),
   withDatabaseRetry: <T>(fn: () => Promise<T>) => fn(),
   withSequentialDatabaseReads: async (
     reads: ReadonlyArray<() => Promise<unknown>>,
