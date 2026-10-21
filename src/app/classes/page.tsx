@@ -3,17 +3,11 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Class hubs | SailorPath",
-  description: "X-15 and Optimist class hubs on SailorPath.",
+  description: "Explore sailing class context and published records on SailorPath.",
   alternates: { canonical: "/classes" },
 };
 
 const hubs = [
-  {
-    href: "/classes/x15",
-    name: "X-15",
-    status: "Beta",
-    note: "Worlds and Asian Championship context, with class history and no SailorPath ranking.",
-  },
   {
     href: "/classes/optimist",
     name: "Optimist",
@@ -33,8 +27,8 @@ export default function ClassesIndexPage() {
           Classes on SailorPath
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-soft-aqua sm:text-lg">
-          Two class pages so far. Each one explains the class and links out to
-          the records that already exist. They do not replace results or rankings.
+          Explore the class-specific results and standings currently available on
+          SailorPath. Class hubs complement, but do not replace, scorecards or rankings.
         </p>
       </header>
 
