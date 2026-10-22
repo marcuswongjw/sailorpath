@@ -307,7 +307,7 @@ export function AdminOverviewPanel({
                   <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
                     {events.data.demographics.sailorsTotal.toLocaleString()}
                   </p>
-                  <p className="mt-0.5 text-[10px] font-medium text-emerald-600">Profiles with at least one regatta entry</p>
+                  <p className="mt-0.5 text-[10px] font-medium text-emerald-600">All sailor profiles</p>
                 </div>
                 <div className="rounded-lg bg-slate-50 p-3">
                   <p className="text-xs font-medium text-slate-500">Nationalities</p>
