@@ -115,6 +115,30 @@ function crewSummary(result: PublicRegattaResult): string | null {
     .join(" / ");
 }
 
+const CJK_REGEX = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
+
+function secondaryEntryLabel(result: PublicRegattaResult): { text: string; lang?: string } | null {
+  if (result.entryType === "crew" || (result.participants && result.participants.length > 1)) {
+    return null;
+  }
+  const raw = (result.entryLabel || result.participants?.[0]?.sourceName || "").trim();
+  if (!raw) return null;
+
+  const primary = (result.sailorName || "").trim().toLowerCase();
+  if (raw.toLowerCase() === primary) return null;
+
+  const isCjk = CJK_REGEX.test(raw);
+  if (isCjk) {
+    return { text: raw, lang: "ja" };
+  }
+
+  const cleanRaw = raw.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  const cleanPrimary = primary.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  if (cleanRaw && cleanRaw === cleanPrimary) return null;
+
+  return { text: raw };
+}
+
 function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
   if (races.length === 0) return null;
   return (
@@ -223,6 +247,7 @@ export function PublicRegattaResults({
         const dns = Boolean(result.isDns) && !overseas;
         const races = result.raceResults.slice().sort((a, b) => a.raceNumber - b.raceNumber);
         const crew = crewSummary(result);
+        const secondary = secondaryEntryLabel(result);
         return (
           <article
             key={`${result.sailorId}-${result.regattaId}`}
@@ -240,9 +265,17 @@ export function PublicRegattaResults({
                     <Link
                       href={`/sailors/${result.handle}`}
                       prefetch
-                      className={`${colors.link} break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
+                      className={`${colors.link} inline-flex flex-col items-start break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
                     >
-                      {result.sailorName}
+                      <span>{result.sailorName}</span>
+                      {secondary && (
+                        <span
+                          lang={secondary.lang}
+                          className="text-[12px] font-normal leading-tight text-[var(--sp-charcoal)] opacity-75"
+                        >
+                          {secondary.text}
+                        </span>
+                      )}
                     </Link>
                     <ClaimProfileLinks result={result} />
                     {crew && (
@@ -350,6 +383,7 @@ export function PublicRegattaResults({
             const races = new Map(result.raceResults.map((race) => [race.raceNumber, race]));
             const podiumTint = podiumRowClass(result.rank);
             const crew = crewSummary(result);
+            const secondary = secondaryEntryLabel(result);
             return (
               <tr
                 key={`${result.sailorId}-${result.regattaId}`}
@@ -366,9 +400,17 @@ export function PublicRegattaResults({
                   <Link
                     href={`/sailors/${result.handle}`}
                     prefetch
-                    className={`${colors.link} font-bold text-[var(--sp-harbour-shadow)]`}
+                    className={`${colors.link} inline-flex flex-col items-start font-bold text-[var(--sp-harbour-shadow)]`}
                   >
-                    {result.sailorName}
+                    <span>{result.sailorName}</span>
+                    {secondary && (
+                      <span
+                        lang={secondary.lang}
+                        className="text-xs font-normal leading-tight text-[var(--sp-charcoal)] opacity-75"
+                      >
+                        {secondary.text}
+                      </span>
+                    )}
                   </Link>
                   <ClaimProfileLinks result={result} />
                   {crew && (

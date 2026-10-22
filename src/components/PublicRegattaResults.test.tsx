@@ -217,4 +217,56 @@ describe("PublicRegattaResults", () => {
     expect(html).toContain("Crew · Seth Low (helm) / Amos Tham (crew) · Sail SGP 29");
     expect((html.match(/Seth Low \/ Amos Tham/g) || []).length).toBeGreaterThan(0);
   });
+
+  it("renders primary English name with native Japanese Kanji as secondary subtext", () => {
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults
+        accent="orange"
+        totalFleetSize={81}
+        results={[
+          {
+            resultId: "res-jpn-1",
+            sailorId: "sailor-shoi",
+            regattaId: "regatta-all-japan",
+            rank: 1,
+            nettScore: 9,
+            totalScore: 14,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Shoi Fujita",
+            entryLabel: "藤田 翔伊",
+            sailNumber: "JPN 3407",
+            handle: "opti-jpn-shoi-fujita-3407",
+            raceResults: [],
+          },
+          {
+            resultId: "res-sgp-1",
+            sailorId: "sailor-ethan",
+            regattaId: "regatta-all-japan",
+            rank: 2,
+            nettScore: 12,
+            totalScore: 18,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Ethan Chia",
+            entryLabel: "ETHAN CHIA",
+            sailNumber: "SGP 111",
+            handle: "ethan-chia",
+            raceResults: [],
+          },
+        ]}
+      />
+    );
+
+    // English names rendered as primary text inside links
+    expect(html).toContain("Shoi Fujita");
+    expect(html).toContain("Ethan Chia");
+
+    // Kanji rendered with Japanese language attribute and subtle style
+    expect(html).toContain('lang="ja"');
+    expect(html).toContain("藤田 翔伊");
+
+    // Case-insensitive duplicate entry label is suppressed (not rendered as secondary text)
+    expect(html).not.toContain(">ETHAN CHIA<");
+  });
 });

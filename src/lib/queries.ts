@@ -626,11 +626,18 @@ async function loadResultsForRegatta(
             ...publicRow,
             profileClaimed: Boolean(parentId),
             sailorName:
-              r.entryLabel ||
-              (participantsByResult.get(r.resultId) || [])
-                .map((participant) => participant.sailorName || participant.sourceName)
-                .join(" / ") ||
-              r.sailorName,
+              (participantsByResult.get(r.resultId) || []).length > 1
+                ? (participantsByResult.get(r.resultId) || [])
+                    .map((participant) => participant.sailorName || participant.sourceName)
+                    .join(" / ")
+                : r.entryType === "crew"
+                ? r.entryLabel || r.sailorName || ""
+                : r.sailorName ||
+                  r.entryLabel ||
+                  (participantsByResult.get(r.resultId) || [])
+                    .map((participant) => participant.sailorName || participant.sourceName)
+                    .join(" / ") ||
+                  "",
             sailNumber: r.entrySailNumber || r.sailNumber,
             participants: participantsByResult.get(r.resultId) || [],
             gender: r.gender || r.sailorGender || null,
