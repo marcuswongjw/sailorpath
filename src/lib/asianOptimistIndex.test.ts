@@ -74,3 +74,11 @@ describe("SailorPath Asian and Oceania Optimist Index baseline", () => {
     });
   });
 });
+
+
+describe("confirmed Index profile destinations", () => {
+  it.each([["MAS:zahirismail", "muhammad-zahir-naiman-bin-ismail-ypp7h9q"], ["HKG:keiracaitlinhwang", "keira-hwang-65gxcij"], ["IND:rameezabhsk", "s-k-rameeza-bhanu-9609sfe"], ["AUS:williamharris", "william-harris-asians25"], ["AUS:balthazarroche", "balthazar-roche-asians25"], ["NZL:jeffreychenglindu", "jeffrey-chenglin-du-asians25"], ["NZL:zephyrlane", "zephyr-lane-asians25"], ["NZL:harrystrang", "harry-strang-asians25"], ["AUS:zacharytait", "zachary-tait-asians25"], ["AUS:hirojacobsen", "hiro-jacobsen-asians25"], ["NZL:hollyrobson", "holly-robson-asians25"], ["AUS:sijiadeng", "sijia-deng-asians25"], ["AUS:emeraldjacobsen", "emerald-jacobsen-asians25"], ["AUS:ethanwilkinson", "ethan-wilkinson-asians25"], ["AUS:kirrahowell", "kirra-howell-asians25"], ["AUS:emmatomkins", "emma-tomkins-asians25"]])("links %s to its existing profile", (identityKey, handle) => {
+    const entry = createAsianOptimistIndexBaseline({ includeOveraged: true }).find((row) => row.identityKey === identityKey);
+    expect(entry?.profileHref).toBe(`/${handle}`);
+  });
+});

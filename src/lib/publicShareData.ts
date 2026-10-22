@@ -13,10 +13,12 @@ import {
   groupedHubForSlug,
   hubHrefForClassSlug,
   savedEventHubForSlug,
+  withPublishedEventSlices,
 } from "@/lib/regattaEventGroups";
 import {
   getRegattaEvent,
   sliceMatchesRegattaSlug,
+  resolveEventSlices,
   type RegattaEventDef,
 } from "@/lib/regattaEvents";
 import {
@@ -44,15 +46,24 @@ export const resolveFleetResultSheet = cache(
   ): Promise<{ event: RegattaEventDef; sheet: ResultSheetShare } | null> => {
     const direct = getRegattaEvent(regattaSlug);
     let published: RegattaRecord[] = [];
-    if (!direct && getDatabaseUrlMeta()) {
+    if (getDatabaseUrlMeta()) {
       published = await getCachedPublicRegattas().catch(() => []);
     }
     const grouped = direct
       ? null
       : savedEventHubForSlug(regattaSlug, published) || groupedHubForSlug(regattaSlug, published);
-    const event = direct || grouped?.event || null;
+    const event = direct ? withPublishedEventSlices(direct, published) : grouped?.event || null;
     if (!event) return null;
-    const slice = event.slices.find((item) => item.key === fleet);
+    let slice = event.slices.find((item) => item.key === fleet);
+    // Old Class A/B hubs shared the classless Optimist URL. Preserve the
+    // sheet that URL previously selected while giving each fleet its own URL.
+    if (!slice && fleet === "optimist") {
+      const legacy = resolveEventSlices(event, published)
+        .filter((item) => ["optimist-class-a", "optimist-class-b"].includes(item.def.key) && item.regatta)
+        .sort((a, b) => ((b.regatta!.raceCount || 0) - (a.regatta!.raceCount || 0))
+          || b.regatta!.totalFleetSize - a.regatta!.totalFleetSize)[0];
+      slice = legacy?.def;
+    }
     if (!slice) return null;
 
     let top3: PodiumFinish[] = [];

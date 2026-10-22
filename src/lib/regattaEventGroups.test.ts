@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 import type { RegattaRecord } from "@/lib/ranking";
-import { defaultEventFleetKey, getSliceResultAvailability, resolveEventSlices } from "@/lib/regattaEvents";
+import { defaultEventFleetKey, getRegattaEvent, getSliceResultAvailability, resolveEventSlices } from "@/lib/regattaEvents";
 import {
   groupedHubForSlug,
   hubHrefForClassSlug,
   isWingfoilBoatClass,
   regattaGroupKey,
   savedEventHubForSlug,
+  withPublishedEventSlices,
 } from "./regattaEventGroups";
 
 function row(
@@ -20,6 +21,70 @@ function row(
     ...partial,
   };
 }
+
+describe("distinct official fleets and disciplines", () => {
+  it("adds saved classes missing from an older registered event", () => {
+    const event = getRegattaEvent("pulau-ujong-regatta-2026")!;
+    const sheets = ["29er", "Techno 293", "iQFOiL"].map((boatClass) => row({
+      slug: `pulau-ujong-2026-${boatClass.toLowerCase().replace(/ /g, "")}`,
+      name: `Pulau Ujong 2026 (${boatClass})`, date: "2026-02-21", boatClass,
+      division: "Open", raceCount: 8, eventSlug: event.slug,
+    }));
+    const enriched = withPublishedEventSlices(event, sheets);
+    expect(enriched.noticeOfRaceUrl).toBe(event.noticeOfRaceUrl);
+    for (const sheet of sheets) {
+      const hub = savedEventHubForSlug(sheet.slug, sheets)!;
+      expect(resolveEventSlices(hub.event, sheets).find((slice) => slice.def.key === hub.fleetKey)?.regatta?.id).toBe(sheet.id);
+    }
+  });
+
+  it("does not let the 29er slice claim a Techno 293 sheet", () => {
+    const event = getRegattaEvent("nsc-cup-2-2025")!;
+    const sheet = row({ slug: "nsc-cup-2-2025-techno-293", name: "NSC Cup 2 2025 (Techno 293)",
+      date: "2025-05-31", boatClass: "Techno 293", division: "Open", raceCount: 8, eventSlug: event.slug });
+    const slices = resolveEventSlices(event, [sheet]);
+    expect(slices.find((slice) => slice.def.key === "29er")?.regatta).toBeNull();
+    expect(slices.find((slice) => slice.def.key === "techno-293")?.regatta?.id).toBe(sheet.id);
+  });
+  it.each([true, false])("preserves both Class A and Class B (saved event: %s)", (saved) => {
+    const sheets = [
+      row({ slug: "east-japan-2026-class-a", name: "East Japan 2026 (Class A)", date: "2026-08-21", division: "Class A", raceCount: 7, totalFleetSize: 87 }),
+      row({ slug: "east-japan-2026-class-b", name: "East Japan 2026 (Class B)", date: "2026-08-21", division: "Class B", raceCount: 13, totalFleetSize: 22 }),
+    ].map((sheet) => ({ ...sheet, ...(saved ? { eventSlug: "east-japan-2026", eventName: "East Japan 2026" } : {}) }));
+    for (const [index, sheet] of sheets.entries()) {
+      const hub = saved ? savedEventHubForSlug(sheet.slug, sheets)! : groupedHubForSlug(sheet.slug, sheets)!;
+      expect(hub.event.slices.map((slice) => slice.key)).toEqual(["optimist-class-a", "optimist-class-b"]);
+      expect(hub.fleetKey).toBe(index === 0 ? "optimist-class-a" : "optimist-class-b");
+      const selected = resolveEventSlices(hub.event, sheets).find((slice) => slice.def.key === hub.fleetKey);
+      expect(selected?.regatta?.id).toBe(sheet.id);
+      expect(selected?.regatta?.totalFleetSize).toBe(sheet.totalFleetSize);
+      expect(selected?.regatta?.raceCount).toBe(sheet.raceCount);
+    }
+  });
+
+  it("keeps 29er, Windfoil and Windsurfing LT accessible beside dinghies", () => {
+    const sheets = [
+      ["optimist-gold", "Optimist", "Gold"], ["29er", "29er", "Open"],
+      ["windfoil", "WindFoil", "Open"], ["windsurfing-lt", "Windsurfing LT", "Open"],
+    ].map(([key, boatClass, division]) => row({ slug: `snsc-2024-${key}`, name: `SNSC 2024 (${boatClass})`,
+      date: "2024-08-31", boatClass, division, eventSlug: "snsc-2024", eventName: "SNSC 2024", raceCount: 5 }));
+    for (const sheet of sheets) {
+      const hub = savedEventHubForSlug(sheet.slug, sheets)!;
+      expect(resolveEventSlices(hub.event, sheets).find((slice) => slice.def.key === hub.fleetKey)?.regatta?.id).toBe(sheet.id);
+      expect(hubHrefForClassSlug(sheet.slug, sheets)).toBe(`/regattas/snsc-2024?fleet=${sheet.slug.slice("snsc-2024-".length)}`);
+    }
+  });
+
+  it("an exact sheet wins over a fuller same-class fallback", () => {
+    const sheets = [
+      row({ slug: "event-selected", name: "Selected", date: "2026-08-21", eventSlug: "event", raceCount: 7 }),
+      row({ slug: "event-other", name: "Other", date: "2026-08-21", eventSlug: "event", raceCount: 13 }),
+    ];
+    const event = { slug: "event", name: "Event", shortName: "Event", datesText: "", venue: "", organizer: "",
+      slices: [{ key: "optimist", label: "Optimist", series: "optimist" as const, slugIncludes: ["event-selected"] }] };
+    expect(resolveEventSlices(event, sheets)[0].regatta?.slug).toBe("event-selected");
+  });
+});
 
 describe("official Optimist development fleets", () => {
   it("keeps Newborn results discoverable beside the main Optimist fleet and ILCA classes", () => {
@@ -489,8 +554,8 @@ describe("groupedHubForSlug", () => {
         eventName: "Singapore National Sailing Championships 2026",
       }),
     ];
-    expect(savedEventHubForSlug("snsc-2026", published)).toBeNull();
-    expect(savedEventHubForSlug("snsc-2026-wingfoil", published)).toBeNull();
+    expect(savedEventHubForSlug("snsc-2026", published)?.event.slug).toBe("snsc-2026");
+    expect(savedEventHubForSlug("snsc-2026-wingfoil", published)?.fleetKey).toBe("wingfoil");
     expect(hubHrefForClassSlug("snsc-2026", published)).toBe("/regattas/snsc-2026");
   });
 });

@@ -34,6 +34,11 @@ export function groupSlug(key: string): string {
 
 type Fleet =
   | "gold"
+  | "class-a"
+  | "class-b"
+  | "29er"
+  | "windfoil"
+  | "windsurfing-lt"
   | "silver"
   | "main"
   | "intermediate"
@@ -95,10 +100,16 @@ function publicFleet(row: RegattaRecord): Fleet | null {
   if (isIlcaSeriesClass(boat, "ILCA 7")) return "ilca7";
   if (classKey === "wingfoil") return "wingfoil";
   if (classKey === "420") return "420";
+  if (classKey === "29er") return "29er";
   // Techno 293 contains "29". Classify it before the 29er exclusion.
   if (classKey === "techno293" || mentionsTechno(row)) return "techno293";
   if (classKey === "iqfoil") return "iqfoil";
-  if (classKey === "windsurfing" || mentionsWindsurfing(row)) return "windsurfing";
+  if (classKey === "windsurfing" || mentionsWindsurfing(row)) {
+    const compact = compactClass(boat);
+    if (compact.startsWith("windfoil")) return "windfoil";
+    if (/\blt\b/i.test(boat) || compact.endsWith("lt")) return "windsurfing-lt";
+    return "windsurfing";
+  }
   const lower = boat.toLowerCase();
   if (
     lower.includes("ilca") ||
@@ -111,6 +122,9 @@ function publicFleet(row: RegattaRecord): Fleet | null {
   const blob = `${row.division || ""} ${row.name} ${row.slug}`.toLowerCase();
   if (classKey === "optimist") {
     const division = String(row.division || "").trim().toLowerCase();
+    const classFleet = division.match(/^(?:optimist\s*)?class[\s_-]*([ab])$/)
+      || blob.match(/\bclass[\s_-]*([ab])\b/);
+    if (classFleet) return classFleet[1] === "a" ? "class-a" : "class-b";
     if (
       division === "main" || division === "intermediate" || division === "green" || division === "newborn" ||
       division === "boys" || division === "girls" ||
@@ -156,6 +170,19 @@ function formatDay(ymd: string): string {
 }
 
 function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
+  if (fleet === "class-a" || fleet === "class-b") {
+    const label = `Optimist Class ${fleet.slice(-1).toUpperCase()}`;
+    return { key: `optimist-${fleet}`, label, series: "optimist",
+      slugIncludes: [row.slug.toLowerCase()], prizeFleetName: label };
+  }
+  if (fleet === "29er") {
+    return { key: "29er", label: "29er", series: "29er",
+      slugIncludes: [row.slug.toLowerCase()], prizeFleetName: "29er" };
+  }
+  if (fleet === "windfoil") {
+    return { key: "windfoil", label: "Windfoil", series: "windsurfing",
+      slugIncludes: [row.slug.toLowerCase()], prizeFleetName: "Windfoil" };
+  }
   if (fleet === "420") {
     return {
       key: "420",
@@ -251,10 +278,10 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
       prizeFleetName: "iQFOiL",
     };
   }
-  if (fleet === "windsurfing") {
+  if (fleet === "windsurfing" || fleet === "windsurfing-lt") {
     const blob = classBlob(row).toLowerCase();
     const compact = compactClass(blob);
-    const isLt =
+    const isLt = fleet === "windsurfing-lt" ||
       /\blt\b/.test(blob) ||
       compact.includes("windsurfinglt") ||
       compact.includes("windsurflt");
@@ -278,6 +305,8 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
 const FLEET_ORDER: Fleet[] = [
   "gold",
   "silver",
+  "class-a",
+  "class-b",
   "main",
   "intermediate",
   "green",
@@ -292,9 +321,12 @@ const FLEET_ORDER: Fleet[] = [
   "ilca6",
   "ilca7",
   "420",
+  "29er",
   "wingfoil",
   "techno293",
   "iqfoil",
+  "windfoil",
+  "windsurfing-lt",
   "windsurfing",
 ];
 
@@ -308,7 +340,7 @@ export function groupedHubForSlug(
 ): { event: RegattaEventDef; fleetKey: string | null } | null {
   const buckets = new Map<string, RegattaRecord[]>();
   for (const row of regattas) {
-    if (findEventSliceForRegattaSlug(row.slug)) continue;
+    if (findEventSliceForRegattaSlug(row.slug) || (row.eventSlug && getRegattaEvent(row.eventSlug))) continue;
     if (!publicFleet(row)) continue;
     const key = regattaGroupKey(row);
     if (!key.split("|")[0] || key.startsWith("|")) continue;
@@ -376,6 +408,32 @@ function eventDatesText(rows: RegattaRecord[]): string {
   return start === end ? start : `${start} – ${end}`;
 }
 
+/** Preserve registered event copy while exposing every saved published class. */
+export function withPublishedEventSlices(event: RegattaEventDef, regattas: RegattaRecord[]): RegattaEventDef {
+  const linked = regattas.filter((row) => row.eventSlug &&
+    (getRegattaEvent(row.eventSlug)?.slug || row.eventSlug).toLowerCase() === event.slug.toLowerCase());
+  const additions = new Map<Fleet, RegattaRecord>();
+  for (const row of linked) {
+    const fleet = publicFleet(row);
+    if (!fleet || event.slices.some((slice) => slice.key === sliceFor(fleet, row).key)) continue;
+    const previous = additions.get(fleet);
+    additions.set(fleet, previous ? preferLinkedSheet(previous, row, event.slug) : row);
+  }
+  const slices = event.slices.map((slice) => {
+    if (!slice.staticId) return slice;
+    const canonical = linked.filter((row) => {
+      const fleet = publicFleet(row);
+      return fleet && sliceFor(fleet, row).key === slice.key && (row.raceCount || 0) > 0 && row.totalFleetSize > 0;
+    });
+    return canonical.length ? { ...slice, alternateSlugIncludes: [
+      ...(slice.alternateSlugIncludes || []), ...canonical.map((row) => [row.slug.toLowerCase()]),
+    ] } : slice;
+  });
+  if (!additions.size && slices.every((slice, index) => slice === event.slices[index])) return event;
+  return { ...event, slices: [...slices, ...FLEET_ORDER.filter((fleet) => additions.has(fleet))
+    .map((fleet) => sliceFor(fleet, additions.get(fleet)!))] };
+}
+
 /**
  * A saved weekend and its class sheets share one public page.
  * The page slug is the weekend slug, not a separate name-and-month slug.
@@ -391,7 +449,13 @@ export function savedEventHubForSlug(
     self?.eventSlug ||
     ""
   ).toLowerCase();
-  if (!eventSlug || getRegattaEvent(eventSlug)) return null;
+  if (!eventSlug) return null;
+  const registered = getRegattaEvent(eventSlug);
+  if (registered) {
+    const event = withPublishedEventSlices(registered, regattas);
+    const fleet = self && publicFleet(self);
+    return { event, fleetKey: fleet ? sliceFor(fleet, self!).key : null };
+  }
 
   const linked = regattas.filter(
     (row) =>

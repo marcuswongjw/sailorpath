@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
 import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
@@ -41,6 +41,8 @@ export default async function FleetResultsPage({
   const { regatta_slug, fleet } = await params;
   const resolved = await resolveFleetResultSheet(regatta_slug, fleet);
   if (!resolved) notFound();
+  const requestedPath = `/regattas/${regatta_slug}/results/${fleet}`;
+  if (resolved.sheet.canonicalPath !== requestedPath) permanentRedirect(resolved.sheet.canonicalPath);
   return (
     <>
       <JsonLd data={sportsEventJsonLd(resolved.sheet)} />

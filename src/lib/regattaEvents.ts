@@ -8,6 +8,7 @@ import {
   type Techno293Regatta,
 } from "@/lib/techno293";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
+import { sailingClassKeyOf } from "@/lib/classRegistry";
 
 /**
  * Event hub registry — pilot.
@@ -1226,12 +1227,24 @@ export function isRegattaLinkedToEventSlice(
     );
   }
 
+  if (["wingfoil", "techno293", "iqfoil", "windsurfing"].includes(slice.series)) {
+    const classKey = sailingClassKeyOf(boat);
+    if (classKey !== slice.series) return false;
+    if (slice.series === "windsurfing") {
+      const compact = boat.toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (slice.key === "windfoil") return compact.startsWith("windfoil");
+      if (slice.key === "windsurfing-lt") return compact.endsWith("lt");
+      return !compact.startsWith("windfoil") && !compact.endsWith("lt");
+    }
+    return true;
+  }
+
   if (slice.series === "420") {
     return ["420", "int420", "international420"].includes(boat.toLowerCase().replace(/[^a-z0-9]/g, ""));
   }
 
   if (slice.series === "29er") {
-    return slug.includes("29er") || name.includes("29er") || boat.includes("29");
+    return sailingClassKeyOf(boat) === "29er" || (!boat && (slug.includes("29er") || name.includes("29er")));
   }
 
   return false;
@@ -1283,7 +1296,7 @@ export function resolveEventSlices(
     if (!def.slugIncludes?.length && !def.alternateSlugIncludes?.length) {
       return { def, regatta: null };
     }
-    const matches = regattas.filter((r) => {
+    const candidates = regattas.filter((r) => {
       if (claimed.has(r.id)) return false;
       // A saved link takes precedence over stale naming tokens after a class move.
       if (r.eventSlug && !isRegattaAssignedToEvent(event, r)) return false;
@@ -1291,6 +1304,10 @@ export function resolveEventSlices(
       if (isRegattaLinkedToEventSlice(event, def, r)) return true;
       return false;
     });
+    // Explicit fleet slug matches take precedence over broad class inference.
+    // Otherwise Class B (more races) can replace an explicitly matched Class A.
+    const exact = candidates.filter((row) => sliceMatchesRegattaSlug(def, row.slug));
+    const matches = exact.length ? exact : candidates;
     const regatta = matches.reduce<RegattaRecord | null>(
       (best, row) => (best ? fullerResultSheet(best, row) : row),
       null

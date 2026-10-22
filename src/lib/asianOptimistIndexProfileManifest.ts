@@ -279,7 +279,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2010
   },
   "MAS:zahirismail": {
-    "handle": "asian-mas-zahir-isma-a18d7d",
+    "handle": "muhammad-zahir-naiman-bin-ismail-ypp7h9q",
     "birthYear": 2011
   },
   "OMA:hadeelalmushaifri": {
@@ -302,7 +302,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2012
   },
   "HKG:keiracaitlinhwang": {
-    "handle": "asian-hkg-keira-cait-c8ae9f",
+    "handle": "keira-hwang-65gxcij",
     "birthYear": 2011
   },
   "HKG:luciencohenaddad": {
@@ -447,7 +447,7 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2014
   },
   "IND:rameezabhsk": {
-    "handle": "asian-ind-rameeza-bh-37bc8f",
+    "handle": "s-k-rameeza-bhanu-9609sfe",
     "birthYear": 2011
   },
   "KOR:siyeonan": {
@@ -488,48 +488,48 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "asian-sri-ruwaneka-r-03d984"
   },
   "AUS:williamharris": {
-    "handle": "asian-aus-william-ha-3aca1e",
+    "handle": "william-harris-asians25",
     "birthYear": 2012
   },
   "AUS:balthazarroche": {
-    "handle": "asian-aus-balthazar--97a545"
+    "handle": "balthazar-roche-asians25"
   },
   "NZL:jeffreychenglindu": {
-    "handle": "asian-nzl-jeffrey-ch-d20610"
+    "handle": "jeffrey-chenglin-du-asians25"
   },
   "NZL:zephyrlane": {
-    "handle": "asian-nzl-zephyr-lan-01f5ab"
+    "handle": "zephyr-lane-asians25"
   },
   "NZL:harrystrang": {
-    "handle": "asian-nzl-harry-stra-0db9d9"
+    "handle": "harry-strang-asians25"
   },
   "AUS:zacharytait": {
-    "handle": "asian-aus-zachary-ta-8aabec"
+    "handle": "zachary-tait-asians25"
   },
   "AUS:hirojacobsen": {
-    "handle": "asian-aus-hiro-jacob-d94184"
+    "handle": "hiro-jacobsen-asians25"
   },
   "NZL:hollyrobson": {
-    "handle": "asian-nzl-holly-robs-2c40da"
+    "handle": "holly-robson-asians25"
   },
   "AUS:sijiadeng": {
-    "handle": "asian-aus-sijia-deng-562079"
+    "handle": "sijia-deng-asians25"
   },
   "AUS:emeraldjacobsen": {
-    "handle": "asian-aus-emerald-ja-ad730f"
+    "handle": "emerald-jacobsen-asians25"
   },
   "AUS:rubensteel": {
     "handle": "ruben-steel-0ajhhtd",
     "birthYear": 2011
   },
   "AUS:ethanwilkinson": {
-    "handle": "asian-aus-ethan-wilk-023c23"
+    "handle": "ethan-wilkinson-asians25"
   },
   "AUS:kirrahowell": {
-    "handle": "asian-aus-kirra-howe-b60df5"
+    "handle": "kirra-howell-asians25"
   },
   "AUS:emmatomkins": {
-    "handle": "asian-aus-emma-tomki-f4c72d"
+    "handle": "emma-tomkins-asians25"
   },
   "AUS:walterheeley": {
     "handle": "walter-heeley-worlds26-c34abc"

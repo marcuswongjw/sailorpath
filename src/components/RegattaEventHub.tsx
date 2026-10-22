@@ -1,3 +1,4 @@
+import { withPublishedEventSlices } from "@/lib/regattaEventGroups";
 import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 import Link from "next/link";
@@ -336,10 +337,12 @@ async function DbSlicePanel({
  * Public event hub: one page per physical regatta with a tab per
  * class/division slice (pilot: SNSC 2026).
  */
-export async function RegattaEventHub({ event, activeFleet, calendarView }: Props) {
+export async function RegattaEventHub({ event: sourceEvent, activeFleet, calendarView }: Props) {
+  let event = sourceEvent;
   let slices: ResolvedEventSlice[];
   try {
     const allRegattas = await getCachedPublicRegattas();
+    event = withPublishedEventSlices(event, allRegattas);
     slices = resolveEventSlices(event, allRegattas);
   } catch (error) {
     const message =

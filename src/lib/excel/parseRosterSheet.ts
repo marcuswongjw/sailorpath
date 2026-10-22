@@ -1,4 +1,4 @@
-import { excelDateToIso } from "@/lib/normalize";
+import { excelDateToIso, normalizeDob } from "@/lib/normalize";
 import { pickCol } from "@/lib/excel/pickCol";
 import { normalizeGender } from "@/lib/gender";
 
@@ -73,7 +73,7 @@ export function parseRosterRows(
       const dropDate = excelDateToIso(
         pickCol(row, ["optimist drop", "dropdate", "drop date", "drop"])
       );
-      const dob = excelDateToIso(
+      const dob = normalizeDob(
         pickCol(row, ["born", "dob", "date of birth", "birthdate", "birth"])
       );
 
