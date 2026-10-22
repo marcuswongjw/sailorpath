@@ -1,3 +1,4 @@
+import { missingFallbackSheets } from "@/lib/resultSheetIdentity";
 import { unstable_cache } from "next/cache";
 import {
   CACHE_TAG_FLEET_RANKINGS,
@@ -393,21 +394,7 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
     const mapped: RegattaRecord[] = rows.map((row) =>
       mapRegattaRow(row.regatta, { slug: row.eventSlug, name: row.eventName })
     );
-    for (const staticReg of ILCA6_STATIC_REGATTAS) {
-      const s = staticReg.slug.toLowerCase();
-      const alreadyPresent = mapped.some((m) => {
-        const ms = m.slug.toLowerCase();
-        if (ms === s) return true;
-        if (s.includes("cincapura") && ms.includes("cincapura") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
-        if (s.includes("pesta") && ms.includes("pesta") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
-        if (s.includes("snsc") && ms.includes("snsc") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
-        if (s.includes("csc") && ms.includes("csc") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
-        return false;
-      });
-      if (!alreadyPresent) {
-        mapped.push(staticReg);
-      }
-    }
+    mapped.push(...missingFallbackSheets(mapped, ILCA6_STATIC_REGATTAS));
     mapped.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     return mapped;
   });
@@ -1043,6 +1030,7 @@ async function computeIlcaRankingsBoard(
           .select({
             id: regattas.id,
             name: regattas.name,
+            slug: regattas.slug,
             date: regattas.date,
             totalFleetSize: regattas.totalFleetSize,
             boatClass: regattas.boatClass,
@@ -1087,6 +1075,7 @@ async function computeIlcaRankingsBoard(
         .map((r) => ({
           id: r.id,
           name: r.name,
+          slug: r.slug,
           date: r.date,
           totalFleetSize: r.totalFleetSize ?? 50,
           boatClass: r.boatClass,
@@ -1097,19 +1086,18 @@ async function computeIlcaRankingsBoard(
 
       if (boatClass === "ILCA 6") {
         const staticData = getStaticIlca6RankingsData();
-        for (const r of staticData.regattas) {
-          if (!ilcaRegattas.some((ir) => ir.id === r.id || ir.name.toLowerCase() === r.name.toLowerCase())) {
-            ilcaRegattas.push({
-              id: r.id,
-              name: r.name,
-              date: r.date,
-              totalFleetSize: r.totalFleetSize ?? 50,
-              boatClass: r.boatClass ?? "ILCA 6",
-              countsForRanking: r.countsForRanking !== false,
-              raceCount: r.raceCount ?? null,
-              division: r.division || "Open",
-            });
-          }
+        for (const r of missingFallbackSheets(ilcaRegattas, staticData.regattas)) {
+          ilcaRegattas.push({
+            id: r.id,
+            name: r.name,
+            slug: r.slug,
+            date: r.date,
+            totalFleetSize: r.totalFleetSize ?? 50,
+            boatClass: r.boatClass ?? "ILCA 6",
+            countsForRanking: r.countsForRanking !== false,
+            raceCount: r.raceCount ?? null,
+            division: r.division || "Open",
+          });
         }
         for (const s of staticData.sailors) {
           if (!ilcaSailors.some((is) => is.id === s.id || is.name.toLowerCase() === s.name.toLowerCase())) {
@@ -1130,19 +1118,18 @@ async function computeIlcaRankingsBoard(
         }
       } else if (boatClass === "ILCA 7") {
         const staticData = getStaticIlca7RankingsData();
-        for (const r of staticData.regattas) {
-          if (!ilcaRegattas.some((ir) => ir.id === r.id || ir.name.toLowerCase() === r.name.toLowerCase())) {
-            ilcaRegattas.push({
-              id: r.id,
-              name: r.name,
-              date: r.date,
-              totalFleetSize: r.totalFleetSize ?? 50,
-              boatClass: r.boatClass ?? "ILCA 7",
-              countsForRanking: r.countsForRanking !== false,
-              raceCount: r.raceCount ?? null,
-              division: r.division || "Open",
-            });
-          }
+        for (const r of missingFallbackSheets(ilcaRegattas, staticData.regattas)) {
+          ilcaRegattas.push({
+            id: r.id,
+            name: r.name,
+            slug: r.slug,
+            date: r.date,
+            totalFleetSize: r.totalFleetSize ?? 50,
+            boatClass: r.boatClass ?? "ILCA 7",
+            countsForRanking: r.countsForRanking !== false,
+            raceCount: r.raceCount ?? null,
+            division: r.division || "Open",
+          });
         }
         for (const s of staticData.sailors) {
           if (!ilcaSailors.some((is) => is.id === s.id || is.name.toLowerCase() === s.name.toLowerCase())) {
@@ -1162,6 +1149,7 @@ async function computeIlcaRankingsBoard(
           }
         }
       }
+
 
       const window = ilcaRankingRegattas(ilcaRegattas, boatClass, asOf);
       if (!window.length) return { ranked: [], asOf };
@@ -1197,7 +1185,7 @@ async function computeIlcaRankingsBoard(
       if (boatClass === "ILCA 6") {
         const staticData = getStaticIlca6RankingsData();
         for (const sr of staticData.results) {
-          if (!ilcaResults.some((r) => r.regattaId === sr.regattaId && r.sailorId === sr.sailorId)) {
+          if (scoringIds.includes(sr.regattaId) && !ilcaResults.some((r) => r.regattaId === sr.regattaId && r.sailorId === sr.sailorId)) {
             ilcaResults.push({
               sailorId: sr.sailorId,
               regattaId: sr.regattaId,
@@ -1210,7 +1198,7 @@ async function computeIlcaRankingsBoard(
       } else if (boatClass === "ILCA 7") {
         const staticData = getStaticIlca7RankingsData();
         for (const sr of staticData.results) {
-          if (!ilcaResults.some((r) => r.regattaId === sr.regattaId && r.sailorId === sr.sailorId)) {
+          if (scoringIds.includes(sr.regattaId) && !ilcaResults.some((r) => r.regattaId === sr.regattaId && r.sailorId === sr.sailorId)) {
             ilcaResults.push({
               sailorId: sr.sailorId,
               regattaId: sr.regattaId,
