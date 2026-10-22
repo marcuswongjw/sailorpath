@@ -1,3 +1,5 @@
+import { PROFILE_ILCA_CLASSES, profileIlcaClassOf, profileIlcaLabel } from "@/lib/profileClasses";
+import type { SeriesStandingProps } from "@/components/sailor-profile/types";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -138,6 +140,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
   let results;
   let seriesStanding;
   let ilcaStanding;
+  const ilcaStandings: Partial<Record<typeof PROFILE_ILCA_CLASSES[number], SeriesStandingProps | null>> = {};
   let observations;
   let equipmentHistory;
   let errorMsg: string | null = null;
@@ -235,14 +238,14 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
         );
       }
 
-      const hasIlcaResults = (results || []).some((result) =>
-        String(result.boatClass || "").toLowerCase().includes("ilca")
-      );
-      if (mayHaveIlca || hasIlcaResults) {
-        ilcaStanding = await getSailorIlcaStanding(sailor.id, "ILCA 4").catch(
-          () => null
-        );
+      const presentIlcaClasses = new Set((results || []).map((result) => profileIlcaClassOf(result.boatClass)).filter(Boolean));
+      if (mayHaveIlca && !presentIlcaClasses.size) presentIlcaClasses.add("ilca4");
+      // Load one board at a time to bound pressure on the shared database pool.
+      for (const key of PROFILE_ILCA_CLASSES) {
+        if (!presentIlcaClasses.has(key)) continue;
+        ilcaStandings[key] = await getSailorIlcaStanding(sailor.id, profileIlcaLabel(key)).catch(() => null);
       }
+      ilcaStanding = ilcaStandings.ilca4;
 
       followControl = {
         sailorId: sailor.id,
@@ -343,6 +346,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       initialEquipment={equipment}
       initialSeriesStanding={seriesStanding}
       initialIlcaStanding={ilcaStanding}
+      initialIlcaStandings={ilcaStandings}
       initialObservations={observations || []}
       initialEquipmentHistory={equipmentHistory || []}
       canSeePrivate={canSeePrivate}

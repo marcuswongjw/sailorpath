@@ -1,5 +1,6 @@
 "use client";
 
+import { PROFILE_ILCA_CLASSES, isProfileIlcaClass, profileIlcaLabel, type ProfileIlcaClass } from "@/lib/profileClasses";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { geographySelectOptions, normalizeGeography } from "@/lib/countries";
@@ -56,6 +57,7 @@ export function useSailorProfileState({
   initialEquipment,
   initialSeriesStanding = null,
   initialIlcaStanding = null,
+  initialIlcaStandings,
   initialObservations = [],
   canSeePrivate = false,
   canClaim = false,
@@ -675,11 +677,13 @@ export function useSailorProfileState({
     }
   };
 
-  /** Split raw results by boat class (before gold filtering). ILCA 6 folds into ILCA 4. */
+  /** Split raw results by boat class (before gold filtering). Each ILCA rig has its own bucket. */
   const classBuckets = useMemo(() => {
     const all = results as ProfileResult[];
     const optimist: ProfileResult[] = [];
     const ilca4: ProfileResult[] = [];
+    const ilca6: ProfileResult[] = [];
+    const ilca7: ProfileResult[] = [];
     const boards: Record<BoardDiscipline, ProfileResult[]> = {
       techno293: [],
       wingfoil: [],
@@ -694,14 +698,18 @@ export function useSailorProfileState({
       }
       const g = profileBoatClassGroup(r.boatClass);
       if (g === "ilca4") ilca4.push(r);
+      else if (g === "ilca6") ilca6.push(r);
+      else if (g === "ilca7") ilca7.push(r);
       else if (g === "optimist") optimist.push(r);
     }
     const byDate = (a: ProfileResult, b: ProfileResult) =>
       String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""));
     optimist.sort(byDate);
     ilca4.sort(byDate);
+    ilca6.sort(byDate);
+    ilca7.sort(byDate);
     for (const list of Object.values(boards)) list.sort(byDate);
-    return { optimist, ilca4, boards };
+    return { optimist, ilca4, ilca6, ilca7, boards };
   }, [results]);
 
   const leftOptimistYear = optimistLeftYear({
@@ -777,8 +785,9 @@ export function useSailorProfileState({
     analytics.mode === "established_gold" && optimistScope === "all"
       ? optimistResultsAll
       : optimistResultsGold;
-  const ilca4Results = classBuckets.ilca4;
-  const hasIlcaResults = ilca4Results.length > 0;
+  const selectedIlcaClass = isProfileIlcaClass(resultsTab) ? resultsTab : null;
+  const activeIlcaResults = classBuckets[selectedIlcaClass || "ilca4"];
+  const hasIlcaResults = PROFILE_ILCA_CLASSES.some((key) => classBuckets[key].length > 0);
   const hasOptimistResults =
     optimistResultsAll.length > 0 || optimistResultsGold.length > 0;
   const onBoardClass = isBoardDiscipline(resultsTab);
@@ -807,15 +816,11 @@ export function useSailorProfileState({
         count: optimistResultsAll.length,
       });
     }
-    if (ilca4Results.length > 0) {
-      choices.push({
-        id: "ilca4",
-        label: "ILCA 4",
-        count: ilca4Results.length,
-      });
+    for (const key of PROFILE_ILCA_CLASSES) {
+      if (classBuckets[key].length) choices.push({ id: key, label: profileIlcaLabel(key), count: classBuckets[key].length });
     }
     return choices;
-  }, [classBuckets.boards, optimistResultsAll.length, ilca4Results]);
+  }, [classBuckets, optimistResultsAll.length]);
   const hasBoardResults = classChoices.some((choice) =>
     isBoardDiscipline(choice.id)
   );
@@ -823,21 +828,21 @@ export function useSailorProfileState({
   const showOptimistScopeFilter =
     !onBoardClass &&
     analytics.mode === "established_gold" &&
-    resultsTab !== "ilca4" &&
+    !selectedIlcaClass &&
     resultsTab !== "journey" &&
     !(hasIlcaResults && optimistResultsAll.length === 0);
-  const ilca4Tenure = useMemo(() => {
-    if (!ilca4Results.length) return null;
-    const first = [...ilca4Results]
+  const ilcaTenure = useMemo(() => {
+    if (!activeIlcaResults.length) return null;
+    const first = [...activeIlcaResults]
       .map((r) => String(r.regattaDate || "").slice(0, 10))
       .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
       .sort()[0];
     return tenureFromFirstDate(first);
-  }, [ilca4Results]);
+  }, [activeIlcaResults]);
 
   const ilcaKeyStats = useMemo(
-    () => buildIlcaKeyStats(ilca4Results as ProfileResult[]),
-    [ilca4Results]
+    () => buildIlcaKeyStats(activeIlcaResults as ProfileResult[]),
+    [activeIlcaResults]
   );
 
   /**
@@ -886,17 +891,9 @@ export function useSailorProfileState({
   }, [optimistResults, initialSeriesStanding]);
 
   /** Active class list for the results panel (tabs when more than one class) */
-  const activeResultsList = onBoardClass
+  const activeResultsList = resultsTab === "journey" ? [] : onBoardClass
     ? activeBoardResults
-    : dualClass && resultsTab === "ilca4"
-      ? ilca4Results
-      : dualClass && resultsTab === "journey"
-        ? []
-        : dualClass
-          ? optimistResultsWithSeriesDns
-          : hasIlcaResults && classBuckets.optimist.length === 0
-            ? ilca4Results
-            : optimistResultsWithSeriesDns;
+    : selectedIlcaClass ? activeIlcaResults : optimistResultsWithSeriesDns;
   const visibleResults = showAllResults
     ? activeResultsList
     : activeResultsList.slice(0, 8);
@@ -906,11 +903,7 @@ export function useSailorProfileState({
       (rs) => rs.isDNS && rs.score > 0 && rs.regattaName && rs.regattaName !== "—"
     ).length ?? 0;
   /** Showing ILCA columns (points + rank) vs Optimist (place + nett) */
-  const primaryIsIlca =
-    !onBoardClass &&
-    ((dualClass && resultsTab === "ilca4") ||
-      (!dualClass && hasIlcaResults && classBuckets.optimist.length === 0) ||
-      (dualClass && preferIlcaFirst && resultsTab === "ilca4"));
+  const primaryIsIlca = Boolean(selectedIlcaClass);
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const sailIlca4 = displaySailor.sailNumberIlca4
@@ -940,11 +933,7 @@ export function useSailorProfileState({
    * - dual-class user is on the ILCA 4 tab, or
    * - ILCA-first after leaving Optimist
    */
-  const useIlcaStats =
-    !onBoardClass &&
-    ((hasIlcaResults && classBuckets.optimist.length === 0) ||
-      (hasIlcaResults && dualClass && resultsTab === "ilca4") ||
-      (preferIlcaFirst && hasIlcaResults && !hasOptimistResults));
+  const useIlcaStats = Boolean(selectedIlcaClass);
 
   const ilcaStatCells =
     leftOptimistYear != null
@@ -1071,7 +1060,7 @@ export function useSailorProfileState({
           ];
 
   const keyStatsTitle = useIlcaStats
-    ? "Key stats (ILCA 4)"
+    ? `Key stats (${selectedIlcaClass ? profileIlcaLabel(selectedIlcaClass) : "ILCA"})`
     : "Key stats (Optimist)";
   const medalTallyTitle = "Medal tally (Optimist)";
 
@@ -1085,31 +1074,16 @@ export function useSailorProfileState({
    * The selected class owns the rank. An ILCA view with no ILCA standing
    * stays empty instead of borrowing the Optimist series place.
    */
-  const standingLooksIlca = Boolean(
-    initialIlcaStanding &&
-      (String(initialIlcaStanding.boatClass || "")
-        .toLowerCase()
-        .includes("ilca") ||
-        String(initialIlcaStanding.fleet || "")
-          .toLowerCase()
-          .includes("open"))
-  );
-  const standingIsIlca = Boolean(useIlcaStats && standingLooksIlca);
-  const activeStanding = onBoardClass
-    ? null
-    : useIlcaStats
-      ? standingIsIlca
-        ? initialIlcaStanding ?? null
-        : null
-      : initialSeriesStanding ?? null;
-  const activeBoatClass: "optimist" | "ilca4" = useIlcaStats
-    ? "ilca4"
-    : "optimist";
+  const ilcaStanding = selectedIlcaClass
+    ? initialIlcaStandings?.[selectedIlcaClass] ??
+      (initialIlcaStanding && (initialIlcaStanding.boatClass ? profileBoatClassGroup(initialIlcaStanding.boatClass) === selectedIlcaClass : selectedIlcaClass === "ilca4") ? initialIlcaStanding : null)
+    : null;
+  const standingIsIlca = Boolean(selectedIlcaClass && ilcaStanding);
+  const activeStanding = onBoardClass ? null : selectedIlcaClass ? ilcaStanding : initialSeriesStanding ?? null;
+  const activeBoatClass: "optimist" | ProfileIlcaClass = selectedIlcaClass || "optimist";
   const selectedClassLabel = onBoardClass
     ? boardSummary?.label || disciplineLabel(resultsTab)
-    : activeBoatClass === "ilca4"
-      ? "ILCA 4"
-      : "Optimist";
+    : selectedIlcaClass ? profileIlcaLabel(selectedIlcaClass) : "Optimist";
   const visibleAwards = useMemo(() => {
     if (!onBoardClass) return awards;
     return awards.filter(
@@ -1144,11 +1118,11 @@ export function useSailorProfileState({
     [displaySailor, classBuckets.optimist, trendCountry]
   );
   const ilcaTrendPoints = useMemo(
-    () => buildIlcaPositionTrend(resultsInCountry(ilca4Results as ProfileResult[], trendCountry)),
-    [ilca4Results, trendCountry]
+    () => buildIlcaPositionTrend(resultsInCountry(activeIlcaResults as ProfileResult[], trendCountry)),
+    [activeIlcaResults, trendCountry]
   );
   const showIlcaTrend =
-    !onBoardClass && (primaryIsIlca || (dualClass && resultsTab === "ilca4"));
+    Boolean(selectedIlcaClass);
   const boardTrendPoints = useMemo(
     () => (onBoardClass ? buildIlcaPositionTrend(resultsInCountry(activeBoardResults, trendCountry)) : []),
     [onBoardClass, activeBoardResults, trendCountry]
@@ -1171,7 +1145,7 @@ export function useSailorProfileState({
   const trendCaption = ` · ${trendCountryName} regattas only` + (onBoardClass
     ? ` · last 10 ${selectedClassLabel} events`
     : showIlcaTrend
-      ? " · last 10 ILCA 4 regattas"
+      ? ` · last 10 ${selectedClassLabel} regattas`
       : countryOptimistAnalytics.mode === "established_gold"
         ? " · last 10 gold events"
         : " · last 10 regattas (incl. DNS)");
@@ -1180,7 +1154,7 @@ export function useSailorProfileState({
   const displayJourney = useMemo(() => {
     const allResults = [
       ...(classBuckets.optimist as ProfileResult[]),
-      ...(classBuckets.ilca4 as ProfileResult[]),
+      ...PROFILE_ILCA_CLASSES.flatMap((key) => classBuckets[key]),
     ];
     const system = buildSystemJourneyMilestones(
       {
@@ -1198,8 +1172,7 @@ export function useSailorProfileState({
     return mergeJourneyDisplay(journey, system);
   }, [
     displaySailor,
-    classBuckets.optimist,
-    classBuckets.ilca4,
+    classBuckets,
     journey,
     leftOptimistYear,
   ]);
@@ -1305,12 +1278,12 @@ export function useSailorProfileState({
     showFullDob,
     fullDobLabel,
     optimistResults,
-    ilca4Results,
+    activeIlcaResults,
     hasIlcaResults,
     hasOptimistResults,
     dualClass,
     showOptimistScopeFilter,
-    ilca4Tenure,
+    ilcaTenure,
     ilcaKeyStats,
     optimistResultsWithSeriesDns,
     activeResultsList,

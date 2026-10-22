@@ -1,8 +1,10 @@
 "use client";
 
+import type { ProfileIlcaClass } from "@/lib/profileClasses";
+import { isProfileIlcaClass } from "@/lib/profileClasses";
 import type { BoardDiscipline } from "@/lib/boardProfile";
 
-export type ProfileClassTab = "optimist" | "ilca4" | BoardDiscipline | "journey";
+export type ProfileClassTab = "optimist" | ProfileIlcaClass | BoardDiscipline | "journey";
 export type ProfileSectionTab = "overview" | "results" | "awards" | "journey" | "equipment";
 
 type Props = {
@@ -39,7 +41,7 @@ export function ProfileClassNavigation({
   onSectionTabChange,
 }: Props) {
   const resultsCount =
-    resultsCountProp ?? (activeTab === "ilca4" ? ilcaCount : optimistCount);
+    resultsCountProp ?? (isProfileIlcaClass(activeTab) ? ilcaCount : optimistCount);
   const milestonesVisible = showMilestones ?? journeyCount > 0;
 
   return (

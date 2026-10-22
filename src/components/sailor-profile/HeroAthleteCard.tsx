@@ -1,5 +1,7 @@
 "use client";
 
+import { isProfileIlcaClass, profileIlcaClassOf, profileIlcaLabel } from "@/lib/profileClasses";
+import type { ProfileBoatClass } from "./rankBasis";
 import { useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
@@ -34,8 +36,8 @@ export interface HeroAthleteCardProps {
   activeStanding: SeriesStandingProps | null;
   standingIsIlca: boolean;
   dualClass?: boolean;
-  selectedBoatClass?: "optimist" | "ilca4";
-  onSelectBoatClass?: (cls: "optimist" | "ilca4") => void;
+  selectedBoatClass?: ProfileBoatClass;
+  onSelectBoatClass?: (cls: ProfileBoatClass) => void;
   /**
    * Classes that actually have results. When set, this replaces the
    * Optimist / ILCA selector, including board disciplines.
@@ -167,14 +169,16 @@ export function HeroAthleteCard({
   const [copied, setCopied] = useState(false);
   const [basisOpen, setBasisOpen] = useState(false);
 
-  const activeBoatClass: "optimist" | "ilca4" =
-    selectedBoatClass === "ilca4" || standingIsIlca ? "ilca4" : "optimist";
+  const activeBoatClass: ProfileBoatClass = selectedBoatClass ||
+    (standingIsIlca ? profileIlcaClassOf(activeStanding?.boatClass) || "ilca4" : "optimist");
+  const activeIsIlca = isProfileIlcaClass(activeBoatClass);
+  const activeClassLabel = activeIsIlca ? profileIlcaLabel(activeBoatClass) : "Optimist";
   const bioParagraph = String(displaySailor.bio || "").trim();
   const resolvedOptimistCount =
     optimistCount ??
     (activeBoatClass === "optimist" ? totalRegattasCount : 0);
   const resolvedIlcaCount =
-    ilcaCount ?? (activeBoatClass === "ilca4" ? totalRegattasCount : 0);
+    ilcaCount ?? (activeIsIlca ? totalRegattasCount : 0);
   const rank = describeProfileRank({
     standing: activeStanding,
     boatClass: activeBoatClass,
@@ -196,15 +200,15 @@ export function HeroAthleteCard({
   const selectedChoice =
     displayChoices.find((choice) =>
       choice.id === (classChoices?.length ? selectedClassId : activeBoatClass)
-    ) ?? displayChoices[0];
+    );
   const showClassSelector = classChoices?.length
     ? classChoices.length > 1 && Boolean(onSelectClass)
     : Boolean(dualClass && onSelectBoatClass);
   const fallbackCount =
-    activeBoatClass === "ilca4" ? resolvedIlcaCount : resolvedOptimistCount;
+    activeIsIlca ? resolvedIlcaCount : resolvedOptimistCount;
   const singleClass: [string, string, number] = [
     selectedChoice?.id ?? activeBoatClass,
-    selectedChoice?.label ?? (activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"),
+    selectedChoice?.label ?? (activeClassLabel),
     selectedChoice?.count ?? fallbackCount,
   ];
 
@@ -216,7 +220,7 @@ export function HeroAthleteCard({
     medals && medals.silver > 0 ? `${medals.silver} silver` : null,
     medals && medals.bronze > 0 ? `${medals.bronze} bronze` : null,
   ].filter((part): part is string => Boolean(part));
-  const classRegattaCount = fallbackCount;
+  const classRegattaCount = selectedChoice?.count ?? fallbackCount;
 
   const resolvedNatSquad =
     currentNatSquad ||
@@ -527,7 +531,7 @@ export function HeroAthleteCard({
                       aria-selected={selected}
                       onClick={() => {
                         if (classChoices?.length) onSelectClass?.(choice.id);
-                        else if (choice.id === "optimist" || choice.id === "ilca4") {
+                        else if (choice.id === "optimist" || isProfileIlcaClass(choice.id)) {
                           onSelectBoatClass?.(choice.id);
                         }
                       }}
@@ -578,11 +582,11 @@ export function HeroAthleteCard({
           <div className="rounded-2xl border border-cool-veil bg-sailcloth/70 p-4 sm:p-5">
             <div className="flex items-center justify-between gap-3 text-slate-soft text-[12px] font-bold uppercase tracking-wider">
               <span>
-                {activeBoatClass === "ilca4" ? "ILCA 4 rank" : "Optimist rank"}
+                {`${activeClassLabel} rank`}
               </span>
               <Trophy
                 className={`h-4 w-4 ${
-                  activeBoatClass === "ilca4"
+                  activeIsIlca
                     ? "text-harbour"
                     : "text-racing-orange"
                 }`}
@@ -649,7 +653,7 @@ export function HeroAthleteCard({
             <div
               role="group"
               aria-label={`${classRegattaCount} ${
-                activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"
+                activeClassLabel
               } regattas`}
               className="rounded-xl border border-cool-veil bg-warm-white p-3.5"
             >
@@ -661,7 +665,7 @@ export function HeroAthleteCard({
                 {classRegattaCount}
               </p>
               <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
-                {activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"} logged
+                {activeClassLabel} logged
               </p>
             </div>
 

@@ -1,3 +1,4 @@
+import { profileIlcaClassOf, isProfileIlcaClass, type ProfileIlcaClass } from "@/lib/profileClasses";
 /**
  * Derived stats for the public sailor profile (new gold vs established gold).
  */
@@ -114,7 +115,7 @@ export function fleetLabelForResult(
   goldEntryDate?: string | null
 ): "Gold" | "Silver" | "Open" | "—" {
   const boat = profileBoatClassGroup(r.boatClass);
-  if (boat === "ilca4") return "Open";
+  if (isProfileIlcaClass(boat)) return "Open";
 
   const div = String(r.division || "").toLowerCase();
   if (div.includes("gold")) return "Gold";
@@ -243,7 +244,7 @@ export function buildResultTags(
       geo !== "SINGAPORE");
 
   const boat = profileBoatClassGroup(r.boatClass);
-  const isIlca = boat === "ilca4";
+  const isIlca = isProfileIlcaClass(boat);
 
   if (dns) {
     tags.push({
@@ -625,7 +626,7 @@ export function prefersIlcaFirstProfile(
     let optimistResults = 0;
     for (const result of results) {
       const group = profileBoatClassGroup(result.boatClass);
-      if (group === "ilca4") ilcaResults += 1;
+      if (isProfileIlcaClass(group)) ilcaResults += 1;
       else if (group === "optimist") optimistResults += 1;
     }
     if (ilcaResults > optimistResults) return true;
@@ -686,34 +687,14 @@ export function ilcaHighPointsForResult(r: ProfileResult): number | null {
   return fleetSize - Math.floor(rank) + 1;
 }
 
-/**
- * Normalise boat class for profile result grouping.
- * ILCA 6 is folded into ILCA 4 for now (no active ILCA 6 programme).
- */
+/** Keep every ILCA rig separate in profile result grouping. */
 export function profileBoatClassGroup(
   boatClass: string | null | undefined
-): "optimist" | "ilca4" | "other" {
-  const s = String(boatClass || "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
-  if (!s || s === "optimist" || s === "opti") return "optimist";
-  if (
-    s === "ilca 4" ||
-    s === "ilca4" ||
-    s === "laser 4.7" ||
-    s === "laser4.7" ||
-    s === "ilca 6" ||
-    s === "ilca6" ||
-    s === "laser radial" ||
-    s === "radial" ||
-    s === "ilca 7" ||
-    s === "ilca7" ||
-    s === "laser standard" ||
-    s === "standard"
-  )
-    return "ilca4";
-  return "other";
+): "optimist" | ProfileIlcaClass | "other" {
+  const ilca = profileIlcaClassOf(boatClass);
+  if (ilca) return ilca;
+  const value = String(boatClass || "").trim().toLowerCase();
+  return !value || value === "optimist" || value === "opti" ? "optimist" : "other";
 }
 
 /**

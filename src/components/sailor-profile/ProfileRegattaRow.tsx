@@ -1,5 +1,7 @@
 "use client";
 
+import { isProfileIlcaClass, profileIlcaLabel } from "@/lib/profileClasses";
+
 import Link from "next/link";
 import {
   ChevronDown,
@@ -63,7 +65,6 @@ export function ProfileRegattaRow({
   res,
   idx,
   expandedRegattaId,
-  primaryIsIlca,
   ownerView,
   awards,
   showEquipment,
@@ -93,9 +94,9 @@ export function ProfileRegattaRow({
   const boatGroup = profileBoatClassGroup(
     (res as ProfileResult).boatClass
   );
-  const isIlcaRow = primaryIsIlca || boatGroup === "ilca4";
+  const isIlcaRow = isProfileIlcaClass(boatGroup);
   const fleet = isIlcaRow
-    ? "ILCA 4"
+    ? profileIlcaLabel(boatGroup as "ilca4" | "ilca6" | "ilca7")
     : fleetLabelForResult(res, goldEntryDate);
   const slug = res.regattaSlug || res.id;
   const expanded = expandedRegattaId === regattaId;

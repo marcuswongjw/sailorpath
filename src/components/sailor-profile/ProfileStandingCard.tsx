@@ -1,5 +1,7 @@
 "use client";
 
+import { profileIlcaClassOf, profileIlcaLabel } from "@/lib/profileClasses";
+
 import Link from "next/link";
 import { Trophy } from "lucide-react";
 import { describeProfileRank } from "./rankBasis";
@@ -22,9 +24,10 @@ export function ProfileStandingCard({
   seriesDnsCount,
   cardClass,
 }: ProfileStandingCardProps) {
+  const ilcaClass = profileIlcaClassOf(standing.boatClass) || "ilca4";
   const rank = describeProfileRank({
     standing,
-    boatClass: standingIsIlca ? "ilca4" : "optimist",
+    boatClass: standingIsIlca ? ilcaClass : "optimist",
   });
 
   return (
@@ -45,7 +48,7 @@ export function ProfileStandingCard({
           </div>
           <div>
             <p className="text-[13px] font-bold text-harbour-shadow">
-              {standingIsIlca ? "ILCA 4 standing" : "Optimist standing"}
+              {standingIsIlca ? `${profileIlcaLabel(ilcaClass)} standing` : "Optimist standing"}
             </p>
             <p className="text-[13px] text-slate-soft mt-0.5">
               Rank basis: {rank.basisLabel.toLowerCase()}

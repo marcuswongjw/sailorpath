@@ -1,3 +1,4 @@
+import type { ProfileIlcaClass } from "@/lib/profileClasses";
 /**
  * Shared types for the sailor profile UI.
  */
@@ -116,6 +117,7 @@ export interface SailorProfileViewProps {
   initialSeriesStanding?: SeriesStandingProps | null;
   /** ILCA 4 national ranking strip (shown when viewing ILCA tab / ILCA-only) */
   initialIlcaStanding?: SeriesStandingProps | null;
+  initialIlcaStandings?: Partial<Record<ProfileIlcaClass, SeriesStandingProps | null>>;
   initialObservations?: ObservationItem[];
   initialEquipmentHistory?: Record<string, unknown>[];
   canSeePrivate?: boolean;

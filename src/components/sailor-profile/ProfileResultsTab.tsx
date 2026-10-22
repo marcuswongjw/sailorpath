@@ -18,6 +18,7 @@ export type ProfileResultsTabProps = {
   cardClass: string;
   resultsTab: string;
   resultsTitle?: string;
+  classLabel?: string;
   dualClass: boolean;
   activeResultsList: ProfileResult[];
   visibleResults: ProfileResult[];
@@ -27,7 +28,7 @@ export type ProfileResultsTabProps = {
   optimistScope: "gold" | "all";
   showOptimistScopeFilter: boolean;
   onOptimistScopeChange: (scope: "gold" | "all") => void;
-  ilca4Tenure: { label: string } | null;
+  ilcaTenure: { label: string } | null;
   primaryIsIlca: boolean;
   ownerView: boolean;
   dismissSailorTip: boolean;
@@ -83,6 +84,7 @@ export function ProfileResultsTab({
   cardClass,
   resultsTab,
   resultsTitle,
+  classLabel = "ILCA 4",
   dualClass,
   activeResultsList,
   visibleResults,
@@ -92,7 +94,7 @@ export function ProfileResultsTab({
   optimistScope,
   showOptimistScopeFilter,
   onOptimistScopeChange,
-  ilca4Tenure,
+  ilcaTenure,
   primaryIsIlca,
   ownerView,
   dismissSailorTip,
@@ -159,12 +161,7 @@ export function ProfileResultsTab({
               {showOptimistScopeFilter && optimistScope === "gold"
                 ? " · gold fleet"
                 : ""}
-              {dualClass && resultsTab === "ilca4" && ilca4Tenure
-                ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
-                : ""}
-              {!dualClass && primaryIsIlca && ilca4Tenure
-                ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
-                : ""}
+              {primaryIsIlca && ilcaTenure ? ` · in ${classLabel} ${ilcaTenure.label} (from first race)` : ""}
             </p>
             )}
             {showOptimistScopeFilter && (

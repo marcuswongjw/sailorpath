@@ -1,9 +1,10 @@
+import { isProfileIlcaClass, profileIlcaLabel, type ProfileIlcaClass } from "@/lib/profileClasses";
 /**
  * Labels for the profile rank so a visitor can tell an official-list
  * place from a rank calculated only from recorded results.
  */
 
-export type ProfileBoatClass = "optimist" | "ilca4";
+export type ProfileBoatClass = "optimist" | ProfileIlcaClass;
 
 export type RankBasisKind = "official-list" | "recorded-results" | "series";
 
@@ -35,7 +36,7 @@ export function rankBasisKind(
   standing: StandingLike,
   boatClass: ProfileBoatClass
 ): RankBasisKind {
-  if (boatClass !== "ilca4") return "series";
+  if (!isProfileIlcaClass(boatClass)) return "series";
   if (
     standing?.rankBasis === "recorded-results" ||
     standing?.unrestricted === true
@@ -63,10 +64,10 @@ export function describeProfileRank(input: {
   const { standing, boatClass } = input;
   const kind = rankBasisKind(standing, boatClass);
   const numbers = usableRank(standing);
-  const className = boatClass === "ilca4" ? "ILCA 4" : "Optimist";
+  const className = isProfileIlcaClass(boatClass) ? profileIlcaLabel(boatClass) : "Optimist";
   const rawCycle = String(standing?.periodLabel || "").trim();
   const cycleLabel =
-    rawCycle.replace(/^ILCA\s*4\s*·\s*/i, "").trim() || "This series";
+    rawCycle.replace(/^ILCA\s*[467]\s*·\s*/i, "").trim() || "This series";
 
   const basisLabel =
     kind === "recorded-results"
@@ -79,9 +80,9 @@ export function describeProfileRank(input: {
 
   const basisDetail =
     kind === "recorded-results"
-      ? "Calculated from recorded ILCA 4 results. This sailor is not on the managed national ranking list."
+      ? `Calculated from recorded ${className} results. This sailor is not on the managed national ranking list.`
       : kind === "official-list"
-        ? "Place on the managed ILCA 4 national ranking list for this series."
+        ? `Place on the managed ${className} national ranking list for this series.`
         : "Optimist series rank for this ranking cycle.";
 
   return {

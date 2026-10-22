@@ -1,3 +1,4 @@
+import { publicProfileRegattaCondition } from "@/lib/publicProfileResults";
 import { missingFallbackSheets } from "@/lib/resultSheetIdentity";
 import { unstable_cache } from "next/cache";
 import {
@@ -733,7 +734,10 @@ export async function getResultsForSailor(sailorId: string) {
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .where(or(eq(regattaResults.sailorId, sailorId), linkedAsParticipant))
+      .where(and(
+        or(eq(regattaResults.sailorId, sailorId), linkedAsParticipant),
+        publicProfileRegattaCondition()
+      ))
       .orderBy(desc(regattas.date));
 
     if (!results.length) {
@@ -829,7 +833,7 @@ export async function getResultsForSailor(sailorId: string) {
 
 export const getCachedResultsForSailor = unstable_cache(
   async (sailorId: string) => getResultsForSailor(sailorId),
-  ["public-sailor-results-v2"],
+  ["public-sailor-results-v3-published"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
@@ -1328,7 +1332,7 @@ function toIlcaSeriesStanding(
     best3of5: me.totalPoints,
     rScores,
     trendNote: recorded
-      ? `Recorded ILCA 4 competitors · #${me.rank} of ${fleetSize}`
+      ? `Recorded ${boatClass} competitors · #${me.rank} of ${fleetSize}`
       : `Best 3 of 5 high points · #${me.rank} of ${fleetSize} nationally`,
     boatClass,
     unrestricted: recorded,
@@ -1349,7 +1353,7 @@ export async function getSailorIlcaStanding(
       national.ranked.length,
       national.asOf,
       boatClass,
-      "official-list"
+      boatClass === "ILCA 7" ? "recorded-results" : "official-list"
     );
   }
 

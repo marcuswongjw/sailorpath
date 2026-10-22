@@ -132,12 +132,12 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     showFullDob,
     fullDobLabel,
     optimistResults,
-    ilca4Results,
+    activeIlcaResults,
     hasIlcaResults,
     hasOptimistResults,
     dualClass,
     showOptimistScopeFilter,
-    ilca4Tenure,
+    ilcaTenure,
     activeResultsList,
     visibleResults,
     hasMoreResults,
@@ -262,14 +262,14 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         selectedBoatClass={activeBoatClass}
         preferIlcaFirst={preferIlcaFirst}
         optimistCount={optimistResults.length}
-        ilcaCount={ilca4Results.length}
+        ilcaCount={activeIlcaResults.length}
         onSelectBoatClass={(cls) => {
           setResultsTab(cls);
           setShowAllResults(false);
         }}
         onViewAwards={() => setSectionTab("awards")}
         medals={displayMedals}
-        classChoices={classChoices.length > 1 || hasBoardResults ? classChoices : undefined}
+        classChoices={classChoices.length ? classChoices : undefined}
         selectedClassId={resultsTab}
         onSelectClass={(cls) => {
           setResultsTab(cls as typeof resultsTab);
@@ -337,16 +337,10 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         activeTab={resultsTab}
         sectionTab={sectionTab}
         optimistCount={optimistResults.length}
-        ilcaCount={ilca4Results.length}
+        ilcaCount={activeIlcaResults.length}
         journeyCount={displayJourney.length}
         awardsCount={visibleAwards.length}
-        resultsCount={
-          onBoardClass
-            ? activeResultsList.length
-            : resultsTab === "ilca4"
-              ? ilca4Results.length
-              : optimistResults.length
-        }
+        resultsCount={activeResultsList.length}
         showStanding={Boolean(activeStanding)}
         showEquipment={
           hasBoardResults && !hasOptimistResults && !hasIlcaResults
@@ -383,7 +377,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           trendCountryOptions={trendCountryOptions}
           activeResultsList={activeResultsList}
           primaryIsIlca={primaryIsIlca}
-          classLabel={onBoardClass ? selectedClassLabel : undefined}
+          classLabel={selectedClassLabel}
           hideStanding={onBoardClass}
           onNavigateTab={(tab) => setSectionTab(tab as ProfileSectionTab)}
         />
@@ -394,8 +388,9 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         <ProfileResultsTab
           cardClass={cardClass}
           resultsTab={resultsTab}
+          classLabel={selectedClassLabel}
           resultsTitle={
-            onBoardClass ? `Regatta results · ${selectedClassLabel}` : undefined
+            `Regatta results · ${selectedClassLabel}`
           }
           dualClass={dualClass}
           activeResultsList={activeResultsList}
@@ -409,7 +404,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
             setOptimistScope(scope);
             setShowAllResults(false);
           }}
-          ilca4Tenure={ilca4Tenure}
+          ilcaTenure={ilcaTenure}
           primaryIsIlca={primaryIsIlca}
           ownerView={ownerView}
           dismissSailorTip={dismissSailorTip}

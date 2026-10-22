@@ -2,7 +2,7 @@
 
 import { Sailboat } from "lucide-react";
 import { formatEventWhen } from "@/lib/profileUi";
-import { ordinal, profileBoatClassGroup } from "@/lib/profileAnalytics";
+import { ordinal } from "@/lib/profileAnalytics";
 import type {
   ProfileMode,
   TrendPoint,
@@ -52,7 +52,6 @@ export function ProfileOverviewTab({
   setTrendCountry,
   trendCountryOptions,
   activeResultsList,
-  primaryIsIlca,
   onNavigateTab,
   classLabel: classLabelProp,
   hideStanding = false,
@@ -126,11 +125,6 @@ export function ProfileOverviewTab({
             {recent.map((res, idx) => {
               const rank = res.rank != null ? Number(res.rank) : null;
               const dns = Boolean(res.isDns || res.isDNS);
-              const isIlcaRow =
-                !classLabelProp &&
-                (primaryIsIlca ||
-                  profileBoatClassGroup(res.boatClass) === "ilca4" ||
-                  classLabel === "ILCA 4");
               const dateStr = formatEventWhen(res.regattaDate as string);
               const place = dns
                 ? "DNS"
@@ -162,7 +156,7 @@ export function ProfileOverviewTab({
                         {place}
                       </span>
                       <span className="block text-[11px] font-semibold text-slate-soft">
-                        {classLabelProp || (isIlcaRow ? "ILCA 4" : "Optimist")}
+                        {classLabel}
                       </span>
                     </span>
                   </button>

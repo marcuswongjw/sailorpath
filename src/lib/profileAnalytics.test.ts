@@ -287,9 +287,10 @@ describe("buildIlcaKeyStats / prefersIlcaFirstProfile", () => {
     expect(optimistLeftYear({ dropDate: null, dob: "2018-01-01" })).toBe(null);
   });
 
-  it("folds ILCA 6 into ILCA 4", () => {
-    expect(profileBoatClassGroup("ILCA 6")).toBe("ilca4");
-    expect(profileBoatClassGroup("Laser Radial")).toBe("ilca4");
+  it("keeps ILCA rigs separate while recognizing their aliases", () => {
+    expect(profileBoatClassGroup("ILCA 6")).toBe("ilca6");
+    expect(profileBoatClassGroup("Laser Radial")).toBe("ilca6");
+    expect(profileBoatClassGroup("Laser Standard")).toBe("ilca7");
   });
 });
 

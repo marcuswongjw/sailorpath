@@ -1,3 +1,4 @@
+import { isProfileIlcaClass, type ProfileIlcaClass } from "@/lib/profileClasses";
 import { ordinal, profileBoatClassGroup } from "@/lib/profileAnalytics";
 import { sailingClassKeyOf } from "@/lib/classRegistry";
 
@@ -10,7 +11,7 @@ export const BOARD_DISCIPLINES = [
 ] as const;
 
 export type BoardDiscipline = (typeof BOARD_DISCIPLINES)[number];
-export type ProfileDiscipline = "optimist" | "ilca4" | BoardDiscipline;
+export type ProfileDiscipline = "optimist" | ProfileIlcaClass | BoardDiscipline;
 
 export type BoardResultRow = {
   boatClass?: string | null;
@@ -61,7 +62,7 @@ export function profileDisciplineOf(
   const board = boardDisciplineOf(boatClass);
   if (board) return board;
   const group = profileBoatClassGroup(boatClass);
-  if (group === "optimist" || group === "ilca4") return group;
+  if (group === "optimist" || isProfileIlcaClass(group)) return group;
   return null;
 }
 
@@ -71,6 +72,10 @@ export function disciplineLabel(id: ProfileDiscipline): string {
       return "Optimist";
     case "ilca4":
       return "ILCA 4";
+    case "ilca6":
+      return "ILCA 6";
+    case "ilca7":
+      return "ILCA 7";
     case "techno293":
       return "Techno 293";
     case "wingfoil":
