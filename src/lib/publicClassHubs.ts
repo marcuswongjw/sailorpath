@@ -42,4 +42,3 @@ export const PUBLIC_CLASS_HUBS = [
     note: "Normalized class sheets, sailor results, and race scores.",
   },
 ] as const;
-
