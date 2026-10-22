@@ -394,7 +394,17 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
       mapRegattaRow(row.regatta, { slug: row.eventSlug, name: row.eventName })
     );
     for (const staticReg of ILCA6_STATIC_REGATTAS) {
-      if (!mapped.some((m) => m.slug.toLowerCase() === staticReg.slug.toLowerCase())) {
+      const s = staticReg.slug.toLowerCase();
+      const alreadyPresent = mapped.some((m) => {
+        const ms = m.slug.toLowerCase();
+        if (ms === s) return true;
+        if (s.includes("cincapura") && ms.includes("cincapura") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
+        if (s.includes("pesta") && ms.includes("pesta") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
+        if (s.includes("snsc") && ms.includes("snsc") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
+        if (s.includes("csc") && ms.includes("csc") && (ms.includes("ilca-6") || ms.includes("ilca6"))) return true;
+        return false;
+      });
+      if (!alreadyPresent) {
         mapped.push(staticReg);
       }
     }

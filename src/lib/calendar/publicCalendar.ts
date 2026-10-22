@@ -54,6 +54,35 @@ const getCachedCalendarDeletions = unstable_cache(
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
+export function dedupeEventSheets(sheets: RegattaRecord[]): RegattaRecord[] {
+  const map = new Map<string, RegattaRecord>();
+  for (const sheet of sheets) {
+    const key = `${(sheet.boatClass || "Optimist").trim().toLowerCase()}:${(sheet.division || "open").trim().toLowerCase()}`;
+    const existing = map.get(key);
+    if (!existing) {
+      map.set(key, sheet);
+      continue;
+    }
+    const existingRaces = existing.raceCount ?? 0;
+    const sheetRaces = sheet.raceCount ?? 0;
+    if (sheetRaces !== existingRaces) {
+      if (sheetRaces > existingRaces) map.set(key, sheet);
+      continue;
+    }
+    const existingFleet = existing.totalFleetSize ?? 0;
+    const sheetFleet = sheet.totalFleetSize ?? 0;
+    if (sheetFleet !== existingFleet) {
+      if (sheetFleet > existingFleet) map.set(key, sheet);
+      continue;
+    }
+    if (existing.id.startsWith("reg-") && !sheet.id.startsWith("reg-")) {
+      map.set(key, sheet);
+      continue;
+    }
+  }
+  return Array.from(map.values());
+}
+
 /** The shared calendar inventory, including saved overrides and deletions. */
 export async function getPublicCalendarData() {
   let dbRegattas: RegattaRecord[] = [];
@@ -209,7 +238,8 @@ export async function getPublicCalendarData() {
   const grouped = groupRegattaEvents(dbRegattas, eventSlugsById);
   const resultSheetsByEvent: Record<string, RegattaRecord[]> = {};
   for (const event of grouped.events) {
-    const sheets = dbRegattas.filter((sheet) => [...event.sheets, ...event.shells.filter((row) => (row.totalFleetSize || 0) > 0)].some((row) => row.id === sheet.id));
+    const rawSheets = dbRegattas.filter((sheet) => [...event.sheets, ...event.shells.filter((row) => (row.totalFleetSize || 0) > 0)].some((row) => row.id === sheet.id));
+    const sheets = dedupeEventSheets(rawSheets);
     resultSheetsByEvent[event.slug] = sheets;
     const existing = publicEvents.get(event.slug);
     if (existing) {
