@@ -1,3 +1,5 @@
+import { PUBLIC_CLASS_HUBS as classHubs } from "@/lib/publicClassHubs";
+import { publishedResultClasses } from "@/lib/classRegistry";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
@@ -41,51 +43,6 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600;
 
-const classHubs = [
-  {
-    name: "Optimist",
-    href: "/sg/optimist/gold",
-    tagline: "Gold and Silver fleet rankings",
-    note: "Standings from published, reviewed class results.",
-  },
-  {
-    name: "ILCA 4",
-    href: "/sg/ilca4",
-    tagline: "Youth national ranking",
-    note: "Singapore ranking and race-by-race results.",
-  },
-  {
-    name: "ILCA 6",
-    href: "/sg/ilca6",
-    tagline: "National high points ranking",
-    note: "Best 3 of 5 events in the current series.",
-  },
-  {
-    name: "ILCA 7",
-    href: "/sg/ilca7",
-    tagline: "Class standings and results",
-    note: "Follow fleet finishes and individual race scores.",
-  },
-  {
-    name: "WingFoil",
-    href: "/sg/wingfoil",
-    tagline: "Sprint slalom standings",
-    note: "Heat finishes and discards across the series.",
-  },
-  {
-    name: "Techno 293",
-    href: "/sg/techno293",
-    tagline: "One Design series standings",
-    note: "Southwest Monsoon series and race scorecards.",
-  },
-  {
-    name: "iQFOiL",
-    href: "/sg/iqfoil",
-    tagline: "Published regatta results",
-    note: "Normalized class sheets, sailor results, and race scores.",
-  },
-] as const;
-
 function resultHref(row: RegattaRecord, rows: RegattaRecord[]): string {
   const explicit = savedEventHubForSlug(row.slug, rows);
   if (explicit?.fleetKey) {
@@ -125,7 +82,7 @@ export default async function HomePage() {
   const latestResults = recentLandingResults(publicRegattas, today, counts).slice(0, 3);
   const countryCount = new Set(publicRegattas.map(landingCountry).filter(Boolean)).size;
   const stats = [
-    { value: String(classHubs.length), label: "classes with results" },
+    { value: publicRegattas.length ? String(publishedResultClasses(publicRegattas).length) : "—", label: "classes with results" },
     { value: totals.athletes, label: "sailors" },
     { value: totals.regattas, label: "published result tables" },
     { value: countryCount ? String(countryCount) : "—", label: "countries with results" },

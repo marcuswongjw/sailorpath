@@ -1,3 +1,4 @@
+import { sailingClassAliasRows } from "@/lib/classRegistry";
 /**
  * Lean admin Stats aggregates — COUNT / DISTINCT only (no full result scans).
  * Account details are fetched only for the superadmin-gated Stats endpoint.
@@ -138,14 +139,22 @@ export async function getPlatformDemographics(): Promise<PlatformDemographics> {
         limit 10
       `),
       withStatsQueryTimeout(pgSql`
+        with aliases as (
+          select * from jsonb_to_recordset(${JSON.stringify(sailingClassAliasRows())}::jsonb)
+            as alias(token text, label text)
+        ), classified as (
+          select r.id, coalesce(a.label, nullif(trim(r.boat_class), ''), 'Unassigned') as class_name
+          from public.regattas r
+          left join aliases a on a.token = regexp_replace(lower(coalesce(r.boat_class, '')), '[^a-z0-9]', '', 'g')
+        )
         select
-          r.boat_class as class_name,
+          r.class_name,
           count(distinct r.id)::int as regattas,
           count(rr.id)::int as results,
           count(distinct rr.sailor_id)::int as sailors
-        from public.regattas r
+        from classified r
         join public.regatta_results rr on rr.regatta_id = r.id
-        group by r.boat_class
+        group by r.class_name
         order by count(rr.id) desc
       `),
     ]);

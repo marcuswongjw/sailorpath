@@ -1,9 +1,12 @@
+import { getCachedPublicRegattas } from "@/lib/queries";
+import { publishedResultClasses } from "@/lib/classRegistry";
+import { PUBLIC_CLASS_HUBS } from "@/lib/publicClassHubs";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Class hubs | SailorPath",
-  description: "X-15 and Optimist class hubs on SailorPath.",
+  description: "Explore sailing classes, published scorecards, Singapore standings and class guides on SailorPath.",
   alternates: { canonical: "/classes" },
 };
 
@@ -22,7 +25,14 @@ const hubs = [
   },
 ] as const;
 
-export default function ClassesIndexPage() {
+export default async function ClassesIndexPage() {
+  let classes: string[] = [];
+  let available = true;
+  try {
+    classes = publishedResultClasses(await getCachedPublicRegattas());
+  } catch {
+    available = false;
+  }
   return (
     <main className="mx-auto max-w-6xl space-y-10 px-4 py-10 sm:px-6 sm:py-14">
       <header className="rounded-3xl border border-harbour/15 bg-harbour-shadow px-6 py-8 text-sailcloth shadow-sm sm:px-10 sm:py-12">
@@ -33,12 +43,31 @@ export default function ClassesIndexPage() {
           Classes on SailorPath
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-soft-aqua sm:text-lg">
-          Two class pages so far. Each one explains the class and links out to
-          the records that already exist. They do not replace results or rankings.
+          Browse published results by class, explore Singapore standings and
+          learn about the boats and boards behind the racing.
         </p>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-2" aria-label="Class hubs">
+      <section aria-label="Classes with published results" className="space-y-4">
+        <h2 className="text-2xl font-bold text-harbour-shadow">Classes with published results</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {classes.map((name) => {
+            const hub = PUBLIC_CLASS_HUBS.find((item) => item.name === name);
+            return (
+              <article key={name} className="rounded-2xl border border-cool-veil bg-warm-white p-6">
+                <h3 className="text-xl font-bold text-harbour-shadow">{name}</h3>
+                <Link href={`/results?class=${encodeURIComponent(name)}`} className="mt-3 block text-sm font-semibold text-harbour hover:underline">Browse {name} results</Link>
+                {hub && <Link href={hub.href} className="mt-3 block text-sm font-semibold text-harbour hover:underline">Singapore standings and results</Link>}
+              </article>
+            );
+          })}
+        </div>
+        {!classes.length && <p className="text-sm text-slate-soft">{available ? "No published class scorecards are available yet." : "Class results are temporarily unavailable. Please try again shortly."}</p>}
+      </section>
+
+      <section className="space-y-4" aria-label="Class guides">
+        <h2 className="text-2xl font-bold text-harbour-shadow">Class guides</h2>
+        <div className="grid gap-4 md:grid-cols-2">
         {hubs.map((hub) => (
           <Link
             key={hub.href}
@@ -50,6 +79,7 @@ export default function ClassesIndexPage() {
             <p className="mt-3 text-sm leading-6 text-slate-soft">{hub.note}</p>
           </Link>
         ))}
+        </div>
       </section>
     </main>
   );

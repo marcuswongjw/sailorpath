@@ -89,6 +89,15 @@ describe("public landing page", () => {
     expect(html).toContain("All results");
   });
 
+  it("counts result classes from scorecards rather than the seven featured hubs", async () => {
+    getPublicRegattas.mockResolvedValue(["Optimist", "29er", "420", "WindFoil", "Windfoil"].map((boatClass) => regatta({id: boatClass, boatClass})));
+    const html = renderToStaticMarkup(await HomePage());
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    const label = [...container.querySelectorAll("*")].find((node) => node.textContent === "classes with results");
+    expect(label?.parentElement?.textContent).toContain("4");
+  });
+
   it("marks parent and coach destinations as private and highlights the public Asian Index", async () => {
     getPublicRegattas.mockResolvedValue([]);
 

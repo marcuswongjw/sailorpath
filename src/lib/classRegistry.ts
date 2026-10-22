@@ -15,6 +15,8 @@ export type SailingClassKey =
   | "wingfoil"
   | "techno293"
   | "iqfoil"
+  | "windfoil"
+  | "windsurfing-lt"
   | "windsurfing"
   | "29er"
   | "420";
@@ -84,9 +86,21 @@ export const SAILING_CLASS_REGISTRY: readonly SailingClassDefinition[] = [
     supportsNationalRanking: false,
   },
   {
+    key: "windfoil",
+    label: "Windfoil",
+    aliases: ["windfoil"],
+    supportsNationalRanking: false,
+  },
+  {
+    key: "windsurfing-lt",
+    label: "Windsurfing LT",
+    aliases: ["windsurfinglt"],
+    supportsNationalRanking: false,
+  },
+  {
     key: "windsurfing",
     label: "Windsurfing",
-    aliases: ["windsurfing", "windfoil"],
+    aliases: ["windsurfing"],
     supportsNationalRanking: false,
   },
   {
@@ -127,8 +141,10 @@ function tokenMatchesDefinition(token: string, definition: SailingClassDefinitio
     return token === "t293" || token.startsWith("techno293") || token === "techno";
   }
   if (definition.key === "iqfoil") return token.startsWith("iqfoil");
+  if (definition.key === "windfoil") return token.startsWith("windfoil");
+  if (definition.key === "windsurfing-lt") return token.startsWith("windsurfinglt");
   if (definition.key === "windsurfing") {
-    return token.startsWith("windsurfing") || token.startsWith("windfoil");
+    return token.startsWith("windsurfing") && !token.startsWith("windsurfinglt");
   }
   if (definition.key === "29er") return token.startsWith("29er");
 
@@ -149,6 +165,8 @@ export function resolveSailingClass(
     "ilca4",
     "iqfoil",
     "wingfoil",
+    "windfoil",
+    "windsurfing-lt",
     "windsurfing",
     "techno293",
     "29er",
@@ -204,4 +222,18 @@ export function requiresExplicitImportMetadata(
 
 export function hasFixedOpenDivision(value: string | null | undefined): boolean {
   return resolveSailingClass(value)?.fixedOpenDivision === true;
+}
+
+/** Shared exact alias vocabulary for aggregate SQL; values are bound parameters. */
+export function sailingClassAliasRows(): Array<{ token: string; label: string }> {
+  return SAILING_CLASS_REGISTRY.flatMap((definition) =>
+    [...new Set([normalizeSailingClassToken(definition.label), ...definition.aliases])]
+      .map((token) => ({ token, label: definition.label }))
+  );
+}
+
+/** Distinct published classes with scored sheets, independent of featured hubs. */
+export function publishedResultClasses(rows: readonly { boatClass?: string | null; raceCount?: number | null; totalFleetSize: number }[]): string[] {
+  return [...new Set(rows.filter((row) => (row.raceCount || 0) > 0 && row.totalFleetSize > 0)
+    .map((row) => canonicalBoatClass(row.boatClass)).filter(Boolean))].sort((a, b) => a.localeCompare(b));
 }

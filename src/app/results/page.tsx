@@ -5,7 +5,7 @@ import { getCachedPublicRegattas } from "@/lib/queries";
 import { findEventSliceForRegattaSlug } from "@/lib/regattaEvents";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 import { geographySelectOptions, normalizeGeography } from "@/lib/countries";
-import { canonicalBoatClass } from "@/lib/classRegistry";
+import { canonicalBoatClass, resolveSailingClass } from "@/lib/classRegistry";
 import { matchesRegattaClass } from "@/lib/calendar/publicRegattas";
 
 export const metadata: Metadata = { title: "Published results | SailorPath", description: "Browse completed, published sailing scorecards by event, country, class and year." };
@@ -66,7 +66,7 @@ export default async function ResultsPage({ searchParams }: Props) {
         ? matchesRegattaClass(row.boatClass, "ilca")
         : canonicalBoatClass(row.boatClass).toLowerCase() === selectedClass.toLowerCase();
       // Preserve older links that used a fleet or partial class search.
-      if (!matchesClass && !`${row.boatClass || ""} ${row.division || ""}`.toLowerCase().includes(selectedClass.toLowerCase())) return false;
+      if (!matchesClass && (resolveSailingClass(selectedClass) || !`${row.boatClass || ""} ${row.division || ""}`.toLowerCase().includes(selectedClass.toLowerCase()))) return false;
     }
     return !q || `${row.name} ${row.boatClass || ""} ${row.venue || ""}`.toLowerCase().includes(q);
   }).sort((a, b) => String(b.date).localeCompare(String(a.date)));

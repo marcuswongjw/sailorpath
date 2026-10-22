@@ -48,7 +48,7 @@ export function boardDisciplineOf(
   boatClass: string | null | undefined
 ): BoardDiscipline | null {
   const classKey = sailingClassKeyOf(boatClass);
-  if (classKey === "windsurfing") return "windsurfing";
+  if (["windsurfing", "windsurfing-lt", "windfoil"].includes(classKey || "")) return "windsurfing";
   if (classKey === "wingfoil") return "wingfoil";
   if (classKey === "iqfoil") return "iqfoil";
   if (classKey === "techno293") return "techno293";

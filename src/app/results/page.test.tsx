@@ -73,6 +73,17 @@ describe("results directory", () => {
     expect(container.querySelector('input[name="year"]')).toBeNull();
   });
 
+  it("keeps Windfoil, Windsurfing and Windsurfing LT filters separate", async () => {
+    const names = ["WindFoil", "Windsurfing", "Windsurfing LT", "WingFoil", "iQFOiL"];
+    getPublicRegattas.mockResolvedValue(names.map((boatClass) => ({id: boatClass, slug: boatClass.toLowerCase().replaceAll(" ", "-"), name: `Fleet ${boatClass}`, boatClass, date: "2026-01-01", totalFleetSize: 12})));
+    for (const selected of names) {
+      const html = renderToStaticMarkup(await ResultsPage({searchParams: Promise.resolve({class: selected})}));
+      const container = document.createElement("div");
+      container.innerHTML = html;
+      expect([...container.querySelectorAll("h2")].map((heading) => heading.textContent)).toEqual([`Fleet ${selected}`]);
+    }
+  });
+
   it("combines country aliases, compact class links, year and search filters", async () => {
     getPublicRegattas.mockResolvedValue([
       { id: "match", slug: "match", name: "Harbour Open", date: "2025-09-10", geography: "SG", boatClass: "ILCA 4", totalFleetSize: 12 },

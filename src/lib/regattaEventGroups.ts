@@ -104,7 +104,7 @@ function publicFleet(row: RegattaRecord): Fleet | null {
   // Techno 293 contains "29". Classify it before the 29er exclusion.
   if (classKey === "techno293" || mentionsTechno(row)) return "techno293";
   if (classKey === "iqfoil") return "iqfoil";
-  if (classKey === "windsurfing" || mentionsWindsurfing(row)) {
+  if (["windsurfing", "windsurfing-lt", "windfoil"].includes(classKey || "") || mentionsWindsurfing(row)) {
     const compact = compactClass(boat);
     if (compact.startsWith("windfoil")) return "windfoil";
     if (/\blt\b/i.test(boat) || compact.endsWith("lt")) return "windsurfing-lt";

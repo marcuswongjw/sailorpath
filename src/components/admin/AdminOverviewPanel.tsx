@@ -307,7 +307,7 @@ export function AdminOverviewPanel({
                   <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
                     {events.data.demographics.sailorsTotal.toLocaleString()}
                   </p>
-                  <p className="mt-0.5 text-[10px] font-medium text-emerald-600">100% active competitors</p>
+                  <p className="mt-0.5 text-[10px] font-medium text-emerald-600">Profiles with at least one regatta entry</p>
                 </div>
                 <div className="rounded-lg bg-slate-50 p-3">
                   <p className="text-xs font-medium text-slate-500">Nationalities</p>
@@ -321,14 +321,14 @@ export function AdminOverviewPanel({
                   <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
                     {events.data.demographics.classesCount.toLocaleString()}
                   </p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">With verified results</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">With recorded regatta entries</p>
                 </div>
                 <div className="rounded-lg bg-slate-50 p-3">
                   <p className="text-xs font-medium text-slate-500">Recorded Results</p>
                   <p className="mt-1 text-xl font-bold tabular-nums text-slate-900">
                     {events.data.demographics.resultsTotal.toLocaleString()}
                   </p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Scored race finishes</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Aggregate regatta entries</p>
                 </div>
               </div>
 
@@ -359,8 +359,8 @@ export function AdminOverviewPanel({
                       <thead className="sticky top-0 bg-slate-50 text-slate-500">
                         <tr className="border-b border-slate-100">
                           <th className="py-1.5 px-3 font-semibold">Class</th>
-                          <th className="py-1.5 px-3 text-right font-semibold">Regattas</th>
-                          <th className="py-1.5 px-3 text-right font-semibold">Results</th>
+                          <th className="py-1.5 px-3 text-right font-semibold">Result sheets</th>
+                          <th className="py-1.5 px-3 text-right font-semibold">Entries</th>
                           <th className="py-1.5 px-3 text-right font-semibold">Sailors</th>
                         </tr>
                       </thead>

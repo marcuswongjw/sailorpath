@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   canonicalBoatClass,
+  publishedResultClasses,
   matchesSailingClass,
   requiresExplicitImportMetadata,
   resolveSailingClass,
@@ -8,6 +9,12 @@ import {
 } from "./classRegistry";
 
 describe("classRegistry", () => {
+  it("counts published result classes independently of featured hubs", () => {
+    const rows = ["Windfoil", "WindFoil", "Windsurfing", "Windsurfing LT", "Wingfoil", "WingFoil", "iQFOiL", "29er", "420"]
+      .map((boatClass) => ({boatClass, raceCount: 3, totalFleetSize: 10}));
+    expect(publishedResultClasses([...rows, {boatClass: "Future class", raceCount: 0, totalFleetSize: 0}]))
+      .toEqual(["29er", "420", "iQFOiL", "Windfoil", "Windsurfing", "Windsurfing LT", "WingFoil"].sort((a,b) => a.localeCompare(b)));
+  });
   it("normalizes approved aliases without merging board disciplines", () => {
     expect(canonicalBoatClass("Laser 4.7")).toBe("ILCA 4");
     expect(canonicalBoatClass("Laser Radial")).toBe("ILCA 6");
@@ -16,8 +23,8 @@ describe("classRegistry", () => {
     expect(canonicalBoatClass("Wing Foil")).toBe("WingFoil");
     expect(canonicalBoatClass("T293")).toBe("Techno 293");
 
-    expect(resolveSailingClass("Windfoil")?.key).toBe("windsurfing");
-    expect(resolveSailingClass("Windsurfing LT")?.key).toBe("windsurfing");
+    expect(resolveSailingClass("Windfoil")?.key).toBe("windfoil");
+    expect(resolveSailingClass("Windsurfing LT")?.key).toBe("windsurfing-lt");
     expect(resolveSailingClass("Windfoil")?.key).not.toBe("wingfoil");
     expect(resolveSailingClass("iQFOiL")?.key).not.toBe("wingfoil");
     expect(resolveSailingClass("Techno 293")?.key).not.toBe("iqfoil");

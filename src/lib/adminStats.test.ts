@@ -3,7 +3,7 @@ import { PGlite } from "@electric-sql/pglite";
 
 const mocks = vi.hoisted(() => ({ query: vi.fn() }));
 vi.mock("@/db", () => ({ pgSql: mocks.query }));
-import { formatRosterClaimedPct, getAdminStats, StatsTimeoutError, withStatsQueryTimeout } from "./adminStats";
+import { formatRosterClaimedPct, getPlatformDemographics, getAdminStats, StatsTimeoutError, withStatsQueryTimeout } from "./adminStats";
 
 let database: PGlite;
 beforeEach(async () => {
@@ -22,8 +22,8 @@ beforeEach(async () => {
       last_sign_in_at timestamptz, deleted_at timestamptz, is_anonymous boolean);
     create table auth.sessions (user_id text, not_after timestamptz, refreshed_at timestamptz);
   `);
-  mocks.query.mockImplementation((strings: TemplateStringsArray) =>
-    Object.assign(database.query(strings.join("")).then((r) => r.rows), { cancel: vi.fn() })
+  mocks.query.mockImplementation((strings: TemplateStringsArray, ...params: unknown[]) =>
+    Object.assign(database.query(strings.reduce((query, part, index) => query + (index ? `$${index}` : "") + part, ""), params).then((r) => r.rows), { cancel: vi.fn() })
   );
 });
 afterEach(async () => {
@@ -44,6 +44,20 @@ describe("admin Stats", () => {
       seriesSailors: 2, rosterClaimedPct: 50 });
     expect(stats.dataTrust.missingOrPlaceholderSail).toBe(2);
     expect(stats.authAccountsOk).toBe(true);
+  });
+
+  it("groups class aliases before counting unique sailors and preserves board disciplines", async () => {
+    await database.exec(`insert into regattas values
+      ('a', false, 'Wingfoil'), ('b', false, 'WingFoil'), ('c', false, 'Windfoil'),
+      ('d', false, 'WindFoil'), ('e', false, 'Windsurfing'), ('f', false, 'Windsurfing LT'),
+      ('g', false, 'iQFOiL');
+      insert into regatta_results values ('1','a','same-sailor'), ('2','b','same-sailor'),
+        ('3','c','s2'), ('4','d','s2'), ('5','e','s3'), ('6','f','s4'), ('7','g','s5');`);
+    const stats = await getPlatformDemographics();
+    expect(stats.classesCount).toBe(5);
+    expect(stats.resultsTotal).toBe(7);
+    expect(stats.boatClasses.find((row) => row.className === "WingFoil")).toMatchObject({regattaCount: 2, resultCount: 2, sailorCount: 1});
+    expect(stats.boatClasses.find((row) => row.className === "Windfoil")).toMatchObject({regattaCount: 2, resultCount: 2, sailorCount: 1});
   });
 
   it("still returns inventory and traffic when account activity cannot be read", async () => {

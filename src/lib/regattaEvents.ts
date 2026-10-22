@@ -1229,14 +1229,14 @@ export function isRegattaLinkedToEventSlice(
 
   if (["wingfoil", "techno293", "iqfoil", "windsurfing"].includes(slice.series)) {
     const classKey = sailingClassKeyOf(boat);
-    if (classKey !== slice.series) return false;
     if (slice.series === "windsurfing") {
+      if (!["windsurfing", "windsurfing-lt", "windfoil"].includes(classKey || "")) return false;
       const compact = boat.toLowerCase().replace(/[^a-z0-9]/g, "");
       if (slice.key === "windfoil") return compact.startsWith("windfoil");
       if (slice.key === "windsurfing-lt") return compact.endsWith("lt");
-      return !compact.startsWith("windfoil") && !compact.endsWith("lt");
+      return classKey === "windsurfing";
     }
-    return true;
+    return classKey === slice.series;
   }
 
   if (slice.series === "420") {
