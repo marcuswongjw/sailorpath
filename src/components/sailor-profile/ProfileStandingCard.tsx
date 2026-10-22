@@ -218,13 +218,13 @@ export function ProfileStandingCard({
       <Link
         href={
           standingIsIlca
-            ? "/sg/ilca4"
+            ? `/sg/${ilcaClass}`
             : `/sg/optimist/${String(standing.fleet).toLowerCase()}`
         }
         className="inline-flex items-center gap-1 mt-2 text-[12px] font-bold text-harbour hover:text-harbour-shadow"
       >
         {standingIsIlca
-          ? "View full ILCA 4 standings →"
+          ? `View full ${profileIlcaLabel(ilcaClass)} standings →`
           : `View full ${standing.fleet} standings →`}
       </Link>
     </section>

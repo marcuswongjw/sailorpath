@@ -7,6 +7,7 @@ export type PositionTrendChartProps = {
   points: TrendPoint[];
   mode: "new_gold" | "established_gold" | "other";
   goldEntryDate: string | null;
+  classLabel?: string;
 };
 
 /**
@@ -16,6 +17,7 @@ export function PositionTrendChart({
   points,
   mode,
   goldEntryDate,
+  classLabel = "Open fleet",
 }: PositionTrendChartProps) {
   const trendSvg = useMemo(() => {
     const pts = points;
@@ -199,7 +201,7 @@ export function PositionTrendChart({
             fontWeight="bold"
           >
             {trendSvg.pts.every((p) => p.fleet === "Open")
-              ? "ILCA 4"
+              ? classLabel
               : trendSvg.pts.every((p) => p.fleet !== "Gold")
                 ? "Silver fleet"
                 : "Gold fleet"}

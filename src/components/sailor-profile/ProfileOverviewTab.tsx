@@ -83,6 +83,7 @@ export function ProfileOverviewTab({
         )}
 
         <ProfilePerformanceSummary
+          classLabel={classLabel}
           showSummary={resultsTab !== "journey"}
           showStats={false}
           keyStatsTitle=""

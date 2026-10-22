@@ -42,6 +42,7 @@ type Props = {
   trendMode: ProfileMode;
   trendGoldEntry: string | null;
   trendCaption: string;
+  classLabel?: string;
   trendCountry: string;
   setTrendCountry: (country: string) => void;
   trendCountryOptions: { code: string; name: string }[];
@@ -60,6 +61,7 @@ export function ProfilePerformanceSummary({
   trendMode,
   trendGoldEntry,
   trendCaption,
+  classLabel,
   trendCountry,
   setTrendCountry,
   trendCountryOptions,
@@ -162,6 +164,7 @@ export function ProfilePerformanceSummary({
           </p>
           {trendPoints.length >= 2 ? (
             <PositionTrendChart
+              classLabel={classLabel}
               points={trendPoints}
               mode={trendMode}
               goldEntryDate={trendGoldEntry}
