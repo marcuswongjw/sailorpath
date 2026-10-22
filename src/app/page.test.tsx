@@ -4,13 +4,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/landingStats", () => ({
   getLandingTotals: vi.fn(),
+  getLandingResultCounts: vi.fn(),
 }));
 
 vi.mock("@/lib/queries", () => ({
   getCachedPublicRegattas: vi.fn(),
 }));
 
-import { getLandingTotals } from "@/lib/landingStats";
+vi.mock("@/lib/calendar/publicCalendar", () => ({ getPublicCalendarData: vi.fn() }));
+vi.mock("@/lib/datesSg", () => ({ todayYmdSg: () => "2026-10-22" }));
+
+import { getPublicCalendarData } from "@/lib/calendar/publicCalendar";
+import { getLandingTotals, getLandingResultCounts } from "@/lib/landingStats";
 import { getCachedPublicRegattas } from "@/lib/queries";
 import HomePage from "./page";
 
@@ -41,7 +46,11 @@ describe("public landing page", () => {
   beforeEach(() => {
     getTotals.mockReset();
     getPublicRegattas.mockReset();
-    getTotals.mockResolvedValue({ athletes: "800+", regattas: "130" });
+    getTotals.mockResolvedValue({ athletes: "2500+", regattas: "288" });
+    vi.mocked(getLandingResultCounts).mockReset();
+    vi.mocked(getLandingResultCounts).mockImplementation(async (ids) => Object.fromEntries(ids.map((id) => [id, 24])));
+    vi.mocked(getPublicCalendarData).mockReset();
+    vi.mocked(getPublicCalendarData).mockResolvedValue({ allRegattas: [], resultSheetsByEvent: {} });
   });
 
   it("keeps sailor discovery prominent and makes its search promise specific", async () => {
@@ -70,7 +79,7 @@ describe("public landing page", () => {
 
     const html = renderToStaticMarkup(await HomePage());
 
-    expect(html).toContain("Latest published results");
+    expect(html).toContain("Recent regatta results");
     expect(html).toContain("Newest Scorecard");
     expect(html).toContain("Middle Scorecard");
     expect(html).toContain("Older Scorecard");
@@ -92,7 +101,7 @@ describe("public landing page", () => {
     expect(html).toContain('href="/optimist/asian-index"');
     expect(html).toContain('href="/optimist/asian-index/methodology"');
     expect(html).toContain('href="/classes/x-15"');
-    expect(html).toContain("classes represented");
+    expect(html).toContain("classes with results");
   });
 
   it("keeps the page usable if recent public results cannot be loaded", async () => {
@@ -104,4 +113,39 @@ describe("public landing page", () => {
     expect(html).toContain("Find a sailor profile");
     expect(html).toContain("All results");
   });
+  it("includes today's scored results, marks source status and preserves partial entry counts", async () => {
+    getPublicRegattas.mockResolvedValue([
+      regatta({ id: "today", name: "Today Final", date: "2026-10-22", endDate: "2026-10-22", scheduleNotes: "Official source status: final." }),
+      regatta({ id: "partial", name: "Partial Provisional", endDate: "2026-10-21", scheduleNotes: "Official source status: provisional." }),
+    ]);
+    vi.mocked(getLandingResultCounts).mockResolvedValue({ today: 24, partial: 20 });
+    const html = renderToStaticMarkup(await HomePage());
+    expect(html).toContain("Today Final");
+    expect(html).toContain("22 Oct 2026");
+    expect(html).toContain("Provisional");
+    expect(html).toContain("Partial import");
+    expect(html).toContain("20 of 24 entries imported");
+    expect(html).toContain("published result tables");
+  });
+
+  it("uses calendar events without requiring race scores and explains claiming with labelled sample data", async () => {
+    getPublicRegattas.mockResolvedValue([]);
+    vi.mocked(getPublicCalendarData).mockResolvedValue({ allRegattas: [regatta({name: "Next Weekend",date: "2026-10-30",endDate: "2026-10-31",raceCount: 0, totalFleetSize: 0, classes: ["Optimist","ILCA 4"]})],resultSheetsByEvent: {} });
+    const html = renderToStaticMarkup(await HomePage());
+    expect(html).toContain("Next Weekend");
+    expect(html).toContain("Optimist · ILCA 4");
+    expect(html).toContain('href="/calendar?q=Next%20Weekend"');
+    expect(html).toContain("Request access");
+    expect(html).toContain("Sample profile · demonstration data");
+    expect(html).toContain('href="/sample"');
+  });
+
+  it("keeps discovery usable when the calendar cannot be safely loaded", async () => {
+    getPublicRegattas.mockResolvedValue([]);
+    vi.mocked(getPublicCalendarData).mockRejectedValue(new Error("deletions unavailable"));
+    const html = renderToStaticMarkup(await HomePage());
+    expect(html).toContain("Upcoming events are temporarily unavailable");
+    expect(html).toContain("Find a sailor profile");
+  });
+
 });

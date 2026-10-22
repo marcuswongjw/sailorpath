@@ -15,9 +15,9 @@ describe("landing totals", () => {
   });
 
   it("keeps the published fallback when the count is missing", () => {
-    expect(formatAthleteCount(0)).toBe("800+");
-    expect(formatAthleteCount(Number.NaN)).toBe("800+");
-    expect(formatRegattaCount(Number.NaN)).toBe("130");
+    expect(formatAthleteCount(0)).toBe("0");
+    expect(formatAthleteCount(Number.NaN)).toBe("—");
+    expect(formatRegattaCount(Number.NaN)).toBe("—");
   });
 
   it("prints the regatta total as a whole number", () => {
