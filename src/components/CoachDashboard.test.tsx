@@ -236,3 +236,31 @@ describe("CoachDashboard", () => {
     expect(screen.getByRole("status")).toHaveTextContent("2 sailors removed from your squad");
   });
 });
+
+describe("coach demo journeys", () => {
+  it("opens all four sample athletes inside the demo without public profile or result links", async () => {
+    const { SAMPLE_COACH_SQUAD_DASHBOARD } = await import("@/lib/sampleCoachDashboard");
+    const user = userEvent.setup();
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    render(<CoachDashboard initialData={SAMPLE_COACH_SQUAD_DASHBOARD} demoMode />);
+    for (const name of ["Kimberly Tan", "Ethan Koh", "Lucas Tan", "Sarah Chen"]) {
+      await user.click(screen.getByRole("button", {name}));
+      expect(screen.getByRole("heading", {name})).toBeInTheDocument();
+      expect(document.querySelector('a[href^="/sailors/"]')).toBeNull();
+      expect(document.querySelector('a[href*="/regattas/"]')).toBeNull();
+      if (name === "Kimberly Tan") expect(screen.getByRole("link", {name: /view sample profile/i})).toHaveAttribute("href", "/sample");
+      else expect(screen.getByText("Sample athlete · demonstration data")).toBeInTheDocument();
+      await user.click(screen.getByRole("button", {name: "Close sailor details"}));
+    }
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+  it("compares sample athletes on the demo page", async () => {
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} demoMode />);
+    await user.click(screen.getByLabelText("Select Alyssa Wong for comparison"));
+    await user.click(screen.getByLabelText("Select Kevin Ho for comparison"));
+    expect(screen.getByRole("link", {name: /compare/i})).toHaveAttribute("href", "#demo-comparison");
+    expect(screen.getByRole("region", {name: "Sample sailor comparison"})).toHaveTextContent("Alyssa Wong");
+    expect(screen.getByRole("region", {name: "Sample sailor comparison"})).toHaveTextContent("Kevin Ho");
+  });
+});

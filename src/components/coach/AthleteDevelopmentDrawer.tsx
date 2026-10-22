@@ -19,6 +19,7 @@ import { fleetPillClass } from "@/components/sailor-profile/helpers";
 
 type AthleteDevelopmentDrawerProps = {
   sailor: CoachSquadMember;
+  demoMode?: boolean;
   onClose: () => void;
   onSaveNote: (note: string, visibility: "coach_only" | "shared") => Promise<void>;
   onAddRecord: (payload: {
@@ -98,6 +99,7 @@ function VisibilityToggle({
 
 export function AthleteDevelopmentDrawer({
   sailor,
+  demoMode = false,
   onClose,
   onSaveNote,
   onAddRecord,
@@ -234,12 +236,14 @@ export function AthleteDevelopmentDrawer({
             <p className={`mt-0.5 truncate text-xs ${MUTED}`}>
               {sailor.sailNumber} · {sailor.club}
             </p>
-            <Link
-              href={`/sailors/${sailor.handle}`}
-              className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-racing-orange)] transition"
-            >
-              View public profile &rarr;
-            </Link>
+            {(!demoMode || sailor.handle === "kimberly-t") ? (
+              <Link
+                href={demoMode ? "/sample" : `/sailors/${sailor.handle}`}
+                className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-racing-orange)] transition"
+              >
+                {demoMode ? "View sample profile" : "View public profile"} &rarr;
+              </Link>
+            ) : <p className={`mt-1.5 text-[11px] ${MUTED}`}>Sample athlete · demonstration data</p>}
           </div>
 
           <button
@@ -363,12 +367,11 @@ export function AthleteDevelopmentDrawer({
                       <div key={result.resultId} className={`${NESTED} p-4`}>
                         <div className="flex justify-between gap-3">
                           <div>
-                            <Link
-                              href={regattaHref}
-                              className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)] transition`}
-                            >
-                              {result.regattaName}
-                            </Link>
+                            {demoMode ? <p className={`text-sm font-bold ${INK}`}>{result.regattaName}</p> : (
+                              <Link href={regattaHref} className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)] transition`}>
+                                {result.regattaName}
+                              </Link>
+                            )}
                             <p className={`mt-0.5 text-[10px] ${MUTED}`}>{result.date}</p>
                           </div>
                           <p className={`text-sm font-black ${INK}`}>

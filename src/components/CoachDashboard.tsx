@@ -124,7 +124,7 @@ export function CoachDashboard({
     return (a.ranking ?? 9999) - (b.ranking ?? 9999) || a.name.localeCompare(b.name);
   }), [data.members, sortKey]);
   const compareHref = selected.length === 2 && compareFleet
-    ? `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
+    ? demoMode ? "#demo-comparison" : `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
     : null;
 
   async function mutate(method: "POST" | "PATCH" | "DELETE", payload: { sailorId?: string; sailorIds?: string[]; name?: string }) {
@@ -643,6 +643,19 @@ export function CoachDashboard({
             </div>
           </div>
 
+          {demoMode && compareHref && (
+            <section id="demo-comparison" aria-label="Sample sailor comparison" className="scroll-mt-40 border-b border-[var(--sp-cool-veil)] p-4">
+              <h2 className="font-bold text-[var(--sp-harbour-shadow)]">Sample sailor comparison</h2>
+              <p className="mt-1 text-xs text-[var(--sp-slate-soft)]">Demonstration data for the selected sailors.</p>
+              <div className="mt-3 overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead><tr><th scope="col" className="p-2">Sailor</th><th scope="col" className="p-2">Fleet rank</th><th scope="col" className="p-2">Best 3 score</th></tr></thead>
+                  <tbody>{selectedMembers.map((member) => member && <tr key={member.sailorId}><th scope="row" className="p-2">{member.name}</th><td className="p-2">{member.ranking ?? "—"}</td><td className="p-2">{member.bestThreeOfFive ?? "—"}</td></tr>)}</tbody>
+                </table>
+              </div>
+            </section>
+          )}
+
           {data.members.length > 0 && (
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 px-4 py-2 text-xs">
               <div className="flex items-center gap-3">
@@ -708,9 +721,15 @@ export function CoachDashboard({
                     aria-label={`Select ${member.name} for comparison`} className="h-4 w-4 accent-[var(--sp-racing-orange)]" />
                   <div className="min-w-0 text-left">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Link href={`/sailors/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
-                        {member.name}
-                      </Link>
+                      {demoMode ? (
+                        <button type="button" onClick={() => openSailor(member.sailorId)} className="truncate text-left text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
+                          {member.name}
+                        </button>
+                      ) : (
+                        <Link href={`/sailors/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
+                          {member.name}
+                        </Link>
+                      )}
                       {member.fleet && <span className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${fleetPillClass(member.fleet)}`}>{member.fleet} #{member.ranking}</span>}
                       {member.squadStatus && <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[11px] font-bold text-[var(--sp-charcoal-slate)]">{member.squadStatus}</span>}
                     </div>
@@ -892,6 +911,7 @@ export function CoachDashboard({
         <AthleteDevelopmentDrawer
           key={activeSailor.sailorId}
           sailor={activeSailor}
+          demoMode={demoMode}
           onClose={() => setActiveSailorId(null)}
           onSaveNote={handleSaveNote}
           onAddRecord={handleAddRecord}
