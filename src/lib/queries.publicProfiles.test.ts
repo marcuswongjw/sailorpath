@@ -3,16 +3,17 @@ import { PGlite } from '@electric-sql/pglite';
 import { drizzle } from 'drizzle-orm/pglite';
 import { getTableColumns, getTableName } from 'drizzle-orm';
 import { regattas, regattaResults, regattaResultParticipants, regattaRaceResults, sailors } from '@/db/schema';
-const mock = vi.hoisted(() => ({db: undefined as unknown}));
+const mock = vi.hoisted(() => ({db: undefined as unknown, reads: [] as string[]}));
 vi.mock('next/cache', () => ({unstable_cache: (fn: unknown) => fn}));
 vi.mock('@/db', () => ({
   db: new Proxy({}, {get: (_,key) => {const value = (mock.db as Record<PropertyKey,unknown>)[key];return typeof value === 'function' ? value.bind(mock.db) : value;}}),
-  withDatabaseRetry: (fn: () => unknown) => fn(),
+  withDatabaseRetry: (fn: () => unknown, options?: {label?: string}) => { mock.reads.push(options?.label || "read"); return fn(); },
+  isMissingDatabaseSchemaError: () => false,
   ensureCoreSchema: vi.fn(), formatDbError: (error: Error) => error.message,
   isRetryableDatabaseConnectionError: () => false,
   DbUnavailableError: class extends Error {},
 }));
-import { getResultsForSailor } from './queries';
+import { getResultsForSailor, getResultsForRegatta } from './queries';
 let database: PGlite;
 afterEach(async () => { await database.close(); });
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
@@ -38,6 +39,11 @@ describe('public sailor results query', () => {
       await database.query(`insert into regatta_results (id,regatta_id,sailor_id,rank,verification_status) values ($1,$2,$3,3,'self_reported')`,[id(20+index),id(10+index),sailorId]);
       if (crew) await database.query(`insert into regatta_result_participants (id,regatta_result_id,sailor_id,source_name,display_order,role) values ($1,$2,$3,'Crew sailor',1,'crew')`,[id(30+index),id(20+index),id(1)]);
     }
+    await database.query(`insert into regatta_race_results (regatta_result_id,race_number,score,discarded,raw_value) values ($1,1,3,true,'(3)')`, [id(20)]);
+    mock.reads.length = 0;
+    const scorecard = await getResultsForRegatta(id(10));
+    expect(mock.reads).toEqual(['public.results.entries','public.results.participants','public.results.races']);
+    expect(scorecard[0].raceResults?.[0]).toMatchObject({ score: 3, discarded: true, rawValue: '(3)' });
     const rows = await getResultsForSailor(id(1));
     expect(rows.map(row=>row.regattaSlug).sort()).toEqual(['log-personal','published-crew','published-direct']);
     expect(rows.find(row=>row.regattaSlug==='published-crew')?.participants).toHaveLength(1);

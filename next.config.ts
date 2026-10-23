@@ -62,6 +62,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: { "/*": ["./src/assets/fonts/Montserrat-Bold.ttf"] },
   // Optimist Gold/Silver prerender the full board. Preview builds exceed
   // Next's 60s default and the deploy is marked failed.
   staticPageGenerationTimeout: 180,

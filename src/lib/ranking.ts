@@ -119,6 +119,7 @@ export interface RegattaRecord {
   } | null;
   /** Whether the regatta has published results in SailorPath DB */
   hasResults?: boolean | null;
+  importedEntryCount?: number;
 }
 
 /** Default series class for SG Gold/Silver boards */

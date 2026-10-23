@@ -1,3 +1,4 @@
+import { resultSourceStatus } from "@/lib/resultCardStatus";
 import { withPublishedEventSlices } from "@/lib/regattaEventGroups";
 import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
@@ -305,6 +306,7 @@ async function DbSlicePanel({
         {" · "}
         {nationalRankingLabel(regatta)}
       </p>
+      <p className="text-xs font-semibold text-harbour">{resultSourceStatus(regatta)}</p>
       {regatta.officialResultsUrl && (
         <div>
           <EventLinkChip href={regatta.officialResultsUrl} label="Official Results" />

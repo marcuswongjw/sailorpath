@@ -1,3 +1,4 @@
+import { singleFlight } from "@/lib/singleFlight";
 import { publicProfileRegattaCondition } from "@/lib/publicProfileResults";
 import { missingFallbackSheets } from "@/lib/resultSheetIdentity";
 import { unstable_cache } from "next/cache";
@@ -13,6 +14,7 @@ import {
   db,
   DbUnavailableError,
   formatDbError,
+  isMissingDatabaseSchemaError,
   ensureCoreSchema,
   isRetryableDatabaseConnectionError,
   withDatabaseRetry,
@@ -272,21 +274,17 @@ function isDatabaseUuid(value: string): boolean {
   );
 }
 
-async function withDb<T>(fn: () => Promise<T>): Promise<T> {
+async function withDb<T>(fn: () => Promise<T>, label = "public.read"): Promise<T> {
   try {
-    return await withDatabaseRetry(fn);
+    return await withDatabaseRetry(fn, { label });
   } catch (e) {
     const errStr = formatDbError(e);
-    if (
-      /venue|end_date|nor_url|registration_url|is_selection_trial|organizer|schedule_notes|regatta_race_results|does not exist/i.test(
-        errStr
-      )
-    ) {
+    if (isMissingDatabaseSchemaError(e)) {
       try {
         if (typeof ensureCoreSchema === "function") {
           await ensureCoreSchema();
         }
-        return await withDatabaseRetry(fn);
+        return await withDatabaseRetry(fn, { label });
       } catch (retryErr) {
         throw new DbUnavailableError(formatDbError(retryErr));
       }
@@ -392,9 +390,13 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
             )
           )
           .orderBy(desc(regattas.date));
-    const mapped: RegattaRecord[] = rows.map((row) =>
-      mapRegattaRow(row.regatta, { slug: row.eventSlug, name: row.eventName })
-    );
+    const counts = await db.select({ regattaId: regattaResults.regattaId, count: sql<number>`count(*)::int` })
+      .from(regattaResults).groupBy(regattaResults.regattaId);
+    const countBySheet = new Map(counts.map((row) => [row.regattaId, row.count]));
+    const mapped: RegattaRecord[] = rows.map((row) => ({
+      ...mapRegattaRow(row.regatta, { slug: row.eventSlug, name: row.eventName }),
+      importedEntryCount: countBySheet.get(row.regatta.id) ?? 0,
+    }));
     mapped.push(...missingFallbackSheets(mapped, ILCA6_STATIC_REGATTAS));
     mapped.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     return mapped;
@@ -513,8 +515,8 @@ async function loadResultsForRegatta(
   regattaId: string
 ): Promise<PublicRegattaResult[]> {
   try {
-    const results = await withDb(async () => {
-      const rowsPromise = db
+    const results = await singleFlight(`regatta-results:${regattaId}`, async () => {
+      const readRows = () => db
         .select({
           resultId: regattaResults.id,
           sailorId: regattaResults.sailorId,
@@ -545,7 +547,7 @@ async function loadResultsForRegatta(
         .where(eq(regattaResults.regattaId, regattaId))
         .orderBy(asc(regattaResults.rank));
 
-      const participantsPromise = db
+      const readParticipants = () => db
         .select({
           resultId: regattaResultParticipants.regattaResultId,
           id: regattaResultParticipants.id,
@@ -571,7 +573,7 @@ async function loadResultsForRegatta(
           asc(regattaResultParticipants.displayOrder)
         );
 
-      const raceRowsPromise = db
+      const readRaces = () => db
         .select({
           regattaResultId: regattaRaceResults.regattaResultId,
           raceNumber: regattaRaceResults.raceNumber,
@@ -592,15 +594,15 @@ async function loadResultsForRegatta(
         )
         .catch((error) => {
           // Keep public regatta pages available during rollout before migration 044.
-          if (/regatta_race_results|does not exist|relation/i.test(formatDbError(error))) {
+          if (isMissingDatabaseSchemaError(error) && /regatta_race_results/i.test(formatDbError(error))) {
             return [];
           }
           throw error;
         });
 
-      const rows = await rowsPromise;
-      const participantRows = await participantsPromise;
-      const raceRows = await raceRowsPromise;
+      const rows = await withDb(async () => await readRows(), "public.results.entries");
+      const participantRows = await withDb(async () => await readParticipants(), "public.results.participants");
+      const raceRows = await withDb(async () => await readRaces(), "public.results.races");
       const racesByResult = new Map<string, typeof raceRows>();
       for (const race of raceRows) {
         const list = racesByResult.get(race.regattaResultId) || [];
@@ -670,7 +672,7 @@ async function loadResultsForRegatta(
 
 const getCachedResultsForRegatta = unstable_cache(
   loadResultsForRegatta,
-  ["public-regatta-results-v2"],
+  ["public-regatta-results-v3-read-budgets"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS],
@@ -814,7 +816,7 @@ export async function getResultsForSailor(sailorId: string) {
       }));
     } catch (error) {
       // Keep profiles available during rollout before migration 044 is applied.
-      if (/regatta_race_results|does not exist|relation/i.test(formatDbError(error))) {
+      if (isMissingDatabaseSchemaError(error) && /regatta_race_results/i.test(formatDbError(error))) {
         return results.map((result) => ({
           ...result,
           verificationStatus: displayedResultVerificationStatus({
@@ -996,8 +998,8 @@ async function computeIlcaRankingsBoard(
 ) {
   const asOf = asOfYmd || todayYmdSg();
   try {
-    return await withDb(async () => {
-      const sailorRows = await db
+    return await singleFlight(`ilca-board:${boatClass}:${asOf}:${intakeYear}:${restrictToNationalList}`, async () => {
+      const sailorRows = await withDb(async () => await db
           .select({
             id: sailors.id,
             name: sailors.name,
@@ -1029,8 +1031,8 @@ async function computeIlcaRankingsBoard(
                   )
               )`
             )
-          );
-      const regattaRows = await db
+          ), "public.ilca.sailorRows");
+      const regattaRows = await withDb(async () => await db
           .select({
             id: regattas.id,
             name: regattas.name,
@@ -1058,7 +1060,7 @@ async function computeIlcaRankingsBoard(
                 sql`lower(coalesce(${regattas.boatClass}, '')) like '%radial%'`
               )
             )
-          );
+          ), "public.ilca.regattaRows");
 
       const ilcaSailors = sailorRows.map((s) => ({
         id: s.id,
@@ -1166,7 +1168,7 @@ async function computeIlcaRankingsBoard(
       const resultRows =
         databaseScoringIds.length === 0
           ? []
-          : await db
+          : await withDb(async () => await db
               .select({
                 sailorId: regattaResults.sailorId,
                 regattaId: regattaResults.regattaId,
@@ -1176,7 +1178,7 @@ async function computeIlcaRankingsBoard(
                 isOverseasCommitment: regattaResults.isOverseasCommitment,
               })
               .from(regattaResults)
-              .where(inArray(regattaResults.regattaId, databaseScoringIds));
+              .where(inArray(regattaResults.regattaId, databaseScoringIds)), "public.ilca.resultRows");
 
       const ilcaResults = restoreBestNettHiddenAsDnsByRegatta(resultRows).map((row) => ({
         sailorId: row.sailorId,
@@ -1436,8 +1438,8 @@ function publishedOptimistBoatClassSql() {
 }
 
 async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
-  return withDb(async () => {
-    const sailorRows = await db
+  return singleFlight("optimist-snapshot", async () => {
+    const sailorRows = await withDb(async () => await db
         .select({
           id: sailors.id,
           name: sailors.name,
@@ -1460,8 +1462,8 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
           natSquadStatusJul27: sailors.natSquadStatusJul27,
           nationalSquadStatus: sailors.nationalSquadStatus,
         })
-        .from(sailors);
-    const regattaRows = await db
+        .from(sailors), "public.optimist.sailorRows");
+    const regattaRows = await withDb(async () => await db
         .select({
           id: regattas.id,
           name: regattas.name,
@@ -1480,7 +1482,7 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
             eq(regattas.status, PUBLIC_RANKING_REGATTA_STATUS),
             publishedOptimistBoatClassSql()
           )
-        );
+        ), "public.optimist.regattaRows");
 
     const sailorsOut = sailorRows.map((row) => ({
       ...row,
@@ -1509,7 +1511,7 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
     const resRows =
       regattaIds.length === 0
         ? []
-        : await db
+        : await withDb(async () => await db
             .select({
               sailorId: regattaResults.sailorId,
               regattaId: regattaResults.regattaId,
@@ -1520,7 +1522,7 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
               isOverseasCommitment: regattaResults.isOverseasCommitment,
             })
             .from(regattaResults)
-            .where(inArray(regattaResults.regattaId, regattaIds));
+            .where(inArray(regattaResults.regattaId, regattaIds)), "public.optimist.resRows");
 
     const resultsOut: RegattaResultRecord[] = restoreBestNettHiddenAsDnsByRegatta(
       resRows.map((row) => ({
@@ -1545,7 +1547,7 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
  */
 const getCachedPublishedOptimistSnapshot = unstable_cache(
   queryPublishedOptimistSnapshot,
-  ["published-optimist-snapshot-v2"],
+  ["published-optimist-snapshot-v3-read-budgets"],
   {
     revalidate: PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS],
@@ -1644,7 +1646,7 @@ export function latestRankingRegattaIdForFleet(
  */
 export const getCachedPublicRegattas = unstable_cache(
   async (): Promise<RegattaRecord[]> => listRegattas(),
-  ["public-regattas-list-v6"],
+  ["public-regattas-list-v7-coverage"],
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 

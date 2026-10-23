@@ -19,6 +19,9 @@ export function loadShareFont(): Promise<ArrayBuffer> {
   if (!fontData) {
     fontData = readFile(join(process.cwd(), "src/assets/fonts/Montserrat-Bold.ttf")).then((bytes) => {
       return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
+    }).catch((error) => {
+      fontData = null;
+      throw error;
     });
   }
   return fontData;
@@ -30,15 +33,14 @@ export function ogText(value: string, max: number): string {
   return `${clean.slice(0, Math.max(0, max - 3)).trimEnd()}...`;
 }
 
-async function fonts() {
-  return [
-    {
-      name: "Montserrat",
-      data: await loadShareFont(),
-      weight: 700 as const,
-      style: "normal" as const,
-    },
-  ];
+async function fontOptions() {
+  try {
+    return { fontFamily: "Montserrat", fonts: [{ name: "Montserrat", data: await loadShareFont(), weight: 700 as const, style: "normal" as const }] };
+  } catch {
+    // next/og bundles a default font; a missing brand asset must not break sharing.
+    console.warn("[share-image] Brand font unavailable; using bundled default.");
+    return { fontFamily: "sans-serif", fonts: undefined };
+  }
 }
 
 function BrandMark() {
@@ -60,6 +62,7 @@ export function profileShareSubtitle(
 }
 
 export async function renderProfileShareImage(share: SailorShareModel) {
+  const font = await fontOptions();
   const name = ogText(share.name, 48) || "Sailor";
   const subtitle = profileShareSubtitle(share);
   const best = ogText(share.bestResult || "Results on SailorPath", 90);
@@ -73,7 +76,7 @@ export async function renderProfileShareImage(share: SailorShareModel) {
           flexDirection: "column",
           backgroundColor: TEAL,
           color: "white",
-          fontFamily: "Montserrat",
+          fontFamily: font.fontFamily,
           padding: "64px 72px",
         }}
       >
@@ -93,13 +96,14 @@ export async function renderProfileShareImage(share: SailorShareModel) {
         </div>
       </div>
     ),
-    { ...SHARE_IMAGE_SIZE, fonts: await fonts() }
+    { ...SHARE_IMAGE_SIZE, fonts: font.fonts }
   );
 }
 
 export async function renderResultShareImage(
   sheet: Pick<ResultSheetShare, "regattaName" | "classLabel" | "datesText" | "top3">
 ) {
+  const font = await fontOptions();
   const regatta = ogText(sheet.regattaName, 70) || "SailorPath results";
   const classLabel = ogText(sheet.classLabel, 60) || "Results";
   const dates = ogText(sheet.datesText || "", 60);
@@ -113,7 +117,7 @@ export async function renderResultShareImage(
           flexDirection: "column",
           backgroundColor: TEAL,
           color: "white",
-          fontFamily: "Montserrat",
+          fontFamily: font.fontFamily,
           padding: "56px 72px",
         }}
       >
@@ -141,6 +145,6 @@ export async function renderResultShareImage(
         )}
       </div>
     ),
-    { ...SHARE_IMAGE_SIZE, fonts: await fonts() }
+    { ...SHARE_IMAGE_SIZE, fonts: font.fonts }
   );
 }

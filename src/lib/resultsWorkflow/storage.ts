@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import { eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
-import { regattaEvents, regattas, resultImportMonitors, resultImportScans } from "@/db/schema";
+import { regattaEvents, regattas, resultImportMonitors, resultImportScans, resultMonitorRuns } from "@/db/schema";
 import { todayYmdSg } from "@/lib/datesSg";
 import { scanEventResults } from "./scan";
 import type { ResultsScan } from "./types";
@@ -23,7 +23,7 @@ export async function resultsImportReport(eventId: string) {
   return row?.report ?? null;
 }
 
-export async function runResultsScan(eventId?: string, dryRun = false) {
+async function scanResultsBatch(eventId?: string, dryRun = false) {
   const today = todayYmdSg();
   const oldest = new Date(`${today}T00:00:00Z`);
   oldest.setUTCDate(oldest.getUTCDate() - 45);
@@ -38,7 +38,12 @@ export async function runResultsScan(eventId?: string, dryRun = false) {
   const outcomes = [];
   for (const event of targets) {
     if (!event.eventUrl) throw new Error("Add an event or results URL first.");
-    const report = await scanEventResults(event.eventUrl);
+    let report: ResultsScan;
+    try {
+      report = await scanEventResults(event.eventUrl);
+    } catch {
+      report = { checkedAt: new Date().toISOString(), status: "error", sources: [], searchedUrls: [event.eventUrl], errors: ["Source scan failed. Retry the event check."], pdfCorroboration: "not_found_in_checked_pages" };
+    }
     if (!dryRun) {
       await db.transaction(async (tx) => {
         // Serialise overlapping cron/manual writes for this event.
@@ -62,4 +67,33 @@ export async function saveResultsMonitor(eventId: string, eventUrl: string, enab
   if (!event) throw new Error("Regatta event not found.");
   await db.insert(resultImportMonitors).values({ eventId, eventUrl: eventUrl || null, enabled })
     .onConflictDoUpdate({ target: resultImportMonitors.eventId, set: { eventUrl: eventUrl || null, enabled, checkedAt: null, report: null } });
+}
+
+export async function runResultsScan(eventId?: string, dryRun = false) {
+  if (dryRun) return scanResultsBatch(eventId, true);
+  const [run] = await db.insert(resultMonitorRuns).values({ trigger: eventId ? "manual" : "scheduled", status: "running" }).returning({ id: resultMonitorRuns.id });
+  try {
+    const result = await scanResultsBatch(eventId);
+    const failedCount = result.outcomes.filter((o) => o.report.status === "error").length;
+    await db.update(resultMonitorRuns).set({ status: failedCount ? "failed" : "succeeded", finishedAt: new Date(), checkedCount: result.outcomes.length, failedCount }).where(eq(resultMonitorRuns.id, run.id));
+    return result;
+  } catch (error) {
+    await db.update(resultMonitorRuns).set({ status: "failed", finishedAt: new Date() }).where(eq(resultMonitorRuns.id, run.id));
+    throw error;
+  }
+}
+
+export async function resultsMonitorHealth() {
+  const recentRuns = await db.select().from(resultMonitorRuns).orderBy(desc(resultMonitorRuns.startedAt)).limit(10);
+  const [lastSuccess] = await db.select().from(resultMonitorRuns).where(eq(resultMonitorRuns.status, "succeeded")).orderBy(desc(resultMonitorRuns.startedAt)).limit(1);
+  const [lastFailure] = await db.select().from(resultMonitorRuns).where(eq(resultMonitorRuns.status, "failed")).orderBy(desc(resultMonitorRuns.startedAt)).limit(1);
+  return {
+    enabled: process.env.RESULTS_MONITOR_ENABLED === "true",
+    schedulerConfigured: Boolean(process.env.CRON_SECRET),
+    schedule: "Daily at 09:00 Singapore time",
+    batchLimit: 3,
+    lookbackDays: 45,
+    publication: "admin_review" as const,
+    recentRuns: recentRuns.map((run) => ({ ...run, status: run.status === "running" && Date.now() - run.startedAt.getTime() > 10 * 60 * 1000 ? "interrupted" : run.status })), lastSuccess: lastSuccess ?? null, lastFailure: lastFailure ?? null,
+  };
 }

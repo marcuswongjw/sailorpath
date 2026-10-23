@@ -9,14 +9,18 @@ type Sheet = { id: string; name: string; date: string; boatClass: string; divisi
 type Event = { id: string; slug: string; name: string; startDate: string; endDate: string | null; eventUrl: string; enabled: boolean; checkedAt: string | null; report: ResultsScan | null; lastStatus?: string | null; sheets: Sheet[] };
 const button = "min-h-11 rounded border border-slate-300 px-3 py-2 text-sm font-semibold disabled:opacity-40";
 const AdminRegattaImport = dynamic(() => import("./AdminRegattaImport").then((m) => m.AdminRegattaImport));
-async function readInventory(signal?: AbortSignal): Promise<Event[]> {
+type Run = { id: string; trigger: string; status: string; startedAt: string; finishedAt: string | null; checkedCount: number; failedCount: number };
+type Health = { enabled: boolean; schedulerConfigured: boolean; schedule: string; batchLimit: number; lookbackDays: number; recentRuns: Run[]; lastSuccess: Run | null; lastFailure: Run | null };
+const runTime = (run: Run | null) => run ? new Date(run.finishedAt || run.startedAt).toLocaleString("en-SG", { timeZone: "Asia/Singapore" }) : "None recorded";
+async function readInventory(signal?: AbortSignal): Promise<{ events: Event[]; health?: Health }> {
   const res = await fetch("/api/admin/result-imports", { cache: "no-store", signal });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Could not load regattas.");
-  return data.events;
+  return data;
 }
 
 export function ResultsImportInbox() {
+  const [health, setHealth] = useState<Health | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [selected, setSelected] = useState("");
   const [url, setUrl] = useState("");
@@ -32,11 +36,12 @@ export function ResultsImportInbox() {
   const report = preview || event?.report;
 
   async function load() {
-    setEvents(await readInventory());
+    const data = await readInventory();
+    setEvents(data.events); setHealth(data.health ?? null);
   }
   useEffect(() => {
     const controller = new AbortController();
-    readInventory(controller.signal).then(setEvents).catch((e) => { if (!controller.signal.aborted) setMessage(e.message); });
+    readInventory(controller.signal).then((data) => { setEvents(data.events); setHealth(data.health ?? null); }).catch((e) => { if (!controller.signal.aborted) setMessage(e.message); });
     return () => controller.abort();
   }, []);
 
@@ -76,6 +81,15 @@ export function ResultsImportInbox() {
     <h1 className="text-2xl font-bold">Results import inbox</h1>
     <p>Check event websites after racing ends, extract result tables, then review and import into the correct class sheet. Publication stays under your control during the pilot.</p>
     <p className="text-sm text-slate-600">Scheduled checks cover events that ended in the past 45 days. PDFs and sites that load results dynamically need source review. An event link is a discovery starting point; it does not establish that results are final.</p>
+    {health && <section aria-label="Results monitor status" className="space-y-2 rounded-xl border bg-white p-4">
+      <h2 className="font-semibold">Scheduled source checks: {health.enabled && health.schedulerConfigured ? "Enabled" : "Disabled"}</h2>
+      <p className="text-sm">{health.schedule} · Up to {health.batchLimit} events per run · Past {health.lookbackDays} days.</p>
+      {!health.enabled && <p className="text-sm">Global monitoring is switched off. Event checkboxes take effect when it is enabled.</p>}
+      {!health.schedulerConfigured && <p className="text-sm text-red-700">The scheduler credential is missing. Scheduled requests cannot run.</p>}
+      <p className="text-sm">Last successful check: {runTime(health.lastSuccess)}. Last failed check: {runTime(health.lastFailure)}.</p>
+      <p className="text-sm">Checks discover sources only. Imports are saved as drafts; publication requires administrator review.</p>
+      <details><summary>Recent checks</summary>{health.recentRuns.length ? <ul>{health.recentRuns.map((run) => <li key={run.id} className="py-1 text-sm">{runTime(run)} · {run.trigger} · {run.status} · {run.checkedCount} events checked · {run.failedCount} source failures</li>)}</ul> : <p className="text-sm">No runs recorded yet. History starts with this release.</p>}</details>
+    </section>}
     <label className="block">Regatta
       <select aria-label="Regatta" className="mt-1 block w-full rounded border p-3" value={selected} disabled={busy} onChange={(e) => selectEvent(e.target.value)}>
         <option value="">Choose an event</option>

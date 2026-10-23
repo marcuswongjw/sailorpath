@@ -13,6 +13,7 @@ export {
   type DatabaseRetryOptions,
   getDatabaseUrlMeta,
   formatDbError,
+  isMissingDatabaseSchemaError,
   DbUnavailableError,
 } from "./client";
 export { ensureCoreSchema } from "./ensureSchema";

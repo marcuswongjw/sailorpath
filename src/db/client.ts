@@ -315,7 +315,8 @@ export type DatabaseRetryOptions = {
 
 /** Read-only recovery: retire only failed leases and share one total budget. */
 export async function withDatabaseRetry<T>(operation: () => Promise<T>, options?: DatabaseRetryOptions): Promise<T> {
-  const deadline = Date.now() + (options?.timeoutMs ?? DATABASE_OPERATION_TIMEOUT_MS);
+  const started = Date.now();
+  const deadline = started + (options?.timeoutMs ?? DATABASE_OPERATION_TIMEOUT_MS);
   const parentSignal = readContext.getStore()?.signal;
   for (let attempt = 0; attempt < 2; attempt += 1) {
     const remaining = deadline - Date.now();
@@ -323,7 +324,15 @@ export async function withDatabaseRetry<T>(operation: () => Promise<T>, options?
     try {
       return await withDatabaseDeadline(operation, attempt === 0 ? Math.ceil(remaining / 2) : remaining, options?.signal);
     } catch (error) {
-      if (options?.signal?.aborted || parentSignal?.aborted || attempt === 1 || !isRetryableDatabaseConnectionError(formatDbError(error))) throw error;
+      const remainingMs = Math.max(0, deadline - Date.now());
+      if (options?.signal?.aborted || parentSignal?.aborted || attempt === 1 || remainingMs === 0 || !isRetryableDatabaseConnectionError(formatDbError(error))) {
+        if (!options?.signal?.aborted && !parentSignal?.aborted) console.warn("[sailorpath] Database read failed", {
+          label: options?.label ?? "db.read", elapsedMs: Date.now() - started, attempt: attempt + 1,
+          waiting: databasePool.waitingCount, total: databasePool.totalCount, idle: databasePool.idleCount,
+          error: formatDbError(error).slice(0, 240),
+        });
+        throw error;
+      }
       console.warn("[sailorpath] Retrying database read", {
         label: options?.label ?? "db.read",
         remainingMs: Math.max(0, deadline - Date.now()),
@@ -383,6 +392,11 @@ export function formatDbError(e: unknown): string {
   }
   // Long Drizzle SQL text must not truncate the underlying connection code.
   return parts.reverse().join(" | ").slice(0, 600);
+}
+
+/** SQL text can mention a table/column during any error; only missing-schema errors qualify. */
+export function isMissingDatabaseSchemaError(error: unknown): boolean {
+  return /code=(?:42703|42P01)\b|(?:column|relation) [^\n|]*does not exist/i.test(formatDbError(error));
 }
 
 export class DbUnavailableError extends Error {

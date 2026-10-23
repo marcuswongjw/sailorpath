@@ -222,6 +222,8 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
                           <p className={`text-[11px] truncate ${isSelected ? "text-orange-100" : "text-slate-500"}`}>
                             {reg.date} {reg.venue ? `· ${reg.venue}` : ""}
                           </p>
+                          {reg.sourceStatus && <p className="text-[11px]">{reg.sourceStatus}</p>}
+                          {reg.coverageLabel && <p className="text-[11px]">{reg.coverageLabel}</p>}
                         </div>
                         <ChevronRight className={`h-4 w-4 shrink-0 ${isSelected ? "text-white" : "text-slate-300"}`} />
                       </Link>

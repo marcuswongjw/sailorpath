@@ -407,6 +407,8 @@ export function SearchClient({
                   <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
                 </div>
 
+                {reg.sourceStatus && <p className="mt-2 text-xs font-semibold text-harbour">{reg.sourceStatus}</p>}
+                {reg.coverageLabel && <p className="mt-1 text-xs text-slate-600">{reg.coverageLabel}</p>}
                 <div className="mt-3 flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-slate-500">
                   <span className="inline-flex items-center gap-1">
                     <Calendar className="h-3 w-3 text-slate-400" />

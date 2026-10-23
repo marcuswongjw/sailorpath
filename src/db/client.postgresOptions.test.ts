@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { postgresPoolOptions, toSupabaseTransactionPooler, isRetryableDatabaseConnectionError, formatDbError } from "./client";
+import { postgresPoolOptions, toSupabaseTransactionPooler, isRetryableDatabaseConnectionError, formatDbError, isMissingDatabaseSchemaError } from "./client";
 
 describe("PostgreSQL transport", () => {
   it("keeps a small bounded pool without opting into pipelining or named statements", () => {
@@ -29,6 +29,12 @@ describe("PostgreSQL transport", () => {
       expect(isRetryableDatabaseConnectionError(error)).toBe(true);
     }
     expect(isRetryableDatabaseConnectionError("invalid input syntax for type uuid")).toBe(false);
+  });
+  it("does not mistake query table names for missing schema during a timeout", () => {
+    const timeout = new Error('Failed query: select venue from regatta_race_results', { cause: new Error("DB_OPERATION_TIMEOUT") });
+    expect(isMissingDatabaseSchemaError(timeout)).toBe(false);
+    expect(isMissingDatabaseSchemaError(new Error('column "venue" does not exist'))).toBe(true);
+    expect(isMissingDatabaseSchemaError(new Error('relation "regatta_race_results" does not exist'))).toBe(true);
   });
   it("retains the underlying connection failure when the SQL wrapper is long", () => {
     const error = new Error(`Failed query: ${"column ".repeat(200)}`, { cause: new Error("Connection terminated unexpectedly") });

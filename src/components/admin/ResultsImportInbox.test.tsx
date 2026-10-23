@@ -11,6 +11,16 @@ const event = {
 };
 afterEach(() => { vi.unstubAllGlobals(); });
 describe("results import pilot", () => {
+  it("shows global disabled status independently of enabled event checkboxes", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ events: [event], health: {
+      enabled: false, schedulerConfigured: true, schedule: "Daily at 09:00 Singapore time", batchLimit: 3, lookbackDays: 45,
+      lastSuccess: null, lastFailure: { startedAt: "2026-10-22T01:00:00Z", finishedAt: "2026-10-22T01:01:00Z" }, recentRuns: [],
+    } })));
+    render(<ResultsImportInbox />);
+    expect(await screen.findByRole("heading", { name: "Scheduled source checks: Disabled" })).toBeInTheDocument();
+    expect(screen.getByText(/Global monitoring is switched off/)).toBeInTheDocument();
+    expect(screen.getByText(/Last successful check: None recorded/)).toBeInTheDocument();
+  });
   it("requires a destination and source review before handing scores to the draft importer", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => Response.json({ events: [event] })));
     render(<ResultsImportInbox />);

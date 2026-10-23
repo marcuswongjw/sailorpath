@@ -424,6 +424,17 @@ export const resultImportScans = pgTable("result_import_scans", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({ eventFingerprint: unique().on(table.eventId, table.fingerprint) })).enableRLS();
 
+/** Private scheduler/manual execution history, including failures and empty runs. */
+export const resultMonitorRuns = pgTable("result_monitor_runs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  trigger: text("trigger").notNull(),
+  status: text("status").notNull(),
+  startedAt: timestamp("started_at", { withTimezone: true }).defaultNow().notNull(),
+  finishedAt: timestamp("finished_at", { withTimezone: true }),
+  checkedCount: integer("checked_count").notNull().default(0),
+  failedCount: integer("failed_count").notNull().default(0),
+}).enableRLS();
+
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),

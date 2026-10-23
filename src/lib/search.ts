@@ -1,3 +1,4 @@
+import { resultCoverageLabel, resultSourceStatus } from "@/lib/resultCardStatus";
 import { unstable_cache } from "next/cache";
 import { asc } from "drizzle-orm";
 import { db, withDatabaseRetry } from "@/db";
@@ -122,6 +123,8 @@ export type RegattaSearchResult = {
   division?: string | null;
   raceCount?: number | null;
   totalFleetSize?: number | null;
+  coverageLabel?: string | null;
+  sourceStatus?: string | null;
   href: string;
   score: number;
 };
@@ -468,6 +471,8 @@ export async function searchRegattasEnhanced(query: string, limit = 15): Promise
         division: reg.division,
         raceCount: reg.raceCount,
         totalFleetSize: reg.totalFleetSize,
+        coverageLabel: reg.importedEntryCount ? resultCoverageLabel(reg) : null,
+        sourceStatus: reg.importedEntryCount ? resultSourceStatus(reg) : null,
         href: classResultsHref(reg),
         score,
       });

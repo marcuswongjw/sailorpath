@@ -1,5 +1,5 @@
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { resultsImportInventory, resultsImportReport, runResultsScan, saveResultsMonitor } from "@/lib/resultsWorkflow/storage";
+import { resultsMonitorHealth, resultsImportInventory, resultsImportReport, runResultsScan, saveResultsMonitor } from "@/lib/resultsWorkflow/storage";
 import { resultsUrl } from "@/lib/resultsWorkflow/fetchSource";
 import { asUuid } from "@/lib/validate";
 
@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       if (!parsed.ok) return Response.json({ error: "Invalid event." }, { status: 400 });
       return Response.json({ report: await resultsImportReport(parsed.value) }, { headers: { "Cache-Control": "private, no-store" } });
     }
-    return Response.json({ events: await resultsImportInventory() }, { headers: { "Cache-Control": "private, no-store" } });
+    return Response.json({ events: await resultsImportInventory(), health: await resultsMonitorHealth() }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) { return jsonError(error); }
 }
 export async function POST(request: Request) {
