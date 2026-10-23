@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
 import { UserPlus } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -169,6 +169,20 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     showUnclaimedBanner,
   } = useSailorProfileState(props);
 
+  const pendingResultFocus = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (sectionTab !== "results" || !pendingResultFocus.current) return;
+    const row = document.getElementById(`profile-result-${pendingResultFocus.current}`);
+    if (!row) return;
+    pendingResultFocus.current = null;
+    row.focus({ preventScroll: true });
+    row.scrollIntoView?.({
+      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      block: "start",
+    });
+  }, [sectionTab, expandedRegattaId]);
+
   useEffect(() => {
     if (claimPanelOpen && canClaim && claimStatus !== "pending") {
       document.getElementById("profile-claim-form")?.scrollIntoView({
@@ -188,59 +202,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           You are viewing the public profile. Private notes and equipment are hidden.
         </div>
       )}
-      {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
-      {showUnclaimedBanner && (
-        <div className="rounded-2xl border border-racing-orange/30 bg-warm-white p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-racing-orange" />
-              Is this you? Claim your profile
-            </p>
-            <p className="text-[13px] text-slate-soft mt-1 leading-snug">
-              Link as sailor or parent to unlock logbook, privacy controls, race notes, and equipment tracking.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              if (demoMode) {
-                onDemoClaim?.();
-                return;
-              }
-              if (!isLoggedIn) {
-                router.push(
-                  `/login?next=${encodeURIComponent(
-                    `/${displaySailor.handle || ""}`
-                  )}`
-                );
-                return;
-              }
-              setClaimPanelOpen(true);
-            }}
-            className="shrink-0 sp-primary inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white shadow-sm"
-          >
-            <UserPlus className="h-3.5 w-3.5" />
-            Claim this profile
-          </button>
-        </div>
-      )}
-
-      {/* Claim panel */}
-      {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
-        <section id="profile-claim-form" aria-label="Claim sailor profile" className="scroll-mt-28">
-          <ClaimPanel
-            sailorId={initialSailor.id}
-            sailorName={displaySailor.name}
-            sailNumber={displaySailor.sailNumber}
-            onClose={() => setClaimPanelOpen(false)}
-            onResult={(status, msg) => {
-              setClaimStatus(status);
-              setClaimMsg(msg);
-            }}
-          />
-        </section>
-      )}
-
       {/* Coach squad context strip (demo) */}
       {demoMode && demoRole === "coach" && (
         <div className="rounded-2xl border border-harbour/25 bg-aqua-mist/50 px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-charcoal shadow-xs">
@@ -323,6 +284,59 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         followControl={props.followControl}
       />
 
+      {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
+      {showUnclaimedBanner && (
+        <div className="rounded-2xl border border-racing-orange/30 bg-warm-white p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-racing-orange" />
+              Your profile or your child’s?
+            </p>
+            <p className="text-[13px] text-slate-soft mt-1 leading-snug">
+              Request sailor or parent access to manage the logbook, privacy controls, race notes and equipment. We review requests before granting access.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (demoMode) {
+                onDemoClaim?.();
+                return;
+              }
+              if (!isLoggedIn) {
+                router.push(
+                  `/login?next=${encodeURIComponent(
+                    `/sailors/${displaySailor.handle || ""}`
+                  )}`
+                );
+                return;
+              }
+              setClaimPanelOpen(true);
+            }}
+            className="shrink-0 sp-secondary inline-flex min-h-11 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-semibold"
+          >
+            <UserPlus className="h-3.5 w-3.5" aria-hidden />
+            Request profile access
+          </button>
+        </div>
+      )}
+
+      {/* Claim panel */}
+      {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
+        <section id="profile-claim-form" aria-label="Claim sailor profile" className="scroll-mt-28">
+          <ClaimPanel
+            sailorId={initialSailor.id}
+            sailorName={displaySailor.name}
+            sailNumber={displaySailor.sailNumber}
+            onClose={() => setClaimPanelOpen(false)}
+            onResult={(status, msg) => {
+              setClaimStatus(status);
+              setClaimMsg(msg);
+            }}
+          />
+        </section>
+      )}
+
       {/* Owner editor */}
       {ownerView && editing && (
         <ProfileOwnerEditor
@@ -385,6 +399,11 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           classLabel={selectedClassLabel}
           hideStanding={onBoardClass}
           onNavigateTab={(tab) => setSectionTab(tab as ProfileSectionTab)}
+          onOpenResult={(regattaId) => {
+            pendingResultFocus.current = regattaId;
+            setExpandedRegattaId(regattaId);
+            setSectionTab("results");
+          }}
         />
       )}
 

@@ -105,6 +105,8 @@ describe("HeroAthleteCard", () => {
 
     expect(screen.getByLabelText("4 of 68")).toBeInTheDocument();
     expect(screen.getByText("Gold fleet series")).toBeInTheDocument();
+    expect(screen.getByText("Optimist series rank for this ranking cycle.")).toBeVisible();
+    expect(screen.queryByRole("button", { name: "What this rank means" })).toBeNull();
     expect(screen.queryByText("Status")).not.toBeInTheDocument();
     expect(screen.queryByText("Active competitor")).not.toBeInTheDocument();
     expect(screen.getByText("Regattas")).toBeInTheDocument();

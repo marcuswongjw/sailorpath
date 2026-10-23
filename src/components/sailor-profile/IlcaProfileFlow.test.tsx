@@ -1,5 +1,5 @@
 /** @vitest-environment jsdom */
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 vi.mock('next/navigation', () => ({useRouter: () => ({push:vi.fn(),replace:vi.fn(),refresh:vi.fn()})}));
@@ -10,6 +10,14 @@ import { SailorProfileView } from '@/components/SailorProfileView';
 
 const rows = [4,6,7].map(rig => ({id:`rig-${rig}`,regattaId:`rig-${rig}`,regattaSlug:`cup-ilca-${rig}`,regattaName:`Cup for rig ${rig}`,boatClass:`ILCA ${rig}`,regattaDate:`2026-0${rig}-01`,geography:'SGP',rank:rig,fleetSize:20,raceResults:[{raceNumber:1,score:rig,discarded:false}]}));
 describe('ILCA profile rendering', () => {
+  it('opens and focuses the selected recent regatta instead of only changing tabs', async () => {
+    render(<SailorProfileView initialSailor={{id:'mixed',name:'Mixed Rig Sailor',handle:'mixed',nationality:'SGP'}} initialEquipment={{}} initialResults={rows} />);
+    await userEvent.click(screen.getByRole('button',{name:/Cup for rig 7/}));
+    const result = screen.getByRole('group',{name:'Result: Cup for rig 7'});
+    expect(result).toHaveFocus();
+    expect(within(result).getByRole('button',{expanded:true})).toBeInTheDocument();
+    expect(result).toHaveAttribute('id','profile-result-rig-7');
+  });
   it('labels every rig correctly and changes both overview and results when switching class', async () => {
     const user = userEvent.setup();
     render(<SailorProfileView initialSailor={{id:'mixed',name:'Mixed Rig Sailor',handle:'mixed',nationality:'SGP'}} initialEquipment={{}} initialResults={rows} />);

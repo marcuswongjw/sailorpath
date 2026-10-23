@@ -17,7 +17,6 @@ import {
   BadgeCheck,
   ShieldAlert,
   Medal,
-  Info,
 } from "lucide-react";
 import {
   PROFILE_CARD_CLASS as cardClass,
@@ -167,7 +166,6 @@ export function HeroAthleteCard({
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
-  const [basisOpen, setBasisOpen] = useState(false);
 
   const activeBoatClass: ProfileBoatClass = selectedBoatClass ||
     (standingIsIlca ? profileIlcaClassOf(activeStanding?.boatClass) || "ilca4" : "optimist");
@@ -271,7 +269,7 @@ export function HeroAthleteCard({
           <div className="flex items-start gap-3.5 sm:gap-4.5 min-w-0">
             {/* Avatar */}
             <div className="relative shrink-0">
-              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-gradient-to-br from-harbour to-harbour-shadow border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
+              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
                 {displaySailor.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -622,26 +620,9 @@ export function HeroAthleteCard({
                 <span>{rank.cycleLabel}</span>
               </p>
               )}
-              {rank.hasRank && (
-                <button
-                  type="button"
-                  aria-expanded={basisOpen}
-                  aria-controls="profile-rank-basis"
-                  onClick={() => setBasisOpen((open) => !open)}
-                  className="inline-flex items-center gap-1 rounded-full border border-cool-veil bg-warm-white px-2 py-0.5 text-[12px] font-bold text-harbour hover:bg-aqua-mist"
-                >
-                  <Info className="h-3 w-3" aria-hidden />
-                  What this rank means
-                </button>
-              )}
             </div>
-            {basisOpen && rank.hasRank && (
-              <p
-                id="profile-rank-basis"
-                className="mt-2 text-[13px] leading-relaxed text-charcoal"
-              >
-                {rank.basisDetail}
-              </p>
+            {rank.hasRank && (
+              <p className="mt-2 text-[13px] leading-relaxed text-charcoal">{rank.basisDetail}</p>
             )}
           </div>
 
@@ -711,7 +692,7 @@ export function HeroAthleteCard({
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[13px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[13px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
             >
               {copied ? (
                 <>
@@ -733,7 +714,7 @@ export function HeroAthleteCard({
               !profileClaimed && (
                 <Link
                   href={`/login?next=${encodeURIComponent(
-                    `/${displaySailor.handle || ""}`
+                    `/sailors/${displaySailor.handle || ""}`
                   )}`}
                   className="sp-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white shadow-xs"
                 >
@@ -781,7 +762,7 @@ export function HeroAthleteCard({
                 <button
                   type="button"
                   onClick={onTogglePreviewPublic}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
+                  className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
                     previewPublic
                       ? "border-harbour/40 bg-aqua-mist text-harbour"
                       : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
@@ -800,7 +781,7 @@ export function HeroAthleteCard({
                 <button
                   type="button"
                   onClick={onToggleEditing}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
+                  className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
                     editing
                       ? "border-harbour/40 bg-aqua-mist text-harbour"
                       : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
@@ -813,6 +794,14 @@ export function HeroAthleteCard({
             </div>
           )}
         </div>
+
+        {followControl && (
+          <p className="text-xs leading-5 text-slate-soft">
+            {followControl.disabled
+              ? "You already manage this sailor. Your account has links to the sailing workspace."
+              : `Follow to keep this sailor’s results in your Following feed.${isLoggedIn ? "" : " Sign in to save your follows."}`}
+          </p>
+        )}
 
         {/* Feedback messages */}
         {avatarMsg && (
