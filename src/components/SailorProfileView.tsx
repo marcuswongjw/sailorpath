@@ -183,6 +183,11 @@ export function SailorProfileView(props: SailorProfileViewProps) {
       id="profile-hero"
       className="mx-auto max-w-5xl px-3 sm:px-6 py-6 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-sailcloth text-charcoal overflow-x-clip"
     >
+      {previewPublic && (
+        <div role="status" className="rounded-xl border border-harbour bg-aqua-mist px-4 py-3 text-sm font-semibold text-harbour-shadow">
+          You are viewing the public profile. Private notes and equipment are hidden.
+        </div>
+      )}
       {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
       {showUnclaimedBanner && (
         <div className="rounded-2xl border border-racing-orange/30 bg-warm-white p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">

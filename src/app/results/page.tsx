@@ -1,5 +1,6 @@
 import { eventMatchesQuery } from "@/lib/eventSearch";
-import { resultCoverageLabel, resultSourceStatus } from "@/lib/resultCardStatus";
+import { resultCoverageLabel } from "@/lib/resultCardStatus";
+import { ResultStatus } from "@/components/ResultStatus";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DbOffline } from "@/components/DbOffline";
@@ -121,7 +122,7 @@ export default async function ResultsPage({ searchParams }: Props) {
               </div>
               <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.boatClass || row.division || "Scorecard"}</span>
             </div>
-            <p className="mt-2 text-xs font-semibold text-harbour">{resultSourceStatus(row)}</p>
+            <div className="mt-2"><ResultStatus regatta={row} /></div>
             {resultCoverageLabel(row) && <p className="mt-2 text-sm text-charcoal">{resultCoverageLabel(row)}</p>}
             <p className="mt-3 text-sm text-charcoal">{row.totalFleetSize || 0} sailors in source fleet · {row.raceCount || 0} races</p>
           </Link>

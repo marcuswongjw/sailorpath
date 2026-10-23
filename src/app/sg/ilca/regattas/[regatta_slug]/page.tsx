@@ -119,6 +119,7 @@ export default async function IlcaRegattaDetailPage({
         norUrl={regatta.norUrl}
         officialResultsUrl={regatta.officialResultsUrl}
         officialResultsSourceName={regatta.officialResultsSourceName}
+        scheduleNotes={regatta.scheduleNotes}
       />
       {prizeWinners && (
         <RegattaPrizeWinners
