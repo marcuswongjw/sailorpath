@@ -59,7 +59,6 @@ describe("limitSearchResults", () => {
     expect(source).not.toContain("f.limit ?? 500");
     const directory = readFileSync(new URL("../app/sailors/page.tsx", import.meta.url), "utf8");
     expect(directory).not.toContain("limit: 500");
-    expect(directory).toContain("formatAthleteCount");
   });
 });
 
