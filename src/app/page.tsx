@@ -16,7 +16,6 @@ import type { RegattaRecord } from "@/lib/ranking";
 import {
   ArrowRight,
   ChartNoAxesColumnIncreasing,
-  Check,
   CalendarDays,
   Search,
   Trophy,
@@ -94,7 +93,7 @@ export default async function HomePage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="border-b border-cool-veil">
-        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-3xl px-4 py-10 text-center sm:px-6 sm:py-14 lg:py-16">
           <div className="mx-auto mb-6 inline-block max-w-full rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-balance text-harbour-shadow shadow-xs">
             Sailing results, class standings &amp; sailor profiles
           </div>
@@ -111,67 +110,28 @@ export default async function HomePage() {
             record in one place. Find your next regatta and follow every finish.
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/sailors"
-              className="sp-primary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-8 text-[15px] font-semibold"
-            >
-              Find a sailor profile
-            </Link>
-            <Link href="/results" className="sp-secondary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-6 text-[15px] font-semibold">
-              <Trophy className="h-4 w-4" aria-hidden />
-              Browse published results
-            </Link>
-            <Link href="/rankings" className="text-sm font-semibold text-harbour hover:underline sm:ml-1">
-              View rankings
-            </Link>
-          </div>
-
-          <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13px] sm:text-sm text-slate-soft">
-            {["Free to use", "No credit card", "Results from published race records"].map(
-              (item) => (
-                <span key={item} className="inline-flex items-center gap-1.5">
-                  <Check className="h-4 w-4 text-harbour shrink-0" aria-hidden />
-                  {item}
-                </span>
-              )
-            )}
-          </div>
-
-          <form action="/sailors" className="relative mx-auto mt-6 max-w-lg w-full">
-            <input
-              type="search"
-              name="query"
-              enterKeyHint="search"
-              aria-label="Search sailors"
-              placeholder="Sailor name, sail number, or club"
-              className="w-full min-w-0 rounded-full border border-cool-veil bg-warm-white py-3 sm:py-3.5 pl-4 sm:pl-6 pr-14 text-sm sm:text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
-            />
-            <button
-              type="submit"
-              aria-label="Search"
-              className="absolute right-1.5 sm:right-2 top-1/2 flex h-9 w-9 sm:h-10 sm:w-10 -translate-y-1/2 items-center justify-center rounded-full bg-racing-orange text-white transition-colors hover:bg-racing-deep cursor-pointer"
-            >
-              <Search className="h-4 w-4" aria-hidden />
-            </button>
+          <form action="/sailors" role="search" className="mx-auto mt-7 max-w-xl text-left">
+            <label htmlFor="home-sailor-search" className="mb-2 block text-sm font-semibold text-harbour-shadow">Find a sailor profile</label>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <input
+                id="home-sailor-search"
+                type="search"
+                name="q"
+                enterKeyHint="search"
+                aria-label="Search sailors"
+                placeholder="Sailor name, sail number, or club"
+                className="min-h-12 w-full min-w-0 rounded-xl border border-cool-veil bg-warm-white px-4 py-3 text-base text-charcoal shadow-sm placeholder:text-slate-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour"
+              />
+              <button type="submit" className="sp-primary inline-flex min-h-12 shrink-0 items-center justify-center gap-2 px-5 text-sm font-semibold">
+                <Search className="h-4 w-4" aria-hidden />Find a sailor
+              </button>
+            </div>
+            <p className="mt-2 text-xs leading-5 text-slate-soft">Browse results and public profiles for free. No account needed.</p>
           </form>
-        </div>
-      </section>
-
-
-      {/* ── Stats ───────────────────────────────────────────────────────── */}
-      <section className="bg-sailcloth py-8 sm:py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <dl className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {stats.map(({ value, label }) => (
-              <div key={label} className="sp-card px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
-                <dt className="text-2xl font-bold tabular-nums text-harbour-shadow sm:text-3xl lg:text-4xl">
-                  {value}
-                </dt>
-                <dd className="mt-1.5 text-xs sm:text-sm text-slate-soft leading-snug">{label}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-harbour">
+            <Link href="/results" className="inline-flex min-h-11 items-center gap-2 hover:underline"><Trophy className="h-4 w-4" aria-hidden />Browse published results<ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href="/rankings" className="inline-flex min-h-11 items-center gap-2 hover:underline">View rankings<ArrowRight className="h-4 w-4" aria-hidden /></Link>
+          </div>
         </div>
       </section>
 
@@ -260,6 +220,23 @@ export default async function HomePage() {
           </div> : <p className="mt-6 rounded-xl border border-dashed border-cool-veil p-5 text-sm text-slate-soft">{calendarAvailable ? "No upcoming events are listed right now. Check the calendar for the full schedule." : "Upcoming events are temporarily unavailable. Please check the calendar again shortly."}</p>}
         </div>
       </section>
+
+      {/* ── Stats ───────────────────────────────────────────────────────── */}
+      <section className="bg-sailcloth py-8 sm:py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <dl className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {stats.map(({ value, label }) => (
+              <div key={label} className="sp-card px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+                <dt className="text-2xl font-bold tabular-nums text-harbour-shadow sm:text-3xl lg:text-4xl">
+                  {value}
+                </dt>
+                <dd className="mt-1.5 text-xs sm:text-sm text-slate-soft leading-snug">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
 
       {/* ── Singapore class records ──────────────────────────────────────── */}
       <section className="bg-warm-white py-12 sm:py-16">
