@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 type CalendarPageProps = {
   searchParams?: Promise<{
+    event?: string;
     class?: string;
     view?: string;
     region?: string;
@@ -50,6 +51,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
       initialRegion={searchParams?.region}
       initialSearch={searchParams?.q}
       initialTrialOnly={searchParams?.trials === "1"}
+      initialEvent={searchParams?.event}
       initialClass={initialClass}
       initialTimelineTab={initialTimelineTab}
     />

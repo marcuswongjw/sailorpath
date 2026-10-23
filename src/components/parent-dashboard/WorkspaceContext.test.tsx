@@ -20,6 +20,6 @@ describe("workspace relationship and event context",()=>{
   const document=new DOMParser().parseFromString(html,"text/html");
   const link=[...document.querySelectorAll("a")].find(link=>link.textContent==="Details")!;
   const url=new URL(link.getAttribute("href")!,"https://sailorpath.com");
-  expect(url.searchParams.get("q")).toBe("Eastern Seaboard Regatta 2026");expect(url.searchParams.get("year")).toBe("2026");
+  expect(url.searchParams.get("event")).toBe("eastern-seaboard-regatta-2026");expect(url.searchParams.has("q")).toBe(false);expect(url.searchParams.get("year")).toBe("2026");
  });
 });

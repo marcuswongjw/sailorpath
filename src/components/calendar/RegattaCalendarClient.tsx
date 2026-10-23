@@ -23,6 +23,7 @@ import { matchesRegattaClass, nationalRankingLabel } from "@/lib/calendar/public
 export type RegattaCalendarClientProps = {
   regattas: RegattaRecord[];
   resultSheetsByEvent?: Record<string, RegattaRecord[]>;
+  initialEvent?: string;
   initialClass?: string;
   initialRanking?: string;
   initialYear?: string;
@@ -182,6 +183,7 @@ function downloadIcs(regatta: RegattaRecord) {
 export function RegattaCalendarClient({
   regattas = [],
   resultSheetsByEvent = {},
+  initialEvent = "",
   initialClass = "all",
   initialRanking = "all",
   initialYear = "all",
@@ -191,6 +193,7 @@ export function RegattaCalendarClient({
   initialTimelineTab = "upcoming",
 }: RegattaCalendarClientProps) {
 
+  const [selectedEvent, setSelectedEvent] = useState(initialEvent);
   const [selectedClass, setSelectedClass] = useState<string>(initialClass);
   const [selectedRegion, setSelectedRegion] = useState<string>(initialRegion);
   const [timelineTab, setTimelineTab] = useState<"upcoming" | "past">(
@@ -230,6 +233,10 @@ export function RegattaCalendarClient({
 
   const filteredRegattas = useMemo(() => {
     return activeSource.filter((r) => {
+      if (selectedEvent) {
+        const eventSlug = selectedEvent.trim().toLowerCase();
+        if (r.slug.toLowerCase() !== eventSlug && !(resultSheetsByEvent[r.slug] || []).some((sheet) => sheet.slug.toLowerCase() === eventSlug)) return false;
+      }
       // Region filter
       if (selectedRegion !== "all") {
         const reg = r.region || "Singapore";
@@ -255,20 +262,21 @@ export function RegattaCalendarClient({
 
       return true;
     });
-  }, [activeSource, selectedRegion, selectedClass, filterTrialOnly, searchQuery, selectedYear, canFilterRanking, rankingFilter, resultSheetsByEvent]);
+  }, [activeSource, selectedEvent, selectedRegion, selectedClass, filterTrialOnly, searchQuery, selectedYear, canFilterRanking, rankingFilter, resultSheetsByEvent]);
 
   useEffect(() => {
     const params = new URLSearchParams();
     params.set("view", timelineTab);
     if (selectedClass !== "all") params.set("class", selectedClass);
     if (selectedRegion !== "all") params.set("region", selectedRegion);
+    if (selectedEvent) params.set("event", selectedEvent);
     if (searchQuery) params.set("q", searchQuery);
     if (selectedYear !== "all") params.set("year", selectedYear);
     if (canFilterRanking && rankingFilter !== "all") params.set("ranking", rankingFilter);
     if (filterTrialOnly) params.set("trials", "1");
     const url = `/calendar?${params}`;
     window.history.replaceState(window.history.state, "", url);
-  }, [selectedClass, selectedRegion, timelineTab, searchQuery, filterTrialOnly, selectedYear, canFilterRanking, rankingFilter]);
+  }, [selectedEvent, selectedClass, selectedRegion, timelineTab, searchQuery, filterTrialOnly, selectedYear, canFilterRanking, rankingFilter]);
 
   useEffect(() => {
     const restore = () => {
@@ -276,6 +284,7 @@ export function RegattaCalendarClient({
       setSelectedClass(params.get("class") || "all");
       setSelectedRegion(params.get("region") || "all");
       setTimelineTab(params.get("view") === "past" ? "past" : "upcoming");
+      setSelectedEvent(params.get("event") || "");
       setSearchQuery(params.get("q") || "");
       setFilterTrialOnly(params.get("trials") === "1");
       setSelectedYear(params.get("year") || "all");
@@ -433,6 +442,10 @@ export function RegattaCalendarClient({
         </div>
       </div>
 
+      {selectedEvent && <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[var(--sp-cool-veil)] px-4 py-3 text-sm text-[var(--sp-charcoal)]">
+        <span>Showing the selected regatta</span>
+        <button type="button" onClick={() => setSelectedEvent("")} className="font-semibold text-[var(--sp-harbour-teal)] underline">Show all regattas</button>
+      </div>}
       {/* Regatta Event List */}
       {filteredRegattas.length === 0 ? (
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 sm:p-12 text-center space-y-3 shadow-xs">
@@ -448,6 +461,9 @@ export function RegattaCalendarClient({
               setSelectedRegion("all");
               setFilterTrialOnly(false);
               setSearchQuery("");
+              setSelectedEvent("");
+              setSelectedYear("all");
+              setRankingFilter("all");
             }}
             className="rounded-full bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] border border-[var(--sp-cool-veil)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] pt-1 transition-colors"
           >

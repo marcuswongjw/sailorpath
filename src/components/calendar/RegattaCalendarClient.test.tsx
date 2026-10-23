@@ -177,6 +177,17 @@ describe("RegattaCalendarClient", () => {
     expect(location.search).toContain("q=Changi");
   });
 
+  it("resolves a workspace event identifier despite a changed display title and can clear it", () => {
+    const selected = { ...mockEvents[0], name: "Eastern Seaboard Regatta 2099", slug: "eastern-seaboard-2099" };
+    render(<RegattaCalendarClient regattas={[selected, mockEvents[1]]} initialEvent="eastern-seaboard-2099" initialYear="2099" />);
+    expect(screen.getByText(selected.name)).toBeInTheDocument();
+    expect(screen.queryByText(mockEvents[1].name)).not.toBeInTheDocument();
+    expect(location.search).toContain("event=eastern-seaboard-2099");
+    fireEvent.click(screen.getByRole("button", { name: "Show all regattas" }));
+    expect(screen.getByText(mockEvents[1].name)).toBeInTheDocument();
+    expect(location.search).not.toContain("event=");
+  });
+
   it("filters events when typing in search", () => {
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
