@@ -171,9 +171,17 @@ export function ProfileRegattaRow({
       : null;
 
   return (
-    <div key={regattaId + String(idx)}>
+    <div
+      key={regattaId + String(idx)}
+      id={`profile-result-${regattaId}`}
+      role="group"
+      aria-label={`Result: ${res.regattaName || "Regatta"}`}
+      tabIndex={-1}
+      className="scroll-mt-28 focus-visible:outline-2 focus-visible:outline-harbour"
+    >
       <div
         role={canExpand ? "button" : undefined}
+        aria-expanded={canExpand ? expanded : undefined}
         tabIndex={canExpand ? 0 : undefined}
         onClick={
           canExpand

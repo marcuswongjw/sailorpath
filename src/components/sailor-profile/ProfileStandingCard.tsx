@@ -70,6 +70,10 @@ export function ProfileStandingCard({
         </div>
       </div>
 
+      <p className="mt-3 text-[13px] leading-relaxed text-slate-soft">
+        Best three of five scoring events. {standingIsIlca ? "Higher points are better." : "Lower total scores are better."}
+      </p>
+
       {/* Desktop: 5-column score grid */}
       <div className="mt-4 hidden sm:grid grid-cols-5 gap-2">
         {Array.from({ length: 5 }).map((_, i) => {
