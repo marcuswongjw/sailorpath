@@ -1,5 +1,7 @@
 # Sail-Result 2026 results import
 
+**Updated 22 October 2026:** Per user instruction, all five Optimist Newborn sheets were removed (129 entries/816 scores), along with 36 Newborn-only profiles. The held DOH VINNA result is now attached to Markus Doh Vinna (+1 entry/12 scores). Subsequent identity confirmations attached two Henry results, one Jiahe result and one separate Natidej result. Current batch: **40 sheets, 744 entries, 5,433 race scores across 14 events; 11 entries awaiting identity review.** [Identity update](../identity-resolutions-20261022/report.md). The original import inventory below is retained as historical evidence. [Cleanup report](../newborn-removal-20261022/report.md).
+
 Production data import completed on 22 October 2026 (Singapore time).
 
 **45 published class/fleet sheets across 14 parent events: 868 result entries, 868 participant links and 6,203 individual race scores. Zero inventory or score reconciliation exceptions. 24 ambiguous entries deferred at the user’s request.**

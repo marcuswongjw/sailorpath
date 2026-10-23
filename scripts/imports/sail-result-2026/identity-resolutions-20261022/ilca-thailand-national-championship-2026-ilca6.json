@@ -1,0 +1,169 @@
+{
+  "sheet": {
+    "id": "ea1c3c45-e460-5e1c-9f2a-1ae5c8de611f",
+    "slug": "ilca-thailand-national-championship-2026-ilca6",
+    "name": "ILCA Thailand National Championship 2026 at Royal Varuna Yacht Club — ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 34,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "event": {
+    "id": "d90da686-7b3e-5728-a8f5-e3fb2f06b554",
+    "slug": "ilca-thailand-national-championship-2026",
+    "name": "ILCA Thailand National Championship 2026 at Royal Varuna Yacht Club",
+    "startDate": "2026-01-24",
+    "endDate": "2026-01-26",
+    "venue": "Royal Varuna Yacht Club",
+    "organizer": "Royal Varuna Yacht Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7"
+    ],
+    "existing": false
+  },
+  "officialSource": {
+    "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+    "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+    "type": "link",
+    "visuallyReviewed": false,
+    "provisional": true,
+    "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check.",
+    "pages": [],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+  },
+  "results": [
+    {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 13,
+      "name": "HENRY ATICHAT WIEDMANN",
+      "sailOrBoardNumber": "220235",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 100.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "13th",
+        "class": "ILCA 6",
+        "sailno": "220235",
+        "club": "RVYC",
+        "helmname": "HENRY ATICHAT WIEDMANN",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "6.0",
+        "r2": "(15.0)",
+        "r3": "12.0",
+        "r4": "7.0",
+        "r5": "14.0",
+        "r6": "10.0",
+        "r7": "15.0",
+        "r8": "9.0",
+        "r9": "12.0",
+        "total": "100.0",
+        "nett": "85.0"
+      }
+    }
+  ],
+  "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+  "resultId": "b9e46038-23b5-526f-bc4b-be19334ea5ef",
+  "createProfile": false,
+  "newHandle": "natidej-termtakulwattana-sr26-8e54eb",
+  "expectedProfileName": "Henry Wiedmann",
+  "expectedBefore": 33,
+  "identityDecision": "User confirmed on 22 October 2026: official name HENRY ATICHAT WIEDMANN is the same sailor as Henry Wiedmann. Existing profile fields preserved; historic sail and nationality retained on this result."
+}

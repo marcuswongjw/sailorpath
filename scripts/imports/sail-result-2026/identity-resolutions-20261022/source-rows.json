@@ -1,0 +1,639 @@
+[
+  {
+    "sheet": {
+      "id": "28e32d7a-2de6-5628-a0b6-6797f3bc0eb2",
+      "slug": "egat-and-yrat-regatta-2026-ilca4",
+      "name": "EGAT and YRAT Regatta 2026 — ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "raceCount": 6,
+      "totalFleetSize": 10,
+      "countsForRanking": false,
+      "status": "published",
+      "entryType": "solo",
+      "minParticipants": 1,
+      "maxParticipants": 1
+    },
+    "event": {
+      "id": "22bea0ad-b225-5532-a930-e0a5bd33da17",
+      "slug": "egat-and-yrat-regatta-2026",
+      "name": "EGAT and YRAT Regatta 2026",
+      "startDate": "2026-07-04",
+      "endDate": "2026-07-08",
+      "venue": "Rajjaprabha Dam, Surat Thani",
+      "organizer": "Yacht Racing Association of Thailand",
+      "classes": [
+        "ILCA 4",
+        "ILCA 6",
+        "Optimist"
+      ],
+      "existing": false
+    },
+    "officialSource": {
+      "id": 197632,
+      "url": "https://www.racingrulesofsailing.org/documents/197632",
+      "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+      "type": "pdf",
+      "visuallyReviewed": true,
+      "provisional": false,
+      "page": 2,
+      "pages": [
+        2
+      ],
+      "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+    },
+    "result": {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 6,
+      "name": "NATIDEJ TERMTAKULWATTANA",
+      "sailOrBoardNumber": "2",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "6th",
+        "class": "ILCA 4",
+        "sailno": "2",
+        "club": "YRAT",
+        "helmname": "NATIDEJ TERMTAKULWATTANA",
+        "helmagegroup": "2012",
+        "helmsex": "MALE",
+        "r1": "6.0",
+        "r2": "7.0",
+        "r3": "1.0",
+        "r4": "3.0",
+        "r5": "8.0",
+        "r6": "6.0",
+        "total": "31.0",
+        "nett": "31.0"
+      }
+    }
+  },
+  {
+    "sheet": {
+      "id": "cd6b9360-31a0-5164-9f2d-9c08ac532d61",
+      "slug": "thailand-international-sailing-championships-2026-ilca6",
+      "name": "Thailand International Sailing Championships 2026 — ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "raceCount": 12,
+      "totalFleetSize": 12,
+      "countsForRanking": false,
+      "status": "published",
+      "entryType": "solo",
+      "minParticipants": 1,
+      "maxParticipants": 1
+    },
+    "event": {
+      "id": "9e1dff93-655a-41f4-97c9-e52dbfc02c7b",
+      "slug": "thailand-international-sailing-championships-2026",
+      "name": "Thailand International Sailing Championships 2026",
+      "startDate": "2026-04-15",
+      "endDate": "2026-04-18",
+      "venue": "Samudara Kila Yachting Center, Sattahip, Chonburi, Thailand",
+      "organizer": "Thailand International Sailing Championships Organising Authority",
+      "classes": [
+        "ILCA 4",
+        "ILCA 6",
+        "ILCA 7",
+        "Optimist"
+      ],
+      "existing": true
+    },
+    "officialSource": {
+      "id": 183990,
+      "url": "https://www.racingrulesofsailing.org/documents/183990",
+      "title": "Official thailand-international-sailing-championships-2026 result document 183990",
+      "type": "pdf",
+      "visuallyReviewed": true,
+      "provisional": false,
+      "page": 2,
+      "pages": [
+        2
+      ],
+      "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+    },
+    "result": {
+      "eventKey": "thailand-international-sailing-championships-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 183990,
+        "url": "https://www.racingrulesofsailing.org/documents/183990",
+        "title": "Official thailand-international-sailing-championships-2026 result document 183990",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 8,
+      "name": "HENRY ATICHAT WIEDMANN",
+      "sailOrBoardNumber": "THA 220235",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 99.0,
+      "nettScore": 78.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "track": "E1580",
+        "class": "ILCA6",
+        "sailno": "THA 220235",
+        "club": "RVYC",
+        "helmname": "HENRY ATICHAT WIEDMANN",
+        "nat": "",
+        "yob": "2010",
+        "sex": "MALE",
+        "r1": "8.0",
+        "r2": "(12.0)",
+        "r3": "(9.0)",
+        "r4": "8.0",
+        "r5": "8.0",
+        "r6": "8.0",
+        "r7": "8.0",
+        "r8": "8.0",
+        "r9": "5.0",
+        "r10": "8.0",
+        "r11": "9.0",
+        "r12": "8.0",
+        "total": "99.0",
+        "nett": "78.0"
+      }
+    }
+  },
+  {
+    "sheet": {
+      "id": "5d430ead-f17f-5932-88aa-d94ef5257fc5",
+      "slug": "trat-regatta-2026-optimist-gold",
+      "name": "2026 Trat Regatta — Optimist Gold",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "raceCount": 7,
+      "totalFleetSize": 25,
+      "countsForRanking": false,
+      "status": "published",
+      "entryType": "solo",
+      "minParticipants": 1,
+      "maxParticipants": 1
+    },
+    "event": {
+      "id": "5da83b8f-2063-5f39-bb69-f19cfcda1e04",
+      "slug": "trat-regatta-2026",
+      "name": "2026 Trat Regatta",
+      "startDate": "2026-04-04",
+      "endDate": "2026-04-06",
+      "venue": "Oceanfront Pier, Laem Sok, Trat",
+      "organizer": "Yacht Racing Association of Thailand",
+      "classes": [
+        "ILCA 4",
+        "ILCA 6",
+        "ILCA 7",
+        "Optimist"
+      ],
+      "existing": false
+    },
+    "officialSource": {
+      "id": 182440,
+      "url": "https://www.racingrulesofsailing.org/documents/182440",
+      "title": "Official 2026-trat-regatta result document 182440",
+      "type": "pdf",
+      "visuallyReviewed": true,
+      "provisional": false,
+      "page": 1,
+      "pages": [
+        1
+      ],
+      "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+    },
+    "result": {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 17,
+      "name": "JIAHE LIU",
+      "sailOrBoardNumber": "246",
+      "club": "",
+      "school": null,
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 114.0,
+      "nettScore": 89.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "17th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "246",
+        "club": "",
+        "helmname": "JIAHE LIU",
+        "nat": "",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1q1": "17.0",
+        "r2q2": "18.0",
+        "r3q3": "3.0",
+        "r4f1": "20.0",
+        "r5f2": "(25.0)",
+        "r6f3": "19.0",
+        "r7f4": "12.0",
+        "total": "114.0",
+        "nett": "89.0"
+      }
+    }
+  },
+  {
+    "sheet": {
+      "id": "ea1c3c45-e460-5e1c-9f2a-1ae5c8de611f",
+      "slug": "ilca-thailand-national-championship-2026-ilca6",
+      "name": "ILCA Thailand National Championship 2026 at Royal Varuna Yacht Club — ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "raceCount": 9,
+      "totalFleetSize": 34,
+      "countsForRanking": false,
+      "status": "published",
+      "entryType": "solo",
+      "minParticipants": 1,
+      "maxParticipants": 1
+    },
+    "event": {
+      "id": "d90da686-7b3e-5728-a8f5-e3fb2f06b554",
+      "slug": "ilca-thailand-national-championship-2026",
+      "name": "ILCA Thailand National Championship 2026 at Royal Varuna Yacht Club",
+      "startDate": "2026-01-24",
+      "endDate": "2026-01-26",
+      "venue": "Royal Varuna Yacht Club",
+      "organizer": "Royal Varuna Yacht Club",
+      "classes": [
+        "ILCA 4",
+        "ILCA 6",
+        "ILCA 7"
+      ],
+      "existing": false
+    },
+    "officialSource": {
+      "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+      "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+      "type": "link",
+      "visuallyReviewed": false,
+      "provisional": true,
+      "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check.",
+      "pages": [],
+      "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+    },
+    "result": {
+      "eventKey": "ilca-thailand-national-championship-2026-at-royal-varuna-yacht-club",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "url": "https://rvycresults.com/Results/2026/ILCA2026/Results.html?refresh=2&speed=70&step=2",
+        "title": "ILCA Thailand National Championship 23–26 January 2026 — Royal Varuna Yacht Club",
+        "type": "link",
+        "visuallyReviewed": false,
+        "provisional": true,
+        "pdfSearch": "Host event page, RRS notice board 12108 and web search; no official result PDF. Official HTML read via web tool; direct site has robot check."
+      },
+      "rank": 13,
+      "name": "HENRY ATICHAT WIEDMANN",
+      "sailOrBoardNumber": "220235",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 100.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R9"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "13th",
+        "class": "ILCA 6",
+        "sailno": "220235",
+        "club": "RVYC",
+        "helmname": "HENRY ATICHAT WIEDMANN",
+        "nat": "THA",
+        "gender": "MALE",
+        "yob": "2010",
+        "r1": "6.0",
+        "r2": "(15.0)",
+        "r3": "12.0",
+        "r4": "7.0",
+        "r5": "14.0",
+        "r6": "10.0",
+        "r7": "15.0",
+        "r8": "9.0",
+        "r9": "12.0",
+        "total": "100.0",
+        "nett": "85.0"
+      }
+    }
+  }
+]

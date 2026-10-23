@@ -1,0 +1,202 @@
+{
+  "sheet": {
+    "id": "cd6b9360-31a0-5164-9f2d-9c08ac532d61",
+    "slug": "thailand-international-sailing-championships-2026-ilca6",
+    "name": "Thailand International Sailing Championships 2026 — ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 12,
+    "totalFleetSize": 12,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "event": {
+    "id": "9e1dff93-655a-41f4-97c9-e52dbfc02c7b",
+    "slug": "thailand-international-sailing-championships-2026",
+    "name": "Thailand International Sailing Championships 2026",
+    "startDate": "2026-04-15",
+    "endDate": "2026-04-18",
+    "venue": "Samudara Kila Yachting Center, Sattahip, Chonburi, Thailand",
+    "organizer": "Thailand International Sailing Championships Organising Authority",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": true
+  },
+  "officialSource": {
+    "id": 183990,
+    "url": "https://www.racingrulesofsailing.org/documents/183990",
+    "title": "Official thailand-international-sailing-championships-2026 result document 183990",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 2,
+    "pages": [
+      2
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+  },
+  "results": [
+    {
+      "eventKey": "thailand-international-sailing-championships-2026",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "source": {
+        "id": 183990,
+        "url": "https://www.racingrulesofsailing.org/documents/183990",
+        "title": "Official thailand-international-sailing-championships-2026 result document 183990",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 8,
+      "name": "HENRY ATICHAT WIEDMANN",
+      "sailOrBoardNumber": "THA 220235",
+      "club": "RVYC",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 99.0,
+      "nettScore": 78.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceRaceLabel": "R9"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R10"
+        },
+        {
+          "raceNumber": 11,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceRaceLabel": "R11"
+        },
+        {
+          "raceNumber": 12,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R12"
+        }
+      ],
+      "sourceMetadata": {
+        "no": "8th",
+        "track": "E1580",
+        "class": "ILCA6",
+        "sailno": "THA 220235",
+        "club": "RVYC",
+        "helmname": "HENRY ATICHAT WIEDMANN",
+        "nat": "",
+        "yob": "2010",
+        "sex": "MALE",
+        "r1": "8.0",
+        "r2": "(12.0)",
+        "r3": "(9.0)",
+        "r4": "8.0",
+        "r5": "8.0",
+        "r6": "8.0",
+        "r7": "8.0",
+        "r8": "8.0",
+        "r9": "5.0",
+        "r10": "8.0",
+        "r11": "9.0",
+        "r12": "8.0",
+        "total": "99.0",
+        "nett": "78.0"
+      }
+    }
+  ],
+  "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+  "resultId": "b85181b3-6937-5520-9173-0aada581052a",
+  "createProfile": false,
+  "newHandle": "natidej-termtakulwattana-sr26-8e54eb",
+  "expectedProfileName": "Henry Wiedmann",
+  "expectedBefore": 10,
+  "identityDecision": "User confirmed on 22 October 2026: official name HENRY ATICHAT WIEDMANN is the same sailor as Henry Wiedmann. Existing profile fields preserved; historic sail and nationality retained on this result."
+}

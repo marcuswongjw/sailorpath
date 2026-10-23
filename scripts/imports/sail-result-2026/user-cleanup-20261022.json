@@ -1,0 +1,214 @@
+{
+  "sailorIds": [
+    "8be18336-f5b0-5bc5-997a-a00dc81ed922",
+    "30da5d7d-7f5f-551b-a0a0-76076643ee47",
+    "d7be9dbe-392a-54b7-ad48-ae5c2613feed",
+    "0beb80e2-278d-5bee-9dac-6acb3b8bff82",
+    "e5524ab4-3e31-5604-8b1a-ba33034756aa",
+    "78011f4c-bd38-57b1-9dac-669f8e5e5526",
+    "20594379-d5e6-5f3e-b8f6-1c2af4908315",
+    "c6cd1022-1325-516a-823c-c3a99a67d455",
+    "f136e4db-dae9-50d4-8459-8d1b79a985af",
+    "586f049f-8f51-50fe-9aa0-c059c6898071",
+    "982f681b-af4b-5cdd-80e6-9380f284ce41",
+    "76374cc7-be36-5143-880d-1779dc7a53a2",
+    "17c13540-e04c-5d2b-8ec6-bd5a1b475ec6",
+    "ce999b81-8f03-5556-b78d-81300e737d53",
+    "bd4a51a9-7ed5-5f79-81fa-5c511c8a0a72",
+    "971f3527-fc85-5e9f-aad3-993742229caa",
+    "233c25af-3e1d-593a-99fe-d25c350b1fd1",
+    "8a225df5-574d-57e3-a92d-b4fb75a8d6d7",
+    "b47d2495-8950-5246-88fa-99fa5c61bc36",
+    "f21f34c1-831b-5741-86e9-69f0e52b225c",
+    "b860b67e-137f-5431-8999-95b4dd0eda8f",
+    "6e94e448-7722-544e-92a9-8beca38ddea7",
+    "0eb4cb6d-934d-5d3e-a98a-a44ff7b8d742",
+    "47eb911f-e51b-594a-ad91-6bfd78b5939a",
+    "86b82054-80df-5443-b5d4-4c1b316fcf78",
+    "57467dad-0b2e-55d3-bcbd-46d9bb133e83",
+    "5dd67de5-43db-51a0-88cb-c72972deae1a",
+    "6e26ac2d-e434-590d-8c32-8e93c605b28c",
+    "3a5bc9cf-c5e9-55cf-89e1-3f123bc68e2c",
+    "5a205e8b-e5a6-5406-b787-97668a1a2804",
+    "3d967ede-676b-5724-9cd9-e857385e28ff",
+    "4da76e02-e513-561f-a7af-49f7e6c09397",
+    "f730d58b-22ea-506d-8ed9-6645664b66c1",
+    "e52c6b86-d4e3-5145-afac-bad6bd28d5b5",
+    "7e51de5f-6b97-5d93-a475-97f40fba1856",
+    "9a2aeec3-d9de-50ff-bbc8-a67744324963"
+  ],
+  "sheetIds": [
+    "45a98623-d723-54a1-8539-3e3a193918ad",
+    "7e6e9324-db52-5a8a-9a0c-b37d1b916975",
+    "ac68a5e4-9297-538a-9a1d-b92489c244a2",
+    "9b937415-fcd7-5fe6-8ada-729af5d05baa",
+    "418e92bf-5b38-5151-aeb9-e0d8f964ebd0"
+  ],
+  "result": {
+    "eventKey": "acdc-cup-international-sailing-championship-2026",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "source": {
+      "id": 200613,
+      "url": "https://www.racingrulesofsailing.org/documents/200613",
+      "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+      "type": "pdf",
+      "visuallyReviewed": true,
+      "provisional": false,
+      "page": 1
+    },
+    "rank": 4,
+    "name": "DOH VINNA",
+    "sailOrBoardNumber": "209947",
+    "club": "HHYC",
+    "school": null,
+    "nationality": "HKG",
+    "gender": "M",
+    "officialBirthYear": 2014,
+    "sourceBirthYear": "2014",
+    "grossScore": 102.0,
+    "nettScore": 62.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0",
+        "sourceRaceLabel": "R1"
+      },
+      {
+        "raceNumber": 2,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0",
+        "sourceRaceLabel": "R2"
+      },
+      {
+        "raceNumber": 3,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0",
+        "sourceRaceLabel": "R3"
+      },
+      {
+        "raceNumber": 4,
+        "score": 26.0,
+        "code": "UFD",
+        "discarded": true,
+        "raw": "(26.0 UFD)",
+        "sourceRaceLabel": "R4"
+      },
+      {
+        "raceNumber": 5,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0",
+        "sourceRaceLabel": "R5"
+      },
+      {
+        "raceNumber": 6,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0",
+        "sourceRaceLabel": "R6"
+      },
+      {
+        "raceNumber": 7,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0",
+        "sourceRaceLabel": "R7"
+      },
+      {
+        "raceNumber": 8,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0",
+        "sourceRaceLabel": "R8"
+      },
+      {
+        "raceNumber": 9,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0",
+        "sourceRaceLabel": "R9"
+      },
+      {
+        "raceNumber": 10,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0",
+        "sourceRaceLabel": "R10"
+      },
+      {
+        "raceNumber": 11,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1.0",
+        "sourceRaceLabel": "R11"
+      },
+      {
+        "raceNumber": 12,
+        "score": 14.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(14.0)",
+        "sourceRaceLabel": "R12"
+      }
+    ],
+    "sourceMetadata": {
+      "no": "4th",
+      "track": "E1637",
+      "class": "ILCA 4",
+      "sailno": "209947",
+      "club": "HHYC",
+      "helmname": "DOH VINNA",
+      "nat": "",
+      "yob": "2014",
+      "sex": "Male",
+      "r1": "6.0",
+      "r2": "4.0",
+      "r3": "6.0",
+      "r4": "(26.0 UFD)",
+      "r5": "5.0",
+      "r6": "4.0",
+      "r7": "10.0",
+      "r8": "8.0",
+      "r9": "9.0",
+      "r10": "9.0",
+      "r11": "1.0",
+      "r12": "(14.0)",
+      "total": "102.0",
+      "nett": "62.0"
+    }
+  },
+  "sailorId": "1a1c5ed6-69d0-4738-aaf7-007b9cdfaccf",
+  "resultId": "71b79b46-2b20-5d79-b8b8-ac77f451cda7",
+  "sheetId": "7165c5b6-367c-5c33-bb0f-451e9c253528",
+  "officialSource": {
+    "id": 200613,
+    "url": "https://www.racingrulesofsailing.org/documents/200613",
+    "title": "Official acdc-cup-international-sailing-championship-2026 result document 200613",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1,
+      2
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled.",
+    "secondaryUrl": "https://sail-result.com/result_detail.html?event=ACDC%20Cup%20International%20Sailing%20Championship%202026"
+  },
+  "backupSha256": "6afbba0c39a6dbb46b5fbbb254b58970d9cb68046ef5b54037a7ee607aca6282"
+}

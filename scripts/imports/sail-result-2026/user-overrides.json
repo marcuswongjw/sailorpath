@@ -1,0 +1,39 @@
+{
+  "status": "applied",
+  "date": "2026-10-22",
+  "instruction": "Exclude Optimist Newborn from SailorPath; delete profiles with results exclusively in that division. DOH VINNA is Markus Doh Vinna.",
+  "removedDivision": "Newborn",
+  "removedClassContext": "Optimist",
+  "removedSheets": 5,
+  "removedResults": 129,
+  "removedRaceScores": 816,
+  "deletedProfiles": 36,
+  "retainedMixedFleetProfiles": 41,
+  "resolvedSourceName": "DOH VINNA",
+  "canonicalSailorId": "1a1c5ed6-69d0-4738-aaf7-007b9cdfaccf",
+  "remainingEntries": 744,
+  "remainingSheets": 40,
+  "remainingRaceScores": 5433,
+  "remainingPendingEntries": 11,
+  "identityResolutions": {
+    "HENRY ATICHAT WIEDMANN": {
+      "decision": "same",
+      "canonicalName": "Henry Wiedmann",
+      "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+      "entries": 2
+    },
+    "JIAHE LIU": {
+      "decision": "same",
+      "canonicalName": "JiaHe Liu",
+      "sailorId": "e1a6517e-a545-5518-ab52-d34c4a13abf4",
+      "entries": 1
+    },
+    "NATIDEJ TERMTAKULWATTANA": {
+      "decision": "different",
+      "canonicalName": "Natidej Termtakulwattana",
+      "sailorId": "8e54ebe5-8bbe-573d-9534-fcb24aba07e9",
+      "distinctFromSailorId": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+      "entries": 1
+    }
+  }
+}

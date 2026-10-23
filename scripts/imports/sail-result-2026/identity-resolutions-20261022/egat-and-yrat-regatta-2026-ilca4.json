@@ -1,0 +1,145 @@
+{
+  "sheet": {
+    "id": "28e32d7a-2de6-5628-a0b6-6797f3bc0eb2",
+    "slug": "egat-and-yrat-regatta-2026-ilca4",
+    "name": "EGAT and YRAT Regatta 2026 — ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 10,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "event": {
+    "id": "22bea0ad-b225-5532-a930-e0a5bd33da17",
+    "slug": "egat-and-yrat-regatta-2026",
+    "name": "EGAT and YRAT Regatta 2026",
+    "startDate": "2026-07-04",
+    "endDate": "2026-07-08",
+    "venue": "Rajjaprabha Dam, Surat Thani",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "officialSource": {
+    "id": 197632,
+    "url": "https://www.racingrulesofsailing.org/documents/197632",
+    "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 2,
+    "pages": [
+      2
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+  },
+  "results": [
+    {
+      "eventKey": "egat-and-yrat-regatta-2026",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "source": {
+        "id": 197632,
+        "url": "https://www.racingrulesofsailing.org/documents/197632",
+        "title": "Official egat-and-yrat-regatta-2026 result document 197632",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 2
+      },
+      "rank": 6,
+      "name": "NATIDEJ TERMTAKULWATTANA",
+      "sailOrBoardNumber": "2",
+      "club": "YRAT",
+      "school": null,
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceRaceLabel": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceRaceLabel": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceRaceLabel": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceRaceLabel": "R6"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "6th",
+        "class": "ILCA 4",
+        "sailno": "2",
+        "club": "YRAT",
+        "helmname": "NATIDEJ TERMTAKULWATTANA",
+        "helmagegroup": "2012",
+        "helmsex": "MALE",
+        "r1": "6.0",
+        "r2": "7.0",
+        "r3": "1.0",
+        "r4": "3.0",
+        "r5": "8.0",
+        "r6": "6.0",
+        "total": "31.0",
+        "nett": "31.0"
+      }
+    }
+  ],
+  "sailorId": "8e54ebe5-8bbe-573d-9534-fcb24aba07e9",
+  "resultId": "514ad69d-6d44-556b-a20b-ecf87d78b390",
+  "createProfile": true,
+  "newHandle": "natidej-termtakulwattana-sr26-8e54eb",
+  "expectedProfileName": "Natidej Termtakulwattana",
+  "expectedBefore": 8,
+  "identityDecision": "User confirmed on 22 October 2026: Natidej Termtakulwattana is a different sailor from Natidej Termwattanapakdee. Separate profile; official year 2012 retained on result only; profile DOB unknown."
+}

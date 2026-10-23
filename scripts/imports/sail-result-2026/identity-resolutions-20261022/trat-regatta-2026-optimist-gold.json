@@ -1,0 +1,157 @@
+{
+  "sheet": {
+    "id": "5d430ead-f17f-5932-88aa-d94ef5257fc5",
+    "slug": "trat-regatta-2026-optimist-gold",
+    "name": "2026 Trat Regatta — Optimist Gold",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "raceCount": 7,
+    "totalFleetSize": 25,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "event": {
+    "id": "5da83b8f-2063-5f39-bb69-f19cfcda1e04",
+    "slug": "trat-regatta-2026",
+    "name": "2026 Trat Regatta",
+    "startDate": "2026-04-04",
+    "endDate": "2026-04-06",
+    "venue": "Oceanfront Pier, Laem Sok, Trat",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ],
+    "existing": false
+  },
+  "officialSource": {
+    "id": 182440,
+    "url": "https://www.racingrulesofsailing.org/documents/182440",
+    "title": "Official 2026-trat-regatta result document 182440",
+    "type": "pdf",
+    "visuallyReviewed": true,
+    "provisional": false,
+    "page": 1,
+    "pages": [
+      1
+    ],
+    "comparison": "All source race scores, discard markers and codes extracted from reviewed official tables; row arithmetic reconciled."
+  },
+  "results": [
+    {
+      "eventKey": "2026-trat-regatta",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "source": {
+        "id": 182440,
+        "url": "https://www.racingrulesofsailing.org/documents/182440",
+        "title": "Official 2026-trat-regatta result document 182440",
+        "type": "pdf",
+        "visuallyReviewed": true,
+        "provisional": false,
+        "page": 1
+      },
+      "rank": 17,
+      "name": "JIAHE LIU",
+      "sailOrBoardNumber": "246",
+      "club": "",
+      "school": null,
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 114.0,
+      "nettScore": 89.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceRaceLabel": "R1/Q1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceRaceLabel": "R2/Q2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceRaceLabel": "R3/Q3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceRaceLabel": "R4/F1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)",
+          "sourceRaceLabel": "R5/F2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceRaceLabel": "R6/F3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceRaceLabel": "R7/F4"
+        }
+      ],
+      "sourceMetadata": {
+        "rank": "17th",
+        "fleet": "GOLD",
+        "class": "Optimist",
+        "sailno": "246",
+        "club": "",
+        "helmname": "JIAHE LIU",
+        "nat": "",
+        "yob": "2016",
+        "helmsex": "Female",
+        "r1q1": "17.0",
+        "r2q2": "18.0",
+        "r3q3": "3.0",
+        "r4f1": "20.0",
+        "r5f2": "(25.0)",
+        "r6f3": "19.0",
+        "r7f4": "12.0",
+        "total": "114.0",
+        "nett": "89.0"
+      }
+    }
+  ],
+  "sailorId": "e1a6517e-a545-5518-ab52-d34c4a13abf4",
+  "resultId": "46373d70-f9c1-57b2-90f8-6343fd8c1f04",
+  "createProfile": false,
+  "newHandle": "natidej-termtakulwattana-sr26-8e54eb",
+  "expectedProfileName": "JiaHe Liu",
+  "expectedBefore": 24,
+  "identityDecision": "User confirmed on 22 October 2026: official name JIAHE LIU is the same sailor as JiaHe Liu. Existing profile fields preserved; historic sail and nationality retained on this result."
+}
