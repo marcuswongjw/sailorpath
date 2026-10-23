@@ -3,9 +3,10 @@
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { User, Mail, Calendar, Edit2, Check, Lock, Trophy, ArrowRight, ExternalLink } from "lucide-react";
+import { User, Mail, Calendar, Edit2, Check, Lock } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
+import { AccountWorkspaces } from "@/components/account/AccountWorkspaces";
 import {
   InviteActions,
   SailorInviteAccept,
@@ -339,300 +340,7 @@ function AccountInner() {
         onRespond={respondToInvite}
       />
 
-      {/* User Account Profile Card (distinct from athlete sailor profile) */}
-      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-7 shadow-xs space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--sp-cool-veil)] pb-5">
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 border border-[var(--sp-racing-orange)]/25 text-[var(--sp-racing-orange)] shadow-2xs shrink-0">
-              <User className="h-6 w-6 sm:h-7 sm:w-7" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--sp-racing-orange)]">
-                  User Account Profile
-                </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]">
-                  {userProfile?.role === "superadmin"
-                    ? "Admin"
-                    : userProfile?.role === "coach"
-                    ? "Coach"
-                    : userProfile?.role === "parent"
-                    ? "Parent / Guardian"
-                    : "Registered User"}
-                </span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-[var(--sp-charcoal)] tracking-tight mt-0.5">
-                {userProfile?.fullName || "User Profile"}
-              </h2>
-              <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
-                Your personal login account details — distinct from public athlete ranking profiles.
-              </p>
-            </div>
-          </div>
-
-          {!isEditingProfile && (
-            <button
-              type="button"
-              onClick={() => {
-                setEditName(userProfile?.fullName || "");
-                setEditEmail(userProfile?.email || email || "");
-                setProfileMsg(null);
-                setIsEditingProfile(true);
-              }}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors self-start sm:self-center shadow-2xs"
-            >
-              <Edit2 className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-              <span>Edit Details</span>
-            </button>
-          )}
-        </div>
-
-        {profileMsg && (
-          <div
-            className={`rounded-2xl p-4 text-xs font-semibold border leading-relaxed ${
-              profileMsg.type === "success"
-                ? "bg-emerald-50 border-emerald-200 text-emerald-900"
-                : "bg-rose-50 border-rose-200 text-rose-900"
-            }`}
-          >
-            {profileMsg.text}
-          </div>
-        )}
-
-        {isEditingProfile ? (
-          <form onSubmit={saveProfileDetails} className="space-y-4 pt-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
-                  Full Name / Display Name
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3.5 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
-                  <input
-                    type="text"
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    placeholder="Enter your name"
-                    required
-                    className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
-                  Email Address
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
-                  <input
-                    type="email"
-                    value={editEmail}
-                    onChange={(e) => setEditEmail(e.target.value)}
-                    placeholder="name@example.com"
-                    required
-                    className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5 pt-2">
-              <button
-                type="submit"
-                disabled={profileSaving}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors disabled:opacity-50 shadow-xs"
-              >
-                <Check className="h-3.5 w-3.5" />
-                <span>{profileSaving ? "Saving changes…" : "Save changes"}</span>
-              </button>
-              <button
-                type="button"
-                disabled={profileSaving}
-                onClick={() => {
-                  setIsEditingProfile(false);
-                  setProfileMsg(null);
-                }}
-                className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-slate-soft)] transition-colors shadow-2xs"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
-            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1">
-              <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
-                <User className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-                <span>Full Name</span>
-              </div>
-              <p className="text-sm font-bold text-[var(--sp-charcoal)]">
-                {userProfile?.fullName || "Not set"}
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1 min-w-0">
-              <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
-                <Mail className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
-                <span>Email Address</span>
-              </div>
-              <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
-                {userProfile?.email || email}
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1">
-              <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
-                <Calendar className="h-3.5 w-3.5 text-[var(--sp-harbour-mid)]" />
-                <span>Member Since</span>
-              </div>
-              <p className="text-sm font-bold text-[var(--sp-charcoal)]">
-                {userProfile?.createdAt
-                  ? new Date(userProfile.createdAt).toLocaleDateString("en-SG", {
-                      month: "short",
-                      year: "numeric",
-                    })
-                  : "Active Member"}
-              </p>
-            </div>
-          </div>
-        )}
-      </section>
-
-      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
-        <div className="flex items-center gap-2">
-          <Mail className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-            Follow emails
-          </h2>
-        </div>
-        <label className="flex items-start gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            className="mt-1 h-4 w-4 accent-[var(--sp-harbour-teal)]"
-            checked={notifyFollowed}
-            disabled={notifyBusy}
-            onChange={(event) => void saveNotifyPreference(event.target.checked)}
-          />
-          <span>
-            <span className="block text-sm font-semibold text-[var(--sp-charcoal)]">
-              Email me when results publish for a sailor I follow
-            </span>
-            <span className="block text-xs text-[var(--sp-slate-soft)] mt-1 leading-relaxed">
-              On by default. One email per regatta, even if several sailors you follow are on the same board.
-            </span>
-          </span>
-        </label>
-        {notifyMsg ? (
-          <p className="text-xs font-semibold text-[var(--sp-charcoal-slate)]">{notifyMsg}</p>
-        ) : null}
-        <Link
-          href="/following"
-          className="inline-flex text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline"
-        >
-          Sailors you follow
-        </Link>
-      </section>
-
-      {/* Athlete Hub & Logbook Card */}
-      <section className="rounded-3xl border border-[var(--sp-racing-orange)]/25 bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)]" />
-            <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-              Athlete Hub &amp; Logbook
-            </h2>
-          </div>
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--sp-racing-mist)]/30 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30">
-            Sailor Tools
-          </span>
-        </div>
-        <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
-          Log non-ranking &amp; overseas regatta results, attach official evidence documents, and manage your equipment locker.
-        </p>
-        <div>
-          <Link
-            href="/athlete"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
-          >
-            <span>Open Athlete Hub</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-      </section>
-
-      {isCoach && (
-        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
-          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-            Coach dashboard
-          </h2>
-          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
-            Manage your private squad roster and review live rankings and regatta results.
-          </p>
-          <Link
-            href="/coach-tools"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
-          >
-            <span>Open Coach Dashboard</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </section>
-      )}
-
-      {!isCoach && !isSuperadmin && (
-        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
-          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-            Are you a coach?
-          </h2>
-          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
-            Request coach access for this account. An admin will review it before
-            the private squad dashboard is enabled.
-          </p>
-          <Link
-            href="/coach-tools"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors shadow-2xs"
-          >
-            <span>Request coach access</span>
-          </Link>
-        </section>
-      )}
-
-      {isSuperadmin && (
-        <section className="rounded-3xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
-          <h2 className="text-sm font-bold text-[var(--sp-racing-orange)] uppercase tracking-wider">
-            Superadmin
-          </h2>
-          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
-            Full console access. Owner tools only apply on profiles linked to
-            this account — not every athlete.
-          </p>
-          <a
-            href="https://admin.sailorpath.com/"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
-          >
-            <span>Open admin console</span>
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
-        </section>
-      )}
-
-      {!isCoach && (
-        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
-          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-            Parent / family dashboard
-          </h2>
-          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
-            Rankings snapshot, linked athletes, and claim status in one place.
-          </p>
-          <Link
-            href="/parent"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
-          >
-            <span>Open parent dashboard</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        </section>
-      )}
+      <AccountWorkspaces isCoach={isCoach} isSuperadmin={isSuperadmin} />
 
       {/* Managed profiles */}
       {!isCoach && (
@@ -670,7 +378,7 @@ function AccountInner() {
                       href={`/athlete?id=${s.id}`}
                       className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3.5 py-1.5 text-xs font-semibold text-[var(--sp-harbour-teal)] text-center transition-colors shadow-2xs shrink-0"
                     >
-                      Manage &amp; Log
+                      Open logbook
                     </Link>
                     <Link
                       href={`/sailors/${s.handle}`}
@@ -685,51 +393,6 @@ function AccountInner() {
           )}
         </section>
       )}
-
-      {/* Account security */}
-      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 w-full shadow-xs">
-        <div className="flex items-center gap-2">
-          <Lock className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-            Account Security &amp; Password
-          </h2>
-        </div>
-        <form onSubmit={changePassword} className="space-y-3">
-          <p className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
-            Change password
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input
-              type="password"
-              value={pw}
-              onChange={(e) => setPw(e.target.value)}
-              placeholder="New password (min 6)"
-              autoComplete="new-password"
-              className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
-            />
-            <input
-              type="password"
-              value={pw2}
-              onChange={(e) => setPw2(e.target.value)}
-              placeholder="Confirm password"
-              autoComplete="new-password"
-              className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
-            />
-          </div>
-          <div className="flex items-center gap-3 pt-1">
-            <button
-              type="submit"
-              disabled={pwBusy}
-              className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors disabled:opacity-50 shadow-2xs"
-            >
-              {pwBusy ? "Updating…" : "Update password"}
-            </button>
-            {pwMsg && (
-              <p className="text-xs text-emerald-800 font-semibold">{pwMsg}</p>
-            )}
-          </div>
-        </form>
-      </section>
 
       {/* Claims */}
       {!isCoach && (
@@ -806,10 +469,259 @@ function AccountInner() {
               Click <strong className="text-[var(--sp-charcoal)] font-bold">Claim this profile</strong>{" "}
               and add a short note to help us review the claim.
             </li>
-            <li>Wait for admin approval — then use your Athlete Hub to manage results.</li>
+            <li>Wait for admin approval — then use your logbook to manage results.</li>
           </ol>
         </section>
       )}
+
+      <details id="settings" className="group rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6">
+        <summary className="min-h-11 cursor-pointer text-base font-bold text-harbour-shadow">
+          Account settings
+        </summary>
+        <p className="mt-1 text-sm text-slate-soft">Your login details, email notifications and password.</p>
+        <div className="mt-5 space-y-5">
+          {/* User Account Profile Card (distinct from athlete sailor profile) */}
+          <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-7 shadow-xs space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--sp-cool-veil)] pb-5">
+              <div className="flex items-center gap-3.5">
+                <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 border border-[var(--sp-racing-orange)]/25 text-[var(--sp-racing-orange)] shadow-2xs shrink-0">
+                  <User className="h-6 w-6 sm:h-7 sm:w-7" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--sp-racing-orange)]">
+                      User Account Profile
+                    </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]">
+                      {userProfile?.role === "superadmin"
+                        ? "Admin"
+                        : userProfile?.role === "coach"
+                        ? "Coach"
+                        : userProfile?.role === "parent"
+                        ? "Parent / Guardian"
+                        : "Registered User"}
+                    </span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-[var(--sp-charcoal)] tracking-tight mt-0.5">
+                    {userProfile?.fullName || "User Profile"}
+                  </h2>
+                  <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
+                    Your personal login account details — distinct from public athlete ranking profiles.
+                  </p>
+                </div>
+              </div>
+
+              {!isEditingProfile && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditName(userProfile?.fullName || "");
+                    setEditEmail(userProfile?.email || email || "");
+                    setProfileMsg(null);
+                    setIsEditingProfile(true);
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors self-start sm:self-center shadow-2xs"
+                >
+                  <Edit2 className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
+                  <span>Edit Details</span>
+                </button>
+              )}
+            </div>
+
+            {profileMsg && (
+              <div
+                className={`rounded-2xl p-4 text-xs font-semibold border leading-relaxed ${
+                  profileMsg.type === "success"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+                    : "bg-rose-50 border-rose-200 text-rose-900"
+                }`}
+              >
+                {profileMsg.text}
+              </div>
+            )}
+
+            {isEditingProfile ? (
+              <form onSubmit={saveProfileDetails} className="space-y-4 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
+                      Full Name / Display Name
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3.5 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
+                      <input
+                        type="text"
+                        value={editName}
+                        onChange={(e) => setEditName(e.target.value)}
+                        placeholder="Enter your name"
+                        required
+                        className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
+                      <input
+                        type="email"
+                        value={editEmail}
+                        onChange={(e) => setEditEmail(e.target.value)}
+                        placeholder="name@example.com"
+                        required
+                        className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 pt-2">
+                  <button
+                    type="submit"
+                    disabled={profileSaving}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors disabled:opacity-50 shadow-xs"
+                  >
+                    <Check className="h-3.5 w-3.5" />
+                    <span>{profileSaving ? "Saving changes…" : "Save changes"}</span>
+                  </button>
+                  <button
+                    type="button"
+                    disabled={profileSaving}
+                    onClick={() => {
+                      setIsEditingProfile(false);
+                      setProfileMsg(null);
+                    }}
+                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-slate-soft)] transition-colors shadow-2xs"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
+                <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1">
+                  <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
+                    <User className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
+                    <span>Full Name</span>
+                  </div>
+                  <p className="text-sm font-bold text-[var(--sp-charcoal)]">
+                    {userProfile?.fullName || "Not set"}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1 min-w-0">
+                  <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
+                    <Mail className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
+                    <span>Email Address</span>
+                  </div>
+                  <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
+                    {userProfile?.email || email}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1">
+                  <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
+                    <Calendar className="h-3.5 w-3.5 text-[var(--sp-harbour-mid)]" />
+                    <span>Member Since</span>
+                  </div>
+                  <p className="text-sm font-bold text-[var(--sp-charcoal)]">
+                    {userProfile?.createdAt
+                      ? new Date(userProfile.createdAt).toLocaleDateString("en-SG", {
+                          month: "short",
+                          year: "numeric",
+                        })
+                      : "Active Member"}
+                  </p>
+                </div>
+              </div>
+            )}
+          </section>
+
+          <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+              <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                Follow emails
+              </h2>
+            </div>
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                className="mt-1 h-4 w-4 accent-[var(--sp-harbour-teal)]"
+                checked={notifyFollowed}
+                disabled={notifyBusy}
+                onChange={(event) => void saveNotifyPreference(event.target.checked)}
+              />
+              <span>
+                <span className="block text-sm font-semibold text-[var(--sp-charcoal)]">
+                  Email me when results publish for a sailor I follow
+                </span>
+                <span className="block text-xs text-[var(--sp-slate-soft)] mt-1 leading-relaxed">
+                  On by default. One email per regatta, even if several sailors you follow are on the same board.
+                </span>
+              </span>
+            </label>
+            {notifyMsg ? (
+              <p className="text-xs font-semibold text-[var(--sp-charcoal-slate)]">{notifyMsg}</p>
+            ) : null}
+            <Link
+              href="/following"
+              className="inline-flex text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline"
+            >
+              Sailors you follow
+            </Link>
+          </section>
+
+          {/* Account security */}
+          <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 w-full shadow-xs">
+            <div className="flex items-center gap-2">
+              <Lock className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+              <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                Account Security &amp; Password
+              </h2>
+            </div>
+            <form onSubmit={changePassword} className="space-y-3">
+              <p className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
+                Change password
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  type="password"
+                  value={pw}
+                  onChange={(e) => setPw(e.target.value)}
+                  placeholder="New password (min 6)"
+                  autoComplete="new-password"
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
+                />
+                <input
+                  type="password"
+                  value={pw2}
+                  onChange={(e) => setPw2(e.target.value)}
+                  placeholder="Confirm password"
+                  autoComplete="new-password"
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center gap-3 pt-1">
+                <button
+                  type="submit"
+                  disabled={pwBusy}
+                  className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors disabled:opacity-50 shadow-2xs"
+                >
+                  {pwBusy ? "Updating…" : "Update password"}
+                </button>
+                {pwMsg && (
+                  <p className="text-xs text-emerald-800 font-semibold">{pwMsg}</p>
+                )}
+              </div>
+            </form>
+          </section>
+
+        </div>
+      </details>
 
       <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 p-5 sm:p-6 w-full space-y-2">
         <p className="text-sm font-bold text-[var(--sp-harbour-teal)]">Need help?</p>

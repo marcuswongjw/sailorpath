@@ -1,5 +1,7 @@
 "use client";
 
+import { RankingScenarioNotice } from "@/components/RankingScenarioNotice";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { RankedSailor, Period } from "@/lib/ranking";
@@ -443,7 +445,7 @@ export function FleetRankingsView({
               {fleet} Fleet Rankings
             </h1>
             <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
-              Best 3 of 5 · highlighted scores are selected · * DNS · † overseas
+              Best 3 of 5 · lower score is better · highlighted scores count · * DNS · † overseas
               {carryCount > 0 && (
                 <span className="ml-1.5 text-sky-400/90 font-semibold">
                   · {carryCount} carry-forward
@@ -541,7 +543,7 @@ export function FleetRankingsView({
       )}
 
       {(genderFilter !== "all" || squadFilter !== "all") && !loading && (
-        <p className="text-[11px] text-amber-200/90 font-semibold no-print">
+        <p className="text-[11px] text-harbour-shadow font-semibold no-print">
           Showing {displayRanked.length} of {ranked.length} sailors
           {genderFilter !== "all"
             ? ` · ${
@@ -562,6 +564,8 @@ export function FleetRankingsView({
       <p className="hidden print:block text-sm font-bold text-black">
         SG Optimist {fleet} Fleet Rankings — {periodLabelText}
       </p>
+
+      <RankingScenarioNotice excludedCount={excluded.size} onReset={() => setExcluded(new Set())} />
 
       {/* Scoring events legend + exclude toggles */}
       {!loading && ranked.length > 0 && (
@@ -671,7 +675,7 @@ export function FleetRankingsView({
                     key={ev.regattaId + idx}
                     className={`rounded-lg border px-2.5 py-2 min-h-[3.25rem] flex flex-col gap-1 transition-all ${
                       off
-                        ? "bg-slate-900/80 border-rose-500/40 opacity-60"
+                        ? "bg-sailcloth border-cool-veil"
                         : ev.isCarryForward
                           ? "bg-sky-500/10 border-sky-500/25"
                             : "bg-sailcloth border-cool-veil"
@@ -709,13 +713,7 @@ export function FleetRankingsView({
                 );
               })}
             </div>
-            {excluded.size > 0 && (
-              <p className="hidden text-[11px] font-semibold text-amber-200/90 md:block">
-                Viewing what-if ranking: {excluded.size} regatta
-                {excluded.size === 1 ? "" : "s"} excluded · Best 3 of remaining
-                scores. Current standings return when you reset.
-              </p>
-            )}
+
           </div>
       )}
 

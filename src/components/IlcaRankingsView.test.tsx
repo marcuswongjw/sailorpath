@@ -133,15 +133,17 @@ describe("IlcaRankingsView", () => {
     fireEvent.click(checkboxes[0]);
 
     // What-if banner should be visible
-    expect(screen.getByText(/Viewing what-if ranking: 1 regatta excluded/i)).toBeInTheDocument();
+    expect(screen.getByText(/What-if scenario · 1 event excluded/i)).toBeInTheDocument();
 
     // Reset button should appear
-    const resetButtons = screen.getAllByRole("button", { name: /Reset/i });
+    expect(screen.getAllByText("84").length).toBeGreaterThan(0);
+    const resetButtons = screen.getAllByRole("button", { name: "Return to current standings" });
     expect(resetButtons.length).toBeGreaterThanOrEqual(1);
 
     // Click reset
     fireEvent.click(resetButtons[0]);
-    expect(screen.queryByText(/Viewing what-if ranking/i)).toBeNull();
+    expect(screen.queryByText(/What-if scenario/i)).toBeNull();
+    expect(screen.getAllByText("87").length).toBeGreaterThan(0);
   });
 
   it("hides Born when the birth year is unknown", () => {

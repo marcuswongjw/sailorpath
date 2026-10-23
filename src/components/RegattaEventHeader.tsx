@@ -3,6 +3,7 @@ import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 import Link from "next/link";
 import { FileText, ExternalLink } from "lucide-react";
 import { EventFacts, joinDateRange } from "@/components/EventFacts";
+import { ResultStatus } from "@/components/ResultStatus";
 
 export type RegattaEventHeaderProps = {
   name: string;
@@ -17,6 +18,7 @@ export type RegattaEventHeaderProps = {
   norUrl?: string | null;
   officialResultsUrl?: string | null;
   officialResultsSourceName?: string | null;
+  scheduleNotes?: string | null;
   endDate?: string | null;
   venue?: string | null;
   organiser?: string | null;
@@ -37,6 +39,7 @@ export function RegattaEventHeader({
   norUrl,
   officialResultsUrl,
   officialResultsSourceName,
+  scheduleNotes,
   endDate,
   venue,
   organiser,
@@ -152,6 +155,7 @@ export function RegattaEventHeader({
         <p className="mt-2 text-[11px] font-semibold text-[var(--sp-slate-soft)]">
           * = DNS · † = overseas commitment
         </p>
+        <div className="mt-2"><ResultStatus regatta={{ name, officialResultsSourceName, scheduleNotes }} /></div>
       </div>
     </div>
   );

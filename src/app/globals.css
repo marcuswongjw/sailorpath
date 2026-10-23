@@ -378,10 +378,10 @@ body .border-white\/5, body .border-white\/10, body .border-white\/20, body .bor
 .bg-harbour, .bg-harbour-shadow, .bg-harbour-mid,
 .bg-\[var\(--sp-harbour-teal\)\], .bg-\[var\(--sp-harbour-shadow\)\], .bg-\[var\(--sp-color-teal\)\],
 .bg-\[var\(--sp-racing-orange\)\],
-body [class*="bg-\[var\(--sp-harbour-teal\)\]"],
-body [class*="bg-\[var\(--sp-harbour-teal\)\]"] *,
-body [class*="bg-\[var\(--sp-harbour-shadow\)\]"],
-body [class*="bg-\[var\(--sp-harbour-shadow\)\]"] *,
+body [class~="bg-[var(--sp-harbour-teal)]"],
+body [class~="bg-[var(--sp-harbour-teal)]"] *,
+body [class~="bg-[var(--sp-harbour-shadow)]"],
+body [class~="bg-[var(--sp-harbour-shadow)]"] *,
 body .bg-harbour *,
 body .bg-harbour-shadow * { color: #fff !important; }
 

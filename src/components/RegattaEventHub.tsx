@@ -1,4 +1,5 @@
-import { resultSourceStatus } from "@/lib/resultCardStatus";
+import { organiserResultStatus } from "@/lib/resultCardStatus";
+import { ResultStatus } from "@/components/ResultStatus";
 import { withPublishedEventSlices } from "@/lib/regattaEventGroups";
 import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
@@ -58,6 +59,9 @@ function prizeViewForSlice(event: RegattaEventDef, slice: ResolvedEventSlice) {
 }
 
 function sliceStatusText(slice: ResolvedEventSlice): string {
+  if (slice.regatta) {
+    return `${organiserResultStatus(slice.regatta)} · ${slice.regatta.totalFleetSize} competitors`;
+  }
   const avail = getSliceResultAvailability(slice);
   if (avail.status === "unavailable") {
     return "Results not published yet";
@@ -306,7 +310,7 @@ async function DbSlicePanel({
         {" · "}
         {nationalRankingLabel(regatta)}
       </p>
-      <p className="text-xs font-semibold text-harbour">{resultSourceStatus(regatta)}</p>
+      <ResultStatus regatta={regatta} />
       {regatta.officialResultsUrl && (
         <div>
           <EventLinkChip href={regatta.officialResultsUrl} label="Official Results" />

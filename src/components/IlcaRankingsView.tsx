@@ -1,5 +1,7 @@
 "use client";
 
+import { RankingScenarioNotice } from "@/components/RankingScenarioNotice";
+
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import {
@@ -302,7 +304,7 @@ export function IlcaRankingsView({
               National standings
             </h1>
             <p className="text-[11px] sm:text-sm text-slate-700 mt-1 leading-snug font-medium">
-              Best 3 of last 5 · highlighted scores are selected · 1st = fleet
+              Best 3 of last 5 · higher points are better · highlighted scores count · 1st = fleet
               size pts · * = DNS (0 pts)
             </p>
             {isLoggedIn && boatClass === "ILCA 4" && (
@@ -404,6 +406,8 @@ export function IlcaRankingsView({
           this filter.
         </p>
       )}
+
+      <RankingScenarioNotice excludedCount={excluded.size} onReset={() => setExcluded(new Set())} />
 
       {/* Scoring events & what-if regatta exclusion toggles */}
       {eventSlots.length > 0 && (
@@ -540,13 +544,7 @@ export function IlcaRankingsView({
               )}
             </div>
 
-            {excluded.size > 0 && (
-              <p className="text-[11px] text-amber-800 font-semibold">
-                Viewing what-if ranking: {excluded.size} regatta
-                {excluded.size === 1 ? "" : "s"} excluded · Best 3 of remaining
-                scores. Current standings return when you reset.
-              </p>
-            )}
+
           </div>
         </div>
       )}

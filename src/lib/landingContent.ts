@@ -1,5 +1,5 @@
 import type { RegattaRecord } from "@/lib/ranking";
-import { findEventSliceForRegattaSlug } from "@/lib/regattaEvents";
+import { organiserResultStatus } from "@/lib/resultCardStatus";
 import { nationalityLabelForCode } from "@/lib/countries";
 
 export function recentLandingResults(rows: RegattaRecord[], today: string, counts?: Record<string, number>) {
@@ -10,13 +10,8 @@ export function recentLandingResults(rows: RegattaRecord[], today: string, count
   }).sort((a, b) => String(b.endDate || b.date).localeCompare(String(a.endDate || a.date)) || a.name.localeCompare(b.name));
 }
 
-export function landingResultStatus(row: RegattaRecord): "Final" | "Provisional" | "Reviewed" {
-  const notes = row.scheduleNotes || "";
-  if (/provisional/i.test(row.name) || /(?:source status:|results are|labels? (?:these results|this))\s*provisional/i.test(notes)) return "Provisional";
-  const registered = findEventSliceForRegattaSlug(row.slug)?.slice.resultStatus;
-  if (registered === "provisional") return "Provisional";
-  if (registered === "final" || /(?:source status:|results are|labels? (?:these results|this))\s*final/i.test(notes)) return "Final";
-  return "Reviewed";
+export function landingResultStatus(row: RegattaRecord) {
+  return organiserResultStatus(row);
 }
 
 export function landingCountry(row: RegattaRecord): string {

@@ -202,10 +202,8 @@ export function WingfoilView({
 
       {activeTab === "scorecards" && (
         <div className="space-y-3">
-          <p className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-950">
-            Every published WingFoil result record is listed here. Each row identifies whether it
-            comes from a canonical class sheet or a specialist scorecard that is still awaiting
-            reconciliation.
+          <p className="rounded-xl border border-cool-veil bg-aqua-mist px-3 py-2 text-sm text-harbour-shadow">
+            Browse WingFoil event results and race scorecards. Some events may appear in both formats.
           </p>
           <ClassRegattaListTable
             classNameTitle="WingFoil"

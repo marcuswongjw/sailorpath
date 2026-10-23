@@ -14,7 +14,7 @@ describe("landing event selection", () => {
     expect(upcomingLandingEvents(rows,"2026-10-22").map(r=>r.id)).toEqual(["ongoing","future"]);
   });
   it("does not equate review with final source status", () => {
-    expect(landingResultStatus(row({}))).toBe("Reviewed");
+    expect(landingResultStatus(row({}))).toBe("Final status not confirmed");
     expect(landingResultStatus(row({scheduleNotes:"Official source status: provisional."}))).toBe("Provisional");
     expect(landingResultStatus(row({scheduleNotes:"Official source status: final."}))).toBe("Final");
   });

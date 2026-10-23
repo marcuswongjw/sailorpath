@@ -25,10 +25,10 @@ export function BoardClassHeader({
   const Icon = CLASS_ICONS[classKey];
   const sourceSummary = [
     sourceCounts.canonical > 0
-      ? `${sourceCounts.canonical} canonical class sheet${sourceCounts.canonical === 1 ? "" : "s"}`
+      ? `${sourceCounts.canonical} event result sheet${sourceCounts.canonical === 1 ? "" : "s"}`
       : null,
     sourceCounts.specialist > 0
-      ? `${sourceCounts.specialist} specialist scorecard${sourceCounts.specialist === 1 ? "" : "s"}`
+      ? `${sourceCounts.specialist} race scorecard${sourceCounts.specialist === 1 ? "" : "s"}`
       : null,
   ]
     .filter(Boolean)

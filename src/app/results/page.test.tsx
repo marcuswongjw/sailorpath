@@ -45,8 +45,8 @@ describe("results directory", () => {
     getPublicRegattas.mockResolvedValue([{ id: "partial", slug: "partial", name: "Partial Cup", date: "2026-01-01", totalFleetSize: 48, importedEntryCount: 46, scheduleNotes: "46 of 48 entries imported; 2 awaiting identity review. Provisional results." }]);
     const html = renderToStaticMarkup(await ResultsPage({ searchParams: Promise.resolve({}) }));
     expect(html).toContain("Partial import: 46 of 48 entries shown · 2 await identity review");
-    expect(html).toContain("Provisional source");
-    expect(html).not.toContain("Final source");
+    expect(html).toContain("Organiser: Provisional");
+    expect(html).not.toContain("Organiser: Final");
   });
 
   it("does not represent a database outage as an empty result set", async () => {

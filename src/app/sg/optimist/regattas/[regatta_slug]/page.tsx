@@ -112,6 +112,7 @@ export default async function RegattaDetailPage({
         norUrl={regatta.norUrl}
         officialResultsUrl={regatta.officialResultsUrl}
         officialResultsSourceName={regatta.officialResultsSourceName}
+        scheduleNotes={regatta.scheduleNotes}
       />
       {prizeWinners && (
         <RegattaPrizeWinners
