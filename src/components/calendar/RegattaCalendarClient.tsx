@@ -17,6 +17,7 @@ import {
   Globe,
 } from "lucide-react";
 import type { RegattaRecord } from "@/lib/ranking";
+import { eventMatchesQuery } from "@/lib/eventSearch";
 import { matchesRegattaClass, nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 
 export type RegattaCalendarClientProps = {
@@ -250,15 +251,7 @@ export function RegattaCalendarClient({
       }
 
       // Search query filter
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const matchName = r.name.toLowerCase().includes(q);
-        const matchVenue = (r.venue || "").toLowerCase().includes(q);
-        const matchOrg = (r.organizer || "").toLowerCase().includes(q);
-        const matchNotes = (r.scheduleNotes || "").toLowerCase().includes(q);
-        const matchRegion = (r.region || "").toLowerCase().includes(q);
-        if (!matchName && !matchVenue && !matchOrg && !matchNotes && !matchRegion) return false;
-      }
+      if (!eventMatchesQuery(r, searchQuery)) return false;
 
       return true;
     });

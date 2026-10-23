@@ -50,7 +50,7 @@ export function CoachFeedbackPanel({ athlete }: { athlete: Athlete }) {
         </div>
       ) : (
         <div className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 text-center text-xs ${MUTED}`}>
-          No coach observations logged yet for this period. Entries recorded by your child&apos;s coaches will automatically show here.
+          No coach observations logged yet for this period. {athlete.ownerRelation === "parent" ? "Entries recorded by your child’s coaches will appear here." : athlete.ownerRelation === "sailor" ? "Entries recorded by your coaches will appear here." : "Entries recorded by this sailor’s coaches will appear here."}
         </div>
       )}
     </section>

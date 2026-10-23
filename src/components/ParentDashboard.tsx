@@ -194,6 +194,7 @@ export function ParentDashboard({
                   />
 
                   <PrivateNotesPanel
+                    isParent={activeAthlete.ownerRelation === "parent"}
                     activeAthlete={activeAthlete}
                     noteDraft={d.noteDraft}
                     selectedCategory={d.selectedCategory}

@@ -107,7 +107,7 @@ export function PreRaceChecklist({
                   </p>
                 </div>
                 <Link
-                  href="/calendar"
+                  href={`/calendar?${new URLSearchParams({ q: reg.name, year: reg.date.slice(0, 4) }).toString()}`}
                   className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline shrink-0"
                 >
                   Details

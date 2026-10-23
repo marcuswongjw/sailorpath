@@ -1,3 +1,4 @@
+import { eventMatchesQuery } from "@/lib/eventSearch";
 import { resultCoverageLabel, resultSourceStatus } from "@/lib/resultCardStatus";
 import { unstable_cache } from "next/cache";
 import { asc } from "drizzle-orm";
@@ -429,6 +430,7 @@ export async function searchRegattasEnhanced(query: string, limit = 15): Promise
   const results: RegattaSearchResult[] = [];
 
   for (const reg of candidates) {
+    if (!eventMatchesQuery(reg, q)) continue;
     const nameLower = (reg.name || "").toLowerCase();
     const venueLower = (reg.venue || "").toLowerCase();
     const boatLower = (reg.boatClass || "").toLowerCase();
@@ -445,7 +447,6 @@ export async function searchRegattasEnhanced(query: string, limit = 15): Promise
     if (divLower.includes(q)) score += 80;
 
     // Token matches
-    let tokenMatches = 0;
     for (const t of tokens) {
       if (
         nameLower.includes(t) ||
@@ -455,28 +456,25 @@ export async function searchRegattasEnhanced(query: string, limit = 15): Promise
         slugLower.includes(t)
       ) {
         score += 50;
-        tokenMatches++;
       }
     }
 
-    if (score > 0 || tokenMatches === tokens.length) {
-      results.push({
-        id: reg.id,
-        name: reg.name,
-        slug: reg.slug,
-        date: reg.date,
-        endDate: reg.endDate,
-        venue: reg.venue,
-        boatClass: reg.boatClass ?? "Optimist",
-        division: reg.division,
-        raceCount: reg.raceCount,
-        totalFleetSize: reg.totalFleetSize,
-        coverageLabel: reg.importedEntryCount ? resultCoverageLabel(reg) : null,
-        sourceStatus: reg.importedEntryCount ? resultSourceStatus(reg) : null,
-        href: classResultsHref(reg),
-        score,
-      });
-    }
+    results.push({
+      id: reg.id,
+      name: reg.name,
+      slug: reg.slug,
+      date: reg.date,
+      endDate: reg.endDate,
+      venue: reg.venue,
+      boatClass: reg.boatClass ?? "Optimist",
+      division: reg.division,
+      raceCount: reg.raceCount,
+      totalFleetSize: reg.totalFleetSize,
+      coverageLabel: reg.importedEntryCount ? resultCoverageLabel(reg) : null,
+      sourceStatus: reg.importedEntryCount ? resultSourceStatus(reg) : null,
+      href: classResultsHref(reg),
+      score,
+    });
   }
 
   results.sort((a, b) => b.score - a.score || b.date.localeCompare(a.date));

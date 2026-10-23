@@ -1114,6 +1114,21 @@ export const supportMessages = pgTable("support_messages", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }).enableRLS();
 
+/** Server-only support correspondence and provider acceptance history. */
+export const supportDeliveries = pgTable("support_deliveries", {
+  id: uuid("id").primaryKey().notNull(),
+  messageId: uuid("message_id").notNull().references(() => supportMessages.id, { onDelete: "cascade" }),
+  kind: text("kind", { enum: ["acknowledgement", "reply"] }).notNull(),
+  recipient: text("recipient").notNull(),
+  replyTo: text("reply_to"),
+  subject: text("subject").notNull(),
+  body: text("body").notNull(),
+  status: text("status", { enum: ["sending", "sent", "failed", "skipped"] }).notNull(),
+  actorUserId: uuid("actor_user_id").references(() => profiles.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+}).enableRLS();
+
 /**
  * Privacy-light product usage events (page views, key actions).
  * No free-text PII — path + event type + optional role/session only.

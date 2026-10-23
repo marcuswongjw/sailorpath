@@ -13,6 +13,8 @@ function SupportForm() {
   const [topic, setTopic] = useState("bug");
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
+  const [receipt, setReceipt] = useState("");
+  const [reference, setReference] = useState("");
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,6 +46,8 @@ function SupportForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Send failed");
+      setReceipt(data.message || "Your message is saved.");
+      setReference(String(data.id || "").slice(0, 8).toUpperCase());
       setDone(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not send message");
@@ -63,6 +67,7 @@ function SupportForm() {
           Thanks for writing in. We&apos;ll reply to{" "}
           <strong className="text-[var(--sp-harbour-shadow)]">{email}</strong> as soon as we can.
         </p>
+        <p className="text-sm text-[var(--sp-charcoal-slate)]">{receipt}{reference ? ` Reference: ${reference}.` : ""}</p>
         <Link
           href="/"
           className="inline-flex sp-btn-primary px-6 py-2.5 text-xs font-bold"

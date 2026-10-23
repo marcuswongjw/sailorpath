@@ -27,6 +27,7 @@ function parseNoteCategory(body: string): { category: string | null; text: strin
 }
 
 export type PrivateNotesPanelProps = {
+  isParent?: boolean;
   activeAthlete: {
     id: string;
     name?: string;
@@ -43,6 +44,7 @@ export type PrivateNotesPanelProps = {
 
 export function PrivateNotesPanel({
   activeAthlete,
+  isParent = false,
   noteDraft,
   selectedCategory,
   noteBusy,
@@ -57,11 +59,11 @@ export function PrivateNotesPanel({
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Private notes</p>
         <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
           <StickyNote className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-          Private Parent Journal
+          {isParent ? "Private Parent Journal" : "Private Sailing Journal"}
         </h3>
         <p className={`text-[13px] ${MUTED} mt-0.5 flex items-center gap-1`}>
           <Lock className="h-3 w-3" />
-          100% private to your parent account.
+          Private to your account.
         </p>
       </div>
 

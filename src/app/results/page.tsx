@@ -1,3 +1,4 @@
+import { eventMatchesQuery } from "@/lib/eventSearch";
 import { resultCoverageLabel, resultSourceStatus } from "@/lib/resultCardStatus";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -69,7 +70,7 @@ export default async function ResultsPage({ searchParams }: Props) {
       // Preserve older links that used a fleet or partial class search.
       if (!matchesClass && (resolveSailingClass(selectedClass) || !`${row.boatClass || ""} ${row.division || ""}`.toLowerCase().includes(selectedClass.toLowerCase()))) return false;
     }
-    return !q || `${row.name} ${row.boatClass || ""} ${row.venue || ""}`.toLowerCase().includes(q);
+    return eventMatchesQuery(row, q);
   }).sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
   const controlClassName = "w-full rounded-xl border border-cool-veil bg-white px-3 py-2 text-sm text-charcoal focus-visible:outline-2 focus-visible:outline-harbour";

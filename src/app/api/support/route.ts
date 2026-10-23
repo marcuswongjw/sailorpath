@@ -1,9 +1,10 @@
+import { deliverSupportEmail } from "@/lib/supportDelivery";
 import { NextResponse } from "next/server";
 import { withUserChangeTracking } from "@/lib/userChanges";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, inArray } from "drizzle-orm";
 import { getAuthContext, jsonError, requireSuperadmin } from "@/lib/auth";
 import { db, withDatabaseRetry } from "@/db";
-import { supportMessages } from "@/db/schema";
+import { supportDeliveries, supportMessages } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
 import {
   clientIpFromRequest,
@@ -11,6 +12,8 @@ import {
   rateLimitResponse,
 } from "@/lib/rateLimit";
 import { asBoundedText, asEmail, asHttpUrl, asString } from "@/lib/validate";
+
+export const maxDuration = 60;
 
 const TOPICS = new Set([
   "account",
@@ -97,10 +100,16 @@ async function handlePOST(req: Request) {
       },
     });
 
+    let acknowledgementStatus = "failed";
+    try {
+      acknowledgementStatus = (await deliverSupportEmail({ messageId: row.id, id: row.id, kind: "acknowledgement" })).status;
+    } catch { console.warn("[support] Acknowledgement failed; support request remains saved."); }
+
     return NextResponse.json({
       ok: true,
       id: row.id,
-      message: "Thanks — we received your message and will follow up by email.",
+      acknowledgementStatus,
+      message: acknowledgementStatus === "sent" ? "Your request is saved. A confirmation email has been sent." : "Your request is saved, but we could not send the confirmation email. You do not need to submit it again.",
     });
   } catch (e) {
     console.error("support POST", e);
@@ -146,7 +155,9 @@ export async function GET(req: Request) {
       { label: "admin.support.get" }
     );
 
-    return NextResponse.json({ messages: rows });
+    const deliveries = rows.length ? await withDatabaseRetry(() => db.select().from(supportDeliveries)
+      .where(inArray(supportDeliveries.messageId, rows.map((row) => row.id))).orderBy(desc(supportDeliveries.createdAt)), { label: "admin.support.deliveries" }) : [];
+    return NextResponse.json({ messages: rows.map((row) => ({ ...row, deliveries: deliveries.filter((delivery) => delivery.messageId === row.id) })) }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (e) {
     return jsonError(e);
   }

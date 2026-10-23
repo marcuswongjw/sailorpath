@@ -1,5 +1,6 @@
 "use client";
 
+import { SupportReplyComposer, type SupportDelivery } from "./SupportReplyComposer";
 import { adminJson } from "./adminFetch";
 
 import { useState } from "react";
@@ -20,19 +21,20 @@ type Msg = {
   pageUrl: string | null;
   status: string;
   createdAt: string;
+  deliveries?: SupportDelivery[];
 };
 
 export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast } = useFeedback();
   const queryClient = useQueryClient();
-  const [filter, setFilter] = useState<"new" | "all" | "resolved">("new");
+  const [filter, setFilter] = useState<"new" | "read" | "all" | "resolved">("new");
 
   const messagesQuery = useQuery({
     queryKey: adminQueryKeys.support(filter),
     enabled: isSuperadmin,
     queryFn: async ({ signal }) => {
       const q =
-        filter === "all" ? "" : `?status=${filter === "resolved" ? "resolved" : "new"}`;
+        filter === "all" ? "" : `?status=${filter}`;
       const data = await adminJson<{ messages?: Msg[] }>(`/api/support${q}`, { signal });
       return data.messages || [];
     },
@@ -67,12 +69,12 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           Support inbox
         </h3>
         <p className="text-xs text-slate-500 mt-1">
-          Messages from /support. Reply by email, then mark resolved.
+          Review requests, send replies and check email history, then mark resolved.
         </p>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {(["new", "resolved", "all"] as const).map((f) => (
+        {(["new", "read", "resolved", "all"] as const).map((f) => (
           <button
             key={f}
             type="button"
@@ -111,7 +113,7 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                 )}
                 <p className="text-[13px] text-slate-600 font-mono mt-1">
                   {m.topic || "other"} ·{" "}
-                  {m.createdAt ? new Date(m.createdAt).toLocaleString() : ""}
+                  {m.createdAt ? new Date(m.createdAt).toLocaleString("en-SG", { timeZone: "Asia/Singapore" }) : ""}
                 </p>
               </div>
               <span
@@ -134,6 +136,11 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                 From: {m.pageUrl}
               </p>
             )}
+            {isSuperadmin && <SupportReplyComposer messageId={m.id} email={m.email} deliveries={m.deliveries} onUpdate={(sent) => {
+              if (sent) toast.success("Reply accepted by the email service.");
+              void queryClient.invalidateQueries({ queryKey: ["admin", "support"] });
+              invalidateAdminSummaries(queryClient);
+            }} />}
             {m.status !== "resolved" && isSuperadmin && (
               <button
                 type="button"

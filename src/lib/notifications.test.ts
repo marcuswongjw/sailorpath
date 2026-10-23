@@ -5,7 +5,7 @@ import { sendResendTextEmail } from "./notifications";
 describe("Resend delivery", () => {
   const fetcher = vi.fn();
   const email = { to: "user@example.com", subject: "Welcome", text: "Welcome aboard",
-    html: "<p>Welcome aboard</p>", idempotencyKey: "welcome/approval-1" };
+    html: "<p>Welcome aboard</p>", replyTo: "team@example.com", idempotencyKey: "welcome/approval-1" };
   beforeEach(() => {
     vi.stubEnv("RESEND_API_KEY", "test-only-key");
     vi.stubGlobal("fetch", fetcher);
@@ -20,7 +20,7 @@ describe("Resend delivery", () => {
     expect(url).toBe("https://api.resend.com/emails");
     expect(request.headers["Idempotency-Key"]).toBe(email.idempotencyKey);
     expect(JSON.parse(request.body)).toMatchObject({ from: "SailorPath <notifications@sailorpath.com>",
-      to: ["user@example.com"], text: email.text, html: email.html });
+      to: ["user@example.com"], reply_to: "team@example.com", text: email.text, html: email.html });
     expect(request.signal).toBeInstanceOf(AbortSignal);
   });
   it("retries transient failures with the same payload and key", async () => {

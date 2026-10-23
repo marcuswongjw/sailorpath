@@ -12,6 +12,7 @@ export async function sendResendTextEmail(input: {
   text: string;
   html?: string;
   idempotencyKey?: string;
+  replyTo?: string;
 }): Promise<ResendSendResult> {
   const resendApiKey = process.env.RESEND_API_KEY?.trim();
   const recipients = (Array.isArray(input.to) ? input.to : [input.to])
@@ -34,6 +35,7 @@ export async function sendResendTextEmail(input: {
         body: JSON.stringify({
           from: "SailorPath <notifications@sailorpath.com>", to: recipients,
           subject: input.subject, text: input.text,
+          ...(input.replyTo ? { reply_to: input.replyTo } : {}),
           ...(input.html ? { html: input.html } : {}),
         }),
       });
