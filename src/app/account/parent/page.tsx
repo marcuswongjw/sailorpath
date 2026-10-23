@@ -6,7 +6,7 @@ import { Heart, Sparkles, UserPlus, LogIn } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Parent dashboard | SailorPath",
+  title: "Your sailing workspace | SailorPath",
   description:
     "Manage linked sailor profiles, rankings, and claim status on SailorPath.",
 };
@@ -27,7 +27,7 @@ export default async function ParentPage() {
 
           <div className="space-y-2">
             <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
-              Parent Command Center
+              Your sailing workspace
             </h1>
             <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)] max-w-md mx-auto">
               Sign in to manage linked sailor profiles, equipment maintenance alerts, and selection trials tracking.
@@ -52,7 +52,7 @@ export default async function ParentPage() {
           </div>
 
           <div className="pt-4 border-t border-[var(--sp-cool-veil)] flex items-center justify-center gap-1.5 text-xs text-[var(--sp-charcoal-slate)]">
-            <span>Need to claim your child&apos;s profile?</span>
+            <span>Need to claim a sailor profile?</span>
             <Link
               href="/claim-profile"
               className="font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-0.5"
