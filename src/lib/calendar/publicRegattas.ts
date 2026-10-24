@@ -1,20 +1,8 @@
 import { regattaCountsForRanking, type RegattaRecord } from "@/lib/ranking";
-import { matchesSailingClass } from "@/lib/classRegistry";
+import { classFilterMatches } from "@/lib/classPresentation";
 
 export function matchesRegattaClass(label: string | null | undefined, filter: string): boolean {
-  const requested = filter as
-    | "all"
-    | "ilca"
-    | "optimist"
-    | "ilca4"
-    | "ilca6"
-    | "ilca7"
-    | "wingfoil"
-    | "techno293"
-    | "iqfoil"
-    | "windsurfing"
-    | "29er";
-  return matchesSailingClass(label, requested);
+  return classFilterMatches(label, filter);
 }
 
 /** National ranking is a property of a Singapore class sheet, never its calendar card. */

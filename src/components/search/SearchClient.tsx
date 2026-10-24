@@ -1,5 +1,7 @@
 "use client";
 
+import { sailingClassDisplayLabel } from "@/lib/classPresentation";
+
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
@@ -398,7 +400,7 @@ export function SearchClient({
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-orange-700 border border-orange-200/60 mb-1.5">
-                      {reg.boatClass} {reg.division ? `· ${reg.division}` : ""}
+                      {sailingClassDisplayLabel(reg.boatClass)} {reg.division ? `· ${reg.division}` : ""}
                     </span>
                     <h3 className="text-sm font-bold text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-1">
                       {reg.name}

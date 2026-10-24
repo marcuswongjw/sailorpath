@@ -1,5 +1,7 @@
 "use client";
 
+import { sailingClassDisplayLabel } from "@/lib/classPresentation";
+
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -577,7 +579,7 @@ function AthleteWorkspace({
                           ? ` to ${String(r.regattaEndDate).slice(0, 10)}`
                           : ""}
                         {r.venue ? ` · ${r.venue}` : ""}
-                        {r.boatClass ? ` · ${r.boatClass}` : ""}
+                        {r.boatClass ? ` · ${sailingClassDisplayLabel(r.boatClass)}` : ""}
                         {r.division ? ` · ${r.division}` : ""}
                       </p>
                     </div>

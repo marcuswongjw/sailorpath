@@ -1,3 +1,4 @@
+import { classFilterLabel, classFilterMatches, classFilterOptions, sailingClassDisplayLabel } from "@/lib/classPresentation";
 import { eventMatchesQuery } from "@/lib/eventSearch";
 import { resultCoverageLabel } from "@/lib/resultCardStatus";
 import { ResultStatus } from "@/components/ResultStatus";
@@ -8,8 +9,7 @@ import { getCachedPublicRegattas } from "@/lib/queries";
 import { findEventSliceForRegattaSlug } from "@/lib/regattaEvents";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 import { geographySelectOptions, normalizeGeography } from "@/lib/countries";
-import { canonicalBoatClass, resolveSailingClass } from "@/lib/classRegistry";
-import { matchesRegattaClass } from "@/lib/calendar/publicRegattas";
+import { resolveSailingClass } from "@/lib/classRegistry";
 
 export const metadata: Metadata = { title: "Published results | SailorPath", description: "Browse completed, published sailing scorecards by event, country, class and year." };
 export const revalidate = 3600;
@@ -39,16 +39,16 @@ export default async function ResultsPage({ searchParams }: Props) {
     (row) => String(row.endDate || row.date).slice(0, 10) < today
   );
   const selectedClass = filters.class && filters.class !== "all"
-    ? filters.class.toLowerCase() === "ilca" ? "ilca" : canonicalBoatClass(filters.class)
+    ? classFilterLabel(filters.class)
     : "all";
   const selectedYear = filters.year && filters.year !== "all" ? filters.year : "all";
   const selectedCountry = filters.country && filters.country !== "all"
     ? normalizeGeography(filters.country) || "all"
     : "all";
-  const classes = [...new Set([
-    ...completed.map((row) => canonicalBoatClass(row.boatClass)).filter(Boolean),
+  const classes = classFilterOptions([
+    ...completed.map((row) => row.boatClass),
     ...(selectedClass === "all" ? [] : [selectedClass]),
-  ])].sort((a, b) => a.localeCompare(b));
+  ]);
   const years = [...new Set([
     ...completed.map((row) => String(row.date).slice(0, 4)).filter((year) => /^\d{4}$/.test(year)),
     ...(selectedYear === "all" ? [] : [selectedYear]),
@@ -65,9 +65,7 @@ export default async function ResultsPage({ searchParams }: Props) {
     if (selectedCountry !== "all" && normalizeGeography(row.geography) !== selectedCountry) return false;
     if (filters.region && filters.region !== "all" && String(row.region || "Singapore").toLowerCase() !== filters.region.toLowerCase()) return false;
     if (selectedClass !== "all") {
-      const matchesClass = selectedClass === "ilca"
-        ? matchesRegattaClass(row.boatClass, "ilca")
-        : canonicalBoatClass(row.boatClass).toLowerCase() === selectedClass.toLowerCase();
+      const matchesClass = classFilterMatches(row.boatClass, selectedClass);
       // Preserve older links that used a fleet or partial class search.
       if (!matchesClass && (resolveSailingClass(selectedClass) || !`${row.boatClass || ""} ${row.division || ""}`.toLowerCase().includes(selectedClass.toLowerCase()))) return false;
     }
@@ -99,7 +97,7 @@ export default async function ResultsPage({ searchParams }: Props) {
           <span>Class</span>
           <select name="class" defaultValue={selectedClass} className={controlClassName}>
             <option value="all">All classes</option>
-            {classes.map((boatClass) => <option key={boatClass} value={boatClass}>{boatClass === "ilca" ? "ILCA (all)" : boatClass}</option>)}
+            {classes.map((boatClass) => <option key={boatClass} value={boatClass}>{boatClass === "ILCA" ? "ILCA (all)" : boatClass}</option>)}
           </select>
         </label>
         <label className="space-y-1 text-sm font-semibold text-charcoal">
@@ -120,7 +118,7 @@ export default async function ResultsPage({ searchParams }: Props) {
                 <h2 className="text-lg font-bold text-harbour-shadow">{row.name}</h2>
                 <p className="mt-1 text-sm text-slate-soft">{String(row.date).slice(0, 10)} · {row.venue || "Venue pending"}</p>
               </div>
-              <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.boatClass || row.division || "Scorecard"}</span>
+              <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{sailingClassDisplayLabel(row.boatClass) || row.division || "Scorecard"}</span>
             </div>
             <div className="mt-2"><ResultStatus regatta={row} /></div>
             {resultCoverageLabel(row) && <p className="mt-2 text-sm text-charcoal">{resultCoverageLabel(row)}</p>}

@@ -1,3 +1,4 @@
+import { classFilterLabel, classFilterOptions } from "@/lib/classPresentation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RegattaDirectoryLink } from "@/components/regattas/RegattaDirectoryLink";
@@ -28,7 +29,7 @@ function one(value: string | undefined): string {
 function queryFrom(params: SearchParams) {
   return {
     q: one(params.q),
-    boatClass: one(params.class) || "all",
+    boatClass: classFilterLabel(one(params.class)) || "all",
     year: one(params.year) || "all",
     when: one(params.when) || "all",
     results: one(params.results) === "published" ? "published" : "all",
@@ -63,7 +64,7 @@ export default async function RegattasPage({
   const directory = mergeRegattaDirectory(published, directoryFromCalendar(SINGAPORE_REGATTAS_2026));
   const visible = filterRegattaDirectory(directory, query);
   const retryHref = `/regattas?${new URLSearchParams({ q: query.q, class: query.boatClass, year: query.year, when: query.when, results: query.results })}`;
-  const classes = [...new Set(directory.flatMap((row) => row.classes || (row.boatClass ? [row.boatClass] : [])))].sort((a, b) => a.localeCompare(b));
+  const classes = classFilterOptions(directory.flatMap((row) => row.classes || [row.boatClass]));
   const years = [...new Set(directory.map((row) => row.date.slice(0, 4)).filter((year) => /^\d{4}$/.test(year)))].sort((a, b) => b.localeCompare(a));
 
   return (

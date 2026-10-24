@@ -1,8 +1,7 @@
 import { groupRegattaEvents, sheetClassLabel } from "@/lib/admin/groupRegattaEvents";
 import { getRegattaEvent } from "@/lib/regattaEvents";
 import { hubHrefForClassSlug } from "@/lib/regattaEventGroups";
-import { matchesRegattaClass } from "@/lib/calendar/publicRegattas";
-import { sailingClassKeyOf } from "@/lib/classRegistry";
+import { classFilterMatches, classFilterOptions, sailingClassDisplayLabel } from "@/lib/classPresentation";
 import type { RegattaCalendarEntry } from "@/lib/calendar/singaporeRegattas2026";
 import type { RegattaRecord } from "@/lib/ranking";
 
@@ -48,7 +47,7 @@ export function directoryFromPublished(rows: RegattaRecord[]): DirectoryRegatta[
       href: hubHrefForClassSlug(row.slug, valid) || `/regattas/${encodeURIComponent(row.slug)}`,
     })).sort((a, b) => a.label.localeCompare(b.label) || a.name.localeCompare(b.name));
     const scoredMembers = members.filter((row) => (row.importedEntryCount ?? row.totalFleetSize) > 0);
-    const classes = [...new Set((scoredMembers.length ? scoredMembers : members).map((row) => row.boatClass).filter((value): value is string => Boolean(value) && value!.toLowerCase() !== "all"))];
+    const classes = classFilterOptions((scoredMembers.length ? scoredMembers : members).map((row) => row.boatClass));
     return { id: slug, slug, name, date, endDate: endDate || null, venue: venue || sample.venue || null,
       boatClass: classes.length === 1 ? classes[0] : null, classes, region: sample.region || null,
       hasPublishedResults: fleets.length > 0, fleets };
@@ -76,7 +75,7 @@ export function directoryFromCalendar(rows: RegattaCalendarEntry[]): DirectoryRe
     endDate: row.endDate ? ymd(row.endDate) : null,
     venue: row.venue || null,
     boatClass: row.boatClass || null,
-    classes: row.classes?.length ? row.classes : row.boatClass ? [row.boatClass] : [],
+    classes: classFilterOptions(row.classes?.length ? row.classes : [row.boatClass]),
     region: row.region || null,
     hasPublishedResults: false,
   }); });
@@ -91,7 +90,7 @@ export function mergeRegattaDirectory(
   for (const row of [...calendar, ...published]) {
     const current = bySlug.get(row.slug);
     bySlug.set(row.slug, { ...current, ...row,
-      classes: [...new Set([...(current?.classes || []), ...(row.classes || [])])],
+      classes: classFilterOptions([...(current?.classes || []), ...(row.classes || [])]),
       endDate: [current?.endDate, row.endDate].filter(Boolean).sort().at(-1) || null,
     });
   }
@@ -100,16 +99,13 @@ export function mergeRegattaDirectory(
 
 function matchesClass(row: DirectoryRegatta, boatClass: string): boolean {
   if (!boatClass || boatClass === "all") return true;
-  if ((row.classes || [row.boatClass]).some((label) => matchesDirectoryClass(label, boatClass))) return true;
-  return String(row.boatClass || "").toLowerCase().includes(boatClass.toLowerCase());
+  if ((row.classes || [row.boatClass]).some((label) => classFilterMatches(label, boatClass))) return true;
+  return false;
 }
 
-function matchesDirectoryClass(label: string | null | undefined, filter: string): boolean {
-  return matchesRegattaClass(label, sailingClassKeyOf(filter) || filter) || String(label || "").toLowerCase() === filter.toLowerCase();
-}
 
 function directoryFleetLabel(row: RegattaRecord): string {
-  const label = sheetClassLabel(row);
+  const label = sailingClassDisplayLabel(sheetClassLabel(row));
   const division = String(row.division || "").trim();
   return division && !/^(open|both|national|international)$/i.test(division) && !label.toLowerCase().includes(division.toLowerCase())
     ? `${label} · ${division}` : label;
@@ -125,7 +121,7 @@ export function filterRegattaDirectory(
   const when = query.when === "upcoming" || query.when === "past" ? query.when : "all";
   const visible = rows.filter((row) => {
     if (query.results === "published" && !row.hasPublishedResults) return false;
-    if (query.results === "published" && row.fleets && query.boatClass && query.boatClass !== "all" && !row.fleets.some((fleet) => matchesDirectoryClass(fleet.boatClass, query.boatClass!))) return false;
+    if (query.results === "published" && row.fleets && query.boatClass && query.boatClass !== "all" && !row.fleets.some((fleet) => classFilterMatches(fleet.boatClass, query.boatClass!))) return false;
     if (year !== "all" && !row.date.startsWith(year)) return false;
     if (!matchesClass(row, query.boatClass || "all")) return false;
     const end = row.endDate || row.date;
@@ -140,7 +136,7 @@ export function filterRegattaDirectory(
     when === "upcoming" ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date)
   );
   return visible.map((row) => ({ ...row, fleets: row.fleets?.filter((fleet) =>
-    !query.boatClass || query.boatClass === "all" || matchesDirectoryClass(fleet.boatClass, query.boatClass)
+    !query.boatClass || query.boatClass === "all" || classFilterMatches(fleet.boatClass, query.boatClass)
   ) }));
 }
 
