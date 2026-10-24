@@ -47,7 +47,8 @@ export function directoryFromPublished(rows: RegattaRecord[]): DirectoryRegatta[
       boatClass: row.boatClass || null,
       href: hubHrefForClassSlug(row.slug, valid) || `/regattas/${encodeURIComponent(row.slug)}`,
     })).sort((a, b) => a.label.localeCompare(b.label) || a.name.localeCompare(b.name));
-    const classes = [...new Set(members.map((row) => row.boatClass).filter((value): value is string => Boolean(value)))];
+    const scoredMembers = members.filter((row) => (row.importedEntryCount ?? row.totalFleetSize) > 0);
+    const classes = [...new Set((scoredMembers.length ? scoredMembers : members).map((row) => row.boatClass).filter((value): value is string => Boolean(value) && value!.toLowerCase() !== "all"))];
     return { id: slug, slug, name, date, endDate: endDate || null, venue: venue || sample.venue || null,
       boatClass: classes.length === 1 ? classes[0] : null, classes, region: sample.region || null,
       hasPublishedResults: fleets.length > 0, fleets };

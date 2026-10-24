@@ -33,6 +33,12 @@ describe("regatta directory", () => {
     expect(directory[0].fleets).toHaveLength(3);
   });
 
+  it("does not count an unscored calendar placeholder as another class", () => {
+    const directory = directoryFromPublished([...csc, { ...csc[0], id: "shell", slug: "csc-shell", boatClass: "ILCA", totalFleetSize: 0, importedEntryCount: 0 }]);
+    expect(directory[0].classes).toHaveLength(3);
+    expect(directory[0].fleets).toHaveLength(3);
+  });
+
   it("keeps similar events on different weekends separate using saved links", () => {
     const separate = directoryFromPublished(csc.slice(0, 2).map((row, index) => ({ ...row,
       eventId: `weekend-${index}`, eventSlug: `csc-weekend-${index}`, eventName: `CSC Weekend ${index}`,
