@@ -41,6 +41,24 @@ describe("results directory", () => {
     expect(html).toContain("12 sailors in source fleet · 4 races");
   });
 
+  it("normalizes result badges while keeping unspecified ILCA and fleet suffixes visible", async () => {
+    getPublicRegattas.mockResolvedValue(["Wingfoil (U19)", "WingFoil", "WindFoil", "ILCA", "ILCA 4", "ILCA 6", "ILCA 7"].map((boatClass, index) => ({
+      id: `display-${index}`, slug: `display-${index}`, name: `Class Event ${index}`, boatClass, date: "2020-01-01", totalFleetSize: 20,
+    })));
+    const html = renderToStaticMarkup(await ResultsPage({ searchParams: Promise.resolve({}) }));
+    expect(html).toContain("WingFoil (U19)");
+    expect(html).not.toContain("Wingfoil (U19)");
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    expect(container.querySelectorAll('option[value="WingFoil"]')).toHaveLength(1);
+    expect(container.querySelector('option[value="ILCA"]')?.textContent).toBe("ILCA (all)");
+    const filtered = renderToStaticMarkup(await ResultsPage({ searchParams: Promise.resolve({ class: "ilca" }) }));
+    const filteredContainer = document.createElement("div");
+    filteredContainer.innerHTML = filtered;
+    expect(filteredContainer.querySelectorAll("h2")).toHaveLength(4);
+    expect(filteredContainer.querySelector<HTMLSelectElement>('select[name="class"]')?.value).toBe("ILCA");
+  });
+
   it("shows partial coverage and provisional source status without implying finality", async () => {
     getPublicRegattas.mockResolvedValue([{ id: "partial", slug: "partial", name: "Partial Cup", date: "2026-01-01", totalFleetSize: 48, importedEntryCount: 46, scheduleNotes: "46 of 48 entries imported; 2 awaiting identity review. Provisional results." }]);
     const html = renderToStaticMarkup(await ResultsPage({ searchParams: Promise.resolve({}) }));

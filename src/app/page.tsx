@@ -1,3 +1,4 @@
+import { sailingClassDisplayLabel } from "@/lib/classPresentation";
 import { PUBLIC_CLASS_HUBS as classHubs } from "@/lib/publicClassHubs";
 import { publishedResultClasses } from "@/lib/classRegistry";
 import type { Metadata } from "next";
@@ -156,7 +157,7 @@ export default async function HomePage() {
                   href={resultHref(row, publicRegattas)}
                   className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
                 >
-                  <p className="text-xs font-bold uppercase tracking-wide text-harbour">{row.boatClass || row.division || "Sailing"} · {formatLandingDate(row.endDate || row.date)}</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-harbour">{sailingClassDisplayLabel(row.boatClass) || row.division || "Sailing"} · {formatLandingDate(row.endDate || row.date)}</p>
                   <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
                     <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-harbour">{landingResultStatus(row)}</span>
                     {counts && (counts[row.id] || 0) < row.totalFleetSize && <span className="rounded-full bg-orange-50 px-2.5 py-1 text-orange-900">Partial import</span>}

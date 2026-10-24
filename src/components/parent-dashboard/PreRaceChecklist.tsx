@@ -1,5 +1,7 @@
 "use client";
 
+import { sailingClassDisplayLabel } from "@/lib/classPresentation";
+
 import Link from "next/link";
 import { Calendar, RotateCcw, CheckSquare, Square, Trash2, Plus } from "lucide-react";
 import {
@@ -103,7 +105,7 @@ export function PreRaceChecklist({
                   <p className={`font-bold ${INK} truncate`}>{reg.name}</p>
                   <p className={`text-[13px] ${MUTED} font-mono mt-0.5`}>
                     {reg.date}{" "}
-                    {reg.boatClass ? `· ${reg.boatClass}` : ""}
+                    {reg.boatClass ? `· ${sailingClassDisplayLabel(reg.boatClass)}` : ""}
                   </p>
                 </div>
                 <Link
