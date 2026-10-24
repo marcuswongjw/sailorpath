@@ -144,7 +144,7 @@ describe("RegattaCalendarClient", () => {
     expect(screen.queryByText("45th Lake Garda Meeting Optimist")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "All Regions" }));
     expect(screen.getByText("45th Lake Garda Meeting Optimist")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "ILCA 4", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: "ILCA 4" }));
     expect(screen.queryByText("45th Lake Garda Meeting Optimist")).not.toBeInTheDocument();
   });
 
