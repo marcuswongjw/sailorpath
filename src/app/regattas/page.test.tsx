@@ -47,7 +47,7 @@ describe("regatta directory page", () => {
     })));
     const html = renderToStaticMarkup(await RegattasPage({ searchParams: Promise.resolve({}) }));
     expect(html.match(/<article/g)).toHaveLength(1);
-    expect(html).toContain("2 classes");
+    expect(html).toContain("2 scorecards");
     expect(html).toContain("ILCA 4 results — Harbour Open 2026");
     expect(html).toContain("ILCA 6 results — Harbour Open 2026");
     expect(html).toContain("fleet=ilca-4");

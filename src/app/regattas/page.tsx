@@ -105,7 +105,7 @@ export default async function RegattasPage({
                   {row.date}{row.endDate && row.endDate !== row.date ? ` – ${row.endDate}` : ""} · {row.venue || "Venue pending"}
                 </p>
               </div>
-              <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.classes && row.classes.length > 1 ? `${row.classes.length} classes` : row.boatClass || "Regatta"}</span>
+              <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.fleets?.length ? `${row.fleets.length} ${row.fleets.length === 1 ? "scorecard" : "scorecards"}` : row.classes && row.classes.length > 1 ? `${row.classes.length} classes` : row.boatClass || "Regatta"}</span>
             </div>
             {row.region && <p className="mt-3 text-sm text-charcoal">{row.region}</p>}
             {row.fleets?.length ? (
