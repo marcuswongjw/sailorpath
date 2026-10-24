@@ -62,6 +62,17 @@ describe("public result comparison", () => {
     expect(name).toHaveAttribute("aria-sort","descending");
   });
 
+
+  it("explains rank markers when those entry statuses are present", () => {
+    const dns = {...result("dns","Absent Sailor",12),isDns:true};
+    const overseas = {...result("overseas","Overseas Sailor",11),isOverseasCommitment:true};
+    render(<PublicRegattaResults accent="orange" totalFleetSize={12} results={[dns,overseas]} />);
+    expect(screen.getByText("* beside a rank")).toBeInTheDocument();
+    expect(screen.getByText("Entry recorded as did not start (DNS).")).toBeInTheDocument();
+    expect(screen.getByText("† beside a rank")).toBeInTheDocument();
+    expect(screen.getByText("Overseas commitment recorded for this entry.")).toBeInTheDocument();
+  });
+
   it("only explains observed codes and preserves event-specific code uncertainty", () => {
     render(<ResultScoringGuide codes={[" DSQ ","DSQ","CUSTOM",""]} />);
     expect(screen.getAllByText("DSQ",{exact:true})).toHaveLength(1);

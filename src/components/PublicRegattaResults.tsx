@@ -504,7 +504,7 @@ export function PublicRegattaResults({
       )}
       {results.length > 0 && (
         <>
-          <ResultScoringGuide codes={results.flatMap((result) => result.raceResults.map((race) => race.scoringCode || ""))} />
+          <ResultScoringGuide codes={results.flatMap((result) => result.raceResults.map((race) => race.scoringCode || ""))} hasDnsEntries={results.some((result) => result.isDns && !result.isOverseasCommitment)} hasOverseasEntries={results.some((result) => result.isOverseasCommitment)} />
           <div role="group" aria-label="Mobile results view" className="sm:hidden flex flex-wrap gap-2">
             <button type="button" aria-pressed={mobileView === "cards"} aria-controls={viewId + "-cards"} onClick={() => setMobileView("cards")} className={mobileView === "cards" ? "sp-primary min-h-11 px-4 text-sm font-semibold" : "sp-secondary min-h-11 px-4 text-sm font-semibold"}>Sailor cards</button>
             <button type="button" aria-pressed={mobileView === "table"} aria-controls={viewId + "-table"} onClick={() => setMobileView("table")} className={mobileView === "table" ? "sp-primary min-h-11 px-4 text-sm font-semibold" : "sp-secondary min-h-11 px-4 text-sm font-semibold"}>Compare scores</button>

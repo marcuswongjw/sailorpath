@@ -1,6 +1,6 @@
 import { scoringCodeMeaning } from "@/lib/raceScorePresentation";
 
-export function ResultScoringGuide({ codes }: { codes: readonly string[] }) {
+export function ResultScoringGuide({ codes, hasDnsEntries = false, hasOverseasEntries = false }: { codes: readonly string[]; hasDnsEntries?: boolean; hasOverseasEntries?: boolean }) {
   const observedCodes = [...new Set(codes.map((code) => code.trim().toUpperCase()).filter(Boolean))].sort();
   return (
     <details className="rounded-xl border border-cool-veil bg-warm-white px-4 text-sm text-charcoal">
@@ -13,6 +13,8 @@ export function ResultScoringGuide({ codes }: { codes: readonly string[] }) {
           <div><dt className="font-semibold text-harbour-shadow">Nett</dt><dd className="mt-1 text-sm leading-6">Score after the organiser’s exclusions and adjustments.</dd></div>
           <div><dt className="font-semibold text-harbour-shadow">Discarded score</dt><dd className="mt-1 text-sm leading-6">A crossed-out race score is marked as a discard and excluded from Nett. The source may also show it in brackets.</dd></div>
           <div><dt className="font-semibold text-harbour-shadow">—</dt><dd className="mt-1 text-sm leading-6">No score is available here for that race. A missing score does not mean zero or DNS.</dd></div>
+          {hasDnsEntries && <div><dt className="font-semibold text-harbour-shadow">* beside a rank</dt><dd className="mt-1 text-sm leading-6">Entry recorded as did not start (DNS).</dd></div>}
+          {hasOverseasEntries && <div><dt className="font-semibold text-harbour-shadow">† beside a rank</dt><dd className="mt-1 text-sm leading-6">Overseas commitment recorded for this entry.</dd></div>}
         </dl>
         {observedCodes.length > 0 && (
           <div>
