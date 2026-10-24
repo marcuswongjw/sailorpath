@@ -8,8 +8,13 @@ export function RegattasBackLink({ href = "/calendar", className, children }: { 
   const router = useRouter();
   return <Link href={href} className={className} onClick={(event) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const saved = sessionStorage.getItem("regatta-return-url");
-    if (saved && /^\/calendar(?:\?|$)/.test(saved)) {
+    let saved: string | null = null;
+    try {
+      saved = sessionStorage.getItem("regatta-return-url");
+    } catch {
+      return;
+    }
+    if (saved && /^\/(?:calendar|regattas)(?:\?|$)/.test(saved)) {
       event.preventDefault();
       router.push(saved);
     }
