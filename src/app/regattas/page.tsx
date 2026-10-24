@@ -63,7 +63,7 @@ export default async function RegattasPage({
   const directory = mergeRegattaDirectory(published, directoryFromCalendar(SINGAPORE_REGATTAS_2026));
   const visible = filterRegattaDirectory(directory, query);
   const retryHref = `/regattas?${new URLSearchParams({ q: query.q, class: query.boatClass, year: query.year, when: query.when, results: query.results })}`;
-  const classes = [...new Set(directory.map((row) => row.boatClass).filter((value): value is string => Boolean(value)))].sort((a, b) => a.localeCompare(b));
+  const classes = [...new Set(directory.flatMap((row) => row.classes || (row.boatClass ? [row.boatClass] : [])))].sort((a, b) => a.localeCompare(b));
   const years = [...new Set(directory.map((row) => row.date.slice(0, 4)).filter((year) => /^\d{4}$/.test(year)))].sort((a, b) => b.localeCompare(a));
 
   return (
@@ -97,19 +97,31 @@ export default async function RegattasPage({
       </div>
       <section aria-label="Regattas" className="space-y-3">
         {visible.length ? visible.map((row) => (
-          <RegattaDirectoryLink key={row.slug} href={`/regattas/${encodeURIComponent(row.slug)}`} className="block rounded-2xl border border-cool-veil bg-warm-white p-5 transition hover:border-harbour/50 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-harbour">
+          <article key={row.slug} className="rounded-2xl border border-cool-veil bg-warm-white p-5">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div>
-                <h2 className="text-lg font-bold text-harbour-shadow">{row.name}</h2>
+                <h2 className="text-lg font-bold text-harbour-shadow"><RegattaDirectoryLink href={`/regattas/${encodeURIComponent(row.slug)}`} className="hover:text-harbour hover:underline focus-visible:outline-2 focus-visible:outline-harbour">{row.name}</RegattaDirectoryLink></h2>
                 <p className="mt-1 text-sm text-slate-soft">
                   {row.date}{row.endDate && row.endDate !== row.date ? ` – ${row.endDate}` : ""} · {row.venue || "Venue pending"}
                 </p>
               </div>
-              <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.boatClass || "Regatta"}</span>
+              <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.classes && row.classes.length > 1 ? `${row.classes.length} classes` : row.boatClass || "Regatta"}</span>
             </div>
             {row.region && <p className="mt-3 text-sm text-charcoal">{row.region}</p>}
-            <p className="mt-3 text-sm font-bold text-harbour">{row.hasPublishedResults ? "Published results →" : "Event details →"}</p>
-          </RegattaDirectoryLink>
+            {row.fleets?.length ? (
+              <ul aria-label={`Published scorecards for ${row.name}`} className="mt-4 divide-y divide-cool-veil border-t border-cool-veil">
+                {row.fleets.map((fleet) => (
+                  <li key={fleet.id}>
+                    <RegattaDirectoryLink href={fleet.href} aria-label={`${fleet.label} results — ${row.name}`} className="flex min-h-12 items-center justify-between gap-3 py-3 text-sm font-semibold text-harbour hover:underline focus-visible:outline-2 focus-visible:outline-harbour">
+                      <span>{fleet.label}</span><span className="shrink-0">View results →</span>
+                    </RegattaDirectoryLink>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <RegattaDirectoryLink href={`/regattas/${encodeURIComponent(row.slug)}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-bold text-harbour hover:underline">Event details →</RegattaDirectoryLink>
+            )}
+          </article>
         )) : (
           <div className="rounded-2xl border border-dashed border-cool-veil p-8 text-center text-sm text-slate-soft">
             No regattas match these filters.

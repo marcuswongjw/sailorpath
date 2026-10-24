@@ -39,6 +39,24 @@ describe("regatta directory page", () => {
     expect(metadata.title).toBe("Regattas matching “Harbour” | SailorPath");
   });
 
+  it("renders one event card with direct fleet links and applies class filters", async () => {
+    getPublicRegattas.mockResolvedValue(["ILCA 4", "ILCA 6"].map((boatClass, index) => ({
+      id: `sheet-${index}`, name: `Harbour Open (${boatClass})`, slug: `harbour-${index}`,
+      date: "2026-08-01", totalFleetSize: 20, boatClass,
+      eventId: "harbour", eventSlug: "harbour-open-2026", eventName: "Harbour Open 2026",
+    })));
+    const html = renderToStaticMarkup(await RegattasPage({ searchParams: Promise.resolve({}) }));
+    expect(html.match(/<article/g)).toHaveLength(1);
+    expect(html).toContain("2 classes");
+    expect(html).toContain("ILCA 4 results — Harbour Open 2026");
+    expect(html).toContain("ILCA 6 results — Harbour Open 2026");
+    expect(html).toContain("fleet=ilca-4");
+    expect(html).toContain("fleet=ilca-6");
+    const filtered = renderToStaticMarkup(await RegattasPage({ searchParams: Promise.resolve({ class: "ILCA 6", results: "published" }) }));
+    expect(filtered).toContain("ILCA 6 results — Harbour Open 2026");
+    expect(filtered).not.toContain("ILCA 4 results — Harbour Open 2026");
+  });
+
   it("shows a recoverable warning when published results cannot load", async () => {
     getPublicRegattas.mockResolvedValue([]).mockRejectedValueOnce(new Error("Unavailable"));
     const page = await RegattasPage({ searchParams: Promise.resolve({ results: "published", q: "Cup" }) });
