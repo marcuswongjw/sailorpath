@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { EventFacts } from "@/components/EventFacts";
+import { PendingRegattaCards } from "@/components/calendar/PendingRegattaCards";
+import type { PendingRegatta } from "@/lib/calendar/pendingRegattas";
 import {
   Calendar,
   Search,
@@ -22,6 +24,7 @@ import { matchesRegattaClass, nationalRankingLabel } from "@/lib/calendar/public
 
 export type RegattaCalendarClientProps = {
   regattas: RegattaRecord[];
+  pendingRegattas?: readonly PendingRegatta[];
   resultSheetsByEvent?: Record<string, RegattaRecord[]>;
   initialEvent?: string;
   initialClass?: string;
@@ -182,6 +185,7 @@ function downloadIcs(regatta: RegattaRecord) {
 
 export function RegattaCalendarClient({
   regattas = [],
+  pendingRegattas = [],
   resultSheetsByEvent = {},
   initialEvent = "",
   initialClass = "all",
@@ -230,6 +234,16 @@ export function RegattaCalendarClient({
   }, [regattas, todayStr]);
 
   const activeSource = timelineTab === "upcoming" ? upcomingList : pastList;
+  const pending = pendingRegattas.filter((event) =>
+    timelineTab === "upcoming" && event.year >= todayStr.slice(0, 4) &&
+    !regattas.some((dated) => dated.slug === event.slug) &&
+    (!selectedEvent || selectedEvent === event.slug) &&
+    (selectedRegion === "all" || selectedRegion.toLowerCase() === event.region.toLowerCase()) &&
+    matchesRegattaClass(event.boatClass, selectedClass) &&
+    (selectedYear === "all" || selectedYear === event.year) &&
+    !filterTrialOnly && !(canFilterRanking && rankingFilter !== "all") &&
+    eventMatchesQuery(event, searchQuery)
+  );
 
   const filteredRegattas = useMemo(() => {
     return activeSource.filter((r) => {
@@ -387,7 +401,7 @@ export function RegattaCalendarClient({
         <div className="flex flex-wrap gap-3 text-sm">
           <label>Year <select value={selectedYear} onChange={(event) => setSelectedYear(event.target.value)} className="rounded-lg border p-2">
             <option value="all">All years</option>
-            {[...new Set(regattas.map((event) => String(event.date).slice(0, 4)))].sort().reverse().map((year) => <option key={year} value={year}>{year}</option>)}
+            {[...new Set([...regattas.map((event) => String(event.date).slice(0, 4)), ...pendingRegattas.map((event) => event.year)])].sort().reverse().map((year) => <option key={year} value={year}>{year}</option>)}
           </select></label>
           {canFilterRanking && <label>Singapore national ranking <select value={rankingFilter} onChange={(event) => setRankingFilter(event.target.value)} className="rounded-lg border p-2">
             <option value="all">All class results</option><option value="ranking">Counts for ranking</option><option value="excluded">Does not count</option>
@@ -447,7 +461,7 @@ export function RegattaCalendarClient({
         <button type="button" onClick={() => setSelectedEvent("")} className="font-semibold text-[var(--sp-harbour-teal)] underline">Show all regattas</button>
       </div>}
       {/* Regatta Event List */}
-      {filteredRegattas.length === 0 ? (
+      {filteredRegattas.length === 0 && pending.length === 0 ? (
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 sm:p-12 text-center space-y-3 shadow-xs">
           <Calendar className="h-10 w-10 text-[var(--sp-slate-soft)] mx-auto" />
           <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">No regattas matching your filters</p>
@@ -616,7 +630,7 @@ export function RegattaCalendarClient({
                         className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center justify-center gap-1.5 transition-colors"
                       >
                         <FileText className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-                        {regatta.norUrl.includes("racingrulesofsailing.org") || regatta.norUrl.includes("/documents/")
+                        {regatta.norUrl.includes("racingrulesofsailing.org") || regatta.norUrl.includes("/documents/") || regatta.norUrl.includes("/online-notice-board")
                           ? "Official Notice Board"
                           : "Notice of Race"}
                         <ExternalLink className="h-3 w-3 text-[var(--sp-slate-soft)]" />
@@ -654,6 +668,8 @@ export function RegattaCalendarClient({
           })}
         </div>
       )}
+
+      <PendingRegattaCards events={pending} />
 
       {/* Footer information */}
       <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 text-center space-y-2 shadow-xs">

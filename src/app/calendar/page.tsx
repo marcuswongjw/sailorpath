@@ -4,6 +4,7 @@ import { DbOffline } from "@/components/DbOffline";
 import { RegattaCalendarClient } from "@/components/calendar/RegattaCalendarClient";
 import { calendarPastResultsHref } from "@/lib/publicRouteRedirects";
 import { getPublicCalendarData } from "@/lib/calendar/publicCalendar";
+import { PENDING_REGATTAS } from "@/lib/calendar/pendingRegattas";
 
 export const revalidate = 3600;
 
@@ -45,6 +46,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
   return (
     <RegattaCalendarClient
       regattas={allRegattas}
+      pendingRegattas={PENDING_REGATTAS}
       resultSheetsByEvent={resultSheetsByEvent}
       initialRanking={searchParams?.ranking}
       initialYear={searchParams?.year}

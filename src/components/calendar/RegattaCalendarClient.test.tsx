@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { RegattaCalendarClient } from "./RegattaCalendarClient";
 import type { RegattaRecord } from "@/lib/ranking";
+import { PENDING_REGATTAS } from "@/lib/calendar/pendingRegattas";
 
 const mockRouter = {
   push: vi.fn(),
@@ -97,6 +98,7 @@ const mockEvents: RegattaRecord[] = [
 ];
 
 describe("RegattaCalendarClient", () => {
+  const pending = PENDING_REGATTAS.map((event) => ({ ...event, year: "2099" }));
   beforeEach(() => {
     vi.clearAllMocks();
     sessionStorage.clear();
@@ -124,6 +126,33 @@ describe("RegattaCalendarClient", () => {
 
     expect(screen.getByRole("heading", { name: "Regattas" })).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
+  });
+
+  it("shows an undated event without a fabricated date, countdown or calendar export", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="Garda" />);
+    const section = screen.getByRole("region", { name: "Regattas awaiting confirmed dates" });
+    expect(section).toHaveTextContent("45th Lake Garda Meeting Optimist");
+    expect(section).toHaveTextContent("Exact dates are awaiting confirmation");
+    expect(screen.queryByRole("button", { name: /Add to Calendar/ })).not.toBeInTheDocument();
+    expect(screen.queryByText("No regattas matching your filters")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Official event website" })).toHaveAttribute("href", "https://fragliavelariva.it/");
+  });
+
+  it("applies calendar region and class filters to undated events", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="Garda" />);
+    fireEvent.click(screen.getByRole("button", { name: /Singapore/ }));
+    expect(screen.queryByText("45th Lake Garda Meeting Optimist")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "All Regions" }));
+    expect(screen.getByText("45th Lake Garda Meeting Optimist")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "ILCA 4", exact: true }));
+    expect(screen.queryByText("45th Lake Garda Meeting Optimist")).not.toBeInTheDocument();
+  });
+
+  it("hides an undated planning card after a dated record is available", () => {
+    const dated = { ...mockEvents[0], slug: pending[0].slug, name: pending[0].name };
+    render(<RegattaCalendarClient regattas={[dated]} pendingRegattas={pending} initialSearch="Garda" />);
+    expect(screen.queryByRole("region", { name: "Regattas awaiting confirmed dates" })).not.toBeInTheDocument();
+    expect(screen.getAllByText("45th Lake Garda Meeting Optimist")).toHaveLength(1);
   });
 
   it("does not delay browsing while account auth initializes", () => {
