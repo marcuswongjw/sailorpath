@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+import { ResultScoringGuide } from "@/components/ResultScoringGuide";
+import { describeRaceScore } from "@/lib/raceScorePresentation";
 import Link from "next/link";
 import { birthYear } from "@/lib/age";
 import { formatGenderLabel } from "@/lib/gender";
@@ -37,9 +39,9 @@ const accentClasses = {
 
 /** Row background tints for top 3 */
 function podiumRowClass(rank: number | null | undefined): string {
-  if (rank === 1) return "bg-[#FFF9DB]/70";
-  if (rank === 2) return "bg-[#F5F5F5]/80";
-  if (rank === 3) return "bg-[#FBF2E7]/70";
+  if (rank === 1) return "bg-[#FFF9DB]";
+  if (rank === 2) return "bg-[#F5F5F5]";
+  if (rank === 3) return "bg-[#FBF2E7]";
   return "";
 }
 
@@ -53,6 +55,16 @@ function raceValueClass(race: OfficialRaceResultInput | undefined) {
   if (race.discarded) return "text-[var(--sp-charcoal)] line-through";
   if (race.scoringCode) return "text-amber-800 font-bold bg-amber-50 rounded px-1";
   return "text-[var(--sp-charcoal-slate)]";
+}
+
+function RaceScore({ race, raceNumber }: { race: OfficialRaceResultInput | undefined; raceNumber: number }) {
+  const description = describeRaceScore(race, raceNumber);
+  return (
+    <span title={description} className={raceValueClass(race)}>
+      <span aria-hidden="true">{raceValue(race)}</span>
+      <span className="sr-only">{description}</span>
+    </span>
+  );
 }
 
 function claimProfileHref(handle: string): string {
@@ -143,7 +155,7 @@ function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
   if (races.length === 0) return null;
   return (
     <details open={races.length <= 8} className="group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
-      <summary className="cursor-pointer list-none px-3 py-2 text-[11px] font-semibold text-[var(--sp-harbour-teal)] marker:content-none flex items-center justify-between">
+      <summary className="cursor-pointer list-none min-h-11 px-3 py-2 text-[13px] font-semibold text-[var(--sp-harbour-teal)] marker:content-none flex items-center justify-between">
         <span className="inline-flex items-center gap-1.5">
           <span aria-hidden className="transition-transform group-open:rotate-90">›</span>
           <span>{races.length} published race score{races.length === 1 ? "" : "s"}</span>
@@ -153,10 +165,11 @@ function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
       <div className="grid grid-cols-3 gap-1.5 border-t border-[var(--sp-cool-veil)] p-2.5">
         {races.map((race) => (
           <div key={race.raceNumber} className="rounded-lg bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] px-2 py-1.5 text-center">
-            <p className="text-[9px] font-semibold uppercase text-[var(--sp-slate-soft)]">R{race.raceNumber}</p>
-            <p className={`text-xs font-bold tabular-nums ${raceValueClass(race)}`}>
-              {raceValue(race)}
+            <p className="text-[11px] font-semibold uppercase text-[var(--sp-slate-soft)]">R{race.raceNumber}</p>
+            <p className="text-sm font-bold tabular-nums">
+              <RaceScore race={race} raceNumber={race.raceNumber} />
             </p>
+            {race.discarded && <p aria-hidden="true" className="mt-0.5 text-[10px] text-[var(--sp-charcoal)]">Discarded</p>}
           </div>
         ))}
       </div>
@@ -183,6 +196,8 @@ export function PublicRegattaResults({
   pendingIdentityReview = false,
 }: Props) {
   const colors = accentClasses[accent];
+  const viewId = useId();
+  const [mobileView, setMobileView] = useState<"cards" | "table">("cards");
 
   const importedRaceCount = results.reduce(
     (max, result) =>
@@ -203,7 +218,7 @@ export function PublicRegattaResults({
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
       setSortKey(key);
-      setSortDir(key === "name" || key === "nationality" || key === "gender" ? "asc" : "asc");
+      setSortDir("asc");
     }
   }
 
@@ -234,14 +249,14 @@ export function PublicRegattaResults({
       "aria-sort": isActive ? (sortDir === "asc" ? "ascending" : "descending") : ("none" as "ascending" | "descending" | "none"),
       className: `px-3 py-3 ${extraClass} cursor-pointer select-none whitespace-nowrap hover:text-[#2D6A6F] transition-colors ${isActive ? "text-[#2D6A6F]" : ""}`,
       tabIndex: 0,
-      onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") handleSort(key); },
+      onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleSort(key); } },
     };
   }
 
   // ── Mobile cards ─────────────────────────────────────────────────────
   const mobileList = (
-    <div className="sm:hidden space-y-2">
-      {results.map((result) => {
+    <div id={viewId + "-cards"} className={mobileView === "cards" ? "sm:hidden space-y-2" : "hidden"}>
+      {sorted.map((result) => {
         const badge = getPercentileBadge(result.rank, totalFleetSize);
         const overseas = Boolean(result.isOverseasCommitment);
         const dns = Boolean(result.isDns) && !overseas;
@@ -337,7 +352,14 @@ export function PublicRegattaResults({
 
   // ── Desktop table ─────────────────────────────────────────────────────
   const desktopTable = (
-    <div className="hidden sm:block overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
+    <div
+      id={viewId + "-table"}
+      role="region"
+      aria-label="Scrollable regatta results"
+      aria-describedby={results.length ? viewId + "-scroll-help" : undefined}
+      tabIndex={0}
+      className={(mobileView === "table" ? "block" : "hidden") + " sm:block max-w-full overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour"}
+    >
       <table
         className={`w-full ${hasRaceResults ? "min-w-[1050px]" : "min-w-[680px]"} text-left text-sm`}
         aria-label="Regatta results"
@@ -347,16 +369,16 @@ export function PublicRegattaResults({
             <th {...thProps("rank", "Rank", "text-center")}>
               Rank <SortIcon active={sortKey === "rank"} dir={sortDir} />
             </th>
-            <th {...thProps("name", "Name")}>
+            <th {...thProps("name", "Name", "sticky left-0 z-20 min-w-40 max-w-48 bg-[var(--sp-sailcloth)] shadow-[2px_0_0_var(--sp-cool-veil)]")}>
               Name <SortIcon active={sortKey === "name"} dir={sortDir} />
             </th>
-            <th {...thProps("nationality", "Nationality", "text-center")}>
+            <th {...thProps("nationality", "Nationality", "hidden sm:table-cell text-center")}>
               Nationality <SortIcon active={sortKey === "nationality"} dir={sortDir} />
             </th>
-            <th {...thProps("gender", "Gender", "text-center")}>
+            <th {...thProps("gender", "Gender", "hidden sm:table-cell text-center")}>
               Gender <SortIcon active={sortKey === "gender"} dir={sortDir} />
             </th>
-            <th {...thProps("birthYear", "Birth year", "text-center")}>
+            <th {...thProps("birthYear", "Birth year", "hidden sm:table-cell text-center")}>
               Birth year <SortIcon active={sortKey === "birthYear"} dir={sortDir} />
             </th>
             {raceNumbers.map((raceNumber) => (
@@ -396,7 +418,7 @@ export function PublicRegattaResults({
                     nonPodiumClassName={colors.rank}
                   />
                 </td>
-                <td className="px-3 py-3">
+                <td className={`sticky left-0 z-10 min-w-40 max-w-48 px-3 py-3 break-words shadow-[2px_0_0_var(--sp-cool-veil)] ${podiumTint || "bg-[var(--sp-warm-white)]"}`}>
                   <Link
                     href={`/sailors/${result.handle}`}
                     prefetch
@@ -420,13 +442,13 @@ export function PublicRegattaResults({
                     </p>
                   )}
                 </td>
-                <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
+                <td className="hidden sm:table-cell px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
                   {result.nationality || "—"}
                 </td>
-                <td className="px-3 py-3 text-center text-[var(--sp-charcoal)]">
+                <td className="hidden sm:table-cell px-3 py-3 text-center text-[var(--sp-charcoal)]">
                   {formatGenderLabel(result.gender)}
                 </td>
-                <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
+                <td className="hidden sm:table-cell px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
                   {result.birthYear ?? birthYear(result.dob) ?? "—"}
                 </td>
                 {raceNumbers.map((raceNumber) => {
@@ -437,7 +459,7 @@ export function PublicRegattaResults({
                       className={`px-2 py-3 text-center font-mono text-xs font-semibold tabular-nums ${raceValueClass(race)}`}
                       title={race?.discarded ? "Discarded score" : race?.scoringCode || undefined}
                     >
-                      {raceValue(race)}
+                      <RaceScore race={race} raceNumber={raceNumber} />
                     </td>
                   );
                 })}
@@ -479,6 +501,26 @@ export function PublicRegattaResults({
           Partial import: {results.length} of {totalFleetSize} entries are shown.{" "}
           {totalFleetSize - results.length} entries await sailor identity review.
         </p>
+      )}
+      {results.length > 0 && (
+        <>
+          <ResultScoringGuide codes={results.flatMap((result) => result.raceResults.map((race) => race.scoringCode || ""))} />
+          <div role="group" aria-label="Mobile results view" className="sm:hidden flex flex-wrap gap-2">
+            <button type="button" aria-pressed={mobileView === "cards"} aria-controls={viewId + "-cards"} onClick={() => setMobileView("cards")} className={mobileView === "cards" ? "sp-primary min-h-11 px-4 text-sm font-semibold" : "sp-secondary min-h-11 px-4 text-sm font-semibold"}>Sailor cards</button>
+            <button type="button" aria-pressed={mobileView === "table"} aria-controls={viewId + "-table"} onClick={() => setMobileView("table")} className={mobileView === "table" ? "sp-primary min-h-11 px-4 text-sm font-semibold" : "sp-secondary min-h-11 px-4 text-sm font-semibold"}>Compare scores</button>
+          </div>
+          <div className="sm:hidden flex flex-wrap items-center gap-2">
+            <label htmlFor={viewId + "-sort"} className="text-sm font-semibold text-harbour">Sort results</label>
+            <select id={viewId + "-sort"} value={sortKey} onChange={(event) => { setSortKey(event.target.value as SortKey); setSortDir("asc"); }} className="min-h-11 min-w-0 rounded-xl border border-cool-veil bg-warm-white px-3 text-base text-charcoal">
+              <option value="rank">Rank</option><option value="name">Name</option><option value="nationality">Nationality</option><option value="gender">Gender</option><option value="birthYear">Birth year</option><option value="total">Total</option><option value="nett">Nett</option>
+            </select>
+            <button type="button" onClick={() => setSortDir((direction) => direction === "asc" ? "desc" : "asc")} className="sp-secondary min-h-11 px-3 text-sm font-semibold" aria-label={sortDir === "asc" ? "Change to descending order" : "Change to ascending order"}>{sortDir === "asc" ? "Ascending" : "Descending"}</button>
+          </div>
+          <p role="status" className="sr-only">Sorted by {sortKey}, {sortDir === "asc" ? "ascending" : "descending"}.</p>
+          <p id={viewId + "-scroll-help"} className={(mobileView === "table" ? "block" : "hidden") + " sm:block text-xs leading-5 text-slate-soft"}>
+            Scroll across to compare {hasRaceResults ? "race scores and totals" : "totals"}. Sailor names stay in view. Missing scores are shown as —.
+          </p>
+        </>
       )}
       {mobileList}
       {desktopTable}
