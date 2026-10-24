@@ -38,7 +38,7 @@ const getCachedCalendarEvents = unstable_cache(
         })
         .from(regattaEvents)
     ),
-  ["calendar-events-v1"],
+  ["calendar-events-v2-2027-official-details"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_PUBLIC_REGATTAS],
