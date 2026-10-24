@@ -1,5 +1,6 @@
 "use client";
 
+import { classFilterMatches, classFilterOptions, sailingClassDisplayLabel } from "@/lib/classPresentation";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
@@ -121,7 +122,7 @@ export function RegattasListClient({
     for (const r of regattas) {
       if (r.boatClass) set.add(r.boatClass);
     }
-    return Array.from(set).sort();
+    return classFilterOptions([...set]);
   }, [regattas]);
 
   const periods = useMemo(() => {
@@ -151,7 +152,7 @@ export function RegattasListClient({
       if (rankingFilter === "ranking" && !regattaCountsForRanking(r)) return false;
       if (rankingFilter === "non-ranking" && regattaCountsForRanking(r)) return false;
 
-      if (!hideBoatClassFilter && boatClassFilter !== "all" && r.boatClass !== boatClassFilter) {
+      if (!hideBoatClassFilter && boatClassFilter !== "all" && !classFilterMatches(r.boatClass, boatClassFilter)) {
         return false;
       }
       if (division !== "all" && String(r.division || "Gold") !== division) {
@@ -425,6 +426,7 @@ export function RegattasListClient({
               setDivision("all");
               setPeriod("all");
               setGeography("all");
+              setBoatClassFilter("all");
             }}
             className="text-xs text-[var(--sp-racing-orange)] hover:underline font-bold"
           >
@@ -487,7 +489,7 @@ export function RegattasListClient({
                           </span>
                           <span className="inline-flex items-center gap-1 rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-1 text-[11px]">
                             <Sailboat className="h-3 w-3 text-[var(--sp-slate-soft)]" />
-                            {r.boatClass || "Optimist"}
+                            {sailingClassDisplayLabel(r.boatClass || "Optimist")}
                           </span>
                           <span className="inline-flex items-center gap-1 rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-1 text-[11px]">
                             <Anchor className="h-3 w-3 text-[var(--sp-slate-soft)]" />

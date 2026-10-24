@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Globe,
 } from "lucide-react";
+import { classDisplayLabels, classFilterKey, sailingClassDisplayLabel } from "@/lib/classPresentation";
 import type { RegattaRecord } from "@/lib/ranking";
 import { eventMatchesQuery } from "@/lib/eventSearch";
 import { matchesRegattaClass, nationalRankingLabel } from "@/lib/calendar/publicRegattas";
@@ -106,8 +107,8 @@ function getCountdownLabel(startDateStr: string, endDateStr?: string | null): {
 }
 
 function regattaClasses(regatta: RegattaRecord): string[] {
-  if (regatta.classes && regatta.classes.length > 0) return regatta.classes;
-  return [regatta.boatClass || "Optimist"];
+  if (regatta.classes && regatta.classes.length > 0) return classDisplayLabels(regatta.classes);
+  return [sailingClassDisplayLabel(regatta.boatClass || "Optimist")];
 }
 
 /** Calendar cards open the resolver, which sends each event to its real results page. */
@@ -198,7 +199,7 @@ export function RegattaCalendarClient({
 }: RegattaCalendarClientProps) {
 
   const [selectedEvent, setSelectedEvent] = useState(initialEvent);
-  const [selectedClass, setSelectedClass] = useState<string>(initialClass);
+  const [selectedClass, setSelectedClass] = useState<string>(classFilterKey(initialClass));
   const [selectedRegion, setSelectedRegion] = useState<string>(initialRegion);
   const [timelineTab, setTimelineTab] = useState<"upcoming" | "past">(
     initialTimelineTab
@@ -295,7 +296,7 @@ export function RegattaCalendarClient({
   useEffect(() => {
     const restore = () => {
       const params = new URLSearchParams(location.search);
-      setSelectedClass(params.get("class") || "all");
+      setSelectedClass(classFilterKey(params.get("class")));
       setSelectedRegion(params.get("region") || "all");
       setTimelineTab(params.get("view") === "past" ? "past" : "upcoming");
       setSelectedEvent(params.get("event") || "");
@@ -610,7 +611,7 @@ export function RegattaCalendarClient({
                         <div className="relative z-10 space-y-2 pt-3" aria-label="Class results">
                           {(resultSheetsByEvent[regatta.slug] || []).filter((sheet) => matchesRegattaClass(sheet.boatClass, selectedClass)).map((sheet) => (
                             <Link key={sheet.id} href={regattaPageHref(sheet, timelineTab)} className="block rounded-lg border border-[var(--sp-cool-veil)] p-2 text-sm font-semibold text-[var(--sp-harbour-teal)] hover:underline focus-visible:outline-2">
-                              {sheet.boatClass || "Optimist"} {sheet.division || ""} results
+                              {sailingClassDisplayLabel(sheet.boatClass || "Optimist")} {sheet.division || ""} results
                               {nationalRankingLabel(sheet) && <span className="block text-xs font-normal">{nationalRankingLabel(sheet)}</span>}
                             </Link>
                           ))}

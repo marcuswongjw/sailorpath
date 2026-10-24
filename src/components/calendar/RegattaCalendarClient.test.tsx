@@ -128,6 +128,17 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
   });
 
+  it("normalizes calendar chips and accepts a legacy class label without mixing board disciplines", () => {
+    render(<RegattaCalendarClient initialClass="WingFoil" regattas={[
+      { ...mockEvents[0], id: "wing", name: "Wing showcase", slug: "wing-showcase", boatClass: "Wingfoil", classes: ["Wingfoil", "WingFoil"] },
+      { ...mockEvents[0], id: "wind", name: "Wind showcase", slug: "wind-showcase", boatClass: "WindFoil", classes: ["WindFoil"] },
+    ]} />);
+    expect(screen.getByRole("heading", { name: "Wing showcase" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Wind showcase" })).not.toBeInTheDocument();
+    expect(screen.getAllByText("WingFoil", { exact: true })).toHaveLength(2);
+    expect(screen.queryByText("Wingfoil", { exact: true })).not.toBeInTheDocument();
+  });
+
   it("shows an undated event without a fabricated date, countdown or calendar export", () => {
     render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="Garda" />);
     const section = screen.getByRole("region", { name: "Regattas awaiting confirmed dates" });

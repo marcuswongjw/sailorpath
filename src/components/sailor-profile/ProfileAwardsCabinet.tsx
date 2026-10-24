@@ -1,5 +1,7 @@
 "use client";
 
+import { sailingClassDisplayLabel } from "@/lib/classPresentation";
+
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Trophy, Compass, Calendar } from "lucide-react";
@@ -194,7 +196,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                 </div>
 
                 <span className="rounded-md border border-cool-veil bg-white/80 px-2 py-0.5 text-[10px] font-black text-charcoal shrink-0">
-                  {award.boatClass}
+                  {sailingClassDisplayLabel(award.boatClass)}
                 </span>
               </div>
 
