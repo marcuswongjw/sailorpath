@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RegattaDirectoryLink } from "@/components/regattas/RegattaDirectoryLink";
 import { RegattaDirectoryFilters } from "@/components/regattas/RegattaDirectoryFilters";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 import { getCachedPublicRegattas } from "@/lib/queries";
@@ -17,6 +18,7 @@ type SearchParams = {
   class?: string;
   year?: string;
   when?: string;
+  results?: string;
 };
 
 function one(value: string | undefined): string {
@@ -29,6 +31,7 @@ function queryFrom(params: SearchParams) {
     boatClass: one(params.class) || "all",
     year: one(params.year) || "all",
     when: one(params.when) || "all",
+    results: one(params.results) === "published" ? "published" : "all",
   };
 }
 
@@ -51,13 +54,15 @@ export default async function RegattasPage({
 }) {
   const query = queryFrom(await searchParams);
   let published: DirectoryRegatta[] = [];
+  let resultsUnavailable = false;
   try {
     published = directoryFromPublished(await getCachedPublicRegattas());
   } catch {
-    published = [];
+    resultsUnavailable = true;
   }
   const directory = mergeRegattaDirectory(published, directoryFromCalendar(SINGAPORE_REGATTAS_2026));
   const visible = filterRegattaDirectory(directory, query);
+  const retryHref = `/regattas?${new URLSearchParams({ q: query.q, class: query.boatClass, year: query.year, when: query.when, results: query.results })}`;
   const classes = [...new Set(directory.map((row) => row.boatClass).filter((value): value is string => Boolean(value)))].sort((a, b) => a.localeCompare(b));
   const years = [...new Set(directory.map((row) => row.date.slice(0, 4)).filter((year) => /^\d{4}$/.test(year)))].sort((a, b) => b.localeCompare(a));
 
@@ -71,16 +76,28 @@ export default async function RegattasPage({
         </p>
       </header>
       <RegattaDirectoryFilters
+        key={JSON.stringify(query)}
         q={query.q}
         boatClass={query.boatClass}
         year={query.year}
         when={query.when}
+        results={query.results}
         classes={classes}
         years={years}
       />
+      {resultsUnavailable && (
+        <div role="status" className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
+          <p>Published results could not be loaded. Only calendar events are available; this list may be incomplete.</p>
+          <a href={retryHref} className="mt-2 inline-flex min-h-11 items-center font-bold underline">Try again</a>
+        </div>
+      )}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+        <p role="status" className="font-semibold text-charcoal">{visible.length} {visible.length === 1 ? "event" : "events"} shown · {query.when === "upcoming" ? "Soonest first" : "Newest first"}</p>
+        <Link href="/regattas" className="inline-flex min-h-11 items-center font-bold text-harbour underline">Clear filters</Link>
+      </div>
       <section aria-label="Regattas" className="space-y-3">
         {visible.length ? visible.map((row) => (
-          <Link key={row.slug} href={`/regattas/${encodeURIComponent(row.slug)}`} className="block rounded-2xl border border-cool-veil bg-warm-white p-5 transition hover:border-harbour/50 hover:shadow-sm">
+          <RegattaDirectoryLink key={row.slug} href={`/regattas/${encodeURIComponent(row.slug)}`} className="block rounded-2xl border border-cool-veil bg-warm-white p-5 transition hover:border-harbour/50 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-harbour">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div>
                 <h2 className="text-lg font-bold text-harbour-shadow">{row.name}</h2>
@@ -91,7 +108,8 @@ export default async function RegattasPage({
               <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-xs font-bold text-harbour">{row.boatClass || "Regatta"}</span>
             </div>
             {row.region && <p className="mt-3 text-sm text-charcoal">{row.region}</p>}
-          </Link>
+            <p className="mt-3 text-sm font-bold text-harbour">{row.hasPublishedResults ? "Published results →" : "Event details →"}</p>
+          </RegattaDirectoryLink>
         )) : (
           <div className="rounded-2xl border border-dashed border-cool-veil p-8 text-center text-sm text-slate-soft">
             No regattas match these filters.

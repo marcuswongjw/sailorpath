@@ -11,6 +11,7 @@ export type DirectoryRegatta = {
   venue: string | null;
   boatClass: string | null;
   region: string | null;
+  hasPublishedResults?: boolean;
 };
 
 export type RegattaDirectoryQuery = {
@@ -18,6 +19,7 @@ export type RegattaDirectoryQuery = {
   boatClass?: string;
   year?: string;
   when?: string;
+  results?: string;
 };
 
 function ymd(value: string | null | undefined): string {
@@ -36,6 +38,7 @@ export function directoryFromPublished(rows: RegattaRecord[]): DirectoryRegatta[
       venue: row.venue || null,
       boatClass: row.boatClass || null,
       region: row.region || null,
+      hasPublishedResults: (row.importedEntryCount ?? row.totalFleetSize) > 0,
     }));
 }
 
@@ -49,6 +52,7 @@ export function directoryFromCalendar(rows: RegattaCalendarEntry[]): DirectoryRe
     venue: row.venue || null,
     boatClass: row.boatClass || null,
     region: row.region || null,
+    hasPublishedResults: false,
   }));
 }
 
@@ -78,6 +82,7 @@ export function filterRegattaDirectory(
   const year = query.year && query.year !== "all" ? query.year : "all";
   const when = query.when === "upcoming" || query.when === "past" ? query.when : "all";
   const visible = rows.filter((row) => {
+    if (query.results === "published" && !row.hasPublishedResults) return false;
     if (year !== "all" && !row.date.startsWith(year)) return false;
     if (!matchesClass(row, query.boatClass || "all")) return false;
     const end = row.endDate || row.date;

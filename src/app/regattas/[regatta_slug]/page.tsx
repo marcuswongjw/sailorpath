@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { permanentRedirect, redirect } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
@@ -214,12 +215,12 @@ export default async function RegattaRedirectPage({
           Results for this event are not on SailorPath yet.
         </p>
       )}
-      <Link
+      <RegattasBackLink
         href={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
         className="inline-block font-semibold text-[var(--sp-harbour-teal)] hover:underline"
       >
-        Back to the calendar
-      </Link>
+        Back to regattas
+      </RegattasBackLink>
     </div>
   );
 }

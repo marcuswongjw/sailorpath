@@ -38,4 +38,15 @@ describe("regatta directory page", () => {
     const metadata = await generateMetadata({ searchParams: Promise.resolve({ q: "Harbour" }) });
     expect(metadata.title).toBe("Regattas matching “Harbour” | SailorPath");
   });
+
+  it("shows a recoverable warning when published results cannot load", async () => {
+    getPublicRegattas.mockResolvedValue([]).mockRejectedValueOnce(new Error("Unavailable"));
+    const page = await RegattasPage({ searchParams: Promise.resolve({ results: "published", q: "Cup" }) });
+    const html = renderToStaticMarkup(page);
+    expect(html).toContain("Published results could not be loaded");
+    expect(html).toContain("Try again");
+    expect(html).toContain('value="published" selected');
+    expect(html).toContain('value="Cup"');
+    expect(html).toContain("Clear filters");
+  });
 });

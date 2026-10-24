@@ -5,17 +5,18 @@ type Props = {
   boatClass: string;
   year: string;
   when: string;
+  results: string;
   classes: string[];
   years: string[];
 };
 
 const controlClassName =
-  "w-full rounded-xl border border-cool-veil bg-white px-3 py-2 text-sm text-charcoal focus-visible:outline-2 focus-visible:outline-harbour";
+  "min-h-11 w-full rounded-xl border border-cool-veil bg-white px-3 py-2 text-sm text-charcoal focus-visible:outline-2 focus-visible:outline-harbour";
 
 /** Query-string filters for the server-rendered regatta directory. */
-export function RegattaDirectoryFilters({ q, boatClass, year, when, classes, years }: Props) {
+export function RegattaDirectoryFilters({ q, boatClass, year, when, results, classes, years }: Props) {
   return (
-    <form action="/regattas" method="get" className="grid items-end gap-3 rounded-2xl border border-cool-veil bg-warm-white p-4 sm:grid-cols-2 lg:grid-cols-5">
+    <form action="/regattas" method="get" className="grid items-end gap-3 rounded-2xl border border-cool-veil bg-warm-white p-4 sm:grid-cols-2 lg:grid-cols-3">
       <label className="space-y-1 text-sm font-semibold text-charcoal">
         <span>Search</span>
         <input type="search" name="q" defaultValue={q} placeholder="Event or venue" aria-label="Search regattas" className={controlClassName} />
@@ -46,7 +47,14 @@ export function RegattaDirectoryFilters({ q, boatClass, year, when, classes, yea
           <option value="past">Past</option>
         </select>
       </label>
-      <button type="submit" className="sp-primary rounded-xl px-4 py-2 text-sm font-bold text-white">Filter regattas</button>
+      <label className="space-y-1 text-sm font-semibold text-charcoal">
+        <span>Results</span>
+        <select name="results" defaultValue={results} className={controlClassName}>
+          <option value="all">All events</option>
+          <option value="published">Published results</option>
+        </select>
+      </label>
+      <button type="submit" className="sp-primary min-h-11 rounded-xl px-4 py-2 text-sm font-bold text-white">Filter regattas</button>
     </form>
   );
 }
