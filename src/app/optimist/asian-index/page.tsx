@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withAsianOptimistIndexBirthYears } from "@/lib/asianOptimistIndexBirthYears";
 import { AsianOptimistIndexView } from "@/components/AsianOptimistIndexView";
 import { createAsianOptimistIndexProvisionalEntries } from "@/lib/asianOptimistIndexScoring";
 import { ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS } from "@/lib/asianOptimistIndexQualifiers";
@@ -25,9 +26,13 @@ export default async function AsianOptimistIndexPage(
 ) {
   const filters = props.searchParams ? await props.searchParams : undefined;
 
+  const entries = await withAsianOptimistIndexBirthYears(
+    createAsianOptimistIndexProvisionalEntries()
+  );
+
   return (
     <AsianOptimistIndexView
-      entries={createAsianOptimistIndexProvisionalEntries()}
+      entries={entries}
       qualifiers={[...ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS]}
       filters={filters}
     />
