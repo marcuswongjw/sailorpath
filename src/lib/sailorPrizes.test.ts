@@ -275,3 +275,10 @@ it("records overseas public podiums independently of national-ranking eligibilit
   expect(getSailorPrizes(sailor, [{ ...row, regattaSlug: "log-personal-session" }])).toHaveLength(0);
   expect(getSailorPrizes(sailor, [{ ...row, isOverseasCommitment: true }])).toHaveLength(0);
 });
+
+
+it("keeps an overall podium alongside a separately sourced female award", () => {
+  const prizes = getSailorPrizes({ name: "Lyric Li Yuxuan", handle: "lyric-li-yuxuan" }, [{ regattaSlug: "csc-gold-jan-26-2026-01-24", regattaName: "CSC Gold", regattaDate: "2026-01-24", boatClass: "Optimist", division: "Gold", rank: 3 }]);
+  expect(prizes.some((award) => award.regattaSlug === "csc-gold-jan-26-2026-01-24" && award.categoryName === "Female" && award.rank === 1)).toBe(true);
+  expect(prizes.some((award) => award.regattaSlug === "csc-gold-jan-26-2026-01-24" && award.categoryName === "Open" && award.rank === 3)).toBe(true);
+});

@@ -235,8 +235,12 @@ export function getSailorPrizes(
       // Only add if not already captured under NoR schedule
       const alreadyHas = awards.some(
         (a) =>
-          a.regattaSlug === regSlug ||
-          regattaNameKey(a.regattaName) === regattaNameKey(res.regattaName || "")
+          /^(open|overall)(?:$|\s|\()/i.test(a.categoryName) &&
+          a.boatClass === boatClass &&
+          (!/gold|silver/i.test(res.division || "") || a.fleetName.toLowerCase().includes((res.division || "").toLowerCase())) &&
+          (a.regattaSlug === regSlug ||
+          getRegattaPrizeSchedule(regSlug)?.regattaSlug === a.regattaSlug ||
+          regattaNameKey(a.regattaName) === regattaNameKey(res.regattaName || ""))
       );
 
       if (!alreadyHas && !seenKeys.has(dedupeKey)) {
@@ -302,6 +306,6 @@ export function mergeSailorPrizes(...groups: SailorPrizeAward[][]): SailorPrizeA
   const all = [...new Map(groups.flat().map((award) => [award.id, award])).values()];
   const eventKey = (award: SailorPrizeAward) => getRegattaPrizeSchedule(award.regattaSlug)?.regattaSlug || award.regattaSlug;
   return all.filter((award) => award.sourceUrl || award.isOfficialNoR || !all.some((other) =>
-    other !== award && (other.sourceUrl || other.isOfficialNoR) && eventKey(other) === eventKey(award) && other.boatClass === award.boatClass &&
+    other !== award && /^(open|overall)(?:$|\s|\()/i.test(other.categoryName) && (other.sourceUrl || other.isOfficialNoR) && eventKey(other) === eventKey(award) && other.boatClass === award.boatClass &&
     (!/gold|silver/i.test(award.fleetName) || other.fleetName.toLowerCase().includes(award.fleetName.toLowerCase()))));
 }
