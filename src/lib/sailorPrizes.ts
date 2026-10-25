@@ -150,6 +150,7 @@ export function getSailorPrizes(
     sailNumber?: string | null;
     countsForRanking?: boolean;
     isDns?: boolean;
+    isOverseasCommitment?: boolean;
   }[] = [],
   schedules: readonly RegattaPrizeSchedule[] = ALL_REGATTA_PRIZE_SCHEDULES
 ): SailorPrizeAward[] {
@@ -223,7 +224,8 @@ export function getSailorPrizes(
       res.rank >= 1 &&
       res.rank <= 3 &&
       !res.isDns &&
-      res.countsForRanking !== false
+      !res.isOverseasCommitment &&
+      !String(res.regattaSlug || "").startsWith("log-")
     ) {
       const regSlug = res.regattaSlug || (res.regattaName || "").toLowerCase().replace(/[^a-z0-9]+/g, "-");
       const boatClass = res.boatClass || "Optimist";

@@ -266,3 +266,12 @@ describe("sailorPrizes", () => {
     });
   });
 });
+
+
+it("records overseas public podiums independently of national-ranking eligibility, excluding logbook and commitment placeholders", () => {
+  const sailor = { name: "Overseas Podium Sailor", handle: "overseas-podium" };
+  const row = { regattaSlug: "overseas-open-2026", regattaName: "Overseas Open", regattaDate: "2026-09-01", rank: 2, boatClass: "Optimist", countsForRanking: false };
+  expect(getSailorPrizes(sailor, [row])).toHaveLength(1);
+  expect(getSailorPrizes(sailor, [{ ...row, regattaSlug: "log-personal-session" }])).toHaveLength(0);
+  expect(getSailorPrizes(sailor, [{ ...row, isOverseasCommitment: true }])).toHaveLength(0);
+});
