@@ -21,6 +21,16 @@ export const PENDING_REGATTAS: readonly PendingRegatta[] = [
     organizer: "Fraglia Vela Riva",
     officialUrl: "https://fragliavelariva.it/",
   },
+  {
+    slug: "optimist-asian-oceanian-championship-2027",
+    name: "2027 Optimist Asian & Oceanian Championship",
+    year: "2027",
+    boatClass: "Optimist",
+    region: "Asia",
+    venue: "Host Venue TBD",
+    organizer: "International Optimist Dinghy Association (IODA)",
+    officialUrl: "https://optiworld.org",
+  },
 ];
 
 // Checked 2026-10-24: the organiser's calendar has no dated 45th edition.
