@@ -111,6 +111,7 @@ export type EquipmentProps = {
 };
 
 export interface SailorProfileViewProps {
+  initialPrizeAwards?: import("@/lib/sailorPrizes").SailorPrizeAward[];
   initialSailor: SailorRecordProps;
   initialResults: RegattaResultItem[];
   initialEquipment: EquipmentProps;

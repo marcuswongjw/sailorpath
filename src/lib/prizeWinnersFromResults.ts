@@ -5,6 +5,7 @@ import { getOptimistSailNumber } from "@/lib/optimistSailNumberMap";
 
 export type PrizeResultRow = {
   sailorName: string;
+  handle?: string | null;
   sailNumber?: string | null;
   gender?: string | null;
   birthYear?: number | null;
@@ -181,6 +182,7 @@ function fillCategory(
         rank: place,
         prizeTitle: placeTitle(place),
         sailorName: row.sailorName,
+        sailorHandle: row.handle || undefined,
         sailNumber: row.sailNumber ? String(row.sailNumber) : undefined,
         gender: isFemale(row.gender) ? "F" : String(row.gender || "").toUpperCase() === "M" ? "M" : undefined,
         birthYear: year ?? undefined,

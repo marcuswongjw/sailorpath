@@ -1,3 +1,6 @@
+import { searchSailorsEnhanced } from "@/lib/search";
+import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
+import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
 import { organiserResultStatus } from "@/lib/resultCardStatus";
 import { ResultStatus } from "@/components/ResultStatus";
 import { withPublishedEventSlices } from "@/lib/regattaEventGroups";
@@ -20,7 +23,7 @@ import {
   type ResolvedEventSlice,
 } from "@/lib/regattaEvents";
 import { fillUnlistedPrizeWinners } from "@/lib/prizeWinnersFromResults";
-import { getPrizeFleetDefinitions, prizeNameKey, type PrizeWinner } from "@/lib/regattaPrizes";
+import { getPrizeFleetDefinitions, getPrizeDefinitionsForSheet, prizeNameKey } from "@/lib/regattaPrizes";
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";
 import type { RegattaRecord } from "@/lib/ranking";
 import type { Techno293Regatta } from "@/lib/techno293";
@@ -47,10 +50,7 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
 
 function prizeViewForSlice(event: RegattaEventDef, slice: ResolvedEventSlice) {
   if (slice.regatta) {
-    const fromRow = getPrizeFleetDefinitions(
-      slice.regatta.slug,
-      slice.def.prizeFleetName
-    );
+    const fromRow = getPrizeDefinitionsForSheet(slice.regatta);
     if (fromRow) return fromRow;
   }
   if (!slice.def.prizeFleetName) return null;
@@ -89,30 +89,13 @@ function EventLinkChip({
   );
 }
 
-function profileHandlesForWinners(
-  results: { sailorName: string; handle: string; sailNumber?: string | null }[],
-  winners: PrizeWinner[]
-): Record<string, string> {
-  const byName = new Map<string, string>();
-  const bySail = new Map<string, string>();
-  for (const row of results) {
-    if (row.handle) byName.set(prizeNameKey(row.sailorName), row.handle);
-    const sail = String(row.sailNumber || "").replace(/\s+/g, "");
-    if (sail && row.handle) bySail.set(sail, row.handle);
-  }
-  const handles: Record<string, string> = {};
-  for (const winner of winners) {
-    const sail = String(winner.sailNumber || "").replace(/\s+/g, "");
-    const handle = byName.get(prizeNameKey(winner.sailorName)) || (sail ? bySail.get(sail) : undefined);
-    if (handle) handles[prizeNameKey(winner.sailorName)] = handle;
-  }
-  return handles;
-}
 
 function BoardClassPanel({
   slice,
+  profileHandles,
 }: {
   slice: RegattaEventSliceDef;
+  profileHandles: Record<string, string>;
 }) {
   const board = getStaticBoardRegatta(slice) as
     | WingfoilRegatta
@@ -148,7 +131,7 @@ function BoardClassPanel({
                 <RankMedalBadge rank={r.rank} className="h-7 w-7 text-xs" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)]">
-                    {r.name}
+                    {profileHandles[prizeNameKey(r.name)] ? <Link href={`/sailors/${encodeURIComponent(profileHandles[prizeNameKey(r.name)])}`} className="hover:underline">{r.name}</Link> : r.name}
                   </p>
                   <p className="truncate text-xs text-[var(--sp-charcoal-slate)]">
                     {[r.sailNumber, r.club || r.schoolName].filter(Boolean).join(" · ")}
@@ -294,7 +277,7 @@ async function DbSlicePanel({
   const winners = fleets.flatMap((fleet) =>
     fleet.categories.flatMap((category) => category.winners)
   );
-  const profileHandles = profileHandlesForWinners(results, winners);
+  const profileHandles = prizeWinnerProfileHandles(winners, results);
   return (
     <div className="space-y-3">
       {prizeView && fleets.length > 0 && (
@@ -303,6 +286,7 @@ async function DbSlicePanel({
           profileHandles={profileHandles}
         />
       )}
+      {!fleets.length && <RegattaFleetPodium results={results} />}
       <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed">
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
@@ -362,6 +346,17 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
   const active = slices.find((s) => s.def.key === activeKey) ?? slices[0];
   if (!active) return null;
   const prizeView = prizeViewForSlice(event, active);
+  let staticProfileHandles: Record<string, string> = {};
+  if (!active.regatta) {
+    const directory = await searchSailorsEnhanced({}).catch(() => []);
+    const people = directory.map((person) => ({ sailorName: person.name, handle: person.handle, sailorId: person.id, sailNumber: person.sailNumber }));
+    const board = getStaticBoardRegatta(active.def);
+    const winners = [
+      ...(prizeView?.fleets.flatMap((fleet) => fleet.categories.flatMap((category) => category.winners)) || []),
+      ...(board?.results?.slice(0, 3).map((row) => ({ sailorName: row.name, sailNumber: row.sailNumber, rank: row.rank, prizeTitle: "" })) || []),
+    ];
+    staticProfileHandles = prizeWinnerProfileHandles(winners, people);
+  }
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
@@ -435,13 +430,14 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
       {!active.regatta && prizeView && (
         <RegattaPrizeWinners
           schedule={{ ...prizeView.schedule, fleets: prizeView.fleets }}
+          profileHandles={staticProfileHandles}
         />
       )}
 
       {active.regatta ? (
         <DbSlicePanel regatta={active.regatta} def={active.def} prizeView={prizeView} />
       ) : (
-        <BoardClassPanel slice={active.def} />
+        <BoardClassPanel slice={active.def} profileHandles={staticProfileHandles} />
       )}
     </div>
   );

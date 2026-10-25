@@ -80,11 +80,11 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                 Awards &amp; Honours
               </h2>
               <span className="rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 text-[10px] font-bold text-amber-900">
-                {awards.length} Verified {awards.length === 1 ? "Prize" : "Prizes"}
+                {awards.length} Recorded {awards.length === 1 ? "Honour" : "Honours"}
               </span>
             </div>
             <p className="text-xs text-slate-soft mt-0.5">
-              Official podium finishes and awards per Notice of Race (NoR)
+              Official award records and recorded podium finishes
             </p>
           </div>
         </div>
@@ -165,9 +165,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
         {filteredAwards.map((award) => {
           const style = medalStyle(award.medal, award.rank);
           const regattaHref = award.regattaSlug
-            ? award.boatClass.toLowerCase().includes("ilca")
-              ? `/sg/ilca/regattas/${award.regattaSlug}`
-              : `/regattas/${award.regattaSlug}`
+            ? `/regattas/${award.regattaSlug}`
             : null;
 
           return (
@@ -226,6 +224,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                 )}
               </div>
 
+              {award.sourceUrl && <a href={award.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-xs font-semibold text-harbour underline">Official award source ↗</a>}
               {/* Metadata subline: Club, School, Sail #, and Notes */}
               {(award.club || award.schoolName || award.sailNumber || award.notes) && (
                 <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-soft pt-0.5">

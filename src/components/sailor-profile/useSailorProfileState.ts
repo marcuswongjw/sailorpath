@@ -46,13 +46,14 @@ import type {
   SailorProfileViewProps,
 } from "./types";
 import type { ProfileSectionTab } from "./ProfileClassNavigation";
-import { getSailorPrizes, getSailorMedalCounts } from "@/lib/sailorPrizes";
+import { getSailorPrizes, getSailorMedalCounts, mergeSailorPrizes } from "@/lib/sailorPrizes";
 import type { ProfileOwnerForm } from "@/components/sailor-profile/ProfileOwnerEditor";
 import { errorMessage } from "@/lib/errors";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 export function useSailorProfileState({
   initialSailor,
+  initialPrizeAwards,
   initialResults,
   initialEquipment,
   initialSeriesStanding = null,
@@ -741,8 +742,8 @@ export function useSailorProfileState({
 
   // Cross-class official Notice of Race (NoR) prizes and verified awards
   const awards = useMemo(
-    () => getSailorPrizes(displaySailor, results),
-    [displaySailor, results]
+    () => mergeSailorPrizes(getSailorPrizes(displaySailor, results), initialPrizeAwards || []),
+    [displaySailor, results, initialPrizeAwards]
   );
   const awardCounts = useMemo(() => getSailorMedalCounts(awards), [awards]);
 

@@ -6,6 +6,7 @@
  */
 
 export type PrizeWinner = {
+  sailorHandle?: string;
   rank: number;
   prizeTitle: string; // e.g. "1st", "2nd", "3rd", "Top Secondary School"
   sailorName: string;
@@ -40,6 +41,9 @@ export function prizeNameKey(name: string): string {
 }
 
 export type RegattaPrizeSchedule = {
+  sourceDescription?: string;
+  sourceUrl?: string;
+  sourceKind?: "organiser-report" | "notice-of-race";
   regattaSlug: string;
   regattaName: string;
   year: number;
@@ -5095,7 +5099,39 @@ export const NSC_CUP_2_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+/** Named awards corroborated by CSC's post-event reports and linked standings.
+ * The score PDFs retain a provisional heading; no broader prize cutoff is inferred. */
+export const CSC_OPTIMIST_GOLD_2026_PRIZES: RegattaPrizeSchedule = {
+  regattaSlug: "csc-gold-jan-26-2026-01-24", regattaName: "CSC Optimist Championship (Gold Fleet) 2026", year: 2026,
+  datesText: "24–25 January 2026", venue: "Changi Sailing Club", organizer: "Changi Sailing Club",
+  noticeOfRaceUrl: "", officialNoticeBoardUrl: "", websiteUrl: "https://www.csc.org.sg/2026/01/26/csc-optimist-championship-gold-fleet-2026/", registrationUrl: "",
+  entryFees: { singleHanded: 0, doubleHanded: 0, earlyBirdDeadline: "", finalDeadline: "", lateFee: 0 }, scheduleSummary: "", scoringRules: "",
+  sourceKind: "organiser-report", sourceDescription: "Named champions confirmed by CSC’s post-event report. Linked score PDF is marked provisional.",
+  sourceUrl: "https://www.csc.org.sg/2026/01/26/csc-optimist-championship-gold-fleet-2026/",
+  fleets: [{ fleetName: "Optimist Gold Fleet", boatClass: "Optimist", categories: [
+    { categoryName: "Open", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "Champion / Challenge Trophy", sailorName: "Lucas Cao Zhihong", sailorHandle: "lucas-cao-zhihong", sailNumber: "149" }] },
+    { categoryName: "Female", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "1st Female", sailorName: "Lyric Li Yuxuan", sailorHandle: "lyric-li-yuxuan", sailNumber: "728" }] },
+    { categoryName: "12 years and under", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "1st (12 years and under)", sailorName: "Charles Kong Shing Chak", sailorHandle: "charles-kong-shing-chak", sailNumber: "716" }] },
+  ] }],
+};
+export const CSC_OPTIMIST_SILVER_2026_PRIZES: RegattaPrizeSchedule = {
+  ...CSC_OPTIMIST_GOLD_2026_PRIZES,
+  regattaSlug: "csc-silver-jan-26-2026-01-17", regattaName: "CSC Optimist Championship (Silver Fleet) 2026", datesText: "17–18 January 2026",
+  sourceDescription: "Overall podium confirmed by CSC’s post-event report. Linked score PDF is marked provisional.",
+  sourceUrl: "https://www.csc.org.sg/2026/01/19/csc-optimist-championships-silver-fleet-2026-day-2/",
+  websiteUrl: "https://www.csc.org.sg/2026/01/19/csc-optimist-championships-silver-fleet-2026-day-2/",
+  fleets: [{ fleetName: "Optimist Silver Fleet", boatClass: "Optimist", categories: [
+    { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [
+      { rank: 1, prizeTitle: "1st Overall", sailorName: "Chloe Ariane Pitsilis", sailorHandle: "chloe-ariane-pitsilis", sailNumber: "708" },
+      { rank: 2, prizeTitle: "2nd Overall", sailorName: "Clara Ng Siew Ning", sailorHandle: "clara-ng-siew-ning", sailNumber: "3739" },
+      { rank: 3, prizeTitle: "3rd Overall", sailorName: "Cyra Cama", sailorHandle: "cyra-cama", sailNumber: "29" },
+    ] },
+  ] }],
+};
+
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+  CSC_OPTIMIST_GOLD_2026_PRIZES,
+  CSC_OPTIMIST_SILVER_2026_PRIZES,
   RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
   RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE,
   RSYC_OPTIMIST_2025_PRIZE_SCHEDULE,
@@ -5122,6 +5158,20 @@ function slugHasAdjacentTokens(slug: string, left: string, right: string): boole
 
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
+  const aliases: Record<string, RegattaPrizeSchedule> = {
+    "rsyc-2026-gold": RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE,
+    "rsyc-2026-silver": RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+    "rsyc-2025-gold": RSYC_OPTIMIST_2025_PRIZE_SCHEDULE,
+    "rsyc-2025-silver": RSYC_OPTIMIST_2025_PRIZE_SCHEDULE,
+    "safyc-gold-jul-26-2026-07-04": SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+    "safyc-silver-jul-26-2026-07-04": SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+    "safyc-silver-jul-25-2025-07-12": SAFYC_OPTIMIST_2025_PRIZE_SCHEDULE,
+    "pesta-sukan-26-ilca4": PESTA_SUKAN_2026_PRIZE_SCHEDULE,
+    "temasek-ilca-jun-26-2026-06-20": TEMASEK_2026_PRIZE_SCHEDULE,
+    "csc-gold-jan-26-2026-01-24": CSC_OPTIMIST_GOLD_2026_PRIZES,
+    "csc-silver-jan-26-2026-01-17": CSC_OPTIMIST_SILVER_2026_PRIZES,
+  };
+  if (aliases[s]) return aliases[s];
   if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
     return RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE;
   }
@@ -5327,4 +5377,15 @@ export function getPrizeWinnersForRegatta(
 
   if (fleets.length === 0) return null;
   return { schedule: found.schedule, fleets };
+}
+
+
+/** Select by actual class/division for legacy slugs that omit a rig or fleet. */
+export function getPrizeDefinitionsForSheet(sheet: { slug: string; boatClass?: string | null; division?: string | null }) {
+  const schedule = getRegattaPrizeSchedule(sheet.slug);
+  if (!schedule) return null;
+  const key = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const fleets = schedule.fleets.filter((fleet) => key(fleet.boatClass) === key(sheet.boatClass || "Optimist") &&
+    (!/gold|silver/i.test(sheet.division || "") || fleet.fleetName.toLowerCase().includes((sheet.division || "").toLowerCase())));
+  return fleets.length ? { schedule, fleets } : null;
 }
