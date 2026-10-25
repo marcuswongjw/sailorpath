@@ -1,3 +1,4 @@
+import { loadSailorPrizeAwards } from "@/lib/loadSailorPrizeAwards";
 import { PROFILE_ILCA_CLASSES, profileIlcaClassOf, profileIlcaLabel } from "@/lib/profileClasses";
 import type { SeriesStandingProps } from "@/components/sailor-profile/types";
 import { Suspense } from "react";
@@ -280,6 +281,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
     notFound();
   }
 
+  const initialPrizeAwards = await loadSailorPrizeAwards(sailor, results || []).catch(() => []);
   const canSeePrivate = access.canSeePrivate;
   const publicSailor = toPublicSailorProps(sailor, { canSeePrivate });
   const equipment = toPublicEquipmentProps(sailor, canSeePrivate);
@@ -315,6 +317,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       }
     >
       <SailorProfileView
+      initialPrizeAwards={initialPrizeAwards}
       initialSailor={publicSailor}
       initialResults={(results || []).map((r) => ({
         id: r.resultId || r.regattaId,

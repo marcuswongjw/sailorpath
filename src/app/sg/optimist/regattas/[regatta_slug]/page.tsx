@@ -1,3 +1,5 @@
+import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
+import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
 import { notFound, permanentRedirect } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
@@ -14,7 +16,7 @@ import {
 } from "@/lib/publicShareData";
 import { resultSheetFromRegatta, shareMetadata, sportsEventJsonLd, topFinishers } from "@/lib/publicSeo";
 import { fillUnlistedPrizeWinners } from "@/lib/prizeWinnersFromResults";
-import { getPrizeFleetDefinitions, getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
+import { getPrizeDefinitionsForSheet, getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -75,7 +77,7 @@ export default async function RegattaDetailPage({
   if (!regatta || !results) notFound();
 
   const eventYear = Number(String(regatta.date || "").slice(0, 4));
-  const defined = getPrizeFleetDefinitions(regatta_slug);
+  const defined = getPrizeDefinitionsForSheet(regatta);
   const calculated = defined
     ? fillUnlistedPrizeWinners(defined.fleets, results, eventYear)
     : null;
@@ -117,8 +119,10 @@ export default async function RegattaDetailPage({
       {prizeWinners && (
         <RegattaPrizeWinners
           schedule={{ ...prizeWinners.schedule, fleets: prizeWinners.fleets }}
+          profileHandles={prizeWinnerProfileHandles(prizeWinners.fleets.flatMap((fleet) => fleet.categories.flatMap((category) => category.winners)), results)}
         />
       )}
+      {!prizeWinners && <RegattaFleetPodium results={results} />}
       <PublicRegattaResults
         results={results}
         totalFleetSize={regatta.totalFleetSize}

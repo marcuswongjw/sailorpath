@@ -7,6 +7,8 @@
 
 import {
   ALL_REGATTA_PRIZE_SCHEDULES,
+  getRegattaPrizeSchedule,
+  type RegattaPrizeSchedule,
   prizeNameKey,
 } from "./regattaPrizes";
 
@@ -28,6 +30,7 @@ export interface SailorPrizeAward {
   schoolName?: string;
   club?: string;
   isOfficialNoR: boolean;
+  sourceUrl?: string;
 }
 
 export interface SailorMedalCounts {
@@ -147,7 +150,8 @@ export function getSailorPrizes(
     sailNumber?: string | null;
     countsForRanking?: boolean;
     isDns?: boolean;
-  }[] = []
+  }[] = [],
+  schedules: readonly RegattaPrizeSchedule[] = ALL_REGATTA_PRIZE_SCHEDULES
 ): SailorPrizeAward[] {
   if (!sailor || !sailor.name) return [];
 
@@ -161,7 +165,7 @@ export function getSailorPrizes(
   );
 
   // 1. Search in Official NoR Prize Schedules
-  for (const schedule of ALL_REGATTA_PRIZE_SCHEDULES) {
+  for (const schedule of schedules) {
     for (const fleet of schedule.fleets) {
       for (const cat of fleet.categories) {
         // Skip purely internal school divisions per user rule
@@ -180,9 +184,9 @@ export function getSailorPrizes(
           const nameMatches = matchesSailorName(w.sailorName, sailor.name);
           const sailMatches = Boolean(wSail && sailorSailNumbers.has(wSail));
 
-          if (nameMatches || (sailMatches && wordsOf(w.sailorName)[0] === wordsOf(sailor.name)[0])) {
+          if (w.sailorHandle ? w.sailorHandle === sailor.handle : nameMatches || (sailMatches && wordsOf(w.sailorName)[0] === wordsOf(sailor.name)[0])) {
             const medal = deriveMedalTier(w.rank, w.prizeTitle);
-            const awardId = `${schedule.regattaSlug}-${fleet.boatClass}-${cat.categoryName}-${w.rank}`;
+            const awardId = `${schedule.regattaSlug}-${fleet.fleetName}-${cat.categoryName}-${w.rank}`;
 
             if (!seenKeys.has(awardId)) {
               seenKeys.add(awardId);
@@ -202,7 +206,8 @@ export function getSailorPrizes(
                 sailNumber: w.sailNumber || sailor.sailNumber || undefined,
                 schoolName: w.schoolName || sailor.school || undefined,
                 club: w.club || sailor.club || undefined,
-                isOfficialNoR: true,
+                isOfficialNoR: schedule.sourceKind !== "organiser-report",
+                sourceUrl: schedule.sourceUrl || schedule.noticeOfRaceUrl || undefined,
               });
             }
           }
@@ -287,4 +292,14 @@ export function getSailorMedalCounts(awards: SailorPrizeAward[]): SailorMedalCou
     bronze,
     total: awards.length,
   };
+}
+
+
+/** Prefer the same event's named/NoR award over a duplicate generic podium. */
+export function mergeSailorPrizes(...groups: SailorPrizeAward[][]): SailorPrizeAward[] {
+  const all = [...new Map(groups.flat().map((award) => [award.id, award])).values()];
+  const eventKey = (award: SailorPrizeAward) => getRegattaPrizeSchedule(award.regattaSlug)?.regattaSlug || award.regattaSlug;
+  return all.filter((award) => award.sourceUrl || award.isOfficialNoR || !all.some((other) =>
+    other !== award && (other.sourceUrl || other.isOfficialNoR) && eventKey(other) === eventKey(award) && other.boatClass === award.boatClass &&
+    (!/gold|silver/i.test(award.fleetName) || other.fleetName.toLowerCase().includes(award.fleetName.toLowerCase()))));
 }

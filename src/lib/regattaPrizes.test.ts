@@ -236,3 +236,12 @@ describe("regattaPrizes", () => {
   });
 });
 
+
+it("restores exact imported aliases without borrowing another year's prizes", () => {
+  expect(getRegattaPrizeSchedule("rsyc-2026-gold")?.regattaSlug).toBe("rsyc-optimist-gold-fleet-knockout-championship-2026");
+  expect(getRegattaPrizeSchedule("safyc-silver-jul-25-2025-07-12")?.year).toBe(2025);
+  expect(getRegattaPrizeSchedule("safyc-gold-jul-26-2026-07-04")?.year).toBe(2026);
+  expect(getRegattaPrizeSchedule("pesta-sukan-26-ilca4")?.year).toBe(2026);
+  expect(getRegattaPrizeSchedule("csc-gold-jan-26-2026-01-24")?.fleets[0].categories[1].winners[0].sailorHandle).toBe("lyric-li-yuxuan");
+  expect(getRegattaPrizeSchedule("csc-silver-jan-26-2026-01-17")?.fleets[0].categories[0].winners.map((winner) => winner.sailorHandle)).toEqual(["chloe-ariane-pitsilis", "clara-ng-siew-ning", "cyra-cama"]);
+});

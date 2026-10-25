@@ -118,7 +118,8 @@ function WinnerRow({
           <div className="min-w-0 flex-1">
             <PrizeSailorName
               name={w.sailorName}
-              handle={profileHandles?.[prizeNameKey(w.sailorName)]}
+              handle={w.sailorHandle || profileHandles?.[prizeNameKey(w.sailorName)]}
+              profileHandles={profileHandles}
             />
           </div>
         </div>
@@ -239,10 +240,11 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div className="space-y-1.5">
             <h2 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] tracking-tight leading-tight">
-              Verified Prize Winners &amp; Podiums
+              Prize Winners &amp; Podiums
             </h2>
             <p className="text-xs text-[var(--sp-slate-soft)]">
-              Awarded per Section 19 of the official Notice of Race ({schedule.regattaName})
+              {schedule.sourceDescription || `Prize categories from the official Notice of Race (${schedule.regattaName}).`}
+              {schedule.sourceUrl && <a href={schedule.sourceUrl} target="_blank" rel="noopener noreferrer" className="ml-1 underline">Official source ↗</a>}
             </p>
           </div>
 
@@ -312,7 +314,9 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
   );
 }
 
-function PrizeSailorName({ name, handle }: { name: string; handle?: string }) {
+function PrizeSailorName({ name, handle, profileHandles }: { name: string; handle?: string; profileHandles?: Record<string, string> }) {
+  if (name.includes("/")) return <>{name.split("/").map((part, index) => <span key={part}>{index > 0 && " / "}<PrizeSailorName name={part.trim()} handle={profileHandles?.[prizeNameKey(part)]} /></span>)}</>;
+
   if (!handle) {
     return (
       <span className="font-black text-charcoal text-[13px] sm:text-sm leading-snug break-words">
