@@ -1,3 +1,5 @@
+import { INTERNATIONAL_REGATTA_PRIZE_SCHEDULES, getInternationalRegattaPrizeSchedule } from "./internationalRegattaPrizes";
+
 /**
  * Official Notice of Race (NoR) Prize Categories & Verified Winners
  *
@@ -27,6 +29,8 @@ export type PrizeCategory = {
 };
 
 export type RegattaPrizeFleet = {
+  /** Restrict awards to a separately scored division, e.g. Girls. */
+  division?: string;
   fleetName: string;
   boatClass: string;
   categories: PrizeCategory[];
@@ -5130,6 +5134,7 @@ export const CSC_OPTIMIST_SILVER_2026_PRIZES: RegattaPrizeSchedule = {
 };
 
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+  ...INTERNATIONAL_REGATTA_PRIZE_SCHEDULES,
   CSC_OPTIMIST_GOLD_2026_PRIZES,
   CSC_OPTIMIST_SILVER_2026_PRIZES,
   RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
@@ -5158,6 +5163,8 @@ function slugHasAdjacentTokens(slug: string, left: string, right: string): boole
 
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
+  const international = getInternationalRegattaPrizeSchedule(s);
+  if (international) return international;
   const aliases: Record<string, RegattaPrizeSchedule> = {
     "rsyc-2026-gold": RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE,
     "rsyc-2026-silver": RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
@@ -5313,6 +5320,8 @@ export type RegattaPrizeWinnersView = {
  */
 export function inferPrizeFleetName(slug: string): string | undefined | null {
   const s = String(slug || "").toLowerCase();
+  if (s.includes("girls")) return s.includes("ilca") ? "ILCA 4 Girls" : "Optimist Girls";
+  if (s.includes("boys")) return s.includes("ilca") ? "ILCA 4 Boys" : "Optimist Boys";
   if (/ilca-?4/.test(s)) return "ILCA 4";
   if (/ilca-?6/.test(s)) return "ILCA 6";
   if (/ilca-?7/.test(s)) return "ILCA 7";
@@ -5385,7 +5394,13 @@ export function getPrizeDefinitionsForSheet(sheet: { slug: string; boatClass?: s
   const schedule = getRegattaPrizeSchedule(sheet.slug);
   if (!schedule) return null;
   const key = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
-  const fleets = schedule.fleets.filter((fleet) => key(fleet.boatClass) === key(sheet.boatClass || "Optimist") &&
+  const fleets = schedule.fleets.filter((fleet) => (!fleet.division || key(fleet.division) === key(sheet.division || "")) && key(fleet.boatClass) === key(sheet.boatClass || "Optimist") &&
     (!/gold|silver/i.test(sheet.division || "") || fleet.fleetName.toLowerCase().includes((sheet.division || "").toLowerCase())));
   return fleets.length ? { schedule, fleets } : null;
+}
+
+/** A girls-only or age award must not hide the recorded overall fleet podium. */
+export function hasOverallPrizeWinners(fleets: readonly RegattaPrizeFleet[]): boolean {
+  return fleets.some((fleet) => fleet.categories.some((category) =>
+    /^(open|overall)(?:$|\s|\()/i.test(category.categoryName) && category.winners.length > 0));
 }

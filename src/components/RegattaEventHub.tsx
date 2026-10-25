@@ -1,3 +1,4 @@
+import { hasOverallPrizeWinners } from "@/lib/regattaPrizes";
 import { searchSailorsEnhanced } from "@/lib/search";
 import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
 import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
@@ -286,7 +287,7 @@ async function DbSlicePanel({
           profileHandles={profileHandles}
         />
       )}
-      {!fleets.length && <RegattaFleetPodium results={results} />}
+      {!hasOverallPrizeWinners(fleets) && <RegattaFleetPodium results={results} />}
       <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed">
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
