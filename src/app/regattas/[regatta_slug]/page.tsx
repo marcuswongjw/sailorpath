@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { DbOffline } from "@/components/DbOffline";
+import { RegattaOverview, formatRegattaDates, regattaTimelineStatus } from "@/components/RegattaOverview";
+import { PENDING_REGATTAS } from "@/lib/calendar/pendingRegattas";
+import { getPublicCalendarData } from "@/lib/calendar/publicCalendar";
 import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { permanentRedirect, redirect } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
@@ -13,11 +17,9 @@ import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
 import { resolveFleetResultSheet } from "@/lib/publicShareData";
 import {
   eventHubShare,
-  eventHubTitle,
   resultSheetFromEventSlice,
   shareMetadata,
   sportsEventJsonLd,
-  yearFromText,
 } from "@/lib/publicSeo";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 import { getCachedPublicRegattas, getRegattaBySlug } from "@/lib/queries";
@@ -76,8 +78,8 @@ export async function generateMetadata({
     const calendarEntry = SINGAPORE_REGATTAS_2026.find((entry) => entry.slug === regatta_slug);
     if (calendarEntry) {
       return shareMetadata({
-        title: eventHubTitle(calendarEntry.name, yearFromText(calendarEntry.name)),
-        description: `Published results for ${calendarEntry.name}.`,
+        title: `${calendarEntry.name} | SailorPath`,
+        description: `Dates, venue, classes and official event information for ${calendarEntry.name}.`,
         canonicalPath: `/regattas/${calendarEntry.slug}`,
       });
     }
@@ -184,7 +186,32 @@ export default async function RegattaRedirectPage({
     redirect(classResultsHref(matches[0]));
   }
 
-  const title = calendarEntry?.name || "Results are not published yet";
+  const pending = PENDING_REGATTAS.find((entry) => entry.slug === regatta_slug);
+  if (pending) {
+    return <div className="mx-auto w-full max-w-6xl space-y-7 px-4 py-8 sm:py-10">
+      <RegattaOverview name={pending.name} dates={`${pending.year} · Dates to be confirmed`} venue={pending.venue} organiser={pending.organizer} classes={[pending.boatClass]} region={pending.region} status="Dates TBC" websiteUrl={pending.officialUrl} />
+      <section className="border-t border-[var(--sp-cool-veil)] pt-6"><h2 className="mb-3 text-lg font-bold text-[var(--sp-harbour-shadow)]">Fleet results</h2><p className="text-sm text-[var(--sp-charcoal-slate)]">Exact event dates are awaiting confirmation from the organiser.</p></section>
+    </div>;
+  }
+
+  // Use the calendar inventory so saved overrides and deletions stay authoritative.
+  let calendarEvent;
+  try {
+    calendarEvent = (await getPublicCalendarData()).allRegattas.find((entry) => entry.slug === regatta_slug);
+  } catch {
+    if (calendarEntry) return <DbOffline title="Event information is temporarily unavailable" />;
+  }
+  if (calendarEvent) {
+    return <div className="mx-auto w-full max-w-6xl space-y-7 px-4 py-8 sm:py-10">
+      <RegattaOverview name={calendarEvent.name} dates={formatRegattaDates(calendarEvent.date, calendarEvent.endDate)} venue={calendarEvent.venue} organiser={calendarEvent.organizer} classes={calendarEvent.classes?.length ? calendarEvent.classes : [calendarEvent.boatClass || ""]} region={calendarEvent.region} status={regattaTimelineStatus(calendarEvent.date, calendarEvent.endDate)} registrationUrl={calendarEvent.registrationUrl} noticeBoardUrl={calendarEvent.norUrl} keyDeadlines={calendarEvent.keyDeadlines} summary={calendarEvent.scheduleNotes} backHref={calendarView === "past" ? "/calendar?view=past" : "/calendar"} calendarEvent={{ slug: calendarEvent.slug, name: calendarEvent.name, startDate: calendarEvent.date, endDate: calendarEvent.endDate, venue: calendarEvent.venue }} />
+      <section aria-label="Fleet results" className="space-y-4 border-t border-[var(--sp-cool-veil)] pt-6">
+        <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">Fleet results</h2>
+        {matches.length > 1 ? <ul className="grid gap-3 sm:grid-cols-2">{matches.map((row) => <li key={row.id}><Link href={classResultsHref(row)} className="block rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 font-semibold text-[var(--sp-harbour-teal)] hover:underline">{[row.boatClass, row.division].filter(Boolean).join(" · ")} →</Link></li>)}</ul> : <div className="rounded-xl bg-[var(--sp-aqua-mist)] p-5"><p className="font-semibold text-[var(--sp-harbour-shadow)]">Results will appear here once published.</p><p className="mt-1 text-sm text-[var(--sp-charcoal-slate)]">Each fleet will have a direct link to its scorecard.</p></div>}
+      </section>
+    </div>;
+  }
+
+  const title = "Results are not published yet";
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-4 px-4 py-10">

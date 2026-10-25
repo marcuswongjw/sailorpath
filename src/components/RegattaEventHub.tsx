@@ -1,11 +1,10 @@
 import { organiserResultStatus } from "@/lib/resultCardStatus";
 import { ResultStatus } from "@/components/ResultStatus";
 import { withPublishedEventSlices } from "@/lib/regattaEventGroups";
-import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 import Link from "next/link";
 import { ExternalLink, FileText } from "lucide-react";
-import { EventFacts } from "@/components/EventFacts";
+import { RegattaOverview } from "@/components/RegattaOverview";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
@@ -366,53 +365,21 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
-      <nav
-        aria-label="Breadcrumb"
-        className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs font-bold"
-      >
-        <RegattasBackLink
-          href={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
-          className="text-[var(--sp-harbour-teal)] hover:underline"
-        >
-          Regattas
-        </RegattasBackLink>
-        <span className="text-[var(--sp-slate-soft)]" aria-hidden>
-          /
-        </span>
-        <span className="text-[var(--sp-charcoal)] truncate max-w-[12rem] sm:max-w-xs font-medium">
-          {event.shortName}
-        </span>
-      </nav>
-
-      <header className="min-w-0 space-y-2">
-        <div className="flex flex-wrap items-center gap-2">
-          {event.officialNoticeBoardUrl && (
-            <EventLinkChip
-              href={event.officialNoticeBoardUrl}
-              label="Official Notice Board"
-            />
-          )}
-          {event.noticeOfRaceUrl &&
-            event.noticeOfRaceUrl !== event.officialNoticeBoardUrl && (
-              <EventLinkChip href={event.noticeOfRaceUrl} label="Notice of Race" />
-            )}
-        </div>
-        <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] leading-snug break-words tracking-tight">
-          {event.name}
-        </h1>
-        <EventFacts
-          dates={event.datesText}
-          venue={event.venue}
-          organiser={event.organizer}
-          className="space-y-1 text-[12px] sm:text-xs leading-relaxed"
-          labelClassName="font-bold text-[var(--sp-charcoal)]"
-          valueClassName="text-[var(--sp-charcoal-slate)]"
-        />
-        {event.scheduleSummary && (
-          <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed max-w-3xl">
-            {event.scheduleSummary}
-          </p>
-        )}
+      <RegattaOverview
+        name={event.name}
+        dates={event.datesText}
+        venue={event.venue}
+        organiser={event.organizer}
+        classes={event.slices.map((slice) => slice.label)}
+        status={slices.some((slice) => slice.regatta ? (slice.regatta.raceCount || 0) > 0 : Boolean(getStaticBoardRegatta(slice.def)?.results?.length)) ? "Results available" : "Event overview"}
+        registrationUrl={event.registrationUrl}
+        noticeBoardUrl={event.officialNoticeBoardUrl}
+        noticeOfRaceUrl={event.noticeOfRaceUrl}
+        websiteUrl={event.websiteUrl}
+        summary={event.scheduleSummary}
+        backHref={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
+      />
+      <div>
         {event.seriesLinks && event.seriesLinks.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
             <span className="font-bold text-[var(--sp-slate-soft)]">Series Championship:</span>
@@ -427,8 +394,9 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
             ))}
           </div>
         )}
-      </header>
+      </div>
 
+      <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">Fleet results</h2>
       <nav
         aria-label="Classes at this event"
         className="flex flex-wrap gap-0 border-b border-[var(--sp-cool-veil)]"
