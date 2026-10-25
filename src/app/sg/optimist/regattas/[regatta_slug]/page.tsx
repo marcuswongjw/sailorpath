@@ -1,3 +1,4 @@
+import { hasOverallPrizeWinners } from "@/lib/regattaPrizes";
 import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
 import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -122,7 +123,7 @@ export default async function RegattaDetailPage({
           profileHandles={prizeWinnerProfileHandles(prizeWinners.fleets.flatMap((fleet) => fleet.categories.flatMap((category) => category.winners)), results)}
         />
       )}
-      {!prizeWinners && <RegattaFleetPodium results={results} />}
+      {!hasOverallPrizeWinners(prizeWinners?.fleets || []) && <RegattaFleetPodium results={results} />}
       <PublicRegattaResults
         results={results}
         totalFleetSize={regatta.totalFleetSize}
