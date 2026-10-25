@@ -5111,7 +5111,7 @@ export const CSC_OPTIMIST_GOLD_2026_PRIZES: RegattaPrizeSchedule = {
   fleets: [{ fleetName: "Optimist Gold Fleet", boatClass: "Optimist", categories: [
     { categoryName: "Open", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "Champion / Challenge Trophy", sailorName: "Lucas Cao Zhihong", sailorHandle: "lucas-cao-zhihong", sailNumber: "149" }] },
     { categoryName: "Female", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "1st Female", sailorName: "Lyric Li Yuxuan", sailorHandle: "lyric-li-yuxuan", sailNumber: "728" }] },
-    { categoryName: "12 years and under", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "1st (12 years and under)", sailorName: "Charles Kong", sailNumber: "716" }] },
+    { categoryName: "12 years and under", prizesAwarded: "1st", winners: [{ rank: 1, prizeTitle: "1st (12 years and under)", sailorName: "Charles Kong Shing Chak", sailorHandle: "charles-kong-shing-chak", sailNumber: "716" }] },
   ] }],
 };
 export const CSC_OPTIMIST_SILVER_2026_PRIZES: RegattaPrizeSchedule = {
