@@ -72,7 +72,9 @@ describe("POST /api/account/evidence/upload", () => {
     expect(mocks.uploads[0].bucket).toBe("regatta-evidence");
     expect(mocks.uploads[0].path.startsWith(`${USER}/`)).toBe(true);
     expect(mocks.uploads[0].options).toMatchObject({ upsert: false });
-    expect(data.url).toContain(`/regatta-evidence/${USER}/`);
+    expect(data.url).toMatch(/^\/api\/account\/evidence\?path=/);
+    expect(decodeURIComponent(data.url)).toContain(`${USER}/`);
+    expect(data.url).not.toContain("supabase.co");
     expect(mocks.uploads.some((row) => row.bucket === "avatars")).toBe(false);
   });
 

@@ -4,7 +4,6 @@ import { useId, useState } from "react";
 import { ResultScoringGuide } from "@/components/ResultScoringGuide";
 import { describeRaceScore } from "@/lib/raceScorePresentation";
 import Link from "next/link";
-import { birthYear } from "@/lib/age";
 import { formatGenderLabel } from "@/lib/gender";
 import { getPercentileBadge } from "@/lib/ranking";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
@@ -228,7 +227,7 @@ export function PublicRegattaResults({
       case "name": return r.sailorName?.toLowerCase() ?? "";
       case "nationality": return r.nationality?.toLowerCase() ?? "";
       case "gender": return formatGenderLabel(r.gender)?.toLowerCase() ?? "";
-      case "birthYear": return r.birthYear ?? birthYear(r.dob) ?? 9999;
+      case "birthYear": return r.birthYear ?? 9999;
       case "total": return r.totalScore ?? 9999;
       case "nett": return r.nettScore ?? 9999;
     }
@@ -307,7 +306,7 @@ export function PublicRegattaResults({
                     formatGenderLabel(result.gender) !== "—"
                       ? formatGenderLabel(result.gender)
                       : null,
-                    result.birthYear ?? birthYear(result.dob),
+                    result.birthYear,
                   ].filter(Boolean).join(" · ") || "—"}
                 </p>
               </div>
@@ -449,7 +448,7 @@ export function PublicRegattaResults({
                   {formatGenderLabel(result.gender)}
                 </td>
                 <td className="hidden sm:table-cell px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
-                  {result.birthYear ?? birthYear(result.dob) ?? "—"}
+                  {result.birthYear ?? "—"}
                 </td>
                 {raceNumbers.map((raceNumber) => {
                   const race = races.get(raceNumber);

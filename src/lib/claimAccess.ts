@@ -75,3 +75,19 @@ export async function getApprovedClaimRelationsForUser(
   }
   return map;
 }
+
+/** Guardian permission belongs to this actor, never to another profile owner. */
+export async function canGiveGuardianConsent(
+  sailorId: string,
+  userId: string,
+  owner: { parentId: string | null; ownerRelation: string | null }
+): Promise<boolean> {
+  if (owner.parentId === userId && owner.ownerRelation === "parent") return true;
+  const [claim] = await db.select({ id: sailorClaims.id }).from(sailorClaims).where(and(
+    eq(sailorClaims.sailorId, sailorId),
+    eq(sailorClaims.requesterId, userId),
+    eq(sailorClaims.status, "approved"),
+    eq(sailorClaims.relation, "parent")
+  )).limit(1);
+  return Boolean(claim);
+}
