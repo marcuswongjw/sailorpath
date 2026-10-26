@@ -1,3 +1,4 @@
+import { extendInternationalPrizeSchedules } from "./internationalAdditionalPrizes";
 import type { PrizeWinner, RegattaPrizeSchedule } from "./regattaPrizes";
 
 const noFees = { singleHanded: 0, doubleHanded: 0, earlyBirdDeadline: "", finalDeadline: "", lateFee: 0 };
@@ -8,7 +9,7 @@ const winner = (rank: number, sailorName: string, sailorHandle: string, sailNumb
 const base = { registrationUrl: "", entryFees: noFees, scheduleSummary: "", scoringRules: "", sourceKind: "notice-of-race" as const };
 
 /** Event-specific awards only. Never infer continental eligibility from a sailor's profile country. */
-export const INTERNATIONAL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+export const INTERNATIONAL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = extendInternationalPrizeSchedules([
   {
     ...base,
     regattaSlug: "2026-optimist-world-championship-overall", regattaName: "2026 Optimist World Championship", year: 2026,
@@ -101,7 +102,7 @@ export const INTERNATIONAL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
       ] },
     ] }],
   },
-];
+]);
 
 /** Only these published editions have been checked; selection trials must never match. */
 const aliases: Record<string, string> = {

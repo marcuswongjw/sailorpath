@@ -11,6 +11,7 @@ describe("international girls' awards", () => {
     }]);
     expect(awards.filter((a) => a.regattaSlug.includes("2025-optimist-asian"))).toMatchObject([
       { categoryName: "Girls", rank: 1, medal: "gold", sailNumber: "SGP 159" },
+      { categoryName: "Asian", rank: 3, medal: "bronze", sailNumber: "SGP 159" },
     ]);
   });
   it("does not attach international awards to a different handle with a similar name", () => {
@@ -25,8 +26,8 @@ describe("international girls' awards", () => {
   });
   it("does not use girls' schedules on boys' results sheets or selection trials", () => {
     expect(getPrizeDefinitionsForSheet({ slug: "2026-optimist-european-championship-girls", boatClass: "Optimist", division: "Boys" })).toBeNull();
-    expect(getRegattaPrizeSchedule("2026-optimist-european-championship-boys")).toBeNull();
-    expect(getRegattaPrizeSchedule("2026-ilca-4-youth-worlds-boys")).toBeNull();
+    expect(getPrizeDefinitionsForSheet({ slug: "2026-optimist-european-championship-boys", boatClass: "Optimist", division: "Boys" })?.fleets[0].fleetName).toBe("Optimist Boys");
+    expect(getPrizeDefinitionsForSheet({ slug: "2026-ilca-4-youth-worlds-boys", boatClass: "ILCA 4", division: "Boys" })?.fleets[0].fleetName).toBe("ILCA 4 Boys");
     expect(getRegattaPrizeSchedule("optimist-asian-oceanian-thailand-selection-trials-2026-optimist")).toBeNull();
     expect(getPrizeDefinitionsForSheet({ slug: "2026-ilca-4-youth-worlds-girls", boatClass: "ILCA 4", division: "Girls" })?.fleets[0].fleetName).toBe("ILCA 4 Girls");
   });
@@ -36,7 +37,7 @@ describe("international girls' awards", () => {
       { sailorName: "Manuel Bragança", handle: "manuel-braganca-worlds26-fc4e07", rank: 1 },
       { sailorName: "Ines Mendez Larminaux", handle: "ines-mendez-larminaux-hkrw-80c3e8", rank: 6 },
     ], 2026);
-    expect(filled[0].categories.map((c) => c.categoryName)).toEqual(["Open", "Girls"]);
+    expect(filled[0].categories.map((c) => c.categoryName)).toEqual(expect.arrayContaining(["Open", "Girls"]));
     expect(filled[0].categories[0].prizesAwarded).toBe("1st to 20th");
     expect(hasOverallPrizeWinners(filled)).toBe(true);
   });
@@ -51,5 +52,35 @@ describe("international girls' awards", () => {
     const sailor = { name: "Maria De Lluc Bestard", handle: "maria-de-lluc-bestard-euro26-dfd246" };
     const awards = getSailorPrizes(sailor, [{ regattaSlug: "2026-optimist-european-championship-girls", rank: 1, boatClass: "Optimist", division: "Girls" }]);
     expect(mergeSailorPrizes(awards).filter((a) => a.regattaSlug.includes("european"))).toHaveLength(2);
+  });
+});
+
+
+describe("remaining championship categories", () => {
+  it("counts a fleet podium using its category rank, not its colour or overall position", () => {
+    const awards = getSailorPrizes({ name: "Eren Kaan Erendemir", handle: "eren-kaan-erendemir-worlds26-52181c" });
+    expect(awards).toMatchObject([{ categoryName: "Silver Fleet", rank: 1, medal: "gold", notes: "Overall position 72; 134 points nett." }]);
+    const bronze = getSailorPrizes({ name: "Jonny Jaap Seekamp", handle: "jonny-jaap-seekamp-worlds26-d9ef32" });
+    expect(bronze[0].medal).toBe("bronze");
+  });
+  it("uses continental eligibility independently of the open podium", () => {
+    const categories = getRegattaPrizeSchedule("2025-optimist-asian-oceanian-championship-overall")!.fleets[0].categories;
+    expect(categories.find((c) => c.categoryName === "Asian")!.winners.map((w) => w.sailorName)).toEqual(["Sorawit Naksuk", "Ethan Chia Han Wei", "Anya Alessia Zahedi"]);
+    expect(categories.find((c) => c.categoryName === "Oceanian")!.winners.map((w) => w.sailorName)).toEqual(["William Harris", "Balthazar Roche", "Jeffrey Chenglin Du"]);
+    const reportAward = getSailorPrizes({ name: "Kornelia Pajak", handle: "asian-uae-kornelia-p-748bbf" }).find((a) => a.categoryName === "Silver Fleet")!;
+    expect(reportAward.isOfficialNoR).toBe(false);
+    expect(reportAward.sourceUrl).toContain("sail-world.com/news/291403");
+  });
+  it("links U16 podiums without inferring ages from profiles", () => {
+    const award = getSailorPrizes({ name: "Xuacu García Rigo", handle: "ilca4-worlds26-esp-xuacu-garc-a-rigo-967f4c" })[0];
+    expect(award).toMatchObject({ categoryName: "Boys U16", rank: 1, prizeTitle: "U16 Boys’ World Champion" });
+    const penghu = getRegattaPrizeSchedule("2026-ilca-asian-cup-ilca4")!.fleets[0].categories.find((c) => c.categoryName === "Boys U16")!;
+    expect(penghu.winners.map((w) => w.sailorHandle)).toEqual(["ilca4-worlds26-kor-jiun-choi-614785", "lim-yuk-jun", "austin-lee-thai25-554015"]);
+  });
+  it("keeps named world-champion trophies in the same first-place honour", () => {
+    const schedule = getRegattaPrizeSchedule("2026-optimist-world-championship-overall")!;
+    const filled = fillUnlistedPrizeWinners(schedule.fleets, [{ sailorName: "Manuel Bragança", handle: "manuel-braganca-worlds26-fc4e07", rank: 1 }], 2026);
+    expect(filled[0].categories[0].winners[0].prizeTitle).toContain("Peter Barclay Trophy");
+    expect(filled[0].categories[0].winners[0].prizeTitle).toContain("Beacon Challenge Cup");
   });
 });
