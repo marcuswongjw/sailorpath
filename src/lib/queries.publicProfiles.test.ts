@@ -40,13 +40,18 @@ describe('public sailor results query', () => {
       if (crew) await database.query(`insert into regatta_result_participants (id,regatta_result_id,sailor_id,source_name,display_order,role) values ($1,$2,$3,'Crew sailor',1,'crew')`,[id(30+index),id(20+index),id(1)]);
     }
     await database.query(`insert into regatta_race_results (regatta_result_id,race_number,score,discarded,raw_value) values ($1,1,3,true,'(3)')`, [id(20)]);
+    await database.query(`update sailors set dob='2012-08-23', school='Hidden fixture school', show_school_on_public_profile=false where id=$1`, [id(1)]);
     mock.reads.length = 0;
     const scorecard = await getResultsForRegatta(id(10));
+    expect(scorecard[0].birthYear).toBe(2012);
+    expect(scorecard[0]).not.toHaveProperty('dob');
+    expect(scorecard[0]).not.toHaveProperty('school');
+    expect(scorecard[0]).not.toHaveProperty('parentId');
     expect(mock.reads).toEqual(['public.results.entries','public.results.participants','public.results.races']);
     expect(scorecard[0].raceResults?.[0]).toMatchObject({ score: 3, discarded: true, rawValue: '(3)' });
     const rows = await getResultsForSailor(id(1));
-    expect(rows.map(row=>row.regattaSlug).sort()).toEqual(['log-personal','published-crew','published-direct']);
+    expect(rows.map(row=>row.regattaSlug).sort()).toEqual(['published-crew','published-direct']);
     expect(rows.find(row=>row.regattaSlug==='published-crew')?.participants).toHaveLength(1);
-    expect(rows.find(row=>row.regattaSlug==='log-personal')?.verificationStatus).toBe('self_reported');
+    expect(rows.find(row=>row.regattaSlug==='log-personal')).toBeUndefined();
   });
 });
