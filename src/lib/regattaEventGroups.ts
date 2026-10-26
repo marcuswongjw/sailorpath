@@ -50,6 +50,8 @@ type Fleet =
   | "bravo"
   | "charlie"
   | "open"
+  | "ilca4-boys"
+  | "ilca4-girls"
   | "ilca4"
   | "ilca6"
   | "ilca7"
@@ -95,7 +97,11 @@ function mentionsWindsurfing(
 function publicFleet(row: RegattaRecord): Fleet | null {
   const boat = String(row.boatClass || "");
   const classKey = sailingClassKeyOf(boat);
-  if (isIlcaSeriesClass(boat, "ILCA 4")) return "ilca4";
+  if (isIlcaSeriesClass(boat, "ILCA 4")) {
+    const division = String(row.division || "").trim().toLowerCase();
+    if (division === "boys" || division === "girls") return `ilca4-${division}`;
+    return "ilca4";
+  }
   if (isIlcaSeriesClass(boat, "ILCA 6")) return "ilca6";
   if (isIlcaSeriesClass(boat, "ILCA 7")) return "ilca7";
   if (classKey === "wingfoil") return "wingfoil";
@@ -205,6 +211,11 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
       slugIncludes: [row.slug.toLowerCase()],
       prizeFleetName: `${label} Fleet`,
     };
+  }
+  if (fleet === "ilca4-boys" || fleet === "ilca4-girls") {
+    const division = fleet === "ilca4-boys" ? "Boys" : "Girls";
+    return { key: `ilca-4-${division.toLowerCase()}`, label: `ILCA 4 ${division}`,
+      series: "ilca4", slugIncludes: [row.slug.toLowerCase()], prizeFleetName: `ILCA 4 ${division}` };
   }
   if (fleet === "ilca4") {
     return {
@@ -317,6 +328,8 @@ const FLEET_ORDER: Fleet[] = [
   "charlie",
   "open",
   "newborn",
+  "ilca4-boys",
+  "ilca4-girls",
   "ilca4",
   "ilca6",
   "ilca7",

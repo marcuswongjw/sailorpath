@@ -177,7 +177,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
                   <span
                     role="img"
-                    aria-label={`${award.prizeTitle} Medal`}
+                    aria-label={`${award.prizeTitle} ${award.medal === "other" ? "Award" : "Medal"}`}
                     className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-black text-xs shadow-xs"
                     style={{ backgroundColor: style.bg, color: style.fg }}
                   >

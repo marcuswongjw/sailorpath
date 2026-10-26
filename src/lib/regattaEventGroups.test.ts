@@ -627,3 +627,23 @@ describe("Eastern Seaboard 420 crew results", () => {
     expect(resolveEventSlices(hub.event, [sheets[3]])[0].regatta?.slug).toBe(sheets[3].slug);
   });
 });
+
+
+describe("ILCA 4 separately scored boys and girls fleets", () => {
+  it("keeps both scorecards and direct links when they share one boat class", () => {
+    const published = ["Boys", "Girls"].map((division) => row({
+      slug: `2026-ilca-4-youth-worlds-${division.toLowerCase()}`,
+      name: `2026 ILCA 4 Youth World Championships (${division})`, boatClass: "ILCA 4", division,
+      date: "2026-08-03", raceCount: division === "Boys" ? 11 : 12,
+      totalFleetSize: division === "Boys" ? 298 : 150,
+      eventSlug: "2026-ilca-4-youth-world-championships", eventName: "2026 ILCA 4 Youth World Championships",
+    }));
+    const hub = savedEventHubForSlug("2026-ilca-4-youth-world-championships", published)!;
+    expect(hub.event.slices.map((slice) => slice.key)).toEqual(["ilca-4-boys", "ilca-4-girls"]);
+    for (const sheet of published) {
+      const key = `ilca-4-${sheet.division!.toLowerCase()}`;
+      expect(hubHrefForClassSlug(sheet.slug, published)).toBe(`/regattas/2026-ilca-4-youth-world-championships?fleet=${key}`);
+      expect(resolveEventSlices(hub.event, published).find((slice) => slice.def.key === key)?.regatta?.slug).toBe(sheet.slug);
+    }
+  });
+});

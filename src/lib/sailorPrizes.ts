@@ -208,8 +208,8 @@ export function getSailorPrizes(
                 sailNumber: w.sailNumber || sailor.sailNumber || undefined,
                 schoolName: w.schoolName || sailor.school || undefined,
                 club: w.club || sailor.club || undefined,
-                isOfficialNoR: schedule.sourceKind !== "organiser-report",
-                sourceUrl: schedule.sourceUrl || schedule.noticeOfRaceUrl || undefined,
+                isOfficialNoR: (cat.sourceKind || schedule.sourceKind) !== "organiser-report",
+                sourceUrl: cat.sourceUrl || schedule.sourceUrl || schedule.noticeOfRaceUrl || undefined,
               });
             }
           }
