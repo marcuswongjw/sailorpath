@@ -37,7 +37,9 @@ export interface SailorMedalCounts {
   gold: number;
   silver: number;
   bronze: number;
+  /** All recorded honours, including finishing-place prizes outside the podium. */
   total: number;
+  podiums: number;
 }
 
 function wordsOf(name: string): string[] {
@@ -93,16 +95,15 @@ export function deriveMedalTier(
   rank: number,
   prizeTitle?: string
 ): "gold" | "silver" | "bronze" | "other" {
+  // Category placing is authoritative. “Silver Fleet” and “Vice Champion”
+  // describe an award, but must not turn a bronze or non-podium place into gold.
+  if (Number.isFinite(rank) && rank > 0) {
+    return rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "other";
+  }
   const title = (prizeTitle || "").toLowerCase();
-  if (/\b1st\b/.test(title) || title.includes("champion") || title.includes("gold") || rank === 1) {
-    return "gold";
-  }
-  if (/\b2nd\b/.test(title) || title.includes("silver") || rank === 2) {
-    return "silver";
-  }
-  if (/\b3rd\b/.test(title) || title.includes("bronze") || rank === 3) {
-    return "bronze";
-  }
+  if (/\b1st\b/.test(title)) return "gold";
+  if (/\b2nd\b/.test(title)) return "silver";
+  if (/\b3rd\b/.test(title)) return "bronze";
   return "other";
 }
 
@@ -297,6 +298,7 @@ export function getSailorMedalCounts(awards: SailorPrizeAward[]): SailorMedalCou
     silver,
     bronze,
     total: awards.length,
+    podiums: gold + silver + bronze,
   };
 }
 

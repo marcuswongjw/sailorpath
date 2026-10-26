@@ -155,7 +155,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
             🏆 Total Podiums
           </p>
           <p className="text-2xl font-black text-charcoal mt-0.5 tabular-nums">
-            {counts.total}
+            {counts.podiums}
           </p>
         </div>
       </div>
