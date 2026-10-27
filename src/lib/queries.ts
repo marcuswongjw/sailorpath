@@ -1,3 +1,4 @@
+import { encodeServerSnapshot, decodeServerSnapshot } from "@/lib/serverSnapshotCodec";
 import { toPublicRegattaResult } from "@/lib/publicRegattaResult";
 import { singleFlight } from "@/lib/singleFlight";
 import { publicProfileRegattaCondition } from "@/lib/publicProfileResults";
@@ -1543,16 +1544,16 @@ async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot
  * scanning sailors + results again per fleet or per request.
  */
 const getCachedPublishedOptimistSnapshot = unstable_cache(
-  queryPublishedOptimistSnapshot,
-  ["published-optimist-snapshot-v3-read-budgets"],
+  async () => encodeServerSnapshot(await queryPublishedOptimistSnapshot()),
+  ["published-optimist-snapshot-v4-compressed"],
   {
     revalidate: PUBLIC_EXPENSIVE_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS],
   }
 );
 
-function loadPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
-  return getCachedPublishedOptimistSnapshot();
+async function loadPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
+  return decodeServerSnapshot<OptimistRankingSnapshot>(await getCachedPublishedOptimistSnapshot());
 }
 
 /**
