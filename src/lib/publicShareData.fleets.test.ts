@@ -5,7 +5,7 @@ vi.mock("@/db", () => ({ getDatabaseUrlMeta: () => true }));
 vi.mock("@/lib/queries", () => ({
   getCachedPublicRegattas: async () => state.rows,
   getResultsForRegatta: async () => [],
-  getCachedSailorByHandle: vi.fn(), getResultsForSailor: vi.fn(), getRegattaBySlug: vi.fn(),
+  getCachedSailorByHandle: vi.fn(), getCachedResultsForSailor: vi.fn(), getRegattaBySlug: vi.fn(),
 }));
 
 import { resolveFleetResultSheet } from "./publicShareData";

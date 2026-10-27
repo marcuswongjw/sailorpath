@@ -1,15 +1,19 @@
 import { NextResponse } from "next/server";
 import { getAuthContext } from "@/lib/auth";
 
-export async function GET() {
-  // Authenticated superadmins get the full diagnostic payload.
-  // Everyone else sees only the live/offline status.
-  let isSuperadmin = false;
-  try {
-    const ctx = await getAuthContext();
-    if (ctx?.role === "superadmin") isSuperadmin = true;
-  } catch {
-    /* not signed in — return minimal response below */
+export async function GET(request: Request) {
+  // A liveness check must not query Supabase or run schema diagnostics.
+  if (new URL(request.url).searchParams.get("diagnostics") !== "1") {
+    return NextResponse.json({ ok: true, mode: "live", check: "liveness" }, {
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
+  let auth;
+  try { auth = await getAuthContext(); } catch { auth = null; }
+  if (auth?.role !== "superadmin") {
+    return NextResponse.json({ error: auth ? "Forbidden" : "Sign in required" }, {
+      status: auth ? 403 : 401, headers: { "Cache-Control": "private, no-store" },
+    });
   }
 
   const hasDatabaseUrl = Boolean(
@@ -163,12 +167,6 @@ export async function GET() {
     }
   }
 
-  // Unauthenticated or non-admin: return minimal status only.
-  // Full diagnostics (schema, migrations, connection details) are superadmin-only.
-  if (!isSuperadmin) {
-    return NextResponse.json({ ok: live, mode: live ? "live" : "offline" });
-  }
-
   return NextResponse.json({
     ok: live,
     mode: live ? "live" : "offline",
@@ -229,5 +227,5 @@ export async function GET() {
       error: dbError,
     },
     hint: live ? liveHint : hint,
-  });
+  }, { headers: { "Cache-Control": "private, no-store" } });
 }

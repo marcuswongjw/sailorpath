@@ -1,7 +1,6 @@
 import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
-import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
@@ -100,7 +99,7 @@ async function handlePOST(req: Request) {
       })
       .returning();
 
-    revalidatePublicRankings(`observation:${values.sailorId}`);
+    // Private observations do not change public rankings or scorecards.
     return NextResponse.json({ ok: true, observation: row });
   } catch (e) {
     console.error("observations POST", e);
@@ -147,7 +146,7 @@ async function handleDELETE(req: Request) {
         )
       );
 
-    revalidatePublicRankings(`observation:${existing.sailorId}`);
+    // Private observations do not change public rankings or scorecards.
     return NextResponse.json({ ok: true });
   } catch (e) {
     return jsonError(e);
