@@ -22,6 +22,16 @@ describe("public cache refresh", () => {
     }
   });
 
+  it("invalidates each public page once without expiring the root layout", () => {
+    revalidatePublicRankings("results:publish");
+    const calls = vi.mocked(revalidatePath).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    expect(new Set(calls.map(([path]) => path)).size).toBe(calls.length);
+    expect(calls.every((call) => call.length === 1)).toBe(true);
+    expect(calls).toContainEqual(["/"]);
+    expect(calls).not.toContainEqual(["/", "layout"]);
+  });
+
   it("keeps the previous news payload available while an article refresh runs", () => {
     revalidatePublicNews("harbour-cup");
     expect(vi.mocked(revalidateTag)).toHaveBeenCalledWith(expect.any(String), "max");

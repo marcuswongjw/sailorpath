@@ -42,9 +42,9 @@ export function revalidatePublicRankings(reason?: string): void {
       revalidateTag(tag, "max");
     }
     for (const path of PUBLIC_RANKING_PATHS) {
+      // These are concrete page paths. Invalidating "/" as a layout also
+      // expires unrelated profile caches across the whole application.
       revalidatePath(path);
-      revalidatePath(path, "page");
-      revalidatePath(path, "layout");
     }
     if (reason && process.env.NODE_ENV !== "production") {
       console.info("[revalidatePublicRankings]", reason);

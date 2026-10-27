@@ -39,3 +39,11 @@ Run the full test suite, focused publication/privacy and cache-routing tests, ty
 For a meaningful before/after comparison, record `pg_stat_statements` call/row deltas over equivalent traffic windows without resetting the global counters. Inspect the Supabase project's Usage/Network Traffic reports for billed database and storage GB after reporting catches up. Frequent deployments can keep caches cold and should be included in that comparison.
 
 Do not tighten cache durations indiscriminately or cache owner data publicly. Further work should be driven by the remaining top query deltas, especially repeated full ranking snapshots and administrative polling, rather than an assumed storage-download problem.
+
+## Ranking cache item size follow-up
+
+A production SQL aggregate measured 9,196 published Optimist result rows at approximately 1,908,611 JSON bytes, before adding all sailor and regatta records. The combined snapshot can exceed the 2 MB Data Cache item limit documented at https://vercel.com/docs/caching/runtime-cache/data-cache. Oversized items are not cached, so a six-hour TTL alone does not guarantee reduced database reads.
+
+Store the complete snapshot as an asynchronously gzipped base64 string inside the existing server cache, then decode it before the unchanged ranking calculation. Keep the same tags and six-hour revalidation interval, with a new versioned cache key. This avoids a database schema change or changes to scoring, retains one coherent snapshot, and leaves substantial size headroom. Compression affects the Vercel server cache, not browser responses or photo access rules. Tests cover exact JSON round-trip, identical ranking outputs, malformed payload rejection and a realistic-size fixture exceeding 2 MB before encoding.
+
+Public ranking invalidation also called `revalidatePath` three times per path, including `revalidatePath("/", "layout")`, which broadly expires unrelated page/data caches. Invalidate each concrete public page once instead; retain all explicit public cache tags. This reduces redundant revalidation calls and avoids whole-application refreshes after ranking edits.
