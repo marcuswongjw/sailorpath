@@ -238,11 +238,13 @@ export async function PATCH(req: Request) {
       (key) => typeof body[key] === "boolean" && body[key] !== sailor[key]
     );
     // A child cannot evade consent by changing DOB first or in this request.
+    const changingPublishedPhoto = body.avatarUrl !== undefined && patch.avatarUrl !== sailor.avatarUrl &&
+      (sailor.showProfilePhotoOnPublicProfile || body.showProfilePhotoOnPublicProfile === true);
     const changingDob = body.dob !== undefined && patch.dob !== sailor.dob;
     const needsGuardian = requiresGuardianConsent(sailor.dob) ||
       (body.dob !== undefined && requiresGuardianConsent(patch.dob as string | null));
     if (
-      (changingPublicVisibility || changingDob) && needsGuardian &&
+      (changingPublicVisibility || changingDob || changingPublishedPhoto) && needsGuardian &&
       auth.role !== "superadmin" &&
       !(await canGiveGuardianConsent(sailorId, auth.userId, sailor))
     ) {

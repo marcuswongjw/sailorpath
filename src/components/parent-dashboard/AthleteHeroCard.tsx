@@ -1,5 +1,7 @@
 "use client";
 
+import { profilePhotoUrl } from "@/lib/profilePhoto";
+
 import Link from "next/link";
 import { Trophy, User, Sailboat, Compass, ExternalLink } from "lucide-react";
 import { relationLabel } from "@/lib/claimRelation";
@@ -20,7 +22,7 @@ export function AthleteHeroCard({ athlete }: { athlete: Athlete }) {
           {athlete.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={athlete.avatarUrl}
+              src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || undefined}
               alt=""
               className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover border-2 border-[var(--sp-cool-veil)] shrink-0"
             />

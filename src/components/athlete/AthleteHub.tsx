@@ -1,5 +1,7 @@
 "use client";
 
+import { profilePhotoUrl } from "@/lib/profilePhoto";
+
 import { sailingClassDisplayLabel } from "@/lib/classPresentation";
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
@@ -301,7 +303,8 @@ function AthleteWorkspace({
             <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] shrink-0 shadow-2xs">
               {athlete.avatarUrl ? (
                 <Image
-                  src={athlete.avatarUrl}
+                  unoptimized
+                  src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || "/avatar-demo.png"}
                   alt={athlete.name}
                   fill
                   className="object-cover"

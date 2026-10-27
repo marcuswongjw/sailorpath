@@ -95,6 +95,12 @@ describe("PATCH /api/account/sailor", () => {
     expect((await patch({ showSchoolOnPublicProfile: true })).status).toBe(403);
     expect(mocks.updateSet).not.toHaveBeenCalled();
   });
+  it("requires an acting guardian to replace an already-public child's photo", async () => {
+    Object.assign(mocks.sailor, { showProfilePhotoOnPublicProfile: true, avatarUrl: "https://old.test/photo.jpg" });
+    mocks.canGiveGuardianConsent.mockResolvedValue(false);
+    expect((await patch({ avatarUrl: "https://new.test/photo.jpg" })).status).toBe(403);
+    expect(mocks.updateSet).not.toHaveBeenCalled();
+  });
   it("allows an additional approved guardian rather than checking the primary owner's relation", async () => {
     mocks.sailor.ownerRelation = "sailor";
     mocks.getAuthContext.mockResolvedValue({ userId: "additional-parent", role: "parent" });

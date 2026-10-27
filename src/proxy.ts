@@ -123,6 +123,15 @@ export function hasUsableSupabaseUrl(value: string): boolean {
 export async function proxy(request: NextRequest) {
   const host = request.headers.get("host") || "";
   const pathname = request.nextUrl.pathname;
+  if (pathname === "/_next/image") {
+    const source = request.nextUrl.searchParams.get("url") || "";
+    if (/athlete-portraits|\/api\/sailors\/[^/]+\/photo|\/avatars\//i.test(source)) {
+      return new NextResponse(null, { status: 404, headers: { "Cache-Control": "private, no-store" } });
+    }
+  }
+  if (pathname.startsWith("/athlete-portraits/")) {
+    return new NextResponse(null, { status: 404, headers: { "Cache-Control": "private, no-store" } });
+  }
   const isAdminRoot =
     host.includes("admin.sailorpath.com") && pathname === "/";
 
@@ -199,6 +208,8 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
+    "/_next/image",
+    "/athlete-portraits/:path*",
     "/admin/:path*",
     "/account/:path*",
     "/parent/:path*",

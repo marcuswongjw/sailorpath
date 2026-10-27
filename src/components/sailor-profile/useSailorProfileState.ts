@@ -344,8 +344,8 @@ export function useSailorProfileState({
       setAvatarMsg("Demo only — photo not uploaded");
       return;
     }
-    if (!file.type.startsWith("image/")) {
-      setAvatarMsg("Please choose an image file");
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      setAvatarMsg("Please choose a JPG, PNG or WebP image");
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
@@ -365,7 +365,7 @@ export function useSailorProfileState({
       const path = `${initialSailor.id}/${Date.now()}.${ext}`;
       const { error: upErr } = await supabase.storage
         .from("avatars")
-        .upload(path, file, { upsert: true, contentType: file.type });
+        .upload(path, file, { upsert: false, contentType: file.type, cacheControl: "0" });
       if (upErr) throw upErr;
       const { data: pub } = supabase.storage.from("avatars").getPublicUrl(path);
       const publicUrl = pub.publicUrl;
