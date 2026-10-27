@@ -647,3 +647,17 @@ describe("ILCA 4 separately scored boys and girls fleets", () => {
     }
   });
 });
+
+ describe("X-15 source-defined divisions", () => {
+  it.each([1, 3])("preserves every scored sheet with %s divisions", (count) => {
+    const sheets = ["Senior male", "Senior female", "Youth male U19"].slice(0, count).map((division, i) => row({ slug: `fixture-x15-${i}`, name: `Fixture (${division})`, date: "2026-11-08", boatClass: "X-15", division, eventId: "fixture-id", eventSlug: "fixture", eventName: "Fixture event" }));
+    for (const sheet of sheets) {
+      const hub = savedEventHubForSlug(sheet.slug, sheets)!;
+      expect(hub.event.slices).toHaveLength(count);
+      expect(resolveEventSlices(hub.event, sheets).find(slice => slice.def.key === hub.fleetKey)?.regatta?.id).toBe(sheet.id);
+      expect(hubHrefForClassSlug(sheet.slug, sheets)).toBe(`/regattas/fixture?fleet=${hub.fleetKey}`);
+      const other = { ...sheet, id: "other", boatClass: "WingFoil" };
+      expect(resolveEventSlices(hub.event, [other]).every(slice => !slice.regatta)).toBe(true);
+    }
+  });
+});

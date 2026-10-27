@@ -112,6 +112,7 @@ export function classResultsHref(
   // Do not silently place a board/skiff result inside Optimist Gold. Dedicated
   // class pages retain their own provenance while a normalized event hub exists.
   const classKey = sailingClassKeyOf(regatta.boatClass);
+  if (classKey === "x15") return "/classes/x15#results";
   if (classKey === "iqfoil") return "/sg/iqfoil";
   if (classKey === "wingfoil") return "/sg/wingfoil";
   if (classKey === "techno293") return "/sg/techno293";

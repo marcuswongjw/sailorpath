@@ -33,6 +33,7 @@ export function groupSlug(key: string): string {
 }
 
 type Fleet =
+  | `x15-${string}`
   | "gold"
   | "class-a"
   | "class-b"
@@ -97,6 +98,10 @@ function mentionsWindsurfing(
 function publicFleet(row: RegattaRecord): Fleet | null {
   const boat = String(row.boatClass || "");
   const classKey = sailingClassKeyOf(boat);
+  if (classKey === "x15") {
+    const division = String(row.division || "Open").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return `x15-${division || "open"}`;
+  }
   if (isIlcaSeriesClass(boat, "ILCA 4")) {
     const division = String(row.division || "").trim().toLowerCase();
     if (division === "boys" || division === "girls") return `ilca4-${division}`;
@@ -176,6 +181,10 @@ function formatDay(ymd: string): string {
 }
 
 function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
+  if (fleet.startsWith("x15-")) {
+    return { key: fleet, label: `X-15 ${row.division?.trim() || "Open"}`,
+      series: "x15", slugIncludes: [row.slug.toLowerCase()] };
+  }
   if (fleet === "class-a" || fleet === "class-b") {
     const label = `Optimist Class ${fleet.slice(-1).toUpperCase()}`;
     return { key: `optimist-${fleet}`, label, series: "optimist",
@@ -343,6 +352,14 @@ const FLEET_ORDER: Fleet[] = [
   "windsurfing",
 ];
 
+/** Preserve the established order and append source-defined X-15 divisions. */
+function orderedFleets(fleets: Iterable<Fleet>): Fleet[] {
+  return [...fleets].sort((a, b) => {
+    const left = FLEET_ORDER.indexOf(a), right = FLEET_ORDER.indexOf(b);
+    return (left < 0 ? FLEET_ORDER.length : left) - (right < 0 ? FLEET_ORDER.length : right) || a.localeCompare(b);
+  });
+}
+
 /**
  * Tabs for a results row that is not already part of a registered event.
  * One class stays on its own page. Two or more classes share one hub.
@@ -381,7 +398,7 @@ export function groupedHubForSlug(
     const current = chosen.get(fleet);
     chosen.set(fleet, current ? fuller(current, row) : row);
   }
-  const slices = FLEET_ORDER.filter((fleet) => chosen.has(fleet)).map((fleet) =>
+  const slices = orderedFleets(chosen.keys()).map((fleet) =>
     sliceFor(fleet, chosen.get(fleet)!)
   );
   if (slices.length < 2) return null;
@@ -443,7 +460,7 @@ export function withPublishedEventSlices(event: RegattaEventDef, regattas: Regat
     ] } : slice;
   });
   if (!additions.size && slices.every((slice, index) => slice === event.slices[index])) return event;
-  return { ...event, slices: [...slices, ...FLEET_ORDER.filter((fleet) => additions.has(fleet))
+  return { ...event, slices: [...slices, ...orderedFleets(additions.keys())
     .map((fleet) => sliceFor(fleet, additions.get(fleet)!))] };
 }
 
@@ -483,7 +500,7 @@ export function savedEventHubForSlug(
     const current = chosen.get(fleet);
     chosen.set(fleet, current ? preferLinkedSheet(current, row, eventSlug) : row);
   }
-  const slices = FLEET_ORDER.filter((fleet) => chosen.has(fleet)).map((fleet) =>
+  const slices = orderedFleets(chosen.keys()).map((fleet) =>
     sliceFor(fleet, chosen.get(fleet)!)
   );
   if (!slices.length) return null;
