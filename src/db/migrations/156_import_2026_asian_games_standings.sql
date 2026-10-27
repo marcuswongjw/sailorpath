@@ -277,8 +277,8 @@ BEGIN
   LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := 'ad785bc0-da18-41e2-aa35-f8d90af36153';
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Tiago Cheng De Villemor Salgado', 'tiago-cheng-de-villemor-salgado', 'HKG', 'M', 'HKG', now(), now())
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Tiago Cheng De Villemor Salgado', 'tiago-cheng-de-villemor-salgado', 'HKG', 'HKG', 'M', 'HKG', now(), now())
     ON CONFLICT (id) DO NOTHING;
   END IF;
 
@@ -308,8 +308,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Sophia Montgomery') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Sophia Montgomery', 'sophia-montgomery', 'THA', 'F', 'THA', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Sophia Montgomery', 'sophia-montgomery', 'THA', 'THA', 'F', 'THA', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000011';
@@ -357,8 +357,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Nethra Kumanan') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Nethra Kumanan', 'nethra-kumanan', 'IND', 'F', 'IND', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Nethra Kumanan', 'nethra-kumanan', 'IND', 'IND', 'F', 'IND', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000013';
@@ -387,8 +387,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) IN (lower('Ha Jee-min'), lower('Jeemin Ha')) LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Ha Jee-min', 'ha-jee-min', 'KOR', 'M', 'KOR', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Ha Jee-min', 'ha-jee-min', 'KOR', 'KOR', 'M', 'KOR', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000021';
@@ -413,8 +413,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Nicholas Halliday') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Nicholas Halliday', 'nicholas-halliday', 'HKG', 'M', 'HKG', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Nicholas Halliday', 'nicholas-halliday', 'HKG', 'HKG', 'M', 'HKG', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000022';
@@ -439,8 +439,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(name) LIKE '%khairulnizam%afendy%' LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Khairulnizam Mohd Afendy', 'khairulnizam-mohd-afendy', 'MAS', 'M', 'MAS', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Khairulnizam Mohd Afendy', 'khairulnizam-mohd-afendy', 'MAS', 'MAS', 'M', 'MAS', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000023';
@@ -469,8 +469,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Ethan Kiu / Louis Polson') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Ethan Kiu / Louis Polson', 'ethan-kiu-louis-polson', 'HKG', 'M', 'HKG', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Ethan Kiu / Louis Polson', 'ethan-kiu-louis-polson', 'HKG', 'HKG', 'M', 'HKG', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000031';
@@ -535,8 +535,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Muhammad Adam Aierell / Iqbal Nazham Musmuliadi') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Muhammad Adam Aierell / Iqbal Nazham Musmuliadi', 'adam-aierell-iqbal-nazham', 'MAS', 'M', 'MAS', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Muhammad Adam Aierell / Iqbal Nazham Musmuliadi', 'adam-aierell-iqbal-nazham', 'MAS', 'MAS', 'M', 'MAS', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000034';
@@ -565,8 +565,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Wong Tsz Ho') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Wong Tsz Ho', 'wong-tsz-ho', 'HKG', 'M', 'HKG', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Wong Tsz Ho', 'wong-tsz-ho', 'HKG', 'HKG', 'M', 'HKG', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000041';
@@ -591,8 +591,8 @@ BEGIN
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower('Masato Kozono') LIMIT 1;
   IF v_sailor_id IS NULL THEN
     v_sailor_id := gen_random_uuid();
-    INSERT INTO public.sailors (id, name, handle, club, gender, nationality, created_at, updated_at)
-    VALUES (v_sailor_id, 'Masato Kozono', 'masato-kozono', 'JPN', 'M', 'JPN', now(), now());
+    INSERT INTO public.sailors (id, name, handle, sail_number, club, gender, nationality, created_at, updated_at)
+    VALUES (v_sailor_id, 'Masato Kozono', 'masato-kozono', 'JPN', 'JPN', 'M', 'JPN', now(), now());
   END IF;
 
   v_res_id := '3e18a002-a020-4100-8001-000000000042';
