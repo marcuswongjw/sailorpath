@@ -16,12 +16,12 @@ const history = [
   {
     year: "1947",
     title: "Clearwater, Florida",
-    body: "Clark Mills designed the pram for the Optimist Club after Clifford McKay asked for a cheap boat children could build and sail. Mills gave the design away and took no royalties. This is class history, not a SailorPath ranking.",
+    body: "Clark Mills designed the pram for the Optimist Club after Clifford McKay asked for a cheap boat children could build and sail. Mills gave the design away and took no royalties.",
   },
   {
     year: "1958",
     title: "Denmark",
-    body: "Axel Damgaard took a boat home to Denmark. The rig was modified, and that boat became the International Optimist. This is class history, not a SailorPath ranking.",
+    body: "Axel Damgaard took a boat home to Denmark. The rig was modified, and that boat became the International Optimist.",
   },
 ] as const;
 

@@ -39,7 +39,7 @@ export default async function X15ClassHub() {
       <div>
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-soft-aqua">One-design wingfoil racing</p>
         <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Follow the X-15 class</h1>
-        <p className="mt-4 max-w-xl text-base leading-7 text-soft-aqua">Events, official information and race results for riders, families and coaches. Start with the inaugural World Championships in Ibiza.</p>
+        <p className="mt-4 max-w-xl text-base leading-7 text-soft-aqua">Events, official information and race results for riders, families and coaches. Start with the inaugural World Championships in Ibiza. This hub follows relevant X-15 racing wherever reviewed records are published.</p>
         <nav aria-label="On this X-15 page" className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-sm font-bold">
           {[['#results', 'Results'], ['#events', 'Upcoming events'], ['#about-class', 'About X-15']].map(([href, label]) => <a key={href} href={href} className="underline decoration-soft-aqua/50 underline-offset-4 hover:text-soft-aqua focus-visible:outline-2 focus-visible:outline-offset-4">{label}</a>)}
         </nav>
