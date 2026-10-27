@@ -1,3 +1,4 @@
+import { toPublicRegattaResult } from "@/lib/publicRegattaResult";
 import { singleFlight } from "@/lib/singleFlight";
 import { publicProfileRegattaCondition } from "@/lib/publicProfileResults";
 import { missingFallbackSheets } from "@/lib/resultSheetIdentity";
@@ -147,11 +148,9 @@ export type PublicRegattaResult = {
   sailorName: string;
   sailNumber: string;
   handle: string;
-  school?: string | null;
   gender?: string | null;
   sailorGender?: string | null;
   birthYear?: number | null;
-  dob?: string | null;
   nationality?: string | null;
   sailorNationality?: string | null;
   entryLabel?: string | null;
@@ -513,7 +512,7 @@ export async function listSailorsFull() {
 
 async function loadResultsForRegatta(
   regattaId: string
-): Promise<PublicRegattaResult[]> {
+): Promise<Array<PublicRegattaResult & { dob?: string | null; school?: string | null }>> {
   try {
     const results = await singleFlight(`regatta-results:${regattaId}`, async () => {
       const readRows = () => db
@@ -672,7 +671,7 @@ async function loadResultsForRegatta(
 
 const getCachedResultsForRegatta = unstable_cache(
   loadResultsForRegatta,
-  ["public-regatta-results-v3-read-budgets"],
+  ["public-regatta-results-v4-private-fields-removed"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS],
@@ -682,7 +681,7 @@ const getCachedResultsForRegatta = unstable_cache(
 export async function getResultsForRegatta(
   regattaId: string
 ): Promise<PublicRegattaResult[]> {
-  return getCachedResultsForRegatta(regattaId);
+  return (await getCachedResultsForRegatta(regattaId)).map(toPublicRegattaResult);
 }
 
 export async function getResultsForSailor(sailorId: string) {
@@ -835,7 +834,7 @@ export async function getResultsForSailor(sailorId: string) {
 
 export const getCachedResultsForSailor = unstable_cache(
   async (sailorId: string) => getResultsForSailor(sailorId),
-  ["public-sailor-results-v3-published"],
+  ["public-sailor-results-v4-published-only"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],

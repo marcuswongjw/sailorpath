@@ -12,6 +12,7 @@ export type SailingClassKey =
   | "ilca4"
   | "ilca6"
   | "ilca7"
+  | "x15"
   | "wingfoil"
   | "techno293"
   | "iqfoil"
@@ -33,6 +34,11 @@ export type SailingClassDefinition = {
 };
 
 export const SAILING_CLASS_REGISTRY: readonly SailingClassDefinition[] = [
+  {
+    key: "x15", label: "X-15",
+    aliases: ["x15", "x15class", "x15wingfoil", "wingfoilx15"],
+    supportsNationalRanking: false,
+  },
   {
     key: "420",
     label: "420",
@@ -164,6 +170,7 @@ export function resolveSailingClass(
     "ilca6",
     "ilca4",
     "iqfoil",
+    "x15",
     "wingfoil",
     "windfoil",
     "windsurfing-lt",

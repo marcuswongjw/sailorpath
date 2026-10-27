@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { evidenceDownloadUrlForPath } from "@/lib/evidenceDownload";
 import { evidenceStoragePath } from "@/lib/evidenceStoragePath";
 import { createServerSupabase } from "@/lib/supabase/server";
 
@@ -74,13 +75,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const { data: pubUrl } = supabase.storage
-      .from("regatta-evidence")
-      .getPublicUrl(path);
-
     return NextResponse.json({
       ok: true,
-      url: pubUrl.publicUrl,
+      url: evidenceDownloadUrlForPath(path),
       name: originalName,
       type: evidenceType,
       size: file.size,

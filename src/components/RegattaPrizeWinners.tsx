@@ -172,6 +172,12 @@ function CategoryCard({
         </p>
       )}
 
+      {cat.sourceUrl && (
+        <a href={cat.sourceUrl} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 text-xs font-semibold text-harbour underline">
+          Official category source ↗
+        </a>
+      )}
+
       {/* Winners layout */}
       {isThreePodium ? (
         <div className="p-2.5 sm:p-3 flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5 items-stretch">

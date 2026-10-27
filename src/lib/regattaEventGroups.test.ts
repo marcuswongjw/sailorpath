@@ -627,3 +627,37 @@ describe("Eastern Seaboard 420 crew results", () => {
     expect(resolveEventSlices(hub.event, [sheets[3]])[0].regatta?.slug).toBe(sheets[3].slug);
   });
 });
+
+
+describe("ILCA 4 separately scored boys and girls fleets", () => {
+  it("keeps both scorecards and direct links when they share one boat class", () => {
+    const published = ["Boys", "Girls"].map((division) => row({
+      slug: `2026-ilca-4-youth-worlds-${division.toLowerCase()}`,
+      name: `2026 ILCA 4 Youth World Championships (${division})`, boatClass: "ILCA 4", division,
+      date: "2026-08-03", raceCount: division === "Boys" ? 11 : 12,
+      totalFleetSize: division === "Boys" ? 298 : 150,
+      eventSlug: "2026-ilca-4-youth-world-championships", eventName: "2026 ILCA 4 Youth World Championships",
+    }));
+    const hub = savedEventHubForSlug("2026-ilca-4-youth-world-championships", published)!;
+    expect(hub.event.slices.map((slice) => slice.key)).toEqual(["ilca-4-boys", "ilca-4-girls"]);
+    for (const sheet of published) {
+      const key = `ilca-4-${sheet.division!.toLowerCase()}`;
+      expect(hubHrefForClassSlug(sheet.slug, published)).toBe(`/regattas/2026-ilca-4-youth-world-championships?fleet=${key}`);
+      expect(resolveEventSlices(hub.event, published).find((slice) => slice.def.key === key)?.regatta?.slug).toBe(sheet.slug);
+    }
+  });
+});
+
+ describe("X-15 source-defined divisions", () => {
+  it.each([1, 3])("preserves every scored sheet with %s divisions", (count) => {
+    const sheets = ["Senior male", "Senior female", "Youth male U19"].slice(0, count).map((division, i) => row({ slug: `fixture-x15-${i}`, name: `Fixture (${division})`, date: "2026-11-08", boatClass: "X-15", division, eventId: "fixture-id", eventSlug: "fixture", eventName: "Fixture event" }));
+    for (const sheet of sheets) {
+      const hub = savedEventHubForSlug(sheet.slug, sheets)!;
+      expect(hub.event.slices).toHaveLength(count);
+      expect(resolveEventSlices(hub.event, sheets).find(slice => slice.def.key === hub.fleetKey)?.regatta?.id).toBe(sheet.id);
+      expect(hubHrefForClassSlug(sheet.slug, sheets)).toBe(`/regattas/fixture?fleet=${hub.fleetKey}`);
+      const other = { ...sheet, id: "other", boatClass: "WingFoil" };
+      expect(resolveEventSlices(hub.event, [other]).every(slice => !slice.regatta)).toBe(true);
+    }
+  });
+});

@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { and, eq, ne } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
-import { canManageSailor } from "@/lib/claimAccess";
+import { canGiveGuardianConsent, canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
 import { equipmentLogs, regattaResults, sailorAliases, sailors } from "@/db/schema";
+import { requiresGuardianConsent } from "@/lib/guardianConsent";
 import { birthYear } from "@/lib/age";
 import { validateHandle } from "@/lib/handles";
 import { normalizeDob, cleanOptimistSailNumber } from "@/lib/normalize";
@@ -233,20 +234,20 @@ export async function PATCH(req: Request) {
       "showSocialLinksOnPublicProfile",
       "showSailingMilestonesOnPublicProfile",
     ] as const;
-    const isMinor = sailor.dob
-      ? new Date().getFullYear() - Number(String(sailor.dob).slice(0, 4)) < 18
-      : false;
     const changingPublicVisibility = publicVisibilityKeys.some(
       (key) => typeof body[key] === "boolean" && body[key] !== sailor[key]
     );
+    // A child cannot evade consent by changing DOB first or in this request.
+    const changingDob = body.dob !== undefined && patch.dob !== sailor.dob;
+    const needsGuardian = requiresGuardianConsent(sailor.dob) ||
+      (body.dob !== undefined && requiresGuardianConsent(patch.dob as string | null));
     if (
-      changingPublicVisibility &&
-      isMinor &&
-      sailor.ownerRelation !== "parent" &&
-      auth.role !== "superadmin"
+      (changingPublicVisibility || changingDob) && needsGuardian &&
+      auth.role !== "superadmin" &&
+      !(await canGiveGuardianConsent(sailorId, auth.userId, sailor))
     ) {
       return NextResponse.json(
-        { error: "A parent or guardian must manage public profile visibility" },
+        { error: "A parent or guardian must manage birth date and public profile visibility" },
         { status: 403 }
       );
     }

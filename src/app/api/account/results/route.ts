@@ -1,4 +1,5 @@
 import { withUserChangeTracking } from "@/lib/userChanges";
+import { evidenceDownloadUrl } from "@/lib/evidenceDownload";
 import { NextResponse } from "next/server";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
@@ -119,6 +120,7 @@ export async function GET(req: Request) {
 
     const mappedRows = rows.map((r) => ({
       ...r,
+      evidenceUrl: evidenceDownloadUrl(r.evidenceUrl),
       verificationStatus: displayedResultVerificationStatus({
         slug: r.slug,
         countsForRanking: r.countsForRanking,
@@ -325,7 +327,7 @@ async function handlePOST(req: Request) {
         geography: reg.geography,
         boatClass: reg.boatClass,
         countsForRanking: false,
-        evidenceUrl: result.evidenceUrl,
+        evidenceUrl: evidenceDownloadUrl(result.evidenceUrl),
         evidenceName: result.evidenceName,
         evidenceType: result.evidenceType,
         officialUrl: result.officialUrl,
@@ -465,7 +467,7 @@ async function handlePATCH(req: Request) {
         ? (resultPatch.officialUrl as string | null)
         : row.officialUrl;
     if (
-      nextEvidenceUrl !== row.evidenceUrl ||
+      evidenceDownloadUrl(nextEvidenceUrl) !== evidenceDownloadUrl(row.evidenceUrl) ||
       nextOfficialUrl !== row.officialUrl
     ) {
       resultPatch.verifiedAt = null;
@@ -563,7 +565,7 @@ async function handlePATCH(req: Request) {
         geography: reg.geography,
         boatClass: reg.boatClass,
         countsForRanking: false,
-        evidenceUrl: updatedResult.evidenceUrl,
+        evidenceUrl: evidenceDownloadUrl(updatedResult.evidenceUrl),
         evidenceName: updatedResult.evidenceName,
         evidenceType: updatedResult.evidenceType,
         officialUrl: updatedResult.officialUrl,

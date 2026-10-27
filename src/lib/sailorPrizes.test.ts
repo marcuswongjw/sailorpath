@@ -4,6 +4,7 @@ import {
   deriveMedalTier,
   getSailorPrizes,
   getSailorMedalCounts,
+  type SailorPrizeAward,
 } from "./sailorPrizes";
 
 describe("sailorPrizes", () => {
@@ -281,4 +282,20 @@ it("keeps an overall podium alongside a separately sourced female award", () => 
   const prizes = getSailorPrizes({ name: "Lyric Li Yuxuan", handle: "lyric-li-yuxuan" }, [{ regattaSlug: "csc-gold-jan-26-2026-01-24", regattaName: "CSC Gold", regattaDate: "2026-01-24", boatClass: "Optimist", division: "Gold", rank: 3 }]);
   expect(prizes.some((award) => award.regattaSlug === "csc-gold-jan-26-2026-01-24" && award.categoryName === "Female" && award.rank === 1)).toBe(true);
   expect(prizes.some((award) => award.regattaSlug === "csc-gold-jan-26-2026-01-24" && award.categoryName === "Open" && award.rank === 3)).toBe(true);
+});
+
+
+describe("podium totals", () => {
+  it("keeps non-podium honours without counting them as medals or podiums", () => {
+    const award = getSailorPrizes({ name: "Margaux Nguyen-Minh", handle: "margaux-nguyen-minh-fcs112q" })[0];
+    const awards: SailorPrizeAward[] = [award, { ...award, id: "overall-14", rank: 14, medal: "other", prizeTitle: "14th", categoryName: "Open" }];
+    expect(getSailorMedalCounts(awards)).toEqual({ gold: 0, silver: 1, bronze: 0, total: 2, podiums: 1 });
+  });
+  it("uses category rank rather than fleet colours or champion words", () => {
+    expect(deriveMedalTier(2, "Vice Champion")).toBe("silver");
+    expect(deriveMedalTier(3, "3rd Silver Fleet")).toBe("bronze");
+    expect(deriveMedalTier(14, "14th Gold Fleet")).toBe("other");
+    expect(deriveMedalTier(4, "Former Champion")).toBe("other");
+    expect(getSailorMedalCounts([])).toEqual({ gold: 0, silver: 0, bronze: 0, total: 0, podiums: 0 });
+  });
 });

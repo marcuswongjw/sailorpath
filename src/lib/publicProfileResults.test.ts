@@ -6,7 +6,7 @@ import { publicProfileRegattaCondition } from "./publicProfileResults";
 let database: PGlite | undefined;
 afterEach(async () => { await database?.close(); database = undefined; });
 describe("public profile publication boundary", () => {
-  it("excludes staged/archived imports while preserving labelled personal logbook sheets", async () => {
+  it("excludes draft and review logbooks as well as staged/archived imports", async () => {
     database = new PGlite();
     await database.exec(`create table regattas (id text, slug text, status text, counts_for_ranking boolean);
       insert into regattas values
@@ -19,6 +19,6 @@ describe("public profile publication boundary", () => {
       ('archived-personal','log-old','archived',false),
       ('ranking-import','log-ranking','draft',true);`);
     const rows = await drizzle(database).select({id: regattas.id}).from(regattas).where(publicProfileRegattaCondition());
-    expect(rows.map((row)=>row.id).sort()).toEqual(['pending-personal','personal','published']);
+    expect(rows.map((row)=>row.id).sort()).toEqual(['published']);
   });
 });

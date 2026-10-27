@@ -180,7 +180,7 @@ function fillCategory(
       const year = sailorYear(row);
       return {
         rank: place,
-        prizeTitle: placeTitle(place),
+        prizeTitle: place === 1 && category.firstPrizeTitle ? category.firstPrizeTitle : placeTitle(place),
         sailorName: row.sailorName,
         sailorHandle: row.handle || undefined,
         sailNumber: row.sailNumber ? String(row.sailNumber) : undefined,

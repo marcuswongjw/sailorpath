@@ -1,3 +1,4 @@
+import { evidenceDownloadUrl } from "@/lib/evidenceDownload";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray, isNull, like, or } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
@@ -91,7 +92,7 @@ export async function GET() {
             .where(eq(regattaResults.regattaId, row.id)),
         { label: "admin.regatta_suggestions.results" }
       );
-      withSailors.push({ ...row, results });
+      withSailors.push({ ...row, results: results.map((result) => ({ ...result, evidenceUrl: evidenceDownloadUrl(result.evidenceUrl) })) });
     }
 
     return NextResponse.json({
@@ -156,7 +157,7 @@ export async function PATCH(req: Request) {
         source: "/api/admin/regatta-suggestions",
       });
 
-      return NextResponse.json({ ok: true, result: updated });
+      return NextResponse.json({ ok: true, result: { ...updated, evidenceUrl: evidenceDownloadUrl(updated.evidenceUrl) } });
     }
 
     if (action === "reject") {
@@ -198,7 +199,7 @@ export async function PATCH(req: Request) {
         source: "/api/admin/regatta-suggestions",
       });
 
-      return NextResponse.json({ ok: true, result: updated });
+      return NextResponse.json({ ok: true, result: { ...updated, evidenceUrl: evidenceDownloadUrl(updated.evidenceUrl) } });
     }
 
     if (action === "dismiss") {

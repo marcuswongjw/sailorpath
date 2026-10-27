@@ -22,6 +22,10 @@ export type PrizeWinner = {
 };
 
 export type PrizeCategory = {
+  sourceUrl?: string;
+  sourceKind?: "organiser-report" | "notice-of-race";
+  /** Combine a champion’s named trophies with the same first-place honour. */
+  firstPrizeTitle?: string;
   categoryName: string;
   prizesAwarded: string; // e.g. "1st to 3rd", "1st to 10th", "1st"
   eligibilityNotes?: string;
