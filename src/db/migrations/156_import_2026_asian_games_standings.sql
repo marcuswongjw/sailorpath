@@ -238,7 +238,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca4_id, 'Choi Ji-un', '225770', 'individual',
     1, 25.0, 25.0, 'KOR', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings (3 bullets). Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -261,7 +261,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca4_id, 'Ian Goh', '222713', 'individual',
     2, 25.0, 25.0, 'SGP', false, true,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'report',
     'Official federation corroborated overall standings (2 bullets, tie-break for silver). Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -290,7 +290,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca4_id, 'Tiago Cheng De Villemor Salgado', 'HKG', 'individual',
     3, 27.0, 27.0, 'HKG', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -320,7 +320,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca6_id, 'Sophia Montgomery', 'THA', 'individual',
     1, 5.0, 5.0, 'THA', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / World Sailing', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / World Sailing', 'report',
     'Official federation corroborated overall standings (5 net pts, LA28 Olympic quota earned). Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -343,7 +343,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca6_id, 'Jania Ang', '222727', 'individual',
     2, 13.0, 13.0, 'SGP', false, true,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'report',
     'Official federation corroborated overall standings (13 net pts). Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -369,7 +369,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca6_id, 'Nethra Kumanan', 'IND', 'individual',
     3, 14.0, 14.0, 'IND', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -399,7 +399,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca7_id, 'Ha Jee-min', 'KOR', 'individual',
     1, 9.0, 9.0, 'KOR', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / World Sailing', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / World Sailing', 'report',
     'Official federation corroborated overall standings (9 net pts, LA28 Olympic quota earned). Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -425,7 +425,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca7_id, 'Nicholas Halliday', 'HKG', 'individual',
     2, 11.0, 11.0, 'HKG', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -451,7 +451,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_ilca7_id, 'Khairulnizam Mohd Afendy', 'MAS', 'individual',
     3, 18.0, 18.0, 'MAS', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -481,7 +481,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_29er_id, 'Ethan Kiu / Louis Polson', 'HKG', 'crew',
     1, 20.0, 20.0, 'HKG', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -512,7 +512,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_29er_id, 'Sean Kum Kok Wei / Nigel Tan Xu Yuan', '2472', 'crew',
     2, 24.0, 24.0, 'SGP', false, true,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -547,7 +547,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_29er_id, 'Muhammad Adam Aierell / Iqbal Nazham Musmuliadi', 'MAS', 'crew',
     3, 31.0, 31.0, 'MAS', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -577,7 +577,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_iqfoil_id, 'Wong Tsz Ho', 'HKG', 'individual',
     1, 22.0, 22.0, 'HKG', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -603,7 +603,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_iqfoil_id, 'Masato Kozono', 'JPN', 'individual',
     2, 28.0, 28.0, 'JPN', false, false,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
@@ -626,7 +626,7 @@ BEGIN
   ) VALUES (
     v_res_id, v_sailor_id, v_iqfoil_id, 'John Wong Tze Xiang', '2', 'individual',
     3, 34.0, 34.0, 'SGP', false, true,
-    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'official_federation_report',
+    'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'report',
     'Official federation corroborated overall standings (Historic 1st Asian Games windsurfing medal for Singapore). Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
   ) ON CONFLICT (id) DO UPDATE SET rank = EXCLUDED.rank, nett_score = EXCLUDED.nett_score;
 
