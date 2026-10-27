@@ -38,6 +38,7 @@ type Props = {
 };
 
 function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
+  if (series === "x15") return "/classes/x15";
   if (series === "wingfoil") return "/sg/wingfoil";
   if (series === "techno293") return "/sg/techno293";
   if (series === "ilca4") return "/sg/ilca4";

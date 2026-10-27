@@ -37,6 +37,7 @@ export type RegattaEventSliceDef = {
     | "ilca4"
     | "ilca6"
     | "ilca7"
+    | "x15"
     | "wingfoil"
     | "techno293"
     | "windsurfing"
@@ -1227,6 +1228,10 @@ export function isRegattaLinkedToEventSlice(
     );
   }
 
+  if (slice.series === "x15") {
+    return sailingClassKeyOf(boat) === "x15" && sliceMatchesRegattaSlug(slice, regatta.slug);
+  }
+
   if (["wingfoil", "techno293", "iqfoil", "windsurfing"].includes(slice.series)) {
     const classKey = sailingClassKeyOf(boat);
     if (slice.series === "windsurfing") {
@@ -1300,6 +1305,7 @@ export function resolveEventSlices(
       if (claimed.has(r.id)) return false;
       // A saved link takes precedence over stale naming tokens after a class move.
       if (r.eventSlug && !isRegattaAssignedToEvent(event, r)) return false;
+      if (def.series === "x15") return isRegattaLinkedToEventSlice(event, def, r);
       if (sliceMatchesRegattaSlug(def, r.slug)) return true;
       if (isRegattaLinkedToEventSlice(event, def, r)) return true;
       return false;
