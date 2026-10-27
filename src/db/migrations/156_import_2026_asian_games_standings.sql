@@ -163,7 +163,7 @@ BEGIN
     12,
     'JPN',
     '29er',
-    'team',
+    'crew',
     2,
     2,
     false,
@@ -479,7 +479,7 @@ BEGIN
     rank, total_score, nett_score, nationality, is_dns, is_overseas_commitment,
     verification_status, evidence_url, evidence_name, evidence_type, evidence_notes, verified_at
   ) VALUES (
-    v_res_id, v_sailor_id, v_29er_id, 'Ethan Kiu / Louis Polson', 'HKG', 'team',
+    v_res_id, v_sailor_id, v_29er_id, 'Ethan Kiu / Louis Polson', 'HKG', 'crew',
     1, 20.0, 20.0, 'HKG', false, false,
     'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
@@ -510,7 +510,7 @@ BEGIN
     rank, total_score, nett_score, nationality, is_dns, is_overseas_commitment,
     verification_status, evidence_url, evidence_name, evidence_type, evidence_notes, verified_at
   ) VALUES (
-    v_res_id, v_sailor_id, v_29er_id, 'Sean Kum Kok Wei / Nigel Tan Xu Yuan', '2472', 'team',
+    v_res_id, v_sailor_id, v_29er_id, 'Sean Kum Kok Wei / Nigel Tan Xu Yuan', '2472', 'crew',
     2, 24.0, 24.0, 'SGP', false, true,
     'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / Singapore Sailing Federation', 'official_federation_report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
@@ -545,7 +545,7 @@ BEGIN
     rank, total_score, nett_score, nationality, is_dns, is_overseas_commitment,
     verification_status, evidence_url, evidence_name, evidence_type, evidence_notes, verified_at
   ) VALUES (
-    v_res_id, v_sailor_id, v_29er_id, 'Muhammad Adam Aierell / Iqbal Nazham Musmuliadi', 'MAS', 'team',
+    v_res_id, v_sailor_id, v_29er_id, 'Muhammad Adam Aierell / Iqbal Nazham Musmuliadi', 'MAS', 'crew',
     3, 31.0, 31.0, 'MAS', false, false,
     'verified', 'https://www.aichi-nagoya2026.org', '20th Asian Games Standings / ASAF Corroboration', 'official_federation_report',
     'Official federation corroborated overall standings. Individual race scores deferred awaiting official final results PDF per AGENTS.md.', now()
