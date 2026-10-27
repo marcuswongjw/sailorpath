@@ -1,5 +1,7 @@
 "use client";
 
+import { profilePhotoUrl } from "@/lib/profilePhoto";
+
 import { isProfileIlcaClass, profileIlcaClassOf, profileIlcaLabel } from "@/lib/profileClasses";
 import type { ProfileBoatClass } from "./rankBasis";
 import { useRef, useState, type ReactNode } from "react";
@@ -273,7 +275,7 @@ export function HeroAthleteCard({
                 {displaySailor.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={displaySailor.avatarUrl}
+                    src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}
                     alt={displaySailor.name}
                     className="h-full w-full object-cover"
                   />

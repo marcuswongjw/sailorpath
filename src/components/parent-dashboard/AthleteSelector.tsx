@@ -1,5 +1,7 @@
 "use client";
 
+import { profilePhotoUrl } from "@/lib/profilePhoto";
+
 import Link from "next/link";
 import { Users, User, ChevronRight, Award, CheckCircle2 } from "lucide-react";
 import { relationLabel } from "@/lib/claimRelation";
@@ -68,7 +70,7 @@ export function AthleteSelector({
                 {a.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={a.avatarUrl}
+                    src={profilePhotoUrl(a.id, a.avatarUrl) || undefined}
                     alt=""
                     className="h-4 w-4 rounded-full object-cover"
                   />
@@ -108,7 +110,7 @@ export function AthleteSelector({
                   {a.avatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={a.avatarUrl}
+                      src={profilePhotoUrl(a.id, a.avatarUrl) || undefined}
                       alt=""
                       className="h-12 w-12 rounded-2xl object-cover border border-[var(--sp-cool-veil)] shrink-0"
                     />

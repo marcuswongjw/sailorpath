@@ -3,7 +3,7 @@ import { toPublicEquipmentProps, toPublicSailorProps } from "./publicSailor";
 import type { SailorMapped } from "./queries";
 
 const base = {
-  id: "s1",
+  id: "11111111-1111-4111-8111-111111111111",
   name: "Test Sailor",
   handle: "test-sailor",
   sailNumber: "SGP 1",
@@ -102,7 +102,7 @@ describe("toPublicSailorProps", () => {
       { canSeePrivate: false }
     );
     expect(pub.school).toBe("Private School");
-    expect(pub.avatarUrl).toContain("images.example");
+    expect(pub.avatarUrl).toBe("/api/sailors/11111111-1111-4111-8111-111111111111/photo");
     expect(pub.instagram).toBe("@private-sailor");
     expect(pub.sailingJourney).toContain("Private draft");
     expect(pub.showSchoolOnPublicProfile).toBeUndefined();

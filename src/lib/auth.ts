@@ -308,25 +308,9 @@ export function jsonError(error: unknown) {
   } else if (isTemporarilyUnavailable) {
     publicMsg =
       "Temporary service timeout while connecting to the database. Please retry in a moment.";
-    detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 500);
+    if (!isProduction) detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 500);
   } else if (isProduction) {
-    if (
-      fullText.includes("Database unavailable") ||
-      fullText.includes("does not exist") ||
-      fullText.includes("No valid DATABASE_URL") ||
-      fullText.includes("Race-score storage") ||
-      fullText.includes("Same-day") ||
-      fullText.includes("Too many rows") ||
-      fullText.includes("violates") ||
-      fullText.includes("constraint") ||
-      fullText.includes("Failed query")
-    ) {
-      publicMsg = dbDetail && dbDetail.length < 280 ? dbDetail : rawMsg.length < 280 ? rawMsg : rawMsg.slice(0, 240) + "…";
-      detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 500);
-    } else {
-      publicMsg = "Internal error";
-      detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 240);
-    }
+    publicMsg = "Internal error";
   } else {
     // Development: surface full messages for debugging
     publicMsg = dbDetail && dbDetail.length < 280 ? dbDetail : rawMsg.length < 280 ? rawMsg : rawMsg.slice(0, 240) + "…";
@@ -338,6 +322,6 @@ export function jsonError(error: unknown) {
 
   return Response.json(body, {
     status,
-    headers: isTemporarilyUnavailable ? { "Retry-After": "2" } : undefined,
+    headers: { "Cache-Control": "private, no-store", ...(isTemporarilyUnavailable ? { "Retry-After": "2" } : {}) },
   });
 }

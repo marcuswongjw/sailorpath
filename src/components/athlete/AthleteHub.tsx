@@ -1,10 +1,11 @@
 "use client";
 
+import { profilePhotoUrl } from "@/lib/profilePhoto";
+
 import { sailingClassDisplayLabel } from "@/lib/classPresentation";
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   Trophy,
@@ -300,11 +301,11 @@ function AthleteWorkspace({
             {/* Avatar */}
             <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] shrink-0 shadow-2xs">
               {athlete.avatarUrl ? (
-                <Image
-                  src={athlete.avatarUrl}
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || "/avatar-demo.png"}
                   alt={athlete.name}
-                  fill
-                  className="object-cover"
+                  className="h-full w-full object-cover"
                 />
               ) : (
                 <div className="h-full w-full flex items-center justify-center text-[var(--sp-slate-soft)]">

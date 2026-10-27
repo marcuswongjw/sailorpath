@@ -1,3 +1,4 @@
+import { profilePhotoUrl } from "@/lib/profilePhoto";
 import { birthYear } from "@/lib/age";
 import type { SailorMapped } from "@/lib/queries";
 import type {
@@ -34,7 +35,7 @@ export function toPublicSailorProps(
       birthYear: birthYear(sailor.dob),
       bio: sailor.bio,
       instagram: sailor.instagram,
-      avatarUrl: sailor.avatarUrl,
+      avatarUrl: profilePhotoUrl(sailor.id, sailor.avatarUrl),
       sailingJourney: sailor.sailingJourney,
       showSchoolOnPublicProfile: Boolean(sailor.showSchoolOnPublicProfile),
       showEquipmentOnPublicProfile: Boolean(sailor.showEquipmentOnPublicProfile),
@@ -79,7 +80,7 @@ export function toPublicSailorProps(
     dob: null,
     bio: sailor.bio && sailor.bio.length <= 500 ? sailor.bio : null,
     school: sailor.showSchoolOnPublicProfile ? sailor.school : null,
-    avatarUrl: sailor.showProfilePhotoOnPublicProfile ? sailor.avatarUrl : null,
+    avatarUrl: sailor.showProfilePhotoOnPublicProfile ? profilePhotoUrl(sailor.id, sailor.avatarUrl) : null,
     instagram: sailor.showSocialLinksOnPublicProfile ? sailor.instagram : null,
     sailingJourney: sailor.showSailingMilestonesOnPublicProfile
       ? sailor.sailingJourney

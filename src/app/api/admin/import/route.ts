@@ -2386,12 +2386,9 @@ export async function POST(req: Request) {
           });
           await writer.write(encoder.encode(finalPayload + "\n"));
         } catch (e) {
-          const errorMsg =
-            e instanceof ImportConflictError
-              ? e.message
-              : e instanceof Error
-              ? e.message
-              : String(e);
+          const errorMsg = e instanceof ImportConflictError
+            ? e.message
+            : (await jsonError(e).json()).error;
           const errorPayload = JSON.stringify({
             type: "error",
             error: errorMsg,

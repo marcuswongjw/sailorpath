@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { ensureProfileForUser } from "@/lib/queries";
-import { DbUnavailableError } from "@/db";
+import { jsonError } from "@/lib/auth";
 
 export async function POST() {
   try {
@@ -15,10 +15,6 @@ export async function POST() {
     const result = await ensureProfileForUser(user);
     return NextResponse.json(result);
   } catch (e) {
-    if (e instanceof DbUnavailableError) {
-      return NextResponse.json({ error: e.message }, { status: 503 });
-    }
-    console.error(e);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return jsonError(e);
   }
 }
