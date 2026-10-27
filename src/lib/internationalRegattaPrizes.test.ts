@@ -83,25 +83,34 @@ describe("remaining championship categories", () => {
     expect(filled[0].categories[0].winners[0].prizeTitle).toContain("Peter Barclay Trophy");
     expect(filled[0].categories[0].winners[0].prizeTitle).toContain("Beacon Challenge Cup");
   });
-  it("links 20th Asian Games 2026 medalists to sailor profiles across ILCA 4, ILCA 6, ILCA 7, 29er, and iQFOiL", () => {
-    const ianGoh = getSailorPrizes({ name: "Ian Goh", handle: "ian-goh", sailNumberIlca4: "222713" });
-    expect(ianGoh).toEqual(expect.arrayContaining([
-      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-ilca4", rank: 2, medal: "silver", prizeTitle: "Silver Medal (2nd Boy)" }),
-    ]));
+  it("links 20th Asian Games 2026 medalists to sailor profiles across ILCA 4, ILCA 6, ILCA 7, 29er, and iQFOiL without duplicating overall podiums", () => {
+    const ianGoh = getSailorPrizes(
+      { name: "Ian Goh", handle: "ian-goh", sailNumberIlca4: "222713" },
+      [{ regattaSlug: "20th-asian-games-2026-ilca4", rank: 2, boatClass: "ILCA 4", division: "Boys" }]
+    );
+    expect(ianGoh.filter((a) => a.regattaSlug === "20th-asian-games-2026-ilca4")).toEqual([
+      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-ilca4", categoryName: "Overall (Boys)", rank: 2, medal: "silver", prizeTitle: "Silver Medal (2nd Boy)", isOfficialNoR: false }),
+    ]);
+    expect(hasOverallPrizeWinners(getRegattaPrizeSchedule("20th-asian-games-2026-ilca4")!.fleets)).toBe(true);
 
     const janiaAng = getSailorPrizes({ name: "Jania Ang", handle: "jania-ang" });
     expect(janiaAng).toEqual(expect.arrayContaining([
-      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-ilca6", rank: 2, medal: "silver", prizeTitle: "Silver Medal" }),
+      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-ilca6", categoryName: "Overall (Women)", rank: 2, medal: "silver", prizeTitle: "Silver Medal" }),
     ]));
 
     const johnWong = getSailorPrizes({ name: "John Wong Tze Xiang", handle: "john-tze-xiang-wong-acb2ce" });
     expect(johnWong).toEqual(expect.arrayContaining([
-      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-iqfoil", rank: 3, medal: "bronze", prizeTitle: "Bronze Medal" }),
+      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-iqfoil", categoryName: "Overall (Men)", rank: 3, medal: "bronze", prizeTitle: "Bronze Medal" }),
     ]));
 
-    const seanKumNigelTan = getSailorPrizes({ name: "Sean Kum Kok Wei / Nigel Tan Xu Yuan", handle: "sean-kum-nigel-tan-2472" });
-    expect(seanKumNigelTan).toEqual(expect.arrayContaining([
-      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-29er", rank: 2, medal: "silver", prizeTitle: "Silver Medal" }),
+    const seanKum = getSailorPrizes({ name: "Kum Kok Wei Sean", handle: "kum-kok-wei-sean", sailNumber: "2472" });
+    expect(seanKum).toEqual(expect.arrayContaining([
+      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-29er", categoryName: "Overall (Men)", rank: 2, medal: "silver", prizeTitle: "Silver Medal" }),
+    ]));
+
+    const nigelTan = getSailorPrizes({ name: "Nigel Tan Xu Yuan", handle: "nigel-tan-xu-yuan", sailNumber: "2472" });
+    expect(nigelTan).toEqual(expect.arrayContaining([
+      expect.objectContaining({ regattaSlug: "20th-asian-games-2026-29er", categoryName: "Overall (Men)", rank: 2, medal: "silver", prizeTitle: "Silver Medal" }),
     ]));
   });
 });
