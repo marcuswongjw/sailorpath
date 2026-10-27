@@ -52,7 +52,7 @@ URL-encode special characters in the password (`@` → `%40`, `#` → `%23`).
 | `UPSTASH_REDIS_REST_URL` | **recommended in production** — durable rate limits for usage/claims/support ([Upstash Redis](https://upstash.com/)) |
 | `UPSTASH_REDIS_REST_TOKEN` | pair with URL above |
 
-Without Upstash, rate limits fall back to in-process memory and reset on every serverless cold start. Superadmin `/api/health` reports `rateLimit.upstashConfigured`.
+Without Upstash, rate limits fall back to in-process memory and reset on every serverless cold start. Superadmin `/api/health?diagnostics=1` reports `rateLimit.upstashConfigured`.
 
 Authentication cookies are deliberately **host-only**. Do not configure `NEXT_PUBLIC_COOKIE_DOMAIN`; public and admin users sign in separately at `sailorpath.com` and `admin.sailorpath.com` so an untrusted sibling subdomain cannot read an administrator session.
 
@@ -62,7 +62,7 @@ Then **Deployments → Redeploy** the latest `main` commit (do not use an old de
 
 ## 5. Verify
 
-Open https://sailorpath.com/api/health
+Open https://sailorpath.com/api/health?diagnostics=1
 
 Success looks like:
 
@@ -121,3 +121,5 @@ database changes.
 - Silent Demo Mode / mock sailors in production  
 - Google OAuth, Stripe, PostHog (v1)  
 - Role simulator  
+
+The default `/api/health` is an inexpensive application liveness check and does not test the database. Detailed diagnostics require a signed-in superadmin and `?diagnostics=1`.

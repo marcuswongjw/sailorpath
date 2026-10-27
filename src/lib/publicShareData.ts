@@ -6,7 +6,7 @@ import {
   getCachedSailorByHandle,
   getRegattaBySlug,
   getResultsForRegatta,
-  getResultsForSailor,
+  getCachedResultsForSailor,
 } from "@/lib/queries";
 import type { RegattaRecord } from "@/lib/ranking";
 import {
@@ -33,7 +33,7 @@ import {
 
 export const loadShareSailor = cache((handle: string) => getCachedSailorByHandle(handle));
 
-export const loadShareSailorResults = cache((sailorId: string) => getResultsForSailor(sailorId));
+export const loadShareSailorResults = cache((sailorId: string) => getCachedResultsForSailor(sailorId));
 
 export const loadPublishedRegattaBySlug = cache((slug: string) => getRegattaBySlug(slug));
 

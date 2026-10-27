@@ -78,7 +78,7 @@ Hot-path indexes: `040_indexes_hot_paths.sql` (includes `usage_events(created_at
 Uses Upstash Redis when `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
 are set; otherwise falls back to in-process memory (resets on cold start).
 **Turn Upstash on in production** so abuse limits survive Vercel instance churn.
-Check `rateLimit` on superadmin `GET /api/health`.
+Check `rateLimit` on superadmin `GET /api/health?diagnostics=1`.
 
 ## Files
 
@@ -92,3 +92,5 @@ Check `rateLimit` on superadmin `GET /api/health`.
 | `src/components/UsageBeacon.tsx` | Client page tracking |
 | `src/components/admin/AdminMetricsGuide.tsx` | KPI playbook UI |
 | `logs/app.log` | Ops log |
+
+The default `/api/health` is an inexpensive application liveness check and does not test the database. Detailed diagnostics require a signed-in superadmin and `?diagnostics=1`.

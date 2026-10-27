@@ -532,12 +532,10 @@ async function loadResultsForRegatta(
           sailorName: sailors.name,
           sailNumber: sailors.sailNumber,
           handle: sailors.handle,
-          parentId: sailors.parentId,
-          school: sailors.school,
+          profileClaimed: sql<boolean>`${sailors.parentId} is not null`,
           gender: regattaResults.gender,
           sailorGender: sailors.gender,
-          birthYear: regattaResults.birthYear,
-          dob: sailors.dob,
+          birthYear: sql<number | null>`coalesce(${regattaResults.birthYear}, extract(year from ${sailors.dob})::int)`,
           nationality: regattaResults.nationality,
           sailorNationality: sailors.nationality,
         })
@@ -553,7 +551,7 @@ async function loadResultsForRegatta(
           sailorId: regattaResultParticipants.sailorId,
           sailorName: sailors.name,
           handle: sailors.handle,
-          parentId: sailors.parentId,
+          profileClaimed: sql<boolean>`${sailors.parentId} is not null`,
           sourceName: regattaResultParticipants.sourceName,
           displayOrder: regattaResultParticipants.displayOrder,
           role: regattaResultParticipants.role,
@@ -610,20 +608,20 @@ async function loadResultsForRegatta(
       }
       const participantsByResult = new Map<string, RegattaResultParticipantView[]>();
       for (const participant of participantRows) {
-        const { parentId, ...view } = participant;
+        const { profileClaimed, ...view } = participant;
         const list = participantsByResult.get(participant.resultId) || [];
         list.push({
           ...view,
-          profileClaimed: participant.sailorId ? Boolean(parentId) : undefined,
+          profileClaimed: participant.sailorId ? Boolean(profileClaimed) : undefined,
         });
         participantsByResult.set(participant.resultId, list);
       }
       return restoreBestNettHiddenAsDns(
         rows.map((r) => {
-          const { parentId, ...publicRow } = r;
+          const { profileClaimed, ...publicRow } = r;
           return {
             ...publicRow,
-            profileClaimed: Boolean(parentId),
+            profileClaimed: Boolean(profileClaimed),
             sailorName:
               (participantsByResult.get(r.resultId) || []).length > 1
                 ? (participantsByResult.get(r.resultId) || [])
@@ -833,7 +831,7 @@ export async function getResultsForSailor(sailorId: string) {
 }
 
 export const getCachedResultsForSailor = unstable_cache(
-  async (sailorId: string) => getResultsForSailor(sailorId),
+  async (sailorId: string) => singleFlight(`sailor-results:${sailorId}`, () => getResultsForSailor(sailorId)),
   ["public-sailor-results-v4-published-only"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,

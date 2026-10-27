@@ -21,7 +21,8 @@ npm run dev
 
 See **[docs/GO_LIVE.md](docs/GO_LIVE.md)** — wipe schema, run `001_init.sql` and `002_sailor_school_fleet.sql`, set Vercel env, redeploy.
 
-Health check: https://sailorpath.com/api/health  
+Application liveness: https://sailorpath.com/api/health
+Superadmin database diagnostics: https://sailorpath.com/api/health?diagnostics=1
 
 ## Admin
 

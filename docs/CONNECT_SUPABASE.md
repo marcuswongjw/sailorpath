@@ -53,9 +53,9 @@ postgresql://postgres:PASSWORD@db.XXXX.supabase.co:5432/postgres
 
 Authentication cookies are host-only by design. Do not add `NEXT_PUBLIC_COOKIE_DOMAIN`; users sign in separately on `sailorpath.com` and `admin.sailorpath.com` to prevent a public sibling subdomain from reading an administrator session.
 
-### C. Confirm with `/api/health`
+### C. Confirm with `/api/health?diagnostics=1`
 
-Open https://sailorpath.com/api/health after each change + redeploy.
+Open https://sailorpath.com/api/health?diagnostics=1 after each change + redeploy.
 
 | Health JSON | Meaning | Fix |
 |-------------|---------|-----|
@@ -70,7 +70,7 @@ Open https://sailorpath.com/api/health after each change + redeploy.
 1. Supabase → **SQL Editor**  
 2. Paste entire file: `src/db/migrations/0007_bootstrap_schema.sql`  
 3. Run  
-4. Refresh `/api/health` — expect `publicTables` to include `sailors`, `regattas`, `profiles`
+4. Refresh `/api/health?diagnostics=1` — expect `publicTables` to include `sailors`, `regattas`, `profiles`
 
 ### E. Superadmin
 
@@ -83,7 +83,7 @@ WHERE email = 'YOUR_EMAIL';
 
 ### F. Live checklist
 
-1. https://sailorpath.com/api/health → `"mode":"live"`  
+1. https://sailorpath.com/api/health?diagnostics=1 → `"mode":"live"`
 2. https://sailorpath.com — no Demo Mode banner  
 3. https://admin.sailorpath.com — not “simulated”  
 4. Log in → admin writes persist
@@ -208,3 +208,5 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm;
 - [ ] Profile row exists → set `role = 'superadmin'`  
 - [ ] Demo banner gone on sailorpath.com  
 - [ ] (Optional) Google OAuth client + redirect URIs  
+
+The default `/api/health` is an inexpensive application liveness check and does not test the database. Detailed diagnostics require a signed-in superadmin and `?diagnostics=1`.
