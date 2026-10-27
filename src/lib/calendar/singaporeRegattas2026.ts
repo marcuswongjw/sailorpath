@@ -435,10 +435,10 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     totalFleetSize: 64,
   },
   {
-    name: "8th Autumn Meeting & 48th Trofeo Torboli",
+    name: "8th Autumn Meeting & 50th Trofeo Torboli",
     slug: "8th-autumn-meeting-48th-trofeo-torboli-2026",
-    startDate: "2026-10-23",
-    endDate: "2026-10-25",
+    startDate: "2026-10-16",
+    endDate: "2026-10-18",
     boatClass: "Optimist",
     division: "Open",
     region: "Europe",

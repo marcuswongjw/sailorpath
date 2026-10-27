@@ -1,3 +1,4 @@
+import { extendInternationalPrizeSchedules } from "./internationalAdditionalPrizes";
 import type { PrizeWinner, RegattaPrizeSchedule } from "./regattaPrizes";
 
 const noFees = { singleHanded: 0, doubleHanded: 0, earlyBirdDeadline: "", finalDeadline: "", lateFee: 0 };
@@ -5,10 +6,15 @@ const winner = (rank: number, sailorName: string, sailorHandle: string, sailNumb
   rank, sailorName, sailorHandle, sailNumber, gender: "F",
   prizeTitle: prizeTitle || `${rank}${rank === 1 ? "st" : rank === 2 ? "nd" : "rd"} Girl`,
 });
+const medalist = (rank: number, sailorName: string, sailorHandle: string, sailNumber: string, gender: "M" | "F", prizeTitle?: string, notes?: string): PrizeWinner => ({
+  rank, sailorName, sailorHandle, sailNumber, gender,
+  prizeTitle: prizeTitle || (rank === 1 ? "Gold Medal" : rank === 2 ? "Silver Medal" : "Bronze Medal"),
+  notes,
+});
 const base = { registrationUrl: "", entryFees: noFees, scheduleSummary: "", scoringRules: "", sourceKind: "notice-of-race" as const };
 
 /** Event-specific awards only. Never infer continental eligibility from a sailor's profile country. */
-export const INTERNATIONAL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+export const INTERNATIONAL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = extendInternationalPrizeSchedules([
   {
     ...base,
     regattaSlug: "2026-optimist-world-championship-overall", regattaName: "2026 Optimist World Championship", year: 2026,
@@ -101,7 +107,152 @@ export const INTERNATIONAL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
       ] },
     ] }],
   },
-];
+  {
+    ...base,
+    regattaSlug: "20th-asian-games-2026-ilca4",
+    regattaName: "20th Asian Games 2026 (ILCA 4)",
+    year: 2026,
+    datesText: "26 September–3 October 2026",
+    venue: "Kaiyoh Yacht Harbor, Gamagori, Japan",
+    organizer: "Olympic Council of Asia / Asian Sailing Federation (ASAF)",
+    noticeOfRaceUrl: "https://www.aichi-nagoya2026.org",
+    officialNoticeBoardUrl: "https://www.aichi-nagoya2026.org",
+    websiteUrl: "https://www.aichi-nagoya2026.org",
+    sourceUrl: "https://www.aichi-nagoya2026.org",
+    sourceDescription: "Official Asian Games sailing results. Standings corroborated across OCA, ASAF, and Singapore Sailing Federation releases.",
+    fleets: [{
+      fleetName: "ILCA 4",
+      boatClass: "ILCA 4",
+      categories: [
+        {
+          categoryName: "Boys",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            medalist(1, "Choi Ji-un", "ilca4-worlds26-kor-jiun-choi-614785", "KOR 225770", "M", "Gold Medal (1st Boy)", "25 net pts (3 bullets)"),
+            medalist(2, "Ian Goh", "ian-goh", "SGP 222713", "M", "Silver Medal (2nd Boy)", "25 net pts (2 bullets)"),
+            medalist(3, "Tiago Cheng De Villemor Salgado", "tiago-cheng-de-villemor-salgado", "HKG", "M", "Bronze Medal (3rd Boy)", "27 net pts"),
+          ],
+        },
+      ],
+    }],
+  },
+  {
+    ...base,
+    regattaSlug: "20th-asian-games-2026-ilca6",
+    regattaName: "20th Asian Games 2026 (ILCA 6)",
+    year: 2026,
+    datesText: "26 September–3 October 2026",
+    venue: "Kaiyoh Yacht Harbor, Gamagori, Japan",
+    organizer: "Olympic Council of Asia / Asian Sailing Federation (ASAF)",
+    noticeOfRaceUrl: "https://www.aichi-nagoya2026.org",
+    officialNoticeBoardUrl: "https://www.aichi-nagoya2026.org",
+    websiteUrl: "https://www.aichi-nagoya2026.org",
+    sourceUrl: "https://www.aichi-nagoya2026.org",
+    sourceDescription: "Official Asian Games sailing results. Standings corroborated across OCA, ASAF, and Singapore Sailing Federation releases.",
+    fleets: [{
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        {
+          categoryName: "Women",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            medalist(1, "Sophia Montgomery", "sophia-montgomery", "THA", "F", "Gold Medal (LA28 Olympic Quota)", "5 net pts"),
+            medalist(2, "Jania Ang", "jania-ang", "SGP 222727", "F", "Silver Medal", "13 net pts"),
+            medalist(3, "Nethra Kumanan", "nethra-kumanan", "IND", "F", "Bronze Medal", "14 net pts"),
+          ],
+        },
+      ],
+    }],
+  },
+  {
+    ...base,
+    regattaSlug: "20th-asian-games-2026-ilca7",
+    regattaName: "20th Asian Games 2026 (ILCA 7)",
+    year: 2026,
+    datesText: "26 September–3 October 2026",
+    venue: "Kaiyoh Yacht Harbor, Gamagori, Japan",
+    organizer: "Olympic Council of Asia / Asian Sailing Federation (ASAF)",
+    noticeOfRaceUrl: "https://www.aichi-nagoya2026.org",
+    officialNoticeBoardUrl: "https://www.aichi-nagoya2026.org",
+    websiteUrl: "https://www.aichi-nagoya2026.org",
+    sourceUrl: "https://www.aichi-nagoya2026.org",
+    sourceDescription: "Official Asian Games sailing results. Standings corroborated across OCA, ASAF, and World Sailing releases.",
+    fleets: [{
+      fleetName: "ILCA 7",
+      boatClass: "ILCA 7",
+      categories: [
+        {
+          categoryName: "Men",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            medalist(1, "Ha Jee-min", "ha-jee-min", "KOR", "M", "Gold Medal (LA28 Olympic Quota)", "9 net pts"),
+            medalist(2, "Nicholas Halliday", "nicholas-halliday", "HKG", "M", "Silver Medal", "11 net pts"),
+            medalist(3, "Khairulnizam Mohd Afendy", "khairulnizam-mohd-afendy", "MAS", "M", "Bronze Medal", "18 net pts"),
+          ],
+        },
+      ],
+    }],
+  },
+  {
+    ...base,
+    regattaSlug: "20th-asian-games-2026-29er",
+    regattaName: "20th Asian Games 2026 (29er)",
+    year: 2026,
+    datesText: "26 September–3 October 2026",
+    venue: "Kaiyoh Yacht Harbor, Gamagori, Japan",
+    organizer: "Olympic Council of Asia / Asian Sailing Federation (ASAF)",
+    noticeOfRaceUrl: "https://www.aichi-nagoya2026.org",
+    officialNoticeBoardUrl: "https://www.aichi-nagoya2026.org",
+    websiteUrl: "https://www.aichi-nagoya2026.org",
+    sourceUrl: "https://www.aichi-nagoya2026.org",
+    sourceDescription: "Official Asian Games sailing results. Standings corroborated across OCA, ASAF, and Singapore Sailing Federation releases.",
+    fleets: [{
+      fleetName: "29er",
+      boatClass: "29er",
+      categories: [
+        {
+          categoryName: "Men",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            medalist(1, "Ethan Kiu / Louis Polson", "ethan-kiu-louis-polson", "HKG", "M", "Gold Medal", "20 net pts"),
+            medalist(2, "Sean Kum Kok Wei / Nigel Tan Xu Yuan", "sean-kum-nigel-tan-2472", "SGP 2472", "M", "Silver Medal", "24 net pts"),
+            medalist(3, "Muhammad Adam Aierell / Iqbal Nazham Musmuliadi", "adam-aierell-iqbal-nazham", "MAS", "M", "Bronze Medal", "31 net pts"),
+          ],
+        },
+      ],
+    }],
+  },
+  {
+    ...base,
+    regattaSlug: "20th-asian-games-2026-iqfoil",
+    regattaName: "20th Asian Games 2026 (iQFOiL)",
+    year: 2026,
+    datesText: "26 September–3 October 2026",
+    venue: "Kaiyoh Yacht Harbor, Gamagori, Japan",
+    organizer: "Olympic Council of Asia / Asian Sailing Federation (ASAF)",
+    noticeOfRaceUrl: "https://www.aichi-nagoya2026.org",
+    officialNoticeBoardUrl: "https://www.aichi-nagoya2026.org",
+    websiteUrl: "https://www.aichi-nagoya2026.org",
+    sourceUrl: "https://www.aichi-nagoya2026.org",
+    sourceDescription: "Official Asian Games sailing results. Standings corroborated across OCA, ASAF, and Singapore Sailing Federation releases.",
+    fleets: [{
+      fleetName: "iQFOiL",
+      boatClass: "iQFOiL",
+      categories: [
+        {
+          categoryName: "Men",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            medalist(1, "Wong Tsz Ho", "wong-tsz-ho", "HKG", "M", "Gold Medal", "22 net pts"),
+            medalist(2, "Masato Kozono", "masato-kozono", "JPN", "M", "Silver Medal", "28 net pts"),
+            medalist(3, "John Wong Tze Xiang", "john-tze-xiang-wong-acb2ce", "SGP 2", "M", "Bronze Medal", "34 net pts · Historic 1st Asian Games windsurfing medal for Singapore"),
+          ],
+        },
+      ],
+    }],
+  },
+]);
 
 /** Only these published editions have been checked; selection trials must never match. */
 const aliases: Record<string, string> = {
