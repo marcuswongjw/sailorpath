@@ -27,12 +27,13 @@ beforeAll(async () => {
     grant usage on schema storage, private, auth to anon, authenticated;
     revoke all on function private.can_manage_evidence_object(text) from public, anon;
     grant execute on function private.can_manage_evidence_object(text) to authenticated;
-    grant select, insert on storage.objects to anon, authenticated;
+    grant select, insert, update on storage.objects to anon, authenticated;
     grant select on public.profiles, public.sailors, public.sailor_claims to authenticated;
     alter table storage.objects enable row level security;
     create policy "Regatta evidence public read" on storage.objects for select to public using (bucket_id='regatta-evidence');
     create policy "Regatta evidence owner read" on storage.objects for select to authenticated using (bucket_id='regatta-evidence' and private.can_manage_evidence_object(name));
     create policy "Regatta evidence authenticated upload" on storage.objects for insert to authenticated with check (bucket_id='regatta-evidence' and private.can_manage_evidence_object(name));`);
+  await database.exec(`create policy "Regatta evidence authenticated update" on storage.objects for update to authenticated using (bucket_id='regatta-evidence' and private.can_manage_evidence_object(name)) with check (bucket_id='regatta-evidence' and private.can_manage_evidence_object(name));`);
   await database.exec(migration);
   await database.exec(uploadMigration);
 });
@@ -70,6 +71,14 @@ describe("private evidence storage migration", () => {
     expect(await visible("authenticated", other)).toBe(0);
     expect(await visible("authenticated", owner)).toBe(1);
     expect(await visible("authenticated", admin)).toBe(1);
+  });
+  it("does not permit overwriting evidence even in the caller's own folder", async () => {
+    await database.exec("set role authenticated");
+    try {
+      await database.query("select set_config('test.user', $1, false)", [owner]);
+      const result = await database.query("update storage.objects set metadata='{\"size\": 1}'::jsonb where name=$1 returning name", [`${owner}/123_results.pdf`]);
+      expect(result.rows).toHaveLength(0);
+    } finally { await database.exec("reset role"); }
   });
   it("requires an approved claim or ownership and enforces aggregate quotas on upload", async () => {
     expect(await canInsert(other, `${other}/unclaimed.pdf`)).toBe(false);
