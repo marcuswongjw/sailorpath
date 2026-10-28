@@ -264,6 +264,7 @@ function RegattaEvidenceForm({
 
     const formData = new FormData();
     formData.append("file", file);
+    if (sailorId) formData.append("sailorId", sailorId);
     xhr.open("POST", "/api/account/evidence/upload");
     xhr.send(formData);
   };

@@ -91,3 +91,19 @@ export async function canGiveGuardianConsent(
   )).limit(1);
   return Boolean(claim);
 }
+
+/** Verifies whether a user manages at least one sailor profile (owner, approved claimant, or superadmin). */
+export async function hasAnyManagedSailor(
+  userId: string | null | undefined,
+  isAdmin = false
+): Promise<boolean> {
+  if (isAdmin) return true;
+  if (!userId) return false;
+  const [owned] = await db.select({ id: sailors.id }).from(sailors).where(eq(sailors.parentId, userId)).limit(1);
+  if (owned) return true;
+  const [claim] = await db.select({ id: sailorClaims.id }).from(sailorClaims).where(and(
+    eq(sailorClaims.requesterId, userId),
+    eq(sailorClaims.status, "approved")
+  )).limit(1);
+  return Boolean(claim);
+}

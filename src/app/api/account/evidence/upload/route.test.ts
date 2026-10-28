@@ -2,6 +2,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   getAuthContext: vi.fn(),
+  canManageSailor: vi.fn(),
+  hasAnyManagedSailor: vi.fn(),
+  existingObjects: [] as Array<{ name: string; metadata?: { size?: number } }>,
   uploads: [] as Array<{ bucket: string; path: string; options: unknown }>,
   failBucket: null as string | null,
 }));
@@ -14,10 +17,20 @@ vi.mock("@/lib/auth", () => ({
   },
 }));
 
+vi.mock("@/lib/claimAccess", () => ({
+  canManageSailor: mocks.canManageSailor,
+  hasAnyManagedSailor: mocks.hasAnyManagedSailor,
+}));
+
 vi.mock("@/lib/supabase/server", () => ({
   createServerSupabase: async () => ({
     storage: {
       from: (bucket: string) => ({
+        list: () =>
+          Promise.resolve({
+            data: mocks.existingObjects,
+            error: null,
+          }),
         upload: (path: string, _body: unknown, options: unknown) => {
           mocks.uploads.push({ bucket, path, options });
           if (mocks.failBucket === bucket) {
@@ -39,12 +52,13 @@ import { POST } from "./route";
 
 const USER = "11111111-1111-4111-8111-111111111111";
 
-function uploadRequest() {
+function uploadRequest(sailorId?: string) {
   const body = new FormData();
   body.set(
     "file",
     new File(["%PDF"], "results.pdf", { type: "application/pdf" })
   );
+  if (sailorId) body.set("sailorId", sailorId);
   return POST(
     new Request("https://sailorpath.com/api/account/evidence/upload", {
       method: "POST",
@@ -56,7 +70,10 @@ function uploadRequest() {
 describe("POST /api/account/evidence/upload", () => {
   beforeEach(() => {
     mocks.uploads = [];
+    mocks.existingObjects = [];
     mocks.failBucket = null;
+    mocks.canManageSailor.mockResolvedValue(true);
+    mocks.hasAnyManagedSailor.mockResolvedValue(true);
     mocks.getAuthContext.mockResolvedValue({
       userId: USER,
       email: "parent@example.com",
@@ -76,6 +93,37 @@ describe("POST /api/account/evidence/upload", () => {
     expect(decodeURIComponent(data.url)).toContain(`${USER}/`);
     expect(data.url).not.toContain("supabase.co");
     expect(mocks.uploads.some((row) => row.bucket === "avatars")).toBe(false);
+  });
+
+  it("denies uploads when the caller holds no approved sailor claim", async () => {
+    mocks.hasAnyManagedSailor.mockResolvedValue(false);
+    const res = await uploadRequest();
+    expect(res.status).toBe(403);
+    expect(mocks.uploads).toHaveLength(0);
+  });
+
+  it("denies uploads when sailorId is provided for an unmanaged sailor", async () => {
+    mocks.canManageSailor.mockResolvedValue(false);
+    const res = await uploadRequest("22222222-2222-4222-8222-222222222222");
+    expect(res.status).toBe(403);
+    expect(mocks.uploads).toHaveLength(0);
+  });
+
+  it("enforces per-user file count and aggregate byte quotas", async () => {
+    mocks.existingObjects = Array.from({ length: 50 }, (_, i) => ({
+      name: `${i}_result.pdf`,
+      metadata: { size: 1024 },
+    }));
+    const countRes = await uploadRequest();
+    expect(countRes.status).toBe(413);
+    expect(mocks.uploads).toHaveLength(0);
+
+    mocks.existingObjects = [
+      { name: "large.pdf", metadata: { size: 100 * 1024 * 1024 } },
+    ];
+    const sizeRes = await uploadRequest();
+    expect(sizeRes.status).toBe(413);
+    expect(mocks.uploads).toHaveLength(0);
   });
 
   it("returns an error instead of storing evidence in the avatars bucket", async () => {
