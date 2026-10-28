@@ -314,6 +314,8 @@ async function DbSlicePanel({
           raceCount={regatta.raceCount}
           accent={accent}
           pendingIdentityReview={regatta.scheduleNotes?.includes("awaiting identity review")}
+          importNotice={regatta.scheduleNotes && /Partial import:|combined PY/i.test(regatta.scheduleNotes)
+            ? regatta.scheduleNotes : undefined}
         />
       )}
       <p className="text-[13px] text-[var(--sp-charcoal)]">

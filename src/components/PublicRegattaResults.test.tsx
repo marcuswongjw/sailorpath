@@ -3,6 +3,23 @@ import { describe, expect, it } from "vitest";
 import { PublicRegattaResults } from "./PublicRegattaResults";
 
 describe("PublicRegattaResults", () => {
+  it("preserves mixed review reasons without inventing an identity-only shortfall", () => {
+    const notice = "Partial import: 30 of 35 class entries imported; 5 awaiting identity or source review.";
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults accent="orange" totalFleetSize={35} results={[]} pendingIdentityReview importNotice={notice} />
+    );
+    expect(html).toContain(notice);
+    expect(html).not.toContain("entries await sailor identity review");
+  });
+
+  it("explains class subsets of a combined handicap fleet without labelling them missing entries", () => {
+    const notice = "Original combined PY handicap standings; class subset, with original ranks and scores.";
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults accent="sky" totalFleetSize={34} results={[]} importNotice={notice} />
+    );
+    expect(html).toContain(notice);
+    expect(html).not.toContain("identity review");
+  });
   it("shows the imported count and official fleet size when identities are deferred", () => {
     const html = renderToStaticMarkup(
       <PublicRegattaResults accent="orange" totalFleetSize={4} results={[]} pendingIdentityReview />
