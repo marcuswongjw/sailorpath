@@ -15,8 +15,8 @@ const ALLOWED_MIME_TYPES = new Set([
 ]);
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-export const MAX_EVIDENCE_FILES_PER_USER = 50;
-export const MAX_EVIDENCE_TOTAL_BYTES_PER_USER = 100 * 1024 * 1024; // 100MB
+const MAX_EVIDENCE_FILES_PER_USER = 50;
+const MAX_EVIDENCE_TOTAL_BYTES_PER_USER = 100 * 1024 * 1024; // 100MB
 
 export async function POST(req: Request) {
   try {
@@ -25,15 +25,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Sign in required" }, { status: 401 });
     }
 
+    const isAdmin = auth.role === "superadmin";
+    // Reject unapproved accounts before parsing or buffering multipart uploads.
+    if (!isAdmin && !(await hasAnyManagedSailor(auth.userId))) {
+      return NextResponse.json(
+        { error: "An approved sailor profile claim is required to upload evidence." },
+        { status: 403 }
+      );
+    }
+
     const formData = await req.formData();
     const file = formData.get("file");
     const rawSailorId = formData.get("sailorId");
     const sailorId = typeof rawSailorId === "string" ? rawSailorId.trim() : "";
 
-    const isAdmin = auth.role === "superadmin";
     const canUpload = sailorId
       ? await canManageSailor(sailorId, auth.userId, isAdmin)
-      : await hasAnyManagedSailor(auth.userId, isAdmin);
+      : true;
     if (!canUpload) {
       return NextResponse.json(
         { error: "An approved sailor profile claim is required to upload evidence." },
@@ -74,7 +82,7 @@ export async function POST(req: Request) {
 
     const supabase = await createServerSupabase();
     const bucket = supabase.storage.from("regatta-evidence") as {
-      list?: (
+      list: (
         folder?: string,
         options?: { limit?: number }
       ) => Promise<{
@@ -88,7 +96,7 @@ export async function POST(req: Request) {
       ) => Promise<{ error: { message: string } | null }>;
     };
 
-    if (!isAdmin && typeof bucket.list === "function") {
+    if (!isAdmin) {
       const { data: existingFiles, error: listError } = await bucket.list(
         auth.userId,
         { limit: MAX_EVIDENCE_FILES_PER_USER + 1 }

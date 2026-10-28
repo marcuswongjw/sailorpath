@@ -55,4 +55,8 @@ CREATE POLICY "Regatta evidence authenticated upload"
     AND private.can_upload_evidence_object(name)
   );
 
+-- Evidence is immutable: the application uploads unique paths with upsert=false.
+-- Otherwise an account could bypass upload eligibility by overwriting an old object.
+DROP POLICY IF EXISTS "Regatta evidence authenticated update" ON storage.objects;
+
 COMMIT;

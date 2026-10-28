@@ -95,6 +95,15 @@ describe("POST /api/account/evidence/upload", () => {
     expect(mocks.uploads.some((row) => row.bucket === "avatars")).toBe(false);
   });
 
+  it("rejects unapproved accounts before reading multipart bodies", async () => {
+    mocks.hasAnyManagedSailor.mockResolvedValue(false);
+    const request = new Request("https://sailorpath.com/api/account/evidence/upload", { method: "POST" });
+    const parse = vi.spyOn(request, "formData");
+    expect((await POST(request)).status).toBe(403);
+    expect(parse).not.toHaveBeenCalled();
+    expect(mocks.uploads).toHaveLength(0);
+  });
+
   it("denies uploads when the caller holds no approved sailor claim", async () => {
     mocks.hasAnyManagedSailor.mockResolvedValue(false);
     const res = await uploadRequest();
