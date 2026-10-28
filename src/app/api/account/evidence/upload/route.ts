@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { canManageSailor, hasAnyManagedSailor } from "@/lib/claimAccess";
 import { evidenceDownloadUrlForPath } from "@/lib/evidenceDownload";
 import { evidenceStoragePath } from "@/lib/evidenceStoragePath";
 import { createServerSupabase } from "@/lib/supabase/server";
@@ -14,6 +15,8 @@ const ALLOWED_MIME_TYPES = new Set([
 ]);
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+export const MAX_EVIDENCE_FILES_PER_USER = 50;
+export const MAX_EVIDENCE_TOTAL_BYTES_PER_USER = 100 * 1024 * 1024; // 100MB
 
 export async function POST(req: Request) {
   try {
@@ -24,6 +27,19 @@ export async function POST(req: Request) {
 
     const formData = await req.formData();
     const file = formData.get("file");
+    const rawSailorId = formData.get("sailorId");
+    const sailorId = typeof rawSailorId === "string" ? rawSailorId.trim() : "";
+
+    const isAdmin = auth.role === "superadmin";
+    const canUpload = sailorId
+      ? await canManageSailor(sailorId, auth.userId, isAdmin)
+      : await hasAnyManagedSailor(auth.userId, isAdmin);
+    if (!canUpload) {
+      return NextResponse.json(
+        { error: "An approved sailor profile claim is required to upload evidence." },
+        { status: 403 }
+      );
+    }
 
     if (!file || !(file instanceof Blob)) {
       return NextResponse.json(
@@ -57,15 +73,61 @@ export async function POST(req: Request) {
     }
 
     const supabase = await createServerSupabase();
+    const bucket = supabase.storage.from("regatta-evidence") as {
+      list?: (
+        folder?: string,
+        options?: { limit?: number }
+      ) => Promise<{
+        data: Array<{ name: string; metadata?: { size?: number } | null }> | null;
+        error: { message: string } | null;
+      }>;
+      upload: (
+        path: string,
+        body: Buffer,
+        options: { contentType: string; upsert: boolean }
+      ) => Promise<{ error: { message: string } | null }>;
+    };
+
+    if (!isAdmin && typeof bucket.list === "function") {
+      const { data: existingFiles, error: listError } = await bucket.list(
+        auth.userId,
+        { limit: MAX_EVIDENCE_FILES_PER_USER + 1 }
+      );
+      if (listError) {
+        console.error("regatta-evidence quota list failed", listError.message);
+        return NextResponse.json(
+          { error: "Could not verify evidence storage quota. Try again." },
+          { status: 502 }
+        );
+      }
+      const items = (existingFiles || []).filter(
+        (item) => item.name && item.name !== ".emptyFolderPlaceholder"
+      );
+      const totalBytes = items.reduce(
+        (sum, item) => sum + (Number(item.metadata?.size) || 0),
+        0
+      );
+      if (
+        items.length >= MAX_EVIDENCE_FILES_PER_USER ||
+        totalBytes + file.size > MAX_EVIDENCE_TOTAL_BYTES_PER_USER
+      ) {
+        return NextResponse.json(
+          {
+            error:
+              "Evidence storage quota exceeded (maximum 50 files or 100MB per account).",
+          },
+          { status: 413 }
+        );
+      }
+    }
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const { error: uploadError } = await supabase.storage
-      .from("regatta-evidence")
-      .upload(path, buffer, {
-        contentType: mimeType,
-        upsert: false,
-      });
+    const { error: uploadError } = await bucket.upload(path, buffer, {
+      contentType: mimeType,
+      upsert: false,
+    });
 
     if (uploadError) {
       console.error("regatta-evidence upload failed", uploadError.message);

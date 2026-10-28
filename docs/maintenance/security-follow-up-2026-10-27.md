@@ -10,8 +10,8 @@ Rechecked against main `6367af9` and the connected production Supabase project b
 | Draft personal logbooks enter profile history | Previously fixed | Public history requires published status; publication-boundary test exercises draft/review/archived cases. |
 | Hidden photo original remains accessible | Confirmed outstanding | This change protects uploaded and bundled originals behind a consent-checked reader and private storage policies. |
 | API diagnostics reach production clients | Confirmed outstanding | This change sanitises shared errors, auth-profile failures and unexpected streaming-import failures. |
-| Evidence aggregate quotas / approved claims | Still outstanding | Existing upload requires authentication and uploader-folder ownership, but no approved claim or aggregate quota. |
-| Expensive public health diagnostics | Still outstanding | Auth controls response detail, but diagnostics run before the public-response branch. |
+| Evidence aggregate quotas / approved claims | Resolved (28 Oct 2026) | Evidence upload endpoint and `storage.objects` RLS (`20261028095000_evidence_upload_quotas_and_claim_check.sql`) require an approved claim / owned sailor profile (or superadmin) and enforce a per-user quota of 50 files / 100 MB. |
+| Expensive public health diagnostics | Resolved (PR #98) | `/api/health` is now a zero-Supabase-query liveness check; superadmin diagnostics require `?diagnostics=1`. |
 | Compromised-password protection disabled | Still outstanding | Confirmed by current production advisor. Remediation: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection |
 | CSP permits inline scripts and eval | Still outstanding | Existing CSP remains unchanged. |
 
