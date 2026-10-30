@@ -46,7 +46,7 @@ describe("scoped database recovery", () => {
       return "ok";
     }, 500);
     await vi.advanceTimersByTimeAsync(50);
-    expect(await timeout).toMatchObject({ message: "DB_OPERATION_TIMEOUT" });
+    expect(await timeout).toMatchObject({ message: "DB_OPERATION_TIMEOUT", databasePhase: "executing" });
     expect(releases[0]).toHaveBeenCalledExactlyOnceWith(true);
     expect(releases[1]).not.toHaveBeenCalled();
     first!.release();
@@ -62,7 +62,7 @@ describe("scoped database recovery", () => {
     const query = vi.fn();
     const result = withDatabaseDeadline(async () => { const client = await pool.connect(); query(); client.release(); }, 50).catch((error: Error) => error);
     await vi.advanceTimersByTimeAsync(50);
-    expect(await result).toMatchObject({ message: "DB_OPERATION_TIMEOUT" });
+    expect(await result).toMatchObject({ message: "DB_OPERATION_TIMEOUT", databasePhase: "acquiring" });
     const release = vi.fn();
     acquired(undefined, { release } as unknown as PoolClient, release);
     await Promise.resolve();

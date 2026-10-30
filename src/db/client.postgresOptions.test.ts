@@ -5,6 +5,9 @@ describe("PostgreSQL transport", () => {
   it("keeps a small bounded pool without opting into pipelining or named statements", () => {
     const options = postgresPoolOptions("postgresql://localhost/sailorpath");
     expect(options.max).toBe(1);
+    expect(options.idleTimeoutMillis).toBe(30_000);
+    expect(options.keepAlive).toBe(true);
+    expect(options.keepAliveInitialDelayMillis).toBe(10_000);
     expect(options.connectionTimeoutMillis).toBeGreaterThan(0);
     expect(options.query_timeout).toBeGreaterThan(0);
     expect(options).not.toHaveProperty("pipeline", true);

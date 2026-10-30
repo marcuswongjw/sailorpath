@@ -11,9 +11,9 @@ export const DATABASE_PREFLIGHT_TIMEOUT_MS = 1_000;
 // context must be shared with the pool, including its original connect method.
 const globalForDb = globalThis as unknown as {
   sailorpathPgPool?: DatabasePool;
-  sailorpathDatabaseContext?: AsyncLocalStorage<{ signal: AbortSignal }>;
+  sailorpathDatabaseContext?: AsyncLocalStorage<{ signal: AbortSignal; phase: "acquiring" | "executing" }>;
 };
-const readContext = globalForDb.sailorpathDatabaseContext ?? new AsyncLocalStorage<{ signal: AbortSignal }>();
+const readContext = globalForDb.sailorpathDatabaseContext ?? new AsyncLocalStorage<{ signal: AbortSignal; phase: "acquiring" | "executing" }>();
 globalForDb.sailorpathDatabaseContext = readContext;
 
 function cleanUrl(raw: string): string {
@@ -170,7 +170,10 @@ export function postgresPoolOptions(connectionString: string) {
   return {
     connectionString: useSupabaseCa ? url.toString() : connectionString,
     max: 1,
-    idleTimeoutMillis: 5_000,
+    // Reuse warm connections across normal browsing gaps; keep the pool bounded.
+    idleTimeoutMillis: 30_000,
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10_000,
     connectionTimeoutMillis: 2_000,
     query_timeout: 4_000,
     allowExitOnIdle: true,
@@ -198,6 +201,7 @@ export class DatabasePool extends Pool {
       return super.connect();
     }
     const { signal } = context;
+    context.phase = "acquiring";
     const pending = new Promise<PoolClient>((resolve, reject) => {
       if (signal.aborted) return reject(signal.reason);
       let leased: PoolClient | undefined;
@@ -225,6 +229,7 @@ export class DatabasePool extends Pool {
           signal.removeEventListener("abort", onAbort);
           release(releaseError);
         };
+        context.phase = "executing";
         leased = client;
         resolve(client);
       });
@@ -278,9 +283,14 @@ export async function withDatabaseDeadline<T>(operation: () => Promise<T>, timeo
   const timer = setTimeout(() => controller.abort(new Error("DB_OPERATION_TIMEOUT")), Math.max(0, timeoutMs));
   let onAbort: () => void = () => undefined;
   try {
-    return await readContext.run({ signal: controller.signal }, () => Promise.race([
+    const context = { signal: controller.signal, phase: "acquiring" as "acquiring" | "executing" };
+    return await readContext.run(context, () => Promise.race([
       new Promise<never>((_, reject) => {
-        onAbort = () => reject(controller.signal.reason);
+        onAbort = () => {
+          const reason = controller.signal.reason;
+          if (reason instanceof Error) Object.assign(reason, { databasePhase: context.phase });
+          reject(reason);
+        };
         controller.signal.addEventListener("abort", onAbort, { once: true });
         if (controller.signal.aborted) onAbort();
       }),
@@ -327,6 +337,7 @@ export async function withDatabaseRetry<T>(operation: () => Promise<T>, options?
       const remainingMs = Math.max(0, deadline - Date.now());
       if (options?.signal?.aborted || parentSignal?.aborted || attempt === 1 || remainingMs === 0 || !isRetryableDatabaseConnectionError(formatDbError(error))) {
         if (!options?.signal?.aborted && !parentSignal?.aborted) console.warn("[sailorpath] Database read failed", {
+          phase: error instanceof Error && "databasePhase" in error ? error.databasePhase : "unknown",
           label: options?.label ?? "db.read", elapsedMs: Date.now() - started, attempt: attempt + 1,
           waiting: databasePool.waitingCount, total: databasePool.totalCount, idle: databasePool.idleCount,
           error: formatDbError(error).slice(0, 240),
