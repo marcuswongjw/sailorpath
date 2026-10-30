@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 
 type AsianOptimistIndexPageProps = {
   searchParams?: Promise<{
+    page?: string;
     country?: string;
     gender?: string;
     birthYear?: string;

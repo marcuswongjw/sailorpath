@@ -1,7 +1,9 @@
+import { Pagination, pageNumber } from "./Pagination";
 import Link from "next/link";
 import type { AsianOptimistIndexProvisionalEntry } from "@/lib/asianOptimistIndexScoring";
 
 export type AsianOptimistIndexFilterState = {
+  page?: string;
   country?: string;
   gender?: string;
   birthYear?: string;
@@ -67,6 +69,8 @@ export function AsianOptimistIndexStandings({
       ? filters.birthYear!
       : "all";
   const filteredEntries = filterAsianOptimistIndexEntries(entries, country, gender, birthYear);
+  const page = pageNumber(filters.page, filteredEntries.length);
+  const pageEntries = filteredEntries.slice((page - 1) * 30, page * 30);
   const filtersActive = country !== "all" || gender !== "all" || birthYear !== "all";
 
   const g150Cols = qualifierColumns.filter((col) => col.grade === 150);
@@ -148,7 +152,7 @@ export function AsianOptimistIndexStandings({
 
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-slate-soft">
           <p>
-            Showing <span className="font-extrabold text-harbour">{filteredEntries.length}</span> of {entries.length} sailors
+            Showing <span className="font-extrabold text-harbour">{pageEntries.length}</span> of {entries.length} sailors
           </p>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-harbour/5 px-2.5 py-1 text-[11px] font-bold text-harbour">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
@@ -157,6 +161,7 @@ export function AsianOptimistIndexStandings({
         </div>
       </div>
 
+      <Pagination path="/optimist/asian-index" filters={filters} page={page} total={filteredEntries.length} />
       <div className="relative max-h-[75vh] md:max-h-[80vh] overflow-auto border-t border-cool-veil">
         <table className="w-full min-w-[1500px] border-separate border-spacing-0 text-left text-sm">
           <thead className="sticky top-0 z-20 text-xs uppercase tracking-wide text-slate-soft shadow-[0_2px_4px_rgba(0,0,0,0.06)]">
@@ -217,7 +222,7 @@ export function AsianOptimistIndexStandings({
             </tr>
           </thead>
           <tbody>
-            {filteredEntries.map((sailor) => (
+            {pageEntries.map((sailor) => (
               <tr key={sailor.sailNumber} className="transition-colors hover:bg-sailcloth/70">
                 <td className="border-b border-cool-veil px-4 py-3">
                   <span className={`inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(sailor.provisionalRank)}`}>

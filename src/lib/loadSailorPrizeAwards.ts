@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+import { CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS } from "./cacheTags";
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";
 import { getRegattaPrizeSchedule, getPrizeDefinitionsForSheet, type RegattaPrizeSchedule } from "@/lib/regattaPrizes";
 import { fillUnlistedPrizeWinners, eligibilityForCategory } from "@/lib/prizeWinnersFromResults";
@@ -7,7 +9,7 @@ import { getSailorPrizes, type SailorPrizeAward } from "@/lib/sailorPrizes";
 /** Share the event page's calculated NoR awards with a participant's profile.
  * Read only public sheets in which this exact sailor participated, one cached fleet at a time.
  * Keep other competitors' eligibility fields on the server. */
-export async function loadSailorPrizeAwards(
+async function calculateSailorPrizeAwards(
   sailor: { id: string; name: string; handle: string },
   results: readonly { regattaId: string; regattaSlug?: string }[]
 ): Promise<SailorPrizeAward[]> {
@@ -33,9 +35,22 @@ export async function loadSailorPrizeAwards(
         });
       }) })) })) };
       awards.push(...getSailorPrizes(sailor, [], [personal]).map((award) => ({ ...award, schoolName: undefined })));
-    } catch {
-      // A temporarily unavailable older fleet must not hide the rest of a public profile.
+    } catch (error) {
+      // Do not persist incomplete awards when a source read fails.
+      throw error;
     }
   }
   return awards;
+}
+
+// Cache the derived awards rather than replaying every historic fleet read on
+// each profile request. Publishing/results changes invalidate both inputs.
+const cachedAwards = unstable_cache(calculateSailorPrizeAwards,
+  ["profile-derived-awards-v1"],
+  { revalidate: 3600, tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS] });
+export async function loadSailorPrizeAwards(
+  sailor: { id: string; name: string; handle: string },
+  results: readonly { regattaId: string; regattaSlug?: string }[]
+): Promise<SailorPrizeAward[]> {
+  return cachedAwards(sailor, results.map(({ regattaId, regattaSlug }) => ({ regattaId, regattaSlug })));
 }

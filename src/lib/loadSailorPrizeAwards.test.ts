@@ -1,3 +1,4 @@
+vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
 import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/lib/queries", () => ({ getCachedPublicRegattas: vi.fn(), getResultsForRegatta: vi.fn() }));
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";

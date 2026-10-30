@@ -8,10 +8,10 @@ export function DbOffline({ title = "Results are temporarily unavailable" }: { m
       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400">
         <Database className="h-6 w-6" />
       </div>
-      <h1 className="text-xl font-black text-white">
+      <h1 className="text-xl font-black text-harbour-shadow">
         {title}
       </h1>
-      <p className="text-sm text-slate-400 leading-relaxed">
+      <p className="text-sm text-slate-soft leading-relaxed">
         We couldn&apos;t load this page. Try again in a moment, or contact support
         if the problem continues.
       </p>
@@ -24,13 +24,13 @@ export function DbOffline({ title = "Results are temporarily unavailable" }: { m
         </a>
         <Link
           href="/rankings"
-          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-white"
+          className="rounded-full border border-cool-veil px-5 py-2 text-[15px] font-semibold text-harbour"
         >
           View rankings
         </Link>
         <Link
           href="/support"
-          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-slate-300"
+          className="rounded-full border border-cool-veil px-5 py-2 text-[15px] font-semibold text-harbour"
         >
           Contact support
         </Link>

@@ -1,3 +1,4 @@
+import { Pagination, pageNumber } from "@/components/Pagination";
 import { classFilterLabel, classFilterMatches, classFilterOptions, sailingClassDisplayLabel } from "@/lib/classPresentation";
 import { eventMatchesQuery } from "@/lib/eventSearch";
 import { resultCoverageLabel } from "@/lib/resultCardStatus";
@@ -14,7 +15,7 @@ import { resolveSailingClass } from "@/lib/classRegistry";
 export const metadata: Metadata = { title: "Published results | SailorPath", description: "Browse completed, published sailing scorecards by event, country, class and year." };
 export const revalidate = 3600;
 
-type Props = { searchParams: Promise<{ class?: string; country?: string; region?: string; year?: string; q?: string }> };
+type Props = { searchParams: Promise<{ class?: string; country?: string; region?: string; year?: string; q?: string; page?: string }> };
 
 function hrefFor(row: Awaited<ReturnType<typeof getCachedPublicRegattas>>[number], all: Awaited<ReturnType<typeof getCachedPublicRegattas>>) {
   const explicit = savedEventHubForSlug(row.slug, all);
@@ -72,6 +73,8 @@ export default async function ResultsPage({ searchParams }: Props) {
     return eventMatchesQuery(row, q);
   }).sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
+  const page = pageNumber(filters.page, visible.length);
+  const pageRows = visible.slice((page - 1) * 30, page * 30);
   const controlClassName = "w-full rounded-xl border border-cool-veil bg-white px-3 py-2 text-sm text-charcoal focus-visible:outline-2 focus-visible:outline-harbour";
 
   return (
@@ -111,8 +114,8 @@ export default async function ResultsPage({ searchParams }: Props) {
         <button type="submit" className="sp-primary rounded-xl px-4 py-2 text-sm font-bold text-white">Filter results</button>
       </form>
       <section aria-label="Published scorecards" className="space-y-3">
-        {visible.length ? visible.map((row) => (
-          <Link key={row.id} href={hrefFor(row, rows)} className="block rounded-2xl border border-cool-veil bg-warm-white p-5 transition hover:border-harbour/50 hover:shadow-sm">
+        {visible.length ? pageRows.map((row) => (
+          <Link prefetch={false} key={row.id} href={hrefFor(row, rows)} className="block rounded-2xl border border-cool-veil bg-warm-white p-5 transition hover:border-harbour/50 hover:shadow-sm">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div>
                 <h2 className="text-lg font-bold text-harbour-shadow">{row.name}</h2>
@@ -128,6 +131,7 @@ export default async function ResultsPage({ searchParams }: Props) {
           <div className="rounded-2xl border border-dashed border-cool-veil p-8 text-center text-sm text-slate-soft">No published scorecards match these filters.</div>
         )}
       </section>
+      <Pagination path="/results" filters={filters} page={page} total={visible.length} />
     </main>
   );
 }

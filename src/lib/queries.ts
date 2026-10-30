@@ -390,7 +390,7 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
             )
           )
           .orderBy(desc(regattas.date));
-    const counts = await db.select({ regattaId: regattaResults.regattaId, count: sql<number>`count(*)::int` })
+    const counts = await db.select({ regattaId: regattaResults.regattaId, count: sql<number>`count(*) filter (where not coalesce(${regattaResults.isOverseasCommitment}, false))::int` })
       .from(regattaResults).groupBy(regattaResults.regattaId);
     const countBySheet = new Map(counts.map((row) => [row.regattaId, row.count]));
     const mapped: RegattaRecord[] = rows.map((row) => ({
@@ -1325,7 +1325,7 @@ function toIlcaSeriesStanding(
 
   const recorded = rankBasis === "recorded-results";
   return {
-    periodLabel: `${boatClass} · ranking as of ${asOf}`,
+    periodLabel: `${boatClass} · ${asOf > todayYmdSg() ? "selection cutoff" : "ranking as of"} ${asOf}`,
     fleet: "Open",
     overallRank: me.rank,
     fleetSize,
@@ -1644,7 +1644,7 @@ export function latestRankingRegattaIdForFleet(
  */
 export const getCachedPublicRegattas = unstable_cache(
   async (): Promise<RegattaRecord[]> => listRegattas(),
-  ["public-regattas-list-v7-coverage"],
+  ["public-regattas-list-v8-source-entries"],
   { revalidate: PUBLIC_DATA_REVALIDATE_SECONDS, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
