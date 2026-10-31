@@ -1,0 +1,3033 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "f3885c31-1f75-58aa-adfc-6e41ccd4a5a3",
+    "slug": "thailand-nationals-long-distance-2025",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance",
+    "startDate": "2025-04-19",
+    "endDate": "2025-04-19",
+    "venue": "Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "eeafd5ca-f435-5efb-b58e-d4c98bf53eca",
+    "slug": "thailand-nationals-long-distance-2025-optimist",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance \u2014 Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "raceCount": 1,
+    "totalFleetSize": 58,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/137858",
+    "title": "Thailand National Championship 2025 \u2014 Long Distance \u2014 Optimist Open results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 1,
+      "name": "RACHATA SADTRAKULWATTANA",
+      "sailOrBoardNumber": "THA1963",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "15/11/2011",
+      "grossScore": 1.0,
+      "nettScore": 1.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "815466d6-d7b8-5fa7-8e48-02c32948aed0",
+      "participants": [
+        {
+          "id": "44c3b440-2dec-5403-b228-27db3eba0d2b",
+          "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+          "sourceName": "RACHATA SADTRAKULWATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: RACHATA SADTRAKULWATTANA; historic sail: THA1963; club: YRAT; year field: 15/11/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 2,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA 1987",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "24/2/2012",
+      "grossScore": 2.0,
+      "nettScore": 2.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8e562c0f-86ff-59f4-903b-b09c6923cded",
+      "participants": [
+        {
+          "id": "db42238f-72f9-5e79-b139-df324eda60eb",
+          "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+          "sourceName": "SUTHINAN NAKPASOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: SUTHINAN NAKPASOM; historic sail: THA 1987; club: YRAT; year field: 24/2/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 3,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "THA1289",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "28/4/2010",
+      "grossScore": 3.0,
+      "nettScore": 3.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "59888759-bb9e-5a64-885e-947af112d24a",
+      "participants": [
+        {
+          "id": "0d2f590a-c9fb-55df-8d7f-9473e8b835df",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "KARIT PHRAMMANEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: KARIT PHRAMMANEE; historic sail: THA1289; club: YRAT; year field: 28/4/2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 4,
+      "name": "PANUDAT POLPOOL",
+      "sailOrBoardNumber": "THA1295",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "17/3/2012",
+      "grossScore": 4.0,
+      "nettScore": 4.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "6d93922e-614e-54fe-bd36-e3ae56f5c6e7",
+      "participants": [
+        {
+          "id": "9f96707a-1f4a-531b-897f-634331b5353c",
+          "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+          "sourceName": "PANUDAT POLPOOL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PANUDAT POLPOOL; historic sail: THA1295; club: YRAT; year field: 17/3/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 5,
+      "name": "CHANYACHART ITTIVORAKUL",
+      "sailOrBoardNumber": "THA1887",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "1/7/2012",
+      "grossScore": 5.0,
+      "nettScore": 5.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "eb64d291-ecc1-5dd8-a68b-8d055c871a35",
+      "participants": [
+        {
+          "id": "be01f700-8785-5178-997a-c1df9035fe83",
+          "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+          "sourceName": "CHANYACHART ITTIVORAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: CHANYACHART ITTIVORAKUL; historic sail: THA1887; club: ACDC.SC; year field: 1/7/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 6,
+      "name": "SURAPHA MUANGNGAM",
+      "sailOrBoardNumber": "THA1772",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "26/5/2011",
+      "grossScore": 6.0,
+      "nettScore": 6.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b7d812cb-5bb1-529d-afc7-8dda4e571596",
+      "participants": [
+        {
+          "id": "7f5d3df3-54f8-5457-9e8a-088267919c97",
+          "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "sourceName": "SURAPHA MUANGNGAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: SURAPHA MUANGNGAM; historic sail: THA1772; club: YRAT; year field: 26/5/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 7,
+      "name": "JIRATHIP MUTIPHAN",
+      "sailOrBoardNumber": "THA1985",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "24/1/2010",
+      "grossScore": 7.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8ac1849d-cf65-5720-b9f6-e225f9133479",
+      "participants": [
+        {
+          "id": "550807a9-10a9-53cb-bd3a-fc65685962f9",
+          "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+          "sourceName": "JIRATHIP MUTIPHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: JIRATHIP MUTIPHAN; historic sail: THA1985; club: YRAT; year field: 24/1/2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 8,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "THA395",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "13/5/2011",
+      "grossScore": 8.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4fd8235b-ecce-5a29-8bf8-5829859c638c",
+      "participants": [
+        {
+          "id": "f0961268-2fb4-52c1-b678-3b145a1d1914",
+          "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+          "sourceName": "NATTHAPONG NEELASAVEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTHAPONG NEELASAVEE; historic sail: THA395; club: YRAT; year field: 13/5/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 9,
+      "name": "PARIYAPORN CHANTARAWONG",
+      "sailOrBoardNumber": "THA1223",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "7/7/2011",
+      "grossScore": 9.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "dfc3a57c-d7c0-5a16-91eb-e0e62ecb17a9",
+      "participants": [
+        {
+          "id": "57f46824-bebc-50c6-b9fc-0b83afc7e41b",
+          "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+          "sourceName": "PARIYAPORN CHANTARAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PARIYAPORN CHANTARAWONG; historic sail: THA1223; club: YRAT; year field: 7/7/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 10,
+      "name": "PAKORNKIAT CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1643",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "10/10/2012",
+      "grossScore": 10.0,
+      "nettScore": 10.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "80db21fd-6fc0-5279-a112-d881753849e0",
+      "participants": [
+        {
+          "id": "131ef073-5c39-5ee7-a4a2-77e060e79d59",
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PAKORNKIAT CHAIYA-O-CHA; historic sail: THA1643; club: YRAT; year field: 10/10/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 11,
+      "name": "NATTAPON CHAILOB",
+      "sailOrBoardNumber": "THA1774",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "30/10/2011",
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "da177f19-e24b-5980-8e11-d362dc79a5d9",
+      "participants": [
+        {
+          "id": "a2fe5dbb-8fe8-501c-b6d6-252c8dc2284b",
+          "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+          "sourceName": "NATTAPON CHAILOB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTAPON CHAILOB; historic sail: THA1774; club: YRAT; year field: 30/10/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 12,
+      "name": "ADISON EIN",
+      "sailOrBoardNumber": "THA1945",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "6/2/2011",
+      "grossScore": 12.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "67f6b89c-c7a4-59ff-8349-c0ac6f8d91ca",
+      "participants": [
+        {
+          "id": "1ef14906-d7f2-5c5f-98b6-cee0eb25df7b",
+          "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+          "sourceName": "ADISON EIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ADISON EIN; historic sail: THA1945; club: YRAT; year field: 6/2/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 13,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "THA1253",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "5/3/2010",
+      "grossScore": 13.0,
+      "nettScore": 13.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3579acb4-de5c-5e8f-bf84-3742b9ce85e0",
+      "participants": [
+        {
+          "id": "1a0e0ecf-5dcd-5efb-bc29-e7e39f589e34",
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PAILIN JAROENPON; historic sail: THA1253; club: YRAT; year field: 5/3/2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 14,
+      "name": "PATTARAKORN POONPAT",
+      "sailOrBoardNumber": "THA88",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "30/4/2012",
+      "grossScore": 14.0,
+      "nettScore": 14.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c0b982ba-b7e8-5dd5-bb21-92a186b8626b",
+      "participants": [
+        {
+          "id": "afe70b0f-3589-55f0-bfb3-c0d620480558",
+          "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+          "sourceName": "PATTARAKORN POONPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PATTARAKORN POONPAT; historic sail: THA88; club: ACDC.SC; year field: 30/4/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 15,
+      "name": "PUNTHITA WEROTJANAKUL",
+      "sailOrBoardNumber": "THA 1888",
+      "club": "UWC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "14/9/2012",
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "bb03dee5-8ced-53e5-9b33-fb74a4d0f1a6",
+      "participants": [
+        {
+          "id": "215b24ac-dd2e-50bd-91cc-506c02f9cb9b",
+          "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+          "sourceName": "PUNTHITA WEROTJANAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PUNTHITA WEROTJANAKUL; historic sail: THA 1888; club: UWC; year field: 14/9/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 16,
+      "name": "THAWAREE RAKSAPAN",
+      "sailOrBoardNumber": "198",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "14/12/2013",
+      "grossScore": 16.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "954a3699-b9a1-5947-b09b-30a6f3c8ab86",
+      "participants": [
+        {
+          "id": "aaa25f6d-2112-53d7-a430-db791547fd33",
+          "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+          "sourceName": "THAWAREE RAKSAPAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: THAWAREE RAKSAPAN; historic sail: 198; club: YRAT; year field: 14/12/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 17,
+      "name": "NATTAYUT JANGKITTIYARAT",
+      "sailOrBoardNumber": "THA 7111",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "11/7/2012",
+      "grossScore": 17.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5f89e38f-4972-43dc-8323-906310cf159a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8c27c98f-f0db-5a6e-a648-fb7d54f1fa23",
+      "participants": [
+        {
+          "id": "c63ec4e2-1b9e-5bbc-b82d-1c7e169db78e",
+          "sailorId": "5f89e38f-4972-43dc-8323-906310cf159a",
+          "sourceName": "NATTAYUT JANGKITTIYARAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTAYUT JANGKITTIYARAT; historic sail: THA 7111; club: ACDC.SC; year field: 11/7/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 18,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA2865",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "14/6/2013",
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "94f5eda5-52d9-59f8-ab7d-c17e44ee690e",
+      "participants": [
+        {
+          "id": "54c80e91-83f6-5e24-8eba-1632e67d1043",
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ITTHICHAI TIATHONGCHAI; historic sail: THA2865; club: YRAT; year field: 14/6/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 19,
+      "name": "JIN YUEYAN",
+      "sailOrBoardNumber": "7709",
+      "club": "SLSC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "17/10/2012",
+      "grossScore": 19.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3bc139f2-4d49-5a15-b6a4-8ff401641102",
+      "participants": [
+        {
+          "id": "00f238d6-def5-5a02-9cd9-0124b70073b5",
+          "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+          "sourceName": "JIN YUEYAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: JIN YUEYAN; historic sail: 7709; club: SLSC; year field: 17/10/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 20,
+      "name": "ANDRIES KOSUGE",
+      "sailOrBoardNumber": "THA2888",
+      "club": "UWC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "10/6/2014",
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "05e85a10-68dd-5045-93e5-0d6f66a8fde4",
+      "participants": [
+        {
+          "id": "b0d81934-c673-5350-a245-66e8b0f31809",
+          "sailorId": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+          "sourceName": "ANDRIES KOSUGE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ANDRIES KOSUGE; historic sail: THA2888; club: UWC; year field: 10/6/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 21,
+      "name": "NATTHANAN CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1905",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "27/10/2014",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "39a0044c-258a-55e2-a1b2-e48f07565533",
+      "participants": [
+        {
+          "id": "a0398382-eb8b-5948-a309-123a1a50c487",
+          "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+          "sourceName": "NATTHANAN CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTHANAN CHAIYA-O-CHA; historic sail: THA1905; club: YRAT; year field: 27/10/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 22,
+      "name": "ANUSARA POLCHAI",
+      "sailOrBoardNumber": "THA1953",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "2/10/2555",
+      "grossScore": 22.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c4d90d22-b468-5cd7-becf-dbcd7c7cb8ab",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "2903876a-df5c-562c-8e65-bb3eb887b7e7",
+      "participants": [
+        {
+          "id": "19e4510c-4f1c-5af0-b31c-eb42692fbb1b",
+          "sailorId": "c4d90d22-b468-5cd7-becf-dbcd7c7cb8ab",
+          "sourceName": "ANUSARA POLCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ANUSARA POLCHAI; historic sail: THA1953; club: YRAT; year field: 2/10/2555. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 23,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "THA 1788",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "9/4/2013",
+      "grossScore": 23.0,
+      "nettScore": 23.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a28cdf6f-e190-5f65-89f0-2877ee3c0430",
+      "participants": [
+        {
+          "id": "59852376-d9cd-50f5-b6f8-254dc573d7c6",
+          "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+          "sourceName": "ASHIRA PHANGRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ASHIRA PHANGRAK; historic sail: THA 1788; club: ACDC.SC; year field: 9/4/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 24,
+      "name": "TATIGUN HOMCHONG",
+      "sailOrBoardNumber": "THA1759",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "26/4/2013",
+      "grossScore": 24.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f0da1b31-a326-5256-9067-8e8162d509a5",
+      "participants": [
+        {
+          "id": "64a51c54-4271-5616-8a6a-0132194923a4",
+          "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+          "sourceName": "TATIGUN HOMCHONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: TATIGUN HOMCHONG; historic sail: THA1759; club: YRAT; year field: 26/4/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 25,
+      "name": "NAIMAKRON JANGKITTIYARAT",
+      "sailOrBoardNumber": "THA 7211",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "8/9/2013",
+      "grossScore": 25.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "dd30d6c0-aaee-5249-ad41-7689a0563c07",
+      "participants": [
+        {
+          "id": "32c9225e-bce7-560d-be52-4ea826512942",
+          "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+          "sourceName": "NAIMAKRON JANGKITTIYARAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NAIMAKRON JANGKITTIYARAT; historic sail: THA 7211; club: ACDC.SC; year field: 8/9/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 26,
+      "name": "WICHAYAPORN SAKSRIKLOM",
+      "sailOrBoardNumber": "THA1901",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "20/5/2014",
+      "grossScore": 26.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7616a645-0de2-5358-ac45-286d3c141a11",
+      "participants": [
+        {
+          "id": "3c80f90e-59ea-5e61-a6b0-3355af160301",
+          "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+          "sourceName": "WICHAYAPORN SAKSRIKLOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: WICHAYAPORN SAKSRIKLOM; historic sail: THA1901; club: YRAT; year field: 20/5/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 28,
+      "name": "NIRADA SASIWATTANAPORN",
+      "sailOrBoardNumber": "THA 1925",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "1/12/2014",
+      "grossScore": 28.0,
+      "nettScore": 28.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d0615c62-b43d-5c0f-a846-4081e586ed21",
+      "participants": [
+        {
+          "id": "755a3bb4-06c8-58c6-b338-3d0e483e2f62",
+          "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+          "sourceName": "NIRADA SASIWATTANAPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NIRADA SASIWATTANAPORN; historic sail: THA 1925; club: YRAT; year field: 1/12/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 29,
+      "name": "THANAPHA PHONGKAMNERD",
+      "sailOrBoardNumber": "THA1484",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "3/9/2012",
+      "grossScore": 29.0,
+      "nettScore": 29.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3ba328d0-e9c5-5986-b34d-9f85d452c2b5",
+      "participants": [
+        {
+          "id": "d90ab52b-51ae-58bc-9f0b-debdfb2739cb",
+          "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+          "sourceName": "THANAPHA PHONGKAMNERD",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: THANAPHA PHONGKAMNERD; historic sail: THA1484; club: YRAT; year field: 3/9/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 30,
+      "name": "THYRACHA HOMCHONG",
+      "sailOrBoardNumber": "THA1555",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "9/10/2011",
+      "grossScore": 30.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "886b0637-300f-56d1-9e65-b266b3cce606",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ca11f594-fa7f-5935-b451-0914c062b691",
+      "participants": [
+        {
+          "id": "fef2809e-96ea-5557-b138-1dac186b192c",
+          "sailorId": "886b0637-300f-56d1-9e65-b266b3cce606",
+          "sourceName": "THYRACHA HOMCHONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: THYRACHA HOMCHONG; historic sail: THA1555; club: YRAT; year field: 9/10/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 31,
+      "name": "NATIDEJ TERMWATTANAPAKDEE",
+      "sailOrBoardNumber": "THA199",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "19/10/2012",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "cb30df2f-ff0b-5c20-b1a2-005b32cba6c5",
+      "participants": [
+        {
+          "id": "e7844314-4ccf-5748-9f1e-15b67e565190",
+          "sailorId": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+          "sourceName": "NATIDEJ TERMWATTANAPAKDEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATIDEJ TERMWATTANAPAKDEE; historic sail: THA199; club: YRAT; year field: 19/10/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 32,
+      "name": "CHITIPAT SAINUMKHEAW",
+      "sailOrBoardNumber": "THA1859",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "16/10/2012",
+      "grossScore": 32.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "cf8527cc-ea3c-511d-b38d-9ac07c72b1d2",
+      "participants": [
+        {
+          "id": "979b07c1-0318-5f26-8419-9988bb5e2cbb",
+          "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+          "sourceName": "CHITIPAT SAINUMKHEAW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: CHITIPAT SAINUMKHEAW; historic sail: THA1859; club: RTFYC; year field: 16/10/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 33,
+      "name": "PORNYAMOL SAWAENGKHUN",
+      "sailOrBoardNumber": "1695",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "6/5/2013",
+      "grossScore": 33.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e752a950-7c34-528e-9adc-8e4cb1f46e90",
+      "participants": [
+        {
+          "id": "264b2cd5-a410-557b-ae56-aae327518ac9",
+          "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+          "sourceName": "PORNYAMOL SAWAENGKHUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: PORNYAMOL SAWAENGKHUN; historic sail: 1695; club: YRAT; year field: 6/5/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 34,
+      "name": "ARUNEE RAKSAPAN",
+      "sailOrBoardNumber": "1396",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "16/8/2015",
+      "grossScore": 34.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "133abe6f-655b-538c-a6cc-36112fcabc73",
+      "participants": [
+        {
+          "id": "b10db058-0672-53ba-958c-83ad784e5715",
+          "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+          "sourceName": "ARUNEE RAKSAPAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: ARUNEE RAKSAPAN; historic sail: 1396; club: YRAT; year field: 16/8/2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 35,
+      "name": "ARANYA KLANGMUEANG",
+      "sailOrBoardNumber": "THA1775",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "30/10/2014",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9b68dec2-92c9-59b1-95f2-491b2aa65b47",
+      "participants": [
+        {
+          "id": "4fa2301f-e49c-584c-b330-1b7f7411c94c",
+          "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+          "sourceName": "ARANYA KLANGMUEANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: ARANYA KLANGMUEANG; historic sail: THA1775; club: YRAT; year field: 30/10/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 36,
+      "name": "HON MUK SEN",
+      "sailOrBoardNumber": "HKG97",
+      "club": "SLSC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "13/9/2012",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9fc4186f-e2cd-500e-879a-551b4a812776",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c7d22bde-1847-574f-95cf-a116dc50b2ac",
+      "participants": [
+        {
+          "id": "9e7ab7bd-1cc3-58fe-993f-6ae0ed3a3f86",
+          "sailorId": "9fc4186f-e2cd-500e-879a-551b4a812776",
+          "sourceName": "HON MUK SEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: HON MUK SEN; historic sail: HKG97; club: SLSC; year field: 13/9/2012. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 37,
+      "name": "NETCHANOK CHATAWATTANASOPAKUL",
+      "sailOrBoardNumber": "THA1562",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "5/10/2015",
+      "grossScore": 37.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f5ed3a51-27e6-5f00-b351-b1e486c4caef",
+      "participants": [
+        {
+          "id": "d438a973-00c5-5c64-8031-2fbd1ca8d279",
+          "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+          "sourceName": "NETCHANOK CHATAWATTANASOPAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: NETCHANOK CHATAWATTANASOPAKUL; historic sail: THA1562; club: ACDC.SC; year field: 5/10/2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 38,
+      "name": "SUWAPHAK PLUMJIT",
+      "sailOrBoardNumber": "THA1589",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "1/12/2012",
+      "grossScore": 38.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c136f4fd-e71a-5aff-806a-b8ca5aa71c6c",
+      "participants": [
+        {
+          "id": "6ae34c89-dbf1-5992-a7f5-738fb83eeafa",
+          "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+          "sourceName": "SUWAPHAK PLUMJIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: SUWAPHAK PLUMJIT; historic sail: THA1589; club: ACDC.SC; year field: 1/12/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 39,
+      "name": "THIRAWAT HANKHAM",
+      "sailOrBoardNumber": "THA1565",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "23/1/2013",
+      "grossScore": 39.0,
+      "nettScore": 39.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3ce4d650-8343-584a-9f44-0d419d80eded",
+      "participants": [
+        {
+          "id": "b33a8c26-2509-5081-8ab3-651dbbc20ca1",
+          "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+          "sourceName": "THIRAWAT HANKHAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: THIRAWAT HANKHAM; historic sail: THA1565; club: YRAT; year field: 23/1/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 40,
+      "name": "NAPICHAYA RATTANADECHAKORN",
+      "sailOrBoardNumber": "THA1457",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "5/12/2014",
+      "grossScore": 40.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4bcdd0e9-c902-5559-9026-0680c4d914fe",
+      "participants": [
+        {
+          "id": "4ce95e27-ac44-5031-ac96-d2574aa0151e",
+          "sailorId": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+          "sourceName": "NAPICHAYA RATTANADECHAKORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: NAPICHAYA RATTANADECHAKORN; historic sail: THA1457; club: YRAT; year field: 5/12/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 41,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "5/6/2013",
+      "grossScore": 41.0,
+      "nettScore": 41.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e896cd76-6c34-59eb-aff6-d136c4da99b6",
+      "participants": [
+        {
+          "id": "27e4c80e-7f31-5990-937a-e3465eb0d85b",
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: SURATSAYAPRON KAEWRAKUM; historic sail: THA1696; club: ACDC.SC; year field: 5/6/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 42,
+      "name": "SARUTIYA RATTANADECHAKORN",
+      "sailOrBoardNumber": "THA436",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "16/2/2013",
+      "grossScore": 42.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a080465e-2c15-42a8-b8e4-ee24afb5fe74",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "24644e8c-1b0f-54f0-ab03-cc4a663eca96",
+      "participants": [
+        {
+          "id": "925b06ab-230a-5571-8a03-0a8753a45707",
+          "sailorId": "a080465e-2c15-42a8-b8e4-ee24afb5fe74",
+          "sourceName": "SARUTIYA RATTANADECHAKORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: SARUTIYA RATTANADECHAKORN; historic sail: THA436; club: YRAT; year field: 16/2/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 43,
+      "name": "PATTHARAKORN PHADUNGYOTEE",
+      "sailOrBoardNumber": "THA1255",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "8/12/2010",
+      "grossScore": 43.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e60aa575-112f-5d20-911e-68618a35669d",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "0c5eaf87-6290-5698-b277-9b7cd9629254",
+      "participants": [
+        {
+          "id": "85f46ff1-79d4-5af6-8dfd-2448dd532cb2",
+          "sailorId": "e60aa575-112f-5d20-911e-68618a35669d",
+          "sourceName": "PATTHARAKORN PHADUNGYOTEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: PATTHARAKORN PHADUNGYOTEE; historic sail: THA1255; club: ACDC.SC; year field: 8/12/2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 45,
+      "name": "NATTHAPHATR POOLKLANG",
+      "sailOrBoardNumber": "THA1434",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "14/10/2013",
+      "grossScore": 45.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5fa5258f-bfc5-5552-926a-5b7758e95ecc",
+      "participants": [
+        {
+          "id": "e1cefcab-0085-53ca-a068-8a15e51b3546",
+          "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+          "sourceName": "NATTHAPHATR POOLKLANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: NATTHAPHATR POOLKLANG; historic sail: THA1434; club: ACDC.SC; year field: 14/10/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 46,
+      "name": "ZHAI JINGQI",
+      "sailOrBoardNumber": "THA2322",
+      "club": "SLSC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "11/9/2014",
+      "grossScore": 46.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "054aee36-ca29-587c-a986-d818a393d57a",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "12df9a85-1b66-5b29-ab9d-dceaca11c464",
+      "participants": [
+        {
+          "id": "fd51d291-edf5-5ad4-85d5-09a1f52f72e8",
+          "sailorId": "054aee36-ca29-587c-a986-d818a393d57a",
+          "sourceName": "ZHAI JINGQI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: ZHAI JINGQI; historic sail: THA2322; club: SLSC; year field: 11/9/2014. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 47,
+      "name": "CHEN YOUCHENG",
+      "sailOrBoardNumber": "CHN0769",
+      "club": "SLSC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "22/12/2014",
+      "grossScore": 47.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "522321a9-7d84-4285-9d1c-6287b6056576",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "72c8dbf0-c996-57f9-9a87-f2f0cba1816f",
+      "participants": [
+        {
+          "id": "7bd99984-248f-5bf9-9410-e6b014b32614",
+          "sailorId": "522321a9-7d84-4285-9d1c-6287b6056576",
+          "sourceName": "CHEN YOUCHENG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: CHEN YOUCHENG; historic sail: CHN0769; club: SLSC; year field: 22/12/2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 48,
+      "name": "TASANATHAM SUTHAMGOSAL",
+      "sailOrBoardNumber": "THA1879",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "7/8/2015",
+      "grossScore": 48.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7a475df7-bc47-43cf-bab3-815222279ece",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7c2fb0a7-49e4-5e30-8315-ccde8035ce78",
+      "participants": [
+        {
+          "id": "4abaaccc-7c83-541a-b374-0075c025329a",
+          "sailorId": "7a475df7-bc47-43cf-bab3-815222279ece",
+          "sourceName": "TASANATHAM SUTHAMGOSAL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: TASANATHAM SUTHAMGOSAL; historic sail: THA1879; club: ACDC.SC; year field: 7/8/2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 49,
+      "name": "SANTHAT SUTHAMGOSAL",
+      "sailOrBoardNumber": "THA544",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "14/9/2013",
+      "grossScore": 49.0,
+      "nettScore": 49.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "154feedb-6173-4142-8d3e-88f1567b22e7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "46610d83-4aae-5507-ad44-b0ab469b9c2b",
+      "participants": [
+        {
+          "id": "a9b201e9-94da-563e-8f11-3d0b1c085069",
+          "sailorId": "154feedb-6173-4142-8d3e-88f1567b22e7",
+          "sourceName": "SANTHAT SUTHAMGOSAL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: SANTHAT SUTHAMGOSAL; historic sail: THA544; club: ACDC.SC; year field: 14/9/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "SORAWIT NAKSUK",
+      "sailOrBoardNumber": "THA1493",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "3/5/2012",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3c3fc4bc-5ade-5d61-93c2-d1e6c5a7d7d6",
+      "participants": [
+        {
+          "id": "e7ecf5a4-9f91-56ac-a4b3-62faef24daf3",
+          "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+          "sourceName": "SORAWIT NAKSUK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: SORAWIT NAKSUK; historic sail: THA1493; club: YRAT; year field: 3/5/2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "PAKIN WONGRATANACHOT",
+      "sailOrBoardNumber": "THA 1954",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "15/7/2011",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "84989fa3-2e3d-50f4-90ce-f12cc74afc09",
+      "participants": [
+        {
+          "id": "64c7b71e-1196-5e55-b027-faae6b177915",
+          "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+          "sourceName": "PAKIN WONGRATANACHOT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: PAKIN WONGRATANACHOT; historic sail: THA 1954; club: RTFYC; year field: 15/7/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "WANG XINGXUN",
+      "sailOrBoardNumber": "CHN7040",
+      "club": "SLSC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "30/5/2014",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f61d7399-636b-57a0-aa08-1194527caed2",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "6d2211c4-97c9-58d1-b11f-09042043a81c",
+      "participants": [
+        {
+          "id": "df55614c-3745-5f48-80d6-a063f517aaf3",
+          "sailorId": "f61d7399-636b-57a0-aa08-1194527caed2",
+          "sourceName": "WANG XINGXUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: WANG XINGXUN; historic sail: CHN7040; club: SLSC; year field: 30/5/2014. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "DHAMMAPORN ARUNO",
+      "sailOrBoardNumber": "THA1881",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "14/3/2013",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c278a426-cfa6-5e0d-9b68-2d384ccb6e3f",
+      "participants": [
+        {
+          "id": "aae1063a-cae9-500c-89a3-004256cd3abd",
+          "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+          "sourceName": "DHAMMAPORN ARUNO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: DHAMMAPORN ARUNO; historic sail: THA1881; club: ACDC.SC; year field: 14/3/2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "KITTI. SINPIVONG",
+      "sailOrBoardNumber": "",
+      "club": "BSAC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "12/5/2510",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fe0379f0-ca6d-57b4-a0fb-3f07e1f5a080",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c1773648-5909-5b38-9445-02361082a5f2",
+      "participants": [
+        {
+          "id": "9eea76a4-9267-5515-a4e2-f2127eb4865b",
+          "sailorId": "fe0379f0-ca6d-57b4-a0fb-3f07e1f5a080",
+          "sourceName": "KITTI. SINPIVONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: KITTI. SINPIVONG; historic sail: ; club: BSAC; year field: 12/5/2510. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "MUHAMMAD AMSHA DANISH BIN RUZAKI",
+      "sailOrBoardNumber": "MAS 227",
+      "club": "TSA",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "29/9/2011",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "82a773a8-d54c-4da8-8488-fd592c468b52",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e81a2727-48d1-5c20-abb7-3bebbaf91fb9",
+      "participants": [
+        {
+          "id": "a35742b3-ab48-530b-bcf6-8b9c52be76f6",
+          "sailorId": "82a773a8-d54c-4da8-8488-fd592c468b52",
+          "sourceName": "MUHAMMAD AMSHA DANISH BIN RUZAKI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 2; source name: MUHAMMAD AMSHA DANISH BIN RUZAKI; historic sail: MAS 227; club: TSA; year field: 29/9/2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 53,
+  "deferredEntryCount": 5,
+  "publicSummary": "Provisional organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 53 of 58 class entries imported; 5 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 27,
+      "name": "KLAOCHNOK CHTAWATTANASOPAKUN",
+      "sailOrBoardNumber": "THA1246",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "21/1/2013",
+      "grossScore": 27.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "name": "Klaochanok Chatawattanasopakun",
+          "similarity": 0.964
+        },
+        {
+          "id": "8b594c37-db52-4549-a765-f51fd619238d",
+          "name": "Netchanok Chatawattanasopakun",
+          "similarity": 0.836
+        },
+        {
+          "id": "6b6f8f4a-3108-5288-af73-f67f3009f4de",
+          "name": "Kanta Takasaki",
+          "similarity": 0.55
+        }
+      ]
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 44,
+      "name": "NAVATAWAN JAEMJIT",
+      "sailOrBoardNumber": "THA1979",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "17/12/2014",
+      "grossScore": 44.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "1c03e3e7-ea29-526f-88b3-fd77ce113868",
+          "name": "Navatawan Jeanjit",
+          "similarity": 0.875
+        },
+        {
+          "id": "5890ff0d-ad50-4352-84a0-29135867289a",
+          "name": "Nagisa Kawakami",
+          "similarity": 0.6
+        },
+        {
+          "id": "1c5900eb-e05a-4376-a668-e3cd7cf3a2db",
+          "name": "Nathan, Nande Li",
+          "similarity": 0.552
+        }
+      ]
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "PIMPISA DEVAHASTIN NA AYUDHAYA",
+      "sailOrBoardNumber": "THA599",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "17/3/2016",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "976342b7-69ec-4200-8e46-684855939591",
+          "name": "Pimpisa Devahastin Na Ayudhya",
+          "similarity": 0.981
+        },
+        {
+          "id": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+          "name": "Prapada Peeranantapanya",
+          "similarity": 0.49
+        },
+        {
+          "id": "652c1835-ecb4-5ee1-8ee0-cdd5bc9e6d55",
+          "name": "Misa Kawashima",
+          "similarity": 0.45
+        }
+      ]
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "NUFAEL HAKIMI BIN IZHAR",
+      "sailOrBoardNumber": "MAS 246",
+      "club": "TSA",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "21/4/2014",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "1b12d594-107f-40e1-9967-c65f59f6b27a",
+          "name": "Nufael Hakimi Izhar",
+          "similarity": 0.919
+        },
+        {
+          "id": "00e9f759-95f1-4633-88db-b07d7933d248",
+          "name": "Nur Aina Binti Norhazram",
+          "similarity": 0.537
+        },
+        {
+          "id": "ce278b06-d698-5f58-b57b-e901c9f7b859",
+          "name": "Nur Faarihah Binti Abdul Rani",
+          "similarity": 0.533
+        }
+      ]
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137858,
+      "sourcePage": 2,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Open",
+      "rank": 50,
+      "name": "IMANINA RAISYA BINTI IZHAR",
+      "sailOrBoardNumber": "MAS 245",
+      "club": "TSA",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "13/1/2013",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "59.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "241af289-a3d3-4054-8f9a-a874c1a62471",
+          "name": "Imanina Raisya bt Izhar",
+          "similarity": 0.93
+        },
+        {
+          "id": "f7c2b125-af12-5716-98bf-b05bfaa6666b",
+          "name": "Aina Qasrina Binti Yuslizam",
+          "similarity": 0.638
+        },
+        {
+          "id": "00e9f759-95f1-4633-88db-b07d7933d248",
+          "name": "Nur Aina Binti Norhazram",
+          "similarity": 0.591
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "988b923b-6960-4d5e-be75-d53c32295492",
+      "club": "YRAT",
+      "name": "Wichayaporn Saksriklom",
+      "gender": "F",
+      "handle": "wichayaporn-saksriklom-lf81guh",
+      "birthYear": 2014,
+      "sailNumber": "1794",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "club": "RTFYC",
+      "name": "Naimakron Jangkittiyarat",
+      "gender": "M",
+      "handle": "naimakron-jangkittiyarat-rtbu36u",
+      "birthYear": 2013,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "522321a9-7d84-4285-9d1c-6287b6056576",
+      "club": "SHENZHEN Linghang",
+      "name": "Chen Youcheng",
+      "gender": "M",
+      "handle": "asian-chn-chen-youch-5784f0",
+      "birthYear": 2014,
+      "sailNumber": "3821",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "club": "ACDC.SC",
+      "name": "Ashira Phangrak",
+      "gender": "M",
+      "handle": "ashira-phangrak-oi7odm9",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "221935"
+    },
+    {
+      "id": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "club": "YRAT",
+      "name": "Suwaphak Plumjit",
+      "gender": "F",
+      "handle": "suwaphak-plumjit-8glzaqs",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222589"
+    },
+    {
+      "id": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+      "club": "Nantong Zilang",
+      "name": "Yueyan Jin",
+      "gender": "F",
+      "handle": "yueyan-jin-zbqbb4k",
+      "birthYear": 2012,
+      "sailNumber": "7709",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "82a773a8-d54c-4da8-8488-fd592c468b52",
+      "club": "Imported official result",
+      "name": "Muhammad Amsha Danish Bin Ruzaki",
+      "gender": "M",
+      "handle": "asian-mas-muhammad-a-5a4212",
+      "birthYear": null,
+      "sailNumber": "247",
+      "nationality": "MAS",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-Cha",
+      "gender": "M",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "M",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "club": "RTFYC",
+      "name": "Arunee Raksapun",
+      "gender": "F",
+      "handle": "arunee-raksapun-u24jkub",
+      "birthYear": 2015,
+      "sailNumber": "945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "club": "YRAT",
+      "name": "Sorawit Naksuk",
+      "gender": "M",
+      "handle": "sorawit-naksuk-812d4t4",
+      "birthYear": 2012,
+      "sailNumber": "1493",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "club": "YRAT",
+      "name": "Rachata Sadtrakulwatanna",
+      "gender": "M",
+      "handle": "rachata-sadtrakulwatanna-823ho68",
+      "birthYear": 2011,
+      "sailNumber": "1963",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "club": "YRAT",
+      "name": "Surapha Muangngam",
+      "gender": "F",
+      "handle": "surapha-muangngam-8gw2ruy",
+      "birthYear": 2011,
+      "sailNumber": "1941",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "YRAT",
+      "name": "Karit Phrammanee",
+      "gender": "M",
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "M",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "club": "RTFYC",
+      "name": "Thawaree Raksapun",
+      "gender": "F",
+      "handle": "thawaree-raksapun-sd0d5wz",
+      "birthYear": 2013,
+      "sailNumber": "1459",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "club": "YRAT",
+      "name": "Pornyamol Sawaengkhun",
+      "gender": "F",
+      "handle": "pornyamol-sawaengkhun-9e8uu7a",
+      "birthYear": 2013,
+      "sailNumber": "1900",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-Cha",
+      "gender": "F",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "club": "PATTAYA SAILING CLUB",
+      "name": "Chanyachart Ittivorakul",
+      "gender": "M",
+      "handle": "chanyachart-ittivorakul-hkrw-863b5d",
+      "birthYear": 2012,
+      "sailNumber": "1887",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "club": "YRAT",
+      "name": "Panudat Polpool",
+      "gender": "M",
+      "handle": "panudat-polpool-hkrw-2c3a79",
+      "birthYear": 2012,
+      "sailNumber": "1295",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7a475df7-bc47-43cf-bab3-815222279ece",
+      "club": "ACDC",
+      "name": "Tasanatham Suthamgosal",
+      "gender": "M",
+      "handle": "asian-tha-tasanatham-481c84",
+      "birthYear": 2015,
+      "sailNumber": "1979",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "club": "YRAT",
+      "name": "Adison Ein",
+      "gender": "M",
+      "handle": "adison-ein-f5kv46b",
+      "birthYear": 2011,
+      "sailNumber": "1945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "club": "ACDC.SC",
+      "name": "Pattarakorn Poonpat",
+      "gender": "M",
+      "handle": "pattarakorn-poonpat-oe44pao",
+      "birthYear": 2012,
+      "sailNumber": "88",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+      "club": "ACDC",
+      "name": "Natthapatr Poolklang",
+      "gender": "M",
+      "handle": "natthapatr-poolklang-thai25-9e4112",
+      "birthYear": 2013,
+      "sailNumber": "THA 1695",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+      "club": "YRAT",
+      "name": "Natidej Termwattanapakdee",
+      "gender": "M",
+      "handle": "natidej-termwattanapakdee-thai25-8f2e85",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "220051"
+    },
+    {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "Punthita Werotjanakul",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "club": "YRAT",
+      "name": "Jiratip Mutiphan",
+      "gender": "M",
+      "handle": "jiratip-mutiphan-thai25-5cd22c",
+      "birthYear": 2010,
+      "sailNumber": "THA 1985",
+      "nationality": "THA",
+      "sailNumberIlca4": "9"
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "M",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "club": "YRAT",
+      "name": "Natthapong Neelasavee",
+      "gender": "M",
+      "handle": "natthapong-neelasavee-91q0rru",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222071"
+    },
+    {
+      "id": "a080465e-2c15-42a8-b8e4-ee24afb5fe74",
+      "club": "YRAT",
+      "name": "Sarutiya Rattanadechakorn",
+      "gender": "F",
+      "handle": "sarutiya-rattanadechakorn-vv7ekh4",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222687"
+    },
+    {
+      "id": "dbf8b543-6a92-47ff-94c4-b103e58516de",
+      "club": "YRAT",
+      "name": "Andries Kosuge",
+      "gender": "M",
+      "handle": "asian-tha-andries-ko-4bbf2d",
+      "birthYear": 2014,
+      "sailNumber": "1394",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "ACDC.SC",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": 2013,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8b594c37-db52-4549-a765-f51fd619238d",
+      "club": "ACDC.SC",
+      "name": "Netchanok Chatawattanasopakun",
+      "gender": "F",
+      "handle": "netchanok-chatawattanasopakun-b63j9ly",
+      "birthYear": 2015,
+      "sailNumber": "1644",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "club": "ACDC.SC",
+      "name": "Dhammaporn Aruno",
+      "gender": "F",
+      "handle": "dhammaporn-aruno-v6gx0i8",
+      "birthYear": 2013,
+      "sailNumber": "1881",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "F",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "YRAT",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": 2014,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "club": "YRAT",
+      "name": "Aranya Klangmueang",
+      "gender": "F",
+      "handle": "aranya-klangmueang-0gxqda0",
+      "birthYear": 2014,
+      "sailNumber": "1498",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e8ce1948-803f-4646-a2f5-88d4c7ead815",
+      "club": "YRAT",
+      "name": "Napichaya Rattanadechakorn",
+      "gender": "F",
+      "handle": "napichaya-rattanadechakorn-03dz6c6",
+      "birthYear": 2014,
+      "sailNumber": "1457",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "154feedb-6173-4142-8d3e-88f1567b22e7",
+      "club": "ACDC",
+      "name": "Santhat Suthamgosal",
+      "gender": "M",
+      "handle": "asian-tha-santhat-su-2e78e2",
+      "birthYear": 2013,
+      "sailNumber": "1879",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "club": "RTFYC",
+      "name": "Chitipat Sainumkheaw",
+      "gender": "M",
+      "handle": "chitipat-sainumkheaw-thai25-c6fe76",
+      "birthYear": 2012,
+      "sailNumber": "THA 1859",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5f89e38f-4972-43dc-8323-906310cf159a",
+      "club": "YRAT",
+      "name": "Nattayut Jangkittiyarat",
+      "gender": "M",
+      "handle": "asian-tha-nattayut-j-5d6010",
+      "birthYear": 2012,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "club": "YRAT",
+      "name": "Nattapon Chailob",
+      "gender": "M",
+      "handle": "nattapon-chailob-thai25-2480fe",
+      "birthYear": 2011,
+      "sailNumber": "THA 1774",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "club": "YRAT",
+      "name": "Tatigun Homchong",
+      "gender": "M",
+      "handle": "tatigun-homchong-thai25-21f21e",
+      "birthYear": 2013,
+      "sailNumber": "THA 1759",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "club": "RTFYC",
+      "name": "Pakin Wongratanachot",
+      "gender": "M",
+      "handle": "pakin-wongratanachot-thai25-7c7d0b",
+      "birthYear": 2011,
+      "sailNumber": "THA 1954",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "886b0637-300f-56d1-9e65-b266b3cce606",
+      "club": "YRAT",
+      "name": "Thyracha Homchong",
+      "gender": "F",
+      "handle": "thyracha-homchong-thai25-886b06",
+      "birthYear": 2011,
+      "sailNumber": "THA 1555",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "e60aa575-112f-5d20-911e-68618a35669d",
+      "name": "Pattharakorn Phadungyotee",
+      "handle": "pattharakorn-phadungyotee-sr25-e60aa5",
+      "sailNumber": "THA 1255",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "ACDC.SC"
+    },
+    {
+      "id": "c4d90d22-b468-5cd7-becf-dbcd7c7cb8ab",
+      "name": "Anusara Polchai",
+      "handle": "anusara-polchai-sr25-c4d90d",
+      "sailNumber": "THA1953",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT"
+    },
+    {
+      "id": "9fc4186f-e2cd-500e-879a-551b4a812776",
+      "name": "Hon Muk Sen",
+      "handle": "hon-muk-sen-sr25-9fc418",
+      "sailNumber": "HKG97",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "SLSC"
+    },
+    {
+      "id": "054aee36-ca29-587c-a986-d818a393d57a",
+      "name": "Zhai Jingqi",
+      "handle": "zhai-jingqi-sr25-054aee",
+      "sailNumber": "THA2322",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "SLSC"
+    },
+    {
+      "id": "f61d7399-636b-57a0-aa08-1194527caed2",
+      "name": "Wang Xingxun",
+      "handle": "wang-xingxun-sr25-f61d73",
+      "sailNumber": "CHN7040",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "SLSC"
+    },
+    {
+      "id": "fe0379f0-ca6d-57b4-a0fb-3f07e1f5a080",
+      "name": "Kitti. Sinpivong",
+      "handle": "kitti-sinpivong-sr25-fe0379",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "BSAC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

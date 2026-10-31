@@ -1,0 +1,370 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "75988a11-b78d-50e2-be5a-6c2c3c6bc0ba",
+    "slug": "acdc-cup-international-2025",
+    "name": "ACDC Cup International Sailing Championship 2025",
+    "startDate": "2025-07-10",
+    "endDate": "2025-07-12",
+    "venue": "ACDC Sailing Club, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "a62775e2-103c-52f9-827a-e4e01066e2d4",
+    "slug": "acdc-cup-international-2025-ilca6",
+    "name": "ACDC Cup International Sailing Championship 2025 \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 3,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/151739",
+    "title": "ACDC Cup International Sailing Championship 2025 \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 2,
+      "name": "TEEKATAT DANGPRATUM",
+      "sailOrBoardNumber": "208184",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 17.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "646ad892-73c8-5efb-9dd1-8be36f3e3f1d",
+      "participants": [
+        {
+          "id": "14c51b8e-ab47-5fa1-b923-0d7f993c7374",
+          "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+          "sourceName": "TEEKATAT DANGPRATUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 1; source name: TEEKATAT DANGPRATUM; historic sail: 208184; club: ACDC.SC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "Luck Puapitsirikul",
+      "sailOrBoardNumber": "22",
+      "club": "ACDC. SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 27.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "68fea819-ebd7-5cec-9b89-de1d58136f05",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "68e0cbe7-65bf-5c62-9d6c-0ca830747910",
+      "participants": [
+        {
+          "id": "ecb0844b-61f6-5fbe-b7e0-8a2a2902bb03",
+          "sailorId": "68fea819-ebd7-5cec-9b89-de1d58136f05",
+          "sourceName": "Luck Puapitsirikul",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 1; source name: Luck Puapitsirikul; historic sail: 22; club: ACDC. SC; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 2,
+  "deferredEntryCount": 1,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 2 of 3 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 1,
+      "name": "Aueaoangkun jadsanam",
+      "sailOrBoardNumber": "9",
+      "club": "ACDC SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 10.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "2b2f3955-49bf-5a67-8643-70307409f211",
+          "name": "Aueangkun Jadsanam",
+          "similarity": 0.944
+        },
+        {
+          "id": "7b4c39c9-4e3c-511a-ad83-3d2871065992",
+          "name": "Alisa Eangsantea",
+          "similarity": 0.529
+        },
+        {
+          "id": "ccf1bb16-2294-44cc-b061-6218576ea01c",
+          "name": "Angus Jackson",
+          "similarity": 0.516
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+      "club": "RTNYC",
+      "name": "Teekatat Dangpratum",
+      "gender": "M",
+      "handle": "teekatat-dangpratum-sr26-9b4038",
+      "birthYear": 2011,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "68fea819-ebd7-5cec-9b89-de1d58136f05",
+      "name": "Luck Puapitsirikul",
+      "handle": "luck-puapitsirikul-sr25-68fea8",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "ACDC. SC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

@@ -1,0 +1,585 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "77d3c6a5-83a8-5b98-b881-418267461f6b",
+    "slug": "sea-games-2025",
+    "name": "33rd SEA Games 2025 \u2014 Sailing",
+    "startDate": "2025-12-09",
+    "endDate": "2025-12-18",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "42879c98-f145-5ab7-9595-36615d5fafb1",
+    "slug": "sea-games-2025-ilca4-girls",
+    "name": "33rd SEA Games 2025 \u2014 Sailing \u2014 ILCA 4 Girls",
+    "boatClass": "ILCA 4",
+    "division": "Girls",
+    "raceCount": 9,
+    "totalFleetSize": 5,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/170965",
+    "title": "33rd SEA Games 2025 \u2014 Sailing \u2014 ILCA 4 Girls results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Girl's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Girls",
+      "rank": 1,
+      "name": "PRIN SUBYING",
+      "sailOrBoardNumber": "THA 222687",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 14.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4ad409e4-bec8-5594-9b85-1bfa63aa9cee",
+      "participants": [
+        {
+          "id": "4a061c45-348a-5f54-b85d-e391c8aac7b1",
+          "sailorId": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+          "sourceName": "PRIN SUBYING",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Girl's ILCA4; page 1; source name: PRIN SUBYING; historic sail: THA 222687; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Girl's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Girls",
+      "rank": 3,
+      "name": "NIA MEHRY ZAHEDI",
+      "sailOrBoardNumber": "SGP",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 27.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "20af3d01-7d86-4111-bad1-0c2be026e039",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "0a860d8d-737f-5361-84ea-c116ce41a6fa",
+      "participants": [
+        {
+          "id": "d57e3ed5-003c-5e03-a32a-185593299fbd",
+          "sailorId": "20af3d01-7d86-4111-bad1-0c2be026e039",
+          "sourceName": "NIA MEHRY ZAHEDI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Girl's ILCA4; page 1; source name: NIA MEHRY ZAHEDI; historic sail: SGP; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Girl's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Girls",
+      "rank": 4,
+      "name": "KHIM ASHLEY ALBO",
+      "sailOrBoardNumber": "PHI 225452",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 31.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(6.0 DSQ)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "108d0eda-d379-5e23-bcde-6732a7f489cb",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "aa7061f8-344c-56a3-b53e-d0605b5bc924",
+      "participants": [
+        {
+          "id": "d6604403-2ddd-5aeb-b9f9-ee3dd6b5d5ad",
+          "sailorId": "108d0eda-d379-5e23-bcde-6732a7f489cb",
+          "sourceName": "KHIM ASHLEY ALBO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Girl's ILCA4; page 1; source name: KHIM ASHLEY ALBO; historic sail: PHI 225452; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Girl's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Girls",
+      "rank": 5,
+      "name": "PHAM KHANH NGOC NGUYEN",
+      "sailOrBoardNumber": "228172",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 39.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0054671b-b92c-5436-9f55-93096948fd98",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "aaed8052-f9bc-57fb-a6c6-ab7b8d0c6498",
+      "participants": [
+        {
+          "id": "30ba2d4d-0e0a-59a8-b52e-e91e2fc565a2",
+          "sailorId": "0054671b-b92c-5436-9f55-93096948fd98",
+          "sourceName": "PHAM KHANH NGOC NGUYEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Girl's ILCA4; page 1; source name: PHAM KHANH NGOC NGUYEN; historic sail: 228172; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 4,
+  "deferredEntryCount": 1,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 4 of 5 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Girl's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Girls",
+      "rank": 2,
+      "name": "NUR ZAFRINA SYUHADA MOHD ZAILAN",
+      "sailOrBoardNumber": "MAS209888",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 27.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(6.0 RET)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "b33f7ace-2a40-5394-8858-007b26ae3163",
+          "name": "Nur Zafrina Syuhada Binti Mohd Zailan",
+          "similarity": 0.915
+        },
+        {
+          "id": "96bfe722-1e1a-4e2c-901e-dae4789973ac",
+          "name": "Nur Hafizanah Binti Zailan",
+          "similarity": 0.52
+        },
+        {
+          "id": "a87ef095-13d6-4bd7-b496-75ae7471f0fa",
+          "name": "Nur Badrina Husna Binti Hamidon",
+          "similarity": 0.519
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "20af3d01-7d86-4111-bad1-0c2be026e039",
+      "club": "PA",
+      "name": "Nia Mehry Zahedi",
+      "gender": "F",
+      "handle": "nia-mehry-zahedi-04ev2zf",
+      "birthYear": 2009,
+      "sailNumber": "4670",
+      "nationality": "SGP",
+      "sailNumberIlca4": "224245"
+    },
+    {
+      "id": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+      "club": "YRAT",
+      "name": "Prin Subying",
+      "gender": "F",
+      "handle": "prin-subying-zi3cbf5",
+      "birthYear": 2008,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "108d0eda-d379-5e23-bcde-6732a7f489cb",
+      "name": "Khim Ashley Albo",
+      "handle": "khim-ashley-albo-sr25-108d0e",
+      "sailNumber": "",
+      "sailNumberIlca4": "PHI 225452",
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "0054671b-b92c-5436-9f55-93096948fd98",
+      "name": "Pham Khanh Ngoc Nguyen",
+      "handle": "pham-khanh-ngoc-nguyen-sr25-005467",
+      "sailNumber": "",
+      "sailNumberIlca4": "228172",
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

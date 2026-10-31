@@ -1,0 +1,3757 @@
+{
+  "batch": "australia-optimist-2025-2026-10-30",
+  "event": {
+    "slug": "2025-nsw-optimist-championship",
+    "name": "2025 NSW Optimist Championship",
+    "startDate": "2025-04-05",
+    "endDate": "2025-04-06",
+    "venue": "Toronto Amateur Sailing Club, Lake Macquarie, NSW, Australia",
+    "organizer": "Toronto Amateur Sailing Club and NSW IODA",
+    "id": "0830c245-ba09-5596-8ac0-3d89100325f5",
+    "classes": [
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "1e523e5f-5b60-5366-8914-f0f556c2c730",
+    "slug": "2025-nsw-optimist-championship-optimist-intermediate",
+    "name": "2025 NSW Optimist Championship \u2014 Optimist Intermediate",
+    "boatClass": "Optimist",
+    "division": "Intermediate",
+    "raceCount": 5,
+    "totalFleetSize": 51,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1,
+    "status": "draft"
+  },
+  "officialSource": {
+    "url": "https://www.austeamsailing.com/events/nswstates2025.htm",
+    "title": "2025 NSW Optimist Championship \u2014 Optimist Intermediate",
+    "type": "url",
+    "provisional": false,
+    "publicationStatus": "published overall standings",
+    "visuallyReviewed": false,
+    "pdfUrl": null,
+    "pdfLimitation": "Official results PDF not located."
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "Mac Darlington",
+      "sailOrBoardNumber": "1839",
+      "club": "GRSC (Scots)",
+      "grossScore": 26.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(14.0)",
+          "score": 14.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Mac Darlington",
+      "sailorId": "7411c058-0e0a-5a5d-aa05-fb3bd9edc4aa",
+      "resultId": "7467e332-67cd-5b25-898c-5e30624cbdf3",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "856c6815-776b-5398-b16c-db2c95dea479",
+          "sailorId": "7411c058-0e0a-5a5d-aa05-fb3bd9edc4aa",
+          "sourceName": "Mac Darlington",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Mac Darlington; historic sail 1839; club GRSC (Scots). Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 2,
+      "name": "Alex Mirceski",
+      "sailOrBoardNumber": "1791",
+      "club": "HHSC",
+      "grossScore": 41.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(23.0)",
+          "score": 23.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Alex Mirceski",
+      "sailorId": "fc8d7069-1d5c-5065-982f-5b7c0d711185",
+      "resultId": "5ee220de-c12a-55cb-8063-105f1d12d672",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "2ce08ea6-def0-5c8c-b73b-96ea2f2177e1",
+          "sailorId": "fc8d7069-1d5c-5065-982f-5b7c0d711185",
+          "sourceName": "Alex Mirceski",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Alex Mirceski; historic sail 1791; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 3,
+      "name": "Alastair Kernaghan",
+      "sailOrBoardNumber": "1236",
+      "club": "RSYS",
+      "grossScore": 36.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(12.0)",
+          "score": 12.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Alastair Kernaghan",
+      "sailorId": "9276bce6-0f5f-5bdf-82ef-f0befc16c3f9",
+      "resultId": "96cff6ff-1e65-5542-8e8c-66a452e0dfe0",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "e0a4b10a-993b-5a5d-b644-2ae4bfa8f223",
+          "sailorId": "9276bce6-0f5f-5bdf-82ef-f0befc16c3f9",
+          "sourceName": "Alastair Kernaghan",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Alastair Kernaghan; historic sail 1236; club RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 4,
+      "name": "Meii You",
+      "sailOrBoardNumber": "1549",
+      "club": "WSC",
+      "grossScore": 52.0,
+      "nettScore": 29.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(23.0)",
+          "score": 23.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Meii You",
+      "sailorId": "cdd61132-5975-4264-8804-cf78cd45258e",
+      "resultId": "5b198450-3fcc-5188-a70b-487173bc0190",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "681a484c-47b3-56dc-a8bf-a20b0f32cd2a",
+          "sailorId": "cdd61132-5975-4264-8804-cf78cd45258e",
+          "sourceName": "Meii You",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Meii You; historic sail 1549; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 5,
+      "name": "Axel Ryves",
+      "sailOrBoardNumber": "1633",
+      "club": "HHSC",
+      "grossScore": 60.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(25.0)",
+          "score": 25.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Axel Ryves",
+      "sailorId": "9ee1f9f1-aa37-4a62-8f85-67ab090c6d64",
+      "resultId": "d7ea5ebf-cc32-5f81-87b4-46f703f923a9",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c4e74a28-764c-5319-b656-49af7c87a1e4",
+          "sailorId": "9ee1f9f1-aa37-4a62-8f85-67ab090c6d64",
+          "sourceName": "Axel Ryves",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Axel Ryves; historic sail 1633; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 6,
+      "name": "Jungwon Park",
+      "sailOrBoardNumber": "1038",
+      "club": "WSC",
+      "grossScore": 71.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(34.0)",
+          "score": 34.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jungwon Park",
+      "sailorId": "ff95dfaa-563f-49ec-9d09-7cdd09128577",
+      "resultId": "059856e2-73e5-522c-9efe-b907e39606ae",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "996ac3c4-20e8-5d90-96ff-0f5c889fa6b9",
+          "sailorId": "ff95dfaa-563f-49ec-9d09-7cdd09128577",
+          "sourceName": "Jungwon Park",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Jungwon Park; historic sail 1038; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 7,
+      "name": "Heidi Sinclair-Hill",
+      "sailOrBoardNumber": "1364",
+      "club": "WSC",
+      "grossScore": 77.0,
+      "nettScore": 41.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(36.0)",
+          "score": 36.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Heidi Sinclair-Hill",
+      "sailorId": "8ffb1e6b-203c-4bab-ac2f-18de1db064b7",
+      "resultId": "e2257f5a-fed6-5c78-a7d1-8f21850dd697",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "ba3d6611-ee87-5f97-b470-4f3391381284",
+          "sailorId": "8ffb1e6b-203c-4bab-ac2f-18de1db064b7",
+          "sourceName": "Heidi Sinclair-Hill",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Heidi Sinclair-Hill; historic sail 1364; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 8,
+      "name": "John Yin",
+      "sailOrBoardNumber": "1849",
+      "club": "",
+      "grossScore": 62.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(20.0)",
+          "score": 20.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "John Yin",
+      "sailorId": "86be27b5-6ef5-5894-a0e8-e823f4ea0659",
+      "resultId": "1204efdf-50d4-5fe4-8512-51be1970843d",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "d61dc831-be42-5b62-9998-d88b844b1ed0",
+          "sailorId": "86be27b5-6ef5-5894-a0e8-e823f4ea0659",
+          "sourceName": "John Yin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name John Yin; historic sail 1849; club . Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 9,
+      "name": "Lucas YUNING",
+      "sailOrBoardNumber": "1674",
+      "club": "RPAYC",
+      "grossScore": 60.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(17.0)",
+          "score": 17.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lucas YUNING",
+      "sailorId": "51b53b7d-6169-5a41-96d5-6d39d5638d32",
+      "resultId": "559448c2-2e49-5200-9e63-4a7fe02ae44c",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "ded6b566-9985-59bf-b126-ea0a2aad5ecc",
+          "sailorId": "51b53b7d-6169-5a41-96d5-6d39d5638d32",
+          "sourceName": "Lucas YUNING",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Lucas YUNING; historic sail 1674; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 10,
+      "name": "Bay Roche",
+      "sailOrBoardNumber": "1925",
+      "club": "WSC/KRB",
+      "grossScore": 67.0,
+      "nettScore": 49.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(18.0)",
+          "score": 18.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Bay Roche",
+      "sailorId": "465baf88-e20e-44a3-9883-5b9813a90230",
+      "resultId": "528b2c5a-f6ce-544b-a914-ac2855d82c8b",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "ab8018ec-fb92-5d65-93e6-580d627c80e6",
+          "sailorId": "465baf88-e20e-44a3-9883-5b9813a90230",
+          "sourceName": "Bay Roche",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Bay Roche; historic sail 1925; club WSC/KRB. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 11,
+      "name": "Orlando Watts",
+      "sailOrBoardNumber": "1745",
+      "club": "RSYS",
+      "grossScore": 83.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(31.0)",
+          "score": 31.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Orlando Watts",
+      "sailorId": "15b30f88-d7b3-45f1-b9c2-a59c9972101b",
+      "resultId": "195bc5dd-8149-5e79-a4dc-d035f955ada1",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "48bce0ab-6e18-504e-be9a-18275b2b9e21",
+          "sailorId": "15b30f88-d7b3-45f1-b9c2-a59c9972101b",
+          "sourceName": "Orlando Watts",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Orlando Watts; historic sail 1745; club RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 12,
+      "name": "Isabel Yu",
+      "sailOrBoardNumber": "1546",
+      "club": "RSYS",
+      "grossScore": 80.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(28.0)",
+          "score": 28.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Isabel Yu",
+      "sailorId": "a60316a7-9870-5c31-861e-b5c4c5f02bbf",
+      "resultId": "1d710969-98af-5675-b101-ab6e911f002e",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "07554144-4a53-5706-8bbc-a2b77d70216e",
+          "sailorId": "a60316a7-9870-5c31-861e-b5c4c5f02bbf",
+          "sourceName": "Isabel Yu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Isabel Yu; historic sail 1546; club RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 13,
+      "name": "Oliver Korn",
+      "sailOrBoardNumber": "709",
+      "club": "GRSC",
+      "grossScore": 75.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(22.0)",
+          "score": 22.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Oliver Korn",
+      "sailorId": "365765e9-9ea4-5de4-8228-00156c596e49",
+      "resultId": "3cb07914-d38f-5a27-8efb-5ce9d0c12db2",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "0d36e3c3-bbf0-589a-b4d1-e39c2ed53108",
+          "sailorId": "365765e9-9ea4-5de4-8228-00156c596e49",
+          "sourceName": "Oliver Korn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Oliver Korn; historic sail 709; club GRSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 14,
+      "name": "Lucas Shou",
+      "sailOrBoardNumber": "1089",
+      "club": "WSC",
+      "grossScore": 114.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(52.0 UFD)",
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lucas Shou",
+      "sailorId": "3ec1d829-56ea-591b-aa4b-0032547e95ee",
+      "resultId": "10f465ac-b1e0-50fb-a697-4dfaa18674bc",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "b9143ff2-c4a5-5232-96a1-ec2bca768402",
+          "sailorId": "3ec1d829-56ea-591b-aa4b-0032547e95ee",
+          "sourceName": "Lucas Shou",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Lucas Shou; historic sail 1089; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 15,
+      "name": "Gary Zhu",
+      "sailOrBoardNumber": "1334",
+      "club": "RPAYC",
+      "grossScore": 91.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(29.0)",
+          "score": 29.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Gary Zhu",
+      "sailorId": "88822835-4596-4a37-880c-ffe6e9b41169",
+      "resultId": "280d0c36-e87a-536d-82d2-2415e6110dc3",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "0c144a16-094f-5483-b788-cb23f000cca4",
+          "sailorId": "88822835-4596-4a37-880c-ffe6e9b41169",
+          "sourceName": "Gary Zhu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Gary Zhu; historic sail 1334; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 16,
+      "name": "Tessa Bonjean",
+      "sailOrBoardNumber": "1543",
+      "club": "Wsc",
+      "grossScore": 102.0,
+      "nettScore": 67.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(35.0)",
+          "score": 35.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Tessa Bonjean",
+      "sailorId": "09e13481-654a-59c6-a7d5-dc9bb6f79c25",
+      "resultId": "923f20c5-b8f9-5edd-b110-f1d84524ea47",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "547988a5-d4f8-5ac9-a09c-21ac499b793a",
+          "sailorId": "09e13481-654a-59c6-a7d5-dc9bb6f79c25",
+          "sourceName": "Tessa Bonjean",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Tessa Bonjean; historic sail 1543; club Wsc. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 17,
+      "name": "Fletcher Boyd",
+      "sailOrBoardNumber": "1594",
+      "club": "TASC",
+      "grossScore": 100.0,
+      "nettScore": 67.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(33.0)",
+          "score": 33.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Fletcher Boyd",
+      "sailorId": "aaee3aa2-83f8-58fd-8959-291f443ae104",
+      "resultId": "d42b60aa-9a8c-5dcb-bfb9-c9fb775c9c46",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "138dbea9-262a-5157-87ba-d89c219f9041",
+          "sailorId": "aaee3aa2-83f8-58fd-8959-291f443ae104",
+          "sourceName": "Fletcher Boyd",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Fletcher Boyd; historic sail 1594; club TASC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 18,
+      "name": "Sheldon Zhuang",
+      "sailOrBoardNumber": "851",
+      "club": "WSC",
+      "grossScore": 114.0,
+      "nettScore": 72.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(42.0)",
+          "score": 42.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Sheldon Zhuang",
+      "sailorId": "3e11a63e-ee2e-5451-8611-e06200aae55b",
+      "resultId": "5079cbfc-5dad-5d6c-9e99-e27f44c6df68",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "18df0a6d-a3f1-5e6e-9eda-83bdd90a14a3",
+          "sailorId": "3e11a63e-ee2e-5451-8611-e06200aae55b",
+          "sourceName": "Sheldon Zhuang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Sheldon Zhuang; historic sail 851; club WSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 19,
+      "name": "Oliver Lu",
+      "sailOrBoardNumber": "1890",
+      "club": "GRSC",
+      "grossScore": 109.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(36.0)",
+          "score": 36.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Oliver Lu",
+      "sailorId": "db651910-60fa-5ae0-a6cb-fd059d8bfe85",
+      "resultId": "1a15fab7-5557-561f-83cc-1b7f2b71e570",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "7db845a2-6d86-5da7-b908-1c187740ac4d",
+          "sailorId": "db651910-60fa-5ae0-a6cb-fd059d8bfe85",
+          "sourceName": "Oliver Lu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Oliver Lu; historic sail 1890; club GRSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 20,
+      "name": "Avah Rogers",
+      "sailOrBoardNumber": "1195",
+      "club": "WSC",
+      "grossScore": 111.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(34.0)",
+          "score": 34.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Avah Rogers",
+      "sailorId": "15ecf3cd-b0ee-59c9-97bf-cd870dddcbc2",
+      "resultId": "26524387-0484-53db-a69e-63a5aeea6354",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "1079be0c-0b5c-55fe-be48-e53afecce27e",
+          "sailorId": "15ecf3cd-b0ee-59c9-97bf-cd870dddcbc2",
+          "sourceName": "Avah Rogers",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Avah Rogers; historic sail 1195; club WSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 21,
+      "name": "Edward Payne",
+      "sailOrBoardNumber": "1627",
+      "club": "HHSC RSYS",
+      "grossScore": 120.0,
+      "nettScore": 78.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0)",
+          "score": 42.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Edward Payne",
+      "sailorId": "045b2495-820a-5df1-b744-8439ea2e3d13",
+      "resultId": "ee218477-3d98-5769-814f-7443115b1ac1",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "329655ee-d1e4-5bca-a9b4-40a0812774b2",
+          "sailorId": "045b2495-820a-5df1-b744-8439ea2e3d13",
+          "sourceName": "Edward Payne",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Edward Payne; historic sail 1627; club HHSC RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 22,
+      "name": "Cleo McLay",
+      "sailOrBoardNumber": "1669",
+      "club": "HHSC",
+      "grossScore": 113.0,
+      "nettScore": 79.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(34.0)",
+          "score": 34.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Cleo McLay",
+      "sailorId": "34370769-ffef-436d-8e90-9d7f9627748c",
+      "resultId": "f1c3d94c-2688-5dc1-a48b-7ce9e26606eb",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "31117451-2a01-5061-9e09-4f406a9db422",
+          "sailorId": "34370769-ffef-436d-8e90-9d7f9627748c",
+          "sourceName": "Cleo McLay",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Cleo McLay; historic sail 1669; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 23,
+      "name": "Tom Kefford",
+      "sailOrBoardNumber": "154",
+      "club": "CYC",
+      "grossScore": 109.0,
+      "nettScore": 80.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(29.0)",
+          "score": 29.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Tom Kefford",
+      "sailorId": "6bb33423-d331-5bde-9731-2e09ea2eba83",
+      "resultId": "dc21fd04-3638-5cf2-822c-af8ae9128132",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "39c04a28-3aa8-5d6e-b6e1-a04677dcfcb2",
+          "sailorId": "6bb33423-d331-5bde-9731-2e09ea2eba83",
+          "sourceName": "Tom Kefford",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Tom Kefford; historic sail 154; club CYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 24,
+      "name": "Fletcher Royan",
+      "sailOrBoardNumber": "1401",
+      "club": "NSC",
+      "grossScore": 119.0,
+      "nettScore": 81.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(38.0)",
+          "score": 38.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Fletcher Royan",
+      "sailorId": "6f46f86a-da84-5289-b718-711637e49fc5",
+      "resultId": "b95d5574-b996-5570-908b-8e6692cb1fd7",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "b8c5cdbc-79b4-5df1-ac76-195566eef00b",
+          "sailorId": "6f46f86a-da84-5289-b718-711637e49fc5",
+          "sourceName": "Fletcher Royan",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Fletcher Royan; historic sail 1401; club NSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 25,
+      "name": "Hamish McGeorge",
+      "sailOrBoardNumber": "1553",
+      "club": "Cranbrook",
+      "grossScore": 109.0,
+      "nettScore": 81.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(28.0)",
+          "score": 28.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Hamish McGeorge",
+      "sailorId": "1ca39c84-e028-53e7-b107-fc87a53b481e",
+      "resultId": "a03eacc0-509c-5e42-a464-5eb8e8497f12",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "edd7e9dd-2336-5988-8d74-06a52fa03d87",
+          "sailorId": "1ca39c84-e028-53e7-b107-fc87a53b481e",
+          "sourceName": "Hamish McGeorge",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Hamish McGeorge; historic sail 1553; club Cranbrook. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 26,
+      "name": "Charles Ball",
+      "sailOrBoardNumber": "1100",
+      "club": "WSC",
+      "grossScore": 117.0,
+      "nettScore": 82.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(35.0)",
+          "score": 35.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Charles Ball",
+      "sailorId": "c7687431-746d-4be4-a906-fd73e317674b",
+      "resultId": "6ec66086-971e-5a9d-9761-eca27d767388",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "d69b29e6-b441-56fb-9dc7-d803317fc364",
+          "sailorId": "c7687431-746d-4be4-a906-fd73e317674b",
+          "sourceName": "Charles Ball",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Charles Ball; historic sail 1100; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 27,
+      "name": "Brayden Huang",
+      "sailOrBoardNumber": "679",
+      "club": "NSC",
+      "grossScore": 127.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(42.0)",
+          "score": 42.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Brayden Huang",
+      "sailorId": "f26e7a93-7b3f-5b8a-81ab-c5d767424cb8",
+      "resultId": "c62b78f3-6abe-5d11-bf67-7f74e076a5aa",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "2ad2a925-e7b9-5925-aea3-51896817d6ef",
+          "sailorId": "f26e7a93-7b3f-5b8a-81ab-c5d767424cb8",
+          "sourceName": "Brayden Huang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Brayden Huang; historic sail 679; club NSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 28,
+      "name": "Alex Baxter",
+      "sailOrBoardNumber": "1767",
+      "club": "RSYS",
+      "grossScore": 126.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(41.0)",
+          "score": 41.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Alex Baxter",
+      "sailorId": "48a1a52b-6bd7-5c30-8d2c-39eb3af7b314",
+      "resultId": "223908aa-6719-5112-ae24-2ec80fd1e7e3",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "d2701be6-c004-50e6-9e66-569768329d0e",
+          "sailorId": "48a1a52b-6bd7-5c30-8d2c-39eb3af7b314",
+          "sourceName": "Alex Baxter",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Alex Baxter; historic sail 1767; club RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 29,
+      "name": "Zac Boyd",
+      "sailOrBoardNumber": "1611",
+      "club": "HHSC",
+      "grossScore": 123.0,
+      "nettScore": 88.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(35.0)",
+          "score": 35.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Zac Boyd",
+      "sailorId": "31374565-e925-521a-a074-93c0d364cbc2",
+      "resultId": "3f5ed85a-ff9f-5e59-bd88-10fdb0ce26de",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "899b6ebc-6adf-58c9-a747-736a6c1238a3",
+          "sailorId": "31374565-e925-521a-a074-93c0d364cbc2",
+          "sourceName": "Zac Boyd",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Zac Boyd; historic sail 1611; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 30,
+      "name": "Alexander Quinn",
+      "sailOrBoardNumber": "421",
+      "club": "CYC",
+      "grossScore": 124.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(32.0)",
+          "score": 32.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Alexander Quinn",
+      "sailorId": "bab03bca-e72f-5b38-8901-d0aa700a480b",
+      "resultId": "5f601dab-bf27-5232-8faa-b012983a55b8",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "d95acc09-5e59-5329-a3d9-246a304f4afc",
+          "sailorId": "bab03bca-e72f-5b38-8901-d0aa700a480b",
+          "sourceName": "Alexander Quinn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Alexander Quinn; historic sail 421; club CYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 31,
+      "name": "Miles White",
+      "sailOrBoardNumber": "1432",
+      "club": "HHSC",
+      "grossScore": 128.0,
+      "nettScore": 93.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(35.0)",
+          "score": 35.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Miles White",
+      "sailorId": "79de686e-027d-5809-99e8-453bfd3cf285",
+      "resultId": "0d4b3324-2d0f-59da-afa0-62584cc80ccd",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c6c15655-0e9b-5ebe-a02f-848ad7f4af1c",
+          "sailorId": "79de686e-027d-5809-99e8-453bfd3cf285",
+          "sourceName": "Miles White",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Miles White; historic sail 1432; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 32,
+      "name": "Lily Zahab",
+      "sailOrBoardNumber": "1833",
+      "club": "RSYS",
+      "grossScore": 132.0,
+      "nettScore": 95.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(37.0)",
+          "score": 37.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lily Zahab",
+      "sailorId": "79d6d1fe-2427-4b45-ab45-6cd4658e5571",
+      "resultId": "43379cfc-8d11-5e06-82fc-49f708e2805d",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "8899770b-d388-5a24-a8ab-e6e199c2cdee",
+          "sailorId": "79d6d1fe-2427-4b45-ab45-6cd4658e5571",
+          "sourceName": "Lily Zahab",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Lily Zahab; historic sail 1833; club RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 33,
+      "name": "Jiacheng Liu",
+      "sailOrBoardNumber": "1770",
+      "club": "RPAYC",
+      "grossScore": 143.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "43.0",
+          "score": 43.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(45.0)",
+          "score": 45.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "35.0",
+          "score": 35.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jiacheng Liu",
+      "sailorId": "711dae05-bbdb-59b1-a315-7e93e8870c92",
+      "resultId": "dcbcc80e-09ac-5639-9175-90bb64703fbf",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "f3242d6e-bda0-5b1d-b522-5bdec0839b63",
+          "sailorId": "711dae05-bbdb-59b1-a315-7e93e8870c92",
+          "sourceName": "Jiacheng Liu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Jiacheng Liu; historic sail 1770; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 34,
+      "name": "Jasper Fifield",
+      "sailOrBoardNumber": "1385",
+      "club": "RSYS",
+      "grossScore": 151.0,
+      "nettScore": 99.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "47.0",
+          "score": 47.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(52.0 UFD)",
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jasper Fifield",
+      "sailorId": "e2e50ed2-0886-476c-a373-2893d7480f35",
+      "resultId": "8f6b7166-db1f-5dba-8a2d-0d4aa25f429b",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "298c3e3b-7441-5443-8286-e346b9fed92e",
+          "sailorId": "e2e50ed2-0886-476c-a373-2893d7480f35",
+          "sourceName": "Jasper Fifield",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Jasper Fifield; historic sail 1385; club RSYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 35,
+      "name": "William Lawson",
+      "sailOrBoardNumber": "1139",
+      "club": "HHSC",
+      "grossScore": 160.0,
+      "nettScore": 110.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(50.0)",
+          "score": 50.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "William Lawson",
+      "sailorId": "2552c01d-6467-5dbf-b858-c798384746a4",
+      "resultId": "c9fb3549-43ea-5238-89b8-edbb134880fe",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "a53bc71a-c8ea-58a9-969e-8bf9d80c403e",
+          "sailorId": "2552c01d-6467-5dbf-b858-c798384746a4",
+          "sourceName": "William Lawson",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name William Lawson; historic sail 1139; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 36,
+      "name": "Henry Hsieh",
+      "sailOrBoardNumber": "1384",
+      "club": "WSC",
+      "grossScore": 155.0,
+      "nettScore": 111.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(44.0)",
+          "score": 44.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "41.0",
+          "score": 41.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Henry Hsieh",
+      "sailorId": "79eaf618-95a1-5ddd-959c-0cb14c11df71",
+      "resultId": "52fd6a54-0224-56f7-a336-7596cc12721c",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "9dedab66-09fc-5095-be43-441c55face13",
+          "sailorId": "79eaf618-95a1-5ddd-959c-0cb14c11df71",
+          "sourceName": "Henry Hsieh",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Henry Hsieh; historic sail 1384; club WSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 37,
+      "name": "Jasmine Wang",
+      "sailOrBoardNumber": "748",
+      "club": "RPAYC",
+      "grossScore": 159.0,
+      "nettScore": 118.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(41.0)",
+          "score": 41.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jasmine Wang",
+      "sailorId": "b259b4fe-9ae6-521b-960b-34da1fe8a554",
+      "resultId": "47be4c0f-7cda-5f0d-adfe-7dc5f26c21fa",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "6770f5de-fb8f-5830-a30c-638436610c9f",
+          "sailorId": "b259b4fe-9ae6-521b-960b-34da1fe8a554",
+          "sourceName": "Jasmine Wang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Jasmine Wang; historic sail 748; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 39,
+      "name": "Sebastian Salter",
+      "sailOrBoardNumber": "1560",
+      "club": "Cranbrook",
+      "grossScore": 179.0,
+      "nettScore": 133.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(46.0)",
+          "score": 46.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "45.0",
+          "score": 45.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Sebastian Salter",
+      "sailorId": "e69e8c1b-a4f5-5f59-903b-b857e6a5cc5c",
+      "resultId": "71f072c7-8cb4-5c95-ac73-e20f663b4944",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "e56630c6-1c15-5e47-acbc-6a565df41c4d",
+          "sailorId": "e69e8c1b-a4f5-5f59-903b-b857e6a5cc5c",
+          "sourceName": "Sebastian Salter",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Sebastian Salter; historic sail 1560; club Cranbrook. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 40,
+      "name": "Josh Horth",
+      "sailOrBoardNumber": "1828",
+      "club": "WSC/Cranbrook",
+      "grossScore": 179.0,
+      "nettScore": 133.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(46.0)",
+          "score": 46.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Josh Horth",
+      "sailorId": "2b2c4cb9-8c65-55e5-a671-cf9fa0c5eaff",
+      "resultId": "4e93ee4d-9ea2-54f3-8c4e-88e7b20f2e45",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "de83af75-492d-523d-8565-2d1a0971a922",
+          "sailorId": "2b2c4cb9-8c65-55e5-a671-cf9fa0c5eaff",
+          "sourceName": "Josh Horth",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Josh Horth; historic sail 1828; club WSC/Cranbrook. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 41,
+      "name": "Markus Liu",
+      "sailOrBoardNumber": "1395",
+      "club": "WSC",
+      "grossScore": 188.0,
+      "nettScore": 136.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(52.0 UFD)",
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "44.0",
+          "score": 44.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Markus Liu",
+      "sailorId": "ace9e6c1-bdd4-58f0-8159-a753458dfcb8",
+      "resultId": "bc074181-9822-53d6-9c22-fe406678465e",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "824f9967-b83c-5d04-9e5c-de1b7c9dd49f",
+          "sailorId": "ace9e6c1-bdd4-58f0-8159-a753458dfcb8",
+          "sourceName": "Markus Liu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Markus Liu; historic sail 1395; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 42,
+      "name": "Lara Dorling",
+      "sailOrBoardNumber": "1729",
+      "club": "RPAYC",
+      "grossScore": 192.0,
+      "nettScore": 149.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(43.0)",
+          "score": 43.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lara Dorling",
+      "sailorId": "a68e8e7f-d347-5326-a405-7f795be50f87",
+      "resultId": "fa3f1eaf-a77e-5365-9703-271fb2f02c24",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "dfbb74fd-e0f5-5e9a-8154-88d090d9773b",
+          "sailorId": "a68e8e7f-d347-5326-a405-7f795be50f87",
+          "sourceName": "Lara Dorling",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Lara Dorling; historic sail 1729; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 43,
+      "name": "Charlie Antill",
+      "sailOrBoardNumber": "1179",
+      "club": "RPAYC",
+      "grossScore": 200.0,
+      "nettScore": 155.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(45.0)",
+          "score": 45.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "41.0",
+          "score": 41.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "43.0",
+          "score": 43.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Charlie Antill",
+      "sailorId": "bbe7c4bd-ce11-5a53-8504-826e74b5c8fe",
+      "resultId": "ee0ecf92-2989-52de-bfc2-86420478e5b3",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "962d98f8-10f6-5e25-b0dc-ce02317bac2f",
+          "sailorId": "bbe7c4bd-ce11-5a53-8504-826e74b5c8fe",
+          "sourceName": "Charlie Antill",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Charlie Antill; historic sail 1179; club RPAYC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 44,
+      "name": "Anastasi Fermanis",
+      "sailOrBoardNumber": "1832",
+      "club": "Cranbrook",
+      "grossScore": 206.0,
+      "nettScore": 156.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(50.0)",
+          "score": 50.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "47.0",
+          "score": 47.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "49.0",
+          "score": 49.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Anastasi Fermanis",
+      "sailorId": "18f88435-7b13-55d7-8189-592c6f92a628",
+      "resultId": "915ee2c3-978c-5a8b-83da-a1f2dc7e9d84",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "8e7c9a7e-ee7e-5c55-b476-dcc9e10bd2b0",
+          "sailorId": "18f88435-7b13-55d7-8189-592c6f92a628",
+          "sourceName": "Anastasi Fermanis",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Anastasi Fermanis; historic sail 1832; club Cranbrook. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 45,
+      "name": "Kai Houtzager",
+      "sailOrBoardNumber": "1325",
+      "club": "GRSC",
+      "grossScore": 208.0,
+      "nettScore": 159.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(49.0)",
+          "score": 49.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "43.0",
+          "score": 43.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Kai Houtzager",
+      "sailorId": "be6e8fd1-74cd-5d69-ba96-c0dff384b40a",
+      "resultId": "16aa0b8c-69ab-5bcc-97bd-d1a993a0e69a",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "4fdfb08a-a746-5345-bdc8-f7b9e3e6a496",
+          "sailorId": "be6e8fd1-74cd-5d69-ba96-c0dff384b40a",
+          "sourceName": "Kai Houtzager",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Kai Houtzager; historic sail 1325; club GRSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 46,
+      "name": "Aidan Kelly",
+      "sailOrBoardNumber": "1644",
+      "club": "WSC",
+      "grossScore": 217.0,
+      "nettScore": 165.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(52.0 DNC)",
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "42.0",
+          "score": 42.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "46.0",
+          "score": 46.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Aidan Kelly",
+      "sailorId": "67e32791-4430-52f4-8639-2dac808c1464",
+      "resultId": "c19c4e58-7419-5951-b2a2-f1a1a132c064",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "6382fbe6-6617-5877-b77f-626cd8595f36",
+          "sailorId": "67e32791-4430-52f4-8639-2dac808c1464",
+          "sourceName": "Aidan Kelly",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Aidan Kelly; historic sail 1644; club WSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 47,
+      "name": "Xavier Odillo Maher",
+      "sailOrBoardNumber": "183",
+      "club": "Cranbrook",
+      "grossScore": 220.0,
+      "nettScore": 170.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "41.0",
+          "score": 41.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "45.0",
+          "score": 45.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "48.0",
+          "score": 48.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(50.0)",
+          "score": 50.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Xavier Odillo Maher",
+      "sailorId": "d0b1e187-90c6-5a93-9598-8d2c799b772d",
+      "resultId": "36a958fd-d961-5b54-8d9a-f114836b55d9",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "73ae5373-5ba0-5e02-b5e6-9f72d4e94add",
+          "sailorId": "d0b1e187-90c6-5a93-9598-8d2c799b772d",
+          "sourceName": "Xavier Odillo Maher",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Xavier Odillo Maher; historic sail 183; club Cranbrook. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 48,
+      "name": "Willow Murray",
+      "sailOrBoardNumber": "1863",
+      "club": "RPAYC",
+      "grossScore": 224.0,
+      "nettScore": 172.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "45.0",
+          "score": 45.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(52.0 UFD)",
+          "score": 52.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "47.0",
+          "score": 47.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "48.0",
+          "score": 48.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Willow Murray",
+      "sailorId": "c720156e-a4fc-5c44-8505-4ad78bb60d73",
+      "resultId": "22c95f04-e870-5827-9701-3d5180c704de",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "810321e7-9406-5ed0-9b80-3f4006f8df5f",
+          "sailorId": "c720156e-a4fc-5c44-8505-4ad78bb60d73",
+          "sourceName": "Willow Murray",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Willow Murray; historic sail 1863; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 49,
+      "name": "Luca McMahon",
+      "sailOrBoardNumber": "1643",
+      "club": "WSC",
+      "grossScore": 224.0,
+      "nettScore": 175.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "43.0",
+          "score": 43.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "48.0",
+          "score": 48.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(49.0)",
+          "score": 49.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "47.0",
+          "score": 47.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Luca McMahon",
+      "sailorId": "3db96e3f-6001-5374-b7a1-eec8fd26a430",
+      "resultId": "34b55231-97b2-5696-b007-555e83acdb6d",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "9c6fffa0-761e-5282-aaed-76b3693381c4",
+          "sailorId": "3db96e3f-6001-5374-b7a1-eec8fd26a430",
+          "sourceName": "Luca McMahon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Luca McMahon; historic sail 1643; club WSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 50,
+      "name": "James Kenny",
+      "sailOrBoardNumber": "1761",
+      "club": "WSC",
+      "grossScore": 235.0,
+      "nettScore": 185.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "48.0",
+          "score": 48.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "47.0",
+          "score": 47.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "46.0",
+          "score": 46.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(50.0)",
+          "score": 50.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "44.0",
+          "score": 44.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "James Kenny",
+      "sailorId": "4fe35b1f-0b8f-506c-90a2-3dd48db7f590",
+      "resultId": "9106ae2e-eb80-5f79-a91d-8fcd009a4352",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "c1d6fec9-5105-576d-90bc-1c974d239707",
+          "sailorId": "4fe35b1f-0b8f-506c-90a2-3dd48db7f590",
+          "sourceName": "James Kenny",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name James Kenny; historic sail 1761; club WSC. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 51,
+      "name": "Carlitos Curran",
+      "sailOrBoardNumber": "1286",
+      "club": "Cranbrook",
+      "grossScore": 245.0,
+      "nettScore": 193.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "51.0",
+          "score": 51.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "46.0",
+          "score": 46.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(52.0 DNF)",
+          "score": 52.0,
+          "code": "DNF",
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "44.0",
+          "score": 44.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "52.0 DNC",
+          "score": 52.0,
+          "code": "DNC",
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Carlitos Curran",
+      "sailorId": "f471cd29-a817-571d-9b70-72dafc9f287c",
+      "resultId": "77994d21-25b4-5eb9-b3d9-1435abbbc303",
+      "identityBasis": "Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "b1ebe5f3-d50c-5e1d-b70a-573d21898164",
+          "sailorId": "f471cd29-a817-571d-9b70-72dafc9f287c",
+          "sourceName": "Carlitos Curran",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Intermediate; source name Carlitos Curran; historic sail 1286; club Cranbrook. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: R1, R2, R3, R5, R6. No birth year inferred."
+    }
+  ],
+  "importedEntryCount": 50,
+  "deferredEntryCount": 1,
+  "pendingEntries": [
+    {
+      "rank": 38,
+      "name": "Naomi von Bibra",
+      "sailOrBoardNumber": "1589",
+      "club": "RQYS",
+      "grossScore": 180.0,
+      "nettScore": 131.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(49.0)",
+          "score": 49.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "44.0",
+          "score": 44.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "42.0",
+          "score": 42.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Naomi von Bibra",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "41c571c0-0ca0-5403-b3e5-51b515ae9c38",
+          "name": "Naomi Von Bubra",
+          "sail": "1709",
+          "similarity": 0.923
+        },
+        {
+          "id": "10ebfe56-5763-4270-bb43-ad01e524c0ca",
+          "name": "Luca Von Bibra",
+          "sail": "1604",
+          "similarity": 0.72
+        },
+        {
+          "id": "1d6a7924-ff83-5128-9e2d-a07a3cb10e9d",
+          "name": "Takiko Minehira",
+          "sail": "JPN 1",
+          "similarity": 0.593
+        }
+      ]
+    }
+  ],
+  "publicSummary": "Partial import: 50 of 51 entries; 1 entries awaiting identity review. Published overall standings; source race labels R1, R2, R3, R5, R6 retained. Excluded from Singapore rankings.",
+  "identityReview": {
+    "method": "Full names; exact source sails disambiguate collisions; close names held. Victorian initials corroborated with official entry list."
+  },
+  "profilePreflight": [
+    {
+      "id": "045b2495-820a-5df1-b744-8439ea2e3d13",
+      "name": "Edward Payne",
+      "handle": "opti-aus-edward-payne-1627",
+      "sailNumber": "1627",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "Hhsc",
+      "birthYear": null
+    },
+    {
+      "id": "09e13481-654a-59c6-a7d5-dc9bb6f79c25",
+      "name": "Tessa Bonjean",
+      "handle": "opti-aus-tessa-bonjean-1543",
+      "sailNumber": "1543",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "15b30f88-d7b3-45f1-b9c2-a59c9972101b",
+      "name": "Orlando Watts",
+      "handle": "orlando-watts-anz26-15b30f",
+      "sailNumber": "1745",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RSYS",
+      "birthYear": null
+    },
+    {
+      "id": "18f88435-7b13-55d7-8189-592c6f92a628",
+      "name": "Anastasi Fermanis",
+      "handle": "ilca-4-aus-anastasi-fermanis-222153",
+      "sailNumber": "222153",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "2552c01d-6467-5dbf-b858-c798384746a4",
+      "name": "William Lawson",
+      "handle": "opti-aus-william-lawson-1139",
+      "sailNumber": "1139",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "31374565-e925-521a-a074-93c0d364cbc2",
+      "name": "Zac Boyd",
+      "handle": "opti-aus-zac-boyd-1753",
+      "sailNumber": "1753",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "34370769-ffef-436d-8e90-9d7f9627748c",
+      "name": "Cleo Mclay",
+      "handle": "cleo-mclay-anz26-343707",
+      "sailNumber": "1669",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "365765e9-9ea4-5de4-8228-00156c596e49",
+      "name": "Oliver Korn",
+      "handle": "opti-aus-oliver-korn-709",
+      "sailNumber": "709",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "GRSC",
+      "birthYear": null
+    },
+    {
+      "id": "465baf88-e20e-44a3-9883-5b9813a90230",
+      "name": "Bay Roche",
+      "handle": "bay-roche-anz26-465baf",
+      "sailNumber": "1925",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "WSC/SSCBC",
+      "birthYear": null
+    },
+    {
+      "id": "48a1a52b-6bd7-5c30-8d2c-39eb3af7b314",
+      "name": "Alex Baxter",
+      "handle": "opti-aus-alex-baxter-1767",
+      "sailNumber": "1767",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RSYS",
+      "birthYear": null
+    },
+    {
+      "id": "6bb33423-d331-5bde-9731-2e09ea2eba83",
+      "name": "Tom Kefford",
+      "handle": "opti-aus-tom-kefford-1405",
+      "sailNumber": "1405",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "CYC",
+      "birthYear": null
+    },
+    {
+      "id": "6f46f86a-da84-5289-b718-711637e49fc5",
+      "name": "Fletcher Royan",
+      "handle": "opti-aus-fletcher-royan-1401",
+      "sailNumber": "1401",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "NSC",
+      "birthYear": null
+    },
+    {
+      "id": "711dae05-bbdb-59b1-a315-7e93e8870c92",
+      "name": "Jiacheng Liu",
+      "handle": "opti-aus-jiacheng-liu-1770",
+      "sailNumber": "1770",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "7411c058-0e0a-5a5d-aa05-fb3bd9edc4aa",
+      "name": "Mac Darlington",
+      "handle": "mac-darlington-hkoda26-7411c0",
+      "sailNumber": "AUS 1879",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "Unknown",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "79d6d1fe-2427-4b45-ab45-6cd4658e5571",
+      "name": "Lily Zahab",
+      "handle": "lily-zahab-anz26-79d6d1",
+      "sailNumber": "1833",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "RSYS",
+      "birthYear": null
+    },
+    {
+      "id": "79de686e-027d-5809-99e8-453bfd3cf285",
+      "name": "Miles White",
+      "handle": "opti-aus-miles-white-1432",
+      "sailNumber": "1432",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "86be27b5-6ef5-5894-a0e8-e823f4ea0659",
+      "name": "John Yin",
+      "handle": "ilca-4-aus-john-yin-209285",
+      "sailNumber": "209285",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "DBSC",
+      "birthYear": null
+    },
+    {
+      "id": "88822835-4596-4a37-880c-ffe6e9b41169",
+      "name": "Gary Zhu",
+      "handle": "gary-zhu-anz26-888228",
+      "sailNumber": "1606",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "8ffb1e6b-203c-4bab-ac2f-18de1db064b7",
+      "name": "Heidi Sinclair-Hill",
+      "handle": "heidi-sinclair-hill-anz26-8ffb1e",
+      "sailNumber": "1364",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "F",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "9276bce6-0f5f-5bdf-82ef-f0befc16c3f9",
+      "name": "Alastair Kernaghan",
+      "handle": "ilca-4-aus-alastair-kernaghan-212892",
+      "sailNumber": "212892",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "RSYS",
+      "birthYear": null
+    },
+    {
+      "id": "9ee1f9f1-aa37-4a62-8f85-67ab090c6d64",
+      "name": "Axel Ryves",
+      "handle": "axel-ryves-anz26-9ee1f9",
+      "sailNumber": "1633",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "a60316a7-9870-5c31-861e-b5c4c5f02bbf",
+      "name": "Isabel Yu",
+      "handle": "opti-aus-isabel-yu-1546",
+      "sailNumber": "1546",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "RSYS",
+      "birthYear": null
+    },
+    {
+      "id": "a68e8e7f-d347-5326-a405-7f795be50f87",
+      "name": "Lara Dorling",
+      "handle": "opti-aus-lara-dorling-1729",
+      "sailNumber": "1729",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "ace9e6c1-bdd4-58f0-8159-a753458dfcb8",
+      "name": "Markus Liu",
+      "handle": "opti-aus-markus-liu-1849",
+      "sailNumber": "1849",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "b259b4fe-9ae6-521b-960b-34da1fe8a554",
+      "name": "Jasmine Wang",
+      "handle": "opti-aus-jasmine-wang-1668",
+      "sailNumber": "1668",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "bab03bca-e72f-5b38-8901-d0aa700a480b",
+      "name": "Alexander Quinn",
+      "handle": "opti-aus-alexander-quinn-1403",
+      "sailNumber": "1403",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "CYC",
+      "birthYear": null
+    },
+    {
+      "id": "be6e8fd1-74cd-5d69-ba96-c0dff384b40a",
+      "name": "Kai Houtzager",
+      "handle": "opti-aus-kai-houtzager-1325",
+      "sailNumber": "1325",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "GRSC",
+      "birthYear": null
+    },
+    {
+      "id": "c720156e-a4fc-5c44-8505-4ad78bb60d73",
+      "name": "Willow Murray",
+      "handle": "opti-aus-willow-murray-1863",
+      "sailNumber": "1863",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "c7687431-746d-4be4-a906-fd73e317674b",
+      "name": "Charles Ball",
+      "handle": "charles-ball-anz26-c76874",
+      "sailNumber": "1808",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "cdd61132-5975-4264-8804-cf78cd45258e",
+      "name": "Meii You",
+      "handle": "meii-you-anz26-cdd611",
+      "sailNumber": "1549",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "F",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "e2e50ed2-0886-476c-a373-2893d7480f35",
+      "name": "Jasper Fifield",
+      "handle": "jasper-fifield-anz26-e2e50e",
+      "sailNumber": "1916",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "Rsys",
+      "birthYear": null
+    },
+    {
+      "id": "e69e8c1b-a4f5-5f59-903b-b857e6a5cc5c",
+      "name": "Sebastian Salter",
+      "handle": "opti-aus-sebastian-salter-1944",
+      "sailNumber": "1944",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "Cranbrook",
+      "birthYear": null
+    },
+    {
+      "id": "f26e7a93-7b3f-5b8a-81ab-c5d767424cb8",
+      "name": "Brayden Huang",
+      "handle": "opti-aus-brayden-huang-679",
+      "sailNumber": "679",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "NSC/MHYC",
+      "birthYear": null
+    },
+    {
+      "id": "fc8d7069-1d5c-5065-982f-5b7c0d711185",
+      "name": "Alex Mirceski",
+      "handle": "opti-aus-alex-mirceski-1791",
+      "sailNumber": "1791",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "ff95dfaa-563f-49ec-9d09-7cdd09128577",
+      "name": "Jungwon Park",
+      "handle": "jungwon-park-anz26-ff95df",
+      "sailNumber": "4710",
+      "sailNumberIlca4": null,
+      "nationality": "NZL",
+      "gender": "M",
+      "club": "Kohimarama Yacht Club",
+      "birthYear": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "51b53b7d-6169-5a41-96d5-6d39d5638d32",
+      "name": "Lucas YUNING",
+      "handle": "lucas-yuning-aus25-51b53b",
+      "sailNumber": "1674",
+      "sailNumberIlca4": null,
+      "club": "HHSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "3ec1d829-56ea-591b-aa4b-0032547e95ee",
+      "name": "Lucas SHOU",
+      "handle": "lucas-shou-aus25-3ec1d8",
+      "sailNumber": "1089",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "aaee3aa2-83f8-58fd-8959-291f443ae104",
+      "name": "Fletcher Boyd",
+      "handle": "fletcher-boyd-aus25-aaee3a",
+      "sailNumber": "1594",
+      "sailNumberIlca4": null,
+      "club": "TASC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "3e11a63e-ee2e-5451-8611-e06200aae55b",
+      "name": "Sheldon Zhuang",
+      "handle": "sheldon-zhuang-aus25-3e11a6",
+      "sailNumber": "851",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "db651910-60fa-5ae0-a6cb-fd059d8bfe85",
+      "name": "Oliver Lu",
+      "handle": "oliver-lu-aus25-db6519",
+      "sailNumber": "1890",
+      "sailNumberIlca4": null,
+      "club": "GRSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "15ecf3cd-b0ee-59c9-97bf-cd870dddcbc2",
+      "name": "Avah Rogers",
+      "handle": "avah-rogers-aus25-15ecf3",
+      "sailNumber": "1195",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "1ca39c84-e028-53e7-b107-fc87a53b481e",
+      "name": "Hamish McGeorge",
+      "handle": "hamish-mcgeorge-aus25-1ca39c",
+      "sailNumber": "1553",
+      "sailNumberIlca4": null,
+      "club": "Cranbrook",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "79eaf618-95a1-5ddd-959c-0cb14c11df71",
+      "name": "Henry Hsieh",
+      "handle": "henry-hsieh-aus25-79eaf6",
+      "sailNumber": "1384",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "2b2c4cb9-8c65-55e5-a671-cf9fa0c5eaff",
+      "name": "Josh Horth",
+      "handle": "josh-horth-aus25-2b2c4c",
+      "sailNumber": "1828",
+      "sailNumberIlca4": null,
+      "club": "WSC/Cranbrook",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "bbe7c4bd-ce11-5a53-8504-826e74b5c8fe",
+      "name": "Charlie Antill",
+      "handle": "charlie-antill-aus25-bbe7c4",
+      "sailNumber": "1179",
+      "sailNumberIlca4": null,
+      "club": "RPAYC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "67e32791-4430-52f4-8639-2dac808c1464",
+      "name": "Aidan Kelly",
+      "handle": "aidan-kelly-aus25-67e327",
+      "sailNumber": "1644",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "d0b1e187-90c6-5a93-9598-8d2c799b772d",
+      "name": "Xavier Odillo Maher",
+      "handle": "xavier-odillo-maher-aus25-d0b1e1",
+      "sailNumber": "183",
+      "sailNumberIlca4": null,
+      "club": "Cranbrook",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "3db96e3f-6001-5374-b7a1-eec8fd26a430",
+      "name": "Luca McMahon",
+      "handle": "luca-mcmahon-aus25-3db96e",
+      "sailNumber": "1643",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "4fe35b1f-0b8f-506c-90a2-3dd48db7f590",
+      "name": "James Kenny",
+      "handle": "james-kenny-aus25-4fe35b",
+      "sailNumber": "1761",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "f471cd29-a817-571d-9b70-72dafc9f287c",
+      "name": "Carlitos Curran",
+      "handle": "carlitos-curran-aus25-f471cd",
+      "sailNumber": "1286",
+      "sailNumberIlca4": null,
+      "club": "Cranbrook",
+      "gender": null,
+      "nationality": null
+    }
+  ]
+}

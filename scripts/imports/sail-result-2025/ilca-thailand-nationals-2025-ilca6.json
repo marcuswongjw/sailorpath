@@ -1,0 +1,3248 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "75c887ec-a54f-5567-b9d4-94a2a3653a25",
+    "slug": "ilca-thailand-nationals-2025",
+    "name": "ILCA Thailand National Championships 2025",
+    "startDate": "2025-01-25",
+    "endDate": "2025-01-27",
+    "venue": "Royal Varuna Yacht Club, Pattaya, Thailand",
+    "organizer": "Royal Varuna Yacht Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7"
+    ]
+  },
+  "sheet": {
+    "id": "cd3712e1-b4a9-50a0-b3a6-0e1fa96640c4",
+    "slug": "ilca-thailand-nationals-2025-ilca6",
+    "name": "ILCA Thailand National Championships 2025 \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 8,
+    "totalFleetSize": 32,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://sail-result.com/RVYC/2025/ILCA/results.html",
+    "title": "ILCA Thailand National Championships 2025 \u2014 ILCA 6 Open results",
+    "type": "link",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": false,
+    "pdfSearch": "Searched official organiser notice board, Royal Varuna event pages, ILCA class association article and web PDF queries. Organiser-linked HTML only; not PDF-verified."
+  },
+  "results": [
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 1,
+      "name": "MARION GRACE MONTGOMERY",
+      "sailOrBoardNumber": "222660",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 24.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a0270d04-7df0-53f0-9ce6-528b4eb865b6",
+      "participants": [
+        {
+          "id": "acf6fb48-1ba9-557b-9045-e39ad40f4894",
+          "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+          "sourceName": "MARION GRACE MONTGOMERY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: MARION GRACE MONTGOMERY; historic sail: 222660; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 2,
+      "name": "NUR ALIA AMERA BINTI MOHAMAD LATIF",
+      "sailOrBoardNumber": "209878",
+      "club": "MSA/MSN",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2003,
+      "sourceBirthYear": "2003",
+      "grossScore": 39.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8813d941-a761-5ea0-8a0b-f6ed49ff38b8",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "a7593856-4dfe-57af-b28b-927bc565a42a",
+      "participants": [
+        {
+          "id": "b0ca8917-ca11-52f4-9a40-577b561676e8",
+          "sailorId": "8813d941-a761-5ea0-8a0b-f6ed49ff38b8",
+          "sourceName": "NUR ALIA AMERA BINTI MOHAMAD LATIF",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: NUR ALIA AMERA BINTI MOHAMAD LATIF; historic sail: 209878; club: MSA/MSN; year field: 2003. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 4,
+      "name": "THANAPAT SIRICHAROEN",
+      "sailOrBoardNumber": "210250",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 47.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "de0550e0-b07f-5842-b791-00b8a2d9d4a1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "eb59a42c-c7f1-5420-b5a3-a19def4b4904",
+      "participants": [
+        {
+          "id": "55bd9061-2237-50de-a133-86146eb34682",
+          "sailorId": "de0550e0-b07f-5842-b791-00b8a2d9d4a1",
+          "sourceName": "THANAPAT SIRICHAROEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: THANAPAT SIRICHAROEN; historic sail: 210250; club: YRAT; year field: 2006. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 5,
+      "name": "THORFUN BOONNAK",
+      "sailOrBoardNumber": "190935",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 53.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "10816881-3f9f-5845-92dd-a1eea6e48348",
+      "participants": [
+        {
+          "id": "75e15203-77f7-5f4a-9ff8-03dd051d07d6",
+          "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+          "sourceName": "THORFUN BOONNAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: THORFUN BOONNAK; historic sail: 190935; club: YRAT; year field: 2005. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 6,
+      "name": "PATCHAREE SRINGAM",
+      "sailOrBoardNumber": "21025",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2003,
+      "sourceBirthYear": "2003",
+      "grossScore": 62.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "055e640a-262a-50d5-bb90-cd06e535548a",
+      "participants": [
+        {
+          "id": "8a84d448-ff76-5c74-b15e-63387ad5dc1b",
+          "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+          "sourceName": "PATCHAREE SRINGAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: PATCHAREE SRINGAM; historic sail: 21025; club: YRAT; year field: 2003. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 7,
+      "name": "JUNG HYEWON",
+      "sailOrBoardNumber": "221038",
+      "club": "KSAF",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2004,
+      "sourceBirthYear": "2004",
+      "grossScore": 59.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9a71b922-1236-52ad-83b6-8810421a88ff",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "07c42b36-65f0-5670-aaf3-e3bba872637e",
+      "participants": [
+        {
+          "id": "6aa0a20e-d9b6-5580-aeb5-872d955de833",
+          "sailorId": "9a71b922-1236-52ad-83b6-8810421a88ff",
+          "sourceName": "JUNG HYEWON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: JUNG HYEWON; historic sail: 221038; club: KSAF; year field: 2004. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 9,
+      "name": "KAMONCHANOK KLAHAN",
+      "sailOrBoardNumber": "207885",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2000,
+      "sourceBirthYear": "2000",
+      "grossScore": 64.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1e8de1ed-c7d0-570a-8972-4b587d575bd5",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f74473f9-379f-594f-8ce3-7cfe62f484fb",
+      "participants": [
+        {
+          "id": "8e4f4e75-46d5-5143-84bd-884fec656c4b",
+          "sailorId": "1e8de1ed-c7d0-570a-8972-4b587d575bd5",
+          "sourceName": "KAMONCHANOK KLAHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: KAMONCHANOK KLAHAN; historic sail: 207885; club: YRAT; year field: 2000. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 11,
+      "name": "SARAH SEOW HUI YAN",
+      "sailOrBoardNumber": "219162",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2007,
+      "sourceBirthYear": "2007",
+      "grossScore": 90.0,
+      "nettScore": 70.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fc5e098b-be2e-4466-8b92-bada3a3479db",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "6d06bd4f-2909-5e63-b362-0166a6af4263",
+      "participants": [
+        {
+          "id": "6f2df83a-8bde-5efb-9759-58485207a2f6",
+          "sailorId": "fc5e098b-be2e-4466-8b92-bada3a3479db",
+          "sourceName": "SARAH SEOW HUI YAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: SARAH SEOW HUI YAN; historic sail: 219162; club: RVYC; year field: 2007. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 12,
+      "name": "PUTTARAKSA IMRAKSA",
+      "sailOrBoardNumber": "6",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 91.0,
+      "nettScore": 70.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "dc755173-bee5-5c96-9956-d73d86939ec4",
+      "participants": [
+        {
+          "id": "ad4498da-e7cf-5395-bc1f-ff07dc7d8fe0",
+          "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+          "sourceName": "PUTTARAKSA IMRAKSA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: PUTTARAKSA IMRAKSA; historic sail: 6; club: YRAT; year field: 2006. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 13,
+      "name": "CLAUDIA NAZAROV",
+      "sailOrBoardNumber": "221441",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 110.0,
+      "nettScore": 93.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "3670e144-3032-5f4c-b7fa-a8270840d544",
+      "participants": [
+        {
+          "id": "50c3fb58-60db-5125-abe8-1fbf7ca59338",
+          "sailorId": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+          "sourceName": "CLAUDIA NAZAROV",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: CLAUDIA NAZAROV; historic sail: 221441; club: RVYC; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 14,
+      "name": "ABIGAIL KOH",
+      "sailOrBoardNumber": "214237",
+      "club": "PA",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 128.0,
+      "nettScore": 95.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(33.0 DNC)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "63d082ef-363c-4b69-929a-25341b195a08",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8c717e81-ae0c-5ccc-b859-3bd0c7101082",
+      "participants": [
+        {
+          "id": "d7ce8b59-5256-54bd-975d-110d3d583e8b",
+          "sailorId": "63d082ef-363c-4b69-929a-25341b195a08",
+          "sourceName": "ABIGAIL KOH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: ABIGAIL KOH; historic sail: 214237; club: PA; year field: 2006. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 15,
+      "name": "PALIGA POONPAT",
+      "sailOrBoardNumber": "2",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2002,
+      "sourceBirthYear": "2002",
+      "grossScore": 117.0,
+      "nettScore": 99.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "00e255ee-fe4e-5ffd-a300-fb91012432b1",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f0619733-fe00-5b8e-b902-8026335dc2ee",
+      "participants": [
+        {
+          "id": "73c9165f-4beb-5e5d-8ffb-735696b9c2e3",
+          "sailorId": "00e255ee-fe4e-5ffd-a300-fb91012432b1",
+          "sourceName": "PALIGA POONPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: PALIGA POONPAT; historic sail: 2; club: YRAT; year field: 2002. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 16,
+      "name": "MAX HUNT",
+      "sailOrBoardNumber": "222555",
+      "club": "WHITSTABLE YACHT CLUB",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1957,
+      "sourceBirthYear": "1957",
+      "grossScore": 139.0,
+      "nettScore": 106.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(33.0 BFD)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "359d27f5-9a07-57de-8d4b-3638bf310b19",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7052b76a-3b72-551f-b127-c12b414d775c",
+      "participants": [
+        {
+          "id": "cff54150-8bd8-5a72-862a-06c9719d1545",
+          "sailorId": "359d27f5-9a07-57de-8d4b-3638bf310b19",
+          "sourceName": "MAX HUNT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: MAX HUNT; historic sail: 222555; club: WHITSTABLE YACHT CLUB; year field: 1957. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 17,
+      "name": "GORDON ALEXANDER ALLAN",
+      "sailOrBoardNumber": "221058",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 129.0,
+      "nettScore": 109.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "97828399-4ff6-40c1-8deb-6b308b6072ad",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d38fb475-1794-5599-aa91-fbb3921e4935",
+      "participants": [
+        {
+          "id": "acd0ddb7-749c-582e-aea6-a59e4210ccf9",
+          "sailorId": "97828399-4ff6-40c1-8deb-6b308b6072ad",
+          "sourceName": "GORDON ALEXANDER ALLAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: GORDON ALEXANDER ALLAN; historic sail: 221058; club: RVYC; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 18,
+      "name": "NUR ADLINA NASREEN BINTI MOHD NASRI",
+      "sailOrBoardNumber": "209879",
+      "club": "MSA/MSN",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2004,
+      "sourceBirthYear": "2004",
+      "grossScore": 132.0,
+      "nettScore": 110.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "08805f7e-ee2e-52e8-823f-d9b7b81941ba",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b00aabbf-d40a-5890-a675-0b5a0f235a3f",
+      "participants": [
+        {
+          "id": "f5c20028-2b4d-5df5-b0bc-6ce7e5b990c3",
+          "sailorId": "08805f7e-ee2e-52e8-823f-d9b7b81941ba",
+          "sourceName": "NUR ADLINA NASREEN BINTI MOHD NASRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: NUR ADLINA NASREEN BINTI MOHD NASRI; historic sail: 209879; club: MSA/MSN; year field: 2004. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 19,
+      "name": "NORIO AKIYAMA",
+      "sailOrBoardNumber": "162556",
+      "club": "BIWAKO YACHT CLUB",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1958,
+      "sourceBirthYear": "1958",
+      "grossScore": 145.0,
+      "nettScore": 112.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(33.0 BFD)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "06ac765d-1d35-5c0c-9c7d-173bc45fc968",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "2d1ff18c-34dd-518d-bc75-82739427827e",
+      "participants": [
+        {
+          "id": "30ec521c-533f-579d-b3cc-4bec4638bd3b",
+          "sailorId": "06ac765d-1d35-5c0c-9c7d-173bc45fc968",
+          "sourceName": "NORIO AKIYAMA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: NORIO AKIYAMA; historic sail: 162556; club: BIWAKO YACHT CLUB; year field: 1958. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 20,
+      "name": "YANG DAREON",
+      "sailOrBoardNumber": "224349",
+      "club": "SEOUL",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 175.0,
+      "nettScore": 146.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "53bfc1f0-5769-57bc-8d04-add0b908e17c",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "cdfc0e41-f68e-584d-90a8-e31ad5844a7e",
+      "participants": [
+        {
+          "id": "5b132ff8-2d0b-509f-9a6e-b3dc9f09b198",
+          "sailorId": "53bfc1f0-5769-57bc-8d04-add0b908e17c",
+          "sourceName": "YANG DAREON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: YANG DAREON; historic sail: 224349; club: SEOUL; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 21,
+      "name": "NEIL DUNKLEY",
+      "sailOrBoardNumber": "222280",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1950,
+      "sourceBirthYear": "1950",
+      "grossScore": 178.0,
+      "nettScore": 150.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9fd049a9-9442-559a-b086-c4dcecc85702",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "44ccdd77-a0bf-5b9f-8378-5e1d9de32591",
+      "participants": [
+        {
+          "id": "a667ca03-ee38-5703-8c32-12d6ea5d943b",
+          "sailorId": "9fd049a9-9442-559a-b086-c4dcecc85702",
+          "sourceName": "NEIL DUNKLEY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: NEIL DUNKLEY; historic sail: 222280; club: RVYC; year field: 1950. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 22,
+      "name": "HIDETOSHI MORI",
+      "sailOrBoardNumber": "221083",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1971,
+      "sourceBirthYear": "1971",
+      "grossScore": 179.0,
+      "nettScore": 154.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a0781ffc-2650-5388-90bc-79429ef7ba02",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "29a45591-9070-54a0-b217-b5d1f2369c55",
+      "participants": [
+        {
+          "id": "eaa1dc5a-6c2b-598e-8c24-25f5e31d9a67",
+          "sailorId": "a0781ffc-2650-5388-90bc-79429ef7ba02",
+          "sourceName": "HIDETOSHI MORI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: HIDETOSHI MORI; historic sail: 221083; club: RVYC; year field: 1971. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 23,
+      "name": "PARK SEONG HEE",
+      "sailOrBoardNumber": "219177",
+      "club": "KSAF",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 184.0,
+      "nettScore": 155.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0edf08d5-0982-5feb-956f-80f0a8beee32",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "3d9a355b-d45c-573b-94c6-8fec7daf0eff",
+      "participants": [
+        {
+          "id": "771d0d78-79e8-573f-99d1-9b8fe551d886",
+          "sailorId": "0edf08d5-0982-5feb-956f-80f0a8beee32",
+          "sourceName": "PARK SEONG HEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: PARK SEONG HEE; historic sail: 219177; club: KSAF; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 24,
+      "name": "CLAES ELMEN",
+      "sailOrBoardNumber": "221603",
+      "club": "RVYC / HKKK",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1955,
+      "sourceBirthYear": "1955",
+      "grossScore": 196.0,
+      "nettScore": 163.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(33.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f857af8e-de4c-524b-9ada-97705dc92590",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "92a36094-edb8-5e82-a612-0a8ab40ffa76",
+      "participants": [
+        {
+          "id": "5bbe1442-6279-58f5-8c6a-dfe912a54b70",
+          "sailorId": "f857af8e-de4c-524b-9ada-97705dc92590",
+          "sourceName": "CLAES ELMEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: CLAES ELMEN; historic sail: 221603; club: RVYC / HKKK; year field: 1955. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 25,
+      "name": "JUSTIIN ANG",
+      "sailOrBoardNumber": "158031",
+      "club": "CONSTANT WIND SAILING CLUB",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1979,
+      "sourceBirthYear": "1979",
+      "grossScore": 205.0,
+      "nettScore": 172.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(33.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ee13d1f0-bbd2-4c2b-9f95-ceff48c978e2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "1c93d04f-d95e-5906-b65d-25a3ed1633f4",
+      "participants": [
+        {
+          "id": "4d0fd3c8-9459-5d77-bf8b-06da27664522",
+          "sailorId": "ee13d1f0-bbd2-4c2b-9f95-ceff48c978e2",
+          "sourceName": "JUSTIIN ANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: JUSTIIN ANG; historic sail: 158031; club: CONSTANT WIND SAILING CLUB; year field: 1979. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 26,
+      "name": "YEJI LEE",
+      "sailOrBoardNumber": "206510",
+      "club": "GANGWON",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 203.0,
+      "nettScore": 174.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e1db7d5e-13a1-56cf-a7e3-d8af1db9aeb7",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "de77ccc2-b0c7-5a3e-8ca9-5919991f3d83",
+      "participants": [
+        {
+          "id": "501fd548-b8c7-502d-894a-6c639d5be5ca",
+          "sailorId": "e1db7d5e-13a1-56cf-a7e3-d8af1db9aeb7",
+          "sourceName": "YEJI LEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: YEJI LEE; historic sail: 206510; club: GANGWON; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 27,
+      "name": "KIM CHAERIN",
+      "sailOrBoardNumber": "215573",
+      "club": "KSAF",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 208.0,
+      "nettScore": 179.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "589b14b6-5008-5a64-ad4c-5b893e9a92ff",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4df50961-a886-57e6-84aa-daeff2cf7196",
+      "participants": [
+        {
+          "id": "45a07164-2f17-58af-b5af-db6ecb02c109",
+          "sailorId": "589b14b6-5008-5a64-ad4c-5b893e9a92ff",
+          "sourceName": "KIM CHAERIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: KIM CHAERIN; historic sail: 215573; club: KSAF; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 28,
+      "name": "WIKKI BHANUBANDH",
+      "sailOrBoardNumber": "221060",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 1978,
+      "sourceBirthYear": "1978",
+      "grossScore": 215.0,
+      "nettScore": 182.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(33.0 BFD)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fc1cce04-098d-596c-84b4-a0e8d7df6be1",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "1d5a6662-efb9-50f9-aa9d-9f60e62a42f7",
+      "participants": [
+        {
+          "id": "d73edf4e-46a4-51b2-92dd-09ca4d74f31e",
+          "sailorId": "fc1cce04-098d-596c-84b4-a0e8d7df6be1",
+          "sourceName": "WIKKI BHANUBANDH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: WIKKI BHANUBANDH; historic sail: 221060; club: RVYC; year field: 1978. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 30,
+      "name": "MANZO SUZUKI",
+      "sailOrBoardNumber": "206832",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1965,
+      "sourceBirthYear": "1965",
+      "grossScore": 225.0,
+      "nettScore": 192.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(33.0 BFD)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8ee2436f-4527-5668-a8a3-4ac913e5978d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3f7664ad-610d-55ee-809e-a2219205a640",
+      "participants": [
+        {
+          "id": "a5f32a35-f252-5077-b0b5-ea1739d673c0",
+          "sailorId": "8ee2436f-4527-5668-a8a3-4ac913e5978d",
+          "sourceName": "MANZO SUZUKI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: MANZO SUZUKI; historic sail: 206832; club: RVYC; year field: 1965. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 31,
+      "name": "SATOSHI MOURI",
+      "sailOrBoardNumber": "218532",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1980,
+      "sourceBirthYear": "1980",
+      "grossScore": 227.0,
+      "nettScore": 194.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(33.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "33.0 RET"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "33.0 RET"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "61d2947c-385f-50ce-ac97-aa69c3e513ef",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "3cc2130d-5207-5907-ba74-09f0c191d297",
+      "participants": [
+        {
+          "id": "5e9015db-b796-58f2-bad6-ce33348204f3",
+          "sailorId": "61d2947c-385f-50ce-ac97-aa69c3e513ef",
+          "sourceName": "SATOSHI MOURI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: SATOSHI MOURI; historic sail: 218532; club: RVYC; year field: 1980. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 32,
+      "name": "MIN JEEHEI",
+      "sailOrBoardNumber": "198075",
+      "club": "KAESONG",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2003,
+      "sourceBirthYear": "2003",
+      "grossScore": 264.0,
+      "nettScore": 231.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(33.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "33.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1a7499fa-1b2b-5c12-8a70-9a85a381fda6",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "5fd18aa3-af19-566e-9e6a-d543daf9fdfa",
+      "participants": [
+        {
+          "id": "3d32ce48-8266-5015-87b9-d8c9a3181b15",
+          "sailorId": "1a7499fa-1b2b-5c12-8a70-9a85a381fda6",
+          "sourceName": "MIN JEEHEI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6; page 1; source name: MIN JEEHEI; historic sail: 198075; club: KAESONG; year field: 2003. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 28,
+  "deferredEntryCount": 4,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 28 of 32 class entries imported; 4 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "NOPPASORN KHUNBOONJAN",
+      "sailOrBoardNumber": "220240",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 34.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+          "name": "Noppassorn Khunboonjan",
+          "similarity": 0.976
+        },
+        {
+          "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+          "name": "Thorfun Boonnak",
+          "similarity": 0.529
+        },
+        {
+          "id": "19ec1fe1-4cdb-5ee2-85c1-61bf87a1ee6d",
+          "name": "Chonghao Anson Huang",
+          "similarity": 0.526
+        }
+      ]
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 8,
+      "name": "BRANEE MUANGNGAM",
+      "sailOrBoardNumber": "210290",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2007,
+      "sourceBirthYear": "2007",
+      "grossScore": 61.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+          "name": "Paranee Muangngam",
+          "similarity": 0.903
+        },
+        {
+          "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "name": "Surapha Muangngam",
+          "similarity": 0.71
+        },
+        {
+          "id": "214e19d2-eca3-4224-a65e-d56249b1e197",
+          "name": "Chiradej Leungthongkam",
+          "similarity": 0.611
+        }
+      ]
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 10,
+      "name": "NANAFUNAZAWA",
+      "sailOrBoardNumber": "208625",
+      "club": "HIHO BAY YACHT CLUB",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2007,
+      "sourceBirthYear": "2007",
+      "grossScore": 93.0,
+      "nettScore": 60.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(33.0 UFD)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "9ca50e97-0c1a-528c-8aee-77d3752d6e9c",
+          "name": "Hana Nakazawa",
+          "similarity": 0.75
+        },
+        {
+          "id": "5f6d71a5-1dc3-599c-b9be-377150d4dd3a",
+          "name": "Nana Muranaka",
+          "similarity": 0.667
+        },
+        {
+          "id": "c6b57c5c-01cc-5e9c-ada6-363a17c702c0",
+          "name": "Fuka Nakagawa",
+          "similarity": 0.583
+        }
+      ]
+    },
+    {
+      "eventKey": "ilca-thailand-nationals-2025",
+      "sourceDocument": "html-1",
+      "sourcePage": 1,
+      "sourceClass": "ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 29,
+      "name": "JEONMINSOL",
+      "sailOrBoardNumber": "207987",
+      "club": "GANGWON",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 216.0,
+      "nettScore": 183.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(33.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "15012e88-24c1-c977-aeff-e60cb97e9daa",
+          "name": "Jonas Aminoff",
+          "similarity": 0.636
+        },
+        {
+          "id": "5fb0c663-a7c4-401c-8a0d-b4f25d49893e",
+          "name": "Hyeonsol Kim",
+          "similarity": 0.571
+        },
+        {
+          "id": "0f1eb283-e53c-533e-8113-55753e658647",
+          "name": "Emma Tomkins",
+          "similarity": 0.571
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "63d082ef-363c-4b69-929a-25341b195a08",
+      "club": "PAssion Wave",
+      "name": "Abigail Koh",
+      "gender": "F",
+      "handle": "abigail-koh-csc25",
+      "birthYear": null,
+      "sailNumber": "214237",
+      "nationality": "SGP",
+      "sailNumberIlca4": "214237"
+    },
+    {
+      "id": "fc5e098b-be2e-4466-8b92-bada3a3479db",
+      "club": "Republic of Singapore Yacht Club",
+      "name": "Sarah Seow Hui Yan",
+      "gender": "F",
+      "handle": "sarah-seow-hui-yan-csc25",
+      "birthYear": null,
+      "sailNumber": "219162",
+      "nationality": "SGP",
+      "sailNumberIlca4": "18"
+    },
+    {
+      "id": "359d27f5-9a07-57de-8d4b-3638bf310b19",
+      "club": "WHITSTABLE YACHT CLUB",
+      "name": "Max Hunt",
+      "gender": "M",
+      "handle": "max-hunt-sr26-359d27",
+      "birthYear": 1957,
+      "sailNumber": "",
+      "nationality": "GBR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ee13d1f0-bbd2-4c2b-9f95-ceff48c978e2",
+      "club": "Constant Wind SeaSports",
+      "name": "Justiin Ang",
+      "gender": "M",
+      "handle": "justiin-ang-e32757e083",
+      "birthYear": 1979,
+      "sailNumber": "158031",
+      "nationality": "SGP",
+      "sailNumberIlca4": "158031"
+    },
+    {
+      "id": "9a71b922-1236-52ad-83b6-8810421a88ff",
+      "club": "KSAF",
+      "name": "Jung Hyewon",
+      "gender": "F",
+      "handle": "jung-hyewon-sr26-9a71b9",
+      "birthYear": 2004,
+      "sailNumber": "",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f857af8e-de4c-524b-9ada-97705dc92590",
+      "club": "HKK / RVYC",
+      "name": "Claes Elmen",
+      "gender": "M",
+      "handle": "claes-elmen-sr26-f857af",
+      "birthYear": 1955,
+      "sailNumber": "",
+      "nationality": "SWE",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a0781ffc-2650-5388-90bc-79429ef7ba02",
+      "club": "RVYC",
+      "name": "Hidetoshi Mori",
+      "gender": "M",
+      "handle": "hidetoshi-mori-sr26-a0781f",
+      "birthYear": 1971,
+      "sailNumber": "",
+      "nationality": "JPN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8ee2436f-4527-5668-a8a3-4ac913e5978d",
+      "club": "RVYC",
+      "name": "Manzo Suzuki",
+      "gender": "M",
+      "handle": "manzo-suzuki-sr26-8ee243",
+      "birthYear": 1965,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fd049a9-9442-559a-b086-c4dcecc85702",
+      "club": "RVYC",
+      "name": "Neil Dunkley",
+      "gender": "M",
+      "handle": "neil-dunkley-sr26-9fd049",
+      "birthYear": 1950,
+      "sailNumber": "",
+      "nationality": "GBR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "de0550e0-b07f-5842-b791-00b8a2d9d4a1",
+      "club": "YRAT",
+      "name": "Thanapat Siricharoen",
+      "gender": "M",
+      "handle": "thanapat-siricharoen-sr26-de0550",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5191c60e-3586-5a0d-b103-5512d9e35440",
+      "club": "YRAT",
+      "name": "Puttaraksa Imraksa",
+      "gender": "F",
+      "handle": "puttaraksa-imraksa-sr26-5191c6",
+      "birthYear": 2006,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "club": "YRAT",
+      "name": "Thorfun Boonnak",
+      "gender": "F",
+      "handle": "thorfun-boonnak-sr26-5cfe0b",
+      "birthYear": 2005,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "club": "YRAT/RVYC",
+      "name": "Marion Grace Montgomery",
+      "gender": "F",
+      "handle": "marion-grace-montgomery-sr26-0f33df",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "club": "YRAT",
+      "name": "Patcharee Sringam",
+      "gender": "F",
+      "handle": "patcharee-sringam-sr26-7dbdb6",
+      "birthYear": 2003,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "589b14b6-5008-5a64-ad4c-5b893e9a92ff",
+      "club": "JEONBUK",
+      "name": "Kim Chaerin",
+      "gender": "F",
+      "handle": "kim-chaerin-sr26-589b14",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "KOR",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "97828399-4ff6-40c1-8deb-6b308b6072ad",
+      "club": "Royal Varuna Yacht Club",
+      "name": "Gordon Alexander Allan",
+      "gender": "M",
+      "handle": "gordon-alexander-allan-c32df510a0",
+      "birthYear": 2010,
+      "sailNumber": "221058",
+      "nationality": "SGP",
+      "sailNumberIlca4": "221058"
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+      "name": "Claudia Nazarov",
+      "handle": "claudia-nazarov-sr25-0078ae",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RVYC"
+    },
+    {
+      "id": "00e255ee-fe4e-5ffd-a300-fb91012432b1",
+      "name": "Paliga Poonpat",
+      "handle": "paliga-poonpat-sr25-00e255",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT"
+    },
+    {
+      "id": "8813d941-a761-5ea0-8a0b-f6ed49ff38b8",
+      "name": "Nur Alia Amera Binti Mohamad Latif",
+      "handle": "nur-alia-amera-binti-mohamad-latif-sr25-8813d9",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "MSA/MSN"
+    },
+    {
+      "id": "1e8de1ed-c7d0-570a-8972-4b587d575bd5",
+      "name": "Kamonchanok Klahan",
+      "handle": "kamonchanok-klahan-sr25-1e8de1",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "YRAT"
+    },
+    {
+      "id": "08805f7e-ee2e-52e8-823f-d9b7b81941ba",
+      "name": "Nur Adlina Nasreen Binti Mohd Nasri",
+      "handle": "nur-adlina-nasreen-binti-mohd-nasri-sr25-08805f",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "MSA/MSN"
+    },
+    {
+      "id": "06ac765d-1d35-5c0c-9c7d-173bc45fc968",
+      "name": "Norio Akiyama",
+      "handle": "norio-akiyama-sr25-06ac76",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "BIWAKO YACHT CLUB"
+    },
+    {
+      "id": "53bfc1f0-5769-57bc-8d04-add0b908e17c",
+      "name": "Yang Dareon",
+      "handle": "yang-dareon-sr25-53bfc1",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "SEOUL"
+    },
+    {
+      "id": "0edf08d5-0982-5feb-956f-80f0a8beee32",
+      "name": "Park Seong Hee",
+      "handle": "park-seong-hee-sr25-0edf08",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "KSAF"
+    },
+    {
+      "id": "e1db7d5e-13a1-56cf-a7e3-d8af1db9aeb7",
+      "name": "Yeji Lee",
+      "handle": "yeji-lee-sr25-e1db7d",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "GANGWON"
+    },
+    {
+      "id": "fc1cce04-098d-596c-84b4-a0e8d7df6be1",
+      "name": "Wikki Bhanubandh",
+      "handle": "wikki-bhanubandh-sr25-fc1cce",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "RVYC"
+    },
+    {
+      "id": "61d2947c-385f-50ce-ac97-aa69c3e513ef",
+      "name": "Satoshi Mouri",
+      "handle": "satoshi-mouri-sr25-61d294",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "1a7499fa-1b2b-5c12-8a70-9a85a381fda6",
+      "name": "Min Jeehei",
+      "handle": "min-jeehei-sr25-1a7499",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "KAESONG"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

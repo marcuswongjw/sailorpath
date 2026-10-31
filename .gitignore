@@ -50,6 +50,19 @@ tmp/
 .claude/
 .manus/
 .work/
+*.traineddata
+outputs/high-priority-fixes-20261022/
+outputs/identity-resolutions-20261022/
+outputs/landing-page-review-20261022/
+outputs/lower-priority-fixes-20261023/
+outputs/malaysia-optimist-2026-search/
+outputs/medium-priority-fixes-20261022/
+outputs/medium-priority-fixes-20261023/
+outputs/newborn-removal-20261022/
+outputs/post-deploy-review-20261022/
+outputs/profile-high-priority-fixes-20261022/
+outputs/site-review-20261022/
+outputs/visuals/
 
 # Supabase CLI temp
 supabase/.temp/

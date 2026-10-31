@@ -1,0 +1,717 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "f3885c31-1f75-58aa-adfc-6e41ccd4a5a3",
+    "slug": "thailand-nationals-long-distance-2025",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance",
+    "startDate": "2025-04-19",
+    "endDate": "2025-04-19",
+    "venue": "Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "17541783-3aa2-5bcf-8c85-1af83adb290d",
+    "slug": "thailand-nationals-long-distance-2025-ilca4",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance \u2014 ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 1,
+    "totalFleetSize": 34,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/137882",
+    "title": "Thailand National Championship 2025 \u2014 Long Distance \u2014 ILCA 4 Open results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 9,
+      "name": "FU FENGZIYI",
+      "sailOrBoardNumber": "225277",
+      "club": "SLSC",
+      "nationality": "CHN",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 9.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "f1e36975-9563-5693-8b42-89b59edc7c13",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "12535ae4-d63e-5d5f-9d86-8e5d63a618ee",
+      "participants": [
+        {
+          "id": "4c730f1e-60c4-58fd-a665-209b8614e20d",
+          "sailorId": "f1e36975-9563-5693-8b42-89b59edc7c13",
+          "sourceName": "FU FENGZIYI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: FU FENGZIYI; historic sail: 225277; club: SLSC; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 10,
+      "name": "PACHARAPOL RUMVISAI",
+      "sailOrBoardNumber": "THA220239",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 10.0,
+      "nettScore": 10.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "894e336c-3313-5343-91e9-ff359cb21612",
+      "participants": [
+        {
+          "id": "c1e57130-439d-553f-9cc4-eb616954e3d1",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: PACHARAPOL RUMVISAI; historic sail: THA220239; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 11,
+      "name": "HUSSALUK SRINAKORN",
+      "sailOrBoardNumber": "THA225984",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ff009a0d-a3d0-522e-be37-0ab352dd03af",
+      "participants": [
+        {
+          "id": "b566894f-351c-5ad1-b501-f04408cb0190",
+          "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+          "sourceName": "HUSSALUK SRINAKORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: HUSSALUK SRINAKORN; historic sail: THA225984; club: YRAT; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 19,
+      "name": "LUCK PUAPITSIRIKUL",
+      "sailOrBoardNumber": "845119",
+      "club": "ACDC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 19.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "68fea819-ebd7-5cec-9b89-de1d58136f05",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "3fcf7b04-0d66-57ab-935b-8adaefe23cca",
+      "participants": [
+        {
+          "id": "86f3ec27-2fd8-5635-b943-f1b2769130dd",
+          "sailorId": "68fea819-ebd7-5cec-9b89-de1d58136f05",
+          "sourceName": "LUCK PUAPITSIRIKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: LUCK PUAPITSIRIKUL; historic sail: 845119; club: ACDC; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 22,
+      "name": "JESSADA NAMWONG",
+      "sailOrBoardNumber": "178106",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 22.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "3f585228-fe16-5a16-8cd9-cfd471eb53fb",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "07455800-f5fa-5fc9-b6c5-a1c90338b8c3",
+      "participants": [
+        {
+          "id": "ed1892d3-a6b3-5148-b106-3dd370751817",
+          "sailorId": "3f585228-fe16-5a16-8cd9-cfd471eb53fb",
+          "sourceName": "JESSADA NAMWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: JESSADA NAMWONG; historic sail: 178106; club: YRAT; year field: 2012. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "PINCHANOK KLAYSOMBOON",
+      "sailOrBoardNumber": "THA217322",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5b03c1e7-e21d-53b0-baa4-a6c337fd3c16",
+      "participants": [
+        {
+          "id": "f1b39190-f39a-5e3a-b38a-e9064705be8c",
+          "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+          "sourceName": "PINCHANOK KLAYSOMBOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: PINCHANOK KLAYSOMBOON; historic sail: THA217322; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "Pichayapa kamutatira",
+      "sailOrBoardNumber": "217386",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "d65f1d24-7149-519b-854e-506b4ba5788c",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "06f9abe5-1f2d-550d-833e-11e82e455525",
+      "participants": [
+        {
+          "id": "ac88c2da-b06e-53c8-9a5e-adb20215de02",
+          "sailorId": "d65f1d24-7149-519b-854e-506b4ba5788c",
+          "sourceName": "Pichayapa kamutatira",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: Pichayapa kamutatira; historic sail: 217386; club: YRAT; year field: 2012. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "PRAPASSORN KAEWPROM",
+      "sailOrBoardNumber": "THA9",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "8d54107d-d292-5e13-9616-cf53bbd41c87",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "d47d99f9-6260-5850-8ad5-3c3e81b1f7c6",
+      "participants": [
+        {
+          "id": "bedfa274-3bee-5eff-bf85-641bb9245bfe",
+          "sailorId": "8d54107d-d292-5e13-9616-cf53bbd41c87",
+          "sourceName": "PRAPASSORN KAEWPROM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: PRAPASSORN KAEWPROM; historic sail: THA9; club: YRAT; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "THANVISIT KITCHANASIRI",
+      "sailOrBoardNumber": "226085",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "781e9576-c2d9-5619-b02e-86b98ce50b41",
+      "participants": [
+        {
+          "id": "1f09390b-504d-5556-888a-05af554b1c12",
+          "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+          "sourceName": "THANVISIT KITCHANASIRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: THANVISIT KITCHANASIRI; historic sail: 226085; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "WASAWAT PUENGPRADIT",
+      "sailOrBoardNumber": "THA219465",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "2c1b6cea-2f95-5e1c-8895-2599a064f4fa",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "59843476-f7f0-586a-934a-165ba79121f9",
+      "participants": [
+        {
+          "id": "63bd92a3-8987-5d02-862c-25270cfbf7c2",
+          "sailorId": "2c1b6cea-2f95-5e1c-8895-2599a064f4fa",
+          "sourceName": "WASAWAT PUENGPRADIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: WASAWAT PUENGPRADIT; historic sail: THA219465; club: RVYC; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "Thanaporn Phokaew",
+      "sailOrBoardNumber": "217321",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "40ca06d7-972f-584d-b2c0-26c91346ed4b",
+      "participants": [
+        {
+          "id": "833cecba-8f59-55b5-86b7-2bd34d53745d",
+          "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+          "sourceName": "Thanaporn Phokaew",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: Thanaporn Phokaew; historic sail: 217321; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "Thanakrit Phokaew",
+      "sailOrBoardNumber": "21507",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "d89c5ebf-fb9b-5861-8fa4-67a8c3e815d4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "55414113-2015-51c1-86d5-6eeabcb39de0",
+      "participants": [
+        {
+          "id": "6492447e-09c5-5b0b-bd48-9d7c99237f0f",
+          "sailorId": "d89c5ebf-fb9b-5861-8fa4-67a8c3e815d4",
+          "sourceName": "Thanakrit Phokaew",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 3; source name: Thanakrit Phokaew; historic sail: 21507; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    }
+  ],
+  "importedEntryCount": 12,
+  "deferredEntryCount": 1,
+  "publicSummary": "Provisional organiser results. Original combined PY handicap standings; class subset, with original ranks and scores. Partial import: 12 of 13 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 15,
+      "name": "PUMITUS MEEIMSIN",
+      "sailOrBoardNumber": "22023",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": true,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+          "name": "Pumitus Mee-Iamsin",
+          "similarity": 0.968
+        },
+        {
+          "id": "c361c7f7-cda6-830f-7e00-60f2bea8df78",
+          "name": "Marius Eiane",
+          "similarity": 0.538
+        },
+        {
+          "id": "13e616ec-def6-49c8-80d9-6fe3d7c41719",
+          "name": "Lucius Chimon",
+          "similarity": 0.519
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": "M",
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "club": "YRAT",
+      "name": "Thanaporn Phokaew",
+      "gender": "F",
+      "handle": "thanaporn-phokaew-2zbw4z0",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225426"
+    },
+    {
+      "id": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "club": "YRAT",
+      "name": "Pinchanok Klaysomboon",
+      "gender": "F",
+      "handle": "pinchanok-klaysomboon-ofynlxk",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "222687"
+    },
+    {
+      "id": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "club": "YRAT",
+      "name": "Hussaluk Srinakorn",
+      "gender": "M",
+      "handle": "hussaluk-srinakorn-2pumyyp",
+      "birthYear": 2009,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "club": "RVYC",
+      "name": "Thanvisit Kitchanasiri",
+      "gender": "M",
+      "handle": "thanvisit-kitchanasiri-thai25-278c69",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "226395"
+    },
+    {
+      "id": "d89c5ebf-fb9b-5861-8fa4-67a8c3e815d4",
+      "club": "YRAT",
+      "name": "Thanakrit Phokaew",
+      "gender": "M",
+      "handle": "thanakrit-phokaew-sr26-d89c5e",
+      "birthYear": 2010,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "222685"
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "8d54107d-d292-5e13-9616-cf53bbd41c87",
+      "name": "Prapassorn Kaewprom",
+      "handle": "prapassorn-kaewprom-sr25-8d5410",
+      "sailNumber": "",
+      "sailNumberIlca4": "21507",
+      "nationality": null,
+      "gender": "F",
+      "club": "YRAT"
+    },
+    {
+      "id": "68fea819-ebd7-5cec-9b89-de1d58136f05",
+      "name": "Luck Puapitsirikul",
+      "handle": "luck-puapitsirikul-sr25-68fea8",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "ACDC. SC"
+    },
+    {
+      "id": "2c1b6cea-2f95-5e1c-8895-2599a064f4fa",
+      "name": "Wasawat Puengpradit",
+      "handle": "wasawat-puengpradit-sr25-2c1b6c",
+      "sailNumber": "",
+      "sailNumberIlca4": "THA 219465",
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "d65f1d24-7149-519b-854e-506b4ba5788c",
+      "name": "Pichayapa Kamutatira",
+      "handle": "pichayapa-kamutatira-sr25-d65f1d",
+      "sailNumber": "",
+      "sailNumberIlca4": "217386",
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT"
+    },
+    {
+      "id": "3f585228-fe16-5a16-8cd9-cfd471eb53fb",
+      "name": "Jessada Namwong",
+      "handle": "jessada-namwong-sr25-3f5852",
+      "sailNumber": "",
+      "sailNumberIlca4": "178106",
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "f1e36975-9563-5693-8b42-89b59edc7c13",
+      "name": "Fu Fengziyi",
+      "handle": "fu-fengziyi-sr25-f1e369",
+      "sailNumber": "",
+      "sailNumberIlca4": "225277",
+      "nationality": "CHN",
+      "gender": "M",
+      "club": "SLSC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

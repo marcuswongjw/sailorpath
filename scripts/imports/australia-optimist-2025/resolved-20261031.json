@@ -1,0 +1,297 @@
+[
+  {
+    "folder": "australia-optimist-2025",
+    "sheet": {
+      "id": "118dd38f-e66e-5fe2-9a3c-1da284dac37f",
+      "slug": "2025-musto-australian-optimist-championship-optimist-green",
+      "name": "2025 Musto Australian Optimist Championship \u2014 Optimist Green",
+      "boatClass": "Optimist",
+      "division": "Green",
+      "raceCount": 16,
+      "totalFleetSize": 34,
+      "entryType": "individual",
+      "minParticipants": 1,
+      "maxParticipants": 1,
+      "status": "draft"
+    },
+    "source": {
+      "url": "https://sailingresults.net/sa/results/overall.aspx?ID=82026.3",
+      "title": "2025 Musto Australian Optimist Championship \u2014 Optimist Green",
+      "type": "url",
+      "provisional": false,
+      "publicationStatus": "published overall standings",
+      "visuallyReviewed": true,
+      "pdfUrl": "https://results.rqys.com.au/ResultsArchive/2025/2025%20Musto%20Australian%20Optimist%20Championship/Overall%20Results%20-%20Green%20Fleet.pdf",
+      "pdfLimitation": "Open and Green PDF right-hand columns clipped; complete values from official HTML."
+    },
+    "row": {
+      "event": "nationals",
+      "division": "Green",
+      "rank": 11,
+      "name": "Naomi VON BIBRA",
+      "sailOrBoardNumber": "514",
+      "club": "RQYS",
+      "grossScore": 199.0,
+      "nettScore": 158.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "12",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "1",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "13",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "10",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "raw": "18",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 8,
+          "raw": "6",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 9,
+          "raw": "10",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 10,
+          "raw": "(21)",
+          "score": 21.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 11,
+          "raw": "17",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 12,
+          "raw": "16",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 13,
+          "raw": "15",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 14,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 15,
+          "raw": "(20)",
+          "score": 20.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 16,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": "F",
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Naomi VON BIBRA",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "41c571c0-0ca0-5403-b3e5-51b515ae9c38",
+          "name": "Naomi Von Bubra",
+          "sail": "1709",
+          "similarity": 0.923
+        },
+        {
+          "id": "10ebfe56-5763-4270-bb43-ad01e524c0ca",
+          "name": "Luca Von Bibra",
+          "sail": "1604",
+          "similarity": 0.72
+        },
+        {
+          "id": "1d6a7924-ff83-5128-9e2d-a07a3cb10e9d",
+          "name": "Takiko Minehira",
+          "sail": "JPN 1",
+          "similarity": 0.593
+        }
+      ]
+    },
+    "sailorId": "41c571c0-0ca0-5403-b3e5-51b515ae9c38",
+    "expectedName": "Naomi Von Bubra",
+    "expectedStatus": "published",
+    "sources": [
+      "https://www.racingrulesofsailing.org/competitors/13308/event?page=2",
+      "https://www.rqys.com.au/rqys-sailors-shine-at-2026-optimist-national-championships-in-hobart/",
+      "https://sailingresults.net/sa/results/entrylist.aspx?ID=82277.2"
+    ],
+    "rationale": "RQYS names Naomi von Bibra as its 2026 Nationals Under 10 Girls winner. Official 2026 entry uses VON BUBRA, Nitro, sail 1709, RQYS; Queensland official noticeboard uses von Bibra, Nitro, sail 1709, Royal Qld Yacht Squadron. 2025 held full name and RQYS agree. Historical sail 514 retained; existing profile attributes unchanged.",
+    "resultId": "e39c2dbb-8fae-59f6-81e2-ab6afd42b940",
+    "participantId": "2f921f10-547e-5995-a760-df6c5103b4b9"
+  },
+  {
+    "folder": "australia-optimist-2025",
+    "sheet": {
+      "id": "1e523e5f-5b60-5366-8914-f0f556c2c730",
+      "slug": "2025-nsw-optimist-championship-optimist-intermediate",
+      "name": "2025 NSW Optimist Championship \u2014 Optimist Intermediate",
+      "boatClass": "Optimist",
+      "division": "Intermediate",
+      "raceCount": 5,
+      "totalFleetSize": 51,
+      "entryType": "individual",
+      "minParticipants": 1,
+      "maxParticipants": 1,
+      "status": "draft"
+    },
+    "source": {
+      "url": "https://www.austeamsailing.com/events/nswstates2025.htm",
+      "title": "2025 NSW Optimist Championship \u2014 Optimist Intermediate",
+      "type": "url",
+      "provisional": false,
+      "publicationStatus": "published overall standings",
+      "visuallyReviewed": false,
+      "pdfUrl": null,
+      "pdfLimitation": "Official results PDF not located."
+    },
+    "row": {
+      "event": "nsw",
+      "division": "Intermediate",
+      "rank": 38,
+      "name": "Naomi von Bibra",
+      "sailOrBoardNumber": "1589",
+      "club": "RQYS",
+      "grossScore": 180.0,
+      "nettScore": 131.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(49.0)",
+          "score": 49.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "44.0",
+          "score": 44.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "42.0",
+          "score": 42.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Naomi von Bibra",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "41c571c0-0ca0-5403-b3e5-51b515ae9c38",
+          "name": "Naomi Von Bubra",
+          "sail": "1709",
+          "similarity": 0.923
+        },
+        {
+          "id": "10ebfe56-5763-4270-bb43-ad01e524c0ca",
+          "name": "Luca Von Bibra",
+          "sail": "1604",
+          "similarity": 0.72
+        },
+        {
+          "id": "1d6a7924-ff83-5128-9e2d-a07a3cb10e9d",
+          "name": "Takiko Minehira",
+          "sail": "JPN 1",
+          "similarity": 0.593
+        }
+      ]
+    },
+    "sailorId": "41c571c0-0ca0-5403-b3e5-51b515ae9c38",
+    "expectedName": "Naomi Von Bubra",
+    "expectedStatus": "published",
+    "sources": [
+      "https://www.racingrulesofsailing.org/competitors/13308/event?page=2",
+      "https://www.rqys.com.au/rqys-sailors-shine-at-2026-optimist-national-championships-in-hobart/",
+      "https://www.austeamsailing.com/events/nswstates2025.htm"
+    ],
+    "rationale": "Same Naomi von Bibra / VON BUBRA evidence as Nationals Green: exact corrected name and RQYS match. NSW official result lists Naomi von Bibra, RQYS, Lean Machine 1589. Historical sail 1589 and source race labels 1,2,3,5,6 retained; existing profile attributes unchanged.",
+    "resultId": "8284b29e-c2f7-5e90-ba86-2feb5c31530e",
+    "participantId": "339af0dd-818d-585a-b876-c8aeaa130a50"
+  }
+]

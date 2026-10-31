@@ -1,0 +1,139 @@
+{
+  "checkedAt": "2026-10-30",
+  "status": "published_live_provisional_with_identity_holds",
+  "databaseWrites": {
+    "events": 2,
+    "sheets": 3,
+    "results": 62,
+    "raceScores": 682,
+    "participants": 62,
+    "newSailors": 8,
+    "existingSailorsUpdated": 0
+  },
+  "sourceSnapshots": [
+    {
+      "url": "https://www.sailwave.com/results/YSC%20CFC%20Optimist%20Open%202026.htm",
+      "file": "cfc.html",
+      "sha256": "f63f7a607d9214f4869ae62e74fc59aa07d186f4dab1b3d5b6457b9db94c15af"
+    },
+    {
+      "url": "https://www.sailwave.com/results/ODMR_2026_ILCA4_OP.htm",
+      "file": "odmr.html",
+      "sha256": "f0685a42a1874e8d6df68ee5a5c5f005ccb2c9933942dceaac7bd478896db6de"
+    }
+  ],
+  "pdfCorroboration": {
+    "available": false,
+    "searched": [
+      "https://myanmarsailing.org/",
+      "https://myanmarsailing.org/news/",
+      "https://myanmarsailing.org/regatta-clinic-schedule/",
+      "https://myanmarsailing.org/category/regatta/",
+      "https://yangonsailing.com/ (not accessible)",
+      "Sailwave results folder and requested sheets",
+      "Web searches for event titles, organiser, host club, class association ODAM, national federation, PDF and final results",
+      "Targeted Facebook searches for Yangon Sailing Club"
+    ],
+    "outcome": "No official final-results PDF located. No PDF verification claimed."
+  },
+  "dates": {
+    "olympicDay": {
+      "start": "2026-06-20",
+      "end": "2026-06-21",
+      "sourceRevision": "2026-06-23 08:30",
+      "basis": "User explicitly instructed to assume these dates on 2026-10-30; not independently verified."
+    },
+    "cfc": {
+      "start": "2026-09-19",
+      "end": "2026-09-20",
+      "sourceRevision": "2026-09-22 10:41",
+      "basis": "User explicitly instructed to assume these dates on 2026-10-30; not independently verified."
+    },
+    "note": "User-supplied assumed event dates, not derived from publication timestamps."
+  },
+  "fleets": [
+    {
+      "event": "YSC CFC 2026",
+      "boatClass": "Optimist",
+      "entries": 31,
+      "raceScores": 341,
+      "provisional": true,
+      "reconciled": 31,
+      "discrepancies": 0
+    },
+    {
+      "event": "Olympic Day Movement Regatta 2026",
+      "boatClass": "ILCA 4",
+      "entries": 7,
+      "raceScores": 77,
+      "provisional": true,
+      "reconciled": 7,
+      "discrepancies": 0
+    },
+    {
+      "event": "Olympic Day Movement Regatta 2026",
+      "boatClass": "Optimist",
+      "entries": 31,
+      "raceScores": 341,
+      "provisional": true,
+      "reconciled": 13,
+      "discrepancies": 18
+    }
+  ],
+  "scorePolicy": "Preserve raw text and published total/net. Code-only scores are tentative Appendix A fleet-size-plus-one values, not explicit source points; totals must reconcile before import. Never alter source values to force agreement.",
+  "identityPolicy": "Existing profiles unchanged. Exact normalized names and reviewed paired-source aliases reused. Seven entries held for ambiguous identity; complete source rows retained in pending-entries.json and database audit details.",
+  "blockers": [
+    "Seven entries pending identity review; see pending-entries.json."
+  ],
+  "scoringInstruction": "User explicitly instructed: for Olympic Day discrepancies, follow what is in results sheet. Raw race cells, ranks, discards and published total/net retained unchanged; rows remain pending_review. Numeric scores for code-only cells remain fleet+1 assumptions and are labeled in evidence.",
+  "verification": {
+    "transactionalDryRun": "passed and rolled back before actual import",
+    "postImportInventory": "3 draft sheets; 62 pending_review results; 682 race scores",
+    "idempotentReplay": "passed without duplicate rows",
+    "existingProfilePreservation": "transactional before/after full-profile checks passed",
+    "sourcePreservation": "Each imported rank, total/net, raw race cell, code and discard checked by import transaction; arithmetic mismatch checks waived only for documented source discrepancies per user instruction."
+  },
+  "publication": {
+    "publishedOn": "2026-10-30",
+    "sourceSheetsUnchanged": true,
+    "reviewedResults": 62,
+    "raceScores": 682,
+    "heldEntries": 7,
+    "sheetsPublished": 3,
+    "cacheTag": "public-regattas",
+    "sourceValuesPreserved": true,
+    "publicTableReview": [
+      {
+        "path": "/regattas/yangon-sailing-club-combined-fleet-championships-2026/results/optimist",
+        "httpStatus": 200,
+        "visibleRows": 28,
+        "raceCellsChecked": 308,
+        "errors": [],
+        "provisional": true,
+        "partialNotice": true
+      },
+      {
+        "path": "/regattas/olympic-day-movement-regatta-2026/results/ilca-4",
+        "httpStatus": 200,
+        "visibleRows": 5,
+        "raceCellsChecked": 55,
+        "errors": [],
+        "provisional": true,
+        "partialNotice": true
+      },
+      {
+        "path": "/regattas/olympic-day-movement-regatta-2026/results/optimist",
+        "httpStatus": 200,
+        "visibleRows": 29,
+        "raceCellsChecked": 319,
+        "errors": [],
+        "provisional": true,
+        "partialNotice": true
+      }
+    ],
+    "liveEventUrls": [
+      "https://sailorpath.com/regattas/yangon-sailing-club-combined-fleet-championships-2026",
+      "https://sailorpath.com/regattas/olympic-day-movement-regatta-2026"
+    ]
+  }
+}

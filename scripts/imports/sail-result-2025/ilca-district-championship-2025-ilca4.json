@@ -1,0 +1,2811 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "aceb80c8-46ee-5e27-860d-2a5137e20235",
+    "slug": "ilca-district-championship-2025",
+    "name": "ILCA District Championship 2025",
+    "startDate": "2025-10-31",
+    "endDate": "2025-11-02",
+    "venue": "Royal Varuna Yacht Club, Pattaya, Thailand",
+    "organizer": "Royal Varuna Yacht Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7"
+    ]
+  },
+  "sheet": {
+    "id": "c9fcde35-3332-5194-906f-774fe4ee8502",
+    "slug": "ilca-district-championship-2025-ilca4",
+    "name": "ILCA District Championship 2025 \u2014 ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 3,
+    "totalFleetSize": 42,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://jpvm.org/results/2025/rvyc/Results_ilca.html",
+    "title": "ILCA District Championship 2025 \u2014 ILCA 4 Open results",
+    "type": "link",
+    "provisional": false,
+    "publicationStatus": "unspecified",
+    "visuallyReviewed": false,
+    "pdfSearch": "Searched official organiser notice board, Royal Varuna event pages, ILCA class association article and web PDF queries. Organiser-linked HTML only; not PDF-verified."
+  },
+  "results": [
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 1,
+      "name": "NIGEL TAN XU YUAN",
+      "sailOrBoardNumber": "SGP 225176",
+      "club": "CONSTANT WIND",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 4.0,
+      "nettScore": 4.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ca98c637-aebd-4f38-81c7-80345846c93a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "6f0783de-f938-5740-a2cc-9547899c6b96",
+      "participants": [
+        {
+          "id": "f2dd0acb-09e2-543e-bf80-527d28c58153",
+          "sailorId": "ca98c637-aebd-4f38-81c7-80345846c93a",
+          "sourceName": "NIGEL TAN XU YUAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: NIGEL TAN XU YUAN; historic sail: SGP 225176; club: CONSTANT WIND; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 2,
+      "name": "PINCHANOK KLAYSOMBOON",
+      "sailOrBoardNumber": "THA 217386",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "112630a8-c0e7-52ed-ad5c-322e6eea75b1",
+      "participants": [
+        {
+          "id": "a342f196-abe4-5ea8-a590-171687d1678c",
+          "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+          "sourceName": "PINCHANOK KLAYSOMBOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: PINCHANOK KLAYSOMBOON; historic sail: THA 217386; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 3,
+      "name": "DARWIN HSU",
+      "sailOrBoardNumber": "THA 225985",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 16.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "45f1c6a5-7e6f-529e-9537-aa73d0833b86",
+      "participants": [
+        {
+          "id": "ababce80-bee2-5b07-abfd-fa54b7bd7856",
+          "sailorId": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+          "sourceName": "DARWIN HSU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: DARWIN HSU; historic sail: THA 225985; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 4,
+      "name": "HUSSALUK SRINAKORN",
+      "sailOrBoardNumber": "THA 217453",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "0d48887e-2593-5f19-ac3f-9553a482d6aa",
+      "participants": [
+        {
+          "id": "f8117329-97d5-56cb-bf10-b8a53ba3a7c2",
+          "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+          "sourceName": "HUSSALUK SRINAKORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: HUSSALUK SRINAKORN; historic sail: THA 217453; club: YRAT; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 5,
+      "name": "PRIN SUBYING",
+      "sailOrBoardNumber": "THA 222687",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 24.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a5cfeab5-115f-5319-aaad-ddc367057337",
+      "participants": [
+        {
+          "id": "b4b4576c-f37f-59c2-aadb-d00400c09485",
+          "sailorId": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+          "sourceName": "PRIN SUBYING",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: PRIN SUBYING; historic sail: THA 222687; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 6,
+      "name": "IAN GOH",
+      "sailOrBoardNumber": "SGP 222713",
+      "club": "CONTANT WIND",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d52d284f-c0d7-4a72-b86d-45c57b963c6c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ae003669-1c93-5e37-b026-cd24d9b57a28",
+      "participants": [
+        {
+          "id": "950efba4-7131-58d1-9fc8-cea3be3972c1",
+          "sailorId": "d52d284f-c0d7-4a72-b86d-45c57b963c6c",
+          "sourceName": "IAN GOH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: IAN GOH; historic sail: SGP 222713; club: CONTANT WIND; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 7,
+      "name": "MORI IKUTO",
+      "sailOrBoardNumber": "JPN 221687",
+      "club": "CHANGI SAILING CLUB",
+      "nationality": "JPN",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 32.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "61334a08-e796-43d7-aeb8-ac70f6bf6f30",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "41071e95-ff95-5d2c-96fc-f3a8e3d062a0",
+      "participants": [
+        {
+          "id": "fc31920d-ea5e-5145-bced-5ab551696092",
+          "sailorId": "61334a08-e796-43d7-aeb8-ac70f6bf6f30",
+          "sourceName": "MORI IKUTO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: MORI IKUTO; historic sail: JPN 221687; club: CHANGI SAILING CLUB; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 8,
+      "name": "TORN RATTANA",
+      "sailOrBoardNumber": "THA 221947",
+      "club": "YRAT/RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "efba7d9a-d71a-55b9-90fc-5ec21941baa1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5d5bf98c-da7a-52ed-9ba9-2ffd10dd70b0",
+      "participants": [
+        {
+          "id": "b71a6895-9516-50f4-a141-603997a3d12c",
+          "sailorId": "efba7d9a-d71a-55b9-90fc-5ec21941baa1",
+          "sourceName": "TORN RATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: TORN RATTANA; historic sail: THA 221947; club: YRAT/RVYC; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 9,
+      "name": "JOASH TAN JING EN",
+      "sailOrBoardNumber": "SGP 209051",
+      "club": "ONE DEGREE 15",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 38.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5b7d75f5-3786-41de-81a1-76bbba1869e9",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f693df89-2dc9-59b2-a93d-50bf6a136f07",
+      "participants": [
+        {
+          "id": "9698d4e3-4d0f-5e09-aacb-06e0cb9571db",
+          "sailorId": "5b7d75f5-3786-41de-81a1-76bbba1869e9",
+          "sourceName": "JOASH TAN JING EN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: JOASH TAN JING EN; historic sail: SGP 209051; club: ONE DEGREE 15; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 10,
+      "name": "WONG WEIKAI ZACHARY",
+      "sailOrBoardNumber": "SGP 221061",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 39.0,
+      "nettScore": 39.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ec69d8a1-8f12-4ca3-a99c-d3e18d096b2a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7e033b81-43e6-51f8-82c8-59a561ddc0eb",
+      "participants": [
+        {
+          "id": "c02428b7-27ce-5be7-9a32-a386c246a907",
+          "sailorId": "ec69d8a1-8f12-4ca3-a99c-d3e18d096b2a",
+          "sourceName": "WONG WEIKAI ZACHARY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: WONG WEIKAI ZACHARY; historic sail: SGP 221061; club: RVYC; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 11,
+      "name": "PACHARAPOL RUMVISAI",
+      "sailOrBoardNumber": "THA 216489",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 40.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "aa63bdd9-d479-504e-88a9-5be60d195167",
+      "participants": [
+        {
+          "id": "6259daa7-d5f9-5182-90ee-eb54639e731d",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: PACHARAPOL RUMVISAI; historic sail: THA 216489; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 12,
+      "name": "AUSTIN YEO",
+      "sailOrBoardNumber": "SGP 221062",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 44.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d7ce117b-5c64-40ea-86bd-79a7a73bb833",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7c8c5bf8-8edf-583b-97da-f26d03fddcaa",
+      "participants": [
+        {
+          "id": "11f820b1-0f03-5136-a455-36f03100e84c",
+          "sailorId": "d7ce117b-5c64-40ea-86bd-79a7a73bb833",
+          "sourceName": "AUSTIN YEO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: AUSTIN YEO; historic sail: SGP 221062; club: RVYC; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 13,
+      "name": "JOLIN ZHENG",
+      "sailOrBoardNumber": "HKG 209319",
+      "club": "RHKYC",
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 45.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "018b6ed4-9636-47e1-8d40-aa5e21a22f32",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "0d1c91c3-ce29-5701-91ae-b61ed1ba249f",
+      "participants": [
+        {
+          "id": "5bfc3fb2-6db1-5755-bcb6-f2cb4137ce04",
+          "sailorId": "018b6ed4-9636-47e1-8d40-aa5e21a22f32",
+          "sourceName": "JOLIN ZHENG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: JOLIN ZHENG; historic sail: HKG 209319; club: RHKYC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 14,
+      "name": "CHEN YU KAI",
+      "sailOrBoardNumber": "TPE 222236",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 45.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ad7a6bbd-6cf8-5f38-96f2-0c40bdc246e4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "37d8d29e-a4d4-5d8a-91b7-ea2578dc8ed3",
+      "participants": [
+        {
+          "id": "5c056e57-a3a0-5c6c-ba5b-8e50c8e6b87d",
+          "sailorId": "ad7a6bbd-6cf8-5f38-96f2-0c40bdc246e4",
+          "sourceName": "CHEN YU KAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: CHEN YU KAI; historic sail: TPE 222236; club: RVYC; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 17,
+      "name": "MIKA TEW",
+      "sailOrBoardNumber": "SGP 219762",
+      "club": "PASSION WAVE",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 51.0,
+      "nettScore": 51.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bf1de4cb-9dd4-426d-a9e1-a669f7e091d9",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "973e440b-a896-5bd2-b14e-672601dfe751",
+      "participants": [
+        {
+          "id": "7c248b2b-06a1-572b-a838-622329982430",
+          "sailorId": "bf1de4cb-9dd4-426d-a9e1-a669f7e091d9",
+          "sourceName": "MIKA TEW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: MIKA TEW; historic sail: SGP 219762; club: PASSION WAVE; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 18,
+      "name": "THANVISIT KITCHANASIRI",
+      "sailOrBoardNumber": "THA 226395",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 52.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "fb26fc80-db8a-571c-8c49-16ebd011e5bf",
+      "participants": [
+        {
+          "id": "e7e498c0-0d58-52e9-b5bf-289ecffea6b4",
+          "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+          "sourceName": "THANVISIT KITCHANASIRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: THANVISIT KITCHANASIRI; historic sail: THA 226395; club: RVYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 19,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "128105",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 53.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "501a48e1-b6f1-569f-a827-1bdbe906d7e0",
+      "participants": [
+        {
+          "id": "c83a7efb-8368-5530-8825-6a2683388955",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "KARIT PHRAMMANEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: KARIT PHRAMMANEE; historic sail: 128105; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 20,
+      "name": "HENRY ATICHAT WIEDMANN",
+      "sailOrBoardNumber": "THA 214987",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "98cc5ed0-1dc7-5da1-b2cd-77a6306db913",
+      "participants": [
+        {
+          "id": "603d2a35-8111-5b43-8474-a53965531930",
+          "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+          "sourceName": "HENRY ATICHAT WIEDMANN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: HENRY ATICHAT WIEDMANN; historic sail: THA 214987; club: RVYC; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 21,
+      "name": "NATTAPON TOUTTACHON",
+      "sailOrBoardNumber": "THA 22024",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 59.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "cb7dd15b-b058-430c-88e5-fe0c3a31830e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8f230242-95bb-5dd1-afa8-4d4dcc255aa9",
+      "participants": [
+        {
+          "id": "daa0be3b-528b-5789-af11-5e052e1641e2",
+          "sailorId": "cb7dd15b-b058-430c-88e5-fe0c3a31830e",
+          "sourceName": "NATTAPON TOUTTACHON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: NATTAPON TOUTTACHON; historic sail: THA 22024; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 22,
+      "name": "AMANDINE PITSILIS",
+      "sailOrBoardNumber": "FRA 219725",
+      "club": "CHANGI SAILING CLUB",
+      "nationality": "FRA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 60.0,
+      "nettScore": 60.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "328bdcaa-1773-4bb8-801d-c845c11f2667",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "12e53d35-af18-5d45-b01f-e92d53a67dd3",
+      "participants": [
+        {
+          "id": "fdf64241-8119-5f48-bc49-528aa81149c2",
+          "sailorId": "328bdcaa-1773-4bb8-801d-c845c11f2667",
+          "sourceName": "AMANDINE PITSILIS",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: AMANDINE PITSILIS; historic sail: FRA 219725; club: CHANGI SAILING CLUB; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 23,
+      "name": "ESZTER SZALAY",
+      "sailOrBoardNumber": "HUN 226796",
+      "club": "BMF VSE",
+      "nationality": "HUN",
+      "gender": "F",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 61.0,
+      "nettScore": 61.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "12ef5727-01d3-5d57-97b2-86b18a3f73b6",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ce41b25f-525c-5f20-9b5c-17aefdb11635",
+      "participants": [
+        {
+          "id": "a941240e-e929-5dbd-875f-05945e2a8e94",
+          "sailorId": "12ef5727-01d3-5d57-97b2-86b18a3f73b6",
+          "sourceName": "ESZTER SZALAY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: ESZTER SZALAY; historic sail: HUN 226796; club: BMF VSE; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 24,
+      "name": "LIM YUK JUN",
+      "sailOrBoardNumber": "SGP 225182",
+      "club": "SAF YACHT CLUB",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 62.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "26414c39-ffe4-417d-aabc-a577d6355fd5",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "18f4d670-59c8-5a40-8c23-822be8b055fa",
+      "participants": [
+        {
+          "id": "47ebfc7d-f4c2-5245-9059-ddb36426e1a1",
+          "sailorId": "26414c39-ffe4-417d-aabc-a577d6355fd5",
+          "sourceName": "LIM YUK JUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: LIM YUK JUN; historic sail: SGP 225182; club: SAF YACHT CLUB; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 25,
+      "name": "THANAPORN PHOKAEW",
+      "sailOrBoardNumber": "THA 22268",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 65.0,
+      "nettScore": 65.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "34dc2236-5926-51c8-ba1d-40260a067460",
+      "participants": [
+        {
+          "id": "6d2a095e-35fb-50fc-8dde-588bfc2d887e",
+          "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+          "sourceName": "THANAPORN PHOKAEW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: THANAPORN PHOKAEW; historic sail: THA 22268; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 26,
+      "name": "NINA WANG",
+      "sailOrBoardNumber": "CHN 221551",
+      "club": "QINGDAO SPORT SCHOOL",
+      "nationality": "CHN",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 68.0,
+      "nettScore": 68.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0b42963a-efa1-4010-9029-b50953b6f1fb",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5b040eb0-5de2-5006-9581-e12e332d59dc",
+      "participants": [
+        {
+          "id": "16a9711a-5658-5363-ab43-caa55eb8d91b",
+          "sailorId": "0b42963a-efa1-4010-9029-b50953b6f1fb",
+          "sourceName": "NINA WANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: NINA WANG; historic sail: CHN 221551; club: QINGDAO SPORT SCHOOL; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 27,
+      "name": "ZSOLT SZALAY",
+      "sailOrBoardNumber": "HUN 226793",
+      "club": "BMF VSE",
+      "nationality": "HUN",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 69.0,
+      "nettScore": 69.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9dac82f1-ca4f-554d-9a13-49c59feab0d5",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "588b300c-7414-5929-a83b-7ba709005665",
+      "participants": [
+        {
+          "id": "0c5b2777-a483-5112-962a-070e5b7c2f4f",
+          "sailorId": "9dac82f1-ca4f-554d-9a13-49c59feab0d5",
+          "sourceName": "ZSOLT SZALAY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: ZSOLT SZALAY; historic sail: HUN 226793; club: BMF VSE; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 28,
+      "name": "BAI ZI XI JAYDEN",
+      "sailOrBoardNumber": "SGP 225261",
+      "club": "PASSION WAVE",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 81.0,
+      "nettScore": 81.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3b678e7c-898f-4784-b309-d092393af6b5",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4116df5a-367b-5aeb-aa54-96b4c977379b",
+      "participants": [
+        {
+          "id": "e34bae95-dde0-5219-a2af-41297101edc8",
+          "sailorId": "3b678e7c-898f-4784-b309-d092393af6b5",
+          "sourceName": "BAI ZI XI JAYDEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: BAI ZI XI JAYDEN; historic sail: SGP 225261; club: PASSION WAVE; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 29,
+      "name": "WONG QI KE FEBE",
+      "sailOrBoardNumber": "SGP 225224",
+      "club": "SAYFC",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 86.0,
+      "nettScore": 86.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 43.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "43.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "97297f2f-45a3-4a42-bb8b-7de07d9a5cde",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "28ff3a32-0f3c-56c3-a067-4234f30d8e88",
+      "participants": [
+        {
+          "id": "798655cb-cd1d-5ca0-b123-b191f9cc3021",
+          "sailorId": "97297f2f-45a3-4a42-bb8b-7de07d9a5cde",
+          "sourceName": "WONG QI KE FEBE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: WONG QI KE FEBE; historic sail: SGP 225224; club: SAYFC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 30,
+      "name": "WONG KAI LUN",
+      "sailOrBoardNumber": "SGP 214779",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 89.0,
+      "nettScore": 89.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8203869d-2432-48ee-bd3e-0c591aeb9fdb",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4a25e9c4-0971-5800-a87c-5df46df7043d",
+      "participants": [
+        {
+          "id": "981bf7d4-3a8c-5c10-9742-183f80378f44",
+          "sailorId": "8203869d-2432-48ee-bd3e-0c591aeb9fdb",
+          "sourceName": "WONG KAI LUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: WONG KAI LUN; historic sail: SGP 214779; club: RVYC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 31,
+      "name": "WONG LI XUAN MILDRED",
+      "sailOrBoardNumber": "SGP 223200",
+      "club": "CONTANT WIND",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 92.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3cf3ef94-6f08-485b-86f0-6c1d46de7a02",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f07d2f81-0c49-5531-be61-df3515eccd14",
+      "participants": [
+        {
+          "id": "9bcd609f-cbc4-50f2-996b-27c9a250bdc9",
+          "sailorId": "3cf3ef94-6f08-485b-86f0-6c1d46de7a02",
+          "sourceName": "WONG LI XUAN MILDRED",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: WONG LI XUAN MILDRED; historic sail: SGP 223200; club: CONTANT WIND; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 32,
+      "name": "ISAIAH YAP CHOR HONG",
+      "sailOrBoardNumber": "SGP 227463",
+      "club": "CHANGI SAILING CLUB",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 96.0,
+      "nettScore": 96.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 43.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "43.0 DSQ"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "263ef930-f0ec-4d7a-8ca9-cb19b1cc52d1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ce6e2231-cb0e-590f-abfd-6ed37fc83f7a",
+      "participants": [
+        {
+          "id": "ecdc8ccf-ade6-55bb-8644-74d55b97d0eb",
+          "sailorId": "263ef930-f0ec-4d7a-8ca9-cb19b1cc52d1",
+          "sourceName": "ISAIAH YAP CHOR HONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: ISAIAH YAP CHOR HONG; historic sail: SGP 227463; club: CHANGI SAILING CLUB; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 33,
+      "name": "JOHN RAPHAEL LIM",
+      "sailOrBoardNumber": "SGP 206799",
+      "club": "RVYC",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 97.0,
+      "nettScore": 97.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6bc22d30-b06a-4e64-86a9-f4cb99535f33",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e446ba59-f2fc-5866-9ec4-11405fd75b5b",
+      "participants": [
+        {
+          "id": "cebe4226-f87c-59b2-ba01-14d9b499bae3",
+          "sailorId": "6bc22d30-b06a-4e64-86a9-f4cb99535f33",
+          "sourceName": "JOHN RAPHAEL LIM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: JOHN RAPHAEL LIM; historic sail: SGP 206799; club: RVYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 34,
+      "name": "LAUREN LIM XIU QING",
+      "sailOrBoardNumber": "SGP 216431",
+      "club": "CHANGI SAILING CLUB",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 99.0,
+      "nettScore": 99.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5fef1999-39e8-57bd-9e60-a8a9de0eead2",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "626137cc-d8b7-5204-85c8-bd28923615e6",
+      "participants": [
+        {
+          "id": "d89659c8-de65-53b4-813b-f6710d38e873",
+          "sailorId": "5fef1999-39e8-57bd-9e60-a8a9de0eead2",
+          "sourceName": "LAUREN LIM XIU QING",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: LAUREN LIM XIU QING; historic sail: SGP 216431; club: CHANGI SAILING CLUB; year field: 2012. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 35,
+      "name": "JONATHAN KWOK",
+      "sailOrBoardNumber": "SGP 214808",
+      "club": "CHANGI SAILING CLUB",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 100.0,
+      "nettScore": 100.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9850df41-2b48-4891-b2aa-c9453aa2051c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b7181ffe-1510-5566-af2f-00855891a7b4",
+      "participants": [
+        {
+          "id": "4648a70c-789d-50df-b9fb-44758a01ae7b",
+          "sailorId": "9850df41-2b48-4891-b2aa-c9453aa2051c",
+          "sourceName": "JONATHAN KWOK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: JONATHAN KWOK; historic sail: SGP 214808; club: CHANGI SAILING CLUB; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 36,
+      "name": "REYES TAN JIT ENG",
+      "sailOrBoardNumber": "SGP 214251",
+      "club": "CHANGI SAILING CLUB",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 103.0,
+      "nettScore": 103.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 43.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "43.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "57ce3e0a-f55e-5748-8c86-b770b3314bed",
+      "participants": [
+        {
+          "id": "b9df8efe-b762-53a7-b5d7-e7842a691596",
+          "sailorId": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+          "sourceName": "REYES TAN JIT ENG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: REYES TAN JIT ENG; historic sail: SGP 214251; club: CHANGI SAILING CLUB; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 37,
+      "name": "THITIWORADA JOHNJAITRONG",
+      "sailOrBoardNumber": "THA 221617",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 110.0,
+      "nettScore": 110.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "df5a4e1a-51d8-5bab-a5f2-3f110e90526c",
+      "participants": [
+        {
+          "id": "e630ae61-06cf-58c3-b4ed-198615b45521",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "THITIWORADA JOHNJAITRONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: THITIWORADA JOHNJAITRONG; historic sail: THA 221617; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 38,
+      "name": "NATIDEJ TERMWATTANAPAKDEE",
+      "sailOrBoardNumber": "THA 220051",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 112.0,
+      "nettScore": 112.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "1eb89f09-10dd-533c-b0e2-dc4591d3ae85",
+      "participants": [
+        {
+          "id": "f24a709e-598f-5609-89d4-ec6b8e0e3b11",
+          "sailorId": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+          "sourceName": "NATIDEJ TERMWATTANAPAKDEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: NATIDEJ TERMWATTANAPAKDEE; historic sail: THA 220051; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 39,
+      "name": "QI SHAN",
+      "sailOrBoardNumber": "SGP 217035",
+      "club": "SAF YACHT CLUB",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 113.0,
+      "nettScore": 113.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 43.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "43.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1a7d2b71-08c8-4ff7-88ea-de5b56a90c65",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c42524b8-51e6-58fb-a79e-e06f956ee7d2",
+      "participants": [
+        {
+          "id": "3b7e32e7-8a1a-50e7-b0ee-da56386867ec",
+          "sailorId": "1a7d2b71-08c8-4ff7-88ea-de5b56a90c65",
+          "sourceName": "QI SHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: QI SHAN; historic sail: SGP 217035; club: SAF YACHT CLUB; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 40,
+      "name": "PUMITUS MEE-IAMSIN",
+      "sailOrBoardNumber": "THA 208539",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 116.0,
+      "nettScore": 116.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "373b7304-9ed3-5479-bb06-88b48ccadfce",
+      "participants": [
+        {
+          "id": "3e2f0bbf-4d35-5aab-a96c-75882c7123a0",
+          "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+          "sourceName": "PUMITUS MEE-IAMSIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: PUMITUS MEE-IAMSIN; historic sail: THA 208539; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 41,
+      "name": "SUWAPHAK PLUMJIT",
+      "sailOrBoardNumber": "THA 212817",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 117.0,
+      "nettScore": 117.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8717e7e0-05fa-52b2-a5c0-130f2f93f516",
+      "participants": [
+        {
+          "id": "b65afcca-eae2-505f-a8d3-ab3b08fa6d83",
+          "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+          "sourceName": "SUWAPHAK PLUMJIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: SUWAPHAK PLUMJIT; historic sail: THA 212817; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 42,
+      "name": "PRAPADA PEERANANTAPANYA",
+      "sailOrBoardNumber": "THA 212815",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 119.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "35902ff8-baa7-5fba-95f3-b6cb63309f3b",
+      "participants": [
+        {
+          "id": "483a60ce-5ba1-5c59-a329-d4281f5bbba8",
+          "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+          "sourceName": "PRAPADA PEERANANTAPANYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA4; page 1; source name: PRAPADA PEERANANTAPANYA; historic sail: THA 212815; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 40,
+  "deferredEntryCount": 2,
+  "publicSummary": "Published organiser results; final/provisional status not stated. Official fleet ranks, scoring codes and discards retained. Partial import: 40 of 42 class entries imported; 2 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 15,
+      "name": "KITCHAKHUN",
+      "sailOrBoardNumber": "THA 228917",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 48.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "91555cde-f340-52e6-b977-c3c4aff8abaa",
+          "name": "Im Taehun",
+          "similarity": 0.667
+        },
+        {
+          "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+          "name": "Kiitchakhun Somkhanngoen",
+          "similarity": 0.606
+        },
+        {
+          "id": "54759e1d-d03f-5791-8e65-fbe552419b49",
+          "name": "Khant Khant",
+          "similarity": 0.6
+        }
+      ]
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 16,
+      "name": "JEMIMMA CHANG",
+      "sailOrBoardNumber": "SGP 214636",
+      "club": "PA",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 50.0,
+      "nettScore": 50.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "1ba65410-fa86-472d-ad75-bc510bffd07b",
+          "name": "Jemima Chang",
+          "similarity": 0.957
+        },
+        {
+          "id": "1aa36e44-2f42-4f33-a30e-81ffaf66337b",
+          "name": "Minkwan Chang",
+          "similarity": 0.667
+        },
+        {
+          "id": "0f21b908-6234-4f3b-a34c-fbe589a75c7c",
+          "name": "Keira Hwang",
+          "similarity": 0.636
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "263ef930-f0ec-4d7a-8ca9-cb19b1cc52d1",
+      "club": "Changi Sailing Club",
+      "name": "Isaiah Yap Chor Hong",
+      "gender": "M",
+      "handle": "isaiah-yap-chor-hong",
+      "birthYear": 2012,
+      "sailNumber": "3946",
+      "nationality": "SGP",
+      "sailNumberIlca4": "227463"
+    },
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "F",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "club": "YRAT",
+      "name": "Suwaphak Plumjit",
+      "gender": "F",
+      "handle": "suwaphak-plumjit-8glzaqs",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222589"
+    },
+    {
+      "id": "8203869d-2432-48ee-bd3e-0c591aeb9fdb",
+      "club": "PA",
+      "name": "Wong Kai Lun",
+      "gender": "M",
+      "handle": "regis-wong-xuan-kai-07sd94a",
+      "birthYear": 2011,
+      "sailNumber": "3988",
+      "nationality": "SGP",
+      "sailNumberIlca4": "214779"
+    },
+    {
+      "id": "328bdcaa-1773-4bb8-801d-c845c11f2667",
+      "club": "Changi Sailing Club",
+      "name": "Amandine Zoe Pitsilis",
+      "gender": "F",
+      "handle": "amandine-zoe-pitsilis",
+      "birthYear": 2012,
+      "sailNumber": "702",
+      "nationality": "FRA",
+      "sailNumberIlca4": "219725"
+    },
+    {
+      "id": "1a7d2b71-08c8-4ff7-88ea-de5b56a90c65",
+      "club": "SAFYC",
+      "name": "Qi Shan",
+      "gender": "F",
+      "handle": "qi-shan-ou62r9l",
+      "birthYear": 2013,
+      "sailNumber": "99",
+      "nationality": "SGP",
+      "sailNumberIlca4": "217035"
+    },
+    {
+      "id": "3b678e7c-898f-4784-b309-d092393af6b5",
+      "club": "Raffles Marina",
+      "name": "Jayden Zi Xi Bai",
+      "gender": "M",
+      "handle": "jayden-zi-xi-bai-065358",
+      "birthYear": 2011,
+      "sailNumber": "225261",
+      "nationality": "SGP",
+      "sailNumberIlca4": "225261"
+    },
+    {
+      "id": "0b42963a-efa1-4010-9029-b50953b6f1fb",
+      "club": "QSS",
+      "name": "Nina Wang",
+      "gender": "F",
+      "handle": "nina-wang-zn551mf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "221551"
+    },
+    {
+      "id": "018b6ed4-9636-47e1-8d40-aa5e21a22f32",
+      "club": "Royal Hong Kong Yacht Club",
+      "name": "Jolin Zheng",
+      "gender": "F",
+      "handle": "jolin-zheng-mdmobwq",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "209319"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": "M",
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9850df41-2b48-4891-b2aa-c9453aa2051c",
+      "club": "Changi Sailing Club",
+      "name": "Jonathan Kwok Kum Loong",
+      "gender": "M",
+      "handle": "jonathan-kwok-kum-loong-0iin67q",
+      "birthYear": 2012,
+      "sailNumber": "2003",
+      "nationality": "SGP",
+      "sailNumberIlca4": "214808"
+    },
+    {
+      "id": "6bc22d30-b06a-4e64-86a9-f4cb99535f33",
+      "club": "CSC",
+      "name": "John Raphael Lim",
+      "gender": "M",
+      "handle": "john-raphael-lim-0h6gqjh",
+      "birthYear": 2012,
+      "sailNumber": "788",
+      "nationality": "SGP",
+      "sailNumberIlca4": "206799"
+    },
+    {
+      "id": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "club": "YRAT",
+      "name": "Thanaporn Phokaew",
+      "gender": "F",
+      "handle": "thanaporn-phokaew-2zbw4z0",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225426"
+    },
+    {
+      "id": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "club": "YRAT",
+      "name": "Pinchanok Klaysomboon",
+      "gender": "F",
+      "handle": "pinchanok-klaysomboon-ofynlxk",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "222687"
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "YRAT",
+      "name": "Karit Phrammanee",
+      "gender": "M",
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "d7ce117b-5c64-40ea-86bd-79a7a73bb833",
+      "club": "SAFYC",
+      "name": "Austin Yeo Jia Yu",
+      "gender": "M",
+      "handle": "austin-yeo-jia-yu-j2xhftv",
+      "birthYear": 2009,
+      "sailNumber": "221062",
+      "nationality": "SGP",
+      "sailNumberIlca4": "221062"
+    },
+    {
+      "id": "61334a08-e796-43d7-aeb8-ac70f6bf6f30",
+      "club": "CSC",
+      "name": "Ikuto Mori",
+      "gender": "M",
+      "handle": "ikuto-mori-j5la7xk",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "JPN",
+      "sailNumberIlca4": "221687"
+    },
+    {
+      "id": "5b7d75f5-3786-41de-81a1-76bbba1869e9",
+      "club": "ONE\u00b015 Marina Club",
+      "name": "Joash Tan Jing En",
+      "gender": "M",
+      "handle": "joash-tan-jing-en",
+      "birthYear": 2011,
+      "sailNumber": "3267",
+      "nationality": "SGP",
+      "sailNumberIlca4": "209051"
+    },
+    {
+      "id": "97297f2f-45a3-4a42-bb8b-7de07d9a5cde",
+      "club": "SAF Yacht Club",
+      "name": "Febe Wong Qi Ke",
+      "gender": "F",
+      "handle": "febe-wong-qi-ke-06fwa1t",
+      "birthYear": 2011,
+      "sailNumber": "3003",
+      "nationality": "SGP",
+      "sailNumberIlca4": "13"
+    },
+    {
+      "id": "ad7a6bbd-6cf8-5f38-96f2-0c40bdc246e4",
+      "club": "RVYC",
+      "name": "Chen Yu Kai",
+      "gender": "M",
+      "handle": "chen-yu-kai-thai25-ad7a6b",
+      "birthYear": 2010,
+      "sailNumber": "",
+      "nationality": "TPE",
+      "sailNumberIlca4": "222236"
+    },
+    {
+      "id": "8f2e850e-bd71-53f9-b24b-f34fe4148bd7",
+      "club": "YRAT",
+      "name": "Natidej Termwattanapakdee",
+      "gender": "M",
+      "handle": "natidej-termwattanapakdee-thai25-8f2e85",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "220051"
+    },
+    {
+      "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "club": "YRAT",
+      "name": "Pumitus Mee-Iamsin",
+      "gender": "M",
+      "handle": "pumitus-mee-iamsin-thai25-4f1eb5",
+      "birthYear": 2010,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "208539"
+    },
+    {
+      "id": "3cf3ef94-6f08-485b-86f0-6c1d46de7a02",
+      "club": "Constant Wind SeaSports",
+      "name": "Wong Li Xuan Mildred",
+      "gender": "F",
+      "handle": "wong-li-xuan-mildred-fueslz1",
+      "birthYear": 2011,
+      "sailNumber": "4459",
+      "nationality": "SGP",
+      "sailNumberIlca4": "SGP 223200"
+    },
+    {
+      "id": "ca98c637-aebd-4f38-81c7-80345846c93a",
+      "club": "CWSS",
+      "name": "Nigel Tan Xu Yuan",
+      "gender": "M",
+      "handle": "nigel-tan-xu-yuan",
+      "birthYear": 2010,
+      "sailNumber": "4693",
+      "nationality": "SGP",
+      "sailNumberIlca4": "225176"
+    },
+    {
+      "id": "d52d284f-c0d7-4a72-b86d-45c57b963c6c",
+      "club": "Constant Wind",
+      "name": "Ian Goh",
+      "gender": "M",
+      "handle": "ian-goh-f7d194",
+      "birthYear": null,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "SGP 222713"
+    },
+    {
+      "id": "ec69d8a1-8f12-4ca3-a99c-d3e18d096b2a",
+      "club": "Royal Varuna Yacht Club",
+      "name": "Wong Weikai Zachary",
+      "gender": "M",
+      "handle": "wong-weikai-zachary-ft0rnv9",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "221061"
+    },
+    {
+      "id": "bf1de4cb-9dd4-426d-a9e1-a669f7e091d9",
+      "club": "PAssion Wave",
+      "name": "Mika Tew",
+      "gender": "F",
+      "handle": "mika-tew-0741h6l",
+      "birthYear": 2011,
+      "sailNumber": "3535",
+      "nationality": "SGP",
+      "sailNumberIlca4": "227461"
+    },
+    {
+      "id": "26414c39-ffe4-417d-aabc-a577d6355fd5",
+      "club": "SAF Yacht Club",
+      "name": "Lim Yuk Jun",
+      "gender": "M",
+      "handle": "lim-yuk-jun",
+      "birthYear": 2011,
+      "sailNumber": "3377",
+      "nationality": "SGP",
+      "sailNumberIlca4": "225182"
+    },
+    {
+      "id": "f268697a-ceb4-483a-8a53-9c5241f3f0cc",
+      "club": "Changi Sailing Club",
+      "name": "Reyes Jit Eng Tan",
+      "gender": "M",
+      "handle": "tan-reyes-jit-eng-fzahuzd",
+      "birthYear": 2011,
+      "sailNumber": "4712",
+      "nationality": "SGP",
+      "sailNumberIlca4": "214251"
+    },
+    {
+      "id": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "club": "YRAT/RVYC",
+      "name": "Prapada Peeranantapanya",
+      "gender": "F",
+      "handle": "prapada-peeranantapanya-rz13syo",
+      "birthYear": 2012,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "223567"
+    },
+    {
+      "id": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "club": "YRAT",
+      "name": "Hussaluk Srinakorn",
+      "gender": "M",
+      "handle": "hussaluk-srinakorn-2pumyyp",
+      "birthYear": 2009,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "club": "RVYC",
+      "name": "Thanvisit Kitchanasiri",
+      "gender": "M",
+      "handle": "thanvisit-kitchanasiri-thai25-278c69",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "226395"
+    },
+    {
+      "id": "cb7dd15b-b058-430c-88e5-fe0c3a31830e",
+      "club": "YRAT",
+      "name": "Nattapon Touttachon",
+      "gender": "M",
+      "handle": "nattapon-touttachon-bvpmt73",
+      "birthYear": 2011,
+      "sailNumber": "1859",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efba7d9a-d71a-55b9-90fc-5ec21941baa1",
+      "club": "RVYC/YRAT",
+      "name": "Torn Rattana",
+      "gender": "M",
+      "handle": "torn-rattana-thai25-efba7d",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "221947"
+    },
+    {
+      "id": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+      "club": "YRAT",
+      "name": "Darwin Hsu",
+      "gender": "M",
+      "handle": "darwin-hsu-zirotlz",
+      "birthYear": 2008,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+      "club": "YRAT",
+      "name": "Prin Subying",
+      "gender": "F",
+      "handle": "prin-subying-zi3cbf5",
+      "birthYear": 2008,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9dac82f1-ca4f-554d-9a13-49c59feab0d5",
+      "club": "BMF VSE",
+      "name": "Zsolt Szalay",
+      "gender": "M",
+      "handle": "zsolt-szalay-thai25-9dac82",
+      "birthYear": 2009,
+      "sailNumber": "",
+      "nationality": "HUN",
+      "sailNumberIlca4": "226793"
+    },
+    {
+      "id": "12ef5727-01d3-5d57-97b2-86b18a3f73b6",
+      "club": "BMF VSE",
+      "name": "Eszter Szalay",
+      "gender": "F",
+      "handle": "eszter-szalay-thai25-12ef57",
+      "birthYear": 2009,
+      "sailNumber": "",
+      "nationality": "HUN",
+      "sailNumberIlca4": "226796"
+    },
+    {
+      "id": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+      "club": "RVYC",
+      "name": "Henry Wiedmann",
+      "gender": "M",
+      "handle": "henry-wiedmann-thai25-bdcd04",
+      "birthYear": 2010,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "214987"
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "5fef1999-39e8-57bd-9e60-a8a9de0eead2",
+      "name": "Lauren Lim Xiu Qing",
+      "handle": "lauren-lim-xiu-qing-sr25-5fef19",
+      "sailNumber": "",
+      "sailNumberIlca4": "SGP 216431",
+      "nationality": "SGP",
+      "gender": "F",
+      "club": "CHANGI SAILING CLUB"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

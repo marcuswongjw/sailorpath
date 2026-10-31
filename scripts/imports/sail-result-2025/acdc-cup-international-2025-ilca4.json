@@ -1,0 +1,1769 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "75988a11-b78d-50e2-be5a-6c2c3c6bc0ba",
+    "slug": "acdc-cup-international-2025",
+    "name": "ACDC Cup International Sailing Championship 2025",
+    "startDate": "2025-07-10",
+    "endDate": "2025-07-12",
+    "venue": "ACDC Sailing Club, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "b8d4edd6-9059-579b-84f9-30198597f440",
+    "slug": "acdc-cup-international-2025-ilca4",
+    "name": "ACDC Cup International Sailing Championship 2025 \u2014 ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 16,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/151739",
+    "title": "ACDC Cup International Sailing Championship 2025 \u2014 ILCA 4 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 1,
+      "name": "Pinchanok Klaysomboon",
+      "sailOrBoardNumber": "217322",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 14.0,
+      "nettScore": 10.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c5b38b57-3022-539f-86db-7a193f5ef275",
+      "participants": [
+        {
+          "id": "0796874a-3bb5-5cf2-895a-89e43d87d8e0",
+          "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+          "sourceName": "Pinchanok Klaysomboon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Pinchanok Klaysomboon; historic sail: 217322; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 2,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "128105",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 31.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(7.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4f7a9f46-2cd8-58be-bcbe-58dbc5f244f7",
+      "participants": [
+        {
+          "id": "7b213420-685f-53f1-a3b9-f7c5eac82a06",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "KARIT PHRAMMANEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: KARIT PHRAMMANEE; historic sail: 128105; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 3,
+      "name": "PACHARAPOL RUMVISAI",
+      "sailOrBoardNumber": "220239",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 34.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(7.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a7b8720c-ef32-5db7-b416-98a5af9b57a7",
+      "participants": [
+        {
+          "id": "26ea3ce7-ab27-59f0-9724-293c8f0733f7",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: PACHARAPOL RUMVISAI; historic sail: 220239; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 5,
+      "name": "Thanvisit Kitchanasiri",
+      "sailOrBoardNumber": "226395",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 46.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "17.0 DNE"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "af51c7f8-0c99-5c81-8dc8-ab21c45988da",
+      "participants": [
+        {
+          "id": "e7729d76-34ed-59f9-9b58-65d36017062b",
+          "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+          "sourceName": "Thanvisit Kitchanasiri",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Thanvisit Kitchanasiri; historic sail: 226395; club: RVYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 6,
+      "name": "Prapassorn Kaewprom",
+      "sailOrBoardNumber": "21507",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 52.0,
+      "nettScore": 41.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8d54107d-d292-5e13-9616-cf53bbd41c87",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "9fcc21ab-7166-5b82-9a10-cc66bb9cb5b9",
+      "participants": [
+        {
+          "id": "4b1cc4c8-7517-59e6-820e-460ee2c5605f",
+          "sailorId": "8d54107d-d292-5e13-9616-cf53bbd41c87",
+          "sourceName": "Prapassorn Kaewprom",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Prapassorn Kaewprom; historic sail: 21507; club: YRAT; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 7,
+      "name": "PUMITUS MEE- IAMSIN",
+      "sailOrBoardNumber": "22023",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 79.0,
+      "nettScore": 68.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "45fadee9-ecf7-5db3-b6e9-dfc9a43ca257",
+      "participants": [
+        {
+          "id": "3df46a48-f5b7-5312-96e0-1151f3eac4b6",
+          "sailorId": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+          "sourceName": "PUMITUS MEE- IAMSIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: PUMITUS MEE- IAMSIN; historic sail: 22023; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 8,
+      "name": "XIU YU ZHAO",
+      "sailOrBoardNumber": "2",
+      "club": "QINGDAO",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 90.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(17.0 DNC)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bde172a1-ab89-5cb9-a372-2dbb98bd8337",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b8468e66-af1a-5453-bffe-edfb77d7aa69",
+      "participants": [
+        {
+          "id": "22d1b4d7-1bb2-55d8-8992-5851cc112766",
+          "sailorId": "bde172a1-ab89-5cb9-a372-2dbb98bd8337",
+          "sourceName": "XIU YU ZHAO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: XIU YU ZHAO; historic sail: 2; club: QINGDAO; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 9,
+      "name": "CHITIPAT SAINUMKHEAW",
+      "sailOrBoardNumber": "59",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 89.0,
+      "nettScore": 75.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "50947185-5c2a-5546-9e13-2b8888a9cf67",
+      "participants": [
+        {
+          "id": "118ece6b-4101-59d7-956f-cbf85c2c58f3",
+          "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+          "sourceName": "CHITIPAT SAINUMKHEAW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: CHITIPAT SAINUMKHEAW; historic sail: 59; club: RTFYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 10,
+      "name": "Poramut Srisawaddisrilidom",
+      "sailOrBoardNumber": "213035",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 89.0,
+      "nettScore": 75.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5b1885e1-5b75-50b7-a749-a5b33deacaef",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "98c4a455-ff17-5cc8-9403-c0c48da195dc",
+      "participants": [
+        {
+          "id": "a299f2e5-36d1-5828-bfc1-30e8c8389640",
+          "sailorId": "5b1885e1-5b75-50b7-a749-a5b33deacaef",
+          "sourceName": "Poramut Srisawaddisrilidom",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Poramut Srisawaddisrilidom; historic sail: 213035; club: YRAT; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 11,
+      "name": "Thitiworada Johnjaitrong",
+      "sailOrBoardNumber": "215071",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 89.0,
+      "nettScore": 76.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "771bdc46-157f-55dc-b503-ce1ef718b61f",
+      "participants": [
+        {
+          "id": "eac0c699-f583-5401-bd23-4ba537abf724",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "Thitiworada Johnjaitrong",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Thitiworada Johnjaitrong; historic sail: 215071; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 12,
+      "name": "Pakin Wongratanachot",
+      "sailOrBoardNumber": "220656",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 91.0,
+      "nettScore": 79.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "1a529745-d4be-5d2e-bbee-34b5bcb459b5",
+      "participants": [
+        {
+          "id": "06d79e22-9415-5b64-91e8-c01a6b0a85dd",
+          "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+          "sourceName": "Pakin Wongratanachot",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Pakin Wongratanachot; historic sail: 220656; club: RTFYC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 13,
+      "name": "KRITKAMON PRASERTNOPAKUN",
+      "sailOrBoardNumber": "221584",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 120.0,
+      "nettScore": 103.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(17.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b600a008-c41c-5cac-81e0-d367c4fab469",
+      "participants": [
+        {
+          "id": "4859a8f9-f90b-5e8f-8beb-06ded099ebf0",
+          "sailorId": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+          "sourceName": "KRITKAMON PRASERTNOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: KRITKAMON PRASERTNOPAKUN; historic sail: 221584; club: RVYC; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 14,
+      "name": "NOND SUKAPATTEE",
+      "sailOrBoardNumber": "21531",
+      "club": "",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 123.0,
+      "nettScore": 106.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(17.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c9bafcd3-940d-5bd4-a7d3-ae516e71583d",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "eec33ad7-f6f8-57d0-be8c-7e2d1bdf939a",
+      "participants": [
+        {
+          "id": "32c96420-9e0f-57d6-bb72-7f3d78157f0e",
+          "sailorId": "c9bafcd3-940d-5bd4-a7d3-ae516e71583d",
+          "sourceName": "NOND SUKAPATTEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: NOND SUKAPATTEE; historic sail: 21531; club: ; year field: 2011. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 15,
+      "name": "TADOL Ratinukulkit",
+      "sailOrBoardNumber": "202649",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 123.0,
+      "nettScore": 108.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d72c67c6-b26b-5023-8072-64dca2034616",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ffa3fc42-771b-5b75-b0cd-611bba6db2e1",
+      "participants": [
+        {
+          "id": "e34b232c-9319-5671-be8c-95c75d76d5d4",
+          "sailorId": "d72c67c6-b26b-5023-8072-64dca2034616",
+          "sourceName": "TADOL Ratinukulkit",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: TADOL Ratinukulkit; historic sail: 202649; club: RTFYC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 16,
+      "name": "Boonbaramee Sonchai",
+      "sailOrBoardNumber": "200969",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 135.0,
+      "nettScore": 118.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(17.0 DNC)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "17.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b84ee6d4-653e-5333-b76a-4ffc05fab46f",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "37facee3-435d-559b-a512-3191576a51e8",
+      "participants": [
+        {
+          "id": "ef1d7777-bc9b-5c78-b020-44211bdb5087",
+          "sailorId": "b84ee6d4-653e-5333-b76a-4ffc05fab46f",
+          "sourceName": "Boonbaramee Sonchai",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Boonbaramee Sonchai; historic sail: 200969; club: RTFYC; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 15,
+  "deferredEntryCount": 1,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 15 of 16 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 4,
+      "name": "KITCHAKHUN SOMKHANNGONE",
+      "sailOrBoardNumber": "21738",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 38.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+          "name": "Kiitchakhun Somkhanngoen",
+          "similarity": 0.933
+        },
+        {
+          "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+          "name": "Kanthee Khunmuang",
+          "similarity": 0.579
+        },
+        {
+          "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+          "name": "Kanthon Khunmuang",
+          "similarity": 0.579
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "F",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": "M",
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "club": "YRAT",
+      "name": "Pinchanok Klaysomboon",
+      "gender": "F",
+      "handle": "pinchanok-klaysomboon-ofynlxk",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": "222687"
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "YRAT",
+      "name": "Karit Phrammanee",
+      "gender": "M",
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+      "club": "YRAT",
+      "name": "Pumitus Mee-Iamsin",
+      "gender": "M",
+      "handle": "pumitus-mee-iamsin-thai25-4f1eb5",
+      "birthYear": 2010,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "208539"
+    },
+    {
+      "id": "d72c67c6-b26b-5023-8072-64dca2034616",
+      "club": "RTFYC",
+      "name": "Tadol Ratinukulkit",
+      "gender": "M",
+      "handle": "tadol-ratinukulkit-sr26-d72c67",
+      "birthYear": 2011,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "202649"
+    },
+    {
+      "id": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "club": "RVYC",
+      "name": "Thanvisit Kitchanasiri",
+      "gender": "M",
+      "handle": "thanvisit-kitchanasiri-thai25-278c69",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "226395"
+    },
+    {
+      "id": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "club": "RTFYC",
+      "name": "Chitipat Sainumkheaw",
+      "gender": "M",
+      "handle": "chitipat-sainumkheaw-thai25-c6fe76",
+      "birthYear": 2012,
+      "sailNumber": "THA 1859",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "club": "RTFYC",
+      "name": "Pakin Wongratanachot",
+      "gender": "M",
+      "handle": "pakin-wongratanachot-thai25-7c7d0b",
+      "birthYear": 2011,
+      "sailNumber": "THA 1954",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "8d54107d-d292-5e13-9616-cf53bbd41c87",
+      "name": "Prapassorn Kaewprom",
+      "handle": "prapassorn-kaewprom-sr25-8d5410",
+      "sailNumber": "",
+      "sailNumberIlca4": "21507",
+      "nationality": null,
+      "gender": "F",
+      "club": "YRAT"
+    },
+    {
+      "id": "bde172a1-ab89-5cb9-a372-2dbb98bd8337",
+      "name": "Xiu Yu Zhao",
+      "handle": "xiu-yu-zhao-sr25-bde172",
+      "sailNumber": "",
+      "sailNumberIlca4": "2",
+      "nationality": null,
+      "gender": "F",
+      "club": "QINGDAO"
+    },
+    {
+      "id": "5b1885e1-5b75-50b7-a749-a5b33deacaef",
+      "name": "Poramut Srisawaddisrilidom",
+      "handle": "poramut-srisawaddisrilidom-sr25-5b1885",
+      "sailNumber": "",
+      "sailNumberIlca4": "213035",
+      "nationality": null,
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+      "name": "Kritkamon Prasertnopakun",
+      "handle": "kritkamon-prasertnopakun-sr25-2135c9",
+      "sailNumber": "",
+      "sailNumberIlca4": "221584",
+      "nationality": null,
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "c9bafcd3-940d-5bd4-a7d3-ae516e71583d",
+      "name": "Nond Sukapattee",
+      "handle": "nond-sukapattee-sr25-c9bafc",
+      "sailNumber": "",
+      "sailNumberIlca4": "21531",
+      "nationality": null,
+      "gender": "M",
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "b84ee6d4-653e-5333-b76a-4ffc05fab46f",
+      "name": "Boonbaramee Sonchai",
+      "handle": "boonbaramee-sonchai-sr25-b84ee6",
+      "sailNumber": "",
+      "sailNumberIlca4": "200969",
+      "nationality": null,
+      "gender": "M",
+      "club": "RTFYC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "success": true,
+  "message": "Published Series Score retrieved successfully!",
+  "data": {
+    "resultGroupeds": [
+      {
+        "resultOption": "CLASS RESULTS",
+        "results": [
+          {
+            "R2": "1.0",
+            "skipper": "Max Higley",
+            "note": "",
+            "R3": "1.0",
+            "R4": "1.0",
+            "R5": "[2.0]",
+            "resultId": 1,
+            "R6": "2.0",
+            "boatname": "LO RIDER",
+            "resultOption": "CLASS RESULTS",
+            "score": 6.0,
+            "ties": null,
+            "sailnum": "202767",
+            "crew1": "",
+            "crew2": "",
+            "place": 1,
+            "note1": "",
+            "boatId": 4764,
+            "R1": "1.0"
+          },
+          {
+            "R2": "4.0 C",
+            "skipper": "Rollie Haywood",
+            "note": "PLYC",
+            "R3": "2.0",
+            "R4": "2.0",
+            "R5": "1.0",
+            "resultId": 2,
+            "R6": "1.0",
+            "boatname": "WILDCARD",
+            "resultOption": "CLASS RESULTS",
+            "score": 10.0,
+            "ties": null,
+            "sailnum": "194932",
+            "crew1": "",
+            "crew2": "",
+            "place": 2,
+            "note1": "SA",
+            "boatId": 7424,
+            "R1": "[4.0] F"
+          },
+          {
+            "R2": "[4.0] F",
+            "skipper": "Freddie Fletcher-Rees",
+            "note": "",
+            "R3": "3.0",
+            "R4": "3.0",
+            "R5": "3.0",
+            "resultId": 3,
+            "R6": "3.0",
+            "boatname": "LIGHTHOUSE BAY",
+            "resultOption": "CLASS RESULTS",
+            "score": 14.0,
+            "ties": null,
+            "sailnum": "187910",
+            "crew1": "",
+            "crew2": "",
+            "place": 3,
+            "note1": "",
+            "boatId": 4763,
+            "R1": "2.0"
+          }
+        ],
+        "columns": [
+          "place",
+          "ties",
+          "sailnum",
+          "boatname",
+          "skipper",
+          "crew1",
+          "crew2",
+          "note",
+          "note1",
+          "score",
+          "R6",
+          "R5",
+          "R4",
+          "R3",
+          "R2",
+          "R1"
+        ]
+      }
+    ],
+    "entrantDetailDTOs": [],
+    "resultOptionComplete": [
+      "CLASS RESULTS"
+    ]
+  }
+}

@@ -1,0 +1,2300 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "4b3dd72f-e963-5f6f-861b-ca29352eb7bc",
+    "slug": "yrat-cup-series-5-2025",
+    "name": "2025 YRAT Cup Series 5",
+    "startDate": "2025-08-30",
+    "endDate": "2025-08-31",
+    "venue": "Dongtan Bay, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "f8b2ae66-e664-5b49-bc41-a1325ac63e2e",
+    "slug": "yrat-cup-series-5-2025-optimist-silver",
+    "name": "2025 YRAT Cup Series 5 \u2014 Optimist Silver",
+    "boatClass": "Optimist",
+    "division": "Silver",
+    "raceCount": 6,
+    "totalFleetSize": 26,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/156714",
+    "title": "2025 YRAT Cup Series 5 \u2014 Optimist Silver results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 1,
+      "name": "William Poon",
+      "sailOrBoardNumber": "3005",
+      "club": "GKS",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 13.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "889fd6a4-96bb-40fa-8ed5-19fa3ff45188",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "75ec1f62-ee36-526d-82bf-8302eaed612b",
+      "participants": [
+        {
+          "id": "6882114c-9ac5-516f-b7db-807d9a9c3b3c",
+          "sailorId": "889fd6a4-96bb-40fa-8ed5-19fa3ff45188",
+          "sourceName": "William Poon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: William Poon; historic sail: 3005; club: GKS; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 2,
+      "name": "Katelynn Lee",
+      "sailOrBoardNumber": "SGP3383",
+      "club": "GKS",
+      "nationality": "SGP",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 13.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8d3ee6ba-8696-4fca-a6a3-b79c3993194e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "bf7c74fa-0428-5e2e-bcf7-2e7eb4d6ce55",
+      "participants": [
+        {
+          "id": "f89dd759-3413-56d8-8c3b-c57bda77a58b",
+          "sailorId": "8d3ee6ba-8696-4fca-a6a3-b79c3993194e",
+          "sourceName": "Katelynn Lee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Katelynn Lee; historic sail: SGP3383; club: GKS; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 3,
+      "name": "Jiratiwat Peungchurn",
+      "sailOrBoardNumber": "THA936",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 32.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "60ce76ca-f720-53cc-b9ba-dfe00ba9080d",
+      "participants": [
+        {
+          "id": "65d70ba3-86bf-5f79-9fd2-7666dd452f61",
+          "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+          "sourceName": "Jiratiwat Peungchurn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Jiratiwat Peungchurn; historic sail: THA936; club: ACDC.SC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 4,
+      "name": "Baramee Sonnual",
+      "sailOrBoardNumber": "195",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 48.0,
+      "nettScore": 28.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6f60ba18-c0b7-5468-8fa3-b27f75422aec",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "6ff52abf-cd15-53f7-986d-31aacb94dcf4",
+      "participants": [
+        {
+          "id": "a4b0ecda-2950-5ce0-b945-680c8ef05d39",
+          "sailorId": "6f60ba18-c0b7-5468-8fa3-b27f75422aec",
+          "sourceName": "Baramee Sonnual",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Baramee Sonnual; historic sail: 195; club: ACCD.SC; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 5,
+      "name": "Taratep Janlamoon",
+      "sailOrBoardNumber": "THA54",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 61.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(27.0 DSQ)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fb5bf764-c958-5156-b06e-0fef2cf780b5",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "24531ff8-fc31-5622-a46e-a678a30d1c0f",
+      "participants": [
+        {
+          "id": "3234ebc6-ac77-55d3-943b-0f655e0f8c6f",
+          "sailorId": "fb5bf764-c958-5156-b06e-0fef2cf780b5",
+          "sourceName": "Taratep Janlamoon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Taratep Janlamoon; historic sail: THA54; club: SSA; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 6,
+      "name": "ARUNEE RAKSAPAN",
+      "sailOrBoardNumber": "THA1396",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 57.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c3b35655-cea9-53d0-9f07-a30a66fa914a",
+      "participants": [
+        {
+          "id": "c34b9c6a-48b7-57e8-8e88-f680774213f9",
+          "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+          "sourceName": "ARUNEE RAKSAPAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: ARUNEE RAKSAPAN; historic sail: THA1396; club: YRAT; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 8,
+      "name": "Matthias Lee",
+      "sailOrBoardNumber": "3385",
+      "club": "GKS",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2017,
+      "sourceBirthYear": "2017",
+      "grossScore": 56.0,
+      "nettScore": 39.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8f32febd-325c-40b7-9096-064bea31cb7f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5aba998a-d63a-5997-ba80-81ad006b133e",
+      "participants": [
+        {
+          "id": "0db78285-f70f-52ff-8bc1-627af89d6768",
+          "sailorId": "8f32febd-325c-40b7-9096-064bea31cb7f",
+          "sourceName": "Matthias Lee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Matthias Lee; historic sail: 3385; club: GKS; year field: 2017. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 9,
+      "name": "KANYAPAT PISOOTTIWONG",
+      "sailOrBoardNumber": "1556",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 57.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "79a64554-d72c-5085-b57b-fd9e70de52ce",
+      "participants": [
+        {
+          "id": "8690f47f-6c9f-54cd-8a23-b59c57960c2c",
+          "sailorId": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+          "sourceName": "KANYAPAT PISOOTTIWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: KANYAPAT PISOOTTIWONG; historic sail: 1556; club: YRAT; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 10,
+      "name": "Theetawat Manitpornsut",
+      "sailOrBoardNumber": "THA1835",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 58.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ba7eba1c-42d5-5035-839c-91d10145cf3c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "96109eb0-0716-54d7-bdef-2932723c52b8",
+      "participants": [
+        {
+          "id": "817c7bc7-2f74-56c5-9e4a-889c2544562b",
+          "sailorId": "ba7eba1c-42d5-5035-839c-91d10145cf3c",
+          "sourceName": "Theetawat Manitpornsut",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Theetawat Manitpornsut; historic sail: THA1835; club: RTFYC; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 11,
+      "name": "Vajirawit Siriphak",
+      "sailOrBoardNumber": "THA995",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 60.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "feed1618-5c28-484a-bd9c-a31f17b192a1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "567b5e10-edd7-5f56-8a09-0454b3f14a76",
+      "participants": [
+        {
+          "id": "60603679-2f70-5e18-bd71-0c2193c6d7d0",
+          "sailorId": "feed1618-5c28-484a-bd9c-a31f17b192a1",
+          "sourceName": "Vajirawit Siriphak",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Vajirawit Siriphak; historic sail: THA995; club: SSA; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 12,
+      "name": "Hirunsira Munkhongpornpaiboon",
+      "sailOrBoardNumber": "THA932",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 61.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f64a6fa6-21fb-574c-94e6-a3ea8c13cf48",
+      "participants": [
+        {
+          "id": "67f98672-258b-5c63-8531-3beead0a97c3",
+          "sailorId": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+          "sourceName": "Hirunsira Munkhongpornpaiboon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Hirunsira Munkhongpornpaiboon; historic sail: THA932; club: RTFYC; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 13,
+      "name": "Miss Kodchaporn Peungchimplee",
+      "sailOrBoardNumber": "94",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 90.0,
+      "nettScore": 68.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8b4d492f-a4f3-5d3b-b131-9b33a47eb387",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "4d4b82d5-cc7d-5e6e-b462-285544fa6162",
+      "participants": [
+        {
+          "id": "cfb7b798-be06-595e-8954-49229c54a1df",
+          "sailorId": "8b4d492f-a4f3-5d3b-b131-9b33a47eb387",
+          "sourceName": "Miss Kodchaporn Peungchimplee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Miss Kodchaporn Peungchimplee; historic sail: 94; club: ACDC.SC; year field: 2015. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 14,
+      "name": "Hayley tan kai en",
+      "sailOrBoardNumber": "SGP700",
+      "club": "GKS",
+      "nationality": "SGP",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 86.0,
+      "nettScore": 70.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8a79c70f-bee0-4ced-bee4-dac24819d0ed",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "32311400-4114-545f-a18c-1dc3b53e8a69",
+      "participants": [
+        {
+          "id": "0fdad47e-95fb-5177-9fa8-e501402122dd",
+          "sailorId": "8a79c70f-bee0-4ced-bee4-dac24819d0ed",
+          "sourceName": "Hayley tan kai en",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Hayley tan kai en; historic sail: SGP700; club: GKS; year field: 2016. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 15,
+      "name": "Tasanatham Suthamgosal",
+      "sailOrBoardNumber": "THA1979",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 94.0,
+      "nettScore": 71.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7a475df7-bc47-43cf-bab3-815222279ece",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "56373e32-3b31-526e-b5c9-ca479f4b52d9",
+      "participants": [
+        {
+          "id": "1ba5fba8-f185-5291-bcb6-d5a58ff235ee",
+          "sailorId": "7a475df7-bc47-43cf-bab3-815222279ece",
+          "sourceName": "Tasanatham Suthamgosal",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Tasanatham Suthamgosal; historic sail: THA1979; club: ACDC.SC; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 16,
+      "name": "PIMPISA DEVAHASTIN NA AYUDHYA",
+      "sailOrBoardNumber": "THA63",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 95.0,
+      "nettScore": 72.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "976342b7-69ec-4200-8e46-684855939591",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c35b0f42-6796-5f6b-a4d1-2062b00c9206",
+      "participants": [
+        {
+          "id": "b63cbb0d-3304-56c1-a9cc-6d32615a9654",
+          "sailorId": "976342b7-69ec-4200-8e46-684855939591",
+          "sourceName": "PIMPISA DEVAHASTIN NA AYUDHYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: PIMPISA DEVAHASTIN NA AYUDHYA; historic sail: THA63; club: ACDC.SC; year field: 2016. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 17,
+      "name": "Kanthee Khunmuang",
+      "sailOrBoardNumber": "1936",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 98.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5ff1d850-2b8e-5d94-8e5c-b456c652ff07",
+      "participants": [
+        {
+          "id": "d2c40eee-7703-5be5-b922-1e127359377e",
+          "sailorId": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+          "sourceName": "Kanthee Khunmuang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Kanthee Khunmuang; historic sail: 1936; club: SSA; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 19,
+      "name": "PAPUNGKORN KONGPRECHASAKUL",
+      "sailOrBoardNumber": "THA64",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 98.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a1bb3db7-fb14-4510-b7f7-a890fd0ca31c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "afc8e62c-fab4-59f5-a3cc-4a57f9528c94",
+      "participants": [
+        {
+          "id": "363344f0-eba7-52e9-8644-c9d1c921f09a",
+          "sailorId": "a1bb3db7-fb14-4510-b7f7-a890fd0ca31c",
+          "sourceName": "PAPUNGKORN KONGPRECHASAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: PAPUNGKORN KONGPRECHASAKUL; historic sail: THA64; club: SSA; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 20,
+      "name": "Proud Parintarakul",
+      "sailOrBoardNumber": "1935",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 112.0,
+      "nettScore": 89.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "de564928-6def-4b4a-96df-17358fdfc7c5",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9b0ac1f0-b98a-5d74-a1ab-025ba040fce5",
+      "participants": [
+        {
+          "id": "5685419b-7297-57dc-aa12-0a928a1b3809",
+          "sailorId": "de564928-6def-4b4a-96df-17358fdfc7c5",
+          "sourceName": "Proud Parintarakul",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Proud Parintarakul; historic sail: 1935; club: SSA; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 21,
+      "name": "KASSAWEE Homchong",
+      "sailOrBoardNumber": "THA181",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2016,
+      "sourceBirthYear": "2016",
+      "grossScore": 115.0,
+      "nettScore": 91.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "17dd9b0f-f384-5ace-bebf-720276aa2dfe",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2e2ff0ba-9582-5804-b9bd-9e22ebf7ea53",
+      "participants": [
+        {
+          "id": "83ee4260-e23e-5e6b-a340-7883662df80b",
+          "sailorId": "17dd9b0f-f384-5ace-bebf-720276aa2dfe",
+          "sourceName": "KASSAWEE Homchong",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: KASSAWEE Homchong; historic sail: THA181; club: YRAT; year field: 2016. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 22,
+      "name": "Kanthon Khunmuang",
+      "sailOrBoardNumber": "1593",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 116.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fe102225-248d-48a9-a92c-683cadcdbda8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5aaf6dda-496c-5b29-8892-d29977385b5a",
+      "participants": [
+        {
+          "id": "d878203c-bc67-5972-bf87-17fd8ac372d9",
+          "sailorId": "fe102225-248d-48a9-a92c-683cadcdbda8",
+          "sourceName": "Kanthon Khunmuang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Kanthon Khunmuang; historic sail: 1593; club: SSA; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 23,
+      "name": "Kittitat Noondee",
+      "sailOrBoardNumber": "5",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 116.0,
+      "nettScore": 94.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ced44631-e8f2-4b82-86d9-abcb4ca86b41",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "674ffd9a-9f40-5d34-a796-a31873e1d0cb",
+      "participants": [
+        {
+          "id": "ccdd89a1-fe9e-5a01-99fc-4b4098de1850",
+          "sailorId": "ced44631-e8f2-4b82-86d9-abcb4ca86b41",
+          "sourceName": "Kittitat Noondee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Kittitat Noondee; historic sail: 5; club: YRAT; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 24,
+      "name": "Pitchayut Jaroenphat",
+      "sailOrBoardNumber": "8 Red",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 116.0,
+      "nettScore": 94.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1a6a3369-0a69-54cb-a556-a5fbaff24454",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "36a6ebdb-ff41-57f5-99d9-cda9bfe8152e",
+      "participants": [
+        {
+          "id": "1579bc72-0261-54dd-927e-ea383b326ca8",
+          "sailorId": "1a6a3369-0a69-54cb-a556-a5fbaff24454",
+          "sourceName": "Pitchayut Jaroenphat",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Pitchayut Jaroenphat; historic sail: 8 Red; club: YRAT; year field: 2014. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 25,
+      "name": "Chanyaphas Sasirojthanakul",
+      "sailOrBoardNumber": "3",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 150.0,
+      "nettScore": 124.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4ced7340-6118-5b3b-af3b-135bf1cea16c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "fd06756e-4b9a-5e74-b3ae-c6e558ade922",
+      "participants": [
+        {
+          "id": "9f79f8a2-bf26-5988-93b0-e5f71b8fb71b",
+          "sailorId": "4ced7340-6118-5b3b-af3b-135bf1cea16c",
+          "sourceName": "Chanyaphas Sasirojthanakul",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Chanyaphas Sasirojthanakul; historic sail: 3; club: SSA; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 26,
+      "name": "Pakwan Nirachatsuwan",
+      "sailOrBoardNumber": "6",
+      "club": "SSA",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 155.0,
+      "nettScore": 128.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(27.0 DNF)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "eced49b4-094d-5264-8a99-443ccc1602d0",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "e4fa5ac8-48e4-5c12-9bbf-a6555ed0897a",
+      "participants": [
+        {
+          "id": "59114f8e-ff66-5e33-b7bd-7d9e75427995",
+          "sailorId": "eced49b4-094d-5264-8a99-443ccc1602d0",
+          "sourceName": "Pakwan Nirachatsuwan",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist silver Fleet; page 2; source name: Pakwan Nirachatsuwan; historic sail: 6; club: SSA; year field: 2015. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 24,
+  "deferredEntryCount": 2,
+  "publicSummary": "Provisional organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 24 of 26 class entries imported; 2 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 7,
+      "name": "NETCHANOK CHATAWATTANASOPSKUN",
+      "sailOrBoardNumber": "1562",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 52.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "8b594c37-db52-4549-a765-f51fd619238d",
+          "name": "Netchanok Chatawattanasopakun",
+          "similarity": 0.964
+        },
+        {
+          "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "name": "Klaochanok Chatawattanasopakun",
+          "similarity": 0.842
+        },
+        {
+          "id": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+          "name": "Chanchai Teerapittayanon",
+          "similarity": 0.588
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist silver Fleet",
+      "boatClass": "Optimist",
+      "division": "Silver",
+      "rank": 18,
+      "name": "Navatawan Jaemjit",
+      "sailOrBoardNumber": "THA1979",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 99.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "1c03e3e7-ea29-526f-88b3-fd77ce113868",
+          "name": "Navatawan Jeanjit",
+          "similarity": 0.875
+        },
+        {
+          "id": "5890ff0d-ad50-4352-84a0-29135867289a",
+          "name": "Nagisa Kawakami",
+          "similarity": 0.6
+        },
+        {
+          "id": "1c5900eb-e05a-4376-a668-e3cd7cf3a2db",
+          "name": "Nathan, Nande Li",
+          "similarity": 0.552
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+      "club": "YRAT",
+      "name": "Kanyapat Pisoottiwong",
+      "gender": "F",
+      "handle": "kanyapat-pisoottiwong-6sr2pun",
+      "birthYear": 2015,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8f32febd-325c-40b7-9096-064bea31cb7f",
+      "club": "SAF Yacht Club",
+      "name": "Matthias Kai Lun Lee",
+      "gender": "M",
+      "handle": "matthias-kai-lun-lee",
+      "birthYear": 2017,
+      "sailNumber": "3385",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "club": "YRAT",
+      "name": "Jiratiwat Peungchurn",
+      "gender": "M",
+      "handle": "jiratiwat-peungchurn-9xt7lm4",
+      "birthYear": 2012,
+      "sailNumber": "1220",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "club": "RTFYC",
+      "name": "Arunee Raksapun",
+      "gender": "F",
+      "handle": "arunee-raksapun-u24jkub",
+      "birthYear": 2015,
+      "sailNumber": "945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8d3ee6ba-8696-4fca-a6a3-b79c3993194e",
+      "club": "SAF Yacht Club",
+      "name": "Katelynn Kai En Lee",
+      "gender": "F",
+      "handle": "katelynn-kai-en-lee",
+      "birthYear": 2014,
+      "sailNumber": "3383",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "889fd6a4-96bb-40fa-8ed5-19fa3ff45188",
+      "club": "Indonesia Sailing Federation (PORLASI)",
+      "name": "William Poon",
+      "gender": "M",
+      "handle": "william-poon",
+      "birthYear": 2015,
+      "sailNumber": "21",
+      "nationality": "INA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8a79c70f-bee0-4ced-bee4-dac24819d0ed",
+      "club": "Changi Sailing Club",
+      "name": "Hayley Kai En Tan",
+      "gender": "F",
+      "handle": "hayley-kai-en-tan",
+      "birthYear": 2016,
+      "sailNumber": "700",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7a475df7-bc47-43cf-bab3-815222279ece",
+      "club": "ACDC",
+      "name": "Tasanatham Suthamgosal",
+      "gender": "M",
+      "handle": "asian-tha-tasanatham-481c84",
+      "birthYear": 2015,
+      "sailNumber": "1979",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ba7eba1c-42d5-5035-839c-91d10145cf3c",
+      "club": "RTFYC",
+      "name": "Theetawat Manitpornsut",
+      "gender": "M",
+      "handle": "theetawat-manitpornsut-thai26-ba7eba",
+      "birthYear": 2014,
+      "sailNumber": "1835",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6f60ba18-c0b7-5468-8fa3-b27f75422aec",
+      "club": "ACDC.SC",
+      "name": "Baramee Sonnual",
+      "gender": "M",
+      "handle": "baramee-sonnual-thai26-6f60ba",
+      "birthYear": 2015,
+      "sailNumber": "195",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a1bb3db7-fb14-4510-b7f7-a890fd0ca31c",
+      "club": "SSA",
+      "name": "Papungkorn Kongprechasakul",
+      "gender": "M",
+      "handle": "papungkorn-kongprechasakul-tnc26-a1bb3db7",
+      "birthYear": 2015,
+      "sailNumber": "THA64",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "17dd9b0f-f384-5ace-bebf-720276aa2dfe",
+      "club": "YRAT",
+      "name": "Kassawee Homchong",
+      "gender": "M",
+      "handle": "kassawee-homchong-thai25-17dd9b",
+      "birthYear": 2016,
+      "sailNumber": "181",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+      "club": "SSA",
+      "name": "Kanthee Khunmuang",
+      "gender": "M",
+      "handle": "asian-tha-kanthee-kh-35cbfe",
+      "birthYear": 2014,
+      "sailNumber": "54",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+      "club": "SSA",
+      "name": "Kanthon Khunmuang",
+      "gender": "M",
+      "handle": "asian-tha-kanthon-kh-e585c6",
+      "birthYear": 2014,
+      "sailNumber": "1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ced44631-e8f2-4b82-86d9-abcb4ca86b41",
+      "club": "YRAT",
+      "name": "Kittitat Noondee",
+      "gender": "M",
+      "handle": "kittitat-noondee-2g6ggc3",
+      "birthYear": 2015,
+      "sailNumber": "892",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "976342b7-69ec-4200-8e46-684855939591",
+      "club": "YRAT",
+      "name": "Pimpisa Devahastin Na Ayudhya",
+      "gender": "F",
+      "handle": "pimpisa-devahastin-na-ayudhya-7yvd7vy",
+      "birthYear": 2016,
+      "sailNumber": "1539",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+      "club": "RTNYC",
+      "name": "Hirunsira Munkhongpornpaiboon",
+      "gender": "M",
+      "handle": "hirunsira-munkhongpornpaiboon-enjhoth",
+      "birthYear": 2015,
+      "sailNumber": "932",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "feed1618-5c28-484a-bd9c-a31f17b192a1",
+      "club": "SSA",
+      "name": "Vajirawit Siriphak",
+      "gender": "M",
+      "handle": "asian-tha-vajirawit--c5815c",
+      "birthYear": 2015,
+      "sailNumber": "995",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "de564928-6def-4b4a-96df-17358fdfc7c5",
+      "club": "SSA",
+      "name": "Proud Parintarakul",
+      "gender": "F",
+      "handle": "asian-tha-proud-pari-0161e8",
+      "birthYear": 2014,
+      "sailNumber": "935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fb5bf764-c958-5156-b06e-0fef2cf780b5",
+      "club": "SSA",
+      "name": "Taratep Janlamoon",
+      "gender": "M",
+      "handle": "taratep-janlamoon-sr26-fb5bf7",
+      "birthYear": 2012,
+      "sailNumber": "1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4ced7340-6118-5b3b-af3b-135bf1cea16c",
+      "club": "SSA",
+      "name": "Chanyaphas Sasirojthanakul",
+      "gender": "F",
+      "handle": "chanyaphas-sasirojthanakul-sr26-4ced73",
+      "birthYear": 2014,
+      "sailNumber": "883",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "8b4d492f-a4f3-5d3b-b131-9b33a47eb387",
+      "name": "Miss Kodchaporn Peungchimplee",
+      "handle": "miss-kodchaporn-peungchimplee-sr25-8b4d49",
+      "sailNumber": "94",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC.SC"
+    },
+    {
+      "id": "1a6a3369-0a69-54cb-a556-a5fbaff24454",
+      "name": "Pitchayut Jaroenphat",
+      "handle": "pitchayut-jaroenphat-sr25-1a6a33",
+      "sailNumber": "8 Red",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "eced49b4-094d-5264-8a99-443ccc1602d0",
+      "name": "Pakwan Nirachatsuwan",
+      "handle": "pakwan-nirachatsuwan-sr25-eced49",
+      "sailNumber": "6",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "SSA"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

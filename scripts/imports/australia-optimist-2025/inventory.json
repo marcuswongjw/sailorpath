@@ -1,0 +1,65 @@
+[
+  {
+    "file": "2025-musto-australian-optimist-championship-optimist-gold.sql",
+    "entries": 57,
+    "held": 0,
+    "total": 57,
+    "raceScores": 627
+  },
+  {
+    "file": "2025-musto-australian-optimist-championship-optimist-silver.sql",
+    "entries": 55,
+    "held": 1,
+    "total": 56,
+    "raceScores": 605
+  },
+  {
+    "file": "2025-musto-australian-optimist-championship-optimist-intermediate.sql",
+    "entries": 49,
+    "held": 1,
+    "total": 50,
+    "raceScores": 441
+  },
+  {
+    "file": "2025-musto-australian-optimist-championship-optimist-green.sql",
+    "entries": 33,
+    "held": 1,
+    "total": 34,
+    "raceScores": 528
+  },
+  {
+    "file": "2025-nsw-optimist-championship-optimist-open.sql",
+    "entries": 40,
+    "held": 1,
+    "total": 41,
+    "raceScores": 240
+  },
+  {
+    "file": "2025-nsw-optimist-championship-optimist-intermediate.sql",
+    "entries": 50,
+    "held": 1,
+    "total": 51,
+    "raceScores": 250
+  },
+  {
+    "file": "2025-victorian-optimist-open-championship-optimist-open.sql",
+    "entries": 31,
+    "held": 1,
+    "total": 32,
+    "raceScores": 124
+  },
+  {
+    "file": "2025-victorian-optimist-open-championship-optimist-intermediate.sql",
+    "entries": 28,
+    "held": 0,
+    "total": 28,
+    "raceScores": 112
+  },
+  {
+    "file": "2025-victorian-optimist-open-championship-optimist-green.sql",
+    "entries": 26,
+    "held": 0,
+    "total": 26,
+    "raceScores": 156
+  }
+]

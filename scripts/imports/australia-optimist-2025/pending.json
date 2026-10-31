@@ -1,0 +1,102 @@
+[
+  {
+    "event": "nationals",
+    "division": "Intermediate",
+    "rank": 46,
+    "name": "Ayana LILO-HUSSAIN",
+    "sailOrBoardNumber": "603",
+    "club": "SYC",
+    "grossScore": 349.0,
+    "nettScore": 255.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "42",
+        "score": 42.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(47)",
+        "score": 47.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(47)",
+        "score": 47.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 4,
+        "raw": "21",
+        "score": 21.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 5,
+        "raw": "33",
+        "score": 33.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 6,
+        "raw": "46",
+        "score": 46.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 7,
+        "raw": "30",
+        "score": 30.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 8,
+        "raw": "39",
+        "score": 39.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 9,
+        "raw": "44",
+        "score": 44.0,
+        "code": null,
+        "discarded": false
+      }
+    ],
+    "gender": "F",
+    "nationality": null,
+    "officialBirthYear": null,
+    "sourceName": "Ayana LILO-HUSSAIN",
+    "reason": "Close/ambiguous existing identity; held.",
+    "candidates": [
+      {
+        "id": "bb408eea-0002-49e2-978a-21e9b17a6b1a",
+        "name": "Ayana Hussain",
+        "sail": "605",
+        "similarity": 0.857
+      },
+      {
+        "id": "059779bb-5a2d-4ed7-b4e5-4c92b158174b",
+        "name": "Habib Al Hussaini",
+        "sail": "310",
+        "similarity": 0.645
+      },
+      {
+        "id": "a796d48c-c6ed-490c-b982-3415275e7285",
+        "name": "Layan Al Ruzaiqi",
+        "sail": "306",
+        "similarity": 0.6
+      }
+    ]
+  }
+]

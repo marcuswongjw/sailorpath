@@ -1,0 +1,919 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "6cbd040d-97d6-5b5d-a0ef-f856f73b4ff7",
+    "slug": "childrens-day-regatta-2025",
+    "name": "Children\u2019s Day Regatta 2025",
+    "startDate": "2025-01-17",
+    "endDate": "2025-01-19",
+    "venue": "Samudara Kila Yachting Center, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "159c4ad0-d7ee-543b-aa1c-752898cfeabc",
+    "slug": "childrens-day-regatta-2025-ilca6",
+    "name": "Children\u2019s Day Regatta 2025 \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 5,
+    "totalFleetSize": 11,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/128112",
+    "title": "Children\u2019s Day Regatta 2025 \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 1,
+      "name": "TON RATTANA",
+      "sailOrBoardNumber": "THA222180",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 5.0,
+      "nettScore": 5.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "135c9c70-17a1-503f-9196-2f28a247a2e2",
+      "participants": [
+        {
+          "id": "51d72777-ed8c-5892-9b12-964b61975cf4",
+          "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+          "sourceName": "TON RATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: TON RATTANA; historic sail: THA222180; club: RVYC; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 2,
+      "name": "Claudia Nazarov",
+      "sailOrBoardNumber": "THA221441",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 14.0,
+      "nettScore": 14.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f9ea1599-7146-5dab-86f4-12ba13a55957",
+      "participants": [
+        {
+          "id": "49290f27-297b-5e5c-a56d-e8cd77edbc0c",
+          "sailorId": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+          "sourceName": "Claudia Nazarov",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Claudia Nazarov; historic sail: THA221441; club: RVYC; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "Manitho Henry",
+      "sailOrBoardNumber": "1",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 22.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8ab2a9fd-f982-5e3c-9da5-09078d65cc7a",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "2dc3fdb4-171c-59ef-8bdd-1b211621f6b7",
+      "participants": [
+        {
+          "id": "0c3c5800-af14-5226-afec-5555d922c00d",
+          "sailorId": "8ab2a9fd-f982-5e3c-9da5-09078d65cc7a",
+          "sourceName": "Manitho Henry",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Manitho Henry; historic sail: 1; club: YRAT; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 4,
+      "name": "JAKKRAPAT VONGTIM",
+      "sailOrBoardNumber": "217449",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 26.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "41519e2c-4a0e-5943-85f0-79e441e88df5",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f56bcb79-f69d-517c-b073-6591913a1067",
+      "participants": [
+        {
+          "id": "c506b566-0fcf-5376-afb7-84a038c0e25b",
+          "sailorId": "41519e2c-4a0e-5943-85f0-79e441e88df5",
+          "sourceName": "JAKKRAPAT VONGTIM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: JAKKRAPAT VONGTIM; historic sail: 217449; club: YRAT; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 5,
+      "name": "Boseong Jeon",
+      "sailOrBoardNumber": "KOR 221038",
+      "club": "Boseong club",
+      "nationality": "KOR",
+      "gender": "M",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 27.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "67c7dbe2-74b3-533e-b56a-966db6ba44a8",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "7d107d44-55ce-518b-a833-a6d9f35b68b8",
+      "participants": [
+        {
+          "id": "d6afc438-60e6-58de-8eee-3524f77b2543",
+          "sailorId": "67c7dbe2-74b3-533e-b56a-966db6ba44a8",
+          "sourceName": "Boseong Jeon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Boseong Jeon; historic sail: KOR 221038; club: Boseong club; year field: 2005. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 6,
+      "name": "NICHAWAN NITHITHONGSAKUL",
+      "sailOrBoardNumber": "217445",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 29.0,
+      "nettScore": 29.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b7d9e401-7cdf-5992-b08c-6ea44a2ba1cf",
+      "participants": [
+        {
+          "id": "86d40033-e8c5-59ef-9298-e9b6effb685c",
+          "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+          "sourceName": "NICHAWAN NITHITHONGSAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: NICHAWAN NITHITHONGSAKUL; historic sail: 217445; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 7,
+      "name": "TEEKATAT DANGPRATUM",
+      "sailOrBoardNumber": "8",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 29.0,
+      "nettScore": 29.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c961b32d-4b70-5fd4-8520-76f40e94bdaa",
+      "participants": [
+        {
+          "id": "23b468db-38fa-5df4-ac40-4ac1562750af",
+          "sailorId": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+          "sourceName": "TEEKATAT DANGPRATUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: TEEKATAT DANGPRATUM; historic sail: 8; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 9,
+      "name": "CHAYODOM SEELALAKH",
+      "sailOrBoardNumber": "220240",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 39.0,
+      "nettScore": 39.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "089e667e-8089-5e95-b941-698999626cd6",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "5be68dc5-8637-559b-9202-c5d4a8a69f07",
+      "participants": [
+        {
+          "id": "ed2bca16-7677-5690-b3c5-d7b86d3a134d",
+          "sailorId": "089e667e-8089-5e95-b941-698999626cd6",
+          "sourceName": "CHAYODOM SEELALAKH",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: CHAYODOM SEELALAKH; historic sail: 220240; club: YRAT; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 10,
+      "name": "SUPAKAN KERDSAKUL",
+      "sailOrBoardNumber": "195030",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2007,
+      "sourceBirthYear": "2007",
+      "grossScore": 53.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "dbfe3720-bd69-5832-8ab6-4636b2cac830",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "a9074950-bb02-5082-90ab-18247e0dd2ca",
+      "participants": [
+        {
+          "id": "3c1dcfe7-7c0c-5548-9f8e-70212957244f",
+          "sailorId": "dbfe3720-bd69-5832-8ab6-4636b2cac830",
+          "sourceName": "SUPAKAN KERDSAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: SUPAKAN KERDSAKUL; historic sail: 195030; club: ACDC.SC; year field: 2007. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 11,
+      "name": "NAPATSAKORN WONGPROM",
+      "sailOrBoardNumber": "215075",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 54.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "58eb296d-6b5f-50ef-8b4d-a23156b45e9f",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c58ddb3c-c594-5c79-bd41-a6988ec747e4",
+      "participants": [
+        {
+          "id": "51e13cf6-a7b5-59b7-b662-f6cdfb102257",
+          "sailorId": "58eb296d-6b5f-50ef-8b4d-a23156b45e9f",
+          "sourceName": "NAPATSAKORN WONGPROM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: NAPATSAKORN WONGPROM; historic sail: 215075; club: YRAT; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 10,
+  "deferredEntryCount": 1,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 10 of 11 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128112,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 8,
+      "name": "Kim",
+      "sailOrBoardNumber": "215573",
+      "club": "Jeun buk",
+      "nationality": "KOR",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 34.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "b42c9278-742b-5d1a-a60e-ec352f9c5f0b",
+          "name": "Kim Ji An",
+          "similarity": 0.6
+        },
+        {
+          "id": "066aedea-7cf8-504b-8410-2f5e0cc3b813",
+          "name": "Hwon Kim",
+          "similarity": 0.6
+        },
+        {
+          "id": "0734265d-4f61-5c1e-ae03-6f39847bbd1c",
+          "name": "Iman",
+          "similarity": 0.571
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "9b40387d-1640-592d-b94f-5eb5f0cdcd5d",
+      "club": "RTNYC",
+      "name": "Teekatat Dangpratum",
+      "gender": "M",
+      "handle": "teekatat-dangpratum-sr26-9b4038",
+      "birthYear": 2011,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+      "club": "YRAT",
+      "name": "Nichawan Nithithongsakul",
+      "gender": "F",
+      "handle": "nichawan-nithithongsakul-sr26-846c6c",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "717ef058-5716-5951-a848-0723f95e8f28",
+      "club": "RVYC",
+      "name": "Ton Rattana",
+      "gender": "M",
+      "handle": "ton-rattana-thai25-717ef0",
+      "birthYear": 2008,
+      "sailNumber": "222180",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "41519e2c-4a0e-5943-85f0-79e441e88df5",
+      "name": "Jakkrapat Vongtim",
+      "handle": "jakkrapat-vongtim-sr25-41519e",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+      "name": "Claudia Nazarov",
+      "handle": "claudia-nazarov-sr25-0078ae",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RVYC"
+    },
+    {
+      "id": "8ab2a9fd-f982-5e3c-9da5-09078d65cc7a",
+      "name": "Manitho Henry",
+      "handle": "manitho-henry-sr25-8ab2a9",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "67c7dbe2-74b3-533e-b56a-966db6ba44a8",
+      "name": "Boseong Jeon",
+      "handle": "boseong-jeon-sr25-67c7db",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "KOR",
+      "gender": "M",
+      "club": "Boseong club"
+    },
+    {
+      "id": "089e667e-8089-5e95-b941-698999626cd6",
+      "name": "Chayodom Seelalakh",
+      "handle": "chayodom-seelalakh-sr25-089e66",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "dbfe3720-bd69-5832-8ab6-4636b2cac830",
+      "name": "Supakan Kerdsakul",
+      "handle": "supakan-kerdsakul-sr25-dbfe37",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "ACDC.SC"
+    },
+    {
+      "id": "58eb296d-6b5f-50ef-8b4d-a23156b45e9f",
+      "name": "Napatsakorn Wongprom",
+      "handle": "napatsakorn-wongprom-sr25-58eb29",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

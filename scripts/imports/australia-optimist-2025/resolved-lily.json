@@ -1,0 +1,265 @@
+{
+  "resolvedDate": "2026-10-30",
+  "profileId": "0774b01e-2dd0-5a3d-81d2-62386d3e7e68",
+  "entries": [
+    {
+      "event": "nationals",
+      "division": "Silver",
+      "rank": 26,
+      "name": "Lily CANTWELL",
+      "sailOrBoardNumber": "1868",
+      "club": "RBYC/RGYC",
+      "grossScore": 382.0,
+      "nettScore": 266.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "43",
+          "score": 43.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "33",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(58)BFD",
+          "score": 58.0,
+          "code": "BFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "19",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "46",
+          "score": 46.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "35",
+          "score": 35.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "raw": "(58)UFD",
+          "score": 58.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 8,
+          "raw": "5",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 9,
+          "raw": "7",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 10,
+          "raw": "36",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 11,
+          "raw": "42",
+          "score": 42.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": "F",
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lily CANTWELL",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "6530fa88-9a13-52e8-a9ab-ad59c577560a",
+          "name": "Holly Cantwell",
+          "sail": "IRL 1641",
+          "similarity": 0.88
+        },
+        {
+          "id": "f4fad826-06d6-5bb0-90a1-203230f2ec03",
+          "name": "Riley Cantwell",
+          "sail": "",
+          "similarity": 0.88
+        },
+        {
+          "id": "c6023ffb-498a-485f-bc39-ce179b6f026a",
+          "name": "Maya Cantwell",
+          "sail": "AUS 1850",
+          "similarity": 0.75
+        }
+      ]
+    },
+    {
+      "event": "nsw",
+      "division": "Open",
+      "rank": 36,
+      "name": "Lily Cantwell",
+      "sailOrBoardNumber": "1868",
+      "club": "RBYC",
+      "grossScore": 194.0,
+      "nettScore": 152.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0 UFD)",
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lily Cantwell",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "6530fa88-9a13-52e8-a9ab-ad59c577560a",
+          "name": "Holly Cantwell",
+          "sail": "IRL 1641",
+          "similarity": 0.88
+        },
+        {
+          "id": "f4fad826-06d6-5bb0-90a1-203230f2ec03",
+          "name": "Riley Cantwell",
+          "sail": "",
+          "similarity": 0.88
+        },
+        {
+          "id": "c6023ffb-498a-485f-bc39-ce179b6f026a",
+          "name": "Maya Cantwell",
+          "sail": "AUS 1850",
+          "similarity": 0.75
+        }
+      ]
+    },
+    {
+      "event": "victoria",
+      "division": "Open",
+      "rank": 10,
+      "name": "Lily Cantwell",
+      "sailOrBoardNumber": "1868",
+      "club": "RBYC",
+      "grossScore": 45.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "13",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "12",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lily C",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "6530fa88-9a13-52e8-a9ab-ad59c577560a",
+          "name": "Holly Cantwell",
+          "sail": "IRL 1641",
+          "similarity": 0.88
+        },
+        {
+          "id": "f4fad826-06d6-5bb0-90a1-203230f2ec03",
+          "name": "Riley Cantwell",
+          "sail": "",
+          "similarity": 0.88
+        },
+        {
+          "id": "c6023ffb-498a-485f-bc39-ce179b6f026a",
+          "name": "Maya Cantwell",
+          "sail": "AUS 1850",
+          "similarity": 0.75
+        }
+      ]
+    }
+  ],
+  "basis": "VIODA association and official full-name entry list: Lily Cantwell, AUS 1868. Explicit user approval. Applied lily-resolution.sql; original manifests preserved as historical import snapshots."
+}

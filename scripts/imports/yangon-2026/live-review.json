@@ -1,0 +1,32 @@
+{
+  "reviewedAt": "2026-10-30T04:16:06.284Z",
+  "pages": [
+    {
+      "path": "/regattas/yangon-sailing-club-combined-fleet-championships-2026/results/optimist",
+      "httpStatus": 200,
+      "visibleRows": 28,
+      "raceCellsChecked": 308,
+      "errors": [],
+      "provisional": true,
+      "partialNotice": true
+    },
+    {
+      "path": "/regattas/olympic-day-movement-regatta-2026/results/ilca-4",
+      "httpStatus": 200,
+      "visibleRows": 5,
+      "raceCellsChecked": 55,
+      "errors": [],
+      "provisional": true,
+      "partialNotice": true
+    },
+    {
+      "path": "/regattas/olympic-day-movement-regatta-2026/results/optimist",
+      "httpStatus": 200,
+      "visibleRows": 29,
+      "raceCellsChecked": 319,
+      "errors": [],
+      "provisional": true,
+      "partialNotice": true
+    }
+  ]
+}

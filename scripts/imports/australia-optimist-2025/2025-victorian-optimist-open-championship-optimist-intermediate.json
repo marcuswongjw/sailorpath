@@ -1,0 +1,1889 @@
+{
+  "batch": "australia-optimist-2025-2026-10-30",
+  "event": {
+    "slug": "2025-victorian-optimist-open-championship",
+    "name": "2025 Organic Garden International Optimist Victorian & Open Championship",
+    "startDate": "2025-03-08",
+    "endDate": "2025-03-10",
+    "venue": "Sorrento Sailing Couta Boat Club, Port Phillip, Victoria, Australia",
+    "organizer": "Sorrento Sailing Couta Boat Club and VIODA",
+    "id": "b3f066eb-f709-571e-a71a-013c4a29e409",
+    "classes": [
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "c7e66a3b-31bd-5b0d-8463-8371f9fead88",
+    "slug": "2025-victorian-optimist-open-championship-optimist-intermediate",
+    "name": "2025 Organic Garden International Optimist Victorian & Open Championship \u2014 Optimist Intermediate",
+    "boatClass": "Optimist",
+    "division": "Intermediate",
+    "raceCount": 4,
+    "totalFleetSize": 28,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1,
+    "status": "draft"
+  },
+  "officialSource": {
+    "url": "https://sailingresults.net/sa/results/overall.aspx?ID=81895.2",
+    "title": "2025 Organic Garden International Optimist Victorian & Open Championship \u2014 Optimist Intermediate",
+    "type": "url",
+    "provisional": false,
+    "publicationStatus": "published overall standings",
+    "visuallyReviewed": false,
+    "pdfUrl": null,
+    "pdfLimitation": "Official results PDF not located."
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "Erik Rydin",
+      "sailOrBoardNumber": "HKG506",
+      "club": "SYC",
+      "grossScore": 10.0,
+      "nettScore": 10.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "2",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "3",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "2",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "3",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Erik R",
+      "sailorId": "35f3c2cb-2ced-494d-aa27-c5f0cf3193dd",
+      "resultId": "f2ac182b-939e-5251-bc88-cbe21e22c5b6",
+      "identityBasis": "Full name corroborated by official entry list: Erik R, sail HKG506 -> Erik Rydin. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "ec23d55b-a721-5aae-962a-a72a775ddf58",
+          "sailorId": "35f3c2cb-2ced-494d-aa27-c5f0cf3193dd",
+          "sourceName": "Erik R",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Erik R; historic sail HKG506; club SYC. Full name corroborated by official entry list: Erik R, sail HKG506 -> Erik Rydin. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 2,
+      "name": "Charlie Elvin",
+      "sailOrBoardNumber": "1561",
+      "club": "RBYC",
+      "grossScore": 16.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "3",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "4",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "8",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "1",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Charlie E",
+      "sailorId": "2f60b6fa-d3f9-53eb-9bcd-8c4c80ca2ae8",
+      "resultId": "3c702716-314d-5d21-bab5-029698f4b849",
+      "identityBasis": "Full name corroborated by official entry list: Charlie E, sail 1561 -> Charlie Elvin. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "e30dfa82-05a4-58a3-9984-5ebfcff2515c",
+          "sailorId": "2f60b6fa-d3f9-53eb-9bcd-8c4c80ca2ae8",
+          "sourceName": "Charlie E",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Charlie E; historic sail 1561; club RBYC. Full name corroborated by official entry list: Charlie E, sail 1561 -> Charlie Elvin. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 3,
+      "name": "James Edwards",
+      "sailOrBoardNumber": "1568",
+      "club": "MYC",
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "1",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "1",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "13",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "5",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "James E",
+      "sailorId": "54b6d292-7c1e-4da4-990b-802e674c06e5",
+      "resultId": "5d003f94-f183-5d87-a828-74c417880a86",
+      "identityBasis": "Full name corroborated by official entry list: James E, sail 1568 -> James Edwards. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "5dca2d04-ae80-5a83-bdde-b3ec75105cb5",
+          "sailorId": "54b6d292-7c1e-4da4-990b-802e674c06e5",
+          "sourceName": "James E",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name James E; historic sail 1568; club MYC. Full name corroborated by official entry list: James E, sail 1568 -> James Edwards. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 4,
+      "name": "Ya Zhang",
+      "sailOrBoardNumber": "CHN122",
+      "club": "Qingdao",
+      "grossScore": 22.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "8",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "6",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "4",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "4",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Ya Z",
+      "sailorId": "fb90d81d-fee0-5545-81ce-a65f75e0acfe",
+      "resultId": "0841fd04-bd61-5953-8881-ff3c41b334d0",
+      "identityBasis": "Full name corroborated by official entry list: Ya Z, sail CHN122 -> Ya Zhang. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "374d3242-31e8-5b30-9b80-f39d8b7dc60e",
+          "sailorId": "fb90d81d-fee0-5545-81ce-a65f75e0acfe",
+          "sourceName": "Ya Z",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Ya Z; historic sail CHN122; club Qingdao. Full name corroborated by official entry list: Ya Z, sail CHN122 -> Ya Zhang. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 5,
+      "name": "Bay Roche",
+      "sailOrBoardNumber": "1925",
+      "club": "WSC / KRB",
+      "grossScore": 28.0,
+      "nettScore": 28.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "7",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "8",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "5",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "8",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Bay R",
+      "sailorId": "465baf88-e20e-44a3-9883-5b9813a90230",
+      "resultId": "14f376d0-ba79-5560-b61e-9ae2d0455f00",
+      "identityBasis": "Full name corroborated by official entry list: Bay R, sail 1925 -> Bay Roche. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "3dd5d869-7507-5e37-b459-704079d80cc5",
+          "sailorId": "465baf88-e20e-44a3-9883-5b9813a90230",
+          "sourceName": "Bay R",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Bay R; historic sail 1925; club WSC / KRB. Full name corroborated by official entry list: Bay R, sail 1925 -> Bay Roche. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 6,
+      "name": "Alexander Sorokin",
+      "sailOrBoardNumber": "1430",
+      "club": "SYC",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "1",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "12",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Alexander S",
+      "sailorId": "c381b0a9-d3cd-59a2-b778-09f0146841be",
+      "resultId": "c21f0dbf-8972-574b-aa7f-cbdb4a8efbcb",
+      "identityBasis": "Full name corroborated by official entry list: Alexander S, sail 1430 -> Alexander Sorokin. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "6d54b399-3eb4-5ec3-9925-d5adb45d98f7",
+          "sailorId": "c381b0a9-d3cd-59a2-b778-09f0146841be",
+          "sourceName": "Alexander S",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Alexander S; historic sail 1430; club SYC. Full name corroborated by official entry list: Alexander S, sail 1430 -> Alexander Sorokin. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 7,
+      "name": "Xavier James",
+      "sailOrBoardNumber": "999",
+      "club": "Sandy Bay Sailing Club",
+      "grossScore": 31.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "6",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "13",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "6",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "6",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Xavier J",
+      "sailorId": "8f29ffb3-a556-46c9-82c5-4b20f6d75356",
+      "resultId": "50140a77-5ad2-5192-a66d-29aab4efdbc6",
+      "identityBasis": "Full name corroborated by official entry list: Xavier J, sail 999 -> Xavier James. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "8ee73061-cb3e-5359-b13e-107fe2e306c5",
+          "sailorId": "8f29ffb3-a556-46c9-82c5-4b20f6d75356",
+          "sourceName": "Xavier J",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Xavier J; historic sail 999; club Sandy Bay Sailing Club. Full name corroborated by official entry list: Xavier J, sail 999 -> Xavier James. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 8,
+      "name": "Bobby Furneaux Williams",
+      "sailOrBoardNumber": "1926",
+      "club": "Indented Head YC",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "14",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "3",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "7",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Bobby F",
+      "sailorId": "f59d5ecb-926a-566c-a7c1-cfdca1cde8c2",
+      "resultId": "83308e72-8a37-51d5-ba86-3097f3961a2d",
+      "identityBasis": "Full name corroborated by official entry list: Bobby F, sail 1926 -> Bobby Furneaux Williams. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "ed976daa-b51f-5bff-9d05-defda37c14df",
+          "sailorId": "f59d5ecb-926a-566c-a7c1-cfdca1cde8c2",
+          "sourceName": "Bobby F",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Bobby F; historic sail 1926; club Indented Head YC. Full name corroborated by official entry list: Bobby F, sail 1926 -> Bobby Furneaux Williams. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 9,
+      "name": "Oscar Kirby",
+      "sailOrBoardNumber": "1758",
+      "club": "SSCBC",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "4",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "10",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "7",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "15",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Oscar K",
+      "sailorId": "cd626087-622a-59d5-bc80-b1ae80513b4c",
+      "resultId": "cd4b08aa-b141-5853-8b33-417eca16dfb5",
+      "identityBasis": "Full name corroborated by official entry list: Oscar K, sail 1758 -> Oscar Kirby. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "72da5365-bcd2-596a-a711-ec0b769e5e12",
+          "sailorId": "cd626087-622a-59d5-bc80-b1ae80513b4c",
+          "sourceName": "Oscar K",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Oscar K; historic sail 1758; club SSCBC. Full name corroborated by official entry list: Oscar K, sail 1758 -> Oscar Kirby. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 10,
+      "name": "Aubrey Tan",
+      "sailOrBoardNumber": "1111",
+      "club": "SSCBC / SYC",
+      "grossScore": 42.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "5",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "14",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "12",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Aubrey T",
+      "sailorId": "3895ee0b-423d-54b2-ab8b-ed51a60f50a6",
+      "resultId": "a71936c2-96af-5f6e-86f5-c330d5131f0c",
+      "identityBasis": "Full name corroborated by official entry list: Aubrey T, sail 1111 -> Aubrey Tan. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "b74e7a5d-4a46-5f61-bda7-88128ddb4d04",
+          "sailorId": "3895ee0b-423d-54b2-ab8b-ed51a60f50a6",
+          "sourceName": "Aubrey T",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Aubrey T; historic sail 1111; club SSCBC / SYC. Full name corroborated by official entry list: Aubrey T, sail 1111 -> Aubrey Tan. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 11,
+      "name": "Jasper Mulder",
+      "sailOrBoardNumber": "1002",
+      "club": "SSCBC",
+      "grossScore": 50.0,
+      "nettScore": 50.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "10",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "2",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "18",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "20",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jasper M",
+      "sailorId": "fd289b87-c769-5361-95e5-4730b5d238cd",
+      "resultId": "004f68c2-e855-52ae-b383-7cc3b76fa5fb",
+      "identityBasis": "Full name corroborated by official entry list: Jasper M, sail 1002 -> Jasper Mulder. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "3472eb05-dadc-576e-8984-834066d9136c",
+          "sailorId": "fd289b87-c769-5361-95e5-4730b5d238cd",
+          "sourceName": "Jasper M",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Jasper M; historic sail 1002; club SSCBC. Full name corroborated by official entry list: Jasper M, sail 1002 -> Jasper Mulder. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 12,
+      "name": "Anne Edwards",
+      "sailOrBoardNumber": "1269",
+      "club": "MYC",
+      "grossScore": 50.0,
+      "nettScore": 50.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "18",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "5",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "10",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "17",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Anne E",
+      "sailorId": "71010fdd-6c88-5e28-b9aa-5a1648dbe7b5",
+      "resultId": "2abe2ea0-99f9-53f4-b566-7f5e4d8275c8",
+      "identityBasis": "Full name corroborated by official entry list: Anne E, sail 1269 -> Anne Edwards. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "952580f8-6251-5413-8e32-92ceb2ebcca1",
+          "sailorId": "71010fdd-6c88-5e28-b9aa-5a1648dbe7b5",
+          "sourceName": "Anne E",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Anne E; historic sail 1269; club MYC. Full name corroborated by official entry list: Anne E, sail 1269 -> Anne Edwards. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 13,
+      "name": "Charlie McLaren",
+      "sailOrBoardNumber": "1398",
+      "club": "SSCBC",
+      "grossScore": 54.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "15",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "15",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "13",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Charlie M",
+      "sailorId": "f9a37376-1672-5dfb-98a2-a7e5006893d1",
+      "resultId": "357c04fb-2bc4-5b28-98c8-ab4cdefee81b",
+      "identityBasis": "Full name corroborated by official entry list: Charlie M, sail 1398 -> Charlie McLaren. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c9c7bb54-6343-5f46-a878-61148e0f4417",
+          "sailorId": "f9a37376-1672-5dfb-98a2-a7e5006893d1",
+          "sourceName": "Charlie M",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Charlie M; historic sail 1398; club SSCBC. Full name corroborated by official entry list: Charlie M, sail 1398 -> Charlie McLaren. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 14,
+      "name": "Malawa Heale",
+      "sailOrBoardNumber": "1732",
+      "club": "RBYC",
+      "grossScore": 55.0,
+      "nettScore": 55.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "19",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "18",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Malawa H",
+      "sailorId": "39fb5e0a-c7a4-4aea-8adc-e65325e66843",
+      "resultId": "97dba5eb-8ffc-5562-9890-542dd3a89af7",
+      "identityBasis": "Full name corroborated by official entry list: Malawa H, sail 1732 -> Malawa Heale. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "a075ee5f-def8-5cde-9b02-32d4b8d95dbe",
+          "sailorId": "39fb5e0a-c7a4-4aea-8adc-e65325e66843",
+          "sourceName": "Malawa H",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Malawa H; historic sail 1732; club RBYC. Full name corroborated by official entry list: Malawa H, sail 1732 -> Malawa Heale. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 15,
+      "name": "Finley Insermini",
+      "sailOrBoardNumber": "1177",
+      "club": "RBYC",
+      "grossScore": 56.0,
+      "nettScore": 56.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "12",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "7",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "19",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "18",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Finley I",
+      "sailorId": "8c844476-f530-577e-be42-e594122444d8",
+      "resultId": "f852c070-5f45-5a56-a04e-101c757b668f",
+      "identityBasis": "Full name corroborated by official entry list: Finley I, sail 1177 -> Finley Insermini. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "d759eb81-3d5d-5db8-bae6-342a67963abe",
+          "sailorId": "8c844476-f530-577e-be42-e594122444d8",
+          "sourceName": "Finley I",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Finley I; historic sail 1177; club RBYC. Full name corroborated by official entry list: Finley I, sail 1177 -> Finley Insermini. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 16,
+      "name": "Patrick Moore",
+      "sailOrBoardNumber": "1690",
+      "club": "SSCBC",
+      "grossScore": 56.0,
+      "nettScore": 56.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "13",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "12",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "17",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "14",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Patrick M",
+      "sailorId": "948f00d5-2133-5e3f-9704-19d73a626e57",
+      "resultId": "fbee76c4-0b04-5ddc-ae85-e11a9a9bfa7d",
+      "identityBasis": "Full name corroborated by official entry list: Patrick M, sail 1690 -> Patrick Moore. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "14422635-e4f5-532d-985c-391ba18ade12",
+          "sailorId": "948f00d5-2133-5e3f-9704-19d73a626e57",
+          "sourceName": "Patrick M",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Patrick M; historic sail 1690; club SSCBC. Full name corroborated by official entry list: Patrick M, sail 1690 -> Patrick Moore. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 17,
+      "name": "James Griffiths",
+      "sailOrBoardNumber": "600",
+      "club": "SSCBC",
+      "grossScore": 60.0,
+      "nettScore": 60.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "28",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "16",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "14",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "2",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "James G",
+      "sailorId": "18759aef-ccf3-515f-a5a2-3900b2ad5a5d",
+      "resultId": "8524c264-cc4e-510c-992f-0b1a6cdcd38a",
+      "identityBasis": "Full name corroborated by official entry list: James G, sail 600 -> James Griffiths. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "8a05620e-5291-5f3a-8181-cc6984f49531",
+          "sailorId": "18759aef-ccf3-515f-a5a2-3900b2ad5a5d",
+          "sourceName": "James G",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name James G; historic sail 600; club SSCBC. Full name corroborated by official entry list: James G, sail 600 -> James Griffiths. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 18,
+      "name": "Kate Edwards",
+      "sailOrBoardNumber": "1075",
+      "club": "MYC",
+      "grossScore": 72.0,
+      "nettScore": 72.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "11",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "29OCS",
+          "score": 29.0,
+          "code": "OCS",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "16",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "16",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Kate E",
+      "sailorId": "d3689de6-662c-59f4-a8bc-f2da08fa096c",
+      "resultId": "5d7b3d18-9754-5006-b291-d543783f7c0e",
+      "identityBasis": "Full name corroborated by official entry list: Kate E, sail 1075 -> Kate Edwards. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "e897c879-5dbf-5e7c-8b97-2b900e859858",
+          "sailorId": "d3689de6-662c-59f4-a8bc-f2da08fa096c",
+          "sourceName": "Kate E",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Kate E; historic sail 1075; club MYC. Full name corroborated by official entry list: Kate E, sail 1075 -> Kate Edwards. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 19,
+      "name": "Charlie Chidlow",
+      "sailOrBoardNumber": "941",
+      "club": "RBYC",
+      "grossScore": 74.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "16",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "19",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "29OCS",
+          "score": 29.0,
+          "code": "OCS",
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "10",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Charlie C",
+      "sailorId": "30933bfd-6976-5355-9cfb-f1cd37fa5b39",
+      "resultId": "5200fd8c-87ee-5388-a2f2-e3a9736de586",
+      "identityBasis": "Full name corroborated by official entry list: Charlie C, sail 941 -> Charlie Chidlow. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "64c14d8f-2bd8-5f55-bc6c-72f6585423a8",
+          "sailorId": "30933bfd-6976-5355-9cfb-f1cd37fa5b39",
+          "sourceName": "Charlie C",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Charlie C; historic sail 941; club RBYC. Full name corroborated by official entry list: Charlie C, sail 941 -> Charlie Chidlow. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 20,
+      "name": "Edward Jukes",
+      "sailOrBoardNumber": "1681",
+      "club": "RBYC",
+      "grossScore": 82.0,
+      "nettScore": 82.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "23",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "22",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "15",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "22",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Edward J",
+      "sailorId": "1f3a483a-b110-567c-964e-f32063ec07c4",
+      "resultId": "a0c25306-3ba1-588e-97bc-eee420761c19",
+      "identityBasis": "Full name corroborated by official entry list: Edward J, sail 1681 -> Edward Jukes. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "4632f74e-d2bb-556a-88c9-7c81bcbf3fd9",
+          "sailorId": "1f3a483a-b110-567c-964e-f32063ec07c4",
+          "sourceName": "Edward J",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Edward J; historic sail 1681; club RBYC. Full name corroborated by official entry list: Edward J, sail 1681 -> Edward Jukes. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 21,
+      "name": "Noor Tcharikov",
+      "sailOrBoardNumber": "888",
+      "club": "DBYC",
+      "grossScore": 90.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "17",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "20",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "29NSC",
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "24",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Noor T",
+      "sailorId": "284184d0-8998-5b83-9cdb-7f4d30587ba7",
+      "resultId": "a427494b-019d-5317-8268-592fbc221153",
+      "identityBasis": "Full name corroborated by official entry list: Noor T, sail 888 -> Noor Tcharikov. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "b895eebf-d9cf-5f9f-8a43-d7a8a7632a6e",
+          "sailorId": "284184d0-8998-5b83-9cdb-7f4d30587ba7",
+          "sourceName": "Noor T",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Noor T; historic sail 888; club DBYC. Full name corroborated by official entry list: Noor T, sail 888 -> Noor Tcharikov. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 22,
+      "name": "William James",
+      "sailOrBoardNumber": "828",
+      "club": "Sandy Bay Sailing Club",
+      "grossScore": 90.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "27",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "17",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "20",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "26",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "William J",
+      "sailorId": "6bb53a1d-beec-5217-a6bb-996c0f92b13f",
+      "resultId": "11ec1bb9-d801-55e4-be93-11c1a1b551f2",
+      "identityBasis": "Full name corroborated by official entry list: William J, sail 828 -> William James. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "b4662470-3a3e-54fc-8a0c-7cd5757ea0a0",
+          "sailorId": "6bb53a1d-beec-5217-a6bb-996c0f92b13f",
+          "sourceName": "William J",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name William J; historic sail 828; club Sandy Bay Sailing Club. Full name corroborated by official entry list: William J, sail 828 -> William James. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 23,
+      "name": "Irida Bladon",
+      "sailOrBoardNumber": "1578",
+      "club": "RBYC",
+      "grossScore": 91.0,
+      "nettScore": 91.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "24",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "21",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "21",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "25",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Irida B",
+      "sailorId": "d4a93122-cac6-514d-a1c3-46a63c7aa978",
+      "resultId": "6cbf44fb-3806-5b0f-8652-6274df2383f4",
+      "identityBasis": "Full name corroborated by official entry list: Irida B, sail 1578 -> Irida Bladon. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "cbc56a0d-fca9-5a8b-a2d0-96a236c5c494",
+          "sailorId": "d4a93122-cac6-514d-a1c3-46a63c7aa978",
+          "sourceName": "Irida B",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Irida B; historic sail 1578; club RBYC. Full name corroborated by official entry list: Irida B, sail 1578 -> Irida Bladon. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 24,
+      "name": "Emmanuel Gioutlou",
+      "sailOrBoardNumber": "1138",
+      "club": "SYC/RBYC",
+      "grossScore": 92.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "21",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "24",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "24",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "23",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Emmanuel G",
+      "sailorId": "649ed262-0ae9-5464-ba52-fe8007c641a3",
+      "resultId": "10c1a53c-460c-510d-9392-c01cec06ddfc",
+      "identityBasis": "Full name corroborated by official entry list: Emmanuel G, sail 1138 -> Emmanuel Gioutlou. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "16ff2984-9561-5d58-aba0-a21f5968c79a",
+          "sailorId": "649ed262-0ae9-5464-ba52-fe8007c641a3",
+          "sourceName": "Emmanuel G",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Emmanuel G; historic sail 1138; club SYC/RBYC. Full name corroborated by official entry list: Emmanuel G, sail 1138 -> Emmanuel Gioutlou. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 25,
+      "name": "Atticus Healy",
+      "sailOrBoardNumber": "581",
+      "club": "SSCBC",
+      "grossScore": 95.0,
+      "nettScore": 95.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "22",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "25",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "29OCS",
+          "score": 29.0,
+          "code": "OCS",
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "19",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Atticus H",
+      "sailorId": "54cf411a-9a2a-550c-94c6-828a09c844b6",
+      "resultId": "13ca41f1-5147-5ddb-9f87-93024028d036",
+      "identityBasis": "Full name corroborated by official entry list: Atticus H, sail 581 -> Atticus Healy. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "723a1efb-2dda-53b4-9340-0423e9035096",
+          "sailorId": "54cf411a-9a2a-550c-94c6-828a09c844b6",
+          "sourceName": "Atticus H",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Atticus H; historic sail 581; club SSCBC. Full name corroborated by official entry list: Atticus H, sail 581 -> Atticus Healy. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 26,
+      "name": "Bingjinrong Song",
+      "sailOrBoardNumber": "CHN2005",
+      "club": "Qingdao",
+      "grossScore": 95.0,
+      "nettScore": 95.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "26",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "26",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "22",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "21",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Bingjinrong S",
+      "sailorId": "fd90fe6e-5071-5e32-90c3-a15e20de2d58",
+      "resultId": "b1fb5706-4108-5729-ab47-bf13357e0269",
+      "identityBasis": "Full name corroborated by official entry list: Bingjinrong S, sail CHN2005 -> Bingjinrong Song. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "506df6d4-f68b-529f-b2e6-1eaeec1d3c86",
+          "sailorId": "fd90fe6e-5071-5e32-90c3-a15e20de2d58",
+          "sourceName": "Bingjinrong S",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Bingjinrong S; historic sail CHN2005; club Qingdao. Full name corroborated by official entry list: Bingjinrong S, sail CHN2005 -> Bingjinrong Song. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 27,
+      "name": "Jingzhi Shan",
+      "sailOrBoardNumber": "CHN123",
+      "club": "Qingdao",
+      "grossScore": 100.0,
+      "nettScore": 100.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "25",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "23",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "23",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "29DNF",
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jingzhi S",
+      "sailorId": "85af1c9b-c370-5822-87c0-061953208242",
+      "resultId": "600a7d73-28a5-59be-9a47-c0096fc0217b",
+      "identityBasis": "Full name corroborated by official entry list: Jingzhi S, sail CHN123 -> Jingzhi Shan. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred.",
+      "participants": [
+        {
+          "id": "bf7f5681-a1b9-5187-8b57-3c12b69e9b1e",
+          "sailorId": "85af1c9b-c370-5822-87c0-061953208242",
+          "sourceName": "Jingzhi S",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Jingzhi S; historic sail CHN123; club Qingdao. Full name corroborated by official entry list: Jingzhi S, sail CHN123 -> Jingzhi Shan. Distinct full source name; no close existing-name candidate. No DOB or nationality inferred. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    },
+    {
+      "rank": 28,
+      "name": "Theo Altson",
+      "sailOrBoardNumber": "1801",
+      "club": "SSCBC/RBYC",
+      "grossScore": 107.0,
+      "nettScore": 107.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "20",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "29DNC",
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "29DNC",
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "29DNC",
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Theo A",
+      "sailorId": "16b59fff-e224-4eb6-b839-ea5ff1482211",
+      "resultId": "c35088b1-6eb8-5a71-b130-767209c43f9b",
+      "identityBasis": "Full name corroborated by official entry list: Theo A, sail 1801 -> Theo Altson. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "6d654b48-ee6f-5db8-8a5c-d3613e66a46e",
+          "sailorId": "16b59fff-e224-4eb6-b839-ea5ff1482211",
+          "sourceName": "Theo A",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://sailingresults.net/sa/results/overall.aspx?ID=81895.2. Optimist Intermediate; source name Theo A; historic sail 1801; club SSCBC/RBYC. Full name corroborated by official entry list: Theo A, sail 1801 -> Theo Altson. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: 1, 2, 3, 4. No birth year inferred."
+    }
+  ],
+  "importedEntryCount": 28,
+  "deferredEntryCount": 0,
+  "pendingEntries": [],
+  "publicSummary": "Partial import: 28 of 28 entries; 0 entries awaiting identity review. Published overall standings; source race labels 1, 2, 3, 4 retained. Excluded from Singapore rankings.",
+  "identityReview": {
+    "method": "Full names; exact source sails disambiguate collisions; close names held. Victorian initials corroborated with official entry list."
+  },
+  "profilePreflight": [
+    {
+      "id": "16b59fff-e224-4eb6-b839-ea5ff1482211",
+      "name": "Theo Altson",
+      "handle": "theo-altson-anz26-16b59f",
+      "sailNumber": "1801",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "SSCBC",
+      "birthYear": null
+    },
+    {
+      "id": "1f3a483a-b110-567c-964e-f32063ec07c4",
+      "name": "Edward Jukes",
+      "handle": "opti-aus-edward-jukes-1681",
+      "sailNumber": "1681",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RBYC",
+      "birthYear": null
+    },
+    {
+      "id": "35f3c2cb-2ced-494d-aa27-c5f0cf3193dd",
+      "name": "Erik Rydin",
+      "handle": "erik-rydin-anz26-35f3c2",
+      "sailNumber": "506",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "SYC",
+      "birthYear": null
+    },
+    {
+      "id": "3895ee0b-423d-54b2-ab8b-ed51a60f50a6",
+      "name": "Aubrey Tan",
+      "handle": "opti-aus-aubrey-tan-1111",
+      "sailNumber": "1111",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "SYC/SSCBC",
+      "birthYear": null
+    },
+    {
+      "id": "39fb5e0a-c7a4-4aea-8adc-e65325e66843",
+      "name": "Malawa Heale",
+      "handle": "malawa-heale-anz26-39fb5e",
+      "sailNumber": "1732",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "MYC",
+      "birthYear": null
+    },
+    {
+      "id": "465baf88-e20e-44a3-9883-5b9813a90230",
+      "name": "Bay Roche",
+      "handle": "bay-roche-anz26-465baf",
+      "sailNumber": "1925",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "WSC/SSCBC",
+      "birthYear": null
+    },
+    {
+      "id": "54b6d292-7c1e-4da4-990b-802e674c06e5",
+      "name": "James Edwards",
+      "handle": "james-edwards-anz26-54b6d2",
+      "sailNumber": "1568",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "MYC",
+      "birthYear": null
+    },
+    {
+      "id": "6bb53a1d-beec-5217-a6bb-996c0f92b13f",
+      "name": "William James",
+      "handle": "opti-aus-william-james-1517",
+      "sailNumber": "1517",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RYCT",
+      "birthYear": null
+    },
+    {
+      "id": "71010fdd-6c88-5e28-b9aa-5a1648dbe7b5",
+      "name": "Anne Edwards",
+      "handle": "opti-aus-anne-edwards-1269",
+      "sailNumber": "1269",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "MYC",
+      "birthYear": null
+    },
+    {
+      "id": "8c844476-f530-577e-be42-e594122444d8",
+      "name": "Finley Insermini",
+      "handle": "opti-aus-finley-insermini-1177",
+      "sailNumber": "1177",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RBYC",
+      "birthYear": null
+    },
+    {
+      "id": "8f29ffb3-a556-46c9-82c5-4b20f6d75356",
+      "name": "Xavier James",
+      "handle": "xavier-james-anz26-8f29ff",
+      "sailNumber": "999",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RYCT",
+      "birthYear": null
+    },
+    {
+      "id": "948f00d5-2133-5e3f-9704-19d73a626e57",
+      "name": "Patrick Moore",
+      "handle": "opti-aus-patrick-moore-1392",
+      "sailNumber": "1392",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "SSCBC",
+      "birthYear": null
+    },
+    {
+      "id": "c381b0a9-d3cd-59a2-b778-09f0146841be",
+      "name": "Alexander Sorokin",
+      "handle": "opti-aus-alexander-sorokin-1430",
+      "sailNumber": "1430",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "SYC",
+      "birthYear": null
+    },
+    {
+      "id": "cd626087-622a-59d5-bc80-b1ae80513b4c",
+      "name": "Oscar Kirby",
+      "handle": "opti-aus-oscar-kirby-1758",
+      "sailNumber": "1758",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "SSCBC",
+      "birthYear": null
+    },
+    {
+      "id": "d3689de6-662c-59f4-a8bc-f2da08fa096c",
+      "name": "Kate Edwards",
+      "handle": "kate-edwards-aus26-d3689d",
+      "sailNumber": "",
+      "sailNumberIlca4": "220003",
+      "nationality": null,
+      "gender": "F",
+      "club": "MYC",
+      "birthYear": null
+    },
+    {
+      "id": "d4a93122-cac6-514d-a1c3-46a63c7aa978",
+      "name": "Irida Bladon",
+      "handle": "opti-aus-irida-bladon-1222",
+      "sailNumber": "1222",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "SYC/RBYC",
+      "birthYear": null
+    },
+    {
+      "id": "f59d5ecb-926a-566c-a7c1-cfdca1cde8c2",
+      "name": "Bobby Furneaux Williams",
+      "handle": "opti-aus-bobby-furneaux-williams-1926",
+      "sailNumber": "1926",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "IHYC",
+      "birthYear": null
+    },
+    {
+      "id": "f9a37376-1672-5dfb-98a2-a7e5006893d1",
+      "name": "Charlie Mclaren",
+      "handle": "opti-aus-charlie-mclaren-1398",
+      "sailNumber": "1398",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "SSCBC",
+      "birthYear": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "2f60b6fa-d3f9-53eb-9bcd-8c4c80ca2ae8",
+      "name": "Charlie Elvin",
+      "handle": "charlie-elvin-aus25-2f60b6",
+      "sailNumber": "1561",
+      "sailNumberIlca4": null,
+      "club": "RBYC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "fb90d81d-fee0-5545-81ce-a65f75e0acfe",
+      "name": "Ya Zhang",
+      "handle": "ya-zhang-aus25-fb90d8",
+      "sailNumber": "CHN122",
+      "sailNumberIlca4": null,
+      "club": "Qingdao",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "fd289b87-c769-5361-95e5-4730b5d238cd",
+      "name": "Jasper Mulder",
+      "handle": "jasper-mulder-aus25-fd289b",
+      "sailNumber": "1002",
+      "sailNumberIlca4": null,
+      "club": "SSCBC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "18759aef-ccf3-515f-a5a2-3900b2ad5a5d",
+      "name": "James Griffiths",
+      "handle": "james-griffiths-aus25-18759a",
+      "sailNumber": "600",
+      "sailNumberIlca4": null,
+      "club": "SSCBC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "30933bfd-6976-5355-9cfb-f1cd37fa5b39",
+      "name": "Charlie Chidlow",
+      "handle": "charlie-chidlow-aus25-30933b",
+      "sailNumber": "941",
+      "sailNumberIlca4": null,
+      "club": "RBYC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "284184d0-8998-5b83-9cdb-7f4d30587ba7",
+      "name": "Noor Tcharikov",
+      "handle": "noor-tcharikov-aus25-284184",
+      "sailNumber": "888",
+      "sailNumberIlca4": null,
+      "club": "DBYC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "649ed262-0ae9-5464-ba52-fe8007c641a3",
+      "name": "Emmanuel Gioutlou",
+      "handle": "emmanuel-gioutlou-aus25-649ed2",
+      "sailNumber": "1138",
+      "sailNumberIlca4": null,
+      "club": "SYC/RBYC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "54cf411a-9a2a-550c-94c6-828a09c844b6",
+      "name": "Atticus Healy",
+      "handle": "atticus-healy-aus25-54cf41",
+      "sailNumber": "581",
+      "sailNumberIlca4": null,
+      "club": "SSCBC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "fd90fe6e-5071-5e32-90c3-a15e20de2d58",
+      "name": "Bingjinrong Song",
+      "handle": "bingjinrong-song-aus25-fd90fe",
+      "sailNumber": "CHN2005",
+      "sailNumberIlca4": null,
+      "club": "Qingdao",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "85af1c9b-c370-5822-87c0-061953208242",
+      "name": "Jingzhi Shan",
+      "handle": "jingzhi-shan-aus25-85af1c",
+      "sailNumber": "CHN123",
+      "sailNumberIlca4": null,
+      "club": "Qingdao",
+      "gender": null,
+      "nationality": null
+    }
+  ]
+}

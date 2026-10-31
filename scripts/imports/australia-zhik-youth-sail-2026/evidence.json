@@ -1,0 +1,581 @@
+{
+  "batch": "australia-zhik-youth-sail-2026",
+  "sourceIndexUrl": "https://www.sailing.org.au/news/zhik-youth-sail-2026-save-the-dates",
+  "pdfCorroborationUnavailable": true,
+  "pdfSearchSummary": "Searched Australian Sailing Youth Sail state hubs (sailingyouth.org.au), SailingResults.net noticeboards (IDs 82311, 82171, 82426, 82460, 82464), TopYacht noticeboards (SA seriesId=1175, QLD eventId=407), Sportspage WA portal, and SailSys NT noticeboard (series 5537). Notices of Race, Sailing Instructions, and protest notices were published in PDF, while official final race results are published exclusively via digital scoring portals (SailingResults.net HTML, TopYacht Public Results JSON/HTML, Sportspage HTML, and SailSys JSON/HTML). Standalone official final results PDFs are unavailable. All 478 boat results (213 Optimist + 265 other classes) and 3,554 race scores across the 36 sheets are 100% mathematically reconciled with 0 discrepancies.",
+  "excludedEventsFromSaveTheDates": [
+    {
+      "name": "2026 Zhik Youth Sail Victoria (Victorian Youth Championships)",
+      "dates": "2026-04-09 to 2026-04-12",
+      "venue": "Sorrento Sailing Couta Boat Club, VIC",
+      "url": "https://sailingresults.net/?ID=82171",
+      "reason": "Coaching clinic held 9\u201310 April 2026, but the championship regatta (11\u201312 April 2026) was cancelled due to severe weather and safety conditions (0 races sailed)."
+    }
+  ],
+  "events": [
+    {
+      "id": "8b26aa69-c745-5b8e-a479-6b3f461b478e",
+      "name": "2026 Zhik Youth Sail Tasmania (Tasmanian Youth Championships)",
+      "slug": "2026-zhik-youth-sail-tas",
+      "dates": "2026-03-07 to 2026-03-09",
+      "venue": "Royal Yacht Club of Tasmania, Hobart, TAS, Australia",
+      "organizer": "Australian Sailing / Royal Yacht Club of Tasmania (RYCT)",
+      "officialSource": {
+        "url": "https://sailingresults.net/?ID=82311",
+        "title": "2026 Zhik Tasmanian Youth Championships Official Results (SailingResults.net)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://www.sailingyouth.org.au/youth-sail-tas",
+            "https://sailingresults.net/sa/notice/default.aspx?ID=82311",
+            "https://ryct.org.au/"
+          ],
+          "outcome": "Notice of Race, Sailing Instructions, and Notices to Competitors published in PDF on official noticeboard; final race results published exclusively via SailingResults.net HTML."
+        }
+      },
+      "sheets": [
+        {
+          "id": "07fc9de8-57bb-5523-a830-fbfbac955035",
+          "slug": "2026-zhik-youth-sail-tas-optimist-open",
+          "name": "2026 Zhik Youth Sail Tasmania \u2014 Optimist Open",
+          "division": "Open",
+          "fleetSize": 4,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82311.9",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "de8d9b47-dd0d-5a30-80a9-e0983794ddb8",
+          "slug": "2026-zhik-youth-sail-tas-optimist-intermediate",
+          "name": "2026 Zhik Youth Sail Tasmania \u2014 Optimist Intermediate",
+          "division": "Intermediate",
+          "fleetSize": 7,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82311.8",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "e64e9963-9a30-58d5-8ade-126ba600a933",
+          "slug": "2026-zhik-youth-sail-tas-ilca-4",
+          "name": "2026 Zhik Youth Sail Tasmania \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 14,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82311.3"
+        },
+        {
+          "id": "f31c7a91-22c8-565e-b9f3-12c78d916d90",
+          "slug": "2026-zhik-youth-sail-tas-ilca-6",
+          "name": "2026 Zhik Youth Sail Tasmania \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 10,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82311.4"
+        },
+        {
+          "id": "438fad43-ebcb-5d8f-a097-c4afd049f21e",
+          "slug": "2026-zhik-youth-sail-tas-ilca-7",
+          "name": "2026 Zhik Youth Sail Tasmania \u2014 ILCA 7",
+          "boatClass": "ILCA 7",
+          "division": "Open",
+          "fleetSize": 3,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82311.12"
+        },
+        {
+          "id": "b19552f8-1bfe-5750-b324-601be2e14f43",
+          "slug": "2026-zhik-youth-sail-tas-29er",
+          "name": "2026 Zhik Youth Sail Tasmania \u2014 29er",
+          "boatClass": "29er",
+          "division": "Open",
+          "fleetSize": 6,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82311.5"
+        }
+      ]
+    },
+    {
+      "id": "e9a0a738-bff4-5262-bda9-205f3f0ae0c1",
+      "name": "2026 Zhik Youth Sail Queensland (Queensland Youth Championships)",
+      "slug": "2026-zhik-youth-sail-qld",
+      "dates": "2026-09-21 to 2026-09-26",
+      "venue": "Keppel Bay Sailing Club, Yeppoon, QLD, Australia",
+      "organizer": "Australian Sailing / Keppel Bay Sailing Club (KBSC)",
+      "officialSource": {
+        "url": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1228",
+        "title": "2026 Zhik Youth Sail QLD Echo Course Official Results (TopYacht)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://www.sailingyouth.org.au/youth-sail-qld/",
+            "https://sailingresults.net/sa/notice/default.aspx?ID=82426",
+            "https://topyacht.net/publicresults/IndexResults?clubId=1352&eventId=407"
+          ],
+          "outcome": "NOR, SIs, and protest notices published in PDF on SailingResults.net noticeboard (ID=82426); final race results published exclusively via TopYacht Public Results portal (seriesId=1228)."
+        }
+      },
+      "sheets": [
+        {
+          "id": "4896fb39-ac6d-5e68-aa89-717bf11d1f17",
+          "slug": "2026-zhik-youth-sail-qld-optimist-open",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 Optimist Open",
+          "division": "Open",
+          "fleetSize": 14,
+          "raceCount": 4,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1228",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "4835f06f-3382-53a8-8a42-dc29be4a0267",
+          "slug": "2026-zhik-youth-sail-qld-optimist-intermediate",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 Optimist Intermediate",
+          "division": "Intermediate",
+          "fleetSize": 27,
+          "raceCount": 4,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1228",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "e9dffc70-59be-5a49-b730-ee024f2b62f2",
+          "slug": "2026-zhik-youth-sail-qld-ilca-4",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 36,
+          "raceCount": 7,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1225"
+        },
+        {
+          "id": "2d192fab-bf36-502c-8585-00db17c8277b",
+          "slug": "2026-zhik-youth-sail-qld-ilca-6",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 18,
+          "raceCount": 2,
+          "discardCount": 0,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1225"
+        },
+        {
+          "id": "dcab1b15-3e95-587a-9dd2-d2ccc0303ebb",
+          "slug": "2026-zhik-youth-sail-qld-techno-293",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 Techno 293",
+          "boatClass": "Techno 293",
+          "division": "Open",
+          "fleetSize": 2,
+          "raceCount": 4,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1245"
+        },
+        {
+          "id": "3c34bdde-4a6f-5653-9997-8fc948dfcb8e",
+          "slug": "2026-zhik-youth-sail-qld-iqfoil",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 iQFOiL",
+          "boatClass": "iQFOiL",
+          "division": "Open",
+          "fleetSize": 3,
+          "raceCount": 12,
+          "discardCount": 3,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1226"
+        },
+        {
+          "id": "0a8c0e6b-69f2-5694-baba-0b8610a61f41",
+          "slug": "2026-zhik-youth-sail-qld-29er",
+          "name": "2026 Zhik Youth Sail Queensland \u2014 29er",
+          "boatClass": "29er",
+          "division": "Open",
+          "fleetSize": 9,
+          "raceCount": 7,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1227"
+        }
+      ]
+    },
+    {
+      "id": "a64e79b9-5a04-551d-a5eb-257c1b2e43c0",
+      "name": "2026 Zhik Youth Sail South Australia (SA Youth Championships)",
+      "slug": "2026-zhik-youth-sail-sa",
+      "dates": "2026-09-26 to 2026-09-29",
+      "venue": "Brighton & Seacliff Yacht Club, Adelaide, SA, Australia",
+      "organizer": "Australian Sailing / Brighton & Seacliff Yacht Club (BSYC)",
+      "officialSource": {
+        "url": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1175",
+        "title": "2026 SA Youth Championships Official Results (TopYacht)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://www.sailingyouth.org.au/youth-sail-sa/sa-results",
+            "https://topyacht.com.au/db/otb/event_toolbox.php?des=102.694.2688",
+            "https://www.topyacht.com.au/notice_brd/notice_brd_otb.php?ev=102.102.102.2.694"
+          ],
+          "outcome": "NOR, SIs, and protest time limits published in PDF on TopYacht noticeboard; final race results published exclusively via TopYacht Public Results portal (seriesId=1175)."
+        }
+      },
+      "sheets": [
+        {
+          "id": "9a080071-9657-5b1e-93a8-3b340195dd7e",
+          "slug": "2026-zhik-youth-sail-sa-optimist-open",
+          "name": "2026 Zhik Youth Sail South Australia \u2014 Optimist Open",
+          "division": "Open",
+          "fleetSize": 4,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1175",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "650fcb00-d44d-5a96-bc99-42797efb2882",
+          "slug": "2026-zhik-youth-sail-sa-optimist-intermediate",
+          "name": "2026 Zhik Youth Sail South Australia \u2014 Optimist Intermediate",
+          "division": "Intermediate",
+          "fleetSize": 7,
+          "raceCount": 4,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1175",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "9e10a06a-c922-5a78-8d43-371704f1d58f",
+          "slug": "2026-zhik-youth-sail-sa-ilca-4",
+          "name": "2026 Zhik Youth Sail South Australia \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 3,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1175"
+        },
+        {
+          "id": "917f7edb-cc66-50ee-bd00-611cb1bf09a7",
+          "slug": "2026-zhik-youth-sail-sa-ilca-6",
+          "name": "2026 Zhik Youth Sail South Australia \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 10,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1175"
+        },
+        {
+          "id": "48bc0e93-c18e-5f29-b55d-13d90e8899a0",
+          "slug": "2026-zhik-youth-sail-sa-420",
+          "name": "2026 Zhik Youth Sail South Australia \u2014 420",
+          "boatClass": "420",
+          "division": "Open",
+          "fleetSize": 9,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://topyacht.net/publicresults/SeriesIndex?seriesId=1175"
+        }
+      ]
+    },
+    {
+      "id": "dcf57b30-c097-5d51-bd36-13b22d122d6d",
+      "name": "2026 Zhik Youth Sail Western Australia (WA Youth Championships)",
+      "slug": "2026-zhik-youth-sail-wa",
+      "dates": "2026-09-26 to 2026-10-01",
+      "venue": "Royal Freshwater Bay Yacht Club / Nedlands Yacht Club, Perth, WA, Australia",
+      "organizer": "Australian Sailing / Royal Freshwater Bay Yacht Club (RFBYC) & Nedlands Yacht Club",
+      "officialSource": {
+        "url": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/progresultspage.htm",
+        "title": "2026 Zhik WA Youth Championships Official Results (Sportspage)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://www.sailingyouth.org.au/youth-sail-wa/wa-results-/",
+            "https://www.sailingyouth.org.au/youth-sail-wa/wa-notice-board",
+            "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/progresultspage.htm"
+          ],
+          "outcome": "NOR and SI amendments 1\u20135 published in PDF on WA noticeboard; final race results published exclusively via Sportspage HTML."
+        }
+      },
+      "sheets": [
+        {
+          "id": "6d912022-247e-566a-8637-033ef6073799",
+          "slug": "2026-zhik-youth-sail-wa-optimist-open",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 Optimist Open",
+          "division": "Open",
+          "fleetSize": 25,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/Optimist_Open_Championship.htm",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "ee8e6248-a721-52ff-bcd2-c52531250a21",
+          "slug": "2026-zhik-youth-sail-wa-optimist-intermediate",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 Optimist Intermediate",
+          "division": "Intermediate",
+          "fleetSize": 19,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/Optimist_Intermediate_Championship.htm",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "2b08910d-1d65-5deb-8919-8b1ae74c2eee",
+          "slug": "2026-zhik-youth-sail-wa-ilca-4",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 23,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/ILCA4_Championship.htm"
+        },
+        {
+          "id": "f8318be3-6380-58c3-8f76-5fea34fd7577",
+          "slug": "2026-zhik-youth-sail-wa-ilca-6",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 8,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/ILCA6_Championship.htm"
+        },
+        {
+          "id": "b05ef333-754b-569d-a48e-456e4e0865e8",
+          "slug": "2026-zhik-youth-sail-wa-ilca-7",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 ILCA 7",
+          "boatClass": "ILCA 7",
+          "division": "Open",
+          "fleetSize": 3,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/ILCA7_Championship.htm"
+        },
+        {
+          "id": "00dd2dab-2eee-5129-b28c-841f8d621643",
+          "slug": "2026-zhik-youth-sail-wa-iqfoil",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 iQFOiL",
+          "boatClass": "iQFOiL",
+          "division": "Open",
+          "fleetSize": 6,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/IQ_Foil_Combined_Fleet_Championship.htm"
+        },
+        {
+          "id": "3dab3767-a55e-5a28-8e68-223c2e424aec",
+          "slug": "2026-zhik-youth-sail-wa-29er",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 29er",
+          "boatClass": "29er",
+          "division": "Open",
+          "fleetSize": 6,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/29er_Championship.htm"
+        },
+        {
+          "id": "f25930bb-ea5f-5fa2-87cc-9e4b58a45c98",
+          "slug": "2026-zhik-youth-sail-wa-420",
+          "name": "2026 Zhik Youth Sail Western Australia \u2014 420",
+          "boatClass": "420",
+          "division": "Open",
+          "fleetSize": 1,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://www.sportspage.com.au/yacht_clubs/rfbyc/WAYouth2026/420_Championship.htm"
+        }
+      ]
+    },
+    {
+      "id": "f967b832-71d8-5deb-8550-9d50791429fb",
+      "name": "2026 Zhik Youth Sail New South Wales (NSW Youth Championships)",
+      "slug": "2026-zhik-youth-sail-nsw",
+      "dates": "2026-09-30 to 2026-10-05",
+      "venue": "Toronto Amateur Sailing Club, Lake Macquarie, NSW, Australia",
+      "organizer": "Australian Sailing / Toronto Amateur Sailing Club (TASC)",
+      "officialSource": {
+        "url": "https://sailingresults.net/?ID=82460",
+        "title": "2026 Zhik NSW Youth Championships Official Results (SailingResults.net)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://www.sailingyouth.org.au/youth-sail-nsw/nsw-results",
+            "https://sailingresults.net/sa/notice/default.aspx?ID=82460",
+            "https://www.tasc.org.au/"
+          ],
+          "outcome": "NOR and SIs published in PDF on SailingResults.net noticeboard (ID=82460); final race results published exclusively via SailingResults.net HTML."
+        }
+      },
+      "sheets": [
+        {
+          "id": "6c3e0183-81ef-5e3f-96c0-e41adac8dfeb",
+          "slug": "2026-zhik-youth-sail-nsw-optimist-open",
+          "name": "2026 Zhik Youth Sail New South Wales \u2014 Optimist Open",
+          "division": "Open",
+          "fleetSize": 74,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82460.12",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "598c5aaf-659b-5c4d-a00f-053b4c1238ad",
+          "slug": "2026-zhik-youth-sail-nsw-optimist-intermediate",
+          "name": "2026 Zhik Youth Sail New South Wales \u2014 Optimist Intermediate",
+          "division": "Intermediate",
+          "fleetSize": 32,
+          "raceCount": 8,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82460.11",
+          "boatClass": "Optimist"
+        },
+        {
+          "id": "272410ce-a517-5011-8c9a-51e417976773",
+          "slug": "2026-zhik-youth-sail-nsw-ilca-4",
+          "name": "2026 Zhik Youth Sail New South Wales \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 37,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82460.4"
+        },
+        {
+          "id": "88d641da-3e13-5b23-a77c-7f9d1461195c",
+          "slug": "2026-zhik-youth-sail-nsw-ilca-6",
+          "name": "2026 Zhik Youth Sail New South Wales \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 12,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82460.5"
+        },
+        {
+          "id": "b78278b2-566f-5c40-8968-6a7fd1cba56d",
+          "slug": "2026-zhik-youth-sail-nsw-29er",
+          "name": "2026 Zhik Youth Sail New South Wales \u2014 29er",
+          "boatClass": "29er",
+          "division": "Open",
+          "fleetSize": 15,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82460.6"
+        },
+        {
+          "id": "96f7f60c-0239-53da-a816-33c8ff2840df",
+          "slug": "2026-zhik-youth-sail-nsw-420",
+          "name": "2026 Zhik Youth Sail New South Wales \u2014 420",
+          "boatClass": "420",
+          "division": "Open",
+          "fleetSize": 4,
+          "raceCount": 9,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82460.7"
+        }
+      ]
+    },
+    {
+      "id": "672f20cf-bda5-56a6-8b24-fafae6519b65",
+      "name": "2026 Zhik Youth Sail Northern Territory (NT Youth Championships)",
+      "slug": "2026-zhik-youth-sail-nt",
+      "dates": "2026-07-06 to 2026-07-10",
+      "venue": "Darwin Sailing Club, Fannie Bay, Darwin, NT, Australia",
+      "organizer": "Australian Sailing / Darwin Sailing Club (DSC)",
+      "officialSource": {
+        "url": "https://app.sailsys.com.au/club/54/results/series/5537/pointscore?view=individual&handicap=s",
+        "title": "2026 Youth Sail NT Official Results (SailSys Series 5537)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "outcome": "Final race results published exclusively via official digital scoring portal; no standalone PDF published."
+        }
+      },
+      "sheets": [
+        {
+          "id": "54875168-6184-5164-84d8-285de3e46508",
+          "slug": "2026-zhik-youth-sail-nt-ilca-4",
+          "name": "2026 Zhik Youth Sail Northern Territory \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 3,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://app.sailsys.com.au/club/54/results/series/5537/pointscore?view=individual&handicap=s"
+        },
+        {
+          "id": "3c484299-b607-5b99-8820-37c17d075338",
+          "slug": "2026-zhik-youth-sail-nt-ilca-6",
+          "name": "2026 Zhik Youth Sail Northern Territory \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 8,
+          "raceCount": 6,
+          "discardCount": 1,
+          "sourceUrl": "https://app.sailsys.com.au/club/54/results/series/5537/pointscore?view=individual&handicap=s"
+        }
+      ]
+    },
+    {
+      "id": "8e0a3269-56a6-5750-b099-836da4a9ad50",
+      "name": "2026 Zhik Youth Sail ACT (ACT Youth Championships)",
+      "slug": "2026-zhik-youth-sail-act",
+      "dates": "2026-10-10 to 2026-10-11",
+      "venue": "Canberra Yacht Club, Lake Burley Griffin, ACT, Australia",
+      "organizer": "Australian Sailing / Canberra Yacht Club (CYC)",
+      "officialSource": {
+        "url": "https://sailingresults.net/?ID=82464",
+        "title": "2026 Zhik ACT Youth Championships Official Results (SailingResults.net)",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "outcome": "Final race results published exclusively via official digital scoring portal; no standalone PDF published."
+        }
+      },
+      "sheets": [
+        {
+          "id": "c001f928-e2bd-5d0f-b02a-ac5c083bb8a6",
+          "slug": "2026-zhik-youth-sail-act-ilca-4",
+          "name": "2026 Zhik Youth Sail ACT \u2014 ILCA 4",
+          "boatClass": "ILCA 4",
+          "division": "Open",
+          "fleetSize": 14,
+          "raceCount": 8,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82464.3"
+        },
+        {
+          "id": "8fcca695-4d47-5a85-b2dc-18f4316003f3",
+          "slug": "2026-zhik-youth-sail-act-ilca-6",
+          "name": "2026 Zhik Youth Sail ACT \u2014 ILCA 6",
+          "boatClass": "ILCA 6",
+          "division": "Open",
+          "fleetSize": 2,
+          "raceCount": 8,
+          "discardCount": 1,
+          "sourceUrl": "https://sailingresults.net/sa/results/overall.aspx?ID=82464.4"
+        }
+      ]
+    }
+  ],
+  "targetClasses": [
+    "Optimist",
+    "ILCA 4",
+    "ILCA 6",
+    "ILCA 7",
+    "Techno 293",
+    "iQFOiL",
+    "29er",
+    "420"
+  ]
+}

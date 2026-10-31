@@ -1,0 +1,697 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "fe0ba3ee-002a-5e5c-93ed-71ff357c64a3",
+    "slug": "pre-sea-games-2025",
+    "name": "Pre-33rd SEA Games 2025",
+    "startDate": "2025-11-14",
+    "endDate": "2025-11-16",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "daea4ccf-ed5e-5878-9f2f-8d359a5ddaa0",
+    "slug": "pre-sea-games-2025-ilca6",
+    "name": "Pre-33rd SEA Games 2025 \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 6,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/168534",
+    "title": "Pre-33rd SEA Games 2025 \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 1,
+      "name": "NOPPASSORN KHUNBOONJAN",
+      "sailOrBoardNumber": "THA217427",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 21.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4000b838-9fda-5881-928d-61784e3cf77d",
+      "participants": [
+        {
+          "id": "08d04845-2a84-56d1-b645-7e95bba77612",
+          "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+          "sourceName": "NOPPASSORN KHUNBOONJAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: NOPPASSORN KHUNBOONJAN; historic sail: THA217427; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 2,
+      "name": "SHAZRIN MOHAMAD LATIF",
+      "sailOrBoardNumber": "MAS214990",
+      "club": "MSN/MSA/PODIUM",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 30.0,
+      "nettScore": 23.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(7.0 UFD)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5b423616-410b-5bdf-b425-ac97c141a0fe",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c536ca09-84bf-5127-b875-f85361aa4afd",
+      "participants": [
+        {
+          "id": "463e03a1-2c85-595d-8718-641ddf0dc45c",
+          "sailorId": "5b423616-410b-5bdf-b425-ac97c141a0fe",
+          "sourceName": "SHAZRIN MOHAMAD LATIF",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: SHAZRIN MOHAMAD LATIF; historic sail: MAS214990; club: MSN/MSA/PODIUM; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "Thorfun Boonnak",
+      "sailOrBoardNumber": "THA22266",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 29.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "095648db-817d-5325-8991-6f0dc4b3f10d",
+      "participants": [
+        {
+          "id": "c2e9027f-88f0-5a52-ba13-1d39417de83e",
+          "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+          "sourceName": "Thorfun Boonnak",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: Thorfun Boonnak; historic sail: THA22266; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 4,
+      "name": "Marion Grace Montgomery",
+      "sailOrBoardNumber": "222660",
+      "club": "YRAT/RVYC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 31.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(7.0 UFD)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9e5bc153-0fea-5347-9129-e62cee697ab7",
+      "participants": [
+        {
+          "id": "5cbb5d3d-e5c0-5d9c-89fc-6ead25df411b",
+          "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+          "sourceName": "Marion Grace Montgomery",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: Marion Grace Montgomery; historic sail: 222660; club: YRAT/RVYC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 5,
+      "name": "KIRANA WARDOJO",
+      "sailOrBoardNumber": "INA199449",
+      "club": "INA",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 33.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(7.0 UFD)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "79c6406b-143d-542d-a3fc-b8a328b93f96",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "de38a19f-e794-5a8b-a7b1-1dab48c9af70",
+      "participants": [
+        {
+          "id": "5a0b8bf8-1e8f-5907-bd92-4287e01b57a6",
+          "sailorId": "79c6406b-143d-542d-a3fc-b8a328b93f96",
+          "sourceName": "KIRANA WARDOJO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: KIRANA WARDOJO; historic sail: INA199449; club: INA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 6,
+      "name": "Nurul Rahma Iedha",
+      "sailOrBoardNumber": "INA224628",
+      "club": "INA",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 51.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2102967e-ab0a-500c-9a74-e6a387c85df0",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f64101de-4de7-5985-a06f-d2325de3ec55",
+      "participants": [
+        {
+          "id": "93091d57-02a4-5df5-af53-057237ff62e8",
+          "sailorId": "2102967e-ab0a-500c-9a74-e6a387c85df0",
+          "sourceName": "Nurul Rahma Iedha",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: Nurul Rahma Iedha; historic sail: INA224628; club: INA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 6,
+  "deferredEntryCount": 0,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "club": "Yacht Racing Association of Thailand",
+      "name": "Noppassorn Khunboonjan",
+      "gender": "F",
+      "handle": "noppassorn-khunboonjan-69917e4211",
+      "birthYear": 2006,
+      "sailNumber": "217427",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "club": "YRAT",
+      "name": "Thorfun Boonnak",
+      "gender": "F",
+      "handle": "thorfun-boonnak-sr26-5cfe0b",
+      "birthYear": 2005,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "club": "YRAT/RVYC",
+      "name": "Marion Grace Montgomery",
+      "gender": "F",
+      "handle": "marion-grace-montgomery-sr26-0f33df",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "79c6406b-143d-542d-a3fc-b8a328b93f96",
+      "name": "Kirana Wardojo",
+      "handle": "kirana-wardojo-sr25-79c640",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "5b423616-410b-5bdf-b425-ac97c141a0fe",
+      "name": "Shazrin Mohamad Latif",
+      "handle": "shazrin-mohamad-latif-sr25-5b4236",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "MSN/MSA/PODIUM"
+    },
+    {
+      "id": "2102967e-ab0a-500c-9a74-e6a387c85df0",
+      "name": "Nurul Rahma Iedha",
+      "handle": "nurul-rahma-iedha-sr25-210296",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "INA"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

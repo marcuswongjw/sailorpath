@@ -1,0 +1,359 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "f3885c31-1f75-58aa-adfc-6e41ccd4a5a3",
+    "slug": "thailand-nationals-long-distance-2025",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance",
+    "startDate": "2025-04-19",
+    "endDate": "2025-04-19",
+    "venue": "Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "e43db5e9-c749-53b2-bd79-b498204f9258",
+    "slug": "thailand-nationals-long-distance-2025-ilca7",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance \u2014 ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 1,
+    "totalFleetSize": 34,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/137882",
+    "title": "Thailand National Championship 2025 \u2014 Long Distance \u2014 ILCA 7 Open results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 18,
+      "name": "Suppakorn Chaisanam",
+      "sailOrBoardNumber": "180177",
+      "club": "RTMSC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "dd826db3-dc59-5d54-af52-2dd38d5bb690",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "4a4bfaba-1452-5781-b8e8-79d3a87f8cda",
+      "participants": [
+        {
+          "id": "c2ff41b8-426f-50ee-81b8-2269dedb8ab1",
+          "sailorId": "dd826db3-dc59-5d54-af52-2dd38d5bb690",
+          "sourceName": "Suppakorn Chaisanam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: Suppakorn Chaisanam; historic sail: 180177; club: RTMSC; year field: 2005. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 20,
+      "name": "Nattanun pimpirujanun",
+      "sailOrBoardNumber": "195004",
+      "club": "RTMSC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "abbc2601-9ac8-54ef-a6cc-b00c35c8cfe5",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "371daa45-e6af-5879-9f2d-60ce9e4d6963",
+      "participants": [
+        {
+          "id": "1e57f043-7f33-5384-bd57-2986e8c737b9",
+          "sailorId": "abbc2601-9ac8-54ef-a6cc-b00c35c8cfe5",
+          "sourceName": "Nattanun pimpirujanun",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: Nattanun pimpirujanun; historic sail: 195004; club: RTMSC; year field: 2005. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 21,
+      "name": "KAN SRIPOOMKHAI",
+      "sailOrBoardNumber": "2 RED",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1972,
+      "sourceBirthYear": "1972",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "1c15f478-eec9-5351-bfb7-83216e5a21c1",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "6ef1dfca-989e-52a0-b65a-774bb538c2b8",
+      "participants": [
+        {
+          "id": "80e1437a-edd6-5a1d-9070-7d28d912bcc0",
+          "sailorId": "1c15f478-eec9-5351-bfb7-83216e5a21c1",
+          "sourceName": "KAN SRIPOOMKHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: KAN SRIPOOMKHAI; historic sail: 2 RED; club: RTFYC; year field: 1972. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 23,
+      "name": "PIYANAT POOLKLANG",
+      "sailOrBoardNumber": "1 RED",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1972,
+      "sourceBirthYear": "1972",
+      "grossScore": 23.0,
+      "nettScore": 23.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5a55bca6-b803-5cac-8c47-6fd145a869c3",
+      "participants": [
+        {
+          "id": "f0a229c4-70d7-57ab-b637-1762afc4e108",
+          "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+          "sourceName": "PIYANAT POOLKLANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: PIYANAT POOLKLANG; historic sail: 1 RED; club: RTFYC; year field: 1972. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 25,
+      "name": "RACHAPUT CHANSUWAN",
+      "sailOrBoardNumber": "191389",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 25.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "8072fcde-9e79-5b16-b1d5-396c75ac2ae6",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b8f6a7d3-eafa-5fd7-9e95-66591ffcf529",
+      "participants": [
+        {
+          "id": "5813dd5a-32e4-53f6-a6fa-b97e37587d22",
+          "sailorId": "8072fcde-9e79-5b16-b1d5-396c75ac2ae6",
+          "sourceName": "RACHAPUT CHANSUWAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: RACHAPUT CHANSUWAN; historic sail: 191389; club: RTFYC; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 26,
+      "name": "Natthapat Chotipisarn",
+      "sailOrBoardNumber": "150031",
+      "club": "RTMSC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2000,
+      "sourceBirthYear": "2000",
+      "grossScore": 26.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "452ed06c-8b14-59dc-8d66-ea066c8e7414",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "8f364f13-dd08-5d9d-8623-13f8962e3049",
+      "participants": [
+        {
+          "id": "b981996e-420f-5e1b-9df1-f4170cfb2533",
+          "sailorId": "452ed06c-8b14-59dc-8d66-ea066c8e7414",
+          "sourceName": "Natthapat Chotipisarn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: Natthapat Chotipisarn; historic sail: 150031; club: RTMSC; year field: 2000. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    }
+  ],
+  "importedEntryCount": 6,
+  "deferredEntryCount": 0,
+  "publicSummary": "Provisional organiser results. Original combined PY handicap standings; class subset, with original ranks and scores.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+      "club": "ACDC.SC",
+      "name": "Piyanat Poolklang",
+      "gender": "M",
+      "handle": "piyanat-poolklang-sr26-516019",
+      "birthYear": 1972,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "dd826db3-dc59-5d54-af52-2dd38d5bb690",
+      "name": "Suppakorn Chaisanam",
+      "handle": "suppakorn-chaisanam-sr25-dd826d",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTMSC"
+    },
+    {
+      "id": "abbc2601-9ac8-54ef-a6cc-b00c35c8cfe5",
+      "name": "Nattanun Pimpirujanun",
+      "handle": "nattanun-pimpirujanun-sr25-abbc26",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTMSC"
+    },
+    {
+      "id": "1c15f478-eec9-5351-bfb7-83216e5a21c1",
+      "name": "Kan Sripoomkhai",
+      "handle": "kan-sripoomkhai-sr25-1c15f4",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTFYC"
+    },
+    {
+      "id": "8072fcde-9e79-5b16-b1d5-396c75ac2ae6",
+      "name": "Rachaput Chansuwan",
+      "handle": "rachaput-chansuwan-sr25-8072fc",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTFYC"
+    },
+    {
+      "id": "452ed06c-8b14-59dc-8d66-ea066c8e7414",
+      "name": "Natthapat Chotipisarn",
+      "handle": "natthapat-chotipisarn-sr25-452ed0",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTMSC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

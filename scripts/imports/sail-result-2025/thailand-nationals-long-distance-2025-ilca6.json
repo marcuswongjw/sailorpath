@@ -1,0 +1,258 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "f3885c31-1f75-58aa-adfc-6e41ccd4a5a3",
+    "slug": "thailand-nationals-long-distance-2025",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance",
+    "startDate": "2025-04-19",
+    "endDate": "2025-04-19",
+    "venue": "Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "8aeb2574-8a42-55fe-9ff2-88e5634f5bbb",
+    "slug": "thailand-nationals-long-distance-2025-ilca6",
+    "name": "Thailand National Championship 2025 \u2014 Long Distance \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 1,
+    "totalFleetSize": 34,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/137882",
+    "title": "Thailand National Championship 2025 \u2014 Long Distance \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 5,
+      "name": "TON RATTANA",
+      "sailOrBoardNumber": "THA222180",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 5.0,
+      "nettScore": 5.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "027b6fe0-a37b-5dc9-a0a3-8562280eafbe",
+      "participants": [
+        {
+          "id": "7cb3cbd7-312e-556e-979f-e0856668d3f6",
+          "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+          "sourceName": "TON RATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 1; source name: TON RATTANA; historic sail: THA222180; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 6,
+      "name": "Claudia nazarov",
+      "sailOrBoardNumber": "THA221441",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 6.0,
+      "nettScore": 6.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "e0835b96-5fb6-56cb-ab97-12c1ba209e64",
+      "participants": [
+        {
+          "id": "14f2ff70-d76f-5b19-aae8-d8b85fb75dc5",
+          "sailorId": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+          "sourceName": "Claudia nazarov",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 1; source name: Claudia nazarov; historic sail: THA221441; club: RVYC; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 7,
+      "name": "MARION GRACE MONTGOMERY",
+      "sailOrBoardNumber": "THA",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 7.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "cb6ba57e-1b86-5b7e-af33-0e021bef0974",
+      "participants": [
+        {
+          "id": "a4012d0c-619f-53a8-9526-841c13d8544f",
+          "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+          "sourceName": "MARION GRACE MONTGOMERY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 1; source name: MARION GRACE MONTGOMERY; historic sail: THA; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "thailand-nationals-long-distance-2025",
+      "sourceDocument": 137882,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 27,
+      "name": "PALIGA POONPAT",
+      "sailOrBoardNumber": "THA",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2002,
+      "sourceBirthYear": "2002",
+      "grossScore": 35.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "35.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "00e255ee-fe4e-5ffd-a300-fb91012432b1",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "86be57e9-90d5-58de-91b1-c05c94d3b01f",
+      "participants": [
+        {
+          "id": "44eec58c-49c7-5b11-96b9-02040fb59ea6",
+          "sailorId": "00e255ee-fe4e-5ffd-a300-fb91012432b1",
+          "sourceName": "PALIGA POONPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 3; source name: PALIGA POONPAT; historic sail: THA; club: YRAT; year field: 2002. Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    }
+  ],
+  "importedEntryCount": 4,
+  "deferredEntryCount": 0,
+  "publicSummary": "Provisional organiser results. Original combined PY handicap standings; class subset, with original ranks and scores.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "club": "YRAT/RVYC",
+      "name": "Marion Grace Montgomery",
+      "gender": "F",
+      "handle": "marion-grace-montgomery-sr26-0f33df",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "717ef058-5716-5951-a848-0723f95e8f28",
+      "club": "RVYC",
+      "name": "Ton Rattana",
+      "gender": "M",
+      "handle": "ton-rattana-thai25-717ef0",
+      "birthYear": 2008,
+      "sailNumber": "222180",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "0078ae64-1507-5aed-8907-af6d48c2da7f",
+      "name": "Claudia Nazarov",
+      "handle": "claudia-nazarov-sr25-0078ae",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "RVYC"
+    },
+    {
+      "id": "00e255ee-fe4e-5ffd-a300-fb91012432b1",
+      "name": "Paliga Poonpat",
+      "handle": "paliga-poonpat-sr25-00e255",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "F",
+      "club": "YRAT"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

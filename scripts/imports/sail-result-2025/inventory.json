@@ -1,0 +1,370 @@
+[
+  {
+    "file": "acdc-cup-international-2025-ilca4.sql",
+    "event": "ACDC Cup International Sailing Championship 2025",
+    "sheet": "acdc-cup-international-2025-ilca4",
+    "entries": 15,
+    "scores": 135,
+    "pending": 1
+  },
+  {
+    "file": "acdc-cup-international-2025-ilca6.sql",
+    "event": "ACDC Cup International Sailing Championship 2025",
+    "sheet": "acdc-cup-international-2025-ilca6",
+    "entries": 2,
+    "scores": 18,
+    "pending": 1
+  },
+  {
+    "file": "acdc-cup-international-2025-ilca7.sql",
+    "event": "ACDC Cup International Sailing Championship 2025",
+    "sheet": "acdc-cup-international-2025-ilca7",
+    "entries": 2,
+    "scores": 18,
+    "pending": 1
+  },
+  {
+    "file": "acdc-cup-international-2025-optimist-gold.sql",
+    "event": "ACDC Cup International Sailing Championship 2025",
+    "sheet": "acdc-cup-international-2025-optimist-gold",
+    "entries": 61,
+    "scores": 549,
+    "pending": 6
+  },
+  {
+    "file": "acdc-cup-international-2025-optimist-silver.sql",
+    "event": "ACDC Cup International Sailing Championship 2025",
+    "sheet": "acdc-cup-international-2025-optimist-silver",
+    "entries": 43,
+    "scores": 387,
+    "pending": 8
+  },
+  {
+    "file": "childrens-day-regatta-2025-ilca4.sql",
+    "event": "Children\u2019s Day Regatta 2025",
+    "sheet": "childrens-day-regatta-2025-ilca4",
+    "entries": 27,
+    "scores": 135,
+    "pending": 0
+  },
+  {
+    "file": "childrens-day-regatta-2025-ilca6.sql",
+    "event": "Children\u2019s Day Regatta 2025",
+    "sheet": "childrens-day-regatta-2025-ilca6",
+    "entries": 10,
+    "scores": 50,
+    "pending": 1
+  },
+  {
+    "file": "childrens-day-regatta-2025-optimist-gold.sql",
+    "event": "Children\u2019s Day Regatta 2025",
+    "sheet": "childrens-day-regatta-2025-optimist-gold",
+    "entries": 30,
+    "scores": 180,
+    "pending": 5
+  },
+  {
+    "file": "childrens-day-regatta-2025-optimist-green.sql",
+    "event": "Children\u2019s Day Regatta 2025",
+    "sheet": "childrens-day-regatta-2025-optimist-green",
+    "entries": 24,
+    "scores": 144,
+    "pending": 3
+  },
+  {
+    "file": "childrens-day-regatta-2025-optimist-silver.sql",
+    "event": "Children\u2019s Day Regatta 2025",
+    "sheet": "childrens-day-regatta-2025-optimist-silver",
+    "entries": 31,
+    "scores": 186,
+    "pending": 4
+  },
+  {
+    "file": "ilca-district-championship-2025-ilca4.sql",
+    "event": "ILCA District Championship 2025",
+    "sheet": "ilca-district-championship-2025-ilca4",
+    "entries": 40,
+    "scores": 120,
+    "pending": 2
+  },
+  {
+    "file": "ilca-district-championship-2025-ilca6.sql",
+    "event": "ILCA District Championship 2025",
+    "sheet": "ilca-district-championship-2025-ilca6",
+    "entries": 16,
+    "scores": 48,
+    "pending": 0
+  },
+  {
+    "file": "ilca-district-championship-2025-ilca7.sql",
+    "event": "ILCA District Championship 2025",
+    "sheet": "ilca-district-championship-2025-ilca7",
+    "entries": 12,
+    "scores": 48,
+    "pending": 1
+  },
+  {
+    "file": "ilca-thailand-nationals-2025-ilca4.sql",
+    "event": "ILCA Thailand National Championships 2025",
+    "sheet": "ilca-thailand-nationals-2025-ilca4",
+    "entries": 33,
+    "scores": 264,
+    "pending": 2
+  },
+  {
+    "file": "ilca-thailand-nationals-2025-ilca6.sql",
+    "event": "ILCA Thailand National Championships 2025",
+    "sheet": "ilca-thailand-nationals-2025-ilca6",
+    "entries": 28,
+    "scores": 224,
+    "pending": 4
+  },
+  {
+    "file": "ilca-thailand-nationals-2025-ilca7.sql",
+    "event": "ILCA Thailand National Championships 2025",
+    "sheet": "ilca-thailand-nationals-2025-ilca7",
+    "entries": 31,
+    "scores": 279,
+    "pending": 1
+  },
+  {
+    "file": "phuket-kings-cup-2025-ilca4.sql",
+    "event": "37th Phuket King\u2019s Cup Regatta 2025",
+    "sheet": "phuket-kings-cup-2025-ilca4",
+    "entries": 14,
+    "scores": 112,
+    "pending": 0
+  },
+  {
+    "file": "phuket-kings-cup-2025-ilca6.sql",
+    "event": "37th Phuket King\u2019s Cup Regatta 2025",
+    "sheet": "phuket-kings-cup-2025-ilca6",
+    "entries": 2,
+    "scores": 18,
+    "pending": 1
+  },
+  {
+    "file": "phuket-kings-cup-2025-ilca7.sql",
+    "event": "37th Phuket King\u2019s Cup Regatta 2025",
+    "sheet": "phuket-kings-cup-2025-ilca7",
+    "entries": 4,
+    "scores": 36,
+    "pending": 1
+  },
+  {
+    "file": "phuket-kings-cup-2025-optimist.sql",
+    "event": "37th Phuket King\u2019s Cup Regatta 2025",
+    "sheet": "phuket-kings-cup-2025-optimist",
+    "entries": 34,
+    "scores": 272,
+    "pending": 7
+  },
+  {
+    "file": "pre-sea-games-2025-ilca4-boys.sql",
+    "event": "Pre-33rd SEA Games 2025",
+    "sheet": "pre-sea-games-2025-ilca4-boys",
+    "entries": 17,
+    "scores": 153,
+    "pending": 0
+  },
+  {
+    "file": "pre-sea-games-2025-ilca4-girls.sql",
+    "event": "Pre-33rd SEA Games 2025",
+    "sheet": "pre-sea-games-2025-ilca4-girls",
+    "entries": 7,
+    "scores": 63,
+    "pending": 1
+  },
+  {
+    "file": "pre-sea-games-2025-ilca6.sql",
+    "event": "Pre-33rd SEA Games 2025",
+    "sheet": "pre-sea-games-2025-ilca6",
+    "entries": 6,
+    "scores": 54,
+    "pending": 0
+  },
+  {
+    "file": "pre-sea-games-2025-ilca7.sql",
+    "event": "Pre-33rd SEA Games 2025",
+    "sheet": "pre-sea-games-2025-ilca7",
+    "entries": 11,
+    "scores": 99,
+    "pending": 0
+  },
+  {
+    "file": "pre-sea-games-2025-optimist-boys.sql",
+    "event": "Pre-33rd SEA Games 2025",
+    "sheet": "pre-sea-games-2025-optimist-boys",
+    "entries": 35,
+    "scores": 315,
+    "pending": 3
+  },
+  {
+    "file": "pre-sea-games-2025-optimist-girls.sql",
+    "event": "Pre-33rd SEA Games 2025",
+    "sheet": "pre-sea-games-2025-optimist-girls",
+    "entries": 23,
+    "scores": 207,
+    "pending": 4
+  },
+  {
+    "file": "sea-games-2025-ilca4-boys.sql",
+    "event": "33rd SEA Games 2025 \u2014 Sailing",
+    "sheet": "sea-games-2025-ilca4-boys",
+    "entries": 4,
+    "scores": 36,
+    "pending": 2
+  },
+  {
+    "file": "sea-games-2025-ilca4-girls.sql",
+    "event": "33rd SEA Games 2025 \u2014 Sailing",
+    "sheet": "sea-games-2025-ilca4-girls",
+    "entries": 4,
+    "scores": 36,
+    "pending": 1
+  },
+  {
+    "file": "sea-games-2025-ilca6.sql",
+    "event": "33rd SEA Games 2025 \u2014 Sailing",
+    "sheet": "sea-games-2025-ilca6",
+    "entries": 5,
+    "scores": 50,
+    "pending": 0
+  },
+  {
+    "file": "sea-games-2025-ilca7.sql",
+    "event": "33rd SEA Games 2025 \u2014 Sailing",
+    "sheet": "sea-games-2025-ilca7",
+    "entries": 7,
+    "scores": 70,
+    "pending": 0
+  },
+  {
+    "file": "sea-games-2025-optimist-boys.sql",
+    "event": "33rd SEA Games 2025 \u2014 Sailing",
+    "sheet": "sea-games-2025-optimist-boys",
+    "entries": 5,
+    "scores": 50,
+    "pending": 2
+  },
+  {
+    "file": "sea-games-2025-optimist-girls.sql",
+    "event": "33rd SEA Games 2025 \u2014 Sailing",
+    "sheet": "sea-games-2025-optimist-girls",
+    "entries": 4,
+    "scores": 40,
+    "pending": 2
+  },
+  {
+    "file": "thailand-nationals-long-distance-2025-ilca4.sql",
+    "event": "Thailand National Championship 2025 \u2014 Long Distance",
+    "sheet": "thailand-nationals-long-distance-2025-ilca4",
+    "entries": 12,
+    "scores": 12,
+    "pending": 1
+  },
+  {
+    "file": "thailand-nationals-long-distance-2025-ilca6.sql",
+    "event": "Thailand National Championship 2025 \u2014 Long Distance",
+    "sheet": "thailand-nationals-long-distance-2025-ilca6",
+    "entries": 4,
+    "scores": 4,
+    "pending": 0
+  },
+  {
+    "file": "thailand-nationals-long-distance-2025-ilca7.sql",
+    "event": "Thailand National Championship 2025 \u2014 Long Distance",
+    "sheet": "thailand-nationals-long-distance-2025-ilca7",
+    "entries": 6,
+    "scores": 6,
+    "pending": 0
+  },
+  {
+    "file": "thailand-nationals-long-distance-2025-optimist.sql",
+    "event": "Thailand National Championship 2025 \u2014 Long Distance",
+    "sheet": "thailand-nationals-long-distance-2025-optimist",
+    "entries": 53,
+    "scores": 53,
+    "pending": 5
+  },
+  {
+    "file": "trat-regatta-2025-ilca4.sql",
+    "event": "Trat Regatta 2025",
+    "sheet": "trat-regatta-2025-ilca4",
+    "entries": 9,
+    "scores": 27,
+    "pending": 0
+  },
+  {
+    "file": "trat-regatta-2025-ilca6.sql",
+    "event": "Trat Regatta 2025",
+    "sheet": "trat-regatta-2025-ilca6",
+    "entries": 8,
+    "scores": 24,
+    "pending": 1
+  },
+  {
+    "file": "trat-regatta-2025-ilca7.sql",
+    "event": "Trat Regatta 2025",
+    "sheet": "trat-regatta-2025-ilca7",
+    "entries": 11,
+    "scores": 33,
+    "pending": 0
+  },
+  {
+    "file": "trat-regatta-2025-optimist-gold.sql",
+    "event": "Trat Regatta 2025",
+    "sheet": "trat-regatta-2025-optimist-gold",
+    "entries": 24,
+    "scores": 48,
+    "pending": 0
+  },
+  {
+    "file": "trat-regatta-2025-optimist-silver.sql",
+    "event": "Trat Regatta 2025",
+    "sheet": "trat-regatta-2025-optimist-silver",
+    "entries": 40,
+    "scores": 80,
+    "pending": 6
+  },
+  {
+    "file": "yrat-cup-series-5-2025-ilca4.sql",
+    "event": "2025 YRAT Cup Series 5",
+    "sheet": "yrat-cup-series-5-2025-ilca4",
+    "entries": 16,
+    "scores": 96,
+    "pending": 3
+  },
+  {
+    "file": "yrat-cup-series-5-2025-ilca6.sql",
+    "event": "2025 YRAT Cup Series 5",
+    "sheet": "yrat-cup-series-5-2025-ilca6",
+    "entries": 6,
+    "scores": 36,
+    "pending": 0
+  },
+  {
+    "file": "yrat-cup-series-5-2025-ilca7-master.sql",
+    "event": "2025 YRAT Cup Series 5",
+    "sheet": "yrat-cup-series-5-2025-ilca7-master",
+    "entries": 5,
+    "scores": 20,
+    "pending": 1
+  },
+  {
+    "file": "yrat-cup-series-5-2025-optimist-gold.sql",
+    "event": "2025 YRAT Cup Series 5",
+    "sheet": "yrat-cup-series-5-2025-optimist-gold",
+    "entries": 36,
+    "scores": 216,
+    "pending": 5
+  },
+  {
+    "file": "yrat-cup-series-5-2025-optimist-silver.sql",
+    "event": "2025 YRAT Cup Series 5",
+    "sheet": "yrat-cup-series-5-2025-optimist-silver",
+    "entries": 24,
+    "scores": 144,
+    "pending": 2
+  }
+]

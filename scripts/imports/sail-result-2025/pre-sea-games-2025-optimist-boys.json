@@ -1,0 +1,4137 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "fe0ba3ee-002a-5e5c-93ed-71ff357c64a3",
+    "slug": "pre-sea-games-2025",
+    "name": "Pre-33rd SEA Games 2025",
+    "startDate": "2025-11-14",
+    "endDate": "2025-11-16",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "68fee56a-f7ec-5e48-bc9d-6e3fe3716379",
+    "slug": "pre-sea-games-2025-optimist-boys",
+    "name": "Pre-33rd SEA Games 2025 \u2014 Optimist Boys",
+    "boatClass": "Optimist",
+    "division": "Boys",
+    "raceCount": 9,
+    "totalFleetSize": 38,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/168536",
+    "title": "Pre-33rd SEA Games 2025 \u2014 Optimist Boys results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 1,
+      "name": "SORAWIT NAKSUK",
+      "sailOrBoardNumber": "THA1493",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 71.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a016891e-1031-5850-9856-6d8a14115221",
+      "participants": [
+        {
+          "id": "d2842d8c-95bd-53d2-b01d-b2f661445ddd",
+          "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+          "sourceName": "SORAWIT NAKSUK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: SORAWIT NAKSUK; historic sail: THA1493; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 2,
+      "name": "RACHATA SADTRAKULWATTANA",
+      "sailOrBoardNumber": "THA1963",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 72.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a94c1be1-9a75-5f34-9021-8a7057d845ec",
+      "participants": [
+        {
+          "id": "fe5a0b61-2053-5b5d-a00b-5985497ff6d7",
+          "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+          "sourceName": "RACHATA SADTRAKULWATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: RACHATA SADTRAKULWATTANA; historic sail: THA1963; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 3,
+      "name": "AUNG SITT MAUNG",
+      "sailOrBoardNumber": "MYA117",
+      "club": "MYF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 48.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3d2fede9-5b4d-444d-9eb1-49d05991d128",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ebc66a2c-af99-5173-8aba-7807974c1544",
+      "participants": [
+        {
+          "id": "da738465-78c6-564e-9c2b-9d5b019b64dd",
+          "sailorId": "3d2fede9-5b4d-444d-9eb1-49d05991d128",
+          "sourceName": "AUNG SITT MAUNG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: AUNG SITT MAUNG; historic sail: MYA117; club: MYF; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 4,
+      "name": "ADISON EIN",
+      "sailOrBoardNumber": "THA1945",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 80.0,
+      "nettScore": 41.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "cec6fc9a-314b-562f-a3ea-87e1a4c5bf00",
+      "participants": [
+        {
+          "id": "419beedb-05f3-5fe3-8b99-bf79d7d8f079",
+          "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+          "sourceName": "ADISON EIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: ADISON EIN; historic sail: THA1945; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 5,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "Tha 2865",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 56.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e5d622b4-f765-5922-904e-41760a33251e",
+      "participants": [
+        {
+          "id": "1aa20fcd-68d3-52d3-bf9f-ba63c6325976",
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: ITTHICHAI TIATHONGCHAI; historic sail: Tha 2865; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 6,
+      "name": "JEDD LAM ZHI HAO",
+      "sailOrBoardNumber": "SGP2000",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 65.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c5cabcd3-8962-4c14-aa93-f8b754908fc0",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "26b0023a-8c8b-5b4b-a039-45c5c2410b28",
+      "participants": [
+        {
+          "id": "32789b9a-6790-50d9-8b78-161944b0c704",
+          "sailorId": "c5cabcd3-8962-4c14-aa93-f8b754908fc0",
+          "sourceName": "JEDD LAM ZHI HAO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: JEDD LAM ZHI HAO; historic sail: SGP2000; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 7,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA 1987",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 69.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a610f262-9a77-5b34-a9b2-aa65784f6b54",
+      "participants": [
+        {
+          "id": "24f5c029-12c1-5b6d-8ee6-4e688405c923",
+          "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+          "sourceName": "SUTHINAN NAKPASOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: SUTHINAN NAKPASOM; historic sail: THA 1987; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 8,
+      "name": "PAKORNKIAT CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1643",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 98.0,
+      "nettScore": 76.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4e15fe33-71cb-5be0-9fbf-49ec625fd077",
+      "participants": [
+        {
+          "id": "846f8759-1649-58ba-9017-9a733f17355a",
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: PAKORNKIAT CHAIYA-O-CHA; historic sail: THA1643; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 9,
+      "name": "PEE TECK WOON",
+      "sailOrBoardNumber": "SGP164",
+      "club": "SSF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 101.0,
+      "nettScore": 79.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4c24ef37-0d0c-4d89-aba8-b60b619eabf0",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c20faa5d-4afb-576d-b477-9a7094f109ef",
+      "participants": [
+        {
+          "id": "a62da7e5-72c8-56bb-8097-a1dc313d3464",
+          "sailorId": "4c24ef37-0d0c-4d89-aba8-b60b619eabf0",
+          "sourceName": "PEE TECK WOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: PEE TECK WOON; historic sail: SGP164; club: SSF; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 11,
+      "name": "ANANTACHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "Tha 1549",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 116.0,
+      "nettScore": 91.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "543e85c9-8865-506d-987d-e899e018287f",
+      "participants": [
+        {
+          "id": "803a90ae-4f39-5020-848a-d6cc72f6c44f",
+          "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "sourceName": "ANANTACHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: ANANTACHAI TIATHONGCHAI; historic sail: Tha 1549; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 12,
+      "name": "LUCAS CAO",
+      "sailOrBoardNumber": "SGP149",
+      "club": "SSF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 133.0,
+      "nettScore": 94.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "537e3303-85f9-4b8f-81f3-90999f53cc95",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "bd2f89bf-ca4a-510a-8927-7e95af2eadee",
+      "participants": [
+        {
+          "id": "277bb2dc-85c5-55bb-a220-f5ad79d09e0d",
+          "sailorId": "537e3303-85f9-4b8f-81f3-90999f53cc95",
+          "sourceName": "LUCAS CAO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: LUCAS CAO; historic sail: SGP149; club: SSF; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 13,
+      "name": "PANUWAT SRIROY",
+      "sailOrBoardNumber": "TH 678",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 124.0,
+      "nettScore": 101.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e3d0cd4f-2a22-5831-9a80-2fce0d597f7f",
+      "participants": [
+        {
+          "id": "395cbdf3-9d39-5977-8eed-973902600cb1",
+          "sailorId": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+          "sourceName": "PANUWAT SRIROY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: PANUWAT SRIROY; historic sail: TH 678; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 14,
+      "name": "CHANANCHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "Tha 1487",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 131.0,
+      "nettScore": 106.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "bba9c2d4-4c15-523c-8177-3f495491c20a",
+      "participants": [
+        {
+          "id": "d78d4d30-2664-52fa-aec0-cdda775eaab1",
+          "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "sourceName": "CHANANCHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: CHANANCHAI TIATHONGCHAI; historic sail: Tha 1487; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 15,
+      "name": "LEVY APICHAI WIEDMANN",
+      "sailOrBoardNumber": "THA996",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 144.0,
+      "nettScore": 120.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3fbcd509-ed9f-5f85-9b60-b940e74637e4",
+      "participants": [
+        {
+          "id": "2caf8d5b-872f-5011-bbe1-b1d9352ea7e5",
+          "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+          "sourceName": "LEVY APICHAI WIEDMANN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: LEVY APICHAI WIEDMANN; historic sail: THA996; club: RVYC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 16,
+      "name": "MUHAMMAD ADHIT",
+      "sailOrBoardNumber": "INA2530",
+      "club": "INA",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 160.0,
+      "nettScore": 121.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "39.0 UFD"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a92a882b-f3f4-5fb0-83d2-efd88dc6a54e",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "14d0f1a0-f1ca-526d-bce9-84e5c2130030",
+      "participants": [
+        {
+          "id": "f5fa612f-0294-5df5-a21d-8802cde2f208",
+          "sailorId": "a92a882b-f3f4-5fb0-83d2-efd88dc6a54e",
+          "sourceName": "MUHAMMAD ADHIT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: MUHAMMAD ADHIT; historic sail: INA2530; club: INA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 17,
+      "name": "AMARIN JUNTAJON",
+      "sailOrBoardNumber": "THA1936",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 159.0,
+      "nettScore": 129.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "0390aa00-2df4-573d-abf4-5804abf26047",
+      "participants": [
+        {
+          "id": "ec62287d-76bc-5ac9-af24-2deef390ac3a",
+          "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+          "sourceName": "AMARIN JUNTAJON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: AMARIN JUNTAJON; historic sail: THA1936; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 18,
+      "name": "NAIMAKRON JANGKITTIYARAT",
+      "sailOrBoardNumber": "THA 7211",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 155.0,
+      "nettScore": 132.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "29256bea-5151-5163-b0d3-bee43630e6a6",
+      "participants": [
+        {
+          "id": "bebaf0be-7e06-5aee-99aa-f0cdddda851a",
+          "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+          "sourceName": "NAIMAKRON JANGKITTIYARAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: NAIMAKRON JANGKITTIYARAT; historic sail: THA 7211; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 19,
+      "name": "KYLE JEREMY SOH ZHI JUN",
+      "sailOrBoardNumber": "SGP3183",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 166.0,
+      "nettScore": 138.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2e6a637e-e182-41c3-b6b9-33a89fb0090e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7649c6e4-853a-5c55-9c12-a64af118da43",
+      "participants": [
+        {
+          "id": "a82cf1c4-3ce8-55a0-abe2-24c19348f616",
+          "sailorId": "2e6a637e-e182-41c3-b6b9-33a89fb0090e",
+          "sourceName": "KYLE JEREMY SOH ZHI JUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: KYLE JEREMY SOH ZHI JUN; historic sail: SGP3183; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 20,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "THA1788",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 171.0,
+      "nettScore": 142.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5d255223-0828-5cfb-9e98-37b118d2ea36",
+      "participants": [
+        {
+          "id": "30e06206-1f88-5f28-b502-8cbc7278f1b5",
+          "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+          "sourceName": "ASHIRA PHANGRAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: ASHIRA PHANGRAK; historic sail: THA1788; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 21,
+      "name": "THIRAWAT HANKHAM",
+      "sailOrBoardNumber": "THA1953",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 176.0,
+      "nettScore": 150.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4c3d7246-2691-55d8-a381-f200dc737d23",
+      "participants": [
+        {
+          "id": "9a1e91be-b19a-5132-93ac-c0471a7521f0",
+          "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+          "sourceName": "THIRAWAT HANKHAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: THIRAWAT HANKHAM; historic sail: THA1953; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 22,
+      "name": "TIMOTHY KAI ZHE NG",
+      "sailOrBoardNumber": "SGP2023",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 182.0,
+      "nettScore": 153.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8970d5bb-30d1-48ab-88f2-3003bc0efbfd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c60f41e3-15bb-5cb6-b055-ea318c2b47c7",
+      "participants": [
+        {
+          "id": "790f63f3-1dde-50f6-8e80-429328762901",
+          "sailorId": "8970d5bb-30d1-48ab-88f2-3003bc0efbfd",
+          "sourceName": "TIMOTHY KAI ZHE NG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: TIMOTHY KAI ZHE NG; historic sail: SGP2023; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 23,
+      "name": "JIRATIWAT PEUNGCHURN",
+      "sailOrBoardNumber": "THA936",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 191.0,
+      "nettScore": 162.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e6b4ab43-5a8b-56ad-9861-40d13e37550b",
+      "participants": [
+        {
+          "id": "4f1645e1-0c37-5296-81d3-bcb89cc021d3",
+          "sailorId": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+          "sourceName": "JIRATIWAT PEUNGCHURN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: JIRATIWAT PEUNGCHURN; historic sail: THA936; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 24,
+      "name": "NATTAYUT JANGKITTIYARAT",
+      "sailOrBoardNumber": "THA 7111",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 195.0,
+      "nettScore": 164.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5f89e38f-4972-43dc-8323-906310cf159a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "740b1326-c6a6-52d1-be62-7cf7346f1230",
+      "participants": [
+        {
+          "id": "6d310d75-86ad-543a-a421-c070f18598e6",
+          "sailorId": "5f89e38f-4972-43dc-8323-906310cf159a",
+          "sourceName": "NATTAYUT JANGKITTIYARAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: NATTAYUT JANGKITTIYARAT; historic sail: THA 7111; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 26,
+      "name": "AARON CHIANG ZHIYI",
+      "sailOrBoardNumber": "SGP3128",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 204.0,
+      "nettScore": 173.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "165560d0-d029-4580-bc7e-5b7e46cd2b20",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3a329893-23a2-5c78-9d0e-8ec395754c01",
+      "participants": [
+        {
+          "id": "907a5bf8-e6b8-5be4-9131-ec383e6cbfc2",
+          "sailorId": "165560d0-d029-4580-bc7e-5b7e46cd2b20",
+          "sourceName": "AARON CHIANG ZHIYI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: AARON CHIANG ZHIYI; historic sail: SGP3128; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 27,
+      "name": "AGUERO PRATAMA SYABANI",
+      "sailOrBoardNumber": "INA2611",
+      "club": "INA",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 226.0,
+      "nettScore": 187.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 39.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(39.0 DSQ)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d4ac1747-65f6-57eb-aac2-aa3247f79da9",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "2a52d75a-1881-5df4-96e2-13062fec7ffb",
+      "participants": [
+        {
+          "id": "16666e9c-4519-59d0-adf7-b19e8db92c8f",
+          "sailorId": "d4ac1747-65f6-57eb-aac2-aa3247f79da9",
+          "sourceName": "AGUERO PRATAMA SYABANI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: AGUERO PRATAMA SYABANI; historic sail: INA2611; club: INA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 28,
+      "name": "JOEL ZHUO LE KHOO",
+      "sailOrBoardNumber": "SGP4730",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 221.0,
+      "nettScore": 192.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "632dc3e7-4e51-4855-b14d-0454d5a09701",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "6088bca2-032b-5330-aefd-9a550c82a3b8",
+      "participants": [
+        {
+          "id": "b575f0b6-f3f1-5a20-a944-d59fe8399e35",
+          "sailorId": "632dc3e7-4e51-4855-b14d-0454d5a09701",
+          "sourceName": "JOEL ZHUO LE KHOO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: JOEL ZHUO LE KHOO; historic sail: SGP4730; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 29,
+      "name": "DAN TOH GUAN YOU",
+      "sailOrBoardNumber": "SGP3811",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 236.0,
+      "nettScore": 205.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "434b1159-f466-49dc-b20c-aef801b6350a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "908aa307-c798-53b9-94b6-c37c1f2ee1a1",
+      "participants": [
+        {
+          "id": "057cfacf-6c54-562d-9e36-ba0c6f06ae33",
+          "sailorId": "434b1159-f466-49dc-b20c-aef801b6350a",
+          "sourceName": "DAN TOH GUAN YOU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: DAN TOH GUAN YOU; historic sail: SGP3811; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 30,
+      "name": "HIRUNSIRA MUNKHONGPORNPAIBOON",
+      "sailOrBoardNumber": "932",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 257.0,
+      "nettScore": 218.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b54ae41d-7892-597a-b3b3-679789c5f718",
+      "participants": [
+        {
+          "id": "f1cd3552-c4cc-55b2-9a64-95dedaf99de6",
+          "sailorId": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+          "sourceName": "HIRUNSIRA MUNKHONGPORNPAIBOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: HIRUNSIRA MUNKHONGPORNPAIBOON; historic sail: 932; club: RTFYC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 31,
+      "name": "CHEN-YI KAI",
+      "sailOrBoardNumber": "SGP757",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 288.0,
+      "nettScore": 249.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1a887b11-45b2-4ec6-a8a9-91f81663ba57",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5930cae9-20aa-53b0-a9be-ae689f508df1",
+      "participants": [
+        {
+          "id": "c078e078-973b-5b8b-b696-932d35c52555",
+          "sailorId": "1a887b11-45b2-4ec6-a8a9-91f81663ba57",
+          "sourceName": "CHEN-YI KAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 1; source name: CHEN-YI KAI; historic sail: SGP757; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 32,
+      "name": "TEO KAI JIE",
+      "sailOrBoardNumber": "SGP3550",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 291.0,
+      "nettScore": 252.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        },
+        {
+          "raceNumber": 9,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "39b056e7-10a8-450d-945f-a1109bbb61b0",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "24ca32d8-0a2b-515c-90e9-b2354da60aae",
+      "participants": [
+        {
+          "id": "959be59e-e55d-5e7d-9623-34b2b02ea654",
+          "sailorId": "39b056e7-10a8-450d-945f-a1109bbb61b0",
+          "sourceName": "TEO KAI JIE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 2; source name: TEO KAI JIE; historic sail: SGP3550; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 33,
+      "name": "NATTHAPHATR POOLKLANG",
+      "sailOrBoardNumber": "THA1434",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 298.0,
+      "nettScore": 259.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "44e26e76-d186-5863-84bb-f19bfbc612ad",
+      "participants": [
+        {
+          "id": "c7169e72-1f8a-58ea-a9de-949ca354ca28",
+          "sailorId": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+          "sourceName": "NATTHAPHATR POOLKLANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 2; source name: NATTHAPHATR POOLKLANG; historic sail: THA1434; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 34,
+      "name": "CHEERAWIT SAIYALUXANA",
+      "sailOrBoardNumber": "THA1899",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 302.0,
+      "nettScore": 263.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ad441d27-47bd-533d-961a-346809d9ceba",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ee27f97d-d65d-525d-a640-727d81c762cb",
+      "participants": [
+        {
+          "id": "03d71969-3edb-5b75-b360-20e2e3d7f37e",
+          "sailorId": "ad441d27-47bd-533d-961a-346809d9ceba",
+          "sourceName": "CHEERAWIT SAIYALUXANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 2; source name: CHEERAWIT SAIYALUXANA; historic sail: THA1899; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 35,
+      "name": "WEERATORN POOLLARP",
+      "sailOrBoardNumber": "THA781",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 306.0,
+      "nettScore": 267.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "08cd9934-4024-4a64-ac6e-d6a8d687ab8f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "dbc8074d-305c-5ec9-869d-1aea74f4a06f",
+      "participants": [
+        {
+          "id": "96a453d8-bc54-5f90-a186-f87a82af9c8f",
+          "sailorId": "08cd9934-4024-4a64-ac6e-d6a8d687ab8f",
+          "sourceName": "WEERATORN POOLLARP",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 2; source name: WEERATORN POOLLARP; historic sail: THA781; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 37,
+      "name": "CHAYAPHON BOONSANG",
+      "sailOrBoardNumber": "THA228",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 312.0,
+      "nettScore": 273.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e4b10010-b002-4066-8025-a266795b69bb",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9597b747-0678-59e1-9a4b-9cfe61bb3e71",
+      "participants": [
+        {
+          "id": "02d2faca-c7bc-598a-8d4f-97ae7c1a1180",
+          "sailorId": "e4b10010-b002-4066-8025-a266795b69bb",
+          "sourceName": "CHAYAPHON BOONSANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 2; source name: CHAYAPHON BOONSANG; historic sail: THA228; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 38,
+      "name": "KITTALUK KULWATTANAPHAN",
+      "sailOrBoardNumber": "THA33",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 316.0,
+      "nettScore": 277.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0c18ab78-d7b5-4843-bd57-89ef7738055a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "62a4d687-5006-50c8-940a-7b342b18d4d3",
+      "participants": [
+        {
+          "id": "bea06ccf-97f7-51f2-ac95-53b277952f6b",
+          "sailorId": "0c18ab78-d7b5-4843-bd57-89ef7738055a",
+          "sourceName": "KITTALUK KULWATTANAPHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Boy; page 2; source name: KITTALUK KULWATTANAPHAN; historic sail: THA33; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 35,
+  "deferredEntryCount": 3,
+  "publicSummary": "Provisional organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 35 of 38 class entries imported; 3 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 10,
+      "name": "EHAN LEE",
+      "sailOrBoardNumber": "SGP83",
+      "club": "SSF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 126.0,
+      "nettScore": 87.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "c4e262cc-1d16-4e95-90a0-c168b25c2de1",
+          "name": "Ethan Lee",
+          "similarity": 0.933
+        },
+        {
+          "id": "e8cc76e2-880f-595f-9e9a-5d982e5c5787",
+          "name": "Ethan J. Lee",
+          "similarity": 0.875
+        },
+        {
+          "id": "a8092317-29a4-4200-8d40-8ba10d44d2d0",
+          "name": "Hannah Lee",
+          "similarity": 0.75
+        }
+      ]
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 1,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 25,
+      "name": "DANIAN HUANG",
+      "sailOrBoardNumber": "SGP3300",
+      "club": "SSF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 206.0,
+      "nettScore": 167.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(39.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "39.0 UFD"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 39.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "39.0 UFD"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "bd38a1f4-5a06-4b4d-a92c-c73d51266b6c",
+          "name": "Darian Huang",
+          "similarity": 0.909
+        },
+        {
+          "id": "644b1498-1f04-4e1e-b7a0-f2bd29f874d7",
+          "name": "Damien Huang",
+          "similarity": 0.818
+        },
+        {
+          "id": "7c8c70eb-d172-5740-b744-d097143bdfc5",
+          "name": "Daniel Hung",
+          "similarity": 0.762
+        }
+      ]
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Boy",
+      "boatClass": "Optimist",
+      "division": "Boys",
+      "rank": 36,
+      "name": "NAPAPHAT/BUASUANG",
+      "sailOrBoardNumber": "THA544",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 310.0,
+      "nettScore": 271.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(39.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        },
+        {
+          "raceNumber": 5,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 39.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "39.0 DNF"
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "e4c77476-aeef-45b2-b905-495b594b1353",
+          "name": "Napabhat Buasuang",
+          "similarity": 0.938
+        },
+        {
+          "id": "90b36217-ca95-4a90-b8f3-a502537842ab",
+          "name": "Ashlea Tham Yan Shuang",
+          "similarity": 0.571
+        },
+        {
+          "id": "fe81e936-2a3f-5a20-b21f-ceb72130a2fb",
+          "name": "Raphael Lucas Chan",
+          "similarity": 0.562
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "club": "RTFYC",
+      "name": "Naimakron Jangkittiyarat",
+      "gender": "M",
+      "handle": "naimakron-jangkittiyarat-rtbu36u",
+      "birthYear": 2013,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "165560d0-d029-4580-bc7e-5b7e46cd2b20",
+      "club": "SAF Yacht Club",
+      "name": "Chiang Zhiyi Aaron",
+      "gender": "M",
+      "handle": "chiang-zhiyi-aaron",
+      "birthYear": 2015,
+      "sailNumber": "3128",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "club": "ACDC.SC",
+      "name": "Ashira Phangrak",
+      "gender": "M",
+      "handle": "ashira-phangrak-oi7odm9",
+      "birthYear": 2013,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "221935"
+    },
+    {
+      "id": "1a887b11-45b2-4ec6-a8a9-91f81663ba57",
+      "club": "SAF Yacht Club",
+      "name": "Chen-Yi Kai",
+      "gender": "M",
+      "handle": "chen-yi-kai",
+      "birthYear": 2016,
+      "sailNumber": "757",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "434b1159-f466-49dc-b20c-aef801b6350a",
+      "club": "SAF Yacht Club",
+      "name": "Dan Toh Guan You",
+      "gender": "M",
+      "handle": "dan-toh-guan-you",
+      "birthYear": 2015,
+      "sailNumber": "3811",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "632dc3e7-4e51-4855-b14d-0454d5a09701",
+      "club": "SAF Yacht Club",
+      "name": "Joel Khoo Zhuo Le",
+      "gender": "M",
+      "handle": "joel-khoo-zhuo-le",
+      "birthYear": 2014,
+      "sailNumber": "4730",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-Cha",
+      "gender": "M",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "M",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "50f0e128-c292-4a16-b203-f5bd3e3cd040",
+      "club": "YRAT",
+      "name": "Jiratiwat Peungchurn",
+      "gender": "M",
+      "handle": "jiratiwat-peungchurn-9xt7lm4",
+      "birthYear": 2012,
+      "sailNumber": "1220",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "club": "YRAT",
+      "name": "Anantachai Tiathongchai",
+      "gender": "M",
+      "handle": "anantachai-tiathongchai-onaqh0t",
+      "birthYear": 2015,
+      "sailNumber": "1990",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3d2fede9-5b4d-444d-9eb1-49d05991d128",
+      "club": "Imported official result",
+      "name": "Aung Sitt Maung",
+      "gender": "M",
+      "handle": "aung-sitt-maung-07r0qrq",
+      "birthYear": 2010,
+      "sailNumber": "MYA278",
+      "nationality": "MYA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2e6a637e-e182-41c3-b6b9-33a89fb0090e",
+      "club": "SAF Yacht Club",
+      "name": "Kyle Jeremy Soh Zhi Jun",
+      "gender": "M",
+      "handle": "kyle-jeremy-soh-zhi-jun",
+      "birthYear": 2015,
+      "sailNumber": "3183",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "club": "YRAT",
+      "name": "Sorawit Naksuk",
+      "gender": "M",
+      "handle": "sorawit-naksuk-812d4t4",
+      "birthYear": 2012,
+      "sailNumber": "1493",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "club": "YRAT",
+      "name": "Rachata Sadtrakulwatanna",
+      "gender": "M",
+      "handle": "rachata-sadtrakulwatanna-823ho68",
+      "birthYear": 2011,
+      "sailNumber": "1963",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "M",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "39b056e7-10a8-450d-945f-a1109bbb61b0",
+      "club": "SAF Yacht Club",
+      "name": "Kai Jie Teo",
+      "gender": "M",
+      "handle": "kai-jie-teo",
+      "birthYear": 2016,
+      "sailNumber": "3550",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c5cabcd3-8962-4c14-aa93-f8b754908fc0",
+      "club": "Constant Wind SeaSports",
+      "name": "Jedd Lam Zhi Hao",
+      "gender": "M",
+      "handle": "jedd-lam-zhi-hao",
+      "birthYear": 2013,
+      "sailNumber": "2000",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8970d5bb-30d1-48ab-88f2-3003bc0efbfd",
+      "club": "Constant Wind SeaSports",
+      "name": "Ng Kai Zhe Timothy",
+      "gender": "M",
+      "handle": "ng-kai-zhe-timothy",
+      "birthYear": 2015,
+      "sailNumber": "2023",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "club": "YRAT",
+      "name": "Adison Ein",
+      "gender": "M",
+      "handle": "adison-ein-f5kv46b",
+      "birthYear": 2011,
+      "sailNumber": "1945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4c24ef37-0d0c-4d89-aba8-b60b619eabf0",
+      "club": "PAssion Wave",
+      "name": "Pee Teck Woon",
+      "gender": "M",
+      "handle": "pee-teck-woon",
+      "birthYear": 2011,
+      "sailNumber": "3146",
+      "nationality": "SGP",
+      "sailNumberIlca4": "228472"
+    },
+    {
+      "id": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+      "club": "YRAT",
+      "name": "Panuwat Sriroy",
+      "gender": "M",
+      "handle": "panuwat-sriroy-thai26-034cb0",
+      "birthYear": 2012,
+      "sailNumber": "TH 678",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ad441d27-47bd-533d-961a-346809d9ceba",
+      "club": "ACDC.SC",
+      "name": "Cheerawit Saiyaluxana",
+      "gender": "M",
+      "handle": "cheerawit-saiyaluxana-thai26-ad441d",
+      "birthYear": 2016,
+      "sailNumber": "THA1899",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+      "club": "ACDC",
+      "name": "Natthapatr Poolklang",
+      "gender": "M",
+      "handle": "natthapatr-poolklang-thai25-9e4112",
+      "birthYear": 2013,
+      "sailNumber": "THA 1695",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "537e3303-85f9-4b8f-81f3-90999f53cc95",
+      "club": "SAF Yacht Club",
+      "name": "Lucas Cao Zhihong",
+      "gender": "M",
+      "handle": "lucas-cao-zhihong",
+      "birthYear": 2011,
+      "sailNumber": "149",
+      "nationality": "SGP",
+      "sailNumberIlca4": "149"
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "M",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "0c18ab78-d7b5-4843-bd57-89ef7738055a",
+      "club": "YRAT",
+      "name": "Kittaluk Kulwattanaphan",
+      "gender": "M",
+      "handle": "kittaluk-kulwattanaphan-0te64nr",
+      "birthYear": 2015,
+      "sailNumber": "1788",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e4b10010-b002-4066-8025-a266795b69bb",
+      "club": "YRAT",
+      "name": "Chayaphon Boonsang",
+      "gender": "M",
+      "handle": "chayaphon-boonsang-xpgf7p8",
+      "birthYear": 2014,
+      "sailNumber": "1954",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "08cd9934-4024-4a64-ac6e-d6a8d687ab8f",
+      "club": "YRAT",
+      "name": "Weeratorn Poollarp",
+      "gender": "M",
+      "handle": "weeratorn-poollarp-zx70vdw",
+      "birthYear": 2015,
+      "sailNumber": "1771",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "club": "YRAT",
+      "name": "Chananchai Tiathongchai",
+      "gender": "M",
+      "handle": "chananchai-tiathongchai-e3x85l3",
+      "birthYear": 2015,
+      "sailNumber": "1991",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "club": "YRAT",
+      "name": "Amarin Juntajon",
+      "gender": "M",
+      "handle": "amarin-juntajon-6j5cgat",
+      "birthYear": 2013,
+      "sailNumber": "1584",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "club": "RVYC",
+      "name": "Levy Apichai Wiedmann",
+      "gender": "M",
+      "handle": "asian-tha-levy-apich-debd2f",
+      "birthYear": 2013,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1ff55ac5-256c-42da-9fa5-a85d4f8d7f22",
+      "club": "RTNYC",
+      "name": "Hirunsira Munkhongpornpaiboon",
+      "gender": "M",
+      "handle": "hirunsira-munkhongpornpaiboon-enjhoth",
+      "birthYear": 2015,
+      "sailNumber": "932",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5f89e38f-4972-43dc-8323-906310cf159a",
+      "club": "YRAT",
+      "name": "Nattayut Jangkittiyarat",
+      "gender": "M",
+      "handle": "asian-tha-nattayut-j-5d6010",
+      "birthYear": 2012,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "a92a882b-f3f4-5fb0-83d2-efd88dc6a54e",
+      "name": "Muhammad Adhit",
+      "handle": "muhammad-adhit-sr25-a92a88",
+      "sailNumber": "INA2530",
+      "sailNumberIlca4": null,
+      "nationality": "INA",
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "d4ac1747-65f6-57eb-aac2-aa3247f79da9",
+      "name": "Aguero Pratama Syabani",
+      "handle": "aguero-pratama-syabani-sr25-d4ac17",
+      "sailNumber": "INA2611",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "INA"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

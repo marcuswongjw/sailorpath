@@ -1,0 +1,3589 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "4b3dd72f-e963-5f6f-861b-ca29352eb7bc",
+    "slug": "yrat-cup-series-5-2025",
+    "name": "2025 YRAT Cup Series 5",
+    "startDate": "2025-08-30",
+    "endDate": "2025-08-31",
+    "venue": "Dongtan Bay, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "b2cefb1c-26c6-510d-8ee8-41d663dc36e0",
+    "slug": "yrat-cup-series-5-2025-optimist-gold",
+    "name": "2025 YRAT Cup Series 5 \u2014 Optimist Gold",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "raceCount": 6,
+    "totalFleetSize": 41,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/156714",
+    "title": "2025 YRAT Cup Series 5 \u2014 Optimist Gold results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 1,
+      "name": "Sorawit naksuk",
+      "sailOrBoardNumber": "THA1493",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 16.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a3156947-b5ba-5c51-a02b-d202e7bf465a",
+      "participants": [
+        {
+          "id": "505be58b-1929-517b-a9eb-cd0ee95b8fcc",
+          "sailorId": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+          "sourceName": "Sorawit naksuk",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Sorawit naksuk; historic sail: THA1493; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 2,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "THA1253",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 20.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c40792ae-03b5-532f-ad48-313280d22929",
+      "participants": [
+        {
+          "id": "968ab0d9-9b59-5544-9e3a-c3112686d431",
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: PAILIN JAROENPON; historic sail: THA1253; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 3,
+      "name": "PARIYAPORN CHANTARAWONG",
+      "sailOrBoardNumber": "THA1223",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 35.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ac3c6590-5953-5888-81d3-cb1cbbefd74e",
+      "participants": [
+        {
+          "id": "fe5034c8-8fe9-5687-b3c8-2b541c1cfed5",
+          "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+          "sourceName": "PARIYAPORN CHANTARAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: PARIYAPORN CHANTARAWONG; historic sail: THA1223; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 4,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA 1987",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 30.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "923bad5f-f6e0-54da-b91f-19f2b9982801",
+      "participants": [
+        {
+          "id": "a8ccd25b-2011-504d-94b0-fb2cc42024d1",
+          "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+          "sourceName": "SUTHINAN NAKPASOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: SUTHINAN NAKPASOM; historic sail: THA 1987; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 5,
+      "name": "ADISON EIN",
+      "sailOrBoardNumber": "THA1945",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 32.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "16bf1ce3-c620-5f42-9332-c1221be0f39f",
+      "participants": [
+        {
+          "id": "fc15949f-5f01-5f19-9619-c92d30c405cf",
+          "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+          "sourceName": "ADISON EIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: ADISON EIN; historic sail: THA1945; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 7,
+      "name": "Surapha muangngam",
+      "sailOrBoardNumber": "THA1941",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 45.0,
+      "nettScore": 29.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c9fbb1e9-7743-5f6a-a42d-dd197d34f1ce",
+      "participants": [
+        {
+          "id": "9cadfb6d-0f2f-514b-b60e-15e750289136",
+          "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "sourceName": "Surapha muangngam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Surapha muangngam; historic sail: THA1941; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 9,
+      "name": "NATTAPON CHAILOB",
+      "sailOrBoardNumber": "THA1774",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 58.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "afe60942-db29-5712-b3dd-39a31c66b1b2",
+      "participants": [
+        {
+          "id": "398926ce-f568-5c74-8e58-31f5af436e91",
+          "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+          "sourceName": "NATTAPON CHAILOB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: NATTAPON CHAILOB; historic sail: THA1774; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 12,
+      "name": "Thyracha Homchong",
+      "sailOrBoardNumber": "THA1555",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 98.0,
+      "nettScore": 71.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "886b0637-300f-56d1-9e65-b266b3cce606",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c7058111-4ad1-544b-a34a-2388cfc83596",
+      "participants": [
+        {
+          "id": "2085f31a-84c3-5e04-840b-abc9fd3a385f",
+          "sailorId": "886b0637-300f-56d1-9e65-b266b3cce606",
+          "sourceName": "Thyracha Homchong",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Thyracha Homchong; historic sail: THA1555; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 13,
+      "name": "CHANYACHART ITTIVORAKUL",
+      "sailOrBoardNumber": "THA1887",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 104.0,
+      "nettScore": 78.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ae6e335d-75e5-5ae5-aec1-d33a9d8912c5",
+      "participants": [
+        {
+          "id": "ae178ac4-8bec-5e15-8d05-095024c7f528",
+          "sailorId": "863b5d54-6357-50d0-b16e-75e44de37e41",
+          "sourceName": "CHANYACHART ITTIVORAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: CHANYACHART ITTIVORAKUL; historic sail: THA1887; club: ACDC.SC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 14,
+      "name": "TRAIRAT JAROONROT",
+      "sailOrBoardNumber": "THA1876",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 106.0,
+      "nettScore": 80.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ff16a3db-67d0-554f-8c5f-66499dc12eaf",
+      "participants": [
+        {
+          "id": "51f2aaf4-e519-5264-a20a-e4f69f4c27c5",
+          "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+          "sourceName": "TRAIRAT JAROONROT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: TRAIRAT JAROONROT; historic sail: THA1876; club: ACCD.SC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 15,
+      "name": "PAKORNKIAT CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1643",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 123.0,
+      "nettScore": 81.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(42.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e008ce8b-7678-5abf-8247-6f49817e166b",
+      "participants": [
+        {
+          "id": "4e755d68-e600-59d2-ac13-015611a6d545",
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: PAKORNKIAT CHAIYA-O-CHA; historic sail: THA1643; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 16,
+      "name": "Levy Apichai Wiedmann",
+      "sailOrBoardNumber": "THA1464",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 113.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "97dd2d07-d454-5cd3-8fa9-c7e81ef625bd",
+      "participants": [
+        {
+          "id": "5fb378a2-959c-5f3a-8772-1bd3680c841f",
+          "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+          "sourceName": "Levy Apichai Wiedmann",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Levy Apichai Wiedmann; historic sail: THA1464; club: RVYC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 17,
+      "name": "CHUHAN ZHANG",
+      "sailOrBoardNumber": "THA1582",
+      "club": "ACDC. SC",
+      "nationality": "CHN",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 115.0,
+      "nettScore": 85.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e0522f1a-2b1b-5e8a-8daa-1753067d8947",
+      "participants": [
+        {
+          "id": "71b3f021-d634-58b3-9f5f-642e2c10c9bd",
+          "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+          "sourceName": "CHUHAN ZHANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: CHUHAN ZHANG; historic sail: THA1582; club: ACDC. SC; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 18,
+      "name": "ANANTACHAI. TIATHONGCHAI",
+      "sailOrBoardNumber": "THA1549",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 119.0,
+      "nettScore": 89.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e50f4c45-7fa1-5775-9cfb-4ed51b775962",
+      "participants": [
+        {
+          "id": "4f15f805-eaee-577e-a8d9-651b2ac88d68",
+          "sailorId": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "sourceName": "ANANTACHAI. TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: ANANTACHAI. TIATHONGCHAI; historic sail: THA1549; club: ACCD.SC; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 19,
+      "name": "DHAMMAPORN ARUNO",
+      "sailOrBoardNumber": "THA1881",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 122.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "216ee8a6-8516-55c0-a645-a164e884c18d",
+      "participants": [
+        {
+          "id": "42421f41-6a30-5a44-a758-a6bedd2786c6",
+          "sailorId": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+          "sourceName": "DHAMMAPORN ARUNO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: DHAMMAPORN ARUNO; historic sail: THA1881; club: ACDC.SC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 20,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "THA395",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 134.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(42.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5c3c30c6-a623-5b59-8a60-178c51a5c13f",
+      "participants": [
+        {
+          "id": "6d1adf2c-4ecd-513a-96c2-6c0de06bc544",
+          "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+          "sourceName": "NATTHAPONG NEELASAVEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: NATTHAPONG NEELASAVEE; historic sail: THA395; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 21,
+      "name": "Thanapha Phongkamnerd",
+      "sailOrBoardNumber": "THA1484",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 124.0,
+      "nettScore": 93.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2f8da2b8-b0cb-5768-8dba-04475be4893d",
+      "participants": [
+        {
+          "id": "8bfa9ff3-7535-54e1-ba9d-637506018cb3",
+          "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+          "sourceName": "Thanapha Phongkamnerd",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Thanapha Phongkamnerd; historic sail: THA1484; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 22,
+      "name": "CHANANCHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "THA1487",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 117.0,
+      "nettScore": 93.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "06060d99-e2f0-56c7-909b-aa3d9157f739",
+      "participants": [
+        {
+          "id": "8e397682-12e9-525b-b68f-20bd8a626823",
+          "sailorId": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "sourceName": "CHANANCHAI TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: CHANANCHAI TIATHONGCHAI; historic sail: THA1487; club: ACCD.SC; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 23,
+      "name": "NIRADA SASIWATTANAPORN",
+      "sailOrBoardNumber": "THA1925",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 134.0,
+      "nettScore": 99.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "735a7996-4cf6-5b67-acf6-f8a357d2c7b4",
+      "participants": [
+        {
+          "id": "eacaab9f-cdba-5960-bb76-7fb3bca814ae",
+          "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+          "sourceName": "NIRADA SASIWATTANAPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: NIRADA SASIWATTANAPORN; historic sail: THA1925; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 24,
+      "name": "THAWAREE RAKSAPAN",
+      "sailOrBoardNumber": "THA 1789",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 140.0,
+      "nettScore": 108.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "34a82422-7f1d-533a-be51-d9f663db84fd",
+      "participants": [
+        {
+          "id": "73791076-7220-5ab7-a26f-b1a38a4cf9bf",
+          "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+          "sourceName": "THAWAREE RAKSAPAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: THAWAREE RAKSAPAN; historic sail: THA 1789; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 25,
+      "name": "PANUWAT SRIROY",
+      "sailOrBoardNumber": "THA 678",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 146.0,
+      "nettScore": 113.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4df4eb2f-3639-5b76-b400-0c9f0a8e1d5f",
+      "participants": [
+        {
+          "id": "bec0cff8-2e77-525e-92b0-26457e3a1be2",
+          "sailorId": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+          "sourceName": "PANUWAT SRIROY",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: PANUWAT SRIROY; historic sail: THA 678; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 26,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 146.0,
+      "nettScore": 114.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ac555525-bfc7-5456-9784-d5cabab4b4a7",
+      "participants": [
+        {
+          "id": "b55aa296-e6d2-5c29-89ec-1ad7a6691aa6",
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: SURATSAYAPRON KAEWRAKUM; historic sail: THA1696; club: ACCD.SC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 27,
+      "name": "Kate Lee",
+      "sailOrBoardNumber": "TPE318",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 150.0,
+      "nettScore": 118.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "fa82d181-f92a-504c-b238-0ce7a105dfed",
+      "participants": [
+        {
+          "id": "78f00e9f-524b-583b-a013-a1036cacbdf5",
+          "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+          "sourceName": "Kate Lee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Kate Lee; historic sail: TPE318; club: RVYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 28,
+      "name": "WICHAYAPORN SAKSRIKLOM",
+      "sailOrBoardNumber": "THA1901",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 151.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(32.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "581ad46c-80f1-5ef6-b002-22de1c0dd52a",
+      "participants": [
+        {
+          "id": "c3a385a7-989b-58c9-b3e3-0f4530f5913c",
+          "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+          "sourceName": "WICHAYAPORN SAKSRIKLOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: WICHAYAPORN SAKSRIKLOM; historic sail: THA1901; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 29,
+      "name": "Tatigun Homchong",
+      "sailOrBoardNumber": "THA1759",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 157.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(38.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4789877f-6d59-5ddf-a882-41afd7bce391",
+      "participants": [
+        {
+          "id": "1baaae33-49d3-5577-9a63-32f9d555e93a",
+          "sailorId": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+          "sourceName": "Tatigun Homchong",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Tatigun Homchong; historic sail: THA1759; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 30,
+      "name": "Austin Lee",
+      "sailOrBoardNumber": "TPE315",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 163.0,
+      "nettScore": 127.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 36.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(36.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "55401544-18e4-5347-9967-69547a3cf03a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d856843d-10d1-50d1-951f-95fb56c3a7df",
+      "participants": [
+        {
+          "id": "6e0c7160-87d7-5b54-888f-add105c6ea55",
+          "sailorId": "55401544-18e4-5347-9967-69547a3cf03a",
+          "sourceName": "Austin Lee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: Austin Lee; historic sail: TPE315; club: RVYC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 31,
+      "name": "PORNYAMOL SAWAENGKHUN",
+      "sailOrBoardNumber": "1900",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 169.0,
+      "nettScore": 131.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(38.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f421f0bb-6ea4-52d7-826c-b381025494bc",
+      "participants": [
+        {
+          "id": "93f7093b-9c49-579b-bfe6-f5a05f823d81",
+          "sailorId": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+          "sourceName": "PORNYAMOL SAWAENGKHUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: PORNYAMOL SAWAENGKHUN; historic sail: 1900; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 32,
+      "name": "NAIMAKRON JANGKITTIYARAT",
+      "sailOrBoardNumber": "THA 7211",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 169.0,
+      "nettScore": 134.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e44db67d-917f-5940-8526-cb125c4783a8",
+      "participants": [
+        {
+          "id": "f7e3b456-76c3-5425-a9c7-5132675a54bf",
+          "sailorId": "415e383a-0bee-4a69-a00c-84efb0428508",
+          "sourceName": "NAIMAKRON JANGKITTIYARAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 1; source name: NAIMAKRON JANGKITTIYARAT; historic sail: THA 7211; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 33,
+      "name": "Thirawat Hankham",
+      "sailOrBoardNumber": "THA1565",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 169.0,
+      "nettScore": 134.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3f417913-2eea-51db-826b-be043de8ca2a",
+      "participants": [
+        {
+          "id": "0aaf75df-d555-5959-98e5-e65aaaa671f4",
+          "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+          "sourceName": "Thirawat Hankham",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: Thirawat Hankham; historic sail: THA1565; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 34,
+      "name": "Theerakan Klaysomboon",
+      "sailOrBoardNumber": "THA1935",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 184.0,
+      "nettScore": 147.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2afcd4a3-b147-5d22-927e-dce60ee7dc8f",
+      "participants": [
+        {
+          "id": "9e8308a3-dc3a-520a-8ab6-86b45571d947",
+          "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+          "sourceName": "Theerakan Klaysomboon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: Theerakan Klaysomboon; historic sail: THA1935; club: ACDC.SC; year field: 2015. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 35,
+      "name": "AMARIN JUNTAJON",
+      "sailOrBoardNumber": "THA1936",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 189.0,
+      "nettScore": 151.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(38.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "09612529-de53-5bbb-9057-fc91fd800fa5",
+      "participants": [
+        {
+          "id": "e91dfd6a-9c32-5d7f-b7c8-abb70bd0b5c3",
+          "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+          "sourceName": "AMARIN JUNTAJON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: AMARIN JUNTAJON; historic sail: THA1936; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 36,
+      "name": "NATTHANAN CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1246",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 193.0,
+      "nettScore": 157.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(36.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d1d49700-58f4-5f95-9d11-227f6c6b07fe",
+      "participants": [
+        {
+          "id": "3d41feaa-4b36-53ae-9cf4-b3fb77994b24",
+          "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+          "sourceName": "NATTHANAN CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: NATTHANAN CHAIYA-O-CHA; historic sail: THA1246; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 37,
+      "name": "Klaochanok chatawattanasopakun",
+      "sailOrBoardNumber": "3935",
+      "club": "ACCD.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 203.0,
+      "nettScore": 166.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c94df549-6167-5bed-99b4-bd3970eab6eb",
+      "participants": [
+        {
+          "id": "80107ff4-b99f-5add-8143-8f8885d21fbe",
+          "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "sourceName": "Klaochanok chatawattanasopakun",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: Klaochanok chatawattanasopakun; historic sail: 3935; club: ACCD.SC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 38,
+      "name": "Aranya Klangmueang",
+      "sailOrBoardNumber": "THA 1775",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 227.0,
+      "nettScore": 187.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "1659d695-29a8-552a-b688-9547a27ef829",
+      "participants": [
+        {
+          "id": "df792380-2161-5bbf-8840-7045d90e05f4",
+          "sailorId": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+          "sourceName": "Aranya Klangmueang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: Aranya Klangmueang; historic sail: THA 1775; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 39,
+      "name": "Nattayut Jangkittiyarat",
+      "sailOrBoardNumber": "THA 7111",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 230.0,
+      "nettScore": 190.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5f89e38f-4972-43dc-8323-906310cf159a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "917e7b06-edab-58e5-b91f-741527bce6bd",
+      "participants": [
+        {
+          "id": "38df8833-f05f-559b-85b8-0785f788c441",
+          "sailorId": "5f89e38f-4972-43dc-8323-906310cf159a",
+          "sourceName": "Nattayut Jangkittiyarat",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: Nattayut Jangkittiyarat; historic sail: THA 7111; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 40,
+      "name": "Roong Chantarawinij",
+      "sailOrBoardNumber": "THA731",
+      "club": "RVYC",
+      "nationality": "TAH",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 232.0,
+      "nettScore": 192.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "87305a01-bdb1-494b-838c-5a9a0376ac7c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f59e1603-90d5-5846-ba40-abb710a57bad",
+      "participants": [
+        {
+          "id": "674fbe75-9449-5949-8760-5eb296314e87",
+          "sailorId": "87305a01-bdb1-494b-838c-5a9a0376ac7c",
+          "sourceName": "Roong Chantarawinij",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist gold Fleet; page 2; source name: Roong Chantarawinij; historic sail: THA731; club: RVYC; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 36,
+  "deferredEntryCount": 5,
+  "publicSummary": "Provisional organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 36 of 41 class entries imported; 5 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 6,
+      "name": "Ratcharta Sadtrakulwattan",
+      "sailOrBoardNumber": "THA1963",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 37.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+          "name": "Rachata Sadtrakulwatanna",
+          "similarity": 0.894
+        },
+        {
+          "id": "8e54ebe5-8bbe-573d-9534-fcb24aba07e9",
+          "name": "Natidej Termtakulwattana",
+          "similarity": 0.596
+        },
+        {
+          "id": "828ab5be-d594-5cf3-9c64-da4b2d6df255",
+          "name": "Cassandra Kwan",
+          "similarity": 0.595
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 8,
+      "name": "ITTHICHAI TAITHONGCHAI",
+      "sailOrBoardNumber": "THA2865",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 52.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "182f006d-6103-4990-a289-421c0d94e552",
+          "name": "Itthichai Tiathongchai",
+          "similarity": 0.952
+        },
+        {
+          "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "name": "Anantachai Tiathongchai",
+          "similarity": 0.744
+        },
+        {
+          "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "name": "Chananchai Tiathongchai",
+          "similarity": 0.744
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 10,
+      "name": "Yue Yan",
+      "sailOrBoardNumber": "CHN7709",
+      "club": "RVYC",
+      "nationality": "CHN",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 80.0,
+      "nettScore": 54.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+          "name": "Yueyan Jin",
+          "similarity": 0.8
+        },
+        {
+          "id": "c3485118-e337-551b-a472-ddb347048352",
+          "name": "YueYuan Liu",
+          "similarity": 0.75
+        },
+        {
+          "id": "a88f1f81-4234-420e-aec3-9d530b783645",
+          "name": "Ryley Man",
+          "similarity": 0.714
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 1,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 11,
+      "name": "PATARAKORN POONPAT",
+      "sailOrBoardNumber": "THA88",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 93.0,
+      "nettScore": 68.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+          "name": "Pattarakorn Poonpat",
+          "similarity": 0.971
+        },
+        {
+          "id": "3f60b228-11f1-5af5-8e79-5504eaec55b9",
+          "name": "Park In Joon",
+          "similarity": 0.593
+        },
+        {
+          "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "name": "Pailin Jaroenpon",
+          "similarity": 0.562
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156714,
+      "sourcePage": 2,
+      "sourceClass": "Optimist gold Fleet",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 41,
+      "name": "Santhat Suthamgoasl",
+      "sailOrBoardNumber": "THA1879",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 248.0,
+      "nettScore": 206.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 42.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(42.0 DNF)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 42.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "42.0 DNF"
+        },
+        {
+          "raceNumber": 4,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "154feedb-6173-4142-8d3e-88f1567b22e7",
+          "name": "Santhat Suthamgosal",
+          "similarity": 0.944
+        },
+        {
+          "id": "7a475df7-bc47-43cf-bab3-815222279ece",
+          "name": "Tasanatham Suthamgosal",
+          "similarity": 0.821
+        },
+        {
+          "id": "ddaaec0c-2b9c-23de-07d8-fdd54c947761",
+          "name": "Thani Shams",
+          "similarity": 0.571
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "988b923b-6960-4d5e-be75-d53c32295492",
+      "club": "YRAT",
+      "name": "Wichayaporn Saksriklom",
+      "gender": "F",
+      "handle": "wichayaporn-saksriklom-lf81guh",
+      "birthYear": 2014,
+      "sailNumber": "1794",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "415e383a-0bee-4a69-a00c-84efb0428508",
+      "club": "RTFYC",
+      "name": "Naimakron Jangkittiyarat",
+      "gender": "M",
+      "handle": "naimakron-jangkittiyarat-rtbu36u",
+      "birthYear": 2013,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-Cha",
+      "gender": "M",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+      "club": "YRAT",
+      "name": "Anantachai Tiathongchai",
+      "gender": "M",
+      "handle": "anantachai-tiathongchai-onaqh0t",
+      "birthYear": 2015,
+      "sailNumber": "1990",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5d26c5a2-fefa-462b-9aea-23fc1092f5cf",
+      "club": "YRAT",
+      "name": "Sorawit Naksuk",
+      "gender": "M",
+      "handle": "sorawit-naksuk-812d4t4",
+      "birthYear": 2012,
+      "sailNumber": "1493",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "club": "YRAT",
+      "name": "Surapha Muangngam",
+      "gender": "F",
+      "handle": "surapha-muangngam-8gw2ruy",
+      "birthYear": 2011,
+      "sailNumber": "1941",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "M",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "club": "RTFYC",
+      "name": "Thawaree Raksapun",
+      "gender": "F",
+      "handle": "thawaree-raksapun-sd0d5wz",
+      "birthYear": 2013,
+      "sailNumber": "1459",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "club": "ACDC.SC",
+      "name": "Theerakan Klaysomboon",
+      "gender": "F",
+      "handle": "theerakan-klaysomboon-fy1ms14",
+      "birthYear": 2015,
+      "sailNumber": "THA 1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bade8bf5-70d2-4e22-ac85-4d72e4ac45de",
+      "club": "YRAT",
+      "name": "Pornyamol Sawaengkhun",
+      "gender": "F",
+      "handle": "pornyamol-sawaengkhun-9e8uu7a",
+      "birthYear": 2013,
+      "sailNumber": "1900",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-Cha",
+      "gender": "F",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "863b5d54-6357-50d0-b16e-75e44de37e41",
+      "club": "PATTAYA SAILING CLUB",
+      "name": "Chanyachart Ittivorakul",
+      "gender": "M",
+      "handle": "chanyachart-ittivorakul-hkrw-863b5d",
+      "birthYear": 2012,
+      "sailNumber": "1887",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "club": "YRAT",
+      "name": "Adison Ein",
+      "gender": "M",
+      "handle": "adison-ein-f5kv46b",
+      "birthYear": 2011,
+      "sailNumber": "1945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "034cb0d9-7488-5e16-a97a-1b8a581a71a6",
+      "club": "YRAT",
+      "name": "Panuwat Sriroy",
+      "gender": "M",
+      "handle": "panuwat-sriroy-thai26-034cb0",
+      "birthYear": 2012,
+      "sailNumber": "TH 678",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "club": "RVYC",
+      "name": "Kate Lee",
+      "gender": "F",
+      "handle": "kate-lee-thai25-977155",
+      "birthYear": 2012,
+      "sailNumber": "TPE 318",
+      "nationality": "TPE",
+      "sailNumberIlca4": "214516"
+    },
+    {
+      "id": "55401544-18e4-5347-9967-69547a3cf03a",
+      "club": "RVYC",
+      "name": "Austin Lee",
+      "gender": "M",
+      "handle": "austin-lee-thai25-554015",
+      "birthYear": 2011,
+      "sailNumber": "TPE 315",
+      "nationality": "TPE",
+      "sailNumberIlca4": "217710"
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "M",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "club": "YRAT",
+      "name": "Natthapong Neelasavee",
+      "gender": "M",
+      "handle": "natthapong-neelasavee-91q0rru",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222071"
+    },
+    {
+      "id": "87305a01-bdb1-494b-838c-5a9a0376ac7c",
+      "club": "Royal Thai Fleet Yacht Club",
+      "name": "Roong Chantarawinij",
+      "gender": "F",
+      "handle": "roong-chantarawinij-odgizm0",
+      "birthYear": 2014,
+      "sailNumber": "1446",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "club": "ACDC.SC",
+      "name": "Chuhan Zhang",
+      "gender": "F",
+      "handle": "chuhan-zhang-oes2i91",
+      "birthYear": 2014,
+      "sailNumber": "1947",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+      "club": "YRAT",
+      "name": "Chananchai Tiathongchai",
+      "gender": "M",
+      "handle": "chananchai-tiathongchai-e3x85l3",
+      "birthYear": 2015,
+      "sailNumber": "1991",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "F",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "ACDC.SC",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": 2013,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+      "club": "ACDC.SC",
+      "name": "Dhammaporn Aruno",
+      "gender": "F",
+      "handle": "dhammaporn-aruno-v6gx0i8",
+      "birthYear": 2013,
+      "sailNumber": "1881",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "ACDC.SC",
+      "name": "Trairat Jaroonrot",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": 2011,
+      "sailNumber": "1876",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "F",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "club": "YRAT",
+      "name": "Amarin Juntajon",
+      "gender": "M",
+      "handle": "amarin-juntajon-6j5cgat",
+      "birthYear": 2013,
+      "sailNumber": "1584",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "YRAT",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": 2014,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "club": "RVYC",
+      "name": "Levy Apichai Wiedmann",
+      "gender": "M",
+      "handle": "asian-tha-levy-apich-debd2f",
+      "birthYear": 2013,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+      "club": "YRAT",
+      "name": "Aranya Klangmueang",
+      "gender": "F",
+      "handle": "aranya-klangmueang-0gxqda0",
+      "birthYear": 2014,
+      "sailNumber": "1498",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5f89e38f-4972-43dc-8323-906310cf159a",
+      "club": "YRAT",
+      "name": "Nattayut Jangkittiyarat",
+      "gender": "M",
+      "handle": "asian-tha-nattayut-j-5d6010",
+      "birthYear": 2012,
+      "sailNumber": "7111",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "club": "YRAT",
+      "name": "Nattapon Chailob",
+      "gender": "M",
+      "handle": "nattapon-chailob-thai25-2480fe",
+      "birthYear": 2011,
+      "sailNumber": "THA 1774",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "21f21ea9-1c21-5a9c-82d1-8dc0bbf3e14f",
+      "club": "YRAT",
+      "name": "Tatigun Homchong",
+      "gender": "M",
+      "handle": "tatigun-homchong-thai25-21f21e",
+      "birthYear": 2013,
+      "sailNumber": "THA 1759",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "886b0637-300f-56d1-9e65-b266b3cce606",
+      "club": "YRAT",
+      "name": "Thyracha Homchong",
+      "gender": "F",
+      "handle": "thyracha-homchong-thai25-886b06",
+      "birthYear": 2011,
+      "sailNumber": "THA 1555",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

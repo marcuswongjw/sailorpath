@@ -1,0 +1,624 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "77d3c6a5-83a8-5b98-b881-418267461f6b",
+    "slug": "sea-games-2025",
+    "name": "33rd SEA Games 2025 \u2014 Sailing",
+    "startDate": "2025-12-09",
+    "endDate": "2025-12-18",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "06e4b0fc-0529-5335-8c2d-ee29003292bb",
+    "slug": "sea-games-2025-ilca6",
+    "name": "33rd SEA Games 2025 \u2014 Sailing \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 10,
+    "totalFleetSize": 5,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/170965",
+    "title": "33rd SEA Games 2025 \u2014 Sailing \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Women's ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 1,
+      "name": "JANIA ANG",
+      "sailOrBoardNumber": "SGP",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 18.0,
+      "nettScore": 14.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ddfe8d27-5c27-4cc6-b7b3-5c5d89564914",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "113c2eff-1906-5838-b737-4ae598408f5e",
+      "participants": [
+        {
+          "id": "8cf2feb5-eb30-5bec-928d-632014b0e03a",
+          "sailorId": "ddfe8d27-5c27-4cc6-b7b3-5c5d89564914",
+          "sourceName": "JANIA ANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Women's ILCA6; page 1; source name: JANIA ANG; historic sail: SGP; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Women's ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 2,
+      "name": "NUR SHAZRIN MOHAMAD LATIF",
+      "sailOrBoardNumber": "MAS 214990",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 25.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e65296f7-fdc4-582a-b74b-fc2463ea8228",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "74b04075-90a7-5e68-bcba-1d7af7976e47",
+      "participants": [
+        {
+          "id": "030739c7-f5af-58ea-a01b-fbffcda647fb",
+          "sailorId": "e65296f7-fdc4-582a-b74b-fc2463ea8228",
+          "sourceName": "NUR SHAZRIN MOHAMAD LATIF",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Women's ILCA6; page 1; source name: NUR SHAZRIN MOHAMAD LATIF; historic sail: MAS 214990; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Women's ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "NOPPASSORN KHUNBOONJAN",
+      "sailOrBoardNumber": "THA",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 29.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "fbd98986-62b9-59bb-8bab-b82eff0b1d7f",
+      "participants": [
+        {
+          "id": "48873dbc-01a5-5656-af5e-4fa2150ff2d2",
+          "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+          "sourceName": "NOPPASSORN KHUNBOONJAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Women's ILCA6; page 1; source name: NOPPASSORN KHUNBOONJAN; historic sail: THA; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Women's ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 4,
+      "name": "KIRANA WARDOJO",
+      "sailOrBoardNumber": "INA205020",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 29.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "79c6406b-143d-542d-a3fc-b8a328b93f96",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "8214eaeb-dacd-5227-89ab-c14238ef390f",
+      "participants": [
+        {
+          "id": "177762d5-f076-5dd4-84f4-2864b3eea424",
+          "sailorId": "79c6406b-143d-542d-a3fc-b8a328b93f96",
+          "sourceName": "KIRANA WARDOJO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Women's ILCA6; page 1; source name: KIRANA WARDOJO; historic sail: INA205020; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Women's ILCA6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 5,
+      "name": "THI MY HANH NGUYEN",
+      "sailOrBoardNumber": "228159",
+      "club": "",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 49.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fdba0d5a-ee89-5b42-a07b-9fb0d12dda10",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "dfb7a798-65db-5bce-b248-f13d1a54e995",
+      "participants": [
+        {
+          "id": "5751d210-ae2f-5333-9d5e-c48c62dcdfab",
+          "sailorId": "fdba0d5a-ee89-5b42-a07b-9fb0d12dda10",
+          "sourceName": "THI MY HANH NGUYEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Women's ILCA6; page 1; source name: THI MY HANH NGUYEN; historic sail: 228159; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 5,
+  "deferredEntryCount": 0,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "club": "Yacht Racing Association of Thailand",
+      "name": "Noppassorn Khunboonjan",
+      "gender": "F",
+      "handle": "noppassorn-khunboonjan-69917e4211",
+      "birthYear": 2006,
+      "sailNumber": "217427",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ddfe8d27-5c27-4cc6-b7b3-5c5d89564914",
+      "club": "PAssion Wave",
+      "name": "Jania Ang",
+      "gender": "F",
+      "handle": "jania-ang-2c070ad305",
+      "birthYear": null,
+      "sailNumber": "222727",
+      "nationality": "SGP",
+      "sailNumberIlca4": "222727"
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "e65296f7-fdc4-582a-b74b-fc2463ea8228",
+      "name": "Nur Shazrin Mohamad Latif",
+      "handle": "nur-shazrin-mohamad-latif-sr25-e65296",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "79c6406b-143d-542d-a3fc-b8a328b93f96",
+      "name": "Kirana Wardojo",
+      "handle": "kirana-wardojo-sr25-79c640",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "fdba0d5a-ee89-5b42-a07b-9fb0d12dda10",
+      "name": "Thi My Hanh Nguyen",
+      "handle": "thi-my-hanh-nguyen-sr25-fdba0d",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}
