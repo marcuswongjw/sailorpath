@@ -280,7 +280,7 @@ export function PublicRegattaResults({
                   <div className="min-w-0">
                     <Link
                       href={`/sailors/${result.handle}`}
-                      prefetch
+                      prefetch={false}
                       className={`${colors.link} inline-flex flex-col items-start break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
                     >
                       <span>{result.sailorName}</span>
@@ -422,7 +422,7 @@ export function PublicRegattaResults({
                 <td className={`sticky left-0 z-10 min-w-40 max-w-48 px-3 py-3 break-words shadow-[2px_0_0_var(--sp-cool-veil)] ${podiumTint || "bg-[var(--sp-warm-white)]"}`}>
                   <Link
                     href={`/sailors/${result.handle}`}
-                    prefetch
+                    prefetch={false}
                     className={`${colors.link} inline-flex flex-col items-start font-bold text-[var(--sp-harbour-shadow)]`}
                   >
                     <span>{result.sailorName}</span>

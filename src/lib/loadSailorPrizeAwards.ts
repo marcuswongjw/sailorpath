@@ -46,11 +46,11 @@ async function calculateSailorPrizeAwards(
 // Cache the derived awards rather than replaying every historic fleet read on
 // each profile request. Publishing/results changes invalidate both inputs.
 const cachedAwards = unstable_cache(calculateSailorPrizeAwards,
-  ["profile-derived-awards-v1"],
+  ["profile-derived-awards-v2-minimal-identity"],
   { revalidate: 3600, tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS] });
 export async function loadSailorPrizeAwards(
   sailor: { id: string; name: string; handle: string },
   results: readonly { regattaId: string; regattaSlug?: string }[]
 ): Promise<SailorPrizeAward[]> {
-  return cachedAwards(sailor, results.map(({ regattaId, regattaSlug }) => ({ regattaId, regattaSlug })));
+  return cachedAwards({ id: sailor.id, name: sailor.name, handle: sailor.handle }, results.map(({ regattaId, regattaSlug }) => ({ regattaId, regattaSlug })));
 }
