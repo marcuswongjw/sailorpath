@@ -1,4 +1,5 @@
-vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
+const cacheCalls = vi.hoisted(() => ({ args: [] as unknown[][] }));
+vi.mock("next/cache", () => ({ unstable_cache: (fn: (...args: unknown[]) => unknown) => (...args: unknown[]) => { cacheCalls.args.push(args); return fn(...args); } }));
 import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/lib/queries", () => ({ getCachedPublicRegattas: vi.fn(), getResultsForRegatta: vi.fn() }));
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";
@@ -8,7 +9,7 @@ import type { PublicRegattaResult } from "./queries";
 const slug = "rsyc-2026-gold";
 const sailor = { id: "a", name: "Test Award Sailor", handle: "test-award" };
 const history = [{ regattaId: "g", regattaSlug: slug }];
-beforeEach(() => vi.resetAllMocks());
+beforeEach(() => { vi.resetAllMocks(); cacheCalls.args = []; });
 describe("event awards on sailor profiles", () => {
   it("uses the same calculated category winners as the event page and excludes other sailors", async () => {
     vi.mocked(getCachedPublicRegattas).mockResolvedValue([{ id: "g", name: "RSYC", slug, date: "2026-10-03", boatClass: "Optimist", division: "Gold", totalFleetSize: 2 }]);
@@ -22,6 +23,14 @@ describe("event awards on sailor profiles", () => {
     expect(awards.every((award) => award.schoolName === undefined)).toBe(true);
     const fallback = getSailorPrizes(sailor, [{ regattaSlug: slug, rank: 1, boatClass: "Optimist", division: "Gold" }]);
     expect(mergeSailorPrizes(fallback, awards)).toHaveLength(3);
+  });
+  it("strips private fields before entering the persistent cache", async () => {
+    const input = { ...sailor, dob: "2012-01-01", school: "Private school", parentId: "private-parent" };
+    await loadSailorPrizeAwards(input, []);
+    expect(cacheCalls.args[0][0]).toEqual(sailor);
+    expect(cacheCalls.args[0][0]).not.toHaveProperty("dob");
+    expect(cacheCalls.args[0][0]).not.toHaveProperty("school");
+    expect(cacheCalls.args[0][0]).not.toHaveProperty("parentId");
   });
   it("never guesses official prizes for events without a verified schedule", async () => {
     expect(await loadSailorPrizeAwards(sailor, [{ regattaId: "x", regattaSlug: "unknown" }])).toEqual([]);

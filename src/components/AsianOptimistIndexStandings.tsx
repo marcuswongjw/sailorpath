@@ -232,7 +232,7 @@ export function AsianOptimistIndexStandings({
                 <td className="border-b border-cool-veil px-4 py-3">
                   <div className="font-bold text-harbour">
                     {sailor.profileHref ? (
-                      <Link href={sailor.profileHref} className="hover:text-racing-deep hover:underline">
+                      <Link prefetch={false} href={sailor.profileHref} className="hover:text-racing-deep hover:underline">
                         {sailor.displayName}
                       </Link>
                     ) : sailor.displayName}
