@@ -405,11 +405,12 @@ describe("/api/account/results", () => {
     mocks.resultRowLimit.mockResolvedValue([{
       ...DEFAULT_RESULT_ROW,
       evidenceUrl: `https://fixture.supabase.co/storage/v1/object/public/regatta-evidence/${path}`,
+      officialUrl: `https://fixture.supabase.co/storage/v1/object/public/regatta-evidence/${path}`,
       verificationStatus: "verified",
     }]);
     const response = await PATCH(new Request("http://localhost/api/account/results", {
       method: "PATCH", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ resultId: "res-1", rank: 4, evidenceUrl: `/api/account/evidence?path=${encodeURIComponent(path)}` }),
+      body: JSON.stringify({ resultId: "res-1", rank: 4, evidenceUrl: `/api/account/evidence?path=${encodeURIComponent(path)}`, officialUrl: `/api/account/evidence?path=${encodeURIComponent(path)}` }),
     }));
     expect(response.status).toBe(200);
     expect(mocks.updateResultSpy).not.toHaveBeenCalledWith(expect.objectContaining({ verificationStatus: "pending_review" }));

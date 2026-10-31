@@ -272,7 +272,7 @@ export function HeroAthleteCard({
             {/* Avatar */}
             <div className="relative shrink-0">
               <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
-                {displaySailor.avatarUrl ? (
+                {displaySailor.avatarUrl && (!previewPublic || displaySailor.showProfilePhotoOnPublicProfile) ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}
@@ -419,7 +419,7 @@ export function HeroAthleteCard({
                   }
 
                   // School
-                  if (displaySailor.school) {
+                  if (displaySailor.school && (!previewPublic || displaySailor.showSchoolOnPublicProfile)) {
                     push(
                       <span className="text-slate-soft">
                         {String(displaySailor.school)}

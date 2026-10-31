@@ -585,12 +585,12 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                 >
                   {c.status}
                 </span>
-                {c.sailorOwnerRelation && (
+                {c.status === "approved" && c.effectiveRelation && (
                   <p className="text-[13px] text-slate-500 mt-1.5">
                     Linked as:{" "}
                     <span className="text-slate-300 font-semibold">
                       {relationLabel(
-                        c.sailorOwnerRelation as ClaimRelation
+                        c.effectiveRelation as ClaimRelation
                       )}
                     </span>
                   </p>

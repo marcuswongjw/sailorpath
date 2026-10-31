@@ -121,6 +121,7 @@ export async function GET(req: Request) {
     const mappedRows = rows.map((r) => ({
       ...r,
       evidenceUrl: evidenceDownloadUrl(r.evidenceUrl),
+      officialUrl: evidenceDownloadUrl(r.officialUrl),
       verificationStatus: displayedResultVerificationStatus({
         slug: r.slug,
         countsForRanking: r.countsForRanking,
@@ -468,7 +469,7 @@ async function handlePATCH(req: Request) {
         : row.officialUrl;
     if (
       evidenceDownloadUrl(nextEvidenceUrl) !== evidenceDownloadUrl(row.evidenceUrl) ||
-      nextOfficialUrl !== row.officialUrl
+      evidenceDownloadUrl(nextOfficialUrl) !== evidenceDownloadUrl(row.officialUrl)
     ) {
       resultPatch.verifiedAt = null;
       resultPatch.verifiedBy = null;

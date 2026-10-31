@@ -10,6 +10,15 @@ vi.mock("next/navigation", () => ({
 import { HeroAthleteCard } from "./HeroAthleteCard";
 
 describe("HeroAthleteCard", () => {
+  it("respects school visibility in public preview while keeping the owner view complete", () => {
+    const props = { activeStanding: null, standingIsIlca: false, displaySailor: { id: "qa", handle: "qa-sailor", name: "QA Sailor", school: "Private school", showSchoolOnPublicProfile: false } };
+    const { rerender } = render(<HeroAthleteCard {...props} previewPublic />);
+    expect(screen.queryByText("Private school")).toBeNull();
+    rerender(<HeroAthleteCard {...props} previewPublic={false} />);
+    expect(screen.getByText("Private school")).toBeInTheDocument();
+    rerender(<HeroAthleteCard {...props} displaySailor={{ ...props.displaySailor, showSchoolOnPublicProfile: true }} previewPublic />);
+    expect(screen.getByText("Private school")).toBeInTheDocument();
+  });
   const defaultProps = {
     displaySailor: {
       id: "s1",
