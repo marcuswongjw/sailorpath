@@ -1,0 +1,5353 @@
+{
+  "batch": "eastern-seaboard-2026",
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214660",
+    "title": "Result Final ILCA 18th EASTERN SEABOARD REGATTA.pdf",
+    "type": "pdf",
+    "publicationStatus": "Posted as Final on official notice board; PDF body says provisional",
+    "statusAsOf": "2026-11-01 16:57 +07",
+    "visuallyReviewed": true,
+    "sha256": "12f62b712f5b26947eda1f4410dde2e3b94780782a184ae2b3634118f0d342d0"
+  },
+  "event": {
+    "slug": "eastern-seaboard-regatta-2026",
+    "name": "18th Eastern Seaboard Regatta 2026",
+    "startDate": "2026-10-28",
+    "endDate": "2026-11-01",
+    "venue": "Royal Varuna Yacht Club, Pattaya, Thailand",
+    "organizer": "Royal Varuna Yacht Club",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/198658",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/15166/event"
+  },
+  "sheet": {
+    "slug": "eastern-seaboard-regatta-2026-ilca4",
+    "name": "18th Eastern Seaboard Regatta 2026 \u2014 ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 8,
+    "totalFleetSize": 63,
+    "countsForRanking": false,
+    "status": "published"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "HUSSALUK SRINAKORN",
+      "sailOrBoardNumber": "225982",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2009",
+      "birthYear": 2009,
+      "grossScore": 48.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 2,
+      "name": "PINCHANOK KLAYSOMBOON",
+      "sailOrBoardNumber": "225985",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 59.0,
+      "nettScore": 28.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "2746f84b-a6bf-40cb-b95d-1beb6652f8e6",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 3,
+      "name": "PEE TECK WOON",
+      "sailOrBoardNumber": "228472",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "PASSION WAVE",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 41.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "4c24ef37-0d0c-4d89-aba8-b60b619eabf0",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 4,
+      "name": "ETHAN LEE",
+      "sailOrBoardNumber": "SGP21424",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SINGAPORE SAILING FEDERATION",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 77.0,
+      "nettScore": 50.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(27.0)",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "c4e262cc-1d16-4e95-90a0-c168b25c2de1",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 5,
+      "name": "AUNG SITT MAUNG",
+      "sailOrBoardNumber": "MYA 9",
+      "nationality": "MYA",
+      "sourceNationality": "MYA",
+      "gender": "M",
+      "club": "YANGON SAILING CLUB (MYANMAR YACHTING FE",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 71.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "3d2fede9-5b4d-444d-9eb1-49d05991d128",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 6,
+      "name": "WONG WEIKAI ZACHARY",
+      "sailOrBoardNumber": "229276",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "ROYAL VARUNA YACHT CLUB",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 71.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19.0)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "ec69d8a1-8f12-4ca3-a99c-d3e18d096b2a",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 7,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "THA 178105",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 84.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 8,
+      "name": "LUCAS CAO",
+      "sailOrBoardNumber": "149",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SAFYC",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 97.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "537e3303-85f9-4b8f-81f3-90999f53cc95",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 9,
+      "name": "YU KAI CHEN",
+      "sailOrBoardNumber": "TPE 222236",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 124.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 47.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(47.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "ad7a6bbd-6cf8-5f38-96f2-0c40bdc246e4",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 10,
+      "name": "ADISON EIN",
+      "sailOrBoardNumber": "THA223915",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 132.0,
+      "nettScore": 87.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 1,
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 11,
+      "name": "LIM YUK JUN",
+      "sailOrBoardNumber": "225182",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SAF YACHT CLUB",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 121.0,
+      "nettScore": 91.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "26414c39-ffe4-417d-aabc-a577d6355fd5",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 12,
+      "name": "JOLIN ZHENG",
+      "sailOrBoardNumber": "209319",
+      "nationality": "HKG",
+      "sourceNationality": "HKG",
+      "gender": "F",
+      "club": "RHKYC",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 157.0,
+      "nettScore": 93.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "018b6ed4-9636-47e1-8d40-aa5e21a22f32",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 13,
+      "name": "THANAPORN PHOKAEW",
+      "sailOrBoardNumber": "THA 225426",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 164.0,
+      "nettScore": 100.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(64.0 DNC)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 14,
+      "name": "YONG RAY CHUANG",
+      "sailOrBoardNumber": "221094",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 172.0,
+      "nettScore": 108.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "6b018765-b6a9-5682-ada3-f3002829594e",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 15,
+      "name": "KIAN ANDERSON",
+      "sailOrBoardNumber": "187010",
+      "nationality": "HKG",
+      "sourceNationality": "HKG",
+      "gender": "M",
+      "club": "HEBE HAVEN YC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 137.0,
+      "nettScore": 108.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29.0)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "4275ed2a-d203-4a7f-b66a-230b5f39f8ff",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 16,
+      "name": "ISLA LEE ZHI XI",
+      "sailOrBoardNumber": "8",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "F",
+      "club": "SAFYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 178.0,
+      "nettScore": 133.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "30aec088-71bd-46a8-b21c-bc634cba3cc6",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 17,
+      "name": "ASHLEA THAM",
+      "sailOrBoardNumber": "228468",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "F",
+      "club": "PASSIONWAVE",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 166.0,
+      "nettScore": 135.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "90b36217-ca95-4a90-b8f3-a502537842ab",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 18,
+      "name": "HUANG,CHI-FANG (MEGAN)",
+      "sailOrBoardNumber": "TPE220975",
+      "nationality": "TPE",
+      "sourceNationality": "Taiwan",
+      "gender": "F",
+      "club": "ROYAL VARUNA YACHT CLUB",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 201.0,
+      "nettScore": 137.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "9bdb02cd-2d99-5a51-829a-a0bb6b8ffd24",
+      "matchReason": "Nickname Megan appended; same 220975, TPE, female, 2010 and RVYC as earlier official results.",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 19,
+      "name": "AMANDINE ZOE PITSILIS",
+      "sailOrBoardNumber": "219725",
+      "nationality": "FRA",
+      "sourceNationality": "FRA",
+      "gender": "F",
+      "club": "LA PELLE",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 186.0,
+      "nettScore": 141.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "328bdcaa-1773-4bb8-801d-c845c11f2667",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 20,
+      "name": "KITCHAKHUN SOMKHANNGOEN",
+      "sailOrBoardNumber": "225917",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 208.0,
+      "nettScore": 144.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": false,
+          "raw": "64.0 BFD",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "90a471f5-bd58-400f-a995-e115951ee1ed",
+      "matchReason": "Same official full-name spelling and 225917, YRAT, THA, 2011 in ACDC Cup 2026.",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 21,
+      "name": "JULIEN CHRISTIAN PETRACCO",
+      "sailOrBoardNumber": "221687",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 218.0,
+      "nettScore": 161.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 57.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(57.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "266451eb-c8e3-4485-9e81-bcf4cff922d9",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 22,
+      "name": "SHIN LIN CHEN RUI",
+      "sailOrBoardNumber": "225176",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SAFYC",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 229.0,
+      "nettScore": 165.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "747fa344-5126-4ba1-a876-470a982620c7",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 23,
+      "name": "SKYE HSU",
+      "sailOrBoardNumber": "220501",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "ROYAL VARUNA YACHT CLUB",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 232.0,
+      "nettScore": 168.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "f61896f2-3906-5258-82bc-494e2573ebfc",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 24,
+      "name": "LIAO ZHI TING",
+      "sailOrBoardNumber": "227460",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SAFYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 234.0,
+      "nettScore": 170.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "f9138c57-b669-4793-bb7e-0532eb4ad7b3",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 25,
+      "name": "PRAPADA PEERANANTAPANYA",
+      "sailOrBoardNumber": "THA223567",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "RVYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 211.0,
+      "nettScore": 171.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 26,
+      "name": "JAYDEN ZI XI BAI",
+      "sailOrBoardNumber": "225261",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "ROYAL VARUNA CLUB",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 239.0,
+      "nettScore": 175.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "3b678e7c-898f-4784-b309-d092393af6b5",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 27,
+      "name": "CECILIA KONG",
+      "sailOrBoardNumber": "227678",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "F",
+      "club": "SINGAPORE CHANGI SAILING CLUB",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 223.0,
+      "nettScore": 177.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 46.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(46.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "e4ec252a-fee9-40d0-9c1b-5145a55b800c",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 28,
+      "name": "MARKUS DOH VINNA",
+      "sailOrBoardNumber": "HKG 209947",
+      "nationality": "HKG",
+      "sourceNationality": "HKG",
+      "gender": "M",
+      "club": "HHYC",
+      "sourceYob": "2014",
+      "birthYear": 2014,
+      "grossScore": 224.0,
+      "nettScore": 179.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45.0)",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 2,
+      "sailorId": "1a1c5ed6-69d0-4738-aaf7-007b9cdfaccf",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 29,
+      "name": "SURAPHA MUANGNGAM",
+      "sailOrBoardNumber": "225988",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "sourceYob": "2554",
+      "birthYear": null,
+      "grossScore": 223.0,
+      "nettScore": 183.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40.0)",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": "Non-Gregorian or incomplete source YOB retained verbatim; no birth date inferred."
+    },
+    {
+      "rank": 30,
+      "name": "CHENYANG, YEH",
+      "sailOrBoardNumber": "TPE228160",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 260.0,
+      "nettScore": 196.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "077c93a7-5bcf-5772-a7ec-fe9d0c1e1b7e",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 31,
+      "name": "KATE LEE",
+      "sailOrBoardNumber": "TPE214516",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "F",
+      "club": "RVYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 245.0,
+      "nettScore": 201.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "9771553e-0a20-5561-8f5e-403c21bae60a",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 32,
+      "name": "ASHIRA PHANGRAK",
+      "sailOrBoardNumber": "218744",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 253.2,
+      "nettScore": 204.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 49.2,
+          "code": "SCP",
+          "discarded": true,
+          "raw": "(49.2 SCP)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "9fcccf71-f1d8-4f83-818b-bc2eb6422676",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 33,
+      "name": "CHARLES KONG",
+      "sailOrBoardNumber": "SGP 227676",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SINGAPORE SAILING FEDERATION",
+      "sourceYob": "2014",
+      "birthYear": 2014,
+      "grossScore": 271.0,
+      "nettScore": 207.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "aada8925-cb09-4adb-8bdc-c6b8c2d0a20d",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 34,
+      "name": "LUCAS LIM",
+      "sailOrBoardNumber": "SGP 223355",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 254.0,
+      "nettScore": 208.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 46.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(46.0)",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "25404662-9da1-43a2-8608-9a7e82e40235",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 35,
+      "name": "AUSTIN LEE",
+      "sailOrBoardNumber": "TPE217710",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "RVYC",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 256.0,
+      "nettScore": 214.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 42.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(42.0)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "55401544-18e4-5347-9967-69547a3cf03a",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 36,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "THA215071",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YART",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 280.0,
+      "nettScore": 216.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 37,
+      "name": "SCARLETT TAO",
+      "sailOrBoardNumber": "HKG213251",
+      "nationality": "HKG",
+      "sourceNationality": "HKG",
+      "gender": "F",
+      "club": "RHKYC",
+      "sourceYob": "14",
+      "birthYear": null,
+      "grossScore": 286.0,
+      "nettScore": 222.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(64.0 DNC)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "b5748418-b045-44a6-a48b-53a3b30ffa5c",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": "Non-Gregorian or incomplete source YOB retained verbatim; no birth date inferred."
+    },
+    {
+      "rank": 38,
+      "name": "GEROME SIM",
+      "sailOrBoardNumber": "SGP4",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "SAFYC",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 304.0,
+      "nettScore": 240.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "2ff98601-d8f0-49f2-a643-754b2a6cea8a",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 39,
+      "name": "LIU,TZU-HO",
+      "sailOrBoardNumber": "217714",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "YUSA",
+      "sourceYob": "2009",
+      "birthYear": 2009,
+      "grossScore": 307.0,
+      "nettScore": 243.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "f661a603-313b-472f-a363-9d58914e04c0",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 40,
+      "name": "AMARIN JUNTAJON",
+      "sailOrBoardNumber": "217321",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 292.0,
+      "nettScore": 245.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 47.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(47.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "aa2952d1-ba70-464e-8666-096ff9fef554",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 41,
+      "name": "SUWAPHAK PLUMJIT",
+      "sailOrBoardNumber": "THA222589",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 308.0,
+      "nettScore": 254.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 52.0,
+          "code": null,
+          "discarded": false,
+          "raw": "52.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 54.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(54.0)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 42,
+      "name": "KHAIRUL IMAN BIN MOHD AFENDY",
+      "sailOrBoardNumber": "220364",
+      "nationality": "MAS",
+      "sourceNationality": "MAS",
+      "gender": "M",
+      "club": "KEDAH SAILING ASSOCIATION",
+      "sourceYob": "2014",
+      "birthYear": 2014,
+      "grossScore": 311.0,
+      "nettScore": 259.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 52.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(52.0)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "e8d57d7a-4bfb-451e-a661-11c8ecaf805d",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 43,
+      "name": "ITTHICHAI TIATHONGCHAI",
+      "sailOrBoardNumber": "217453",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2556",
+      "birthYear": null,
+      "grossScore": 307.0,
+      "nettScore": 263.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": "Non-Gregorian or incomplete source YOB retained verbatim; no birth date inferred."
+    },
+    {
+      "rank": 44,
+      "name": "OWEN WONG- FORHART",
+      "sailOrBoardNumber": "212852",
+      "nationality": "USA",
+      "sourceNationality": "USA",
+      "gender": "M",
+      "club": "UWC THAILAND",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 328.0,
+      "nettScore": 270.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 58.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(58.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 54.0,
+          "code": null,
+          "discarded": false,
+          "raw": "54.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "b9cf87e5-6fa9-5f79-909f-1814c8d79999",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "b9cf87e5-6fa9-5f79-909f-1814c8d79999",
+        "name": "Owen Wong-Forhart",
+        "handle": "owen-wong-forhart-esr26-usa",
+        "sailNumber": "",
+        "sailNumberIlca4": "212852",
+        "club": "UWC THAILAND",
+        "nationality": "USA",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 45,
+      "name": "PATTARAKORN POONPAT",
+      "sailOrBoardNumber": "221947",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "AC/DC",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 318.0,
+      "nettScore": 270.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 48.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(48.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 46,
+      "name": "HENRY THOMAS KURATLE",
+      "sailOrBoardNumber": "207079",
+      "nationality": "SUI",
+      "sourceNationality": "SUI",
+      "gender": "M",
+      "club": "UWC THAILAND",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 323.0,
+      "nettScore": 271.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 52.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(52.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 3,
+      "sailorId": "45169513-7b8d-5bd6-bbe3-88fbb8247031",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "45169513-7b8d-5bd6-bbe3-88fbb8247031",
+        "name": "Henry Thomas Kuratle",
+        "handle": "henry-thomas-kuratle-esr26-sui",
+        "sailNumber": "",
+        "sailNumberIlca4": "207079",
+        "club": "UWC THAILAND",
+        "nationality": "SUI",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 47,
+      "name": "MUHAMMAD ZULFAN AKIF BIN ZULKIFLY",
+      "sailOrBoardNumber": "217838",
+      "nationality": "MAS",
+      "sourceNationality": "MAS",
+      "gender": "M",
+      "club": "KEDAH SAILING ASSOCIATION",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 328.0,
+      "nettScore": 273.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 55.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(55.0)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 53.0,
+          "code": null,
+          "discarded": false,
+          "raw": "53.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 53.0,
+          "code": null,
+          "discarded": false,
+          "raw": "53.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 54.0,
+          "code": null,
+          "discarded": false,
+          "raw": "54.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "7bea3cb4-93e5-4d24-acc5-2d19d538aa88",
+      "matchReason": "Unique long full-name variant omitting Mohd; same MAS male identity.",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 48,
+      "name": "KHANT ZIN THAW",
+      "sailOrBoardNumber": "MYA 2",
+      "nationality": "MYA",
+      "sourceNationality": "MYA",
+      "gender": "M",
+      "club": "YANGON SAILING CLUB (MYANMAR YACHTING FE",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 342.0,
+      "nettScore": 285.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 53.0,
+          "code": null,
+          "discarded": false,
+          "raw": "53.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 57.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(57.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 36.0,
+          "code": null,
+          "discarded": false,
+          "raw": "36.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "4f380165-9a64-4366-911f-b15dacc6bbda",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 49,
+      "name": "THIRAWAT HANKHAM",
+      "sailOrBoardNumber": "THA225922",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 345.0,
+      "nettScore": 291.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 54.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(54.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 38.0,
+          "code": null,
+          "discarded": false,
+          "raw": "38.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 53.0,
+          "code": null,
+          "discarded": false,
+          "raw": "53.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 50,
+      "name": "TIMUR SELEZNEV",
+      "sailOrBoardNumber": "111",
+      "nationality": "AIN",
+      "sourceNationality": "AIN",
+      "gender": "M",
+      "club": "NAKHODKA SAILING",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 351.0,
+      "nettScore": 298.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 53.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(53.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 53.0,
+          "code": null,
+          "discarded": false,
+          "raw": "53.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 52.0,
+          "code": null,
+          "discarded": false,
+          "raw": "52.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "802b99e3-2ef5-5c5c-9391-00ab8a672411",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "802b99e3-2ef5-5c5c-9391-00ab8a672411",
+        "name": "Timur Seleznev",
+        "handle": "timur-seleznev-esr26-ain",
+        "sailNumber": "",
+        "sailNumberIlca4": "111",
+        "club": "NAKHODKA SAILING",
+        "nationality": "AIN",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 51,
+      "name": "CALEB CAO ZHIXUAN",
+      "sailOrBoardNumber": "225207",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "M",
+      "club": "CSC",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 361.0,
+      "nettScore": 306.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 55.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(55.0)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "1308ee47-a24a-4248-8040-427a48391187",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 52,
+      "name": "ROBERT KOCHETOVSKIY",
+      "sailOrBoardNumber": "228469",
+      "nationality": "AIN",
+      "sourceNationality": "AIN",
+      "gender": "M",
+      "club": "OPTI TEAM",
+      "sourceYob": "2009",
+      "birthYear": 2009,
+      "grossScore": 371.0,
+      "nettScore": 307.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 56.0,
+          "code": null,
+          "discarded": false,
+          "raw": "56.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 64.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(64.0 UFD)",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "e58690e7-073b-5573-b2ae-f4ce1be100d9",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "e58690e7-073b-5573-b2ae-f4ce1be100d9",
+        "name": "Robert Kochetovskiy",
+        "handle": "robert-kochetovskiy-esr26-ain",
+        "sailNumber": "",
+        "sailNumberIlca4": "228469",
+        "club": "OPTI TEAM",
+        "nationality": "AIN",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 53,
+      "name": "AKTANON JONGJUGKAPHAN",
+      "sailOrBoardNumber": "222687",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "M",
+      "club": "YRAT",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 382.0,
+      "nettScore": 326.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 56.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(56.0)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 39.0,
+          "code": null,
+          "discarded": false,
+          "raw": "39.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 41.0,
+          "code": null,
+          "discarded": false,
+          "raw": "41.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 44.0,
+          "code": null,
+          "discarded": false,
+          "raw": "44.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 56.0,
+          "code": null,
+          "discarded": false,
+          "raw": "56.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "fda6a9f7-be61-4f3b-8f64-7f29c75592c1",
+      "matchReason": "Same official spelling and 222687, THA, male, YRAT, 2012 in ACDC Cup 2026.",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 54,
+      "name": "THITIWORADA JOHNJAITRONG",
+      "sailOrBoardNumber": "222685",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 400.0,
+      "nettScore": 336.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 45.0,
+          "code": null,
+          "discarded": false,
+          "raw": "45.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": false,
+          "raw": "64.0 BFD",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 52.0,
+          "code": null,
+          "discarded": false,
+          "raw": "52.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 55,
+      "name": "OONORN VISUTTIPRAPANONT",
+      "sailOrBoardNumber": "226767",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "RVYC",
+      "sourceYob": "2010",
+      "birthYear": 2010,
+      "grossScore": 412.0,
+      "nettScore": 348.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 54.0,
+          "code": null,
+          "discarded": false,
+          "raw": "54.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 55.0,
+          "code": null,
+          "discarded": false,
+          "raw": "55.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 56.0,
+          "code": null,
+          "discarded": false,
+          "raw": "56.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(64.0 BFD)",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 43.0,
+          "code": null,
+          "discarded": false,
+          "raw": "43.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 49.0,
+          "code": null,
+          "discarded": false,
+          "raw": "49.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "f248ce9b-7121-51a5-8831-8e0aaea4c830",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 56,
+      "name": "TING-JEN LIN",
+      "sailOrBoardNumber": "211961",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "YMES SAIL TEAM",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 415.0,
+      "nettScore": 357.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 57.0,
+          "code": null,
+          "discarded": false,
+          "raw": "57.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 54.0,
+          "code": null,
+          "discarded": false,
+          "raw": "54.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 52.0,
+          "code": null,
+          "discarded": false,
+          "raw": "52.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "64.0 DNE",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 58.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(58.0)",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 57.0,
+          "code": null,
+          "discarded": false,
+          "raw": "57.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 42.0,
+          "code": null,
+          "discarded": false,
+          "raw": "42.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "bbc40d80-aedd-5383-8e46-063b2f8cabe0",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "bbc40d80-aedd-5383-8e46-063b2f8cabe0",
+        "name": "Ting-Jen Lin",
+        "handle": "ting-jen-lin-esr26-tpe",
+        "sailNumber": "",
+        "sailNumberIlca4": "211961",
+        "club": "YMES SAIL TEAM",
+        "nationality": "TPE",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 57,
+      "name": "LAUREN LIM",
+      "sailOrBoardNumber": "SGP216431",
+      "nationality": "SGP",
+      "sourceNationality": "SGP",
+      "gender": "F",
+      "club": "CHANGI SAILING CLUB",
+      "sourceYob": "2012",
+      "birthYear": 2012,
+      "grossScore": 438.0,
+      "nettScore": 374.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(64.0 DNC)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "96ee16c3-fbca-4a89-858d-80d73cf078c6",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 58,
+      "name": "ALEKSANDR KUIMOV",
+      "sailOrBoardNumber": "223801",
+      "nationality": "AIN",
+      "sourceNationality": "AIN",
+      "gender": "M",
+      "club": "NAKHODKA SAILING",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 439.0,
+      "nettScore": 378.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 59.0,
+          "code": null,
+          "discarded": false,
+          "raw": "59.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 57.0,
+          "code": null,
+          "discarded": false,
+          "raw": "57.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 55.0,
+          "code": null,
+          "discarded": false,
+          "raw": "55.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 46.0,
+          "code": null,
+          "discarded": false,
+          "raw": "46.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 61.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(61.0)",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 51.0,
+          "code": null,
+          "discarded": false,
+          "raw": "51.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 59.0,
+          "code": null,
+          "discarded": false,
+          "raw": "59.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "6a514194-8171-55dc-a5f6-ee36e3ad67eb",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "6a514194-8171-55dc-a5f6-ee36e3ad67eb",
+        "name": "Aleksandr Kuimov",
+        "handle": "aleksandr-kuimov-esr26-ain",
+        "sailNumber": "",
+        "sailNumberIlca4": "223801",
+        "club": "NAKHODKA SAILING",
+        "nationality": "AIN",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 59,
+      "name": "TING-EN LIN",
+      "sailOrBoardNumber": "211389",
+      "nationality": "TPE",
+      "sourceNationality": "TPE",
+      "gender": "M",
+      "club": "YMES SAIL TEAM",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 444.0,
+      "nettScore": 383.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 60.0,
+          "code": null,
+          "discarded": false,
+          "raw": "60.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 61.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(61.0)",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 52.0,
+          "code": null,
+          "discarded": false,
+          "raw": "52.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 58.0,
+          "code": null,
+          "discarded": false,
+          "raw": "58.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 40.0,
+          "code": null,
+          "discarded": false,
+          "raw": "40.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 57.0,
+          "code": null,
+          "discarded": false,
+          "raw": "57.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 58.0,
+          "code": null,
+          "discarded": false,
+          "raw": "58.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 58.0,
+          "code": null,
+          "discarded": false,
+          "raw": "58.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "fc743756-eaa4-5d96-9dc9-b9c22ffe845c",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "fc743756-eaa4-5d96-9dc9-b9c22ffe845c",
+        "name": "Ting-En Lin",
+        "handle": "ting-en-lin-esr26-tpe",
+        "sailNumber": "",
+        "sailNumberIlca4": "211389",
+        "club": "YMES SAIL TEAM",
+        "nationality": "TPE",
+        "gender": "M"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 60,
+      "name": "SARUTIYA RATTANADECHAKORN",
+      "sailOrBoardNumber": "22268",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "YRAT",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 449.0,
+      "nettScore": 389.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 58.0,
+          "code": null,
+          "discarded": false,
+          "raw": "58.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 59.0,
+          "code": null,
+          "discarded": false,
+          "raw": "59.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 50.0,
+          "code": null,
+          "discarded": false,
+          "raw": "50.0",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 60.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(60.0)",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 47.0,
+          "code": null,
+          "discarded": false,
+          "raw": "47.0",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 60.0,
+          "code": null,
+          "discarded": false,
+          "raw": "60.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 59.0,
+          "code": null,
+          "discarded": false,
+          "raw": "59.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 56.0,
+          "code": null,
+          "discarded": false,
+          "raw": "56.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "a080465e-2c15-42a8-b8e4-ee24afb5fe74",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 61,
+      "name": "UMI NURCAMELIA BINTI SALAHUDDIN",
+      "sailOrBoardNumber": "215061",
+      "nationality": "MAS",
+      "sourceNationality": "MAS",
+      "gender": "F",
+      "club": "KEDAH SAILING ASSOCIATION",
+      "sourceYob": "2013",
+      "birthYear": 2013,
+      "grossScore": 478.0,
+      "nettScore": 414.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 61.0,
+          "code": null,
+          "discarded": false,
+          "raw": "61.0",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 60.0,
+          "code": null,
+          "discarded": false,
+          "raw": "60.0",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(64.0 DNC)",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 59.0,
+          "code": null,
+          "discarded": false,
+          "raw": "59.0",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "64.0 DNE",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 59.0,
+          "code": null,
+          "discarded": false,
+          "raw": "59.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 56.0,
+          "code": null,
+          "discarded": false,
+          "raw": "56.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 55.0,
+          "code": null,
+          "discarded": false,
+          "raw": "55.0",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "2e45d3f1-a681-52f2-8570-afd3c3647a28",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "2e45d3f1-a681-52f2-8570-afd3c3647a28",
+        "name": "Umi Nurcamelia Binti Salahuddin",
+        "handle": "umi-nurcamelia-binti-salahuddin-esr26-mas",
+        "sailNumber": "",
+        "sailNumberIlca4": "215061",
+        "club": "KEDAH SAILING ASSOCIATION",
+        "nationality": "MAS",
+        "gender": "F"
+      },
+      "metadataNotes": ""
+    },
+    {
+      "rank": 62,
+      "name": "CAPUCINE LALA COLLIN",
+      "sailOrBoardNumber": "THA 221653",
+      "nationality": "THA",
+      "sourceNationality": "THA",
+      "gender": "F",
+      "club": "ROYAL VARUNA YACHT CLUB",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 487.0,
+      "nettScore": 423.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(64.0 DNC)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 55.0,
+          "code": null,
+          "discarded": false,
+          "raw": "55.0",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 48.0,
+          "code": null,
+          "discarded": false,
+          "raw": "48.0",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "5cb993b9-4809-5192-864e-261f913b90c0",
+      "matchReason": "unique exact normalized official name/registered alias",
+      "metadataNotes": ""
+    },
+    {
+      "rank": 63,
+      "name": "ELEANOR WONG- FORHART",
+      "sailOrBoardNumber": "212853",
+      "nationality": "USA",
+      "sourceNationality": "USA",
+      "gender": "F",
+      "club": "UWC THAILAND",
+      "sourceYob": "2011",
+      "birthYear": 2011,
+      "grossScore": 512.0,
+      "nettScore": 448.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(64.0 DNC)",
+          "sourceColumn": "R1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 64.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "64.0 DNC",
+          "sourceColumn": "R8"
+        }
+      ],
+      "sourcePage": 4,
+      "sailorId": "24dfa310-ddfe-5612-bf7a-efc33e9d8d1c",
+      "matchReason": "New distinct official identity; no confirmed existing name or reviewed alias match.",
+      "newProfile": {
+        "id": "24dfa310-ddfe-5612-bf7a-efc33e9d8d1c",
+        "name": "Eleanor Wong-Forhart",
+        "handle": "eleanor-wong-forhart-esr26-usa",
+        "sailNumber": "",
+        "sailNumberIlca4": "212853",
+        "club": "UWC THAILAND",
+        "nationality": "USA",
+        "gender": "F"
+      },
+      "metadataNotes": ""
+    }
+  ]
+}
