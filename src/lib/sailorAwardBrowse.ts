@@ -36,7 +36,7 @@ export function awardScheduleEndDate(datesText: string | undefined, year: number
   return days.sort().at(-1) || null;
 }
 
-/** The event's last day represents when its prizes were earned. */
+/** Prefer the recorded event end date, then its date or legacy schedule. */
 export function awardDate(award: SailorPrizeAward): string | null {
   return isoDate(award.regattaEndDate) || isoDate(award.regattaDate) ||
     awardScheduleEndDate(award.datesText, award.year);

@@ -91,8 +91,6 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
             </p>
           </div>
         </div>
-
-
       </div>
 
       <div role="group" aria-label="Award filters" className="space-y-3">
@@ -149,7 +147,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
         </div>
         <details className="rounded-lg border border-cool-veil px-3 py-2 text-sm">
           <summary className="cursor-pointer font-bold text-harbour">Custom date range</summary>
-          <p className="mt-2 text-xs text-slate-soft">Filter by the final day of the event. Awards without a recorded date are excluded from a date range.</p>
+          <p className="mt-2 text-xs text-slate-soft">Uses the event end date where recorded, otherwise the event date. Awards without a recorded date are excluded from a date range.</p>
           <div className="mt-2 grid gap-3 sm:grid-cols-2">
             <label htmlFor={`${formId}-from`} className="text-xs font-bold text-slate-soft">
               From date
