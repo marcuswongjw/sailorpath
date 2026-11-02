@@ -1,0 +1,772 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "902a5f6d-c9fd-5f62-8dd7-aafbe28e045b",
+    "slug": "trat-regatta-2025",
+    "name": "Trat Regatta 2025",
+    "startDate": "2025-05-09",
+    "endDate": "2025-05-11",
+    "venue": "Laem Sok, Trat, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "5b44e3b3-25b1-5564-b313-5c2625684446",
+    "slug": "trat-regatta-2025-ilca7",
+    "name": "Trat Regatta 2025 \u2014 ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 3,
+    "totalFleetSize": 11,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/141364",
+    "title": "Trat Regatta 2025 \u2014 ILCA 7 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 1,
+      "name": "VORAVONG RACHRATTANARUK",
+      "sailOrBoardNumber": "2",
+      "club": "RTNA",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 3.0,
+      "nettScore": 3.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8c85cda1-e4c8-5df4-bb5e-0875bd34df4d",
+      "participants": [
+        {
+          "id": "729354e5-b9d5-5a7d-a8d6-069f5c35662e",
+          "sailorId": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+          "sourceName": "VORAVONG RACHRATTANARUK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: VORAVONG RACHRATTANARUK; historic sail: 2; club: RTNA; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 2,
+      "name": "PRAKASIT HONGPRADAB",
+      "sailOrBoardNumber": "211365",
+      "club": "RTN",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1983,
+      "sourceBirthYear": "1983",
+      "grossScore": 7.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8feafa74-c15e-5c1d-9e74-bc878bf02545",
+      "participants": [
+        {
+          "id": "20fe93e1-af35-51cd-b300-03fdaa00feaa",
+          "sailorId": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+          "sourceName": "PRAKASIT HONGPRADAB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: PRAKASIT HONGPRADAB; historic sail: 211365; club: RTN; year field: 1983. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 3,
+      "name": "CHAIRAT DANGDEEMARK",
+      "sailOrBoardNumber": "217427",
+      "club": "RTN",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1985,
+      "sourceBirthYear": "1985",
+      "grossScore": 9.0,
+      "nettScore": 9.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fce9b8f0-b102-5c86-9923-ecc223eb3eb8",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "9c820b53-d4a6-5c01-80fb-9ed9716975b8",
+      "participants": [
+        {
+          "id": "d3042fbd-d358-57f9-bb66-40e3ce893bee",
+          "sailorId": "fce9b8f0-b102-5c86-9923-ecc223eb3eb8",
+          "sourceName": "CHAIRAT DANGDEEMARK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: CHAIRAT DANGDEEMARK; historic sail: 217427; club: RTN; year field: 1985. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 4,
+      "name": "BANPOAT NETKRACHANG",
+      "sailOrBoardNumber": "215070",
+      "club": "RTN",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1960,
+      "sourceBirthYear": "1960",
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1b851f6a-eb86-5f45-9182-d8a232c66638",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3ac074d0-5ca9-5629-976e-c819c588ff48",
+      "participants": [
+        {
+          "id": "fc4fa529-2fcd-53e6-b0f2-996d8497f2a0",
+          "sailorId": "1b851f6a-eb86-5f45-9182-d8a232c66638",
+          "sourceName": "BANPOAT NETKRACHANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: BANPOAT NETKRACHANG; historic sail: 215070; club: RTN; year field: 1960. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 5,
+      "name": "NITHASN RODHNUN",
+      "sailOrBoardNumber": "180177",
+      "club": "RTN",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1957,
+      "sourceBirthYear": "1957",
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a71ce952-63d6-5e89-9c42-5c2ff0f3ee95",
+      "participants": [
+        {
+          "id": "b44bf648-610b-5bf5-a4f7-c5c7b905be06",
+          "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+          "sourceName": "NITHASN RODHNUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: NITHASN RODHNUN; historic sail: 180177; club: RTN; year field: 1957. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 6,
+      "name": "TRANAKORN JIRASAK",
+      "sailOrBoardNumber": "NO.",
+      "club": "RTN",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9c2f1430-1ec4-5bd7-ab69-aafa0d5c6956",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "1829f119-1ecc-5268-9770-2ee3e06bb309",
+      "participants": [
+        {
+          "id": "754df390-4500-56d6-bdb1-2c22cf3db6b0",
+          "sailorId": "9c2f1430-1ec4-5bd7-ab69-aafa0d5c6956",
+          "sourceName": "TRANAKORN JIRASAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: TRANAKORN JIRASAK; historic sail: NO.; club: RTN; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "PIYANAT POOLKLANG",
+      "sailOrBoardNumber": "",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "fbaa3e9a-ec2a-51c0-b6c4-4489144c3e1d",
+      "participants": [
+        {
+          "id": "e5403538-2ae0-589f-944d-fa1c098b606a",
+          "sailorId": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+          "sourceName": "PIYANAT POOLKLANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: PIYANAT POOLKLANG; historic sail: ; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "SARANWONG POONPAT",
+      "sailOrBoardNumber": "",
+      "club": "",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e9a60857-8b0c-5546-8ffa-de0ab40c3b4d",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "662e17c1-124d-547f-a7a9-94b43c78034f",
+      "participants": [
+        {
+          "id": "80489400-339d-5ca7-ae62-35eb1eb6695b",
+          "sailorId": "e9a60857-8b0c-5546-8ffa-de0ab40c3b4d",
+          "sourceName": "SARANWONG POONPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: SARANWONG POONPAT; historic sail: ; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "THANAKAN KORKERD",
+      "sailOrBoardNumber": "7",
+      "club": "",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "cbec1536-fff9-5354-9e83-046fb081f2c2",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "2a1dfde4-be64-5a27-a8f3-e901f0ddf31f",
+      "participants": [
+        {
+          "id": "68aefa0e-29a3-51df-b87b-1eee7e9e2003",
+          "sailorId": "cbec1536-fff9-5354-9e83-046fb081f2c2",
+          "sourceName": "THANAKAN KORKERD",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: THANAKAN KORKERD; historic sail: 7; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "THAMMARAT YOUCHAROEN",
+      "sailOrBoardNumber": "286933",
+      "club": "",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6c7c699c-e188-598c-af76-e350917f491e",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "fa1857c8-666c-59b9-8208-d2f744788bd6",
+      "participants": [
+        {
+          "id": "532ea0b7-0c04-5118-87af-34b8f6cfa07c",
+          "sailorId": "6c7c699c-e188-598c-af76-e350917f491e",
+          "sourceName": "THAMMARAT YOUCHAROEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: THAMMARAT YOUCHAROEN; historic sail: 286933; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "PANYA JADSANAM",
+      "sailOrBoardNumber": "",
+      "club": "",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1fccc390-f474-5924-8381-20233044f7fe",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "e17ba846-5c5a-5852-b7af-dd1500394baf",
+      "participants": [
+        {
+          "id": "36c12890-4c22-5734-a4ac-461a45002041",
+          "sailorId": "1fccc390-f474-5924-8381-20233044f7fe",
+          "sourceName": "PANYA JADSANAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 2; source name: PANYA JADSANAM; historic sail: ; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 11,
+  "deferredEntryCount": 0,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "6fb15125-13ed-5249-ba3b-11350f6a20fc",
+      "club": "RTNYC",
+      "name": "Prakasit Hongpradab",
+      "gender": "M",
+      "handle": "prakasit-hongpradab-sr26-6fb151",
+      "birthYear": 1983,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+      "club": "ACDC.SC",
+      "name": "Voravong Rachrattanaruk",
+      "gender": "M",
+      "handle": "voravong-rachrattanaruk-sr26-2b3246",
+      "birthYear": 2000,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "516019fd-e6d5-5972-a00d-321fad9ca9c1",
+      "club": "ACDC.SC",
+      "name": "Piyanat Poolklang",
+      "gender": "M",
+      "handle": "piyanat-poolklang-sr26-516019",
+      "birthYear": 1972,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+      "club": "RTNYC",
+      "name": "Nithasn Rodhnun",
+      "gender": "M",
+      "handle": "cdr-nithasn-rodhnun-sr26-0788d7",
+      "birthYear": 1957,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1b851f6a-eb86-5f45-9182-d8a232c66638",
+      "club": "RTNYC",
+      "name": "Banpoat Netkrachang",
+      "gender": "M",
+      "handle": "vadm-banpoat-netkrachang-sr26-1b851f",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "fce9b8f0-b102-5c86-9923-ecc223eb3eb8",
+      "name": "Chairat Dangdeemark",
+      "handle": "chairat-dangdeemark-sr25-fce9b8",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "RTN"
+    },
+    {
+      "id": "9c2f1430-1ec4-5bd7-ab69-aafa0d5c6956",
+      "name": "Tranakorn Jirasak",
+      "handle": "tranakorn-jirasak-sr25-9c2f14",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "RTN"
+    },
+    {
+      "id": "e9a60857-8b0c-5546-8ffa-de0ab40c3b4d",
+      "name": "Saranwong Poonpat",
+      "handle": "saranwong-poonpat-sr25-e9a608",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "cbec1536-fff9-5354-9e83-046fb081f2c2",
+      "name": "Thanakan Korkerd",
+      "handle": "thanakan-korkerd-sr25-cbec15",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "6c7c699c-e188-598c-af76-e350917f491e",
+      "name": "Thammarat Youcharoen",
+      "handle": "thammarat-youcharoen-sr25-6c7c69",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "1fccc390-f474-5924-8381-20233044f7fe",
+      "name": "Panya Jadsanam",
+      "handle": "panya-jadsanam-sr25-1fccc3",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "Official regatta entry"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

@@ -1,0 +1,990 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "aceb80c8-46ee-5e27-860d-2a5137e20235",
+    "slug": "ilca-district-championship-2025",
+    "name": "ILCA District Championship 2025",
+    "startDate": "2025-10-31",
+    "endDate": "2025-11-02",
+    "venue": "Royal Varuna Yacht Club, Pattaya, Thailand",
+    "organizer": "Royal Varuna Yacht Club",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7"
+    ]
+  },
+  "sheet": {
+    "id": "39c41f2f-9c85-575a-b009-665d52c7a17c",
+    "slug": "ilca-district-championship-2025-ilca7",
+    "name": "ILCA District Championship 2025 \u2014 ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 4,
+    "totalFleetSize": 13,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://jpvm.org/results/2025/rvyc/Results_ilca.html",
+    "title": "ILCA District Championship 2025 \u2014 ILCA 7 Open results",
+    "type": "link",
+    "provisional": false,
+    "publicationStatus": "unspecified",
+    "visuallyReviewed": false,
+    "pdfSearch": "Searched official organiser notice board, Royal Varuna event pages, ILCA class association article and web PDF queries. Organiser-linked HTML only; not PDF-verified."
+  },
+  "results": [
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 1,
+      "name": "BOWONNAN CHANRAM",
+      "sailOrBoardNumber": "2",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 6.0,
+      "nettScore": 6.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fbd4f3f7-3219-5709-b57c-8681d69adbde",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "02f73bd2-224e-5f74-8b2b-bc23ee5544d2",
+      "participants": [
+        {
+          "id": "6399490e-31be-5a7e-a508-3f7e18c92185",
+          "sailorId": "fbd4f3f7-3219-5709-b57c-8681d69adbde",
+          "sourceName": "BOWONNAN CHANRAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: BOWONNAN CHANRAM; historic sail: 2; club: YRAT; year field: 2005. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 2,
+      "name": "VORAVONG RACHRATTANARUK",
+      "sailOrBoardNumber": "THA 215068",
+      "club": "RTNA",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2000,
+      "sourceBirthYear": "2000",
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8dc49b4a-38a9-53c9-9ac9-9d0834671122",
+      "participants": [
+        {
+          "id": "62ebdf95-0177-54d6-a342-5e8964d807d6",
+          "sailorId": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+          "sourceName": "VORAVONG RACHRATTANARUK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: VORAVONG RACHRATTANARUK; historic sail: THA 215068; club: RTNA; year field: 2000. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 3,
+      "name": "LUCAS LELE COLLIN",
+      "sailOrBoardNumber": "FRA 221653",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a0c43406-eac5-5b58-9e94-684f1644e454",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ae300d95-dd4c-5b3c-b0bb-eb71ec5de9fc",
+      "participants": [
+        {
+          "id": "ee502397-4542-5599-a1ab-8fc8e3e45b72",
+          "sailorId": "a0c43406-eac5-5b58-9e94-684f1644e454",
+          "sourceName": "LUCAS LELE COLLIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: LUCAS LELE COLLIN; historic sail: FRA 221653; club: RVYC; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 4,
+      "name": "CHEN YU SHIN",
+      "sailOrBoardNumber": "TPE 213037",
+      "club": "RVYC",
+      "nationality": "TPE",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "27cdb9d1-3035-5a39-b85a-94533038a886",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "0432c3cf-3b40-5a36-9971-46834d92d8a5",
+      "participants": [
+        {
+          "id": "3d28dc37-4371-58d7-8784-270688ad28d3",
+          "sailorId": "27cdb9d1-3035-5a39-b85a-94533038a886",
+          "sourceName": "CHEN YU SHIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: CHEN YU SHIN; historic sail: TPE 213037; club: RVYC; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 5,
+      "name": "SHAHAB KHATAM",
+      "sailOrBoardNumber": "IRN 194870",
+      "club": "IRAN SAIL",
+      "nationality": "IRN",
+      "gender": "M",
+      "officialBirthYear": 1991,
+      "sourceBirthYear": "1991",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "392798bc-1758-555a-b6cc-962e074b68fd",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "80cfaf69-415d-593f-944a-50bc11bc073e",
+      "participants": [
+        {
+          "id": "acef5c0b-3f94-5170-9bdc-ada033aa5992",
+          "sailorId": "392798bc-1758-555a-b6cc-962e074b68fd",
+          "sourceName": "SHAHAB KHATAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: SHAHAB KHATAM; historic sail: IRN 194870; club: IRAN SAIL; year field: 1991. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 6,
+      "name": "APIWAT CHRISTIAN WIEDMANN",
+      "sailOrBoardNumber": "THA 49",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1973,
+      "sourceBirthYear": "1973",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3aa3b7a0-4d10-5cb4-a60f-dc0576a82710",
+      "participants": [
+        {
+          "id": "5734fd30-b652-52fb-99bb-555ffbaf5fad",
+          "sailorId": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+          "sourceName": "APIWAT CHRISTIAN WIEDMANN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: APIWAT CHRISTIAN WIEDMANN; historic sail: THA 49; club: RVYC; year field: 1973. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "MORI HIDETOSHI",
+      "sailOrBoardNumber": "JPN 163218",
+      "club": "RVYC",
+      "nationality": "JPN",
+      "gender": "M",
+      "officialBirthYear": 1971,
+      "sourceBirthYear": "1971",
+      "grossScore": 32.0,
+      "nettScore": 32.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "14.0 RET"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4fde7c15-fd39-511e-9f80-9a25c613d060",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "1df8eb8a-3c42-5b2e-b4ae-c49b14304c7c",
+      "participants": [
+        {
+          "id": "ed60fd08-11d0-5eda-87b6-f917642d55f1",
+          "sailorId": "4fde7c15-fd39-511e-9f80-9a25c613d060",
+          "sourceName": "MORI HIDETOSHI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: MORI HIDETOSHI; historic sail: JPN 163218; club: RVYC; year field: 1971. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 8,
+      "name": "NEIL SEMPLE",
+      "sailOrBoardNumber": "THA 218923",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1961,
+      "sourceBirthYear": "1961",
+      "grossScore": 33.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e0305f5b-6b9e-5132-881d-420f1a7cc54c",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "94a93638-4f1e-5228-b302-d4f489d91525",
+      "participants": [
+        {
+          "id": "c24b7612-40de-55d2-87e1-0f864b32eb40",
+          "sailorId": "e0305f5b-6b9e-5132-881d-420f1a7cc54c",
+          "sourceName": "NEIL SEMPLE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: NEIL SEMPLE; historic sail: THA 218923; club: RVYC; year field: 1961. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 9,
+      "name": "PAVEL PITEL",
+      "sailOrBoardNumber": "CZE 218741",
+      "club": "RVYC",
+      "nationality": "CZE",
+      "gender": "M",
+      "officialBirthYear": 1974,
+      "sourceBirthYear": "1974",
+      "grossScore": 36.0,
+      "nettScore": 36.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9baab4f0-3cad-5918-9ee0-b55d2a221c59",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c830caca-b999-55a5-a84c-28ca2e51c4b3",
+      "participants": [
+        {
+          "id": "e41faba7-3be4-5044-a3f3-e16db8224af9",
+          "sailorId": "9baab4f0-3cad-5918-9ee0-b55d2a221c59",
+          "sourceName": "PAVEL PITEL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: PAVEL PITEL; historic sail: CZE 218741; club: RVYC; year field: 1974. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 10,
+      "name": "GREG FLORKOW",
+      "sailOrBoardNumber": "THA 199981",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1983,
+      "sourceBirthYear": "1983",
+      "grossScore": 42.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "45bf9143-3dfe-5a62-b40b-770df4de9ed4",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c1e3ae6f-c2d9-5d1c-82eb-df7f26f7609f",
+      "participants": [
+        {
+          "id": "151d4e1a-8d6c-5a1c-91e2-0e768e267e0b",
+          "sailorId": "45bf9143-3dfe-5a62-b40b-770df4de9ed4",
+          "sourceName": "GREG FLORKOW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: GREG FLORKOW; historic sail: THA 199981; club: RVYC; year field: 1983. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 12,
+      "name": "RICHARD VINE",
+      "sailOrBoardNumber": "THA 213141",
+      "club": "HUA HIN SAILING CLUB",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1952,
+      "sourceBirthYear": "1952",
+      "grossScore": 48.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "14.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "14.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "24843fe7-1473-5294-9b6a-299b03722167",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e54a66d3-61e9-5ec6-b930-608fd8233ed1",
+      "participants": [
+        {
+          "id": "a441df85-c832-5833-b4f5-48767e465948",
+          "sailorId": "24843fe7-1473-5294-9b6a-299b03722167",
+          "sourceName": "RICHARD VINE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: RICHARD VINE; historic sail: THA 213141; club: HUA HIN SAILING CLUB; year field: 1952. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 13,
+      "name": "MARCEL DUBBELMAN",
+      "sailOrBoardNumber": "THA 21",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 51.0,
+      "nettScore": 51.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "14.0 DNC"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "14.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": "DSQ",
+          "discarded": false,
+          "raw": "14.0 DSQ"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "37674867-aab3-5549-9ca5-9d61aaf18e1d",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "71962510-0754-58bd-8bee-cbd9262b15c6",
+      "participants": [
+        {
+          "id": "141cca00-de91-51dc-a244-0ae7a22e05ad",
+          "sailorId": "37674867-aab3-5549-9ca5-9d61aaf18e1d",
+          "sourceName": "MARCEL DUBBELMAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA7; page 1; source name: MARCEL DUBBELMAN; historic sail: THA 21; club: RVYC; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 12,
+  "deferredEntryCount": 1,
+  "publicSummary": "Published organiser results; final/provisional status not stated. Official fleet ranks, scoring codes and discards retained. Partial import: 12 of 13 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "ilca-district-championship-2025",
+      "sourceDocument": "html-0",
+      "sourcePage": 1,
+      "sourceClass": "ILCA7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 11,
+      "name": "CASEY",
+      "sailOrBoardNumber": "THA 200119",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1951,
+      "sourceBirthYear": "1951",
+      "grossScore": 43.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "9c09287e-3fe4-5157-bb81-7d510c95e166",
+          "name": "An Soe",
+          "similarity": 0.6
+        },
+        {
+          "id": "9b9378aa-37f6-470c-8944-5cf95bd13e04",
+          "name": "Casey Fitness",
+          "similarity": 0.588
+        },
+        {
+          "id": "82f58cc6-5b08-4031-86b8-805aa130d11e",
+          "name": "Lucas Quek",
+          "similarity": 0.571
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+      "club": "ACDC.SC",
+      "name": "Voravong Rachrattanaruk",
+      "gender": "M",
+      "handle": "voravong-rachrattanaruk-sr26-2b3246",
+      "birthYear": 2000,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "27cdb9d1-3035-5a39-b85a-94533038a886",
+      "club": "RVYC",
+      "name": "Chen Yu Shin",
+      "gender": "M",
+      "handle": "chen-yu-shin-thai25-27cdb9",
+      "birthYear": 2008,
+      "sailNumber": "213037",
+      "nationality": "TPE",
+      "sailNumberIlca4": "213037"
+    },
+    {
+      "id": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+      "club": "RVYC",
+      "name": "Apiwat Christian Wiedmann",
+      "gender": "M",
+      "handle": "apiwat-christian-wiedmann-sr26-3b468b",
+      "birthYear": 1973,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9baab4f0-3cad-5918-9ee0-b55d2a221c59",
+      "club": "RVYC",
+      "name": "Pavel Pitel",
+      "gender": "M",
+      "handle": "pavel-pitel-sr26-9baab4",
+      "birthYear": 1974,
+      "sailNumber": "",
+      "nationality": "CZE",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "24843fe7-1473-5294-9b6a-299b03722167",
+      "club": "SAILING CLUB HUA HIN",
+      "name": "Richard Vine",
+      "gender": "M",
+      "handle": "richard-vine-sr26-24843f",
+      "birthYear": 1952,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fbd4f3f7-3219-5709-b57c-8681d69adbde",
+      "club": "YRAT",
+      "name": "Bowonnan Chanram",
+      "gender": "M",
+      "handle": "bowonnan-chanram-sr26-fbd4f3",
+      "birthYear": 2005,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a0c43406-eac5-5b58-9e94-684f1644e454",
+      "club": "RVYC",
+      "name": "Lucas Lele Collin",
+      "gender": "M",
+      "handle": "lucas-lele-collin-sr26-a0c434",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "392798bc-1758-555a-b6cc-962e074b68fd",
+      "name": "Shahab Khatam",
+      "handle": "shahab-khatam-sr25-392798",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "IRN",
+      "gender": "M",
+      "club": "IRAN SAIL"
+    },
+    {
+      "id": "4fde7c15-fd39-511e-9f80-9a25c613d060",
+      "name": "Mori Hidetoshi",
+      "handle": "mori-hidetoshi-sr25-4fde7c",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "JPN",
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "e0305f5b-6b9e-5132-881d-420f1a7cc54c",
+      "name": "Neil Semple",
+      "handle": "neil-semple-sr25-e0305f",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "45bf9143-3dfe-5a62-b40b-770df4de9ed4",
+      "name": "Greg Florkow",
+      "handle": "greg-florkow-sr25-45bf91",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "37674867-aab3-5549-9ca5-9d61aaf18e1d",
+      "name": "Marcel Dubbelman",
+      "handle": "marcel-dubbelman-sr25-376748",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RVYC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

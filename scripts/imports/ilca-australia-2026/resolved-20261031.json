@@ -1,0 +1,158 @@
+[
+  {
+    "folder": "ilca-australia-2026",
+    "sheet": {
+      "id": "d95e43fa-7d98-5399-8e6e-6c8c3b24a432",
+      "slug": "2026-ilca-oceania-australian-open-youth-championships-ilca6-silver",
+      "name": "2026 ILCA Oceania & Australian Open & Youth Championships \u2014 ILCA 6 Silver",
+      "boatClass": "ILCA 6",
+      "division": "Silver",
+      "raceCount": 12,
+      "totalFleetSize": 37,
+      "entryType": "individual",
+      "minParticipants": 1,
+      "maxParticipants": 1,
+      "status": "draft"
+    },
+    "source": {
+      "url": "https://sailingresults.net/sa/results/overall.aspx?ID=82266.3",
+      "title": "2026 ILCA Oceania & Australian Championships \u2014 ILCA 6 Silver",
+      "type": "url",
+      "provisional": false,
+      "publicationStatus": "final",
+      "visuallyReviewed": true,
+      "pdfUrl": "https://www.auslasernationals.com.au/wp-content/uploads/2026/01/2026-Oceania-Australian-Championships-Hobart-Results.pdf"
+    },
+    "row": {
+      "boatClass": "ILCA 6",
+      "division": "Silver",
+      "rank": 4,
+      "name": "Raphael McLachlan",
+      "sailOrBoardNumber": "218664",
+      "club": "DBSC - RSYS",
+      "grossScore": 185.0,
+      "nettScore": 132.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "19",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "21SCP",
+          "score": 21.0,
+          "code": "SCP",
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(38)BFD",
+          "score": 38.0,
+          "code": "BFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "31",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "17",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "20SCP",
+          "score": 20.0,
+          "code": "SCP",
+          "discarded": false
+        },
+        {
+          "raceNumber": 7,
+          "raw": "3",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 8,
+          "raw": "3",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 9,
+          "raw": "2",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 10,
+          "raw": "(15)",
+          "score": 15.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 11,
+          "raw": "7",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 12,
+          "raw": "9",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": "M",
+      "nationality": null,
+      "officialBirthYear": null,
+      "reason": "Ambiguous/close existing identity; deferred.",
+      "candidates": [
+        {
+          "id": "989348bf-f191-48f2-ac6a-2cee5cec4746",
+          "name": "Raphael Mclaughlan",
+          "sail": "AUS 1772",
+          "similarity": 0.909
+        },
+        {
+          "id": "fe81e936-2a3f-5a20-b21f-ceb72130a2fb",
+          "name": "Raphael Lucas Chan",
+          "sail": "3217",
+          "similarity": 0.812
+        },
+        {
+          "id": "b90b6b1b-f763-5766-8a20-667dd663981b",
+          "name": "Raphael Chandler",
+          "sail": "816",
+          "similarity": 0.71
+        }
+      ]
+    },
+    "sailorId": "989348bf-f191-48f2-ac6a-2cee5cec4746",
+    "expectedName": "Raphael Mclaughlan",
+    "expectedStatus": "draft",
+    "sources": [
+      "https://sailingresults.net/sa/results/entrylist.aspx?ID=81738.1.3",
+      "https://sailing.laserinternational.org/public/site/event-site/167/entrylist",
+      "https://www.dbsc.com.au/news/2025/03/01/race-report-2025-vaucluse-regatta-trklz"
+    ],
+    "rationale": "Official 2024 Optimist entry names Raphael McLachlan, Vitesse 1772, RSYS/MHYC, matching existing AUS1772 profile despite source spelling Mclaughlan. ILCA class official 2025 Worlds entry names Raphael Mclachlan AUS218664; DBSC reports Raphael in ILCA6. Held 2026 entry matches full name, sail 218664, DBSC-RSYS. Cross-class continuity inferred from exact name, sail and club corroboration; sheet remains draft.",
+    "resultId": "517257bf-cf22-5862-918d-eb3419bff451",
+    "participantId": "18b8d4b4-56a7-58e9-88e6-b1bb8c27fee0"
+  }
+]

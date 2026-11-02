@@ -1,0 +1,1233 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "fe0ba3ee-002a-5e5c-93ed-71ff357c64a3",
+    "slug": "pre-sea-games-2025",
+    "name": "Pre-33rd SEA Games 2025",
+    "startDate": "2025-11-14",
+    "endDate": "2025-11-16",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "d48762ef-a753-5a65-96cf-638702b2c328",
+    "slug": "pre-sea-games-2025-ilca7",
+    "name": "Pre-33rd SEA Games 2025 \u2014 ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 11,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/168534",
+    "title": "Pre-33rd SEA Games 2025 \u2014 ILCA 7 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 1,
+      "name": "GREGORY ROGER WARDOJO",
+      "sailOrBoardNumber": "INA201522",
+      "club": "INA",
+      "nationality": "INA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 28.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d2d167b4-52fc-532a-8d72-11ffb103a300",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f21a952d-40cf-5290-9c25-081d743d8da0",
+      "participants": [
+        {
+          "id": "fe03e8bf-12da-5e1a-aa46-1a39296b17be",
+          "sailorId": "d2d167b4-52fc-532a-8d72-11ffb103a300",
+          "sourceName": "GREGORY ROGER WARDOJO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: GREGORY ROGER WARDOJO; historic sail: INA201522; club: INA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 2,
+      "name": "Bowonnan Chanram",
+      "sailOrBoardNumber": "213137",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 31.0,
+      "nettScore": 23.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fbd4f3f7-3219-5709-b57c-8681d69adbde",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "248388d9-ed20-541d-a04a-8fb96ab00a07",
+      "participants": [
+        {
+          "id": "bc5b698d-a4d8-5066-92ee-94139ff19dcc",
+          "sailorId": "fbd4f3f7-3219-5709-b57c-8681d69adbde",
+          "sourceName": "Bowonnan Chanram",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: Bowonnan Chanram; historic sail: 213137; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 3,
+      "name": "ASNAWI IQBAL BIN ADAM",
+      "sailOrBoardNumber": "MAS209881",
+      "club": "MSN/MSA/PODIUM",
+      "nationality": "MAS",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 38.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(12.0 UFD)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f0096d23-451f-5231-8f20-027c1fe5a605",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "bc3391a4-ec82-5f97-a761-54423f1b0b27",
+      "participants": [
+        {
+          "id": "07736be3-e3f7-5ce0-b6b2-25cac0208ce8",
+          "sailorId": "f0096d23-451f-5231-8f20-027c1fe5a605",
+          "sourceName": "ASNAWI IQBAL BIN ADAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: ASNAWI IQBAL BIN ADAM; historic sail: MAS209881; club: MSN/MSA/PODIUM; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 4,
+      "name": "MUHAMAD FAIZAL BIN AHMAD ASRI",
+      "sailOrBoardNumber": "MAS209883",
+      "club": "MSN/MSA/PODIUM",
+      "nationality": "MAS",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 36.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c0f5986d-b0c5-58fc-b6d0-6324db45b52e",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "abf58a36-3887-5ec7-b119-2bfe3a91220c",
+      "participants": [
+        {
+          "id": "9c0259d7-7916-5510-bb80-7f184d0d8a7f",
+          "sailorId": "c0f5986d-b0c5-58fc-b6d0-6324db45b52e",
+          "sourceName": "MUHAMAD FAIZAL BIN AHMAD ASRI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: MUHAMAD FAIZAL BIN AHMAD ASRI; historic sail: MAS209883; club: MSN/MSA/PODIUM; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 5,
+      "name": "Ahmad Zainuddin",
+      "sailOrBoardNumber": "INA225223",
+      "club": "INA",
+      "nationality": "INA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 45.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "24fe9786-c482-527b-86a2-fb20e95ee3dc",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "0b997bfa-0b3f-5429-90da-2ca2fb9f4e8e",
+      "participants": [
+        {
+          "id": "fdee2b9e-25bf-5031-a200-0d87c657c737",
+          "sailorId": "24fe9786-c482-527b-86a2-fb20e95ee3dc",
+          "sourceName": "Ahmad Zainuddin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: Ahmad Zainuddin; historic sail: INA225223; club: INA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 6,
+      "name": "HTET LIN ZAW",
+      "sailOrBoardNumber": "218531MYA",
+      "club": "MYF",
+      "nationality": "MYA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 47.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5acb538c-6b7b-5ba7-8cb8-2aad97d20816",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "352d5a56-ee6c-5433-b5cd-e10badabfb6e",
+      "participants": [
+        {
+          "id": "0e9ce7c6-bc25-5c7e-b37b-26408715bf24",
+          "sailorId": "5acb538c-6b7b-5ba7-8cb8-2aad97d20816",
+          "sourceName": "HTET LIN ZAW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: HTET LIN ZAW; historic sail: 218531MYA; club: MYF; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 7,
+      "name": "Voravong Rachrattanaruk",
+      "sailOrBoardNumber": "THA217432",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 58.0,
+      "nettScore": 49.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d8486b4f-1117-5a01-bc98-af799cf88875",
+      "participants": [
+        {
+          "id": "dbdf6e6a-dbcb-54ca-9b2a-de6ae39bd8d8",
+          "sailorId": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+          "sourceName": "Voravong Rachrattanaruk",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: Voravong Rachrattanaruk; historic sail: THA217432; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 3,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 8,
+      "name": "Ton Rattana",
+      "sailOrBoardNumber": "THA221947",
+      "club": "YRAT/RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 60.0,
+      "nettScore": 52.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a0eccd22-b201-5bd2-a3fe-4187b5951747",
+      "participants": [
+        {
+          "id": "e241ef5c-a5b6-59dc-b055-de06bb2e17c3",
+          "sailorId": "717ef058-5716-5951-a848-0723f95e8f28",
+          "sourceName": "Ton Rattana",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 3; source name: Ton Rattana; historic sail: THA221947; club: YRAT/RVYC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 4,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 9,
+      "name": "CHATREE MAKMUL",
+      "sailOrBoardNumber": "THA21506",
+      "club": "NRS",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 82.0,
+      "nettScore": 70.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(12.0 DNC)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "14f321f7-ea6e-55fa-9682-84f34237b940",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c9680b99-a369-5e2e-98b8-60e938aebf79",
+      "participants": [
+        {
+          "id": "5880db36-b174-56ab-b43c-2b7895d7c823",
+          "sailorId": "14f321f7-ea6e-55fa-9682-84f34237b940",
+          "sourceName": "CHATREE MAKMUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 4; source name: CHATREE MAKMUL; historic sail: THA21506; club: NRS; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 4,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 10,
+      "name": "JAKKRAPAT VONGTIM",
+      "sailOrBoardNumber": "2",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 81.0,
+      "nettScore": 71.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "41519e2c-4a0e-5943-85f0-79e441e88df5",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "44b85bc4-fae3-5716-87cd-7b8996ebce62",
+      "participants": [
+        {
+          "id": "635e49b0-7260-59bf-98a9-28f7f6686dda",
+          "sailorId": "41519e2c-4a0e-5943-85f0-79e441e88df5",
+          "sourceName": "JAKKRAPAT VONGTIM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 4; source name: JAKKRAPAT VONGTIM; historic sail: 2; club: YRAT; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168534,
+      "sourcePage": 4,
+      "sourceClass": "ILCA 7",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 11,
+      "name": "Apiwat Christian Wiedmann",
+      "sailOrBoardNumber": "THA49",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 94.0,
+      "nettScore": 82.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(12.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "12.0 UFD"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "ed5aba66-e578-5c15-9410-35f90a0d67e6",
+      "participants": [
+        {
+          "id": "774ef1c5-d406-5adc-a13f-2d1cab5ab84a",
+          "sailorId": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+          "sourceName": "Apiwat Christian Wiedmann",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7; page 4; source name: Apiwat Christian Wiedmann; historic sail: THA49; club: RVYC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 11,
+  "deferredEntryCount": 0,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "2b3246a1-72eb-5606-b101-8c38c82d9afe",
+      "club": "ACDC.SC",
+      "name": "Voravong Rachrattanaruk",
+      "gender": "M",
+      "handle": "voravong-rachrattanaruk-sr26-2b3246",
+      "birthYear": 2000,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+      "club": "RVYC",
+      "name": "Apiwat Christian Wiedmann",
+      "gender": "M",
+      "handle": "apiwat-christian-wiedmann-sr26-3b468b",
+      "birthYear": 1973,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "717ef058-5716-5951-a848-0723f95e8f28",
+      "club": "RVYC",
+      "name": "Ton Rattana",
+      "gender": "M",
+      "handle": "ton-rattana-thai25-717ef0",
+      "birthYear": 2008,
+      "sailNumber": "222180",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fbd4f3f7-3219-5709-b57c-8681d69adbde",
+      "club": "YRAT",
+      "name": "Bowonnan Chanram",
+      "gender": "M",
+      "handle": "bowonnan-chanram-sr26-fbd4f3",
+      "birthYear": 2005,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "5acb538c-6b7b-5ba7-8cb8-2aad97d20816",
+      "name": "Htet Lin Zaw",
+      "handle": "htet-lin-zaw-sr25-5acb53",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "d2d167b4-52fc-532a-8d72-11ffb103a300",
+      "name": "Gregory Roger Wardojo",
+      "handle": "gregory-roger-wardojo-sr25-d2d167",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "f0096d23-451f-5231-8f20-027c1fe5a605",
+      "name": "Asnawi Iqbal Bin Adam",
+      "handle": "asnawi-iqbal-bin-adam-sr25-f0096d",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "MAS",
+      "gender": "M",
+      "club": "MSN/MSA/PODIUM"
+    },
+    {
+      "id": "c0f5986d-b0c5-58fc-b6d0-6324db45b52e",
+      "name": "Muhamad Faizal Bin Ahmad Asri",
+      "handle": "muhamad-faizal-bin-ahmad-asri-sr25-c0f598",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "MAS",
+      "gender": "M",
+      "club": "MSN/MSA/PODIUM"
+    },
+    {
+      "id": "24fe9786-c482-527b-86a2-fb20e95ee3dc",
+      "name": "Ahmad Zainuddin",
+      "handle": "ahmad-zainuddin-sr25-24fe97",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "INA",
+      "gender": "M",
+      "club": "INA"
+    },
+    {
+      "id": "14f321f7-ea6e-55fa-9682-84f34237b940",
+      "name": "Chatree Makmul",
+      "handle": "chatree-makmul-sr25-14f321",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "NRS"
+    },
+    {
+      "id": "41519e2c-4a0e-5943-85f0-79e441e88df5",
+      "name": "Jakkrapat Vongtim",
+      "handle": "jakkrapat-vongtim-sr25-41519e",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "YRAT"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

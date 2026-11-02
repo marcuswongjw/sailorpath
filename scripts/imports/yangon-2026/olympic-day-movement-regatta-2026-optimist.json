@@ -1,0 +1,4133 @@
+{
+  "batch": "yangon-2026-2026-10-30",
+  "event": {
+    "id": "b4a1f000-fbb5-5bf0-a9f6-b5bfa5dcd94e",
+    "slug": "olympic-day-movement-regatta-2026",
+    "name": "Olympic Day Movement Regatta 2026",
+    "startDate": "2026-06-20",
+    "endDate": "2026-06-21",
+    "venue": "Yangon Sailing Club, Yangon, Myanmar",
+    "organizer": "Yangon Sailing Club",
+    "classes": [
+      "ILCA 4",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "491f5d6c-8cc7-5675-b704-4b20c72a4830",
+    "slug": "olympic-day-movement-regatta-2026-optimist",
+    "name": "Olympic Day Movement Regatta 2026 \u2014 Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "raceCount": 11,
+    "totalFleetSize": 31,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1,
+    "status": "draft"
+  },
+  "officialSource": {
+    "url": "https://www.sailwave.com/results/ODMR_2026_ILCA4_OP.htm",
+    "title": "Olympic Day Movement Regatta 2026 \u2014 Optimist provisional results",
+    "type": "url",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": false,
+    "pdfSearch": {
+      "available": false,
+      "searched": [
+        "https://myanmarsailing.org/",
+        "https://myanmarsailing.org/news/",
+        "https://myanmarsailing.org/regatta-clinic-schedule/",
+        "https://myanmarsailing.org/category/regatta/",
+        "https://yangonsailing.com/ (not accessible)",
+        "Sailwave results folder and requested sheets",
+        "Web searches for event titles, organiser, host club, class association ODAM, national federation, PDF and final results",
+        "Targeted Facebook searches for Yangon Sailing Club"
+      ],
+      "outcome": "No official final-results PDF located. No PDF verification claimed."
+    },
+    "datesAssumedByUser": true,
+    "sourceRevision": "Results are provisional as of  8:30 on June 23, 2026"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "sourceRank": "1st",
+      "name": "Thun Pyae Zan",
+      "sailOrBoardNumber": "MYA277",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 19,
+      "nettScore": 12,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "(4)",
+          "score": 4,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "(3)",
+          "score": 3,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "29990b00-de3f-51ec-a3c1-2fb250a82fbf",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "eeb85238-32f9-5d13-bed7-965485f8e466",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "ba52808b-15d2-5af9-b901-c64bd32ab54d",
+          "sailorId": "29990b00-de3f-51ec-a3c1-2fb250a82fbf",
+          "sourceName": "Thun Pyae Zan",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA277. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 2,
+      "sourceRank": "2nd",
+      "name": "Sitt May Chit Po",
+      "sailOrBoardNumber": "MYA77",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 26,
+      "nettScore": 17,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(6)",
+          "score": 6,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(3)",
+          "score": 3,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "3adcdfee-1b33-409f-9e45-a9d3fc4a2725",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "c78a4375-492a-5532-b2f8-bbf729b03eec",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "51a0f89b-a344-5bbc-8b0d-68b3c93fb08a",
+          "sailorId": "3adcdfee-1b33-409f-9e45-a9d3fc4a2725",
+          "sourceName": "Sitt May Chit Po",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA77. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 3,
+      "sourceRank": "3rd",
+      "name": "Thaw Zin Hein Htet",
+      "sailOrBoardNumber": "MYA8",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 38,
+      "nettScore": 28,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "(5)",
+          "score": 5,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "(5)",
+          "score": 5,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "075ff3c1-6e4f-5d00-931a-0ef4ea1346a6",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "d992de3b-4dd0-5f18-9da5-c3ef946dacbb",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "3c79fced-7e37-5aab-aa2c-fa909140f2c9",
+          "sailorId": "075ff3c1-6e4f-5d00-931a-0ef4ea1346a6",
+          "sourceName": "Thaw Zin Hein Htet",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA8. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 4,
+      "sourceRank": "4th",
+      "name": "Kaung Khant Khant Thu",
+      "sailOrBoardNumber": "MYA7",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 56,
+      "nettScore": 36,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(11)",
+          "score": 11,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "1",
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "(9)",
+          "score": 9,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "5bb45750-85e3-5735-b9c4-b055b87af577",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "d705a02b-f090-56b7-879e-083bbb505cee",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "6f2a97ff-13e2-5724-8757-454d1a8109a5",
+          "sailorId": "5bb45750-85e3-5735-b9c4-b055b87af577",
+          "sourceName": "Kaung Khant Khant Thu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA7. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 5,
+      "sourceRank": "5th",
+      "name": "Gone Yee Zaw",
+      "sailOrBoardNumber": "MYA383",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 72,
+      "nettScore": 49,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(10)",
+          "score": 10,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "(13)",
+          "score": 13,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "f87ecd5f-f3a1-4f87-abf6-22dc7e53bf05",
+      "identityBasis": "Paired requested source Gon Yee Zaw with same MYA383.",
+      "resultId": "a81020e7-9b42-5992-8e29-947efd8e1b41",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "b3585903-730b-5194-9410-ba4591b5409f",
+          "sailorId": "f87ecd5f-f3a1-4f87-abf6-22dc7e53bf05",
+          "sourceName": "Gone Yee Zaw",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA383. Paired requested source Gon Yee Zaw with same MYA383. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 6,
+      "sourceRank": "6th",
+      "name": "Eaint CHue Zay Yar",
+      "sailOrBoardNumber": "MYA342",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 91,
+      "nettScore": 61,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "(19)",
+          "score": 19,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "(12)",
+          "score": 12,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "6319ae29-7ef6-53f0-aa9b-1770d73ed55c",
+      "identityBasis": "Minor transliteration/spacing variant; unique full-name candidate.",
+      "resultId": "beceee65-c57a-5012-9a7a-ffa3e7917f07",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "2ab9b65f-4072-5beb-b517-83920e68d47f",
+          "sailorId": "6319ae29-7ef6-53f0-aa9b-1770d73ed55c",
+          "sourceName": "Eaint CHue Zay Yar",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA342. Minor transliteration/spacing variant; unique full-name candidate. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 91/61 retained unchanged; calculated race sum/net 92/61. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 8,
+      "sourceRank": "8th",
+      "name": "Zin Htoo Naing",
+      "sailOrBoardNumber": "MYA278",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 103,
+      "nettScore": 66,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(22)",
+          "score": 22,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "(15)",
+          "score": 15,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "d3c0d165-4c2e-540c-bd37-ac6d74db4931",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "8581ac5c-8589-5599-98a8-81d19975e354",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "e1c392d5-2719-56c1-a255-527a6b88d1e9",
+          "sailorId": "d3c0d165-4c2e-540c-bd37-ac6d74db4931",
+          "sourceName": "Zin Htoo Naing",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA278. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 9,
+      "sourceRank": "9th",
+      "name": "Lin Thant Naung",
+      "sailOrBoardNumber": "MYA27",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 101,
+      "nettScore": 69,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(16)",
+          "score": 16,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "(17)",
+          "score": 17,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "0c1fba60-153b-5837-ade5-c3cc70687402",
+      "identityBasis": "Paired requested source Lin Thet Naung with same MYA27.",
+      "resultId": "63982d1a-9696-5494-b817-1d63fd519851",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "ea70b70a-9aef-5b20-aa9d-dba57390b563",
+          "sailorId": "0c1fba60-153b-5837-ade5-c3cc70687402",
+          "sourceName": "Lin Thant Naung",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA27. Paired requested source Lin Thet Naung with same MYA27. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 101/69 retained unchanged; calculated race sum/net 102/69. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 10,
+      "sourceRank": "10th",
+      "name": "Hnin Zar Li",
+      "sailOrBoardNumber": "MYA331",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 104,
+      "nettScore": 74,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "3",
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(16)",
+          "score": 16,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "(14)",
+          "score": 14,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "dbdfcdc6-f669-5b6e-99e9-bab417b3c631",
+      "identityBasis": "Paired requested source Hnin Zar Lei with same MYA331.",
+      "resultId": "7c460d75-e691-5285-8e6e-e4957a3a66d1",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "949a7e35-e686-53c9-a9fe-1eaa57e026d2",
+          "sailorId": "dbdfcdc6-f669-5b6e-99e9-bab417b3c631",
+          "sourceName": "Hnin Zar Li",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA331. Paired requested source Hnin Zar Lei with same MYA331. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 11,
+      "sourceRank": "11th",
+      "name": "Jue Thinzar Htet",
+      "sailOrBoardNumber": "MYA363",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 118,
+      "nettScore": 86,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "5",
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(17)",
+          "score": 17,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(15)",
+          "score": 15,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "f23d185d-88a0-58d6-8632-5567a2a5dd4f",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "19e47975-c744-5f2a-9cc6-0d6bfd23dab3",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "a99b631b-1072-5c07-92f7-e7981a3068cd",
+          "sailorId": "f23d185d-88a0-58d6-8632-5567a2a5dd4f",
+          "sourceName": "Jue Thinzar Htet",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA363. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 12,
+      "sourceRank": "12th",
+      "name": "Kaung Khant Ko",
+      "sailOrBoardNumber": "MYA382",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 174,
+      "nettScore": 110,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DSQ)",
+          "score": 32,
+          "code": "DSQ",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "(15)",
+          "score": 15,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "611ef739-d28b-57c3-b6fe-183b006a2a38",
+      "identityBasis": "Shortened repeated name; MYA382 agrees with existing profile.",
+      "resultId": "2466fcb7-845b-56c8-987e-30e0aca1670c",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "73277cf9-e22f-5cfd-bfa0-a024a3b2af0c",
+          "sailorId": "611ef739-d28b-57c3-b6fe-183b006a2a38",
+          "sourceName": "Kaung Khant Ko",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA382. Shortened repeated name; MYA382 agrees with existing profile. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 174/110 retained unchanged; calculated race sum/net 143/96. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 13,
+      "sourceRank": "13th",
+      "name": "Min Thiha Nyo",
+      "sailOrBoardNumber": "MYA3",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 146,
+      "nettScore": 112,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(17)",
+          "score": 17,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "(17)",
+          "score": 17,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "7dd0f5ee-38fb-5f46-b14b-124db4aade1b",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "fd463d2e-c0cc-52ff-a571-308eff7cd065",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "f3618a1f-6cb3-56f3-ae17-62c656de5b05",
+          "sailorId": "7dd0f5ee-38fb-5f46-b14b-124db4aade1b",
+          "sourceName": "Min Thiha Nyo",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA3. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 146/112 retained unchanged; calculated race sum/net 148/114. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 14,
+      "sourceRank": "14th",
+      "name": "Nay Min Htet",
+      "sailOrBoardNumber": "MYA10",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 154,
+      "nettScore": 118,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(18)",
+          "score": 18,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "(19)",
+          "score": 19,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "ed6e93cb-d195-5024-8a33-660ad4d2badb",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "61bea42f-3f65-5711-867e-e22325d4b0f7",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "5c431fc8-b248-5ca4-98c4-de162f80b1af",
+          "sailorId": "ed6e93cb-d195-5024-8a33-660ad4d2badb",
+          "sourceName": "Nay Min Htet",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA10. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 154/118 retained unchanged; calculated race sum/net 156/119. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 15,
+      "sourceRank": "15th",
+      "name": "Min Myat Ponnya",
+      "sailOrBoardNumber": "MYA17",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 157,
+      "nettScore": 119,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(20)",
+          "score": 20,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "(18)",
+          "score": 18,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "751b399d-fdaf-53b9-8a24-3d7984746888",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "88a549cf-f0d7-5b4a-af59-1db2f7611aec",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "73f1018a-6dd6-5d58-9626-8395241feed1",
+          "sailorId": "751b399d-fdaf-53b9-8a24-3d7984746888",
+          "sourceName": "Min Myat Ponnya",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA17. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 157/119 retained unchanged; calculated race sum/net 159/121. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 16,
+      "sourceRank": "16th",
+      "name": "Shine Khant",
+      "sailOrBoardNumber": "MYA384",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 166,
+      "nettScore": 127,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(19)",
+          "score": 19,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(20)",
+          "score": 20,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "9",
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "19",
+          "score": 19,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "0ce682fc-3665-5510-bbf6-66271c760f7f",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "f035ec69-487b-5cfb-80aa-b8cf7388cbb8",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "4c575931-7e2c-5c21-84f8-c327efe3103d",
+          "sailorId": "0ce682fc-3665-5510-bbf6-66271c760f7f",
+          "sourceName": "Shine Khant",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA384. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 166/127 retained unchanged; calculated race sum/net 168/129. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 17,
+      "sourceRank": "17th",
+      "name": "Hnin Wai Lwin",
+      "sailOrBoardNumber": "MYA320",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 165,
+      "nettScore": 128,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(18)",
+          "score": 18,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "12",
+          "score": 12,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "(19)",
+          "score": 19,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "813c7c19-1d97-51b8-93d5-585805f42d41",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "8db6e450-50c8-5666-99ae-b6b35c2d25d4",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "1e38d49f-76ce-56f7-a1c7-abf86b5983db",
+          "sailorId": "813c7c19-1d97-51b8-93d5-585805f42d41",
+          "sourceName": "Hnin Wai Lwin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA320. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 165/128 retained unchanged; calculated race sum/net 168/131. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 18,
+      "sourceRank": "18th",
+      "name": "Aye Nandar Moe",
+      "sailOrBoardNumber": "MYA410",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 179,
+      "nettScore": 141,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(19)",
+          "score": 19,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(19)",
+          "score": 19,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "14",
+          "score": 14,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "11",
+          "score": 11,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "bc3a8714-af4d-5366-b0d4-df0686408a04",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "dba90332-8a5e-568c-b5a8-c354f19ab894",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "6c635dfe-315c-59a6-bb11-de3d50ed694f",
+          "sailorId": "bc3a8714-af4d-5366-b0d4-df0686408a04",
+          "sourceName": "Aye Nandar Moe",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA410. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 179/141 retained unchanged; calculated race sum/net 182/144. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 19,
+      "sourceRank": "19th",
+      "name": "Eaint Po Mo Chit",
+      "sailOrBoardNumber": "MYA379",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 201,
+      "nettScore": 149,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "15",
+          "score": 15,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(20)",
+          "score": 20,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "27313b52-7844-52a0-a4cf-1c5d279f9130",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "acf14fc6-761f-5220-950f-2867358913fc",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "a4d27476-86d0-59a7-9d2e-3de411d41ffd",
+          "sailorId": "27313b52-7844-52a0-a4cf-1c5d279f9130",
+          "sourceName": "Eaint Po Mo Chit",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA379. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 201/149 retained unchanged; calculated race sum/net 202/150. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 20,
+      "sourceRank": "20th",
+      "name": "Shoon Lae Khin",
+      "sailOrBoardNumber": "MYA412",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 240,
+      "nettScore": 176,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "16",
+          "score": 16,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "19",
+          "score": 19,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "17",
+          "score": 17,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "19",
+          "score": 19,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "211be6ac-4572-54de-a423-89c4133f5ca8",
+      "identityBasis": "Minor transliteration variant; MYA412 agrees.",
+      "resultId": "cf6bdc8d-4c10-5439-bf4f-0059c68b63a9",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "b972e7ca-bc10-5205-aa7c-b0169e25dae2",
+          "sailorId": "211be6ac-4572-54de-a423-89c4133f5ca8",
+          "sourceName": "Shoon Lae Khin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: ISPE. Historic sail: MYA412. Minor transliteration variant; MYA412 agrees. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 240/176 retained unchanged; calculated race sum/net 241/177. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 22,
+      "sourceRank": "22nd",
+      "name": "Phyu Cin Thadar",
+      "sailOrBoardNumber": "MYA421",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 263,
+      "nettScore": 199,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "e9c8f1e1-acff-5660-ba36-6f75834f3421",
+      "identityBasis": "No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred.",
+      "resultId": "bcd573cb-4e6d-58f1-944a-a4918bc17282",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "4cf8dd00-6177-542a-a553-17dad6a35efe",
+          "sailorId": "e9c8f1e1-acff-5660-ba36-6f75834f3421",
+          "sourceName": "Phyu Cin Thadar",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA421. No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 263/199 retained unchanged; calculated race sum/net 265/201. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 23,
+      "sourceRank": "23rd",
+      "name": "Thwin Min Sett",
+      "sailOrBoardNumber": "MYA405",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 267,
+      "nettScore": 203,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "19",
+          "score": 19,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "20",
+          "score": 20,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "621fc1d7-30a3-5ef6-81cb-b7c71002e05a",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "abaab972-f28c-5add-abd3-f4ba0a06f97d",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "4482e84b-67bf-5ade-8b82-8c2e5b778b75",
+          "sailorId": "621fc1d7-30a3-5ef6-81cb-b7c71002e05a",
+          "sourceName": "Thwin Min Sett",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA405. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 267/203 retained unchanged; calculated race sum/net 269/205. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 24,
+      "sourceRank": "24th",
+      "name": "Hein Thant Saw",
+      "sailOrBoardNumber": "MYA385",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 284,
+      "nettScore": 220,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "e2bcc321-4cd5-5926-80ac-fea76a8f2170",
+      "identityBasis": "No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred.",
+      "resultId": "89b4c882-47e1-5923-ba87-e80262a0e38b",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "7c073138-1eba-570e-82e4-059e82a48187",
+          "sailorId": "e2bcc321-4cd5-5926-80ac-fea76a8f2170",
+          "sourceName": "Hein Thant Saw",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA385. No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 284/220 retained unchanged; calculated race sum/net 286/222. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 25,
+      "sourceRank": "25th",
+      "name": "Zwel La Yaung",
+      "sailOrBoardNumber": "MYA422",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 301,
+      "nettScore": 237,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "26",
+          "score": 26,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "26",
+          "score": 26,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "26",
+          "score": 26,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "27",
+          "score": 27,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "eccf0a0e-a600-599a-b300-79f74309a169",
+      "identityBasis": "No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred.",
+      "resultId": "82dbbea7-0e88-5225-8700-3cbea637f6a5",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "8c0ddf18-55cf-56ca-b40a-2c4361a79e28",
+          "sailorId": "eccf0a0e-a600-599a-b300-79f74309a169",
+          "sourceName": "Zwel La Yaung",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA422. No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 301/237 retained unchanged; calculated race sum/net 303/239. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 26,
+      "sourceRank": "26th",
+      "name": "Sherman Aye",
+      "sailOrBoardNumber": "MYA380",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 304,
+      "nettScore": 240,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNS",
+          "score": 32,
+          "code": "DNS",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "4f705fec-c1a1-5341-b860-2696671f406a",
+      "identityBasis": "Same MYA380; paired requested source Sharman Aye corroborates source name.",
+      "resultId": "cdf0934d-08fd-5533-8560-5ab6c072ab0d",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "90ff4f04-4d19-5c5b-8742-3d322df14600",
+          "sailorId": "4f705fec-c1a1-5341-b860-2696671f406a",
+          "sourceName": "Sherman Aye",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA380. Same MYA380; paired requested source Sharman Aye corroborates source name. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 304/240 retained unchanged; calculated race sum/net 305/241. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 27,
+      "sourceRank": "27th",
+      "name": "May Moe Sett",
+      "sailOrBoardNumber": "MYA392",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 327,
+      "nettScore": 263,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "25",
+          "score": 25,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "27",
+          "score": 27,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "26",
+          "score": 26,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "26",
+          "score": 26,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "sailorId": "662bfb34-271a-52a0-9481-91f38e1f92ef",
+      "identityBasis": "Minor spelling variant; MYA392 agrees.",
+      "resultId": "1285641b-1e82-581c-8420-f336e6116f47",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "bae2be97-5d11-58b4-b90c-32b1ace74bda",
+          "sailorId": "662bfb34-271a-52a0-9481-91f38e1f92ef",
+          "sourceName": "May Moe Sett",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA392. Minor spelling variant; MYA392 agrees. Code-only penalty points use Appendix A fleet size + 1, tentative; source does not give numeric penalty points and totals do not fully reconcile; original raw cells retained. User explicitly instructed on 2026-10-30 to follow the results sheet despite discrepancies. Published total/net 327/263 retained unchanged; calculated race sum/net 328/264. No correction inferred; remains pending_review."
+    },
+    {
+      "rank": 28,
+      "sourceRank": "28th",
+      "name": "Aarman Aye",
+      "sailOrBoardNumber": "MYA399",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 344,
+      "nettScore": 280,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "24",
+          "score": 24,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "OCS",
+          "score": 32,
+          "code": "OCS",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNS",
+          "score": 32,
+          "code": "DNS",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "1fa4bb52-2067-5b56-8310-3be5d8c1a88e",
+      "identityBasis": "Minor spelling variant; MYA399 agrees.",
+      "resultId": "b76a50ba-0d91-59ee-b677-7acda6078d56",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "f19eee1c-8868-5597-9297-fc4c4994bb99",
+          "sailorId": "1fa4bb52-2067-5b56-8310-3be5d8c1a88e",
+          "sourceName": "Aarman Aye",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA399. Minor spelling variant; MYA399 agrees. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 29,
+      "sourceRank": "29th",
+      "name": "Kenzo Phyo",
+      "sailOrBoardNumber": "MYA417",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 352,
+      "nettScore": 288,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNS",
+          "score": 32,
+          "code": "DNS",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "c9f4f820-34c9-5472-8c9a-1213659a56c0",
+      "identityBasis": "No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred.",
+      "resultId": "2eeaeff7-15dd-56ee-b718-b69089101786",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "c3331e9a-01db-528d-952a-ff74ba42b4fa",
+          "sailorId": "c9f4f820-34c9-5472-8c9a-1213659a56c0",
+          "sourceName": "Kenzo Phyo",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA417. No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 29,
+      "sourceRank": "29th",
+      "name": "Jewel",
+      "sailOrBoardNumber": "MYA419",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 352,
+      "nettScore": 288,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "f6f54c9d-88ae-5f87-ae2c-2534daa0f280",
+      "identityBasis": "No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred.",
+      "resultId": "27721ddc-b2b6-518e-9e6d-05bd8f809a47",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "93700f29-1bca-54c8-8790-77a639d5c726",
+          "sailorId": "f6f54c9d-88ae-5f87-ae2c-2534daa0f280",
+          "sourceName": "Jewel",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA419. No existing exact or plausible name candidate in reviewed inventory; source identity retained, no demographics inferred. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    },
+    {
+      "rank": 29,
+      "sourceRank": "29th",
+      "name": "Khin Chan Myae",
+      "sailOrBoardNumber": "MYA389",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 352,
+      "nettScore": 288,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(DNC)",
+          "score": 32,
+          "code": "DNC",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNC",
+          "score": 32,
+          "code": "DNC",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "sailorId": "c62474c8-31b5-5b20-b105-9217e013605e",
+      "identityBasis": "Unique exact normalized source name; existing profile unchanged.",
+      "resultId": "8a3c8b96-9593-5280-a34a-9a79fbdd06c2",
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "participants": [
+        {
+          "id": "0a05b358-a96d-54dd-ae9f-2f04d3b99f0c",
+          "sailorId": "c62474c8-31b5-5b20-b105-9217e013605e",
+          "sourceName": "Khin Chan Myae",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Source explicitly provisional: Results are provisional as of  8:30 on June 23, 2026. Event dates 2026-06-20\u20132026-06-21 assumed at user's instruction on 2026-10-30, not independently verified. No official final PDF found; HTML-only review. Club: YSC. Historic sail: MYA389. Unique exact normalized source name; existing profile unchanged. Code-only penalty points use Appendix A fleet size + 1, corroborated by gross/net reconciliation; original raw cells retained."
+    }
+  ],
+  "importedEntryCount": 29,
+  "deferredEntryCount": 2,
+  "publicSummary": "PROVISIONAL DRAFT. Dates 2026-06-20\u20132026-06-21 assumed at user's instruction; not independently verified. No official final-results PDF located. 29 of 31 entries imported; 2 held for identity review. Published scores and totals retained at user's instruction, including 17 unreconciled rows. 11 races; 2 discards; no Singapore ranking credit.",
+  "pendingEntries": [
+    {
+      "rank": 7,
+      "sourceRank": "7th",
+      "name": "Thuyein Lin",
+      "sailOrBoardNumber": "MYA2",
+      "club": "ISPE",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 88,
+      "nettScore": 64,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "4",
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "7",
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(12)",
+          "score": 12,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "6",
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "2",
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "8",
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "10",
+          "score": 10,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "(12)",
+          "score": 12,
+          "code": null,
+          "discarded": true,
+          "scoreBasis": "explicit"
+        }
+      ],
+      "validation": {
+        "gross": true,
+        "net": true,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": false,
+      "reason": "Possible Thurein Lin; current number differs and transliteration is unconfirmed."
+    },
+    {
+      "rank": 21,
+      "sourceRank": "21st",
+      "name": "Myat Toe Khant",
+      "sailOrBoardNumber": "MYA2(400)",
+      "club": "YSC",
+      "sourceClass": "OPTIMIST",
+      "grossScore": 256,
+      "nettScore": 192,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "13",
+          "score": 13,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(DNF)",
+          "score": 32,
+          "code": "DNF",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 3,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 4,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 5,
+          "raw": "22",
+          "score": 22,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(OCS)",
+          "score": 32,
+          "code": "OCS",
+          "discarded": true,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        },
+        {
+          "raceNumber": 7,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 8,
+          "raw": "23",
+          "score": 23,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 9,
+          "raw": "21",
+          "score": 21,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 10,
+          "raw": "18",
+          "score": 18,
+          "code": null,
+          "discarded": false,
+          "scoreBasis": "explicit"
+        },
+        {
+          "raceNumber": 11,
+          "raw": "DNF",
+          "score": 32,
+          "code": "DNF",
+          "discarded": false,
+          "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+        }
+      ],
+      "validation": {
+        "gross": false,
+        "net": false,
+        "discards": true
+      },
+      "sourceDiscrepancyAccepted": true,
+      "reason": "Existing Khant Khant also uses MYA400; name relationship unconfirmed."
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "29990b00-de3f-51ec-a3c1-2fb250a82fbf",
+      "name": "Thun Pyae Zan",
+      "handle": "thun-pyae-zan-mya372",
+      "sailNumber": "MYA372",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "5bb45750-85e3-5735-b9c4-b055b87af577",
+      "name": "Kaung Khant Khant Thu",
+      "handle": "kaung-khant-khant-thu-mya373",
+      "sailNumber": "MYA373",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "3adcdfee-1b33-409f-9e45-a9d3fc4a2725",
+      "name": "Sitt May Chit Po",
+      "handle": "asian-mya-sitt-may-c-de19ca",
+      "sailNumber": "MYA365",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "F",
+      "club": "Imported official result",
+      "birthYear": null
+    },
+    {
+      "id": "075ff3c1-6e4f-5d00-931a-0ef4ea1346a6",
+      "name": "Thaw Zin Hein Htet",
+      "handle": "thaw-zin-hein-htet-mya377",
+      "sailNumber": "MYA377",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "d3c0d165-4c2e-540c-bd37-ac6d74db4931",
+      "name": "Zin Htoo Naing",
+      "handle": "zin-htoo-naing-mya374",
+      "sailNumber": "MYA374",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "0c1fba60-153b-5837-ade5-c3cc70687402",
+      "name": "Lin Thet Naung",
+      "handle": "lin-thet-naung-mya371",
+      "sailNumber": "MYA371",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "6319ae29-7ef6-53f0-aa9b-1770d73ed55c",
+      "name": "Eaint Chue Zayar",
+      "handle": "eaint-chue-zayar-mya391",
+      "sailNumber": "MYA391",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "f23d185d-88a0-58d6-8632-5567a2a5dd4f",
+      "name": "Jue Thinzar Htet",
+      "handle": "jue-thinzar-htet-mya375",
+      "sailNumber": "MYA375",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "813c7c19-1d97-51b8-93d5-585805f42d41",
+      "name": "Hnin Wai Lwin",
+      "handle": "hnin-wai-lwin-mya406",
+      "sailNumber": "MYA406",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "dbdfcdc6-f669-5b6e-99e9-bab417b3c631",
+      "name": "Hnin Zar Lei",
+      "handle": "hnin-zar-lei-mya409",
+      "sailNumber": "MYA409",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "7dd0f5ee-38fb-5f46-b14b-124db4aade1b",
+      "name": "MIn Thiha Nyo",
+      "handle": "min-thiha-nyo-mya408",
+      "sailNumber": "MYA408",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "27313b52-7844-52a0-a4cf-1c5d279f9130",
+      "name": "Eaint Po Mo Chit",
+      "handle": "eaint-po-mo-chit-mya411",
+      "sailNumber": "MYA411",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "211be6ac-4572-54de-a423-89c4133f5ca8",
+      "name": "Shoom Lai Khin",
+      "handle": "shoom-lai-khin-mya412",
+      "sailNumber": "MYA412",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "bc3a8714-af4d-5366-b0d4-df0686408a04",
+      "name": "Aye Nandar Moe",
+      "handle": "aye-nandar-moe-mya410",
+      "sailNumber": "MYA410",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "662bfb34-271a-52a0-9481-91f38e1f92ef",
+      "name": "May Moe Set",
+      "handle": "may-moe-set-mya392",
+      "sailNumber": "MYA392",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "1fa4bb52-2067-5b56-8310-3be5d8c1a88e",
+      "name": "Arman Aye",
+      "handle": "arman-aye-mya399",
+      "sailNumber": "MYA399",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "c62474c8-31b5-5b20-b105-9217e013605e",
+      "name": "Khin Chan Myae",
+      "handle": "khin-chan-myae-mya389",
+      "sailNumber": "MYA389",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": null,
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "f87ecd5f-f3a1-4f87-abf6-22dc7e53bf05",
+      "name": "Gon Yee Zaw",
+      "handle": "asian-mya-gon-yee-za-2c3f16",
+      "sailNumber": "383",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "F",
+      "club": "Imported official result",
+      "birthYear": 2014
+    },
+    {
+      "id": "4f705fec-c1a1-5341-b860-2696671f406a",
+      "name": "Sherman",
+      "handle": "sherman-mya380",
+      "sailNumber": "MYA380",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": 2016
+    },
+    {
+      "id": "751b399d-fdaf-53b9-8a24-3d7984746888",
+      "name": "Min Myat Ponnya",
+      "handle": "min-myat-ponnya-mya396",
+      "sailNumber": "MYA396",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": 2017
+    },
+    {
+      "id": "0ce682fc-3665-5510-bbf6-66271c760f7f",
+      "name": "Shine Khant",
+      "handle": "shine-khant-mya384",
+      "sailNumber": "MYA384",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": 2015
+    },
+    {
+      "id": "ed6e93cb-d195-5024-8a33-660ad4d2badb",
+      "name": "Nay Min Htet",
+      "handle": "nay-min-htet-mya407",
+      "sailNumber": "MYA407",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "ISPE",
+      "birthYear": 2013
+    },
+    {
+      "id": "611ef739-d28b-57c3-b6fe-183b006a2a38",
+      "name": "Kaung Khant Khant Ko",
+      "handle": "kaung-khant-khant-ko-mya382",
+      "sailNumber": "MYA382",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": 2015
+    },
+    {
+      "id": "621fc1d7-30a3-5ef6-81cb-b7c71002e05a",
+      "name": "Thwin Min Sett",
+      "handle": "thwin-min-sett-mya405",
+      "sailNumber": "MYA405",
+      "sailNumberIlca4": null,
+      "nationality": "MYA",
+      "gender": "M",
+      "club": "YSC",
+      "birthYear": 2011
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "e2bcc321-4cd5-5926-80ac-fea76a8f2170",
+      "name": "Hein Thant Saw",
+      "handle": "hein-thant-saw-ysc26-e2bcc3",
+      "sailNumber": "MYA385",
+      "sailNumberIlca4": null,
+      "club": "Official regatta entry",
+      "nationality": null,
+      "gender": null
+    },
+    {
+      "id": "c9f4f820-34c9-5472-8c9a-1213659a56c0",
+      "name": "Kenzo Phyo",
+      "handle": "kenzo-phyo-ysc26-c9f4f8",
+      "sailNumber": "MYA417",
+      "sailNumberIlca4": null,
+      "club": "Official regatta entry",
+      "nationality": null,
+      "gender": null
+    },
+    {
+      "id": "e9c8f1e1-acff-5660-ba36-6f75834f3421",
+      "name": "Phyu Cin Thadar",
+      "handle": "phyu-cin-thadar-ysc26-e9c8f1",
+      "sailNumber": "MYA421",
+      "sailNumberIlca4": null,
+      "club": "YSC",
+      "nationality": null,
+      "gender": null
+    },
+    {
+      "id": "eccf0a0e-a600-599a-b300-79f74309a169",
+      "name": "Zwel La Yaung",
+      "handle": "zwel-la-yaung-ysc26-eccf0a",
+      "sailNumber": "MYA422",
+      "sailNumberIlca4": null,
+      "club": "YSC",
+      "nationality": null,
+      "gender": null
+    },
+    {
+      "id": "f6f54c9d-88ae-5f87-ae2c-2534daa0f280",
+      "name": "Jewel",
+      "handle": "jewel-ysc26-f6f54c",
+      "sailNumber": "MYA419",
+      "sailNumberIlca4": null,
+      "club": "YSC",
+      "nationality": null,
+      "gender": null
+    }
+  ],
+  "identityReview": {
+    "method": "Exact normalized names and explicitly reviewed paired-source spelling variants. Unconfirmed candidates deferred; existing profiles unchanged."
+  }
+}

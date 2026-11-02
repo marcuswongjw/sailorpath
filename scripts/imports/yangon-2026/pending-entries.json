@@ -1,0 +1,765 @@
+[
+  {
+    "event": "Yangon Sailing Club Combined Fleet Championships 2026",
+    "boatClass": "Optimist",
+    "rank": 5,
+    "sourceRank": "5th",
+    "name": "Thurain Lin",
+    "sailOrBoardNumber": "MYA2",
+    "club": null,
+    "sourceClass": "Optimist",
+    "grossScore": 57,
+    "nettScore": 39,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "4.0",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(9.0)",
+        "score": 9,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "4.0",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "7.0",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "3.0",
+        "score": 3,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(9.0)",
+        "score": 9,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "7.0",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "4.0",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "4.0",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "1.0",
+        "score": 1,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "5.0",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ],
+    "validation": {
+      "gross": true,
+      "net": true,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": false,
+    "reason": "Possible Thurein Lin; current number differs and transliteration is unconfirmed."
+  },
+  {
+    "event": "Yangon Sailing Club Combined Fleet Championships 2026",
+    "boatClass": "Optimist",
+    "rank": 22,
+    "sourceRank": "22nd",
+    "name": "Lucas",
+    "sailOrBoardNumber": "MYA354",
+    "club": null,
+    "sourceClass": "Optimist",
+    "grossScore": 257,
+    "nettScore": 193,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "20.0",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "23.0",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "21.0",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "21.0",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "21.0",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "19.0",
+        "score": 19,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "20.0",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "24.0",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "24.0",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "(32.0 DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(32.0 DNS)",
+        "score": 32,
+        "code": "DNS",
+        "discarded": true,
+        "scoreBasis": "explicit"
+      }
+    ],
+    "validation": {
+      "gross": true,
+      "net": true,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": false,
+    "reason": "Source nickname only; several existing Lucas profiles; no corroborated identity."
+  },
+  {
+    "event": "Yangon Sailing Club Combined Fleet Championships 2026",
+    "boatClass": "Optimist",
+    "rank": 26,
+    "sourceRank": "26th",
+    "name": "Myat Toe Khant",
+    "sailOrBoardNumber": "MYA400",
+    "club": null,
+    "sourceClass": "Optimist",
+    "grossScore": 315,
+    "nettScore": 251,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "21.0",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "15.0",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "23.0",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "(32.0 DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "(32.0 DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "32.0 DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "32.0 DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "32.0 DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "32.0 DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "32.0 DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "32.0 DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ],
+    "validation": {
+      "gross": true,
+      "net": true,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": false,
+    "reason": "Existing Khant Khant also uses MYA400; name relationship unconfirmed."
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "ILCA 4",
+    "rank": 4,
+    "sourceRank": "4th",
+    "name": "Thein Thuyein Myint",
+    "sailOrBoardNumber": null,
+    "club": "YSC",
+    "sourceClass": "ILCA4",
+    "grossScore": 49,
+    "nettScore": 36,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "3",
+        "score": 3,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "3",
+        "score": 3,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "4",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "4",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "4",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "(6)",
+        "score": 6,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "(7)",
+        "score": 7,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "3",
+        "score": 3,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ],
+    "validation": {
+      "gross": true,
+      "net": true,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": false,
+    "reason": "Possible Thein Thurain Myint; source has no sail number and existing nationality conflicts."
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "ILCA 4",
+    "rank": 5,
+    "sourceRank": "5th",
+    "name": "Suu Labb Lin Tun",
+    "sailOrBoardNumber": null,
+    "club": "ISPE",
+    "sourceClass": "ILCA4",
+    "grossScore": 54,
+    "nettScore": 41,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(6)",
+        "score": 6,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "4",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(7)",
+        "score": 7,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "4",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "6",
+        "score": 6,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "3",
+        "score": 3,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "3",
+        "score": 3,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "6",
+        "score": 6,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ],
+    "validation": {
+      "gross": true,
+      "net": true,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": false,
+    "reason": "Possible Su Latt Lin Tun; no source sail number to corroborate variant."
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 7,
+    "sourceRank": "7th",
+    "name": "Thuyein Lin",
+    "sailOrBoardNumber": "MYA2",
+    "club": "ISPE",
+    "sourceClass": "OPTIMIST",
+    "grossScore": 88,
+    "nettScore": 64,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "4",
+        "score": 4,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(12)",
+        "score": 12,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "6",
+        "score": 6,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "2",
+        "score": 2,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(12)",
+        "score": 12,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      }
+    ],
+    "validation": {
+      "gross": true,
+      "net": true,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": false,
+    "reason": "Possible Thurein Lin; current number differs and transliteration is unconfirmed."
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 21,
+    "sourceRank": "21st",
+    "name": "Myat Toe Khant",
+    "sailOrBoardNumber": "MYA2(400)",
+    "club": "YSC",
+    "sourceClass": "OPTIMIST",
+    "grossScore": 256,
+    "nettScore": 192,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(OCS)",
+        "score": 32,
+        "code": "OCS",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ],
+    "validation": {
+      "gross": false,
+      "net": false,
+      "discards": true
+    },
+    "sourceDiscrepancyAccepted": true,
+    "reason": "Existing Khant Khant also uses MYA400; name relationship unconfirmed."
+  }
+]

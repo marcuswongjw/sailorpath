@@ -1,0 +1,2943 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "fe0ba3ee-002a-5e5c-93ed-71ff357c64a3",
+    "slug": "pre-sea-games-2025",
+    "name": "Pre-33rd SEA Games 2025",
+    "startDate": "2025-11-14",
+    "endDate": "2025-11-16",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "b9a09331-71de-5250-a8f2-ad989781c8a9",
+    "slug": "pre-sea-games-2025-optimist-girls",
+    "name": "Pre-33rd SEA Games 2025 \u2014 Optimist Girls",
+    "boatClass": "Optimist",
+    "division": "Girls",
+    "raceCount": 9,
+    "totalFleetSize": 27,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/168536",
+    "title": "Pre-33rd SEA Games 2025 \u2014 Optimist Girls results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 2,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "THA1253",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 34.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "cb7d033d-790c-5b0b-9c88-a80ea6341292",
+      "participants": [
+        {
+          "id": "9d5b2cb8-a2fb-5e86-9d5a-d1e595b4c1b0",
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: PAILIN JAROENPON; historic sail: THA1253; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 3,
+      "name": "PARIYAPORN CHANTARAWONG",
+      "sailOrBoardNumber": "CAN 1610",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 55.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b58053a0-9669-5663-b386-d6402bbe4fa2",
+      "participants": [
+        {
+          "id": "4339e22d-7915-58a5-9a20-4e6014333ae2",
+          "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+          "sourceName": "PARIYAPORN CHANTARAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: PARIYAPORN CHANTARAWONG; historic sail: CAN 1610; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 4,
+      "name": "ANYA ZAHADI",
+      "sailOrBoardNumber": "SGP159",
+      "club": "SSF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 46.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2a686543-6915-54dc-80db-b8781caabdc7",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "a2c3837e-8b9d-5daa-b1d3-3b1f05ce3bcc",
+      "participants": [
+        {
+          "id": "cabb89f9-073d-5b20-84b1-0337bb391b2f",
+          "sailorId": "2a686543-6915-54dc-80db-b8781caabdc7",
+          "sourceName": "ANYA ZAHADI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: ANYA ZAHADI; historic sail: SGP159; club: SSF; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 5,
+      "name": "SITT MAY CHIT PO",
+      "sailOrBoardNumber": "MYA113",
+      "club": "MYF",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 58.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3adcdfee-1b33-409f-9e45-a9d3fc4a2725",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "07df25dd-eac7-5949-b61f-245de40e2cd4",
+      "participants": [
+        {
+          "id": "171da9ef-7071-52dd-a025-ea26e147fb89",
+          "sailorId": "3adcdfee-1b33-409f-9e45-a9d3fc4a2725",
+          "sourceName": "SITT MAY CHIT PO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: SITT MAY CHIT PO; historic sail: MYA113; club: MYF; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 6,
+      "name": "JIN YUEYAN",
+      "sailOrBoardNumber": "CHN7709",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 71.0,
+      "nettScore": 58.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7146367e-73c1-5076-bdbe-f2e665b6c948",
+      "participants": [
+        {
+          "id": "c0d8459b-f4c8-5374-ae91-e472b002230d",
+          "sailorId": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+          "sourceName": "JIN YUEYAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: JIN YUEYAN; historic sail: CHN7709; club: RVYC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 7,
+      "name": "NATTHANAN CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1246",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 97.0,
+      "nettScore": 72.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 25.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(25.0)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f64db175-edfb-5e1e-9498-ed217104c1d6",
+      "participants": [
+        {
+          "id": "33a83404-1926-533c-b05b-15687ce6960f",
+          "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+          "sourceName": "NATTHANAN CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: NATTHANAN CHAIYA-O-CHA; historic sail: THA1246; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 8,
+      "name": "KAELYN DAYNA SOH ZHI YI",
+      "sailOrBoardNumber": "SGP3113",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 100.0,
+      "nettScore": 72.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "5d9d9766-24c1-52e0-b2bf-da89ca89eab4",
+      "participants": [
+        {
+          "id": "f5b577e1-876c-51c7-a85b-4c974aad3de0",
+          "sailorId": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+          "sourceName": "KAELYN DAYNA SOH ZHI YI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: KAELYN DAYNA SOH ZHI YI; historic sail: SGP3113; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 9,
+      "name": "THEERAKAN KLAYSOMBOON",
+      "sailOrBoardNumber": "THA1932",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 101.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24.0)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4a3c4ddb-196c-5cc4-a86f-1916b4d2f480",
+      "participants": [
+        {
+          "id": "c02ff90e-1267-58eb-b87d-2848f6be09ae",
+          "sailorId": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+          "sourceName": "THEERAKAN KLAYSOMBOON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: THEERAKAN KLAYSOMBOON; historic sail: THA1932; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 10,
+      "name": "PUNTHITA WEROTJANAKUL",
+      "sailOrBoardNumber": "THA 1888",
+      "club": "UWC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 107.0,
+      "nettScore": 79.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2b971203-9ce3-5269-a403-9f0c147a24ca",
+      "participants": [
+        {
+          "id": "0af4c2b4-514e-5a6a-993a-81f5c4d75777",
+          "sailorId": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+          "sourceName": "PUNTHITA WEROTJANAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: PUNTHITA WEROTJANAKUL; historic sail: THA 1888; club: UWC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 11,
+      "name": "NIRADA SASIWATTANAPORN",
+      "sailOrBoardNumber": "THA 1925",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 126.0,
+      "nettScore": 98.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8ed76747-9c85-53ab-85d2-462adfb87b54",
+      "participants": [
+        {
+          "id": "fddd4fed-4244-5479-b172-445f5ee76353",
+          "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+          "sourceName": "NIRADA SASIWATTANAPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: NIRADA SASIWATTANAPORN; historic sail: THA 1925; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 12,
+      "name": "THANAPHA PHONGKAMNERD",
+      "sailOrBoardNumber": "THA1484",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 131.0,
+      "nettScore": 103.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a19af055-e243-5171-a4e5-75f185bf44d0",
+      "participants": [
+        {
+          "id": "0820a81e-a95c-52c0-ae00-215d5c7c9fb7",
+          "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+          "sourceName": "THANAPHA PHONGKAMNERD",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: THANAPHA PHONGKAMNERD; historic sail: THA1484; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 13,
+      "name": "THAWAREE RAKSAPUN",
+      "sailOrBoardNumber": "THA 1789",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 128.0,
+      "nettScore": 106.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 22.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(22.0)"
+        },
+        {
+          "raceNumber": 9,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "15f286de-338c-5d49-883c-8188db4ca351",
+      "participants": [
+        {
+          "id": "34ec68d9-d502-5d27-b96a-d41180852b1f",
+          "sailorId": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+          "sourceName": "THAWAREE RAKSAPUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: THAWAREE RAKSAPUN; historic sail: THA 1789; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 14,
+      "name": "PUNYISA KAEWLEK",
+      "sailOrBoardNumber": "8754",
+      "club": "RNSC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 138.0,
+      "nettScore": 110.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e5153ba5-3b2c-5421-b8ae-0a80cd4bee73",
+      "participants": [
+        {
+          "id": "63044872-ff34-56a9-a6ca-cb37f92a41cb",
+          "sailorId": "ca781c67-adcc-48a4-8508-325225b8b71e",
+          "sourceName": "PUNYISA KAEWLEK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: PUNYISA KAEWLEK; historic sail: 8754; club: RNSC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 15,
+      "name": "RUI LING TEO",
+      "sailOrBoardNumber": "SGP3820",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 140.0,
+      "nettScore": 112.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(28.0 UFD)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0210e990-5406-42dc-b0de-e9a9ac7ca272",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "feae1f71-cd6a-55b8-a97d-a52a3971f06b",
+      "participants": [
+        {
+          "id": "7389fbe2-071a-53a3-a301-1cebe2a50c61",
+          "sailorId": "0210e990-5406-42dc-b0de-e9a9ac7ca272",
+          "sourceName": "RUI LING TEO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: RUI LING TEO; historic sail: SGP3820; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 16,
+      "name": "CHUHAN ZHANG",
+      "sailOrBoardNumber": "THA1935",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 145.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(26.0)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2c86f229-4ef7-5360-8af1-a5106702b029",
+      "participants": [
+        {
+          "id": "2e28cd4c-030b-540f-b274-0fc6c75dee6d",
+          "sailorId": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+          "sourceName": "CHUHAN ZHANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: CHUHAN ZHANG; historic sail: THA1935; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 17,
+      "name": "MIKAELA WONG HUI TING",
+      "sailOrBoardNumber": "SGP3029",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 147.0,
+      "nettScore": 124.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23.0)"
+        },
+        {
+          "raceNumber": 7,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7bead077-410f-4f39-9d90-16664ae8e81c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "43405971-0692-5f52-85de-1b1f888d3787",
+      "participants": [
+        {
+          "id": "f6791b51-96ec-5dd3-b271-26f966abfb51",
+          "sailorId": "7bead077-410f-4f39-9d90-16664ae8e81c",
+          "sourceName": "MIKAELA WONG HUI TING",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: MIKAELA WONG HUI TING; historic sail: SGP3029; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 18,
+      "name": "KLAOCHANOK CHATAWATTANASOPAKUN",
+      "sailOrBoardNumber": "THA3935",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 156.0,
+      "nettScore": 128.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 28.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "28.0 UFD"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b1918089-cfe9-53b0-92c4-0f6c9f18a6c0",
+      "participants": [
+        {
+          "id": "d115be1a-7e0f-5897-ab21-d67f0e9015d7",
+          "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "sourceName": "KLAOCHANOK CHATAWATTANASOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: KLAOCHANOK CHATAWATTANASOPAKUN; historic sail: THA3935; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 22,
+      "name": "ABBY YAN YING CHEN",
+      "sailOrBoardNumber": "SGP4729",
+      "club": "SGP",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 179.0,
+      "nettScore": 151.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "615b7b93-cbf3-4f4f-8fe4-e5ce701ba424",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "82643ba4-76bc-5263-9b16-79dee43d775f",
+      "participants": [
+        {
+          "id": "25bf54a5-b863-52a8-b4ac-4c01e10b5bf5",
+          "sailorId": "615b7b93-cbf3-4f4f-8fe4-e5ce701ba424",
+          "sourceName": "ABBY YAN YING CHEN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: ABBY YAN YING CHEN; historic sail: SGP4729; club: SGP; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 23,
+      "name": "ARUNEE RAKSAPAN",
+      "sailOrBoardNumber": "THA 1396",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 190.0,
+      "nettScore": 162.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "31cfc5bb-b044-5cb5-a50c-d8a88052fa3e",
+      "participants": [
+        {
+          "id": "f487c17e-9c52-5ac5-8b2e-78a13c4cbd7f",
+          "sailorId": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+          "sourceName": "ARUNEE RAKSAPAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: ARUNEE RAKSAPAN; historic sail: THA 1396; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 24,
+      "name": "KANYAPAT PISOOTTIWONG",
+      "sailOrBoardNumber": "THA1556",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 194.0,
+      "nettScore": 166.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNS",
+          "discarded": true,
+          "raw": "(28.0 DNS)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "28.0 DNS"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "28.0 DNS"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a55472d3-7dc7-5960-bfc4-97a7dfe1a5fc",
+      "participants": [
+        {
+          "id": "9c78c420-a320-54ea-b163-fd1bff4f7d7f",
+          "sailorId": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+          "sourceName": "KANYAPAT PISOOTTIWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: KANYAPAT PISOOTTIWONG; historic sail: THA1556; club: YRAT; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 25,
+      "name": "NAPHITCHAYA TREERATANAKUN",
+      "sailOrBoardNumber": "THA1557",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 197.0,
+      "nettScore": 169.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0a16d735-09ce-5566-b23a-df78a2abe6c4",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "5c83094b-6317-5622-bf43-49378c5904c2",
+      "participants": [
+        {
+          "id": "587ad13e-d852-569f-979e-bfbdb05ab1c7",
+          "sailorId": "0a16d735-09ce-5566-b23a-df78a2abe6c4",
+          "sourceName": "NAPHITCHAYA TREERATANAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: NAPHITCHAYA TREERATANAKUN; historic sail: THA1557; club: RTFYC; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 26,
+      "name": "NETCHANOK CHATAWATTANASOPAKUN",
+      "sailOrBoardNumber": "THA289",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 203.0,
+      "nettScore": 175.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a4a646a0-8875-5bdb-8427-61c127d472a4",
+      "participants": [
+        {
+          "id": "e71d989b-387d-5c7b-b406-fa5c1612da21",
+          "sailorId": "8b594c37-db52-4549-a765-f51fd619238d",
+          "sourceName": "NETCHANOK CHATAWATTANASOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: NETCHANOK CHATAWATTANASOPAKUN; historic sail: THA289; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 27,
+      "name": "PIMPISA DEVAHASTIN NA AYUDHYA",
+      "sailOrBoardNumber": "THA63",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 226.0,
+      "nettScore": 198.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "976342b7-69ec-4200-8e46-684855939591",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "87c367fb-2dea-5852-91c7-516101773366",
+      "participants": [
+        {
+          "id": "37339bd2-bb35-55e3-bb8f-92d4c4641194",
+          "sailorId": "976342b7-69ec-4200-8e46-684855939591",
+          "sourceName": "PIMPISA DEVAHASTIN NA AYUDHYA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist Girl; page 2; source name: PIMPISA DEVAHASTIN NA AYUDHYA; historic sail: THA63; club: ACDC.SC; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 23,
+  "deferredEntryCount": 4,
+  "publicSummary": "Provisional organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 23 of 27 class entries imported; 4 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 1,
+      "name": "SURAPA MUANGNGAM",
+      "sailOrBoardNumber": "THA1941",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 21.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "name": "Surapha Muangngam",
+          "similarity": 0.968
+        },
+        {
+          "id": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+          "name": "Paranee Muangngam",
+          "similarity": 0.71
+        },
+        {
+          "id": "598f72ed-7c02-4a34-aac2-59f4848e90d3",
+          "name": "Seraphina Kang",
+          "similarity": 0.571
+        }
+      ]
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 19,
+      "name": "DHAMAPORN ARUNO",
+      "sailOrBoardNumber": "THA1881",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 156.0,
+      "nettScore": 128.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+          "name": "Dhammaporn Aruno",
+          "similarity": 0.966
+        },
+        {
+          "id": "988b923b-6960-4d5e-be75-d53c32295492",
+          "name": "Wichayaporn Saksriklom",
+          "similarity": 0.571
+        },
+        {
+          "id": "aa2952d1-ba70-464e-8666-096ff9fef554",
+          "name": "Amarin Juntajon",
+          "similarity": 0.571
+        }
+      ]
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 20,
+      "name": "SURATSAYAPORN KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 171.0,
+      "nettScore": 143.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "name": "Suratsayapron Kaewrakum",
+          "similarity": 0.955
+        },
+        {
+          "id": "dc026565-7e56-5c2b-b0e9-dcb51c7682ed",
+          "name": "Thaniyada Kaewrakum",
+          "similarity": 0.6
+        },
+        {
+          "id": "6fcdc03f-6b56-4e08-aa6d-2cc6b0e9e675",
+          "name": "Sumire Sayawaki-Kogut",
+          "similarity": 0.537
+        }
+      ]
+    },
+    {
+      "eventKey": "pre-sea-games-2025",
+      "sourceDocument": 168536,
+      "sourcePage": 2,
+      "sourceClass": "Optimist Girl",
+      "boatClass": "Optimist",
+      "division": "Girls",
+      "rank": 21,
+      "name": "ARAYA KLANGMUEANG",
+      "sailOrBoardNumber": "THA1498",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 178.0,
+      "nettScore": 150.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(28.0 DNF)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+          "name": "Aranya Klangmueang",
+          "similarity": 0.97
+        },
+        {
+          "id": "c7a2f767-ff62-59fc-871a-7d4bea39f6e0",
+          "name": "Yang Meng",
+          "similarity": 0.667
+        },
+        {
+          "id": "a395fed6-cd42-4923-8678-f88a1e49d724",
+          "name": "Yang Ruiyang",
+          "similarity": 0.593
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+      "club": "YRAT",
+      "name": "Kanyapat Pisoottiwong",
+      "gender": "F",
+      "handle": "kanyapat-pisoottiwong-6sr2pun",
+      "birthYear": 2015,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4ea7704c-a106-47d1-b424-6565e8dd9c3f",
+      "club": "Nantong Zilang",
+      "name": "Yueyan Jin",
+      "gender": "F",
+      "handle": "yueyan-jin-zbqbb4k",
+      "birthYear": 2012,
+      "sailNumber": "7709",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "615b7b93-cbf3-4f4f-8fe4-e5ce701ba424",
+      "club": "PAssion Wave",
+      "name": "Abby Yan Ying Chen",
+      "gender": "F",
+      "handle": "abby-yan-ying-chen",
+      "birthYear": 2016,
+      "sailNumber": "4729",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0210e990-5406-42dc-b0de-e9a9ac7ca272",
+      "club": "SAF Yacht Club",
+      "name": "Teo Rui Ling",
+      "gender": "F",
+      "handle": "teo-rui-ling",
+      "birthYear": 2014,
+      "sailNumber": "3820",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+      "club": "RTFYC",
+      "name": "Arunee Raksapun",
+      "gender": "F",
+      "handle": "arunee-raksapun-u24jkub",
+      "birthYear": 2015,
+      "sailNumber": "945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+      "club": "RTFYC",
+      "name": "Thawaree Raksapun",
+      "gender": "F",
+      "handle": "thawaree-raksapun-sd0d5wz",
+      "birthYear": 2013,
+      "sailNumber": "1459",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "243d158e-38d3-4b9c-8a92-edf468d0719b",
+      "club": "SAF Yacht Club",
+      "name": "Kaelyn Dayna Soh Zhi Yi",
+      "gender": "F",
+      "handle": "kaelyn-dayna-soh-zhi-yi",
+      "birthYear": 2012,
+      "sailNumber": "3113",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8a200ad6-5c43-4b86-97bb-d0905a158577",
+      "club": "ACDC.SC",
+      "name": "Theerakan Klaysomboon",
+      "gender": "F",
+      "handle": "theerakan-klaysomboon-fy1ms14",
+      "birthYear": 2015,
+      "sailNumber": "THA 1593",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7bead077-410f-4f39-9d90-16664ae8e81c",
+      "club": "SAF Yacht Club",
+      "name": "Mikaela Hui Ting Wong",
+      "gender": "F",
+      "handle": "mikaelawong",
+      "birthYear": 2015,
+      "sailNumber": "3029",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-Cha",
+      "gender": "F",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3adcdfee-1b33-409f-9e45-a9d3fc4a2725",
+      "club": "Imported official result",
+      "name": "Sitt May Chit Po",
+      "gender": "F",
+      "handle": "asian-mya-sitt-may-c-de19ca",
+      "birthYear": null,
+      "sailNumber": "MYA365",
+      "nationality": "MYA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "c26a34a0-0b0a-44d0-9951-99974c45b023",
+      "club": "UWC",
+      "name": "Punthita Werotjanakul",
+      "gender": "F",
+      "handle": "punthita-werotjanakul-itr1144",
+      "birthYear": 2012,
+      "sailNumber": "1888",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4f43adc6-85a2-4017-9ccd-08a45484ffce",
+      "club": "ACDC.SC",
+      "name": "Chuhan Zhang",
+      "gender": "F",
+      "handle": "chuhan-zhang-oes2i91",
+      "birthYear": 2014,
+      "sailNumber": "1947",
+      "nationality": "CHN",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "F",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8b594c37-db52-4549-a765-f51fd619238d",
+      "club": "ACDC.SC",
+      "name": "Netchanok Chatawattanasopakun",
+      "gender": "F",
+      "handle": "netchanok-chatawattanasopakun-b63j9ly",
+      "birthYear": 2015,
+      "sailNumber": "1644",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "F",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "ca781c67-adcc-48a4-8508-325225b8b71e",
+      "club": "RNSC",
+      "name": "Punyisa Kaewlek",
+      "gender": "F",
+      "handle": "asian-unk-punyisa-ka-5c5bfa",
+      "birthYear": 2011,
+      "sailNumber": "1565",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "YRAT",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": 2014,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "976342b7-69ec-4200-8e46-684855939591",
+      "club": "YRAT",
+      "name": "Pimpisa Devahastin Na Ayudhya",
+      "gender": "F",
+      "handle": "pimpisa-devahastin-na-ayudhya-7yvd7vy",
+      "birthYear": 2016,
+      "sailNumber": "1539",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "0a16d735-09ce-5566-b23a-df78a2abe6c4",
+      "name": "Naphitchaya Treeratanakun",
+      "handle": "naphitchaya-treeratanakun-sr25-0a16d7",
+      "sailNumber": "1559",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "F",
+      "club": "Official regatta entry"
+    },
+    {
+      "id": "2a686543-6915-54dc-80db-b8781caabdc7",
+      "name": "Anya Zahadi",
+      "handle": "anya-zahadi-sr25-2a6865",
+      "sailNumber": "SGP159",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": null,
+      "club": "SSF"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

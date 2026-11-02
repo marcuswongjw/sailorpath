@@ -1,0 +1,3326 @@
+{
+  "batch": "australia-optimist-2025-2026-10-30",
+  "event": {
+    "slug": "2025-nsw-optimist-championship",
+    "name": "2025 NSW Optimist Championship",
+    "startDate": "2025-04-05",
+    "endDate": "2025-04-06",
+    "venue": "Toronto Amateur Sailing Club, Lake Macquarie, NSW, Australia",
+    "organizer": "Toronto Amateur Sailing Club and NSW IODA",
+    "id": "0830c245-ba09-5596-8ac0-3d89100325f5",
+    "classes": [
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "083ef6e6-0db3-560f-8a3d-ed490ace901f",
+    "slug": "2025-nsw-optimist-championship-optimist-open",
+    "name": "2025 NSW Optimist Championship \u2014 Optimist Open",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 41,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1,
+    "status": "draft"
+  },
+  "officialSource": {
+    "url": "https://www.austeamsailing.com/events/nswstates2025.htm",
+    "title": "2025 NSW Optimist Championship \u2014 Optimist Open",
+    "type": "url",
+    "provisional": false,
+    "publicationStatus": "published overall standings",
+    "visuallyReviewed": false,
+    "pdfUrl": null,
+    "pdfLimitation": "Official results PDF not located."
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "Walter Heeley",
+      "sailOrBoardNumber": "1575",
+      "club": "WSC",
+      "grossScore": 15.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(7.0)",
+          "score": 7.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Walter Heeley",
+      "sailorId": "c34abc0a-3cf5-510b-be46-a2f4f07d6e23",
+      "resultId": "ab313f6a-0d90-566e-af05-2dce1d9024e2",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c0b6cbcc-c541-56a8-bec0-4bf56c86a16e",
+          "sailorId": "c34abc0a-3cf5-510b-be46-a2f4f07d6e23",
+          "sourceName": "Walter Heeley",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Walter Heeley; historic sail 1575; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 2,
+      "name": "Reid Martin",
+      "sailOrBoardNumber": "1728",
+      "club": "PDSC",
+      "grossScore": 33.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(16.0)",
+          "score": 16.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Reid Martin",
+      "sailorId": "fe55751a-320e-48f8-92fd-fd40bca74292",
+      "resultId": "cc84e2e7-e292-50d0-aa3a-ed62ea6de0e4",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "3dedafe1-c23c-55ad-8e50-2c9c5c141296",
+          "sailorId": "fe55751a-320e-48f8-92fd-fd40bca74292",
+          "sourceName": "Reid Martin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Reid Martin; historic sail 1728; club PDSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 3,
+      "name": "Jayden Wang",
+      "sailOrBoardNumber": "1748",
+      "club": "RPAYC",
+      "grossScore": 56.0,
+      "nettScore": 33.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(23.0)",
+          "score": 23.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jayden Wang",
+      "sailorId": "b64cc6ae-a6e8-47a4-b702-b067d02e1f19",
+      "resultId": "21d66149-887e-5c67-a1fd-5e52e4a04c27",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "b97eed4e-8fdd-5af5-9df5-215fa542e295",
+          "sailorId": "b64cc6ae-a6e8-47a4-b702-b067d02e1f19",
+          "sourceName": "Jayden Wang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Jayden Wang; historic sail 1748; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 4,
+      "name": "William Rogers",
+      "sailOrBoardNumber": "1847",
+      "club": "WSC",
+      "grossScore": 50.0,
+      "nettScore": 37.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(13.0)",
+          "score": 13.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "William Rogers",
+      "sailorId": "73a082e4-e3f8-48d7-a5fd-ef0f587867ea",
+      "resultId": "464a91a3-ae34-5966-8a4e-9af153b4251f",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "cabc9a11-c6e8-5e7c-bffe-965a1bca08ca",
+          "sailorId": "73a082e4-e3f8-48d7-a5fd-ef0f587867ea",
+          "sourceName": "William Rogers",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name William Rogers; historic sail 1847; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 5,
+      "name": "William Harris",
+      "sailOrBoardNumber": "1932",
+      "club": "WSC",
+      "grossScore": 56.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(16.0)",
+          "score": 16.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "William Harris",
+      "sailorId": "b2f3bfeb-f969-518e-b631-70da18fadc0d",
+      "resultId": "7a8158bf-60fb-5a93-b833-1e4e3828d5c8",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "176eb521-629c-52bd-baaf-7b87099e130d",
+          "sailorId": "b2f3bfeb-f969-518e-b631-70da18fadc0d",
+          "sourceName": "William Harris",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name William Harris; historic sail 1932; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 6,
+      "name": "Josh Dale",
+      "sailOrBoardNumber": "1715",
+      "club": "RQYS",
+      "grossScore": 56.0,
+      "nettScore": 42.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(14.0)",
+          "score": 14.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Josh Dale",
+      "sailorId": "b6eb51a6-5190-41d7-a8c5-be1f4817428d",
+      "resultId": "327056b0-ce88-511a-9ca3-9cc117a2984f",
+      "identityBasis": "Josh Dale corroborated as Joshua Dale by Nationals full name, exact sail 1715 and RQYS club. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "55f77e0d-2d5e-5a10-b664-595649dada12",
+          "sailorId": "b6eb51a6-5190-41d7-a8c5-be1f4817428d",
+          "sourceName": "Josh Dale",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Josh Dale; historic sail 1715; club RQYS. Josh Dale corroborated as Joshua Dale by Nationals full name, exact sail 1715 and RQYS club. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 7,
+      "name": "Zachary Tait",
+      "sailOrBoardNumber": "1743",
+      "club": "TASC/RPAYC/B16s",
+      "grossScore": 64.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(18.0)",
+          "score": 18.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Zachary Tait",
+      "sailorId": "0b2ef30b-3fd7-5beb-8137-07340ecf5ea3",
+      "resultId": "e382ce85-25b3-5074-b861-24578fbc4c84",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "fd904d2d-3174-566c-987e-7c8a1deca5b2",
+          "sailorId": "0b2ef30b-3fd7-5beb-8137-07340ecf5ea3",
+          "sourceName": "Zachary Tait",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Zachary Tait; historic sail 1743; club TASC/RPAYC/B16s. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 8,
+      "name": "Astrid Nixey",
+      "sailOrBoardNumber": "1851",
+      "club": "HHSC",
+      "grossScore": 63.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(15.0)",
+          "score": 15.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Astrid Nixey",
+      "sailorId": "8d491ab5-2aa9-4da4-98ba-28e3585acc4e",
+      "resultId": "84ce3b07-5f20-5cd8-aad3-8b8cace17836",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "0496718e-99a5-52c7-93ce-d1e129ad88d0",
+          "sailorId": "8d491ab5-2aa9-4da4-98ba-28e3585acc4e",
+          "sourceName": "Astrid Nixey",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Astrid Nixey; historic sail 1851; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 9,
+      "name": "Kalle Gravare",
+      "sailOrBoardNumber": "1929",
+      "club": "WSC",
+      "grossScore": 104.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(42.0 UFD)",
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Kalle Gravare",
+      "sailorId": "7b929e9d-7925-4705-94ab-d175a82bb610",
+      "resultId": "59b41369-a8f5-509f-ac6e-a50d1f708039",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "6c4075a5-c29d-5cb0-97eb-ae3c6b1c7c84",
+          "sailorId": "7b929e9d-7925-4705-94ab-d175a82bb610",
+          "sourceName": "Kalle Gravare",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Kalle Gravare; historic sail 1929; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 10,
+      "name": "Sijia Deng",
+      "sailOrBoardNumber": "1720",
+      "club": "HHSC",
+      "grossScore": 93.0,
+      "nettScore": 62.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "14.0",
+          "score": 14.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(31.0)",
+          "score": 31.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Sijia Deng",
+      "sailorId": "9f1d45de-707d-5b7e-a92c-e88596d5233d",
+      "resultId": "6678e891-9d20-5f28-b6e8-9cac70e5668d",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "942ab6bc-7a03-56e4-bb50-8113f6a4fddd",
+          "sailorId": "9f1d45de-707d-5b7e-a92c-e88596d5233d",
+          "sourceName": "Sijia Deng",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Sijia Deng; historic sail 1720; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 11,
+      "name": "Kirra Howell",
+      "sailOrBoardNumber": "1882",
+      "club": "HHSC",
+      "grossScore": 84.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(21.0)",
+          "score": 21.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Kirra Howell",
+      "sailorId": "c52c2d2b-be97-5d50-9cca-dd8499e29539",
+      "resultId": "ad4b0e69-8ffb-5e6f-a9a7-bbdef49b110a",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "57b29bbb-42a3-5ab9-91da-a4c75afe2d85",
+          "sailorId": "c52c2d2b-be97-5d50-9cca-dd8499e29539",
+          "sourceName": "Kirra Howell",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Kirra Howell; historic sail 1882; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 12,
+      "name": "Aaveer Patil-Chaudhari",
+      "sailOrBoardNumber": "1666",
+      "club": "RPAYC",
+      "grossScore": 96.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(33.0)",
+          "score": 33.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Aaveer Patil-Chaudhari",
+      "sailorId": "2763312e-4580-50b0-9dbc-d644916f8d75",
+      "resultId": "3b21656f-83ac-56ce-9953-c96688ce4fb7",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "4d6e3b92-8fe9-5b6f-a41f-b667ba6f748c",
+          "sailorId": "2763312e-4580-50b0-9dbc-d644916f8d75",
+          "sourceName": "Aaveer Patil-Chaudhari",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Aaveer Patil-Chaudhari; historic sail 1666; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 13,
+      "name": "Balthazar Roche",
+      "sailOrBoardNumber": "1931",
+      "club": "WSC/Cranbrook",
+      "grossScore": 91.0,
+      "nettScore": 64.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "3.0",
+          "score": 3.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(27.0)",
+          "score": 27.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Balthazar Roche",
+      "sailorId": "2e005437-68a4-51ab-bc8b-d377f51d55eb",
+      "resultId": "7bbdaab3-b80d-5999-a1a0-9985326d41dd",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "e8c7fc51-c440-5963-bcef-69cb2d6b464f",
+          "sailorId": "2e005437-68a4-51ab-bc8b-d377f51d55eb",
+          "sourceName": "Balthazar Roche",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Balthazar Roche; historic sail 1931; club WSC/Cranbrook. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 14,
+      "name": "Emerald Jacobsen",
+      "sailOrBoardNumber": "1846",
+      "club": "WSC",
+      "grossScore": 103.0,
+      "nettScore": 69.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(34.0)",
+          "score": 34.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Emerald Jacobsen",
+      "sailorId": "6e620e7e-5678-525f-8760-caaacf2266a9",
+      "resultId": "d68590aa-4d9d-530b-8b0f-1ddfcc3b4a45",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c67e3379-483e-5d5a-b36c-4f19e9130a8a",
+          "sailorId": "6e620e7e-5678-525f-8760-caaacf2266a9",
+          "sourceName": "Emerald Jacobsen",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Emerald Jacobsen; historic sail 1846; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 15,
+      "name": "Hamilton Zhao",
+      "sailOrBoardNumber": "1806",
+      "club": "WSC",
+      "grossScore": 106.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "1.0",
+          "score": 1.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(33.0)",
+          "score": 33.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Hamilton Zhao",
+      "sailorId": "298175a4-db74-4a70-a55c-fdd65f4d3004",
+      "resultId": "300125a8-6b44-5967-b49a-299882881796",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "7e1af023-f71e-5214-b006-51482eb696ce",
+          "sailorId": "298175a4-db74-4a70-a55c-fdd65f4d3004",
+          "sourceName": "Hamilton Zhao",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Hamilton Zhao; historic sail 1806; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 16,
+      "name": "George Pilkington",
+      "sailOrBoardNumber": "1825",
+      "club": "WSC RYCT",
+      "grossScore": 103.0,
+      "nettScore": 73.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(30.0)",
+          "score": 30.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "George Pilkington",
+      "sailorId": "0128db78-9ac9-4f9a-9c42-5db398ec5415",
+      "resultId": "09431da8-ed2f-549d-8bae-8af59fbbef5e",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "cb3fed23-fd34-5e81-a839-e80cee96cc08",
+          "sailorId": "0128db78-9ac9-4f9a-9c42-5db398ec5415",
+          "sourceName": "George Pilkington",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name George Pilkington; historic sail 1825; club WSC RYCT. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 17,
+      "name": "Ethan Wilkinson",
+      "sailOrBoardNumber": "1820",
+      "club": "HHSC",
+      "grossScore": 118.0,
+      "nettScore": 76.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(42.0 UFD)",
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "13.0",
+          "score": 13.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Ethan Wilkinson",
+      "sailorId": "75d11452-5b81-5de3-9776-14179aa88951",
+      "resultId": "6007feba-6c6e-55d9-8ce0-1661f6e74526",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "8e69dff1-898d-5b5d-83d3-51f2fb3925f1",
+          "sailorId": "75d11452-5b81-5de3-9776-14179aa88951",
+          "sourceName": "Ethan Wilkinson",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Ethan Wilkinson; historic sail 1820; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 18,
+      "name": "Hiro Jacobsen",
+      "sailOrBoardNumber": "1845",
+      "club": "WSC",
+      "grossScore": 107.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "5.0",
+          "score": 5.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(30.0)",
+          "score": 30.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Hiro Jacobsen",
+      "sailorId": "07344ea1-1ecc-552c-bbf8-9e2f502e579f",
+      "resultId": "e75a278a-be28-599f-abce-b6f338950738",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "0c8180af-453c-55f5-b063-970c47398ebc",
+          "sailorId": "07344ea1-1ecc-552c-bbf8-9e2f502e579f",
+          "sourceName": "Hiro Jacobsen",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Hiro Jacobsen; historic sail 1845; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 19,
+      "name": "Luca De Giosa",
+      "sailOrBoardNumber": "1920",
+      "club": "HHSC",
+      "grossScore": 119.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "4.0",
+          "score": 4.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0 UFD)",
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Luca De Giosa",
+      "sailorId": "5a61d861-917e-55b9-85db-9c122fcc9183",
+      "resultId": "d39e64ab-173c-50a6-859d-9bd24e17d937",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "1af1d7a1-ad7b-59ed-bb9b-1c6bb7ed2bac",
+          "sailorId": "5a61d861-917e-55b9-85db-9c122fcc9183",
+          "sourceName": "Luca De Giosa",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Luca De Giosa; historic sail 1920; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 20,
+      "name": "Victoria Lin",
+      "sailOrBoardNumber": "1921",
+      "club": "RPAYC",
+      "grossScore": 115.0,
+      "nettScore": 88.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(27.0)",
+          "score": 27.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "8.0",
+          "score": 8.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Victoria Lin",
+      "sailorId": "1366873d-9230-48ae-9dc3-6ef8e8355301",
+      "resultId": "8687c1cf-50af-5c18-8e01-856d2fb3fe82",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "81484f3c-5e08-5c35-91fe-8976b3ffcd61",
+          "sailorId": "1366873d-9230-48ae-9dc3-6ef8e8355301",
+          "sourceName": "Victoria Lin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Victoria Lin; historic sail 1921; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 21,
+      "name": "Tom Griffiths",
+      "sailOrBoardNumber": "1744",
+      "club": "HHSC",
+      "grossScore": 112.0,
+      "nettScore": 88.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "10.0",
+          "score": 10.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "23.0",
+          "score": 23.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(24.0)",
+          "score": 24.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Tom Griffiths",
+      "sailorId": "30880421-1dc4-4a14-9c6b-8c00de39e4d8",
+      "resultId": "811ac8be-2f95-58a3-a6c8-9bce86edce0f",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "76a10039-7559-5e60-9aa4-5ca4a7e2a3c0",
+          "sailorId": "30880421-1dc4-4a14-9c6b-8c00de39e4d8",
+          "sourceName": "Tom Griffiths",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Tom Griffiths; historic sail 1744; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 22,
+      "name": "Seb Tucker",
+      "sailOrBoardNumber": "1771",
+      "club": "WSC",
+      "grossScore": 121.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(31.0)",
+          "score": 31.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Seb Tucker",
+      "sailorId": "a8621760-ffb6-4283-8e2e-12bb7890d8a4",
+      "resultId": "30c5d38a-d0f9-595c-95f1-44f41b340fd2",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "412744e4-c862-5edf-9655-f293c0c7bdb8",
+          "sailorId": "a8621760-ffb6-4283-8e2e-12bb7890d8a4",
+          "sourceName": "Seb Tucker",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Seb Tucker; historic sail 1771; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 23,
+      "name": "Oliver Morris",
+      "sailOrBoardNumber": "1822",
+      "club": "rpayc",
+      "grossScore": 132.0,
+      "nettScore": 97.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(35.0)",
+          "score": 35.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "9.0",
+          "score": 9.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Oliver Morris",
+      "sailorId": "ace08e16-dbb9-59e3-bb48-7c4e2fe4c0f8",
+      "resultId": "adde59cb-1fc6-5a8e-a41e-254c71a40f3f",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "5c32d15e-5fc1-5d7e-9542-3072a426b35d",
+          "sailorId": "ace08e16-dbb9-59e3-bb48-7c4e2fe4c0f8",
+          "sourceName": "Oliver Morris",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Oliver Morris; historic sail 1822; club rpayc. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 24,
+      "name": "Yufu Wang",
+      "sailOrBoardNumber": "1930",
+      "club": "WSC",
+      "grossScore": 135.0,
+      "nettScore": 102.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "2.0",
+          "score": 2.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "(33.0)",
+          "score": 33.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 5,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Yufu Wang",
+      "sailorId": "f5f68b83-bb5b-4523-963f-3f367d5b4771",
+      "resultId": "0003d748-425a-5d34-accf-e4762a166b2f",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "cc43a46f-4817-5739-b805-35af1da5f394",
+          "sailorId": "f5f68b83-bb5b-4523-963f-3f367d5b4771",
+          "sourceName": "Yufu Wang",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Yufu Wang; historic sail 1930; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 25,
+      "name": "Jack McGuire",
+      "sailOrBoardNumber": "1911",
+      "club": "SYC",
+      "grossScore": 148.0,
+      "nettScore": 110.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(38.0)",
+          "score": 38.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jack McGuire",
+      "sailorId": "9e8f469d-4386-46dc-8533-5babc753dd05",
+      "resultId": "85ab5619-8e5a-526a-af84-2d09f00a5f40",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "ad55cfcb-7789-5a8e-a3bf-1dbcb8669afa",
+          "sailorId": "9e8f469d-4386-46dc-8533-5babc753dd05",
+          "sourceName": "Jack McGuire",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Jack McGuire; historic sail 1911; club SYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 26,
+      "name": "Sam Darbyshire",
+      "sailOrBoardNumber": "1620",
+      "club": "RQYS",
+      "grossScore": 147.0,
+      "nettScore": 111.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(36.0)",
+          "score": 36.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "35.0",
+          "score": 35.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "7.0",
+          "score": 7.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Sam Darbyshire",
+      "sailorId": "078bc565-17ae-461c-a08d-1330f11517a8",
+      "resultId": "c94cf194-e45a-598c-8316-ba6bfb2956c3",
+      "identityBasis": "Reviewed source name variant matched to Samuel Darbyshire using exact historic Optimist sail 1620. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "2278f427-ed6c-5429-b4b5-8865152a0fa7",
+          "sailorId": "078bc565-17ae-461c-a08d-1330f11517a8",
+          "sourceName": "Sam Darbyshire",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Sam Darbyshire; historic sail 1620; club RQYS. Reviewed source name variant matched to Samuel Darbyshire using exact historic Optimist sail 1620. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 27,
+      "name": "Milton Li",
+      "sailOrBoardNumber": "1559",
+      "club": "HHSC",
+      "grossScore": 153.0,
+      "nettScore": 117.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(36.0)",
+          "score": 36.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "20.0",
+          "score": 20.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Milton Li",
+      "sailorId": "51a80a27-8665-4db2-afb4-0940cbc20376",
+      "resultId": "0ace051c-841e-5a49-9fc2-ebf11c77bbcd",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c0c3401d-b410-5171-9106-48776bdf9b81",
+          "sailorId": "51a80a27-8665-4db2-afb4-0940cbc20376",
+          "sourceName": "Milton Li",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Milton Li; historic sail 1559; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 28,
+      "name": "Lavinia Liu",
+      "sailOrBoardNumber": "1866",
+      "club": "RPAYC",
+      "grossScore": 147.0,
+      "nettScore": 118.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "(29.0)",
+          "score": 29.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 3,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "15.0",
+          "score": 15.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "21.0",
+          "score": 21.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lavinia Liu",
+      "sailorId": "f26ce470-48a0-419e-967e-b1e936dad712",
+      "resultId": "7a6f35c0-52f9-55ce-a587-e713ead3cfda",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "780e983b-c59f-5b84-88a9-058a65e6f6ae",
+          "sailorId": "f26ce470-48a0-419e-967e-b1e936dad712",
+          "sourceName": "Lavinia Liu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Lavinia Liu; historic sail 1866; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 29,
+      "name": "Addison Greenwood",
+      "sailOrBoardNumber": "1909",
+      "club": "SYC RQYS",
+      "grossScore": 158.0,
+      "nettScore": 119.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(39.0)",
+          "score": 39.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Addison Greenwood",
+      "sailorId": "c6799062-b644-bf9b-cd0c-6f0c43ee8812",
+      "resultId": "b7966b11-1ae1-5ca8-b629-2a55b42a8ed2",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "b0fca78b-0402-53f7-a3b2-dbdf9e8fb32a",
+          "sailorId": "c6799062-b644-bf9b-cd0c-6f0c43ee8812",
+          "sourceName": "Addison Greenwood",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Addison Greenwood; historic sail 1909; club SYC RQYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 30,
+      "name": "Luca von Bibra",
+      "sailOrBoardNumber": "1604",
+      "club": "RQYS",
+      "grossScore": 155.0,
+      "nettScore": 120.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(35.0)",
+          "score": 35.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "12.0",
+          "score": 12.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "35.0",
+          "score": 35.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "30.0",
+          "score": 30.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "11.0",
+          "score": 11.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Luca von Bibra",
+      "sailorId": "10ebfe56-5763-4270-bb43-ad01e524c0ca",
+      "resultId": "e2d4214f-f2d8-5fed-bc50-7567332b20d8",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "93d396ae-c6c2-5272-a441-9e58ec966ded",
+          "sailorId": "10ebfe56-5763-4270-bb43-ad01e524c0ca",
+          "sourceName": "Luca von Bibra",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Luca von Bibra; historic sail 1604; club RQYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 31,
+      "name": "Thomas Maguire",
+      "sailOrBoardNumber": "1747",
+      "club": "HHSC",
+      "grossScore": 149.0,
+      "nettScore": 120.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "17.0",
+          "score": 17.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(29.0)",
+          "score": 29.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Thomas Maguire",
+      "sailorId": "0847caf3-b1c2-50e9-9956-a38413271422",
+      "resultId": "e9990c47-9f12-5e3a-a344-d8f1bfa996cc",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "d50235e6-b125-5874-bf78-0d6a3d945e5f",
+          "sailorId": "0847caf3-b1c2-50e9-9956-a38413271422",
+          "sourceName": "Thomas Maguire",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Thomas Maguire; historic sail 1747; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 32,
+      "name": "Ruben Steel",
+      "sailOrBoardNumber": "1879",
+      "club": "RPAYC",
+      "grossScore": 170.0,
+      "nettScore": 128.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "6.0",
+          "score": 6.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "16.0",
+          "score": 16.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0 DNC)",
+          "score": 42.0,
+          "code": "DNC",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "42.0 DNC",
+          "score": 42.0,
+          "code": "DNC",
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Ruben Steel",
+      "sailorId": "59556a86-6d0f-4500-8a46-4ab111fe1479",
+      "resultId": "24bf962b-0364-5fc7-8a3e-fe88931d9ee5",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "afbe05c7-6c39-5b12-9826-c7e1cfa0d410",
+          "sailorId": "59556a86-6d0f-4500-8a46-4ab111fe1479",
+          "sourceName": "Ruben Steel",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Ruben Steel; historic sail 1879; club RPAYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 33,
+      "name": "Jamie Lee Mason",
+      "sailOrBoardNumber": "1449",
+      "club": "WSC",
+      "grossScore": 163.0,
+      "nettScore": 132.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(31.0)",
+          "score": 31.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "22.0",
+          "score": 22.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Jamie Lee Mason",
+      "sailorId": "2625b7b9-c7eb-59ca-9d5a-d17f47546759",
+      "resultId": "5f7ad354-9b16-5240-b152-fde922dc6e97",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "a8ceb19c-f552-57cd-8bb7-c05b0f0bbdd1",
+          "sailorId": "2625b7b9-c7eb-59ca-9d5a-d17f47546759",
+          "sourceName": "Jamie Lee Mason",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Jamie Lee Mason; historic sail 1449; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 34,
+      "name": "Emma Tomkins",
+      "sailOrBoardNumber": "1781",
+      "club": "HHSC",
+      "grossScore": 167.0,
+      "nettScore": 133.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(34.0)",
+          "score": 34.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "27.0",
+          "score": 27.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "24.0",
+          "score": 24.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "18.0",
+          "score": 18.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Emma Tomkins",
+      "sailorId": "0f1eb283-e53c-533e-8113-55753e658647",
+      "resultId": "f7578cc8-2dcd-5167-ada1-7d8a21730efc",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "0928aa35-d48a-5b88-b3be-8650934f80aa",
+          "sailorId": "0f1eb283-e53c-533e-8113-55753e658647",
+          "sourceName": "Emma Tomkins",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Emma Tomkins; historic sail 1781; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 35,
+      "name": "Lucy Lin",
+      "sailOrBoardNumber": "1624",
+      "club": "WSC",
+      "grossScore": 181.0,
+      "nettScore": 144.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "31.0",
+          "score": 31.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "25.0",
+          "score": 25.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "29.0",
+          "score": 29.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "(37.0)",
+          "score": 37.0,
+          "code": null,
+          "discarded": true
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lucy Lin",
+      "sailorId": "1b22f933-9817-4f8b-a366-11315c5bc283",
+      "resultId": "4ab6d8ac-5718-56b2-a03e-5e91adb4c819",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "a7ce1f85-b42c-5361-8a4e-0d577900e514",
+          "sailorId": "1b22f933-9817-4f8b-a366-11315c5bc283",
+          "sourceName": "Lucy Lin",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Lucy Lin; historic sail 1624; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 37,
+      "name": "Norah Bonjean",
+      "sailOrBoardNumber": "1532",
+      "club": "Wsc",
+      "grossScore": 208.0,
+      "nettScore": 171.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "32.0",
+          "score": 32.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(37.0)",
+          "score": 37.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "35.0",
+          "score": 35.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "35.0",
+          "score": 35.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Norah Bonjean",
+      "sailorId": "8d01c0ff-f163-55fe-b538-2d5ece68fa04",
+      "resultId": "c17f1b5e-b15f-5e66-89b6-4b516fae90b3",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "c037b40b-5981-532a-99a0-104504d4d4be",
+          "sailorId": "8d01c0ff-f163-55fe-b538-2d5ece68fa04",
+          "sourceName": "Norah Bonjean",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Norah Bonjean; historic sail 1532; club Wsc. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 38,
+      "name": "Liam Dixon",
+      "sailOrBoardNumber": "1003",
+      "club": "WSC",
+      "grossScore": 219.0,
+      "nettScore": 177.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "28.0",
+          "score": 28.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0 UFD)",
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Liam Dixon",
+      "sailorId": "b64a0c9f-2c4d-5b02-ad01-b8cea75db517",
+      "resultId": "3995f296-d8e7-58b1-b19b-01bfc239e303",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "1eb0d5c4-7cbf-56df-b166-d4126689e5cc",
+          "sailorId": "b64a0c9f-2c4d-5b02-ad01-b8cea75db517",
+          "sourceName": "Liam Dixon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Liam Dixon; historic sail 1003; club WSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 39,
+      "name": "Lyla Greenwood",
+      "sailOrBoardNumber": "1908",
+      "club": "SYC",
+      "grossScore": 228.0,
+      "nettScore": 187.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "(41.0)",
+          "score": 41.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 2,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "41.0",
+          "score": 41.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lyla Greenwood",
+      "sailorId": "a1bac017-5467-45ce-9ddc-53c13bcf2852",
+      "resultId": "3810b31d-3d10-5d22-abcc-c3018de1510e",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "01b73e09-bdc0-5f53-b4cc-1e234d38851e",
+          "sailorId": "a1bac017-5467-45ce-9ddc-53c13bcf2852",
+          "sourceName": "Lyla Greenwood",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Lyla Greenwood; historic sail 1908; club SYC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 40,
+      "name": "Maxwell Boulton",
+      "sailOrBoardNumber": "1789",
+      "club": "RqYS",
+      "grossScore": 230.0,
+      "nettScore": 189.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "(41.0)",
+          "score": 41.0,
+          "code": null,
+          "discarded": true
+        },
+        {
+          "raceNumber": 4,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "36.0",
+          "score": 36.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 6,
+          "raw": "38.0",
+          "score": 38.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Maxwell Boulton",
+      "sailorId": "39a4c7ef-6f5f-4988-abda-887a645cf3ff",
+      "resultId": "fc7fe34f-51dd-54f5-872c-e3fd2abc8492",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "6abf3e79-820b-50f9-9293-30e7906a1645",
+          "sailorId": "39a4c7ef-6f5f-4988-abda-887a645cf3ff",
+          "sourceName": "Maxwell Boulton",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Maxwell Boulton; historic sail 1789; club RqYS. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    },
+    {
+      "rank": 41,
+      "name": "Taylor Lu",
+      "sailOrBoardNumber": "1348",
+      "club": "HHSC",
+      "grossScore": 238.0,
+      "nettScore": 196.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "37.0",
+          "score": 37.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "39.0",
+          "score": 39.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0 DNC)",
+          "score": 42.0,
+          "code": "DNC",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "42.0 DNC",
+          "score": 42.0,
+          "code": "DNC",
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Taylor Lu",
+      "sailorId": "37139e59-1f6d-56b6-b601-db80331375f1",
+      "resultId": "7d449581-807e-5fce-95a6-398947777c43",
+      "identityBasis": "Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged.",
+      "participants": [
+        {
+          "id": "a5acc365-d13e-546e-9542-8031ef8f26b2",
+          "sailorId": "37139e59-1f6d-56b6-b601-db80331375f1",
+          "sourceName": "Taylor Lu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official results HTML used; no official results PDF located after organiser/class noticeboard and web search. Source: https://www.austeamsailing.com/events/nswstates2025.htm. Optimist Open; source name Taylor Lu; historic sail 1348; club HHSC. Unique normalized full name, or exact-name collision disambiguated by source sail. Existing profile unchanged. Source race labels retained: R1, R2, R3, R4, R5, R6. No birth year inferred."
+    }
+  ],
+  "importedEntryCount": 40,
+  "deferredEntryCount": 1,
+  "pendingEntries": [
+    {
+      "rank": 36,
+      "name": "Lily Cantwell",
+      "sailOrBoardNumber": "1868",
+      "club": "RBYC",
+      "grossScore": 194.0,
+      "nettScore": 152.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "raw": "26.0",
+          "score": 26.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 2,
+          "raw": "19.0",
+          "score": 19.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 3,
+          "raw": "34.0",
+          "score": 34.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 4,
+          "raw": "40.0",
+          "score": 40.0,
+          "code": null,
+          "discarded": false
+        },
+        {
+          "raceNumber": 5,
+          "raw": "(42.0 UFD)",
+          "score": 42.0,
+          "code": "UFD",
+          "discarded": true
+        },
+        {
+          "raceNumber": 6,
+          "raw": "33.0",
+          "score": 33.0,
+          "code": null,
+          "discarded": false
+        }
+      ],
+      "gender": null,
+      "nationality": null,
+      "officialBirthYear": null,
+      "sourceName": "Lily Cantwell",
+      "reason": "Close/ambiguous existing identity; held.",
+      "candidates": [
+        {
+          "id": "6530fa88-9a13-52e8-a9ab-ad59c577560a",
+          "name": "Holly Cantwell",
+          "sail": "IRL 1641",
+          "similarity": 0.88
+        },
+        {
+          "id": "f4fad826-06d6-5bb0-90a1-203230f2ec03",
+          "name": "Riley Cantwell",
+          "sail": "",
+          "similarity": 0.88
+        },
+        {
+          "id": "c6023ffb-498a-485f-bc39-ce179b6f026a",
+          "name": "Maya Cantwell",
+          "sail": "AUS 1850",
+          "similarity": 0.75
+        }
+      ]
+    }
+  ],
+  "publicSummary": "Partial import: 40 of 41 entries; 1 entries awaiting identity review. Published overall standings; source race labels R1, R2, R3, R4, R5, R6 retained. Excluded from Singapore rankings.",
+  "identityReview": {
+    "method": "Full names; exact source sails disambiguate collisions; close names held. Victorian initials corroborated with official entry list."
+  },
+  "profilePreflight": [
+    {
+      "id": "0128db78-9ac9-4f9a-9c42-5db398ec5415",
+      "name": "George Pilkington",
+      "handle": "george-pilkington-0b8nriu",
+      "sailNumber": "0",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "07344ea1-1ecc-552c-bbf8-9e2f502e579f",
+      "name": "Hiro Jacobsen",
+      "handle": "hiro-jacobsen-asians25",
+      "sailNumber": "AUS 1845",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "078bc565-17ae-461c-a08d-1330f11517a8",
+      "name": "Samuel Darbyshire",
+      "handle": "samuel-darbyshire-figml1e",
+      "sailNumber": "1620",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RQYS",
+      "birthYear": null
+    },
+    {
+      "id": "0b2ef30b-3fd7-5beb-8137-07340ecf5ea3",
+      "name": "Zachary Tait",
+      "handle": "zachary-tait-asians25",
+      "sailNumber": "AUS 1743",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "0f1eb283-e53c-533e-8113-55753e658647",
+      "name": "Emma Tomkins",
+      "handle": "emma-tomkins-asians25",
+      "sailNumber": "AUS 1781",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "10ebfe56-5763-4270-bb43-ad01e524c0ca",
+      "name": "Luca Von Bibra",
+      "handle": "luca-von-bibra-anz26-10ebfe",
+      "sailNumber": "1604",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RQYS",
+      "birthYear": null
+    },
+    {
+      "id": "1366873d-9230-48ae-9dc3-6ef8e8355301",
+      "name": "Victoria Lin",
+      "handle": "victoria-lin-asianopti-aus",
+      "sailNumber": "AUS 1921",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "1b22f933-9817-4f8b-a366-11315c5bc283",
+      "name": "Lucy Lin",
+      "handle": "lucy-lin-anz26-1b22f9",
+      "sailNumber": "1938",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "F",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "2625b7b9-c7eb-59ca-9d5a-d17f47546759",
+      "name": "Jamie Lee Mason",
+      "handle": "opti-aus-jamie-lee-mason-1449",
+      "sailNumber": "1449",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "2763312e-4580-50b0-9dbc-d644916f8d75",
+      "name": "Aaveer Patil-Chaudhari",
+      "handle": "420-aus-aaveer-patil-chaudhari-54351",
+      "sailNumber": "54351",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "Rpayc",
+      "birthYear": null
+    },
+    {
+      "id": "298175a4-db74-4a70-a55c-fdd65f4d3004",
+      "name": "Hamilton Zhao",
+      "handle": "hamilton-zhao-anz26-298175",
+      "sailNumber": "1640",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "2e005437-68a4-51ab-bc8b-d377f51d55eb",
+      "name": "Balthazar Roche",
+      "handle": "balthazar-roche-asians25",
+      "sailNumber": "AUS 1931",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "30880421-1dc4-4a14-9c6b-8c00de39e4d8",
+      "name": "Tom Griffiths",
+      "handle": "tom-griffiths-fd96wyi",
+      "sailNumber": "1744",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "39a4c7ef-6f5f-4988-abda-887a645cf3ff",
+      "name": "Maxwell Boulton",
+      "handle": "maxwell-boulton-anz26-39a4c7",
+      "sailNumber": "1868",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RQYS",
+      "birthYear": null
+    },
+    {
+      "id": "51a80a27-8665-4db2-afb4-0940cbc20376",
+      "name": "Milton Li",
+      "handle": "milton-li-anz26-51a80a",
+      "sailNumber": "1559",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "HHSC",
+      "birthYear": null
+    },
+    {
+      "id": "59556a86-6d0f-4500-8a46-4ab111fe1479",
+      "name": "Ruben Steel",
+      "handle": "ruben-steel-0ajhhtd",
+      "sailNumber": "0",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": 2011
+    },
+    {
+      "id": "5a61d861-917e-55b9-85db-9c122fcc9183",
+      "name": "Luca De Giosa",
+      "handle": "luca-de-giosa-euro26-5a61d8",
+      "sailNumber": "AUS 1920",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "Imported official result",
+      "birthYear": null
+    },
+    {
+      "id": "6e620e7e-5678-525f-8760-caaacf2266a9",
+      "name": "Emerald Jacobsen",
+      "handle": "emerald-jacobsen-asians25",
+      "sailNumber": "AUS 1846",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "73a082e4-e3f8-48d7-a5fd-ef0f587867ea",
+      "name": "William Rogers",
+      "handle": "william-rogers-anz26-73a082",
+      "sailNumber": "1847",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "75d11452-5b81-5de3-9776-14179aa88951",
+      "name": "Ethan Wilkinson",
+      "handle": "ethan-wilkinson-asians25",
+      "sailNumber": "AUS 1820",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "7b929e9d-7925-4705-94ab-d175a82bb610",
+      "name": "Kalle Gravare",
+      "handle": "kalle-gravare-anz26-7b929e",
+      "sailNumber": "1929",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "WSC",
+      "birthYear": null
+    },
+    {
+      "id": "8d01c0ff-f163-55fe-b538-2d5ece68fa04",
+      "name": "Norah Bonjean",
+      "handle": "opti-aus-norah-bonjean-1532",
+      "sailNumber": "1532",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": null,
+      "club": "Wsc",
+      "birthYear": null
+    },
+    {
+      "id": "8d491ab5-2aa9-4da4-98ba-28e3585acc4e",
+      "name": "Astrid Nixey",
+      "handle": "astrid-nixey-asianopti-aus",
+      "sailNumber": "AUS 1851",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "9e8f469d-4386-46dc-8533-5babc753dd05",
+      "name": "Jack Mcguire",
+      "handle": "jack-mcguire-anz26-9e8f46",
+      "sailNumber": "1936",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RQYS/SYC",
+      "birthYear": 2013
+    },
+    {
+      "id": "9f1d45de-707d-5b7e-a92c-e88596d5233d",
+      "name": "Sijia Deng",
+      "handle": "sijia-deng-asians25",
+      "sailNumber": "AUS 1720",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "a1bac017-5467-45ce-9ddc-53c13bcf2852",
+      "name": "Lyla Greenwood",
+      "handle": "lyla-greenwood-anz26-a1bac0",
+      "sailNumber": "1909",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "RQYS SYC",
+      "birthYear": null
+    },
+    {
+      "id": "a8621760-ffb6-4283-8e2e-12bb7890d8a4",
+      "name": "Seb Tucker",
+      "handle": "seb-tucker-09584cg",
+      "sailNumber": "0",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "ace08e16-dbb9-59e3-bb48-7c4e2fe4c0f8",
+      "name": "Oliver Morris",
+      "handle": "opti-aus-oliver-morris-1822",
+      "sailNumber": "1822",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "BSYC",
+      "birthYear": null
+    },
+    {
+      "id": "b2f3bfeb-f969-518e-b631-70da18fadc0d",
+      "name": "William Harris",
+      "handle": "william-harris-asians25",
+      "sailNumber": "AUS 1932",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": 2012
+    },
+    {
+      "id": "b64cc6ae-a6e8-47a4-b702-b067d02e1f19",
+      "name": "Jayden Wang",
+      "handle": "jayden-wang-anz26-b64cc6",
+      "sailNumber": "1748",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "b6eb51a6-5190-41d7-a8c5-be1f4817428d",
+      "name": "Joshua Dale",
+      "handle": "joshua-dale-07254wk",
+      "sailNumber": "0",
+      "sailNumberIlca4": null,
+      "nationality": "SGP",
+      "gender": "M",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "c34abc0a-3cf5-510b-be46-a2f4f07d6e23",
+      "name": "Walter Heeley",
+      "handle": "walter-heeley-worlds26-c34abc",
+      "sailNumber": "AUS 1575",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "Imported official result",
+      "birthYear": null
+    },
+    {
+      "id": "c52c2d2b-be97-5d50-9cca-dd8499e29539",
+      "name": "Kirra Howell",
+      "handle": "kirra-howell-asians25",
+      "sailNumber": "AUS 1882",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "c6799062-b644-bf9b-cd0c-6f0c43ee8812",
+      "name": "Addison Greenwood",
+      "handle": "ilca4-worlds26-aus-addison-greenwood-282f2f",
+      "sailNumber": "AUS 206018",
+      "sailNumberIlca4": "206018",
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "N/A",
+      "birthYear": null
+    },
+    {
+      "id": "f26ce470-48a0-419e-967e-b1e936dad712",
+      "name": "Lavinia Liu",
+      "handle": "lavinia-liu-anz26-f26ce4",
+      "sailNumber": "1866",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "F",
+      "club": "ROAYC",
+      "birthYear": null
+    },
+    {
+      "id": "f5f68b83-bb5b-4523-963f-3f367d5b4771",
+      "name": "Yufu Wang",
+      "handle": "yufu-wang-anz26-f5f68b",
+      "sailNumber": "1930",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "RPAYC",
+      "birthYear": null
+    },
+    {
+      "id": "fe55751a-320e-48f8-92fd-fd40bca74292",
+      "name": "Reid Martin",
+      "handle": "reid-martin-anz26-fe5575",
+      "sailNumber": "1728",
+      "sailNumberIlca4": null,
+      "nationality": "AUS",
+      "gender": "M",
+      "club": "PDSC",
+      "birthYear": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "0847caf3-b1c2-50e9-9956-a38413271422",
+      "name": "Thomas MAGUIRE",
+      "handle": "thomas-maguire-aus25-0847ca",
+      "sailNumber": "1747",
+      "sailNumberIlca4": null,
+      "club": "HHSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "b64a0c9f-2c4d-5b02-ad01-b8cea75db517",
+      "name": "Liam DIXON",
+      "handle": "liam-dixon-aus25-b64a0c",
+      "sailNumber": "1003",
+      "sailNumberIlca4": null,
+      "club": "WSC",
+      "gender": null,
+      "nationality": null
+    },
+    {
+      "id": "37139e59-1f6d-56b6-b601-db80331375f1",
+      "name": "Taylor LU",
+      "handle": "taylor-lu-aus25-37139e",
+      "sailNumber": "1348",
+      "sailNumberIlca4": null,
+      "club": "HHSC",
+      "gender": "F",
+      "nationality": null
+    }
+  ]
+}

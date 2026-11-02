@@ -1,0 +1,639 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "902a5f6d-c9fd-5f62-8dd7-aafbe28e045b",
+    "slug": "trat-regatta-2025",
+    "name": "Trat Regatta 2025",
+    "startDate": "2025-05-09",
+    "endDate": "2025-05-11",
+    "venue": "Laem Sok, Trat, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "fa19c452-5c2b-513f-92dd-e3d98523e1e0",
+    "slug": "trat-regatta-2025-ilca4",
+    "name": "Trat Regatta 2025 \u2014 ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 3,
+    "totalFleetSize": 9,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/141364",
+    "title": "Trat Regatta 2025 \u2014 ILCA 4 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 1,
+      "name": "CHANATIP TONGGLUM",
+      "sailOrBoardNumber": "217321",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 4.0,
+      "nettScore": 4.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d9337400-b506-5662-9c3c-9c657c5c947b",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "94ee0d02-3e4a-5f92-9880-df746a518d7e",
+      "participants": [
+        {
+          "id": "1d5fec00-6d43-51cd-8259-f44ab17d99ec",
+          "sailorId": "d9337400-b506-5662-9c3c-9c657c5c947b",
+          "sourceName": "CHANATIP TONGGLUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: CHANATIP TONGGLUM; historic sail: 217321; club: YRAT; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 2,
+      "name": "JEREMY EIN",
+      "sailOrBoardNumber": "221853",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 7.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "64a16ae0-dd22-57c2-9f39-cbcae2141900",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b786af1c-c396-5463-95c2-a5bd4a811fc1",
+      "participants": [
+        {
+          "id": "03847b8c-697f-5946-ad41-197d6613a72c",
+          "sailorId": "64a16ae0-dd22-57c2-9f39-cbcae2141900",
+          "sourceName": "JEREMY EIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: JEREMY EIN; historic sail: 221853; club: ACDC.SC; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 3,
+      "name": "PACHARAPOL RUMVISAI",
+      "sailOrBoardNumber": "THA220239",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 8.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8d698210-1840-591d-b5b0-b45f0781f2ff",
+      "participants": [
+        {
+          "id": "60a8aa98-4d75-5efc-a6c8-55e75bde2fde",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: PACHARAPOL RUMVISAI; historic sail: THA220239; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 4,
+      "name": "PHUMSAMUT WATETAKARN",
+      "sailOrBoardNumber": "215068",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 12.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "ef51229e-76d0-5295-ab12-5b7250335f85",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b5354ac2-2aff-5470-97c0-b55b7399d723",
+      "participants": [
+        {
+          "id": "62e50609-8453-5294-9f52-f9fc6bddaf6a",
+          "sailorId": "ef51229e-76d0-5295-ab12-5b7250335f85",
+          "sourceName": "PHUMSAMUT WATETAKARN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: PHUMSAMUT WATETAKARN; historic sail: 215068; club: YRAT; year field: 2011. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 5,
+      "name": "THITIWORADA JOHNJAITRONG",
+      "sailOrBoardNumber": "220240",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f021fcff-456b-555b-a3e8-a005f34d86b5",
+      "participants": [
+        {
+          "id": "dbeec4d3-bffe-5a37-a7a2-92fb3f9e8bc1",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "THITIWORADA JOHNJAITRONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: THITIWORADA JOHNJAITRONG; historic sail: 220240; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 6,
+      "name": "KRITKAMON PRASERTNOPAKUN",
+      "sailOrBoardNumber": "221584",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 17.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "5f39d0df-db70-5440-ad1a-7ee6f2595bad",
+      "participants": [
+        {
+          "id": "41cb1a27-57ec-5e79-add1-e5cb93ff2833",
+          "sailorId": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+          "sourceName": "KRITKAMON PRASERTNOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: KRITKAMON PRASERTNOPAKUN; historic sail: 221584; club: ACDC.SC; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 7,
+      "name": "THEO REMY SAMANE MAULAVE",
+      "sailOrBoardNumber": "215073",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "dfea9eff-816e-5aaf-b38c-2223966d7a87",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "fd31b578-6983-5c39-846b-c3b4e2b90bbe",
+      "participants": [
+        {
+          "id": "aab8bf01-5ad4-5752-9bd9-bda508a020c5",
+          "sailorId": "dfea9eff-816e-5aaf-b38c-2223966d7a87",
+          "sourceName": "THEO REMY SAMANE MAULAVE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: THEO REMY SAMANE MAULAVE; historic sail: 215073; club: YRAT; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 8,
+      "name": "KHITSANA PHETMAK",
+      "sailOrBoardNumber": "193929",
+      "club": "MR.SC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 24.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "dd386a5a-b2df-5bcb-8105-d4f4bcdb315b",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "fadb13bb-c344-5762-bfb7-fd770b7a5638",
+      "participants": [
+        {
+          "id": "0581c41e-7571-53c0-a145-386a590b397b",
+          "sailorId": "dd386a5a-b2df-5bcb-8105-d4f4bcdb315b",
+          "sourceName": "KHITSANA PHETMAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: KHITSANA PHETMAK; historic sail: 193929; club: MR.SC; year field: 2012. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "trat-regatta-2025",
+      "sourceDocument": 141364,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 9,
+      "name": "KANKAO PEUNGCHIMPLEE",
+      "sailOrBoardNumber": "845119",
+      "club": "ACDC.SC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 27.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e5a2cd0f-d08b-5984-9b75-e19f4242e1ff",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "8d955559-0c5e-5d92-be68-3fe0547311e8",
+      "participants": [
+        {
+          "id": "91ade367-062f-5ded-83d3-2f3122197b80",
+          "sailorId": "e5a2cd0f-d08b-5984-9b75-e19f4242e1ff",
+          "sourceName": "KANKAO PEUNGCHIMPLEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: KANKAO PEUNGCHIMPLEE; historic sail: 845119; club: ACDC.SC; year field: 2011. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 9,
+  "deferredEntryCount": 0,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "F",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": "M",
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+      "name": "Kritkamon Prasertnopakun",
+      "handle": "kritkamon-prasertnopakun-sr25-2135c9",
+      "sailNumber": "",
+      "sailNumberIlca4": "221584",
+      "nationality": null,
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "d9337400-b506-5662-9c3c-9c657c5c947b",
+      "name": "Chanatip Tongglum",
+      "handle": "chanatip-tongglum-sr25-d93374",
+      "sailNumber": "",
+      "sailNumberIlca4": "217321",
+      "nationality": null,
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "64a16ae0-dd22-57c2-9f39-cbcae2141900",
+      "name": "Jeremy Ein",
+      "handle": "jeremy-ein-sr25-64a16a",
+      "sailNumber": "",
+      "sailNumberIlca4": "221853",
+      "nationality": null,
+      "gender": "M",
+      "club": "ACDC.SC"
+    },
+    {
+      "id": "ef51229e-76d0-5295-ab12-5b7250335f85",
+      "name": "Phumsamut Watetakarn",
+      "handle": "phumsamut-watetakarn-sr25-ef5122",
+      "sailNumber": "",
+      "sailNumberIlca4": "215068",
+      "nationality": null,
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "dfea9eff-816e-5aaf-b38c-2223966d7a87",
+      "name": "Theo Remy Samane Maulave",
+      "handle": "theo-remy-samane-maulave-sr25-dfea9e",
+      "sailNumber": "",
+      "sailNumberIlca4": "215073",
+      "nationality": null,
+      "gender": "M",
+      "club": "YRAT"
+    },
+    {
+      "id": "dd386a5a-b2df-5bcb-8105-d4f4bcdb315b",
+      "name": "Khitsana Phetmak",
+      "handle": "khitsana-phetmak-sr25-dd386a",
+      "sailNumber": "",
+      "sailNumberIlca4": "193929",
+      "nationality": null,
+      "gender": "M",
+      "club": "MR.SC"
+    },
+    {
+      "id": "e5a2cd0f-d08b-5984-9b75-e19f4242e1ff",
+      "name": "Kankao Peungchimplee",
+      "handle": "kankao-peungchimplee-sr25-e5a2cd",
+      "sailNumber": "",
+      "sailNumberIlca4": "845119",
+      "nationality": null,
+      "gender": "F",
+      "club": "ACDC.SC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

@@ -1,0 +1,483 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "4b3dd72f-e963-5f6f-861b-ca29352eb7bc",
+    "slug": "yrat-cup-series-5-2025",
+    "name": "2025 YRAT Cup Series 5",
+    "startDate": "2025-08-30",
+    "endDate": "2025-08-31",
+    "venue": "Dongtan Bay, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "06645ac7-6a03-5dcf-b0cf-dda3359e380e",
+    "slug": "yrat-cup-series-5-2025-ilca7-master",
+    "name": "2025 YRAT Cup Series 5 \u2014 ILCA 7 Master",
+    "boatClass": "ILCA 7",
+    "division": "Master",
+    "raceCount": 4,
+    "totalFleetSize": 6,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/156705",
+    "title": "2025 YRAT Cup Series 5 \u2014 ILCA 7 Master results",
+    "type": "pdf",
+    "provisional": true,
+    "publicationStatus": "provisional",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156705,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 Master",
+      "boatClass": "ILCA 7",
+      "division": "Master",
+      "rank": 1,
+      "name": "VAdm. BANPOAT NETKRACHANG",
+      "sailOrBoardNumber": "211365",
+      "club": "RTNYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1960,
+      "sourceBirthYear": "1960",
+      "grossScore": 4.0,
+      "nettScore": 4.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1b851f6a-eb86-5f45-9182-d8a232c66638",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9d033788-cc54-5dae-92c8-10aee0600714",
+      "participants": [
+        {
+          "id": "62517de5-5b5f-5558-8bf9-b0c526a4fdcd",
+          "sailorId": "1b851f6a-eb86-5f45-9182-d8a232c66638",
+          "sourceName": "VAdm. BANPOAT NETKRACHANG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 Master; page 1; source name: VAdm. BANPOAT NETKRACHANG; historic sail: 211365; club: RTNYC; year field: 1960. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156705,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 Master",
+      "boatClass": "ILCA 7",
+      "division": "Master",
+      "rank": 2,
+      "name": "Nithasn Rodhnun",
+      "sailOrBoardNumber": "180177",
+      "club": "RTNYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1957,
+      "sourceBirthYear": "1957",
+      "grossScore": 8.0,
+      "nettScore": 8.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d2d6eae8-43d4-5210-8802-4fcf0874bb13",
+      "participants": [
+        {
+          "id": "987909d1-71df-5c4e-841f-9b1d52ec1e52",
+          "sailorId": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+          "sourceName": "Nithasn Rodhnun",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 Master; page 1; source name: Nithasn Rodhnun; historic sail: 180177; club: RTNYC; year field: 1957. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156705,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 Master",
+      "boatClass": "ILCA 7",
+      "division": "Master",
+      "rank": 4,
+      "name": "Chanchai Teerapittayanon",
+      "sailOrBoardNumber": "197824",
+      "club": "RTNYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1965,
+      "sourceBirthYear": "1965",
+      "grossScore": 17.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2a5f8785-bb3a-5bbd-8d8d-a3791e39552a",
+      "participants": [
+        {
+          "id": "2a9a35d4-48de-50e5-b4e9-c2be61ac2247",
+          "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+          "sourceName": "Chanchai Teerapittayanon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 Master; page 1; source name: Chanchai Teerapittayanon; historic sail: 197824; club: RTNYC; year field: 1965. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156705,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 Master",
+      "boatClass": "ILCA 7",
+      "division": "Master",
+      "rank": 5,
+      "name": "Manat thongjiam",
+      "sailOrBoardNumber": "11",
+      "club": "RTNYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1950,
+      "sourceBirthYear": "1950",
+      "grossScore": 19.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "58b7b23a-debb-5dd7-a384-ea2fc04e1840",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "f937edca-1b08-5444-9b14-f66dbd108d46",
+      "participants": [
+        {
+          "id": "d3ce98e5-693a-530e-a3c6-464d3a386042",
+          "sailorId": "58b7b23a-debb-5dd7-a384-ea2fc04e1840",
+          "sourceName": "Manat thongjiam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 Master; page 1; source name: Manat thongjiam; historic sail: 11; club: RTNYC; year field: 1950. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156705,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 Master",
+      "boatClass": "ILCA 7",
+      "division": "Master",
+      "rank": 6,
+      "name": "Mr.Antony Grover",
+      "sailOrBoardNumber": "209889",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1970,
+      "sourceBirthYear": "1970",
+      "grossScore": 26.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "7.0 DNF"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "7.0 DNF"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "896f126d-aafb-5064-908d-ac7dac738531",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "c8f58e04-6275-507d-8341-5f76cd9e1614",
+      "participants": [
+        {
+          "id": "9d48a399-1cbf-581a-893a-da5a06ee3053",
+          "sailorId": "896f126d-aafb-5064-908d-ac7dac738531",
+          "sourceName": "Mr.Antony Grover",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 Master; page 1; source name: Mr.Antony Grover; historic sail: 209889; club: RTFYC; year field: 1970. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 5,
+  "deferredEntryCount": 1,
+  "publicSummary": "Provisional organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 5 of 6 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156705,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 Master",
+      "boatClass": "ILCA 7",
+      "division": "Master",
+      "rank": 3,
+      "name": "Prayutt Jaibanjong",
+      "sailOrBoardNumber": "194921",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 1949,
+      "sourceBirthYear": "1949",
+      "grossScore": 12.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "8b34639c-0226-5425-98d2-b1f38b439164",
+          "name": "Prayut Jaibanjong",
+          "similarity": 0.97
+        },
+        {
+          "id": "642de257-591e-459d-b256-fb8b50ca2f2e",
+          "name": "Yuntian Dong",
+          "similarity": 0.643
+        },
+        {
+          "id": "df3b979c-913d-5cc0-9a91-928938db6e62",
+          "name": "Arata Takano",
+          "similarity": 0.571
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+      "club": "RTNYC",
+      "name": "Chanchai Teerapittayanon",
+      "gender": "M",
+      "handle": "chanchai-teerapittayanon-sr26-81fa31",
+      "birthYear": 1965,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+      "club": "RTNYC",
+      "name": "Nithasn Rodhnun",
+      "gender": "M",
+      "handle": "cdr-nithasn-rodhnun-sr26-0788d7",
+      "birthYear": 1957,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1b851f6a-eb86-5f45-9182-d8a232c66638",
+      "club": "RTNYC",
+      "name": "Banpoat Netkrachang",
+      "gender": "M",
+      "handle": "vadm-banpoat-netkrachang-sr26-1b851f",
+      "birthYear": null,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "58b7b23a-debb-5dd7-a384-ea2fc04e1840",
+      "name": "Manat Thongjiam",
+      "handle": "manat-thongjiam-sr25-58b7b2",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTNYC"
+    },
+    {
+      "id": "896f126d-aafb-5064-908d-ac7dac738531",
+      "name": "Mr.Antony Grover",
+      "handle": "mr-antony-grover-sr25-896f12",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RTFYC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

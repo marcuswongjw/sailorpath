@@ -1,0 +1,1685 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "4b3dd72f-e963-5f6f-861b-ca29352eb7bc",
+    "slug": "yrat-cup-series-5-2025",
+    "name": "2025 YRAT Cup Series 5",
+    "startDate": "2025-08-30",
+    "endDate": "2025-08-31",
+    "venue": "Dongtan Bay, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "c319a67f-0640-540f-92a9-69718217c089",
+    "slug": "yrat-cup-series-5-2025-ilca4",
+    "name": "2025 YRAT Cup Series 5 \u2014 ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 19,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/156704",
+    "title": "2025 YRAT Cup Series 5 \u2014 ILCA 4 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 1,
+      "name": "Prin Subying",
+      "sailOrBoardNumber": "THA222687",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 10.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e962815e-eaff-56e7-bb38-fe08201ff698",
+      "participants": [
+        {
+          "id": "8cdc5e32-fe95-572c-be84-c3d1be31365c",
+          "sailorId": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+          "sourceName": "Prin Subying",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Prin Subying; historic sail: THA222687; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 2,
+      "name": "Darwin Hsu",
+      "sailOrBoardNumber": "THA220051",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 18.0,
+      "nettScore": 13.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d72e11d6-3381-5f43-bb03-3a8ac2b2aaa6",
+      "participants": [
+        {
+          "id": "8c183bc7-a227-5af9-9460-97f9553bebee",
+          "sailorId": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+          "sourceName": "Darwin Hsu",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Darwin Hsu; historic sail: THA220051; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 3,
+      "name": "Torn Rattana",
+      "sailOrBoardNumber": "THA 221947",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 36.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(20.0 DNC)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "efba7d9a-d71a-55b9-90fc-5ec21941baa1",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9783ff6b-c307-5bc2-ac7b-518c3c6a7f2d",
+      "participants": [
+        {
+          "id": "5e283580-b3d8-5fe9-9a48-db6469a3398b",
+          "sailorId": "efba7d9a-d71a-55b9-90fc-5ec21941baa1",
+          "sourceName": "Torn Rattana",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Torn Rattana; historic sail: THA 221947; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 4,
+      "name": "Thanvisit Kitchanasiri",
+      "sailOrBoardNumber": "THA226395",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 33.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c0cfd2b6-32d5-5fde-bfbf-df167ddc69fb",
+      "participants": [
+        {
+          "id": "a03ddf10-b486-585e-8d93-545f020f1967",
+          "sailorId": "278c69d0-93d3-5d35-8deb-307457689a0d",
+          "sourceName": "Thanvisit Kitchanasiri",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Thanvisit Kitchanasiri; historic sail: THA226395; club: RVYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 5,
+      "name": "Hussaluk Srinakorn",
+      "sailOrBoardNumber": "THA217453",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 34.0,
+      "nettScore": 24.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f5c3d8e0-99d1-50c0-b0a5-c3e03058d7e8",
+      "participants": [
+        {
+          "id": "c141dcfc-f9d7-59a7-bbe7-21a941ea3994",
+          "sailorId": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+          "sourceName": "Hussaluk Srinakorn",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Hussaluk Srinakorn; historic sail: THA217453; club: YRAT; year field: 2009. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 6,
+      "name": "Wasawat Puengpradit",
+      "sailOrBoardNumber": "THA 219465",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2009,
+      "sourceBirthYear": "2009",
+      "grossScore": 39.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2c1b6cea-2f95-5e1c-8895-2599a064f4fa",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "8151e6fe-01f0-54e1-907b-2778f6b12621",
+      "participants": [
+        {
+          "id": "278d84cb-3a70-5c59-8ae5-c22e8b3501ff",
+          "sailorId": "2c1b6cea-2f95-5e1c-8895-2599a064f4fa",
+          "sourceName": "Wasawat Puengpradit",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Wasawat Puengpradit; historic sail: THA 219465; club: RVYC; year field: 2009. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 7,
+      "name": "Karit Phrammanee",
+      "sailOrBoardNumber": "128105",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 44.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(10.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a8dc300b-57aa-5ead-a971-ea569b152d3d",
+      "participants": [
+        {
+          "id": "1fb20954-c0bc-5b52-bdb6-eb747e83267c",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "Karit Phrammanee",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: Karit Phrammanee; historic sail: 128105; club: RVYC; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 8,
+      "name": "PACHARAPOL. RUMVISAI",
+      "sailOrBoardNumber": "THA220239",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 50.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3f0ca66c-cbd3-573a-ab3d-73b3ccc7e5e0",
+      "participants": [
+        {
+          "id": "d251c453-a9ea-5fb5-9bef-b0019cf834cc",
+          "sailorId": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+          "sourceName": "PACHARAPOL. RUMVISAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: PACHARAPOL. RUMVISAI; historic sail: THA220239; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 9,
+      "name": "PANUDAT POLPOOL",
+      "sailOrBoardNumber": "21507",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 54.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(14.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "65a2ecaa-054d-554d-b9a8-95ebec746168",
+      "participants": [
+        {
+          "id": "5e3daac3-56da-5661-bf0b-4507d3dd1a5a",
+          "sailorId": "2c3a793f-5bb5-531e-9290-5d976898618a",
+          "sourceName": "PANUDAT POLPOOL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 1; source name: PANUDAT POLPOOL; historic sail: 21507; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 11,
+      "name": "JIRATHIP MUTIPHAN",
+      "sailOrBoardNumber": "9",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "2553",
+      "grossScore": 67.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(20.0 UFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f7fc3266-ca6e-5c47-9263-dc5be70bd9bf",
+      "participants": [
+        {
+          "id": "29c7847f-7805-51b0-a201-a373b16b842d",
+          "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+          "sourceName": "JIRATHIP MUTIPHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: JIRATHIP MUTIPHAN; historic sail: 9; club: YRAT; year field: 2553. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 12,
+      "name": "Master Henry Atichat Wiedmann",
+      "sailOrBoardNumber": "THA214987",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 68.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(20.0 UFD)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8ab3e59a-d7a5-5771-83ec-06815d8def4e",
+      "participants": [
+        {
+          "id": "2050698a-5494-5f4d-bc47-f26d489e5360",
+          "sailorId": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+          "sourceName": "Master Henry Atichat Wiedmann",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: Master Henry Atichat Wiedmann; historic sail: THA214987; club: RVYC; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 14,
+      "name": "Thanaporn Phokaew",
+      "sailOrBoardNumber": "217321",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 83.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(20.0 DNC)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "20.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7fb0fbb7-b1e7-59db-80a3-198a9f1886a6",
+      "participants": [
+        {
+          "id": "04e59e40-ea8c-5adf-b9e3-695a49166b2b",
+          "sailorId": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+          "sourceName": "Thanaporn Phokaew",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: Thanaporn Phokaew; historic sail: 217321; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 16,
+      "name": "Thitiworada Johnjaitrong",
+      "sailOrBoardNumber": "220240",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 94.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(20.0 UFD)"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "000e9d11-4f8b-5355-8f4c-47ca97765706",
+      "participants": [
+        {
+          "id": "04b64137-85df-56d2-96f1-c198d95690ec",
+          "sailorId": "87248310-cc92-4094-accd-afe96addeeef",
+          "sourceName": "Thitiworada Johnjaitrong",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: Thitiworada Johnjaitrong; historic sail: 220240; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 17,
+      "name": "CHITIPAT SAINUMKHEAW",
+      "sailOrBoardNumber": "7427",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 94.0,
+      "nettScore": 76.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "42885993-2f82-585d-aa8b-ccd76d553f3b",
+      "participants": [
+        {
+          "id": "d4271622-d2ba-5954-85b9-ba6ca1c21cbb",
+          "sailorId": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+          "sourceName": "CHITIPAT SAINUMKHEAW",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: CHITIPAT SAINUMKHEAW; historic sail: 7427; club: RTFYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 18,
+      "name": "KRITKAMON PRASERTNOPAKUN",
+      "sailOrBoardNumber": "THA221584",
+      "club": "RVYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 104.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(20.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "20.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "4d7f21d5-352b-57e3-89fb-583cfee693c0",
+      "participants": [
+        {
+          "id": "5c7d20a3-4a9a-581a-9554-9a4f3db54f3c",
+          "sailorId": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+          "sourceName": "KRITKAMON PRASERTNOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: KRITKAMON PRASERTNOPAKUN; historic sail: THA221584; club: RVYC; year field: 2010. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 19,
+      "name": "Natthamani Boonlikitchewa",
+      "sailOrBoardNumber": "42",
+      "club": "RTFYC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 110.0,
+      "nettScore": 90.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(20.0 DNC)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "20.0 DNC"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2bc5829b-6211-5c3f-97fc-562996a23b0c",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "23e903c9-07c5-5a1d-ac27-017bc4630945",
+      "participants": [
+        {
+          "id": "26e46c74-cda8-52ed-8a2a-f8ac6eda4379",
+          "sailorId": "2bc5829b-6211-5c3f-97fc-562996a23b0c",
+          "sourceName": "Natthamani Boonlikitchewa",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 4; page 2; source name: Natthamani Boonlikitchewa; historic sail: 42; club: RTFYC; year field: 2008. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 16,
+  "deferredEntryCount": 3,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 16 of 19 class entries imported; 3 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 10,
+      "name": "Zheng",
+      "sailOrBoardNumber": "209319",
+      "club": "RHKYC",
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 58.0,
+      "nettScore": 43.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "3c135061-37fe-4545-a759-7fc2824d579b",
+          "name": "Thea Ng",
+          "similarity": 0.727
+        },
+        {
+          "id": "018b6ed4-9636-47e1-8d40-aa5e21a22f32",
+          "name": "Jolin Zheng",
+          "similarity": 0.667
+        },
+        {
+          "id": "6ca77f2f-bbdd-5dc5-802b-9acdb9818f8c",
+          "name": "Tng Zong Heng",
+          "similarity": 0.625
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 13,
+      "name": "KITCHAKHUN SOMKHANNGONE",
+      "sailOrBoardNumber": "21738",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 76.0,
+      "nettScore": 61.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(15.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+          "name": "Kiitchakhun Somkhanngoen",
+          "similarity": 0.933
+        },
+        {
+          "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+          "name": "Kanthee Khunmuang",
+          "similarity": 0.579
+        },
+        {
+          "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+          "name": "Kanthon Khunmuang",
+          "similarity": 0.579
+        }
+      ]
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 4",
+      "boatClass": "ILCA 4",
+      "division": "Open",
+      "rank": 15,
+      "name": "PUMITUS MEE-EIAMSIN",
+      "sailOrBoardNumber": "THA 22023",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 84.0,
+      "nettScore": 68.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+          "name": "Pumitus Mee-Iamsin",
+          "similarity": 0.97
+        },
+        {
+          "id": "c361c7f7-cda6-830f-7e00-60f2bea8df78",
+          "name": "Marius Eiane",
+          "similarity": 0.571
+        },
+        {
+          "id": "abeecd7a-f571-4dfb-a1b7-fe9ccf19da18",
+          "name": "Yap Swee Dean",
+          "similarity": 0.5
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "87248310-cc92-4094-accd-afe96addeeef",
+      "club": "YRAT",
+      "name": "Thitiworada Johnjaitrong",
+      "gender": "F",
+      "handle": "thitiworada-johnjaitrong-hd6qxkf",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "220239"
+    },
+    {
+      "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+      "club": "YRAT",
+      "name": "Pacharapol Rumvisai",
+      "gender": "M",
+      "handle": "pacharapol-rumvisai-2xx8xys",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "55b6a2bc-3e2e-4ec6-adb3-4e849d8c8380",
+      "club": "YRAT",
+      "name": "Thanaporn Phokaew",
+      "gender": "F",
+      "handle": "thanaporn-phokaew-2zbw4z0",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225426"
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "YRAT",
+      "name": "Karit Phrammanee",
+      "gender": "M",
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2c3a793f-5bb5-531e-9290-5d976898618a",
+      "club": "YRAT",
+      "name": "Panudat Polpool",
+      "gender": "M",
+      "handle": "panudat-polpool-hkrw-2c3a79",
+      "birthYear": 2012,
+      "sailNumber": "1295",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "club": "YRAT",
+      "name": "Jiratip Mutiphan",
+      "gender": "M",
+      "handle": "jiratip-mutiphan-thai25-5cd22c",
+      "birthYear": 2010,
+      "sailNumber": "THA 1985",
+      "nationality": "THA",
+      "sailNumberIlca4": "9"
+    },
+    {
+      "id": "d73dd129-1d4d-4229-b0fc-3e7e67007681",
+      "club": "YRAT",
+      "name": "Hussaluk Srinakorn",
+      "gender": "M",
+      "handle": "hussaluk-srinakorn-2pumyyp",
+      "birthYear": 2009,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "278c69d0-93d3-5d35-8deb-307457689a0d",
+      "club": "RVYC",
+      "name": "Thanvisit Kitchanasiri",
+      "gender": "M",
+      "handle": "thanvisit-kitchanasiri-thai25-278c69",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "226395"
+    },
+    {
+      "id": "c6fe767e-b1e5-550f-8393-3bc3d9a70fe3",
+      "club": "RTFYC",
+      "name": "Chitipat Sainumkheaw",
+      "gender": "M",
+      "handle": "chitipat-sainumkheaw-thai25-c6fe76",
+      "birthYear": 2012,
+      "sailNumber": "THA 1859",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efba7d9a-d71a-55b9-90fc-5ec21941baa1",
+      "club": "RVYC/YRAT",
+      "name": "Torn Rattana",
+      "gender": "M",
+      "handle": "torn-rattana-thai25-efba7d",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "221947"
+    },
+    {
+      "id": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+      "club": "YRAT",
+      "name": "Darwin Hsu",
+      "gender": "M",
+      "handle": "darwin-hsu-zirotlz",
+      "birthYear": 2008,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "4bd6cf62-ca39-4324-8fe8-8bd5b6573ef8",
+      "club": "YRAT",
+      "name": "Prin Subying",
+      "gender": "F",
+      "handle": "prin-subying-zi3cbf5",
+      "birthYear": 2008,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+      "club": "RVYC",
+      "name": "Henry Wiedmann",
+      "gender": "M",
+      "handle": "henry-wiedmann-thai25-bdcd04",
+      "birthYear": 2010,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "214987"
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "2135c975-184e-5672-81ec-4fbcf85bcbf7",
+      "name": "Kritkamon Prasertnopakun",
+      "handle": "kritkamon-prasertnopakun-sr25-2135c9",
+      "sailNumber": "",
+      "sailNumberIlca4": "221584",
+      "nationality": null,
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "2c1b6cea-2f95-5e1c-8895-2599a064f4fa",
+      "name": "Wasawat Puengpradit",
+      "handle": "wasawat-puengpradit-sr25-2c1b6c",
+      "sailNumber": "",
+      "sailNumberIlca4": "THA 219465",
+      "nationality": "THA",
+      "gender": "M",
+      "club": "RVYC"
+    },
+    {
+      "id": "2bc5829b-6211-5c3f-97fc-562996a23b0c",
+      "name": "Natthamani Boonlikitchewa",
+      "handle": "natthamani-boonlikitchewa-sr25-2bc582",
+      "sailNumber": "",
+      "sailNumberIlca4": "42",
+      "nationality": null,
+      "gender": "F",
+      "club": "RTFYC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

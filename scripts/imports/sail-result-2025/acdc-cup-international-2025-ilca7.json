@@ -1,0 +1,370 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "75988a11-b78d-50e2-be5a-6c2c3c6bc0ba",
+    "slug": "acdc-cup-international-2025",
+    "name": "ACDC Cup International Sailing Championship 2025",
+    "startDate": "2025-07-10",
+    "endDate": "2025-07-12",
+    "venue": "ACDC Sailing Club, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "7a8de0db-47a2-56dc-b240-fb2b46075a12",
+    "slug": "acdc-cup-international-2025-ilca7",
+    "name": "ACDC Cup International Sailing Championship 2025 \u2014 ILCA 7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 3,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/151739",
+    "title": "ACDC Cup International Sailing Championship 2025 \u2014 ILCA 7 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 [open]",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 2,
+      "name": "AYUTH Saligupta",
+      "sailOrBoardNumber": "2743",
+      "club": "SSC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1968,
+      "sourceBirthYear": "27/8/1968",
+      "grossScore": 22.0,
+      "nettScore": 18.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": "DNS",
+          "discarded": true,
+          "raw": "(4.0 DNS)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "4.0 DNS"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": "DNS",
+          "discarded": false,
+          "raw": "4.0 DNS"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6610e632-bab1-56a5-b382-4eb478eab3ad",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "02473be3-43f0-594d-815a-36db6c813f34",
+      "participants": [
+        {
+          "id": "80a66b86-6ca1-5e16-8c7e-c7cc038d26d0",
+          "sailorId": "6610e632-bab1-56a5-b382-4eb478eab3ad",
+          "sourceName": "AYUTH Saligupta",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 [open]; page 1; source name: AYUTH Saligupta; historic sail: 2743; club: SSC; year field: 27/8/1968. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 [open]",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 3,
+      "name": "Chanchai Teerapittayanon",
+      "sailOrBoardNumber": "205778",
+      "club": "RTNYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": 1965,
+      "sourceBirthYear": "19/9/1965",
+      "grossScore": 25.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": "DNS",
+          "discarded": true,
+          "raw": "(4.0 DNS)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b195e2f4-0a39-538d-bace-23392d7650eb",
+      "participants": [
+        {
+          "id": "f5574c38-311f-5f3b-a590-4b8c0c12e239",
+          "sailorId": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+          "sourceName": "Chanchai Teerapittayanon",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 7 [open]; page 1; source name: Chanchai Teerapittayanon; historic sail: 205778; club: RTNYC; year field: 19/9/1965. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 2,
+  "deferredEntryCount": 1,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 2 of 3 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "acdc-cup-international-2025",
+      "sourceDocument": 151739,
+      "sourcePage": 1,
+      "sourceClass": "ILCA 7 [open]",
+      "boatClass": "ILCA 7",
+      "division": "Open",
+      "rank": 1,
+      "name": "NITHATSANA RODNUN",
+      "sailOrBoardNumber": "180177",
+      "club": "RTNYC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 14.0,
+      "nettScore": 10.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": "DNS",
+          "discarded": true,
+          "raw": "(4.0 DNS)"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "0788d794-c84e-5242-9da9-3d51d26e4eb7",
+          "name": "Nithasn Rodhnun",
+          "similarity": 0.867
+        },
+        {
+          "id": "6a4451dd-ff66-5008-ba1f-04c8e8e443b1",
+          "name": "Natnan Aesomnuek",
+          "similarity": 0.581
+        },
+        {
+          "id": "0c1fba60-153b-5837-ade5-c3cc70687402",
+          "name": "Lin Thet Naung",
+          "similarity": 0.571
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+      "club": "RTNYC",
+      "name": "Chanchai Teerapittayanon",
+      "gender": "M",
+      "handle": "chanchai-teerapittayanon-sr26-81fa31",
+      "birthYear": 1965,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "6610e632-bab1-56a5-b382-4eb478eab3ad",
+      "name": "Ayuth Saligupta",
+      "handle": "ayuth-saligupta-sr25-6610e6",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "SSC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

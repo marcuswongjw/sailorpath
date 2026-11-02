@@ -1,0 +1,370 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "0a582ffa-a99b-5eb3-8b98-e44953f8a050",
+    "slug": "phuket-kings-cup-2025",
+    "name": "37th Phuket King\u2019s Cup Regatta 2025",
+    "startDate": "2025-11-29",
+    "endDate": "2025-12-02",
+    "venue": "Kata Bay, Phuket, Thailand",
+    "organizer": "Phuket King\u2019s Cup Regatta",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "2cef00cb-a63b-5eca-b905-5c76cb43d130",
+    "slug": "phuket-kings-cup-2025-ilca6",
+    "name": "37th Phuket King\u2019s Cup Regatta 2025 \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 9,
+    "totalFleetSize": 11,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/169974",
+    "title": "37th Phuket King\u2019s Cup Regatta 2025 \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "phuket-kings-cup-2025",
+      "sourceDocument": 169974,
+      "sourcePage": 1,
+      "sourceClass": "ILCA6 OPEN",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "THORFUN BOONNAK",
+      "sailOrBoardNumber": "THA 22266",
+      "club": "",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 29.0,
+      "nettScore": 23.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "683e8528-30fe-5544-861e-2cfb8c46683f",
+      "participants": [
+        {
+          "id": "e1df502b-cede-5c8c-8ac2-e3a0fb4c6af3",
+          "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+          "sourceName": "THORFUN BOONNAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6 OPEN; page 1; source name: THORFUN BOONNAK; historic sail: THA 22266; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    },
+    {
+      "eventKey": "phuket-kings-cup-2025",
+      "sourceDocument": 169974,
+      "sourcePage": 1,
+      "sourceClass": "ILCA6 OPEN",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 7,
+      "name": "PANWA BOONNAK",
+      "sailOrBoardNumber": "210290",
+      "club": "RTNA",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 59.0,
+      "nettScore": 51.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": true,
+      "sailorId": "f2294ead-0b9c-5658-8483-afb6b47c88d8",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "3587a0df-bd12-54d7-8bdd-e2f34aeef2ad",
+      "participants": [
+        {
+          "id": "7289178d-212e-50c1-9804-0dab6ca96bc8",
+          "sailorId": "f2294ead-0b9c-5658-8483-afb6b47c88d8",
+          "sourceName": "PANWA BOONNAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA6 OPEN; page 1; source name: PANWA BOONNAK; historic sail: 210290; club: RTNA; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented. Original combined PY handicap fleet ranks and scores retained; this class is a subset of the official fleet."
+    }
+  ],
+  "importedEntryCount": 2,
+  "deferredEntryCount": 1,
+  "publicSummary": "Final organiser results. Original combined PY handicap standings; class subset, with original ranks and scores. Partial import: 2 of 3 class entries imported; 1 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "phuket-kings-cup-2025",
+      "sourceDocument": 169974,
+      "sourcePage": 1,
+      "sourceClass": "ILCA6 OPEN",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 10,
+      "name": "MARCUS YAU",
+      "sailOrBoardNumber": "HKG 195004",
+      "club": "UWC",
+      "nationality": null,
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 92.0,
+      "nettScore": 80.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(12.0 UFD)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        },
+        {
+          "raceNumber": 9,
+          "score": 12.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "12.0 DNC"
+        }
+      ],
+      "handicap": true,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "642f9b67-e03c-4cc6-a877-288e4f63ee59",
+          "name": "Marcus Daum",
+          "similarity": 0.842
+        },
+        {
+          "id": "35ddaae9-11d3-457f-ba18-2c96e6df5aac",
+          "name": "Marcus Li",
+          "similarity": 0.706
+        },
+        {
+          "id": "a85ab47f-fbb5-b738-8932-07ae5af6fd1e",
+          "name": "Marcus Durlach",
+          "similarity": 0.636
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "club": "YRAT",
+      "name": "Thorfun Boonnak",
+      "gender": "F",
+      "handle": "thorfun-boonnak-sr26-5cfe0b",
+      "birthYear": 2005,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "f2294ead-0b9c-5658-8483-afb6b47c88d8",
+      "name": "Panwa Boonnak",
+      "handle": "panwa-boonnak-sr25-f2294e",
+      "sailNumber": "",
+      "sailNumberIlca4": null,
+      "nationality": null,
+      "gender": "M",
+      "club": "RTNA"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

@@ -1,0 +1,602 @@
+[
+  {
+    "boatClass": "ILCA 4",
+    "division": "Silver",
+    "rank": 13,
+    "name": "Sarah Young",
+    "sailOrBoardNumber": "226463",
+    "club": "BYS",
+    "grossScore": 258.0,
+    "nettScore": 179.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "18",
+        "score": 18.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(40)DNF",
+        "score": 40.0,
+        "code": "DNF",
+        "discarded": true
+      },
+      {
+        "raceNumber": 3,
+        "raw": "28",
+        "score": 28.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 4,
+        "raw": "40DNF",
+        "score": 40.0,
+        "code": "DNF",
+        "discarded": false
+      },
+      {
+        "raceNumber": 5,
+        "raw": "40DNC",
+        "score": 40.0,
+        "code": "DNC",
+        "discarded": false
+      },
+      {
+        "raceNumber": 6,
+        "raw": "40DNC",
+        "score": 40.0,
+        "code": "DNC",
+        "discarded": false
+      },
+      {
+        "raceNumber": 7,
+        "raw": "3",
+        "score": 3.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 8,
+        "raw": "1",
+        "score": 1.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 9,
+        "raw": "2",
+        "score": 2.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 10,
+        "raw": "(39)UFD",
+        "score": 39.0,
+        "code": "UFD",
+        "discarded": true
+      },
+      {
+        "raceNumber": 11,
+        "raw": "2",
+        "score": 2.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 12,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      }
+    ],
+    "gender": "F",
+    "nationality": null,
+    "officialBirthYear": null,
+    "reason": "Ambiguous/close existing identity; deferred.",
+    "candidates": [
+      {
+        "id": "82ab4ba4-a693-4e7d-a9c5-6531752cea6e",
+        "name": "Sarah Yong",
+        "sail": "0",
+        "similarity": 0.947
+      },
+      {
+        "id": "bd5eecf8-faa5-4e0f-a86f-5a90483198bb",
+        "name": "Isaac Chong",
+        "sail": "0",
+        "similarity": 0.7
+      },
+      {
+        "id": "1d677d8c-da61-4741-bea3-1cb1f0654153",
+        "name": "Sarah Si Han Ong",
+        "sail": "8",
+        "similarity": 0.696
+      }
+    ]
+  },
+  {
+    "boatClass": "ILCA 4",
+    "division": "Silver",
+    "rank": 34,
+    "name": "Lily Cantwell",
+    "sailOrBoardNumber": "218665",
+    "club": "SYC/RGYC",
+    "grossScore": 407.0,
+    "nettScore": 333.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "33",
+        "score": 33.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 2,
+        "raw": "38",
+        "score": 38.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 3,
+        "raw": "37",
+        "score": 37.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 4,
+        "raw": "35",
+        "score": 35.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 5,
+        "raw": "35",
+        "score": 35.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(39)",
+        "score": 39.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 7,
+        "raw": "(35)",
+        "score": 35.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 8,
+        "raw": "33",
+        "score": 33.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 9,
+        "raw": "30",
+        "score": 30.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 10,
+        "raw": "29",
+        "score": 29.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 11,
+        "raw": "32",
+        "score": 32.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 12,
+        "raw": "31",
+        "score": 31.0,
+        "code": null,
+        "discarded": false
+      }
+    ],
+    "gender": "F",
+    "nationality": null,
+    "officialBirthYear": null,
+    "reason": "Ambiguous/close existing identity; deferred.",
+    "candidates": [
+      {
+        "id": "6530fa88-9a13-52e8-a9ab-ad59c577560a",
+        "name": "Holly Cantwell",
+        "sail": "IRL 1641",
+        "similarity": 0.88
+      },
+      {
+        "id": "c6023ffb-498a-485f-bc39-ce179b6f026a",
+        "name": "Maya Cantwell",
+        "sail": "AUS 1850",
+        "similarity": 0.75
+      },
+      {
+        "id": "a3082455-4079-441d-8436-478f4c9024b7",
+        "name": "Lily-May Weller",
+        "sail": "1304",
+        "similarity": 0.72
+      }
+    ]
+  },
+  {
+    "boatClass": "ILCA 6",
+    "division": "Gold",
+    "rank": 3,
+    "name": "Zoe Thomson",
+    "sailOrBoardNumber": "227893",
+    "club": "RFBYC",
+    "grossScore": 56.0,
+    "nettScore": 38.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "4",
+        "score": 4.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 2,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 3,
+        "raw": "2",
+        "score": 2.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 4,
+        "raw": "2",
+        "score": 2.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 5,
+        "raw": "(7)",
+        "score": 7.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 6,
+        "raw": "3",
+        "score": 3.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 7,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 8,
+        "raw": "4",
+        "score": 4.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 9,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 10,
+        "raw": "7",
+        "score": 7.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(11)SCP",
+        "score": 11.0,
+        "code": "SCP",
+        "discarded": true
+      },
+      {
+        "raceNumber": 12,
+        "raw": "1",
+        "score": 1.0,
+        "code": null,
+        "discarded": false
+      }
+    ],
+    "gender": "F",
+    "nationality": null,
+    "officialBirthYear": null,
+    "reason": "Ambiguous/close existing identity; deferred.",
+    "candidates": [
+      {
+        "id": "1c950636-ccab-528c-afa3-ef3b6a7d51b5",
+        "name": "Joe Thompson",
+        "sail": "192626",
+        "similarity": 0.857
+      },
+      {
+        "id": "3ed039ea-653f-5479-ac6b-79c3511aa962",
+        "name": "Thomas Johnson",
+        "sail": "948",
+        "similarity": 0.609
+      },
+      {
+        "id": "16b59fff-e224-4eb6-b839-ea5ff1482211",
+        "name": "Theo Altson",
+        "sail": "1801",
+        "similarity": 0.6
+      }
+    ]
+  },
+  {
+    "boatClass": "ILCA 6",
+    "division": "Gold",
+    "rank": 31,
+    "name": "Will James",
+    "sailOrBoardNumber": "224237",
+    "club": "BYS",
+    "grossScore": 288.0,
+    "nettScore": 215.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "11",
+        "score": 11.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 2,
+        "raw": "10",
+        "score": 10.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(38)BFD",
+        "score": 38.0,
+        "code": "BFD",
+        "discarded": true
+      },
+      {
+        "raceNumber": 4,
+        "raw": "28",
+        "score": 28.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 5,
+        "raw": "26",
+        "score": 26.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 6,
+        "raw": "10",
+        "score": 10.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 7,
+        "raw": "30",
+        "score": 30.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 8,
+        "raw": "11",
+        "score": 11.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 9,
+        "raw": "(35)",
+        "score": 35.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 10,
+        "raw": "28",
+        "score": 28.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 11,
+        "raw": "31",
+        "score": 31.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 12,
+        "raw": "30",
+        "score": 30.0,
+        "code": null,
+        "discarded": false
+      }
+    ],
+    "gender": "M",
+    "nationality": null,
+    "officialBirthYear": null,
+    "reason": "Ambiguous/close existing identity; deferred.",
+    "candidates": [
+      {
+        "id": "6bb53a1d-beec-5217-a6bb-996c0f92b13f",
+        "name": "William James",
+        "sail": "1517",
+        "similarity": 0.857
+      },
+      {
+        "id": "1cec51d9-3f14-5426-ad36-4312608d8336",
+        "name": "Will Chalmers",
+        "sail": "1438",
+        "similarity": 0.762
+      },
+      {
+        "id": "c684681b-dd3c-5dfc-b8f7-3e55e65f9bbf",
+        "name": "William Teo",
+        "sail": "4615",
+        "similarity": 0.737
+      }
+    ]
+  },
+  {
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "rank": 3,
+    "name": "Ethan McAullay",
+    "sailOrBoardNumber": "211556",
+    "club": "RPYC",
+    "grossScore": 59.0,
+    "nettScore": 38.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "2",
+        "score": 2.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 2,
+        "raw": "3",
+        "score": 3.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(12)",
+        "score": 12.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 4,
+        "raw": "3",
+        "score": 3.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 5,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 6,
+        "raw": "3",
+        "score": 3.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 7,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 8,
+        "raw": "7",
+        "score": 7.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 9,
+        "raw": "3",
+        "score": 3.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 10,
+        "raw": "(9)",
+        "score": 9.0,
+        "code": null,
+        "discarded": true
+      },
+      {
+        "raceNumber": 11,
+        "raw": "2",
+        "score": 2.0,
+        "code": null,
+        "discarded": false
+      },
+      {
+        "raceNumber": 12,
+        "raw": "5",
+        "score": 5.0,
+        "code": null,
+        "discarded": false
+      }
+    ],
+    "gender": "M",
+    "nationality": null,
+    "officialBirthYear": null,
+    "reason": "Ambiguous/close existing identity; deferred.",
+    "candidates": [
+      {
+        "id": "d3b97837-859c-59bd-81f5-9274a051f881",
+        "name": "Ethan Mcculley",
+        "sail": "",
+        "similarity": 0.846
+      },
+      {
+        "id": "d7d194b7-daa9-4d05-a8f8-28997e384d04",
+        "name": "Ethan Jacob Cirulli",
+        "sail": "2034",
+        "similarity": 0.6
+      },
+      {
+        "id": "1f83d34f-3841-534a-b7ff-6f06e614de9a",
+        "name": "Jonathan Molloy",
+        "sail": "1599",
+        "similarity": 0.593
+      }
+    ]
+  }
+]

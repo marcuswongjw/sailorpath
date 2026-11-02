@@ -1,0 +1,688 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "77d3c6a5-83a8-5b98-b881-418267461f6b",
+    "slug": "sea-games-2025",
+    "name": "33rd SEA Games 2025 \u2014 Sailing",
+    "startDate": "2025-12-09",
+    "endDate": "2025-12-18",
+    "venue": "Samudara Kila Yachting Center, Chonburi, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "ea6be3b0-32e9-51bf-a164-43643891f486",
+    "slug": "sea-games-2025-ilca4-boys",
+    "name": "33rd SEA Games 2025 \u2014 Sailing \u2014 ILCA 4 Boys",
+    "boatClass": "ILCA 4",
+    "division": "Boys",
+    "raceCount": 9,
+    "totalFleetSize": 6,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/170965",
+    "title": "33rd SEA Games 2025 \u2014 Sailing \u2014 ILCA 4 Boys results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Boy's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Boys",
+      "rank": 1,
+      "name": "DARWIN HSU",
+      "sailOrBoardNumber": "THA225985",
+      "club": "",
+      "nationality": "THA",
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 14.0,
+      "nettScore": 10.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "583d03db-fb2b-5e37-adac-803cb08fb2ea",
+      "participants": [
+        {
+          "id": "ebd5d8ba-c071-5113-9530-39b94c30b704",
+          "sailorId": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+          "sourceName": "DARWIN HSU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Boy's ILCA4; page 1; source name: DARWIN HSU; historic sail: THA225985; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Boy's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Boys",
+      "rank": 2,
+      "name": "AUSTIN JIA YU YEO",
+      "sailOrBoardNumber": "SGP",
+      "club": "",
+      "nationality": "SGP",
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 28.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d7ce117b-5c64-40ea-86bd-79a7a73bb833",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "2ab435a0-6591-5bce-a0bc-b62428df3ac9",
+      "participants": [
+        {
+          "id": "0b537081-d523-5aa6-985d-39fb617c20de",
+          "sailorId": "d7ce117b-5c64-40ea-86bd-79a7a73bb833",
+          "sourceName": "AUSTIN JIA YU YEO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Boy's ILCA4; page 1; source name: AUSTIN JIA YU YEO; historic sail: SGP; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Boy's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Boys",
+      "rank": 3,
+      "name": "KHUN TUN OO",
+      "sailOrBoardNumber": "MYA 218749",
+      "club": "",
+      "nationality": "MYA",
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 33.0,
+      "nettScore": 26.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(7.0 DSQ)"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "378474e8-cb1e-4163-96b9-e88857ea86d3",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c8028a67-ed43-5ddc-97b3-c422b1c710e9",
+      "participants": [
+        {
+          "id": "50d5f073-d8cf-5e9e-b1d2-01e402a5f894",
+          "sailorId": "378474e8-cb1e-4163-96b9-e88857ea86d3",
+          "sourceName": "KHUN TUN OO",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Boy's ILCA4; page 1; source name: KHUN TUN OO; historic sail: MYA 218749; club: ; year field: . Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Boy's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Boys",
+      "rank": 6,
+      "name": "THANH NHAT MAI",
+      "sailOrBoardNumber": "228158",
+      "club": "",
+      "nationality": "VIE",
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 51.0,
+      "nettScore": 45.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b7076ceb-74cd-5fbc-b529-681c6842ebd1",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "cb7b2f48-61ea-5cdc-8ccf-b45c38bfee5b",
+      "participants": [
+        {
+          "id": "5e35a583-44c9-591e-aa4d-a97f2bc05ab3",
+          "sailorId": "b7076ceb-74cd-5fbc-b529-681c6842ebd1",
+          "sourceName": "THANH NHAT MAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Boy's ILCA4; page 1; source name: THANH NHAT MAI; historic sail: 228158; club: ; year field: . Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    }
+  ],
+  "importedEntryCount": 4,
+  "deferredEntryCount": 2,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 4 of 6 class entries imported; 2 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Boy's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Boys",
+      "rank": 4,
+      "name": "IQBAL NAZHAM MUSMULIADI",
+      "sailOrBoardNumber": "MAS209887",
+      "club": "",
+      "nationality": "MAS",
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 32.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "ffa6f01a-8891-4c9a-a169-33a1008ecd31",
+          "name": "Iqbal Nazham Bin Musmuliadi",
+          "similarity": 0.933
+        },
+        {
+          "id": "ef27b01a-10db-4075-b2f3-9a8dc2930392",
+          "name": "Muhammad Adam Aierell / Iqbal Nazham Musmuliadi",
+          "similarity": 0.689
+        },
+        {
+          "id": "1015180d-c672-43d9-a7ad-5493220f692a",
+          "name": "Alyazia Alhammadi",
+          "similarity": 0.595
+        }
+      ]
+    },
+    {
+      "eventKey": "sea-games-2025",
+      "sourceDocument": 170965,
+      "sourcePage": 1,
+      "sourceClass": "Boy's ILCA4",
+      "boatClass": "ILCA 4",
+      "division": "Boys",
+      "rank": 5,
+      "name": "MARK ADREY AMADEO",
+      "sailOrBoardNumber": "PHI225455",
+      "club": "",
+      "nationality": "PHI",
+      "gender": null,
+      "officialBirthYear": null,
+      "sourceBirthYear": "",
+      "grossScore": 32.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "be357a39-d5b7-401b-8e1f-c2d361169222",
+          "name": "Mark Adrey M. Amadeo",
+          "similarity": 0.968
+        },
+        {
+          "id": "4e8d7fca-e9b8-46e4-8541-cccaed77eb10",
+          "name": "Zakareya Bohamad",
+          "similarity": 0.667
+        },
+        {
+          "id": "49f5428c-032e-4acf-828b-a3790dae9c13",
+          "name": "Amanda S. Amadeo",
+          "similarity": 0.643
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "378474e8-cb1e-4163-96b9-e88857ea86d3",
+      "club": "RVYC",
+      "name": "Khun Tun Oo",
+      "gender": "M",
+      "handle": "khun-tun-oo-06ddzna",
+      "birthYear": 2009,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "d7ce117b-5c64-40ea-86bd-79a7a73bb833",
+      "club": "SAFYC",
+      "name": "Austin Yeo Jia Yu",
+      "gender": "M",
+      "handle": "austin-yeo-jia-yu-j2xhftv",
+      "birthYear": 2009,
+      "sailNumber": "221062",
+      "nationality": "SGP",
+      "sailNumberIlca4": "221062"
+    },
+    {
+      "id": "735e74cd-7ea1-473f-bd4f-c181e97fa781",
+      "club": "YRAT",
+      "name": "Darwin Hsu",
+      "gender": "M",
+      "handle": "darwin-hsu-zirotlz",
+      "birthYear": 2008,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "b7076ceb-74cd-5fbc-b529-681c6842ebd1",
+      "name": "Thanh Nhat Mai",
+      "handle": "thanh-nhat-mai-sr25-b7076c",
+      "sailNumber": "",
+      "sailNumberIlca4": "228158",
+      "nationality": "VIE",
+      "gender": null,
+      "club": "Official regatta entry"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

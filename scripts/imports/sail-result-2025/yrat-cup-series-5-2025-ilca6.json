@@ -1,0 +1,573 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "4b3dd72f-e963-5f6f-861b-ca29352eb7bc",
+    "slug": "yrat-cup-series-5-2025",
+    "name": "2025 YRAT Cup Series 5",
+    "startDate": "2025-08-30",
+    "endDate": "2025-08-31",
+    "venue": "Dongtan Bay, Sattahip, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "ILCA 7",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "23ddeb06-cd30-5553-bb1e-f6bf059a925d",
+    "slug": "yrat-cup-series-5-2025-ilca6",
+    "name": "2025 YRAT Cup Series 5 \u2014 ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "raceCount": 6,
+    "totalFleetSize": 6,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/156704",
+    "title": "2025 YRAT Cup Series 5 \u2014 ILCA 6 Open results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 1,
+      "name": "NOPPASSORN KHUNBOONJAN",
+      "sailOrBoardNumber": "THA217427",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 10.0,
+      "nettScore": 7.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "eeb83600-eaca-5843-96a8-9e1f23712467",
+      "participants": [
+        {
+          "id": "b6de3c8c-cc2c-56d0-b096-4b8c45d29af3",
+          "sailorId": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+          "sourceName": "NOPPASSORN KHUNBOONJAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: NOPPASSORN KHUNBOONJAN; historic sail: THA217427; club: YRAT; year field: 2006. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 2,
+      "name": "Miss Marion Grace Montgomery",
+      "sailOrBoardNumber": "THA222660",
+      "club": "YRAT/RVYC",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 17.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "f33f7a65-fa89-589d-8d82-fed4af9292bb",
+      "participants": [
+        {
+          "id": "f42ee477-b60f-50c3-b810-482947a6a4b3",
+          "sailorId": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+          "sourceName": "Miss Marion Grace Montgomery",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Miss Marion Grace Montgomery; historic sail: THA222660; club: YRAT/RVYC; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 3,
+      "name": "Patcharee Sringam",
+      "sailOrBoardNumber": "210250",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2003,
+      "sourceBirthYear": "2003",
+      "grossScore": 18.0,
+      "nettScore": 13.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "80f2148c-4b19-58ec-bab3-13e270751da7",
+      "participants": [
+        {
+          "id": "932a1c60-8ed5-5098-b433-d37960eccd12",
+          "sailorId": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+          "sourceName": "Patcharee Sringam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Patcharee Sringam; historic sail: 210250; club: YRAT; year field: 2003. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 4,
+      "name": "Thorfun Boonnak",
+      "sailOrBoardNumber": "THA222660",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2005,
+      "sourceBirthYear": "2005",
+      "grossScore": 20.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "4df767dc-f298-5ff1-b92d-df7b101e5dd4",
+      "participants": [
+        {
+          "id": "d6f1c1fa-4f16-5fff-9893-f7b3bf525d16",
+          "sailorId": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+          "sourceName": "Thorfun Boonnak",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Thorfun Boonnak; historic sail: THA222660; club: YRAT; year field: 2005. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 5,
+      "name": "Puttaraksa imraksa",
+      "sailOrBoardNumber": "220236",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2006,
+      "sourceBirthYear": "2006",
+      "grossScore": 25.0,
+      "nettScore": 20.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b2f999bf-5102-5e39-b3c7-0810fc95b786",
+      "participants": [
+        {
+          "id": "18a73e62-0f26-5095-93ac-fece1f33ed16",
+          "sailorId": "5191c60e-3586-5a0d-b103-5512d9e35440",
+          "sourceName": "Puttaraksa imraksa",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: Puttaraksa imraksa; historic sail: 220236; club: YRAT; year field: 2006. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "yrat-cup-series-5-2025",
+      "sourceDocument": 156704,
+      "sourcePage": 2,
+      "sourceClass": "ILCA 6",
+      "boatClass": "ILCA 6",
+      "division": "Open",
+      "rank": 6,
+      "name": "NICHAWAN NITHITHONGSAKUL",
+      "sailOrBoardNumber": "1",
+      "club": "YRAT",
+      "nationality": null,
+      "gender": "F",
+      "officialBirthYear": 2008,
+      "sourceBirthYear": "2008",
+      "grossScore": 36.0,
+      "nettScore": 30.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "09471353-522d-5ffd-9b3d-1fbe3f0b3c39",
+      "participants": [
+        {
+          "id": "563cade1-8ccf-567f-b964-700de4eeb8be",
+          "sailorId": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+          "sourceName": "NICHAWAN NITHITHONGSAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: ILCA 6; page 2; source name: NICHAWAN NITHITHONGSAKUL; historic sail: 1; club: YRAT; year field: 2008. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 6,
+  "deferredEntryCount": 0,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained.",
+  "pendingEntries": [],
+  "profilePreflight": [
+    {
+      "id": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+      "club": "Yacht Racing Association of Thailand",
+      "name": "Noppassorn Khunboonjan",
+      "gender": "F",
+      "handle": "noppassorn-khunboonjan-69917e4211",
+      "birthYear": 2006,
+      "sailNumber": "217427",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5191c60e-3586-5a0d-b103-5512d9e35440",
+      "club": "YRAT",
+      "name": "Puttaraksa Imraksa",
+      "gender": "F",
+      "handle": "puttaraksa-imraksa-sr26-5191c6",
+      "birthYear": 2006,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "846c6c12-eed5-58e1-bd90-9fba7fe01007",
+      "club": "YRAT",
+      "name": "Nichawan Nithithongsakul",
+      "gender": "F",
+      "handle": "nichawan-nithithongsakul-sr26-846c6c",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+      "club": "YRAT",
+      "name": "Thorfun Boonnak",
+      "gender": "F",
+      "handle": "thorfun-boonnak-sr26-5cfe0b",
+      "birthYear": 2005,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "0f33df5e-ca62-502f-a771-b44846d6ac6a",
+      "club": "YRAT/RVYC",
+      "name": "Marion Grace Montgomery",
+      "gender": "F",
+      "handle": "marion-grace-montgomery-sr26-0f33df",
+      "birthYear": 2008,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7dbdb651-0954-5059-be8f-8ea0e85883dd",
+      "club": "YRAT",
+      "name": "Patcharee Sringam",
+      "gender": "F",
+      "handle": "patcharee-sringam-sr26-7dbdb6",
+      "birthYear": 2003,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

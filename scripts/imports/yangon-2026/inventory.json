@@ -1,0 +1,29 @@
+[
+  {
+    "file": "yangon-sailing-club-combined-fleet-championships-2026-optimist.sql",
+    "id": "7c9c1cb9-a3c7-505e-a3c9-801dac28a926",
+    "event": "Yangon Sailing Club Combined Fleet Championships 2026",
+    "boatClass": "Optimist",
+    "imported": 28,
+    "held": 3,
+    "scores": 308
+  },
+  {
+    "file": "olympic-day-movement-regatta-2026-ilca4.sql",
+    "id": "a9eafd0b-6c55-502c-be33-511f68187ef8",
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "ILCA 4",
+    "imported": 5,
+    "held": 2,
+    "scores": 55
+  },
+  {
+    "file": "olympic-day-movement-regatta-2026-optimist.sql",
+    "id": "491f5d6c-8cc7-5675-b704-4b20c72a4830",
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "imported": 29,
+    "held": 2,
+    "scores": 319
+  }
+]

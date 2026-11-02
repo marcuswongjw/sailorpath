@@ -1,0 +1,2903 @@
+{
+  "batch": "sail-result-2025-2026-10-28",
+  "event": {
+    "id": "6cbd040d-97d6-5b5d-a0ef-f856f73b4ff7",
+    "slug": "childrens-day-regatta-2025",
+    "name": "Children\u2019s Day Regatta 2025",
+    "startDate": "2025-01-17",
+    "endDate": "2025-01-19",
+    "venue": "Samudara Kila Yachting Center, Thailand",
+    "organizer": "Yacht Racing Association of Thailand",
+    "classes": [
+      "ILCA 4",
+      "ILCA 6",
+      "Optimist"
+    ]
+  },
+  "sheet": {
+    "id": "4d9921dd-f364-54d1-b8e7-1395e3836e08",
+    "slug": "childrens-day-regatta-2025-optimist-gold",
+    "name": "Children\u2019s Day Regatta 2025 \u2014 Optimist Gold",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "raceCount": 6,
+    "totalFleetSize": 35,
+    "entryType": "individual",
+    "minParticipants": 1,
+    "maxParticipants": 1
+  },
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/128126",
+    "title": "Children\u2019s Day Regatta 2025 \u2014 Optimist Gold results",
+    "type": "pdf",
+    "provisional": false,
+    "publicationStatus": "final",
+    "visuallyReviewed": true,
+    "pdfSearch": null
+  },
+  "results": [
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 1,
+      "name": "PAILIN JAROENPON",
+      "sailOrBoardNumber": "THA1253",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 51.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 36.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(36 UFD)"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "31e9c3f4-de80-5141-a3cf-15d32d6071c0",
+      "participants": [
+        {
+          "id": "23a25c69-c3ef-5f09-95b5-843f9144515e",
+          "sailorId": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+          "sourceName": "PAILIN JAROENPON",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PAILIN JAROENPON; historic sail: THA1253; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 3,
+      "name": "SUTHINAN NAKPASOM",
+      "sailOrBoardNumber": "THA1987",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 30.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b6490dbb-2d5d-5beb-82d4-d6cb619ca0a5",
+      "participants": [
+        {
+          "id": "d733ced8-329e-500b-9fe1-47005063eb3e",
+          "sailorId": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+          "sourceName": "SUTHINAN NAKPASOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: SUTHINAN NAKPASOM; historic sail: THA1987; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 4,
+      "name": "JIRATHIP MUTIPHAN",
+      "sailOrBoardNumber": "THA1495",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": null,
+      "sourceBirthYear": "2553",
+      "grossScore": 29.0,
+      "nettScore": 21.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(8 )"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "517f3653-c50e-5f67-a899-6db1ee0bfd81",
+      "participants": [
+        {
+          "id": "796e1669-1dd4-516b-a036-29ce3a7e7aa2",
+          "sailorId": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+          "sourceName": "JIRATHIP MUTIPHAN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: JIRATHIP MUTIPHAN; historic sail: THA1495; club: YRAT; year field: 2553. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 5,
+      "name": "ADISON EIN",
+      "sailOrBoardNumber": "THA1945",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 64.0,
+      "nettScore": 34.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30 )"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "bd12c990-927d-58d8-9729-8c42cd511120",
+      "participants": [
+        {
+          "id": "f6205b1b-5417-53de-b9c3-7f86a619e84e",
+          "sailorId": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+          "sourceName": "ADISON EIN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ADISON EIN; historic sail: THA1945; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 7,
+      "name": "RACHATA SADTRAKULWATTANA",
+      "sailOrBoardNumber": "THA1963",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 61.0,
+      "nettScore": 40.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21 )"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "26b90bef-5925-533f-a735-615259d222c4",
+      "participants": [
+        {
+          "id": "84e0dab6-e024-5e4f-b6d4-faa7121d4e14",
+          "sailorId": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+          "sourceName": "RACHATA SADTRAKULWATTANA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: RACHATA SADTRAKULWATTANA; historic sail: THA1963; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 8,
+      "name": "PARIYAPORN CHANTARAWONG",
+      "sailOrBoardNumber": "THA1223",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 71.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 2,
+          "score": 24.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(24 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "debee738-1e4a-537e-baf7-90b2429ad312",
+      "participants": [
+        {
+          "id": "d2fc6703-6c6e-5d2d-9e41-eb2dab554ebb",
+          "sailorId": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+          "sourceName": "PARIYAPORN CHANTARAWONG",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PARIYAPORN CHANTARAWONG; historic sail: THA1223; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 9,
+      "name": "NATTAPON. CHAILOB",
+      "sailOrBoardNumber": "THA1856",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 78.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 3,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9d8097da-9eb0-53c8-8366-4847cf54c27e",
+      "participants": [
+        {
+          "id": "a2fd5c1a-d7cf-50b9-913d-762ab718458c",
+          "sailorId": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+          "sourceName": "NATTAPON. CHAILOB",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTAPON. CHAILOB; historic sail: THA1856; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 10,
+      "name": "JESSICA LIU",
+      "sailOrBoardNumber": "HKG238",
+      "club": "RHKYC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 84.0,
+      "nettScore": 47.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 4,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37 )"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "67da3800-fcf0-5047-9516-a3307e93af35",
+      "participants": [
+        {
+          "id": "4b08624b-bc68-527a-bc81-dbe886ca2214",
+          "sailorId": "efbf3e52-e103-455f-af07-e182b5280b3c",
+          "sourceName": "JESSICA LIU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: JESSICA LIU; historic sail: HKG238; club: RHKYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 11,
+      "name": "Surapha muangngam",
+      "sailOrBoardNumber": "THA1941",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 94.0,
+      "nettScore": 53.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 41.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(41 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "006e9571-ca55-50f5-92c5-edc7550a240c",
+      "participants": [
+        {
+          "id": "b19560c0-a5d9-59e7-ae38-92c3449823e4",
+          "sailorId": "3b9072c4-2980-4557-b1f1-b9993c803824",
+          "sourceName": "Surapha muangngam",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: Surapha muangngam; historic sail: THA1941; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 12,
+      "name": "KARIT PHRAMMANEE",
+      "sailOrBoardNumber": "THA1289",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2010,
+      "sourceBirthYear": "2010",
+      "grossScore": 73.0,
+      "nettScore": 56.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(17 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a3500431-9db4-5460-bc46-886bdb00261c",
+      "participants": [
+        {
+          "id": "e1c5afe6-1a9b-5fe6-843b-0fdfdd06bf6b",
+          "sailorId": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+          "sourceName": "KARIT PHRAMMANEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: KARIT PHRAMMANEE; historic sail: THA1289; club: YRAT; year field: 2010. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 14,
+      "name": "PRIN KANTHARAK",
+      "sailOrBoardNumber": "THA1291",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 92.0,
+      "nettScore": 63.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "aa7bb7bd-ca1f-5794-8430-30a84fb8acec",
+      "participants": [
+        {
+          "id": "cce2b761-b699-54fa-ad16-a88260fce2ac",
+          "sailorId": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+          "sourceName": "PRIN KANTHARAK",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PRIN KANTHARAK; historic sail: THA1291; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 15,
+      "name": "NATTHAPONG NEELASAVEE",
+      "sailOrBoardNumber": "THA395",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 95.0,
+      "nettScore": 65.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 3,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "b970187b-8915-5b1c-961c-bfe340b9733d",
+      "participants": [
+        {
+          "id": "ceab1ee0-8ba1-592d-a586-57a25789ea21",
+          "sailorId": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+          "sourceName": "NATTHAPONG NEELASAVEE",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTHAPONG NEELASAVEE; historic sail: THA395; club: YRAT; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 16,
+      "name": "PAKORNKIAT CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1643",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 93.0,
+      "nettScore": 72.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(21 )"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "050effe8-277a-57a0-bce7-3fa595f8ffa6",
+      "participants": [
+        {
+          "id": "f5786c08-c425-5c61-8116-b821ae8d9fca",
+          "sailorId": "71761d05-b857-411f-b37a-cd9522307777",
+          "sourceName": "PAKORNKIAT CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PAKORNKIAT CHAIYA-O-CHA; historic sail: THA1643; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 17,
+      "name": "ITTHICHAI. TIATHONGCHAI",
+      "sailOrBoardNumber": "THA1246",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 99.0,
+      "nettScore": 76.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(23 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "3a9d2b7b-314b-593c-b049-bca199b2714a",
+      "participants": [
+        {
+          "id": "724aba72-b5aa-58ae-af33-cfcea392f330",
+          "sailorId": "182f006d-6103-4990-a289-421c0d94e552",
+          "sourceName": "ITTHICHAI. TIATHONGCHAI",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: ITTHICHAI. TIATHONGCHAI; historic sail: THA1246; club: ACDC.SC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 18,
+      "name": "NANTIPHAT KERDSAKUL",
+      "sailOrBoardNumber": "THA152",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 126.0,
+      "nettScore": 84.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 3,
+          "score": 42.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(42 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e0c694d1-6e8c-5fef-85b8-14263e35dc02",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "b8bdf63c-c1e5-589d-a7b2-c078f33992c0",
+      "participants": [
+        {
+          "id": "491ad150-ca73-5e3a-839e-f711197e467e",
+          "sailorId": "e0c694d1-6e8c-5fef-85b8-14263e35dc02",
+          "sourceName": "NANTIPHAT KERDSAKUL",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NANTIPHAT KERDSAKUL; historic sail: THA152; club: ACDC.SC; year field: 2011. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 19,
+      "name": "NATTHANAN CHAIYA-O-CHA",
+      "sailOrBoardNumber": "THA1499",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 121.0,
+      "nettScore": 91.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 5,
+          "score": 30.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(30 )"
+        },
+        {
+          "raceNumber": 6,
+          "score": 30.0,
+          "code": null,
+          "discarded": false,
+          "raw": "30"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a51c80a0-8cb3-5f58-b3d5-a838a9d83fde",
+      "participants": [
+        {
+          "id": "81b786f2-db4d-5ef3-a8f5-67c4f475e1af",
+          "sailorId": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+          "sourceName": "NATTHANAN CHAIYA-O-CHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NATTHANAN CHAIYA-O-CHA; historic sail: THA1499; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 20,
+      "name": "THANAPHA PHONGKAMNERD",
+      "sailOrBoardNumber": "THA1484",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 137.0,
+      "nettScore": 92.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        },
+        {
+          "raceNumber": 3,
+          "score": 45.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(45 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "e1cae0aa-471c-5070-9091-1f013c805f6e",
+      "participants": [
+        {
+          "id": "a8cf9826-91a3-5559-b10c-af5e75910121",
+          "sailorId": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+          "sourceName": "THANAPHA PHONGKAMNERD",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: THANAPHA PHONGKAMNERD; historic sail: THA1484; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 21,
+      "name": "PATTARAKORN POONPAT",
+      "sailOrBoardNumber": "THA88",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 134.0,
+      "nettScore": 101.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 2,
+          "score": 33.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(33 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7"
+        },
+        {
+          "raceNumber": 6,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "8db57695-7270-5ff3-9813-550e672ab337",
+      "participants": [
+        {
+          "id": "338feced-bbe1-556e-ae53-0e73d4c657d8",
+          "sailorId": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+          "sourceName": "PATTARAKORN POONPAT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PATTARAKORN POONPAT; historic sail: THA88; club: ACDC.SC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 22,
+      "name": "WICHAYAPORN SAKSRIKLOM",
+      "sailOrBoardNumber": "THA1901",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 135.0,
+      "nettScore": 104.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24"
+        },
+        {
+          "raceNumber": 5,
+          "score": 31.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(31 )"
+        },
+        {
+          "raceNumber": 6,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "68c8252c-c0fa-5162-b80b-6b84aa30a996",
+      "participants": [
+        {
+          "id": "dee7cb64-1773-5bf1-a827-9cafc4c9b880",
+          "sailorId": "988b923b-6960-4d5e-be75-d53c32295492",
+          "sourceName": "WICHAYAPORN SAKSRIKLOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: WICHAYAPORN SAKSRIKLOM; historic sail: THA1901; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 23,
+      "name": "TRAIRAT JAROONROT",
+      "sailOrBoardNumber": "THA1254",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 141.0,
+      "nettScore": 106.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22"
+        },
+        {
+          "raceNumber": 3,
+          "score": 35.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(35 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "600937f9-75dd-5122-86a7-6e72141ac033",
+      "participants": [
+        {
+          "id": "2668309e-ca4e-556f-bf71-c7d693381561",
+          "sailorId": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+          "sourceName": "TRAIRAT JAROONROT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: TRAIRAT JAROONROT; historic sail: THA1254; club: ACDC.SC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 24,
+      "name": "NORAKIT FAOTHANOM",
+      "sailOrBoardNumber": "THA1539",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 155.0,
+      "nettScore": 107.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 48.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(48 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29"
+        },
+        {
+          "raceNumber": 4,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "1e767d30-91bd-58e1-b562-6aa545fbe932",
+      "identityBasis": "Distinct full source name; no exact or close existing-name candidate. No DOB invented.",
+      "resultId": "adf4e03c-bc67-5e01-a76a-169648ac1273",
+      "participants": [
+        {
+          "id": "7317aa14-a57f-58aa-9b69-7133c71ca861",
+          "sailorId": "1e767d30-91bd-58e1-b562-6aa545fbe932",
+          "sourceName": "NORAKIT FAOTHANOM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NORAKIT FAOTHANOM; historic sail: THA1539; club: ACDC.SC; year field: 2013. Distinct full source name; no exact or close existing-name candidate. No DOB invented."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 25,
+      "name": "TAMMACHAT SRIOPAS",
+      "sailOrBoardNumber": "3993",
+      "club": "RTNYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 135.0,
+      "nettScore": 107.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21"
+        },
+        {
+          "raceNumber": 2,
+          "score": 28.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(28 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6a47226c-e5c9-4b83-b962-266bbd3c8ccd",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "7f161231-3abc-5034-9901-dcd7e2d3dcd0",
+      "participants": [
+        {
+          "id": "a50fc755-6229-5058-bd62-1a48e1275963",
+          "sailorId": "6a47226c-e5c9-4b83-b962-266bbd3c8ccd",
+          "sourceName": "TAMMACHAT SRIOPAS",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: TAMMACHAT SRIOPAS; historic sail: 3993; club: RTNYC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 27,
+      "name": "THIRAWAT HANKHAM",
+      "sailOrBoardNumber": "THA1565",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 164.0,
+      "nettScore": 116.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20"
+        },
+        {
+          "raceNumber": 3,
+          "score": 48.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(48 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11"
+        },
+        {
+          "raceNumber": 5,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34"
+        },
+        {
+          "raceNumber": 6,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "0e1e0a27-a141-58d2-93ef-92d1a2e82bf2",
+      "participants": [
+        {
+          "id": "bc828b89-e651-5fae-90b6-55b66fecae81",
+          "sailorId": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+          "sourceName": "THIRAWAT HANKHAM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: THIRAWAT HANKHAM; historic sail: THA1565; club: YRAT; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 28,
+      "name": "PAKIN WONGRATANACHOT",
+      "sailOrBoardNumber": "THA1954",
+      "club": "RTFYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 173.0,
+      "nettScore": 116.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27"
+        },
+        {
+          "raceNumber": 2,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25"
+        },
+        {
+          "raceNumber": 3,
+          "score": 57.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(57 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25"
+        },
+        {
+          "raceNumber": 6,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "c63c44b2-c83d-5045-8da8-e276929e2000",
+      "participants": [
+        {
+          "id": "e0c656ad-8057-56d8-8fd2-4d2cae7d32cd",
+          "sailorId": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+          "sourceName": "PAKIN WONGRATANACHOT",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PAKIN WONGRATANACHOT; historic sail: THA1954; club: RTFYC; year field: 2011. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 30,
+      "name": "SURATSAYAPRON KAEWRAKUM",
+      "sailOrBoardNumber": "THA1696",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 167.0,
+      "nettScore": 127.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 37.0,
+          "code": null,
+          "discarded": false,
+          "raw": "37"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22"
+        },
+        {
+          "raceNumber": 6,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "455bee8a-2640-517d-8a60-f0d9154c86ec",
+      "participants": [
+        {
+          "id": "48d11923-cc2e-59c8-b7a4-cfcc1e1cec50",
+          "sailorId": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+          "sourceName": "SURATSAYAPRON KAEWRAKUM",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: SURATSAYAPRON KAEWRAKUM; historic sail: THA1696; club: ACDC.SC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 31,
+      "name": "NIRADA SASIWATTANAPORN",
+      "sailOrBoardNumber": "THA1925",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2014,
+      "sourceBirthYear": "2014",
+      "grossScore": 173.0,
+      "nettScore": 127.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 46.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(46 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25"
+        },
+        {
+          "raceNumber": 5,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "aa3452b5-4f97-581e-ad19-a7eb4a436caf",
+      "participants": [
+        {
+          "id": "500acf20-d75e-55d7-a318-c80f7545ed0d",
+          "sailorId": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+          "sourceName": "NIRADA SASIWATTANAPORN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: NIRADA SASIWATTANAPORN; historic sail: THA1925; club: YRAT; year field: 2014. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 32,
+      "name": "Levy Apichai Wiedmann",
+      "sailOrBoardNumber": "THA996",
+      "club": "RVYC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 175.0,
+      "nettScore": 135.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31"
+        },
+        {
+          "raceNumber": 2,
+          "score": 40.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(40 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27"
+        },
+        {
+          "raceNumber": 4,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13"
+        },
+        {
+          "raceNumber": 6,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "9add22f3-43fc-5950-a11b-2a7383711c25",
+      "participants": [
+        {
+          "id": "663297d7-5d64-535b-a185-12642c4be590",
+          "sailorId": "bb321865-4298-43a9-b473-cf5dabf1f192",
+          "sourceName": "Levy Apichai Wiedmann",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: Levy Apichai Wiedmann; historic sail: THA996; club: RVYC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 33,
+      "name": "PEERAPAT YAPONHA",
+      "sailOrBoardNumber": "THA1593",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 181.0,
+      "nettScore": 139.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22"
+        },
+        {
+          "raceNumber": 2,
+          "score": 42.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(42 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22"
+        },
+        {
+          "raceNumber": 4,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33"
+        },
+        {
+          "raceNumber": 5,
+          "score": 33.0,
+          "code": null,
+          "discarded": false,
+          "raw": "33"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "a3e8bc53-323e-5550-a2cb-193f1a5115af",
+      "participants": [
+        {
+          "id": "b3cb44b2-0c66-545c-ae99-167e65c17350",
+          "sailorId": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+          "sourceName": "PEERAPAT YAPONHA",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: PEERAPAT YAPONHA; historic sail: THA1593; club: ACDC.SC; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 34,
+      "name": "KUNLADECH BUNCHU",
+      "sailOrBoardNumber": "1886",
+      "club": "YRAT",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2012,
+      "sourceBirthYear": "2012",
+      "grossScore": 193.0,
+      "nettScore": 142.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28"
+        },
+        {
+          "raceNumber": 2,
+          "score": 51.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(51 )"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23"
+        },
+        {
+          "raceNumber": 4,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": null,
+          "discarded": false,
+          "raw": "29"
+        },
+        {
+          "raceNumber": 6,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "eb4dfcde-6164-5b00-b483-98d0ea6e8172",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "51f6f142-e73b-5bf0-97c5-074cc8cd1a3c",
+      "participants": [
+        {
+          "id": "2699669e-710d-5c4b-a74b-7c880e3f313e",
+          "sailorId": "eb4dfcde-6164-5b00-b483-98d0ea6e8172",
+          "sourceName": "KUNLADECH BUNCHU",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: KUNLADECH BUNCHU; historic sail: 1886; club: YRAT; year field: 2012. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 35,
+      "name": "KLAOCHANOK CHATAWATTANASOPAKUN",
+      "sailOrBoardNumber": "THA751",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "F",
+      "officialBirthYear": 2013,
+      "sourceBirthYear": "2013",
+      "grossScore": 213.0,
+      "nettScore": 163.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 50.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(50 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 31.0,
+          "code": null,
+          "discarded": false,
+          "raw": "31"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28"
+        },
+        {
+          "raceNumber": 4,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35"
+        },
+        {
+          "raceNumber": 5,
+          "score": 35.0,
+          "code": null,
+          "discarded": false,
+          "raw": "35"
+        },
+        {
+          "raceNumber": 6,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34"
+        }
+      ],
+      "handicap": false,
+      "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "identityBasis": "Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged.",
+      "resultId": "d5a4d209-1552-56b5-9746-36523fe11a58",
+      "participants": [
+        {
+          "id": "8c871cd1-18d5-5f06-a03e-2658f667977c",
+          "sailorId": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+          "sourceName": "KLAOCHANOK CHATAWATTANASOPAKUN",
+          "displayOrder": 1,
+          "role": "solo"
+        }
+      ],
+      "evidenceNotes": "Official source class: Optimist; page 1; source name: KLAOCHANOK CHATAWATTANASOPAKUN; historic sail: THA751; club: ACDC.SC; year field: 2013. Unique exact normalized full name or previously reviewed source alias; existing metadata unchanged."
+    }
+  ],
+  "importedEntryCount": 30,
+  "deferredEntryCount": 5,
+  "publicSummary": "Final organiser results. Official fleet ranks, scoring codes and discards retained. Partial import: 30 of 35 class entries imported; 5 awaiting identity or source review.",
+  "pendingEntries": [
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 13,
+      "name": "Tara",
+      "sailOrBoardNumber": "HKG184",
+      "club": "RHKYC",
+      "nationality": "HKG",
+      "gender": "F",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 88.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(29 )"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "bcb9374d-c256-4add-9abe-98b7832706cc",
+          "name": "Tara Maliah",
+          "similarity": 0.571
+        },
+        {
+          "id": "1b5e6155-88c2-4e32-b173-24e6bfa54c1c",
+          "name": "Taiki Miura",
+          "similarity": 0.571
+        },
+        {
+          "id": "ad2f058a-0396-5b6a-9e82-b5249393fec3",
+          "name": "Sota Kimura",
+          "similarity": 0.571
+        }
+      ]
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 26,
+      "name": "CHANANCHAI TAITHONGCHAI",
+      "sailOrBoardNumber": "THA1487",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2015,
+      "sourceBirthYear": "2015",
+      "grossScore": 159.0,
+      "nettScore": 115.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24"
+        },
+        {
+          "raceNumber": 2,
+          "score": 34.0,
+          "code": null,
+          "discarded": false,
+          "raw": "34"
+        },
+        {
+          "raceNumber": 3,
+          "score": 44.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(44 )"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+          "name": "Chananchai Tiathongchai",
+          "similarity": 0.955
+        },
+        {
+          "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+          "name": "Anantachai Tiathongchai",
+          "similarity": 0.864
+        },
+        {
+          "id": "182f006d-6103-4990-a289-421c0d94e552",
+          "name": "Itthichai Tiathongchai",
+          "similarity": 0.744
+        }
+      ]
+    },
+    {
+      "eventKey": "childrens-day-regatta-2025",
+      "sourceDocument": 128126,
+      "sourcePage": 1,
+      "sourceClass": "Optimist",
+      "boatClass": "Optimist",
+      "division": "Gold",
+      "rank": 29,
+      "name": "KITCHAKHUN SOMKHANNGONE",
+      "sailOrBoardNumber": "THA1567",
+      "club": "ACDC.SC",
+      "nationality": "THA",
+      "gender": "M",
+      "officialBirthYear": 2011,
+      "sourceBirthYear": "2011",
+      "grossScore": 155.0,
+      "nettScore": 118.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 37.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(37 )"
+        },
+        {
+          "raceNumber": 2,
+          "score": 32.0,
+          "code": null,
+          "discarded": false,
+          "raw": "32"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23"
+        },
+        {
+          "raceNumber": 5,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27"
+        },
+        {
+          "raceNumber": 6,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24"
+        }
+      ],
+      "handicap": false,
+      "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+      "candidates": [
+        {
+          "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+          "name": "Kiitchakhun Somkhanngoen",
+          "similarity": 0.933
+        },
+        {
+          "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+          "name": "Kanthee Khunmuang",
+          "similarity": 0.579
+        },
+        {
+          "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+          "name": "Kanthon Khunmuang",
+          "similarity": 0.579
+        }
+      ]
+    }
+  ],
+  "profilePreflight": [
+    {
+      "id": "988b923b-6960-4d5e-be75-d53c32295492",
+      "club": "YRAT",
+      "name": "Wichayaporn Saksriklom",
+      "gender": "F",
+      "handle": "wichayaporn-saksriklom-lf81guh",
+      "birthYear": 2014,
+      "sailNumber": "1794",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1534bdb9-90d3-4736-aeb0-03a64ef4cf48",
+      "club": "YRAT",
+      "name": "Pariyaporn Chantarawong",
+      "gender": "F",
+      "handle": "pariyaporn-chantarawong-87lhahh",
+      "birthYear": 2011,
+      "sailNumber": "1223",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "efbf3e52-e103-455f-af07-e182b5280b3c",
+      "club": "RHKYC",
+      "name": "Jessica Liu",
+      "gender": "F",
+      "handle": "jessica-liu-dzgkrka",
+      "birthYear": 2012,
+      "sailNumber": "238",
+      "nationality": "HKG",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "71761d05-b857-411f-b37a-cd9522307777",
+      "club": "YRAT",
+      "name": "Pakornkiat Chaiya-o-Cha",
+      "gender": "M",
+      "handle": "pakornkiat-chaiya-o-cha-h112x3c",
+      "birthYear": 2012,
+      "sailNumber": "1246",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "182f006d-6103-4990-a289-421c0d94e552",
+      "club": "YRAT",
+      "name": "Itthichai Tiathongchai",
+      "gender": "M",
+      "handle": "itthichai-tiathongchai-iw2jhva",
+      "birthYear": 2013,
+      "sailNumber": "1322",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6a47226c-e5c9-4b83-b962-266bbd3c8ccd",
+      "club": "RTNYC",
+      "name": "Tammachat Sriopas",
+      "gender": "M",
+      "handle": "tammachat-sriopas-inv7x5v",
+      "birthYear": 2012,
+      "sailNumber": "878",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "071e2770-8de0-4d2f-b8c3-bd6cb31fef05",
+      "club": "YRAT",
+      "name": "Rachata Sadtrakulwatanna",
+      "gender": "M",
+      "handle": "rachata-sadtrakulwatanna-823ho68",
+      "birthYear": 2011,
+      "sailNumber": "1963",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+      "club": "YRAT",
+      "name": "Surapha Muangngam",
+      "gender": "F",
+      "handle": "surapha-muangngam-8gw2ruy",
+      "birthYear": 2011,
+      "sailNumber": "1941",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "8263464a-01a9-4e55-b8f1-46d96d0173c4",
+      "club": "YRAT",
+      "name": "Karit Phrammanee",
+      "gender": "M",
+      "handle": "karit-phrammanee-of7ddfd",
+      "birthYear": 2010,
+      "sailNumber": "0",
+      "nationality": "SGP",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "f3e4cce1-2a81-4794-ba02-a570d43efb21",
+      "club": "YRAT",
+      "name": "Suthinan Nakpasom",
+      "gender": "M",
+      "handle": "suthinan-nakpasom-n1ztaan",
+      "birthYear": 2012,
+      "sailNumber": "1987",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "e3d1a118-7f20-4f3d-851d-1dfa857566f2",
+      "club": "YRAT",
+      "name": "Nattanan Chaiya-o-Cha",
+      "gender": "F",
+      "handle": "nattanan-chaiya-o-cha-xw0ncc0",
+      "birthYear": 2014,
+      "sailNumber": "1385",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "a6769ca7-9204-43b3-bbb5-82e0182efd7e",
+      "club": "YRAT",
+      "name": "Adison Ein",
+      "gender": "M",
+      "handle": "adison-ein-f5kv46b",
+      "birthYear": 2011,
+      "sailNumber": "1945",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "1161a90f-29b8-44cb-9b89-35b81011b2b8",
+      "club": "YRAT",
+      "name": "Pailin Jaroenpon",
+      "gender": "F",
+      "handle": "pailin-jaroenpon-f3tnzr6",
+      "birthYear": 2010,
+      "sailNumber": "1253",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "9fe16e38-700a-4ba6-8618-5f6779a9b23f",
+      "club": "ACDC.SC",
+      "name": "Pattarakorn Poonpat",
+      "gender": "M",
+      "handle": "pattarakorn-poonpat-oe44pao",
+      "birthYear": 2012,
+      "sailNumber": "88",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "5cd22c52-558f-598e-84df-07fbb27b43fc",
+      "club": "YRAT",
+      "name": "Jiratip Mutiphan",
+      "gender": "M",
+      "handle": "jiratip-mutiphan-thai25-5cd22c",
+      "birthYear": 2010,
+      "sailNumber": "THA 1985",
+      "nationality": "THA",
+      "sailNumberIlca4": "9"
+    },
+    {
+      "id": "3adcfc44-b8ad-443f-b2e9-c8d5da671014",
+      "club": "YRAT",
+      "name": "Thirawat Hankham",
+      "gender": "M",
+      "handle": "thirawat-hankham-39qtb48",
+      "birthYear": 2013,
+      "sailNumber": "198",
+      "nationality": "THA",
+      "sailNumberIlca4": "225982"
+    },
+    {
+      "id": "39f63d3e-5e9b-4643-9261-bccc97cfd343",
+      "club": "YRAT",
+      "name": "Natthapong Neelasavee",
+      "gender": "M",
+      "handle": "natthapong-neelasavee-91q0rru",
+      "birthYear": 2011,
+      "sailNumber": "0",
+      "nationality": "THA",
+      "sailNumberIlca4": "222071"
+    },
+    {
+      "id": "70a6f3e4-0d5d-50f5-9ffe-54de3fe9811a",
+      "club": "YRAT",
+      "name": "Peerapat Yaponha",
+      "gender": "M",
+      "handle": "peerapat-yaponha-sr26-70a6f3",
+      "birthYear": 2012,
+      "sailNumber": "",
+      "nationality": "THA",
+      "sailNumberIlca4": "THA222685"
+    },
+    {
+      "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+      "club": "ACDC.SC",
+      "name": "Klaochanok Chatawattanasopakun",
+      "gender": "F",
+      "handle": "klaochanok-chatawattanasopakun-wds4018",
+      "birthYear": 2013,
+      "sailNumber": "3935",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "6d6d7dd3-8b95-4230-af00-01321a224c3e",
+      "club": "ACDC.SC",
+      "name": "Suratsayapron Kaewrakum",
+      "gender": "F",
+      "handle": "asian-tha-suratsayap-1412cf",
+      "birthYear": 2013,
+      "sailNumber": "1696",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "60c5d690-0e0b-4f2e-b26e-d549221783b4",
+      "club": "ACDC.SC",
+      "name": "Trairat Jaroonrot",
+      "gender": "M",
+      "handle": "asian-tha-trairat-ja-e891d7",
+      "birthYear": 2011,
+      "sailNumber": "1876",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "b4cbc0a1-4813-41b7-beec-27beba3e6301",
+      "club": "YRAT",
+      "name": "Thanapha Phongkamnerd",
+      "gender": "F",
+      "handle": "thanapha-phongkamnerd-eq3gexa",
+      "birthYear": 2012,
+      "sailNumber": "1529",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+      "club": "YRAT",
+      "name": "Nirada Sasiwattanaporn",
+      "gender": "F",
+      "handle": "asian-tha-nirada-sas-239840",
+      "birthYear": 2014,
+      "sailNumber": "1925",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "bb321865-4298-43a9-b473-cf5dabf1f192",
+      "club": "RVYC",
+      "name": "Levy Apichai Wiedmann",
+      "gender": "M",
+      "handle": "asian-tha-levy-apich-debd2f",
+      "birthYear": 2013,
+      "sailNumber": "996",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "2480fe9f-37e7-52c3-b126-6871b7b0b492",
+      "club": "YRAT",
+      "name": "Nattapon Chailob",
+      "gender": "M",
+      "handle": "nattapon-chailob-thai25-2480fe",
+      "birthYear": 2011,
+      "sailNumber": "THA 1774",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "83d3c9be-253d-5fe7-913c-f4470eda1afe",
+      "club": "YRAT",
+      "name": "Prin Kantharak",
+      "gender": "M",
+      "handle": "prin-kantharak-thai25-83d3c9",
+      "birthYear": 2012,
+      "sailNumber": "THA 1291",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "7c7d0b90-ee1b-5cc7-96af-bfd23c2ef872",
+      "club": "RTFYC",
+      "name": "Pakin Wongratanachot",
+      "gender": "M",
+      "handle": "pakin-wongratanachot-thai25-7c7d0b",
+      "birthYear": 2011,
+      "sailNumber": "THA 1954",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    },
+    {
+      "id": "eb4dfcde-6164-5b00-b483-98d0ea6e8172",
+      "club": "YRAT",
+      "name": "Kunladech Bunchu",
+      "gender": "M",
+      "handle": "kunladech-bunchu-thai25-eb4dfc",
+      "birthYear": 2012,
+      "sailNumber": "THA 1886",
+      "nationality": "THA",
+      "sailNumberIlca4": null
+    }
+  ],
+  "newProfiles": [
+    {
+      "id": "e0c694d1-6e8c-5fef-85b8-14263e35dc02",
+      "name": "Nantiphat Kerdsakul",
+      "handle": "nantiphat-kerdsakul-sr25-e0c694",
+      "sailNumber": "THA152",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "ACDC.SC"
+    },
+    {
+      "id": "1e767d30-91bd-58e1-b562-6aa545fbe932",
+      "name": "Norakit Faothanom",
+      "handle": "norakit-faothanom-sr25-1e767d",
+      "sailNumber": "THA1539",
+      "sailNumberIlca4": null,
+      "nationality": "THA",
+      "gender": "M",
+      "club": "ACDC.SC"
+    }
+  ],
+  "identityReview": {
+    "method": "Unique exact full names and reviewed aliases; close-name and abbreviated identities held."
+  }
+}

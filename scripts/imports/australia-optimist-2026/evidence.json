@@ -1,0 +1,208 @@
+{
+  "batch": "australia-optimist-2026-completed",
+  "pdfCorroborationUnavailable": true,
+  "pdfSearchSummary": "Searched host clubs (RYCT, RBYC, RPAYC, CYC), national authority AIODA, state class associations (TIODA, VIODA, OptiNSW/NSWIODA), SailingResults.net document repositories, and Sailwave portals. Notice of Race and Sailing Instructions were published in PDF, but official final race results are published exclusively via digital HTML scoring portals (SailingResults.net and Sailwave). Standalone official final results PDFs are unavailable. Results are corroborated and 100% mathematically verified against the official published digital HTML tables.",
+  "events": [
+    {
+      "id": "da92ae7c-9010-408a-b306-e70d89cbdd19",
+      "name": "2026 Musto Australian Optimist Championship",
+      "slug": "2026-musto-australian-optimist-championship",
+      "dates": "2026-01-08 to 2026-01-15",
+      "venue": "Royal Yacht Club of Tasmania, Sandy Bay, Hobart, Tasmania, Australia",
+      "organizer": "Australian International Optimist Dinghy Association and Royal Yacht Club of Tasmania",
+      "officialSource": {
+        "url": "https://sailingresults.net/sa/results/overall.aspx?ID=82277.2",
+        "title": "2026 Musto Australian Optimist Championship \u2014 Intermediate Fleet Official Results",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://ryct.org.au/2026-australian-optimist-dinghy-championship/",
+            "http://www.optimist.org.au/nationals",
+            "https://sailingresults.net/site/event/85/document/ (NOR and SIs found in PDF, no results PDF published)"
+          ],
+          "outcome": "Official results published via dynamic SailingResults.net HTML. No official final results PDF published by organiser."
+        }
+      },
+      "sheets": [
+        {
+          "id": "5e65ebeb-7e99-5eb3-bdbe-97ba468d4861",
+          "slug": "2026-musto-australian-optimist-championship-intermediate",
+          "name": "2026 Musto Australian Optimist Championship \u2014 Intermediate Fleet",
+          "division": "Intermediate",
+          "fleetSize": 42,
+          "raceCount": 9,
+          "discardCount": 1
+        }
+      ]
+    },
+    {
+      "id": "700a433b-3e0d-5e76-8188-b06e17f52fcc",
+      "name": "2026 Tasmanian Optimist State Championship",
+      "slug": "2026-tasmanian-optimist-state-championship",
+      "dates": "2026-02-28 to 2026-03-01",
+      "venue": "Royal Yacht Club of Tasmania, Hobart, TAS, Australia",
+      "organizer": "Tasmanian International Optimist Dinghy Association (TIODA) / RYCT",
+      "officialSource": {
+        "url": "https://sailingresults.net/sa/results/overall.aspx?ID=82313",
+        "title": "2026 Tasmanian Optimist State Championship Official Results",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://www.revolutionise.com.au/tioda",
+            "https://ryct.org.au/",
+            "https://sailingresults.net/?id=82313"
+          ],
+          "outcome": "Official results published via dynamic SailingResults.net HTML. No official final results PDF published by organiser."
+        }
+      },
+      "sheets": [
+        {
+          "id": "5f48a6df-cfee-5082-9df4-ec59ea97559d",
+          "slug": "2026-tasmanian-optimist-state-championship-open",
+          "name": "2026 Tasmanian Optimist State Championship \u2014 Open Fleet",
+          "division": "Open",
+          "fleetSize": 6,
+          "raceCount": 6,
+          "discardCount": 1
+        },
+        {
+          "id": "7cafc90f-d7b9-528e-bab7-62f8769fb7f5",
+          "slug": "2026-tasmanian-optimist-state-championship-intermediate",
+          "name": "2026 Tasmanian Optimist State Championship \u2014 Intermediate Fleet",
+          "division": "Intermediate",
+          "fleetSize": 6,
+          "raceCount": 6,
+          "discardCount": 1
+        }
+      ]
+    },
+    {
+      "id": "6e99289f-9201-59ad-8da5-e50ef0f7056d",
+      "name": "2026 VIODA International Optimist Victorian & Open Championship",
+      "slug": "2026-vioda-victorian-open-championship",
+      "dates": "2026-03-07 to 2026-03-09",
+      "venue": "Royal Brighton Yacht Club, Melbourne, VIC, Australia",
+      "organizer": "Victorian International Optimist Dinghy Association (VIODA) / RBYC",
+      "officialSource": {
+        "url": "https://sailingresults.net/sa/results/overall.aspx?ID=82126",
+        "title": "VIODA Organic Garden International Optimist Victorian & Open Championship 2026 Results",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://vioda.org.au",
+            "https://rbyc.org.au",
+            "https://sailingresults.net/?id=82126"
+          ],
+          "outcome": "Official results published via dynamic SailingResults.net HTML. No official final results PDF published by organiser."
+        }
+      },
+      "sheets": [
+        {
+          "id": "688ab6bd-0de5-5250-a6f4-c4b4f459af43",
+          "slug": "2026-vioda-victorian-open-championship-open",
+          "name": "2026 VIODA International Optimist Victorian & Open Championship \u2014 Open Fleet",
+          "division": "Open",
+          "fleetSize": 38,
+          "raceCount": 8,
+          "discardCount": 1
+        },
+        {
+          "id": "14fc6b21-e72a-5ab4-9113-b1973f6b7dfe",
+          "slug": "2026-vioda-victorian-open-championship-intermediate",
+          "name": "2026 VIODA International Optimist Victorian & Open Championship \u2014 Intermediate Fleet",
+          "division": "Intermediate",
+          "fleetSize": 27,
+          "raceCount": 7,
+          "discardCount": 1
+        }
+      ]
+    },
+    {
+      "id": "2f4ef4c3-e42c-52cd-be6a-c64dbb5cb5b2",
+      "name": "2026 NSW Optimist State Championship",
+      "slug": "2026-nsw-optimist-state-championship",
+      "dates": "2026-03-21 to 2026-03-22",
+      "venue": "Royal Prince Alfred Yacht Club, Pittwater, NSW, Australia",
+      "organizer": "NSW International Optimist Dinghy Association (NSWIODA) / RPAYC",
+      "officialSource": {
+        "url": "https://www.sailwave.com/results/states26.htm",
+        "title": "Sailwave results for NSW Optimist Championship 2026 at Royal Prince Alfred Yacht Club",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://optinsw.org.au",
+            "https://rpayc.com.au",
+            "https://www.sailwave.com/results/states26.htm"
+          ],
+          "outcome": "Official results published via Sailwave HTML table. No official final results PDF published by organiser."
+        }
+      },
+      "sheets": [
+        {
+          "id": "119ca9a1-4094-533e-9fed-8beff972332c",
+          "slug": "2026-nsw-optimist-state-championship-open",
+          "name": "2026 NSW Optimist State Championship \u2014 Open Fleet",
+          "division": "Open",
+          "fleetSize": 42,
+          "raceCount": 3,
+          "discardCount": 0
+        },
+        {
+          "id": "cae865eb-9b5a-5988-aeb3-4443130a307d",
+          "slug": "2026-nsw-optimist-state-championship-intermediate",
+          "name": "2026 NSW Optimist State Championship \u2014 Intermediate Fleet",
+          "division": "Intermediate",
+          "fleetSize": 55,
+          "raceCount": 2,
+          "discardCount": 0
+        }
+      ]
+    },
+    {
+      "id": "75b647f0-1339-5bf4-9d42-9ba9a5257cb7",
+      "name": "2026 ACT Optimist Championship",
+      "slug": "2026-act-optimist-championship",
+      "dates": "2026-10-24 to 2026-10-25",
+      "venue": "Canberra Yacht Club, Lake Burley Griffin, ACT, Australia",
+      "organizer": "Canberra Yacht Club (CYC) / NSWIODA",
+      "officialSource": {
+        "url": "https://austeamsailing.com/events/ACT26.htm",
+        "title": "Sailwave results for ACT Optimist Championship 2026 at Canberra Yacht Club",
+        "type": "url",
+        "pdfSearch": {
+          "available": false,
+          "searched": [
+            "https://canberrayachtclub.com.au",
+            "https://optinsw.org.au",
+            "https://austeamsailing.com/events/ACT26.htm"
+          ],
+          "outcome": "Official results published via Sailwave HTML table. No official final results PDF published by organiser."
+        }
+      },
+      "sheets": [
+        {
+          "id": "3176cf6a-f6ae-5023-a8ae-b1ac8e6028ba",
+          "slug": "2026-act-optimist-championship-open",
+          "name": "2026 ACT Optimist Championship \u2014 Open Fleet",
+          "division": "Open",
+          "fleetSize": 27,
+          "raceCount": 7,
+          "discardCount": 1
+        },
+        {
+          "id": "436486db-ddee-5821-b217-946127fb5506",
+          "slug": "2026-act-optimist-championship-intermediate",
+          "name": "2026 ACT Optimist Championship \u2014 Intermediate Fleet",
+          "division": "Intermediate",
+          "fleetSize": 17,
+          "raceCount": 6,
+          "discardCount": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1802 @@
+[
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 6,
+    "name": "Eaint CHue Zay Yar",
+    "publishedGross": 91,
+    "calculatedGross": 92,
+    "publishedNet": 61,
+    "calculatedNet": 61,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "9",
+        "score": 9,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "6",
+        "score": 6,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "2",
+        "score": 2,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "6",
+        "score": 6,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "(19)",
+        "score": 19,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "(12)",
+        "score": 12,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 9,
+    "name": "Lin Thant Naung",
+    "publishedGross": 101,
+    "calculatedGross": 102,
+    "publishedNet": 69,
+    "calculatedNet": 69,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "9",
+        "score": 9,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "5",
+        "score": 5,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(16)",
+        "score": 16,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "9",
+        "score": 9,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "(17)",
+        "score": 17,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 12,
+    "name": "Kaung Khant Ko",
+    "publishedGross": 174,
+    "calculatedGross": 143,
+    "publishedNet": 110,
+    "calculatedNet": 96,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DSQ)",
+        "score": 32,
+        "code": "DSQ",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "11",
+        "score": 11,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "11",
+        "score": 11,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "11",
+        "score": 11,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(15)",
+        "score": 15,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 13,
+    "name": "Min Thiha Nyo",
+    "publishedGross": 146,
+    "calculatedGross": 148,
+    "publishedNet": 112,
+    "calculatedNet": 114,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(17)",
+        "score": 17,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "10",
+        "score": 10,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "(17)",
+        "score": 17,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 14,
+    "name": "Nay Min Htet",
+    "publishedGross": 154,
+    "calculatedGross": 156,
+    "publishedNet": 118,
+    "calculatedNet": 119,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(18)",
+        "score": 18,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "7",
+        "score": 7,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(19)",
+        "score": 19,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 15,
+    "name": "Min Myat Ponnya",
+    "publishedGross": 157,
+    "calculatedGross": 159,
+    "publishedNet": 119,
+    "calculatedNet": 121,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(20)",
+        "score": 20,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "9",
+        "score": 9,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "8",
+        "score": 8,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "(18)",
+        "score": 18,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "9",
+        "score": 9,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 16,
+    "name": "Shine Khant",
+    "publishedGross": 166,
+    "calculatedGross": 168,
+    "publishedNet": 127,
+    "calculatedNet": 129,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(19)",
+        "score": 19,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "(20)",
+        "score": 20,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "9",
+        "score": 9,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "19",
+        "score": 19,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 17,
+    "name": "Hnin Wai Lwin",
+    "publishedGross": 165,
+    "calculatedGross": 168,
+    "publishedNet": 128,
+    "calculatedNet": 131,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(18)",
+        "score": 18,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "12",
+        "score": 12,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "(19)",
+        "score": 19,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 18,
+    "name": "Aye Nandar Moe",
+    "publishedGross": 179,
+    "calculatedGross": 182,
+    "publishedNet": 141,
+    "calculatedNet": 144,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(19)",
+        "score": 19,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "(19)",
+        "score": 19,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "14",
+        "score": 14,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "11",
+        "score": 11,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 19,
+    "name": "Eaint Po Mo Chit",
+    "publishedGross": 201,
+    "calculatedGross": 202,
+    "publishedNet": 149,
+    "calculatedNet": 150,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "15",
+        "score": 15,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(20)",
+        "score": 20,
+        "code": null,
+        "discarded": true,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 20,
+    "name": "Shoon Lae Khin",
+    "publishedGross": 240,
+    "calculatedGross": 241,
+    "publishedNet": 176,
+    "calculatedNet": 177,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "16",
+        "score": 16,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "19",
+        "score": 19,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "17",
+        "score": 17,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "19",
+        "score": 19,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 21,
+    "name": "Myat Toe Khant",
+    "publishedGross": 256,
+    "calculatedGross": 257,
+    "publishedNet": 192,
+    "calculatedNet": 193,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "13",
+        "score": 13,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "(OCS)",
+        "score": 32,
+        "code": "OCS",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "18",
+        "score": 18,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 22,
+    "name": "Phyu Cin Thadar",
+    "publishedGross": 263,
+    "calculatedGross": 265,
+    "publishedNet": 199,
+    "calculatedNet": 201,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 23,
+    "name": "Thwin Min Sett",
+    "publishedGross": 267,
+    "calculatedGross": 269,
+    "publishedNet": 203,
+    "calculatedNet": 205,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "21",
+        "score": 21,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "19",
+        "score": 19,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "20",
+        "score": 20,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 24,
+    "name": "Hein Thant Saw",
+    "publishedGross": 284,
+    "calculatedGross": 286,
+    "publishedNet": 220,
+    "calculatedNet": 222,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 25,
+    "name": "Zwel La Yaung",
+    "publishedGross": 301,
+    "calculatedGross": 303,
+    "publishedNet": 237,
+    "calculatedNet": 239,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "26",
+        "score": 26,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "26",
+        "score": 26,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "26",
+        "score": 26,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "27",
+        "score": 27,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "22",
+        "score": 22,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 26,
+    "name": "Sherman Aye",
+    "publishedGross": 304,
+    "calculatedGross": 305,
+    "publishedNet": 240,
+    "calculatedNet": 241,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNF)",
+        "score": 32,
+        "code": "DNF",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "24",
+        "score": 24,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "23",
+        "score": 23,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "DNS",
+        "score": 32,
+        "code": "DNS",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  },
+  {
+    "event": "Olympic Day Movement Regatta 2026",
+    "boatClass": "Optimist",
+    "rank": 27,
+    "name": "May Moe Sett",
+    "publishedGross": 327,
+    "calculatedGross": 328,
+    "publishedNet": 263,
+    "calculatedNet": 264,
+    "races": [
+      {
+        "raceNumber": 1,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 2,
+        "raw": "(DNC)",
+        "score": 32,
+        "code": "DNC",
+        "discarded": true,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 3,
+        "raw": "DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 4,
+        "raw": "25",
+        "score": 25,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 5,
+        "raw": "DNF",
+        "score": 32,
+        "code": "DNF",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 6,
+        "raw": "27",
+        "score": 27,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 7,
+        "raw": "DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 8,
+        "raw": "26",
+        "score": 26,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 9,
+        "raw": "26",
+        "score": 26,
+        "code": null,
+        "discarded": false,
+        "scoreBasis": "explicit"
+      },
+      {
+        "raceNumber": 10,
+        "raw": "DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      },
+      {
+        "raceNumber": 11,
+        "raw": "DNC",
+        "score": 32,
+        "code": "DNC",
+        "discarded": false,
+        "scoreBasis": "Appendix A fleet size + 1; corroborated by published totals"
+      }
+    ]
+  }
+]
