@@ -12,7 +12,7 @@ const history = [{ regattaId: "g", regattaSlug: slug }];
 beforeEach(() => { vi.resetAllMocks(); cacheCalls.args = []; });
 describe("event awards on sailor profiles", () => {
   it("uses the same calculated category winners as the event page and excludes other sailors", async () => {
-    vi.mocked(getCachedPublicRegattas).mockResolvedValue([{ id: "g", name: "RSYC", slug, date: "2026-10-03", boatClass: "Optimist", division: "Gold", totalFleetSize: 2 }]);
+    vi.mocked(getCachedPublicRegattas).mockResolvedValue([{ id: "g", name: "RSYC", slug, date: "2026-10-03", endDate: "2026-10-04", venue: "Singapore", geography: "SGP", boatClass: "Optimist", division: "Gold", totalFleetSize: 2 }]);
     vi.mocked(getResultsForRegatta).mockResolvedValue([
       { sailorId: "a", sailorName: sailor.name, handle: sailor.handle, rank: 1, gender: "F", birthYear: 2014, school: "Private current school", sailNumber: "123" },
       { sailorId: "b", sailorName: "Other Winner", handle: "other", rank: 2, gender: "M", birthYear: 2014, sailNumber: "456" },
@@ -21,6 +21,7 @@ describe("event awards on sailor profiles", () => {
     expect(awards.map((award) => award.categoryName)).toEqual(["Overall", "Female", "Under 13"]);
     expect(awards.every((award) => award.rank === 1)).toBe(true);
     expect(awards.every((award) => award.schoolName === undefined)).toBe(true);
+    expect(awards[0]).toMatchObject({ regattaDate: "2026-10-03", regattaEndDate: "2026-10-04", venue: "Singapore", geography: "SGP" });
     const fallback = getSailorPrizes(sailor, [{ regattaSlug: slug, rank: 1, boatClass: "Optimist", division: "Gold" }]);
     expect(mergeSailorPrizes(fallback, awards)).toHaveLength(3);
   });

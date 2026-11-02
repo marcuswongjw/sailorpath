@@ -718,6 +718,8 @@ export async function getResultsForSailor(sailorId: string) {
         regattaName: regattas.name,
         regattaSlug: regattas.slug,
         regattaDate: regattas.date,
+        regattaEndDate: regattas.endDate,
+        regattaVenue: regattas.venue,
         division: regattas.division,
         fleetSize: regattas.totalFleetSize,
         raceCount: regattas.raceCount,
@@ -833,7 +835,7 @@ export async function getResultsForSailor(sailorId: string) {
 
 export const getCachedResultsForSailor = unstable_cache(
   async (sailorId: string) => singleFlight(`sailor-results:${sailorId}`, () => getResultsForSailor(sailorId)),
-  ["public-sailor-results-v4-published-only"],
+  ["public-sailor-results-v5-award-dates-location"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],

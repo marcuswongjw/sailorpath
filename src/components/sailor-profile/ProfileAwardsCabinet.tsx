@@ -2,15 +2,19 @@
 
 import { sailingClassDisplayLabel } from "@/lib/classPresentation";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import Link from "next/link";
-import { Trophy, Compass, Calendar } from "lucide-react";
+import { Trophy, Compass, Calendar, MapPin } from "lucide-react";
 import {
   type SailorPrizeAward,
   type SailorMedalCounts,
   getSailorMedalCounts,
 } from "@/lib/sailorPrizes";
 import { PROFILE_CARD_CLASS as cardClass } from "./helpers";
+import {
+  EMPTY_AWARD_FILTERS, awardDateLabel, awardLocation, awardYear, browseSailorAwards,
+  type AwardFilters, type AwardSort,
+} from "@/lib/sailorAwardBrowse";
 
 interface Props {
   awards: SailorPrizeAward[];
@@ -26,19 +30,18 @@ function medalStyle(medal: "gold" | "silver" | "bronze" | "other", rank: number)
 }
 
 export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
-  const counts: SailorMedalCounts = useMemo(() => getSailorMedalCounts(awards), [awards]);
-  const [classFilter, setClassFilter] = useState<string>("all");
-
-  const availableClasses = useMemo(() => {
-    const set = new Set<string>();
-    awards.forEach((a) => set.add(a.boatClass));
-    return Array.from(set);
-  }, [awards]);
-
-  const filteredAwards = useMemo(() => {
-    if (classFilter === "all") return awards;
-    return awards.filter((a) => a.boatClass === classFilter);
-  }, [awards, classFilter]);
+  const formId = useId();
+  const [filters, setFilters] = useState<AwardFilters>(EMPTY_AWARD_FILTERS);
+  const [sort, setSort] = useState<AwardSort>("newest");
+  const updateFilter = (field: keyof AwardFilters, value: string) => setFilters((current) => ({ ...current, [field]: value }));
+  const availableClasses = useMemo(() => [...new Set(awards.map((award) => award.boatClass))].sort(), [awards]);
+  const availableYears = useMemo(() => [...new Set(awards.map(awardYear).filter(Boolean))].sort().reverse(), [awards]);
+  const availableLocations = useMemo(() => [...new Set(awards.map(awardLocation).filter(Boolean))].sort(), [awards]);
+  const filteredAwards = useMemo(() => browseSailorAwards(awards, filters, sort), [awards, filters, sort]);
+  const counts: SailorMedalCounts = useMemo(() => getSailorMedalCounts(filteredAwards), [filteredAwards]);
+  const hasFilters = Object.keys(EMPTY_AWARD_FILTERS).some((key) => filters[key as keyof AwardFilters] !== EMPTY_AWARD_FILTERS[key as keyof AwardFilters]);
+  const invalidRange = Boolean(filters.from && filters.to && filters.from > filters.to);
+  const controlClass = "mt-1 w-full min-w-0 rounded-lg border border-cool-veil bg-white px-3 py-2 text-sm text-charcoal focus-visible:outline-2 focus-visible:outline-harbour";
 
   if (awards.length === 0) {
     return (
@@ -89,39 +92,84 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
           </div>
         </div>
 
-        {/* Boat class filter chips (if multiple classes) */}
-        {availableClasses.length > 1 && (
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <button
-              type="button"
-              onClick={() => setClassFilter("all")}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                classFilter === "all"
-                  ? "bg-harbour text-white shadow-xs"
-                  : "bg-sailcloth border border-cool-veil text-slate-soft hover:text-charcoal"
-              }`}
-            >
-              All ({awards.length})
-            </button>
-            {availableClasses.map((cls) => {
-              const count = awards.filter((a) => a.boatClass === cls).length;
-              return (
-                <button
-                  key={cls}
-                  type="button"
-                  onClick={() => setClassFilter(cls)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                    classFilter === cls
-                      ? "bg-harbour text-white shadow-xs"
-                      : "bg-sailcloth border border-cool-veil text-slate-soft hover:text-charcoal"
-                  }`}
-                >
-                  {cls} ({count})
-                </button>
-              );
-            })}
+
+      </div>
+
+      <div role="group" aria-label="Award filters" className="space-y-3">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label htmlFor={`${formId}-search`} className="text-xs font-bold text-slate-soft">
+            Search awards
+            <input id={`${formId}-search`} type="search" value={filters.query}
+              onChange={(event) => updateFilter("query", event.target.value)}
+              placeholder="Event, category or location" className={controlClass} />
+          </label>
+          <label htmlFor={`${formId}-sort`} className="text-xs font-bold text-slate-soft">
+            Sort awards
+            <select id={`${formId}-sort`} value={sort} onChange={(event) => setSort(event.target.value as AwardSort)} className={controlClass}>
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="placing">Best placing</option>
+              <option value="event">Event name</option>
+              <option value="location">Location</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <label htmlFor={`${formId}-year`} className="text-xs font-bold text-slate-soft">
+            Year
+            <select id={`${formId}-year`} value={filters.year} onChange={(event) => updateFilter("year", event.target.value)} className={controlClass}>
+              <option value="all">All years</option>
+              {availableYears.map((year) => <option key={year} value={year}>{year}</option>)}
+            </select>
+          </label>
+          <label htmlFor={`${formId}-location`} className="text-xs font-bold text-slate-soft">
+            Location
+            <select id={`${formId}-location`} value={filters.location} onChange={(event) => updateFilter("location", event.target.value)} className={controlClass}>
+              <option value="all">All locations</option>
+              {availableLocations.map((location) => <option key={location} value={location}>{location}</option>)}
+            </select>
+          </label>
+          <label htmlFor={`${formId}-class`} className="text-xs font-bold text-slate-soft">
+            Boat class
+            <select id={`${formId}-class`} value={filters.boatClass} onChange={(event) => updateFilter("boatClass", event.target.value)} className={controlClass}>
+              <option value="all">All classes</option>
+              {availableClasses.map((boatClass) => <option key={boatClass} value={boatClass}>{sailingClassDisplayLabel(boatClass)}</option>)}
+            </select>
+          </label>
+          <label htmlFor={`${formId}-medal`} className="text-xs font-bold text-slate-soft">
+            Medal or honour
+            <select id={`${formId}-medal`} value={filters.medal} onChange={(event) => updateFilter("medal", event.target.value)} className={controlClass}>
+              <option value="all">All honours</option>
+              <option value="gold">Gold</option>
+              <option value="silver">Silver</option>
+              <option value="bronze">Bronze</option>
+              <option value="other">Other honours</option>
+            </select>
+          </label>
+        </div>
+        <details className="rounded-lg border border-cool-veil px-3 py-2 text-sm">
+          <summary className="cursor-pointer font-bold text-harbour">Custom date range</summary>
+          <p className="mt-2 text-xs text-slate-soft">Filter by the final day of the event. Awards without a recorded date are excluded from a date range.</p>
+          <div className="mt-2 grid gap-3 sm:grid-cols-2">
+            <label htmlFor={`${formId}-from`} className="text-xs font-bold text-slate-soft">
+              From date
+              <input id={`${formId}-from`} type="date" value={filters.from} max={filters.to || undefined}
+                onChange={(event) => updateFilter("from", event.target.value)} className={controlClass} aria-invalid={invalidRange}
+                aria-describedby={invalidRange ? `${formId}-range-error` : undefined} />
+            </label>
+            <label htmlFor={`${formId}-to`} className="text-xs font-bold text-slate-soft">
+              To date
+              <input id={`${formId}-to`} type="date" value={filters.to} min={filters.from || undefined}
+                onChange={(event) => updateFilter("to", event.target.value)} className={controlClass} aria-invalid={invalidRange}
+                aria-describedby={invalidRange ? `${formId}-range-error` : undefined} />
+            </label>
           </div>
-        )}
+          {invalidRange && <p id={`${formId}-range-error`} role="alert" className="mt-2 text-sm text-red-700">Choose a To date on or after the From date.</p>}
+        </details>
+        <div className="flex items-center justify-between gap-3 text-xs text-slate-soft">
+          <p role="status">Showing {filteredAwards.length} of {awards.length} honours · medal counts reflect this view</p>
+          {hasFilters && <button type="button" onClick={() => setFilters(EMPTY_AWARD_FILTERS)} className="shrink-0 font-bold text-harbour underline">Clear filters</button>}
+        </div>
       </div>
 
       {/* ── Medal Counts Strip ─────────────────────────────────────── */}
@@ -161,7 +209,11 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
       </div>
 
       {/* ── Awards Grid ─────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {filteredAwards.length === 0 && <div className="rounded-xl border border-cool-veil bg-sailcloth p-6 text-center">
+        <p className="font-bold text-charcoal">No awards match these filters.</p>
+        <p className="mt-1 text-sm text-slate-soft">Try another date or location, or clear your filters.</p>
+      </div>}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3" aria-label="Award list">
         {filteredAwards.map((award) => {
           const style = medalStyle(award.medal, award.rank);
           const regattaHref = award.regattaSlug
@@ -169,8 +221,9 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
             : null;
 
           return (
-            <div
+            <article
               key={award.id}
+              aria-label={`${award.prizeTitle} at ${award.regattaName}`}
               className={`rounded-xl border p-3.5 space-y-2.5 transition-all shadow-xs ${style.tint} ${style.border}`}
             >
               <div className="flex items-start justify-between gap-2.5">
@@ -217,12 +270,17 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                   )}
                 </div>
 
-                {award.datesText && (
+                {awardDateLabel(award) && (
                   <span className="text-[11px] text-slate-soft font-medium shrink-0">
-                    {award.datesText}
+                    {awardDateLabel(award)}
                   </span>
                 )}
               </div>
+
+              {awardLocation(award) && <p className="flex items-start gap-1.5 text-xs text-slate-soft">
+                <MapPin className="mt-0.5 h-3 w-3 shrink-0" aria-hidden />
+                <span>{awardLocation(award)}</span>
+              </p>}
 
               {award.sourceUrl && <a href={award.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-block text-xs font-semibold text-harbour underline">Official award source ↗</a>}
               {/* Metadata subline: Club, School, Sail #, and Notes */}
@@ -255,7 +313,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                   )}
                 </div>
               )}
-            </div>
+            </article>
           );
         })}
       </div>
