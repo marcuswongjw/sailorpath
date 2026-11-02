@@ -288,7 +288,8 @@ async function DbSlicePanel({
           profileHandles={profileHandles}
         />
       )}
-      {!hasOverallPrizeWinners(fleets) && <RegattaFleetPodium results={results} />}
+      {prizeView?.schedule.recordedPodiumPolicy !== "official-categories-only" &&
+        !hasOverallPrizeWinners(fleets) && <RegattaFleetPodium results={results} />}
       <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed">
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}

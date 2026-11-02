@@ -229,6 +229,7 @@ export function getSailorPrizes(
       !String(res.regattaSlug || "").startsWith("log-")
     ) {
       const regSlug = res.regattaSlug || (res.regattaName || "").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      if (getRegattaPrizeSchedule(regSlug)?.recordedPodiumPolicy === "official-categories-only") continue;
       const boatClass = res.boatClass || "Optimist";
       const year = Number(String(res.regattaDate || "").slice(0, 4)) || 2026;
       const dedupeKey = `${regSlug}-${boatClass}-overall-${res.rank}`;
