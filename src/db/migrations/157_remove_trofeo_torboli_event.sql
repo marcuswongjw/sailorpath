@@ -20,8 +20,12 @@ BEGIN
     DELETE FROM public.result_import_scans WHERE event_id = v_event_id;
     
     -- Clean up associated regattas / results if any
+    DELETE FROM public.regatta_result_participants WHERE regatta_result_id IN (
+      SELECT rr.id FROM public.regatta_results rr
+      JOIN public.regattas r ON r.id = rr.regatta_id
+      WHERE r.event_id = v_event_id
+    );
     DELETE FROM public.regatta_results WHERE regatta_id IN (SELECT id FROM public.regattas WHERE event_id = v_event_id);
-    DELETE FROM public.regatta_result_participants WHERE regatta_id IN (SELECT id FROM public.regattas WHERE event_id = v_event_id);
     DELETE FROM public.regattas WHERE event_id = v_event_id;
     
     -- Delete the event
