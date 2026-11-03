@@ -1,0 +1,33 @@
+{
+  "regatta_name": "115th Academic Year National President's Cup Sailing Regatta 2026 (115學年度總統盃全國帆船錦標賽)",
+  "sanctioning_authority": "Chinese Taipei Sailing Association (CTSA / 中華民國帆船協會)",
+  "official_url": "https://www.sailwave.com/results/115PresidentCup.htm",
+  "pdf_url": "http://www.ct-sailing.org.tw/media/k2/attachments/Sailwave_results_-_%E6%88%90%E7%B8%BE_-_115%E7%B8%BD%E7%B5%B1%E7%9B%83.pdf",
+  "venue": "Penghu / Tainan, Taiwan",
+  "dates": "14 – 16 August 2026",
+  "classes": [
+    "420",
+    "ILCA 4",
+    "ILCA 4",
+    "ILCA 6",
+    "ILCA 6",
+    "ILCA 7",
+    "optimist",
+    "optimist"
+  ],
+  "fleets_imported": [
+    "420",
+    "ILCA 4 (G)",
+    "ILCA 4 (B)",
+    "ILCA 6 (G)",
+    "ILCA 6 (B)",
+    "ILCA 7",
+    "Optimist (G)",
+    "Optimist (B)"
+  ],
+  "total_entries": 134,
+  "total_participants": 138,
+  "total_race_scores": 804,
+  "mathematical_verification": "100% verified (sum(clean_scores) == gross and gross - discard == net)",
+  "pdf_corroboration_status": "Verified against official CTSA PDF pages rendered to high-resolution PNG screenshots in scripts/imports/taiwan-2026/screenshots/."
+}

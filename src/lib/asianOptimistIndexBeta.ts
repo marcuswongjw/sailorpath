@@ -8,7 +8,7 @@
  */
 
 export const ASIAN_INDEX_BETA_VERSION = "V1 (Beta)";
-export const ASIAN_INDEX_BETA_DRAFT_DATE = "18 October 2026";
+export const ASIAN_INDEX_BETA_DRAFT_DATE = "3 November 2026";
 export const ASIAN_INDEX_NAME = "SailorPath Asian and Oceania Optimist Index";
 export const ASIAN_INDEX_PATH = "/optimist/asian-index";
 export const ASIAN_INDEX_METHODOLOGY_PATH = `${ASIAN_INDEX_PATH}/methodology`;
@@ -122,7 +122,7 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     verifiedMnas: null,
     races: 7,
     check: "meets_pending_verification",
-    note: "Baseline candidate. Leaves the 12-month window on its final-race anniversary, expected 1 Nov 2026; final race day to be verified.",
+    note: "Baseline 2025/26 cycle anchor. Reached its 12-month final-race anniversary on 1 Nov 2026; retained in the current beta baseline pending the December 2026 championship in Colombo.",
   },
   {
     id: "2026-iod-worlds",
@@ -222,15 +222,15 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
   },
   {
     id: "eastern-seaboard-2026",
-    name: "Eastern Seaboard Regatta — Optimist",
+    name: "18th Eastern Seaboard Regatta — Optimist",
     host: "THA",
-    dates: "29–31 Oct 2026 · Thailand",
+    dates: "28 Oct – 1 Nov 2026 · Pattaya",
     grade: 75,
-    starters: null,
-    verifiedMnas: null,
-    races: null,
-    check: "open",
-    note: "Open for nomination. Shares the Thailand host cap with the Thailand International.",
+    starters: 135,
+    verifiedMnas: 6,
+    races: 8,
+    check: "meets",
+    note: "68 Gold + 67 Silver starters published on SailorPath across THA, SGP, MAS, HKG, CHN, and TPE (8 completed races). Shares the Thailand host cap with the Thailand International.",
   },
   {
     id: "phuket-kings-cup",

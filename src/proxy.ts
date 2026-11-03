@@ -6,10 +6,12 @@ const PUBLIC_SINGLE_SEGMENT_PATHS = new Set([
   "about",
   "account",
   "admin",
+  "athlete",
   "blog",
   "calendar",
   "classes",
   "claim-profile",
+  "coach",
   "following",
   "coach-tools",
   "demo-profile",
@@ -55,6 +57,9 @@ export function shouldRefreshSession(
     pathname.startsWith("/parent/") ||
     pathname === "/following" ||
     pathname.startsWith("/following/") ||
+    pathname === "/athlete" ||
+    pathname.startsWith("/athlete/") ||
+    pathname === "/coach" ||
     pathname === "/coach-tools" ||
     pathname === "/sg/optimist/goldsailors" ||
     pathname.startsWith("/sg/optimist/goldsailors/")

@@ -87,4 +87,16 @@ describe("editorial workflow", () => {
     expect(draft?.body).toContain("The host-country cap is essential");
     expect(draft?.body).toContain("Lower Grades Can Beat Weak Higher Grades");
   });
+
+  it("includes the backdated October–November 2026 published updates", () => {
+    const slugs = SEEDED_EDITORIAL_DRAFTS.filter((item) => item.status === "published").map(
+      (item) => item.slug
+    );
+    expect(slugs).toEqual([
+      "2026-asian-games-and-youth-worlds-coverage",
+      "privacy-first-profiles-guardian-consent-and-evidence-protections",
+      "australian-2026-ilca-optimist-and-zhik-youth-sail-results",
+      "18th-eastern-seaboard-regatta-2026-results-published",
+    ]);
+  });
 });

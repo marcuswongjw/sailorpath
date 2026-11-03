@@ -36,9 +36,9 @@ function siteMetadataBase(): URL {
 
 export const metadata: Metadata = {
   metadataBase: siteMetadataBase(),
-  title: "SailorPath | Singapore Youth Sailing Rankings & Athlete Logbooks",
+  title: "SailorPath | Sailing Results, Class Standings & Sailor Profiles",
   description:
-    "Singapore Optimist, ILCA 4, ILCA 6, ILCA 7, WingFoil and Techno 293 standings, regatta results, and sailor records.",
+    "Verified regatta scorecards across Asia and Oceania, Singapore youth and open class standings, and career records across 13 dinghy, skiff, and windsurfing classes.",
   icons: {
     icon: [{ url: "/brand/sailorpath-icon.png", type: "image/png" }],
     apple: [{ url: "/brand/sailorpath-icon.png", type: "image/png" }],

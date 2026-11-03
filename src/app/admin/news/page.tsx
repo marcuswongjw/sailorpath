@@ -30,6 +30,8 @@ async function ensureSeededDraftsInDatabase() {
           sourceUrl: draft.sourceUrl,
           sourceLabel: draft.sourceLabel,
           tags: draft.tags,
+          reviewedAt: draft.status === "published" ? draft.createdAt : null,
+          publishedAt: draft.status === "published" ? draft.createdAt : null,
           updatedAt: draft.createdAt,
         })
         .onConflictDoNothing();
@@ -59,7 +61,7 @@ function mergeSeededFallback(rows: AdminNewsWorkflowArticle[]): AdminNewsWorkflo
     sourceLabel: seed.sourceLabel,
     tags: [...seed.tags],
     updatedAt: seed.createdAt,
-    publishedAt: null,
+    publishedAt: seed.status === "published" ? seed.createdAt : null,
   }));
   return [...missingSeeds, ...rows];
 }

@@ -10,6 +10,11 @@ import { fleetPillClass } from "@/components/sailor-profile/helpers";
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
 
 const DEMO_SEARCH_SAILORS: SearchMatch[] = [
+  { id: "sample-kimberly", name: "Kimberly Tan", handle: "kimberly-t", sailNumber: "SGP 115", club: "Changi Sailing Club" },
+  { id: "sample-ethan", name: "Ethan Koh", handle: "ethan-k", sailNumber: "SGP 4588", club: "Changi Sailing Club" },
+  { id: "sample-sarah", name: "Sarah Chen", handle: "sarah-c", sailNumber: "SGP 4701", club: "National Sailing Centre" },
+  { id: "sample-lucas", name: "Lucas Tan", handle: "lucas-t", sailNumber: "SGP 3108", club: "Changi Sailing Club" },
+  { id: "sample-marcus", name: "Marcus Koh", handle: "marcus-k", sailNumber: "SGP 2184", club: "Changi Sailing Club" },
   { id: "demo-s1", name: "Jedd Lam Zhi Hao", handle: "jedd-lam", sailNumber: "SGP 4688", club: "Changi Sailing Club" },
   { id: "demo-s2", name: "Alyssa Wong", handle: "alyssa-w", sailNumber: "SGP 101", club: "Changi Sailing Club" },
   { id: "demo-s3", name: "Ethan Lee", handle: "ethan-l", sailNumber: "SGP 4589", club: "Changi Sailing Club" },
@@ -23,9 +28,6 @@ const DEMO_SEARCH_SAILORS: SearchMatch[] = [
   { id: "demo-s11", name: "Mikaela Wang", handle: "mikaela-w", sailNumber: "SGP 4620", club: "National Sailing Centre" },
   { id: "demo-s12", name: "Joshua Tan", handle: "joshua-t", sailNumber: "SGP 4677", club: "SAF Yacht Club" },
   { id: "demo-s13", name: "Lucas Wong", handle: "lucas-w", sailNumber: "SGP 4658", club: "SAF Yacht Club" },
-  { id: "demo-s14", name: "Sarah Chen", handle: "sarah-c", sailNumber: "SGP 4701", club: "National Sailing Centre" },
-  { id: "demo-s15", name: "Marcus Koh", handle: "marcus-k", sailNumber: "SGP 2184", club: "Changi Sailing Club" },
-  { id: "demo-s16", name: "Kimberly Tan", handle: "kimberly-t", sailNumber: "SGP 115", club: "Changi Sailing Club" },
   { id: "demo-s17", name: "Kevin Ho", handle: "kevin-h", sailNumber: "SGP 102", club: "National Sailing Centre" },
 ];
 
@@ -123,9 +125,12 @@ export function CoachDashboard({
     if (sortKey === "best3") return (a.bestThreeOfFive ?? 9999) - (b.bestThreeOfFive ?? 9999) || a.name.localeCompare(b.name);
     return (a.ranking ?? 9999) - (b.ranking ?? 9999) || a.name.localeCompare(b.name);
   }), [data.members, sortKey]);
-  const compareHref = selected.length === 2 && compareFleet
-    ? demoMode ? "#demo-comparison" : `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
-    : null;
+  const compareHref =
+    selected.length === 2 && (demoMode || compareFleet)
+      ? demoMode
+        ? "#demo-comparison"
+        : `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
+      : null;
 
   async function mutate(method: "POST" | "PATCH" | "DELETE", payload: { sailorId?: string; sailorIds?: string[]; name?: string }) {
     if (demoMode) {
@@ -168,6 +173,7 @@ export function CoachDashboard({
         };
         setData((prev) => ({
           ...prev,
+          following: prev.following.filter((m) => m.sailorId !== s.id),
           members: [
             {
               id: `m-${Date.now()}`,
@@ -544,16 +550,7 @@ export function CoachDashboard({
         </div>
       </header>
 
-      <div className="order-2">
-        <SquadPulseCards
-          members={data.members}
-          actionsCount={actions.length}
-          rankingPeriod={`${data.period.half} ${data.period.year}`}
-          averageBest={averageBest}
-        />
-      </div>
-
-      <section className="order-1 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 shadow-xs" aria-labelledby="action-centre-title">
+      <section className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 shadow-xs" aria-labelledby="action-centre-title">
         <div className="flex items-center justify-between gap-4">
           <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">Today</p><h2 id="action-centre-title" className="mt-1 text-base font-black text-[var(--sp-harbour-shadow)]">Squad action centre</h2></div>
           <span className="rounded-full bg-[var(--sp-racing-mist)]/50 px-2.5 py-1 text-[11px] font-bold text-[var(--sp-racing-deep)]">{actions.length} to review</span>
@@ -585,7 +582,16 @@ export function CoachDashboard({
         )}
       </section>
 
-      <section className="order-3">
+      <div>
+        <SquadPulseCards
+          members={data.members}
+          actionsCount={actions.length}
+          rankingPeriod={`${data.period.half} ${data.period.year}`}
+          averageBest={averageBest}
+        />
+      </div>
+
+      <section>
         <div className="overflow-hidden rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
           <div className="flex flex-col gap-3 border-b border-[var(--sp-cool-veil)] p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2 min-w-0">
@@ -628,7 +634,9 @@ export function CoachDashboard({
 
               <div className="flex items-center gap-2">
                 <span className="text-[13px] text-[var(--sp-slate-soft)] hidden sm:inline">
-                  Select two sailors
+                  {selected.length === 2 && !compareHref
+                    ? "Select two same-fleet sailors"
+                    : "Select two sailors"}
                 </span>
                 {compareHref ? (
                   <Link href={compareHref} className="sp-btn-primary px-3 py-1.5">
@@ -832,18 +840,18 @@ export function CoachDashboard({
                           <Plus className="mr-1 inline h-3 w-3" />
                           {isMember ? "In Squad" : "Squad"}
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => !isFollowing && followSailor(sailor.id)}
-                          disabled={busyId === sailor.id || isFollowing}
-                          className={`rounded-lg border px-2 py-1.5 text-[10px] font-bold transition-all ${
-                            isFollowing
-                              ? "border-[var(--sp-cool-veil)] bg-[var(--sp-cool-veil)]/30 text-[var(--sp-slate-soft)] cursor-not-allowed"
-                              : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] disabled:opacity-50"
-                          }`}
-                        >
-                          {isFollowing ? "Following" : "Follow"}
-                        </button>
+                         <button
+                           type="button"
+                           onClick={() => !isFollowing && !isMember && followSailor(sailor.id)}
+                           disabled={busyId === sailor.id || isFollowing || isMember}
+                           className={`rounded-lg border px-2 py-1.5 text-[10px] font-bold transition-all ${
+                             isFollowing || isMember
+                               ? "border-[var(--sp-cool-veil)] bg-[var(--sp-cool-veil)]/30 text-[var(--sp-slate-soft)] cursor-not-allowed"
+                               : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] disabled:opacity-50"
+                           }`}
+                         >
+                           {isFollowing ? "Following" : "Follow"}
+                         </button>
                       </div>
                     </div>
                   );
@@ -860,7 +868,7 @@ export function CoachDashboard({
         )}
       </section>
 
-      <section className="order-4 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 shadow-xs" aria-labelledby="following-title">
+      <section className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 shadow-xs" aria-labelledby="following-title">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Watchlist</p><h2 id="following-title" className="mt-1 text-lg font-black text-[var(--sp-harbour-shadow)]">Following</h2><p className="mt-1 text-[11px] text-[var(--sp-slate-soft)]">Track sailors of personal interest or keep watching their progress after they move fleets.</p></div><span className="text-[11px] font-bold text-[var(--sp-slate-soft)]">{data.following.length} sailor{data.following.length === 1 ? "" : "s"}</span></div>
         {data.following.length ? (
           <div className="mt-4 grid gap-2 md:grid-cols-2">

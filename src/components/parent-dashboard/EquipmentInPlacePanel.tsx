@@ -52,6 +52,7 @@ export type EquipmentInPlacePanelProps = {
     equipmentAlerts?: { label: string; reason: string }[];
     primaryGear?: GearItem[];
   };
+  demoMode?: boolean;
   showAddGearModal: boolean;
   addGearTab: "presets" | "custom";
   addGearBusy: boolean;
@@ -79,6 +80,7 @@ export type EquipmentInPlacePanelProps = {
 
 export function EquipmentInPlacePanel({
   activeAthlete,
+  demoMode = false,
   showAddGearModal,
   addGearTab,
   addGearBusy,
@@ -127,7 +129,7 @@ export function EquipmentInPlacePanel({
               Add Equipment
             </button>
             <Link
-              href={`/sailors/${activeAthlete.handle}#profile-equipment`}
+              href={demoMode ? "/sample#profile-equipment" : `/sailors/${activeAthlete.handle}#profile-equipment`}
               className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
             >
               Full Profile →

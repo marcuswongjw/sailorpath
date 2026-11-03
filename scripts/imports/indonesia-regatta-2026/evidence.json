@@ -1,0 +1,63 @@
+{
+  "event": "INA Regatta II & National Sailing Championship 2026 (Kejurnas Layar 2026)",
+  "venue": "Indonesia National Sailing Center (INSC), Ancol, Jakarta, Indonesia",
+  "dates": "20\u201323 August 2026",
+  "country": "INA",
+  "organizer": "Pengurus Besar Persatuan Olahraga Layar Seluruh Indonesia (PB PORLASI / INASAF)",
+  "official_pdf_url": "https://inasaf.org/result/doks/Results%20INA%20Regatta%20II%202026.pdf",
+  "rrs_event_id": 15712,
+  "rrs_url": "https://www.racingrulesofsailing.org/documents/15712/event?name=ina-regatta-ii-national-championship-2026",
+  "total_boats": 79,
+  "total_race_scores": 578,
+  "new_profiles_created": 75,
+  "fleets": [
+    {
+      "class": "Optimist",
+      "fleet_size": 21,
+      "races": 7,
+      "discards": 2
+    },
+    {
+      "class": "ILCA 4",
+      "fleet_size": 11,
+      "races": 7,
+      "discards": 2
+    },
+    {
+      "class": "ILCA 6",
+      "fleet_size": 13,
+      "races": 7,
+      "discards": 2
+    },
+    {
+      "class": "ILCA 7",
+      "fleet_size": 9,
+      "races": 7,
+      "discards": 2
+    },
+    {
+      "class": "420",
+      "fleet_size": 5,
+      "races": 8,
+      "discards": 2
+    },
+    {
+      "class": "Techno 293",
+      "fleet_size": 10,
+      "races": 8,
+      "discards": 2
+    },
+    {
+      "class": "Techno 293 Plus",
+      "fleet_size": 6,
+      "races": 8,
+      "discards": 2
+    },
+    {
+      "class": "iQFoil",
+      "fleet_size": 4,
+      "races": 8,
+      "discards": 2
+    }
+  ]
+}

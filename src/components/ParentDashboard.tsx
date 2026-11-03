@@ -115,11 +115,12 @@ export function ParentDashboard({
             athletes={d.athletes}
             selectedAthleteId={d.selectedAthleteId}
             onSelectAthlete={(id) => d.setSelectedAthleteId(id)}
+            demoMode={demoMode}
           />
 
           {activeAthlete && (
             <div className="space-y-6 sm:space-y-8">
-              <AthleteHeroCard athlete={activeAthlete} />
+              <AthleteHeroCard athlete={activeAthlete} demoMode={demoMode} />
 
               {activeAthlete.season ? (
                 <PersonalSeasonCard season={activeAthlete.season} />
@@ -127,10 +128,11 @@ export function ParentDashboard({
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
-                  <AthleteInsightGrid athlete={activeAthlete} />
+                  <AthleteInsightGrid athlete={activeAthlete} demoMode={demoMode} />
 
                   <EquipmentInPlacePanel
                     activeAthlete={activeAthlete}
+                    demoMode={demoMode}
                     showAddGearModal={d.showAddGearModal}
                     addGearTab={d.addGearTab}
                     addGearBusy={d.addGearBusy}

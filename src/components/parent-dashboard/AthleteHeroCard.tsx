@@ -14,7 +14,18 @@ import {
 } from "./styles";
 import { formatAgeCategory, type Athlete } from "./types";
 
-export function AthleteHeroCard({ athlete }: { athlete: Athlete }) {
+export function AthleteHeroCard({
+  athlete,
+  demoMode = false,
+}: {
+  athlete: Athlete;
+  demoMode?: boolean;
+}) {
+  const profileHref = demoMode ? "/sample" : `/sailors/${athlete.handle}`;
+  const logScoreHref = demoMode
+    ? "/sample?view=sailor"
+    : `/athlete?id=${athlete.id}&tab=results&action=new`;
+
   return (
     <section className={`${CARD} p-5 sm:p-7`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -98,13 +109,13 @@ export function AthleteHeroCard({ athlete }: { athlete: Athlete }) {
 
         <div className="flex flex-wrap sm:flex-col gap-2 shrink-0">
           <Link
-            href={`/athlete?id=${athlete.id}&tab=results&action=new`}
+            href={logScoreHref}
             className={SECONDARY_BTN}
           >
             <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
             Log Score & Evidence ↗
           </Link>
-          <Link href={`/sailors/${athlete.handle}`} className={SECONDARY_BTN}>
+          <Link href={profileHref} className={SECONDARY_BTN}>
             Public Profile
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>

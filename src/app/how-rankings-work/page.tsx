@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "How the rankings work | SailorPath",
-  description: "Understand SailorPath scoring for Singapore Optimist and ILCA 4 ranking series.",
+  description:
+    "Understand SailorPath scoring for Singapore Optimist and ILCA (ILCA 4, ILCA 6, ILCA 7) national ranking series, plus the Asian & Oceania Optimist Index.",
 };
 
 /** Pure static content — no request-time data. */
@@ -23,10 +24,11 @@ export default function HowRankingsWorkPage() {
           How rankings work
         </h1>
         <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
-          Technical notes on Singapore Optimist series scoring and ILCA 4
-          national ranking used in SailorPath. For sailors and parents, the
-          public boards show the same results — this page is for those who want
-          the rules in detail.
+          Technical notes on Singapore Optimist series scoring and ILCA (ILCA 4,
+          ILCA 6, ILCA 7) national rankings used in SailorPath, plus a reference
+          to the Asian &amp; Oceania Optimist Index. For sailors and parents,
+          the public boards show the same results — this page is for those who
+          want the rules in detail.
         </p>
       </div>
 
@@ -125,6 +127,32 @@ export default function HowRankingsWorkPage() {
             className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
           >
             ILCA 7 standings →
+          </Link>
+        </div>
+      </section>
+
+      <section className="space-y-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs">
+        <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">
+          Asian &amp; Oceania Optimist Index (Beta)
+        </h2>
+        <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
+          The Asian &amp; Oceania Optimist Index compares sailors across tier-weighted
+          regional championships and qualifying open regattas in a rolling 12-month
+          window using placement percentiles, field-depth multipliers, and recency
+          weights. It is separate from the Singapore national series above.
+        </p>
+        <div className="flex flex-wrap gap-4 text-xs pt-2">
+          <Link
+            href="/optimist/asian-index"
+            className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
+          >
+            Asian &amp; Oceania Index →
+          </Link>
+          <Link
+            href="/optimist/asian-index/methodology"
+            className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
+          >
+            Index methodology →
           </Link>
         </div>
       </section>

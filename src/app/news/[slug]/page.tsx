@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatNewsDate, getPublishedNewsArticle } from "@/lib/news";
@@ -35,6 +36,7 @@ export async function generateMetadata({
       description: article.summary,
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt,
+      ...(article.imageUrl ? { images: [{ url: article.imageUrl, alt: article.imageAlt || article.title }] } : {}),
     },
   };
 }
@@ -66,6 +68,38 @@ export default async function NewsArticlePage({
           {article.title}
         </h1>
         <p className="mt-5 text-lg leading-8 text-slate-soft">{article.summary}</p>
+
+        {article.imageUrl ? (
+          <figure className="mt-7 overflow-hidden rounded-2xl border border-cool-veil bg-sailcloth">
+            <Image
+              src={article.imageUrl}
+              alt={article.imageAlt || article.title}
+              width={800}
+              height={534}
+              unoptimized
+              className="aspect-video w-full object-cover"
+            />
+            {article.imageCaption || article.imageCredit ? (
+              <figcaption className="border-t border-cool-veil bg-warm-white px-4 py-3 text-xs leading-5 text-slate-soft">
+                {article.imageCaption ? <span>{article.imageCaption} </span> : null}
+                {article.imageCredit ? (
+                  article.imageCreditUrl ? (
+                    <a
+                      href={article.imageCreditUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-harbour hover:underline"
+                    >
+                      {article.imageCredit}
+                    </a>
+                  ) : (
+                    <span className="font-medium">{article.imageCredit}</span>
+                  )
+                ) : null}
+              </figcaption>
+            ) : null}
+          </figure>
+        ) : null}
 
         <div className="mt-8 space-y-5 text-base leading-8 text-charcoal">
           {blocks.map((block, index) =>

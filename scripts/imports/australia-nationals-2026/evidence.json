@@ -1,0 +1,23 @@
+{
+  "29er": {
+    "event": "2026 Australian 29er Championship",
+    "venue": "Sandy Bay Sailing Club, Hobart, Tasmania",
+    "dates": "3\u20139 January 2026",
+    "source_url": "https://sailingresults.net/sa/results/Overall.aspx?ID=82088.1",
+    "boats": 21,
+    "participants": 42,
+    "races": 14,
+    "race_scores": 294
+  },
+  "420": {
+    "event": "2026 International 420 Class Australian Championship",
+    "venue": "Albury Wodonga Sailing Club, Lake Hume, Victoria",
+    "dates": "19\u201323 January 2026",
+    "source_url": "https://www.sailres.com/view.php?s=2755",
+    "boats": 17,
+    "participants": 34,
+    "races": 10,
+    "race_scores": 170
+  },
+  "new_profiles_count": 39
+}

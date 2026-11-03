@@ -190,7 +190,7 @@ export function WingfoilView({
       {activeTab === "regattas" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
-            The event calendar is a schedule and discovery list. Use <strong>Published results</strong>
+            The event calendar is a schedule and discovery list. Use <strong>Published results</strong>{" "}
             to browse every record currently visible on this class page.
           </p>
           <ClassRegattaListTable

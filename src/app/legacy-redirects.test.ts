@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const redirect = vi.hoisted(() => vi.fn());
 vi.mock("next/navigation", () => ({ permanentRedirect: redirect }));
 
+import LegacyCoachAliasPage from "./coach/page";
 import LegacyCoachPage from "./coach-tools/page";
 import LegacyParentPage from "./parent/page";
 
@@ -21,8 +22,12 @@ describe("legacy canonical redirects", () => {
     expect(redirect).toHaveBeenCalledWith("/account/parent");
   });
 
-  it("moves the coach workspace to its canonical private route", () => {
+  it("moves the coach workspace aliases to the canonical private route", () => {
     expect(() => LegacyCoachPage()).toThrow("REDIRECT:/account/coach");
+    expect(redirect).toHaveBeenCalledWith("/account/coach");
+
+    redirect.mockClear();
+    expect(() => LegacyCoachAliasPage()).toThrow("REDIRECT:/account/coach");
     expect(redirect).toHaveBeenCalledWith("/account/coach");
   });
 });

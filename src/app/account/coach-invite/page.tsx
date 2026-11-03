@@ -74,7 +74,7 @@ function CoachInviteInner() {
           This account is now a Coach. Coach tools are available.
         </p>
         <Link
-          href="/coach-tools"
+          href="/account/coach"
           className="inline-flex rounded-full bg-[var(--sp-harbour-teal)] px-4 py-2 text-sm font-bold text-white"
         >
           Open coach tools

@@ -147,7 +147,7 @@ function downloadIcs(regatta: RegattaRecord) {
     regatta.isSelectionTrial ? "Official Selection Trial for National Squad" : null,
     regatta.norUrl ? `Notice of Race: ${regatta.norUrl}` : null,
     regatta.registrationUrl ? `Registration: ${regatta.registrationUrl}` : null,
-    "Track live scores and rankings at: https://sailorpath.com",
+    "Browse published regatta results and rankings at: https://sailorpath.com",
   ]
     .filter(Boolean)
     .join("\\n");
@@ -421,7 +421,9 @@ export function RegattaCalendarClient({
               { id: "wingfoil", label: "WingFoil", icon: Trophy },
               { id: "techno293", label: "Techno 293", icon: Sailboat },
               { id: "29er", label: "29er", icon: Sailboat },
+              { id: "420", label: "420", icon: Sailboat },
               { id: "iqfoil", label: "iQFOiL", icon: Sailboat },
+              { id: "x15", label: "X-15", icon: Trophy },
             ].map((cat) => {
               const Icon = cat.icon;
               const isSelected = selectedClass === cat.id;
@@ -560,6 +562,8 @@ export function RegattaCalendarClient({
                               ? "🇪🇺 Europe"
                               : regatta.region === "Asia"
                               ? "🌏 Asia"
+                              : regatta.region === "International"
+                              ? "🌐 International"
                               : "🇸🇬 Singapore"}
                           </span>
                         )}

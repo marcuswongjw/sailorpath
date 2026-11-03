@@ -149,7 +149,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "displayName": "Khalid Al Sarihi"
   },
   "MYA:sittmaychitpo": {
-    "handle": "asian-mya-sitt-may-c-de19ca"
+    "handle": "asian-mya-sitt-may-c-de19ca",
+    "birthYear": 2013
   },
   "MYA:aungsittmaung": {
     "handle": "aung-sitt-maung-07r0qrq",
@@ -341,7 +342,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
   },
   "MYA:nainglinnaung": {
     "handle": "naing-lin-aung-29xulbs",
-    "displayName": "Naing Lin Aung"
+    "displayName": "Naing Lin Aung",
+    "birthYear": 2012
   },
   "MYA:aungkaungmyat": {
     "handle": "aung-kaung-myat-2by3gwg",
@@ -410,7 +412,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
   },
   "MYA:khantzinthaw": {
     "handle": "asian-mya-khant-zin--f9357f",
-    "displayName": "Khant Zin Thaw"
+    "displayName": "Khant Zin Thaw",
+    "birthYear": 2012
   },
   "MAC:chiinjaspertang": {
     "handle": "asian-mac-chi-in-jas-dd3094"
@@ -504,7 +507,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "handle": "harry-strang-asians25"
   },
   "AUS:zacharytait": {
-    "handle": "zachary-tait-asians25"
+    "handle": "zachary-tait-asians25",
+    "birthYear": 2014
   },
   "AUS:hirojacobsen": {
     "handle": "hiro-jacobsen-asians25"
@@ -557,7 +561,8 @@ export const ASIAN_OPTIMIST_INDEX_PROFILE_MANIFEST = {
     "birthYear": 2011
   },
   "AUS:tobyphillips": {
-    "handle": "toby-phillips-worlds26-f8f1b2"
+    "handle": "toby-phillips-worlds26-f8f1b2",
+    "birthYear": 2011
   },
   "NZL:noahpetersen": {
     "handle": "noah-petersen-worlds26-c10959"

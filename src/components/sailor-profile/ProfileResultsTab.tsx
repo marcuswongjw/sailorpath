@@ -292,6 +292,7 @@ export function ProfileResultsTab({
                 <ProfileRegattaRow
                   key={String(res.regattaId || res.id || idx)}
                   res={res as ProfileResult}
+                  currentSailorId={sailorId}
                   idx={idx}
                   expandedRegattaId={expandedRegattaId}
                   primaryIsIlca={primaryIsIlca}

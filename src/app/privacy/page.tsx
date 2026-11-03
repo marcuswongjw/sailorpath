@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <h1 className="text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)]">
             Privacy
           </h1>
-          <p className="text-xs font-medium text-[var(--sp-slate-soft)]">Effective 23 August 2026</p>
+          <p className="text-xs font-medium text-[var(--sp-slate-soft)]">Effective 3 November 2026</p>
           <p className="text-[var(--sp-charcoal-slate)]">
             This page explains what information SailorPath uses, what may appear
             publicly, and how sailors and families can ask for help with their
@@ -46,21 +46,25 @@ export default function PrivacyPage() {
         <PolicySection title="Information kept private">
           <p>
             Account email addresses, private family notes, equipment records,
-            and information not selected for public sharing are intended for
-            the account holder and authorized linked users. Full dates of birth
-            and weight remain private unless a profile manager chooses to share
-            them. Birth year may still appear publicly when it is part of the
-            sailor record.
+            uploaded claim or result evidence, and information not selected for
+            public sharing are intended for the account holder and authorized
+            linked users. Profile photos and supporting evidence files are
+            stored in private buckets; a profile photo is only shown publicly
+            when an approved profile owner or verified parent/guardian enables
+            public sharing. Full dates of birth and weight remain private unless
+            a profile manager chooses to share them. Birth year may still appear
+            publicly when it is part of the sailor record.
           </p>
         </PolicySection>
 
         <PolicySection title="Information you provide">
           <p>
             SailorPath receives information when you create an account, claim a
-            profile, edit a profile, add notes or equipment, join a waitlist, or
-            contact support. Claim notes and account details may be reviewed by
-            authorized administrators to decide whether an account should be
-            linked to a sailor.
+            profile, edit a profile, upload supporting claim or result evidence,
+            add notes or equipment, or contact support. Claim notes, supporting
+            evidence, and account details may be reviewed by authorized
+            administrators to decide whether an account should be linked to a
+            sailor.
           </p>
         </PolicySection>
 
