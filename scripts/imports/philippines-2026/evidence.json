@@ -1,0 +1,16 @@
+{
+  "regatta_event": "Philippine National Sailing Championship 2026",
+  "event_id": "ec0a10ee-90b6-54b0-ba10-0a08894da825",
+  "organizer": "Philippine Sailing Association (PSA)",
+  "venue": "Manila Bay, Philippines",
+  "dates": "January 15 \u2013 18, 2026",
+  "source_url": "https://www.racingrulesofsailing.org/documents/13459/event",
+  "document_title": "Results 2026 Philippine National Sailing Championship.xlsx.pdf",
+  "verification_methodology": "100% of ranks, sailor names, discards, gross totals, and net scores mathematically cross-checked against official PSA Document 172875 PDF pages.",
+  "pdf_corroboration_status": "Verified against official PSA Document 172875 PDF pages rendered to high-resolution PNG screenshots in /tmp/philippines-2026/pages/.",
+  "sheets_imported": 6,
+  "total_entries": 43,
+  "total_sailors_involved": 48,
+  "new_profiles_created": 35,
+  "existing_profiles_matched": 13
+}

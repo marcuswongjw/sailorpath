@@ -1,0 +1,16 @@
+{
+  "regatta_event": "38th All Japan 420 Class Sailing Championship 2025",
+  "event_id": "57c12ad0-1f21-51cd-9fb6-ecf109757dca",
+  "organizer": "Japan 420 Class Association & Miyazaki Sailing Federation",
+  "venue": "Odotsu Yacht Harbor, Nichinan, Miyazaki Prefecture, Japan",
+  "dates": "December 25 \u2013 28, 2025",
+  "source_url": "https://www.japan420sailing.org/race_result/2728/",
+  "document_title": "\u3010\u6210\u7e3e\u8868\u301112\u670829\u65e5 (1).pdf",
+  "verification_methodology": "100% of ranks, sailor names (Kanji & English Romanizations), sail numbers, clubs, discards, and net totals mathematically cross-checked against official PDF.",
+  "pdf_corroboration_status": "Verified against official PDF rendered to high-resolution PNG in scripts/imports/japan-2025/results.pdf.png.",
+  "sheets_imported": 1,
+  "total_entries": 56,
+  "total_sailors_involved": 112,
+  "new_profiles_created": 107,
+  "existing_profiles_matched": 5
+}

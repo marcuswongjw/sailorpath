@@ -29,6 +29,7 @@ import type { ObservationItem } from "./types";
 
 export type ProfileRegattaRowProps = {
   res: ProfileResult;
+  currentSailorId?: string;
   idx: number;
   expandedRegattaId: string | null;
   primaryIsIlca: boolean;
@@ -63,6 +64,7 @@ export type ProfileRegattaRowProps = {
  */
 export function ProfileRegattaRow({
   res,
+  currentSailorId,
   idx,
   expandedRegattaId,
   ownerView,
@@ -280,9 +282,9 @@ export function ProfileRegattaRow({
               {crewMembers.map((member, i) => {
                 const name = member.sailorName || member.sourceName;
                 const roleSuffix = member.role !== "unknown" ? ` (${member.role})` : "";
-                const isCurrentSailor = member.sailorId === res.sailorId;
+                const isCurrentSailor = Boolean(currentSailorId && member.sailorId === currentSailorId);
                 return (
-                  <span key={member.id || i} className="inline-flex items-center">
+                  <span key={member.sailorId || member.handle || i} className="inline-flex items-center">
                     {i > 0 && <span className="mr-1 text-slate-soft">/</span>}
                     {member.handle && !isCurrentSailor ? (
                       <Link
