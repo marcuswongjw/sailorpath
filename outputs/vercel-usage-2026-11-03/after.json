@@ -1,0 +1,102 @@
+[
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-4",
+    "visit": 1,
+    "status": 200,
+    "cache": "MISS",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "text/html; charset=utf-8",
+    "seconds": 1.276,
+    "bytes": 828998
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-4",
+    "visit": 2,
+    "status": 200,
+    "cache": "HIT",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "text/html; charset=utf-8",
+    "seconds": 0.392,
+    "bytes": 828998
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "visit": 1,
+    "status": 200,
+    "cache": "MISS",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "text/html; charset=utf-8",
+    "seconds": 0.271,
+    "bytes": 204057
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "visit": 2,
+    "status": 200,
+    "cache": "HIT",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "text/html; charset=utf-8",
+    "seconds": 0.338,
+    "bytes": 204057
+  },
+  {
+    "path": "/sailors/mikaelawong",
+    "visit": 1,
+    "status": 200,
+    "cache": "MISS",
+    "control": "private, no-cache, no-store, max-age=0, must-revalidate",
+    "contentType": "text/html; charset=utf-8",
+    "seconds": 0.778,
+    "bytes": 130165
+  },
+  {
+    "path": "/sailors/mikaelawong",
+    "visit": 2,
+    "status": 200,
+    "cache": "MISS",
+    "control": "private, no-cache, no-store, max-age=0, must-revalidate",
+    "contentType": "text/html; charset=utf-8",
+    "seconds": 0.371,
+    "bytes": 130165
+  },
+  {
+    "path": "/news/profile-sharing.png",
+    "visit": 1,
+    "status": 200,
+    "cache": "MISS",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "image/png",
+    "seconds": 0.328,
+    "bytes": 171183
+  },
+  {
+    "path": "/news/profile-sharing.png",
+    "visit": 2,
+    "status": 200,
+    "cache": "HIT",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "image/png",
+    "seconds": 0.073,
+    "bytes": 171183
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-6/opengraph-image",
+    "visit": 1,
+    "status": 200,
+    "cache": "MISS",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "image/png",
+    "seconds": 0.908,
+    "bytes": 54817
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-6/opengraph-image",
+    "visit": 2,
+    "status": 200,
+    "cache": "MISS",
+    "control": "public, max-age=0, must-revalidate",
+    "contentType": "image/png",
+    "seconds": 0.187,
+    "bytes": 54817
+  }
+]

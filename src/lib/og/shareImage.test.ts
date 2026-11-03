@@ -37,8 +37,11 @@ describe("share images", () => {
         { rank: 1, name: "Ada Lim", handle: "ada-lim" },
         { rank: 2, name: "Bo Tan", handle: null },
         { rank: 3, name: "Cai Ng", handle: null },
-      ])
+      ]),
+      { cachePublicResult: true },
     );
+    expect(result.headers.get("Vercel-CDN-Cache-Control")).toBe("public, s-maxage=3600");
+    expect(profile.headers.has("Vercel-CDN-Cache-Control")).toBe(false);
     for (const image of [profile, result]) {
       const bytes = new Uint8Array(await image.arrayBuffer());
       expect(bytes.byteLength).toBeGreaterThan(1000);

@@ -12,12 +12,11 @@ The connected billing tool returned a bounded team-wide daily billing summary. I
 
 - Canonical public fleet scorecards use on-demand ISR with a one-hour fallback refresh. Empty `generateStaticParams` prevents prebuilding every historical sheet. Existing public result/import cache tags refresh dependent pages.
 - Database outages propagate rather than becoming cached missing-fleet responses. Temporary result/copy failures opt out of the route cache; personal profile/account pages retain request-time permission handling.
-- Public regatta social-preview images use the framework's one-hour cache instead of being forced dynamic. Owner-aware profile images retain their existing behaviour.
+- Public regatta share images send Vercel a one-hour cache lifetime for successful renders. Fallback result images use no-store. Owner-aware profile images retain their existing behaviour.
 - Dense fleet, crew, podium, prize, profile-result and award links do not automatically prefetch destinations. Actual client navigation and the main site navigation remain available.
 - Documentation/import-evidence-only previews can skip the build using the last successful preview SHA. Runtime, dependency, build-script, unknown-file, missing-history and multi-commit changes build safely. Production and explicit redeployments always build.
-
 - Sailor profiles receive only the awards matched on the server. The full historical prize catalogue stays out of the client bundle. The same award calculation powers the sample profile.
 
 ## Validation
 
-51 focused tests across 14 files passed, including real temporary-Git fixtures for build decisions, outage handling, public links, scorecard lookup, privacy filtering, share images and invalidation. TypeScript and targeted lint checks passed. Production cache verification is recorded after release.
+51 focused tests across 14 files passed, including real temporary-Git fixtures for build decisions, outage handling, public links, scorecard lookup, privacy filtering, share images and invalidation. TypeScript and targeted lint checks passed. Production readback on revision 15a09c7 showed a MISS followed by a HIT for both Eastern Seaboard ILCA scorecards. The news image also returned a HIT and Mikaela’s profile remained private/no-store. Both share-image requests missed, prompting the explicit Vercel CDN header. The full CI suite, including the original bundle budget, passed.

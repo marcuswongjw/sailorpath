@@ -23,5 +23,5 @@ export default async function Image({
   const { regatta_slug } = await params;
   const event = getRegattaEvent(regatta_slug);
   if (!event) return renderResultShareImage(emptySheet);
-  return renderResultShareImage(eventHubShare(event));
+  return renderResultShareImage(eventHubShare(event), { cachePublicResult: true });
 }
