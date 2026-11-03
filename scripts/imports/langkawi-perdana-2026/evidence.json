@@ -1,0 +1,74 @@
+{
+  "regatta_event": "22nd Langkawi International Regatta Perdana 2026",
+  "event_id": "58e20ba5-f1e4-4895-9387-231273b43421",
+  "organizer": "Kedah Sailing Association & Malaysia Sailing Association",
+  "venue": "National Sailing Centre, Langkawi, Kedah, Malaysia",
+  "dates": "8\u201312 February 2026",
+  "official_pdf_sources": [
+    {
+      "class": "29er",
+      "file": "29er_OPEN.pdf",
+      "drive_id": "1qD39g6m2OqUoGevey3-_0s84u0wZY3e2",
+      "pages_read": [
+        "29er_OPEN_p1.png"
+      ]
+    },
+    {
+      "class": "420",
+      "file": "INT_420.pdf",
+      "drive_id": "1wHci7wyeFnle5EiMJlFOp1bAMWCF74c5",
+      "pages_read": [
+        "INT_420_p1.png"
+      ]
+    },
+    {
+      "class": "ILCA 7",
+      "file": "ILCA_7.pdf",
+      "drive_id": "1117sUE9C4Qql3Ix1cuUEbgkh_gs3tc6b",
+      "pages_read": [
+        "ILCA_7_p1.png"
+      ]
+    },
+    {
+      "class": "iQFoil",
+      "file": "IQ_FOIL.pdf",
+      "drive_id": "1Cngb7WLqwc9yqbrsgAK9-IdEYYsDZ9eK",
+      "pages_read": [
+        "IQ_FOIL_p1.png"
+      ]
+    },
+    {
+      "class": "Techno 293",
+      "file": "WINDSURFING.pdf",
+      "drive_id": "1C-lDmocSOF-hs4oQy_kOSToNU6rrD0EH",
+      "pages_read": [
+        "WINDSURFING_p1.png"
+      ]
+    },
+    {
+      "class": "ILCA 4",
+      "file": "ILCA_4.pdf",
+      "drive_id": "1YyWTE5XwT6eXpEVKRFpqijACTk6LHuGx",
+      "pages_read": [
+        "ILCA_4_p1.png",
+        "ILCA_4_p2.png"
+      ]
+    },
+    {
+      "class": "ILCA 6",
+      "file": "ILCA_6.pdf",
+      "drive_id": "1Ea1dxcs8ONM-QOgrkv2jVYtIggdbRDDM",
+      "pages_read": [
+        "ILCA_6_p1.png",
+        "ILCA_6_p2.png"
+      ]
+    }
+  ],
+  "verification_methodology": "Rendered official PDFs to PNG screenshots and visually verified 100% of ranks, sailor names, clubs, sail numbers, discards, and net totals before building migration.",
+  "comparison_outcome": "100% match with official final Sailwave scorecards published by Kedah Sailing Association & MSA.",
+  "sheets_imported": 14,
+  "total_entries": 104,
+  "total_sailors_involved": 123,
+  "new_profiles_created": 94,
+  "existing_profiles_matched": 29
+}
