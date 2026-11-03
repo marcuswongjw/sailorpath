@@ -74,14 +74,28 @@ export default async function NewsArticlePage({
             <Image
               src={article.imageUrl}
               alt={article.imageAlt || article.title}
-              width={1376}
-              height={768}
+              width={800}
+              height={534}
               unoptimized
               className="aspect-video w-full object-cover"
             />
-            {article.imageCaption ? (
+            {article.imageCaption || article.imageCredit ? (
               <figcaption className="border-t border-cool-veil bg-warm-white px-4 py-3 text-xs leading-5 text-slate-soft">
-                {article.imageCaption}
+                {article.imageCaption ? <span>{article.imageCaption} </span> : null}
+                {article.imageCredit ? (
+                  article.imageCreditUrl ? (
+                    <a
+                      href={article.imageCreditUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-harbour hover:underline"
+                    >
+                      {article.imageCredit}
+                    </a>
+                  ) : (
+                    <span className="font-medium">{article.imageCredit}</span>
+                  )
+                ) : null}
               </figcaption>
             ) : null}
           </figure>

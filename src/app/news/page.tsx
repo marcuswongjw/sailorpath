@@ -33,16 +33,34 @@ export default async function NewsPage() {
               className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-xs"
             >
               {update.imageUrl ? (
-                <Link href={`/news/${update.slug}`} className="block border-b border-cool-veil bg-sailcloth">
-                  <Image
-                    src={update.imageUrl}
-                    alt={update.imageAlt || update.title}
-                    width={1376}
-                    height={768}
-                    unoptimized
-                    className="aspect-video w-full object-cover"
-                  />
-                </Link>
+                <figure className="border-b border-cool-veil bg-sailcloth">
+                  <Link href={`/news/${update.slug}`} className="block">
+                    <Image
+                      src={update.imageUrl}
+                      alt={update.imageAlt || update.title}
+                      width={800}
+                      height={534}
+                      unoptimized
+                      className="aspect-video w-full object-cover"
+                    />
+                  </Link>
+                  {update.imageCredit ? (
+                    <figcaption className="border-t border-cool-veil bg-sailcloth px-5 py-2 text-[11px] leading-4 text-slate-soft sm:px-6">
+                      {update.imageCreditUrl ? (
+                        <a
+                          href={update.imageCreditUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="hover:text-harbour hover:underline"
+                        >
+                          {update.imageCredit}
+                        </a>
+                      ) : (
+                        update.imageCredit
+                      )}
+                    </figcaption>
+                  ) : null}
+                </figure>
               ) : null}
               <div className="p-5 sm:p-6">
                 <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">

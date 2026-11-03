@@ -29,32 +29,47 @@ export type PublishedNewsArticle = {
   imageUrl?: string | null;
   imageAlt?: string | null;
   imageCaption?: string | null;
+  imageCredit?: string | null;
+  imageCreditUrl?: string | null;
 };
 
 const ARTICLE_MEDIA_BY_SLUG: Record<
   string,
-  { imageUrl: string; imageAlt: string; imageCaption: string }
+  {
+    imageUrl: string;
+    imageAlt: string;
+    imageCaption: string;
+    imageCredit: string;
+    imageCreditUrl: string;
+  }
 > = {
   "18th-eastern-seaboard-regatta-2026-results-published": {
     imageUrl: "/news/eastern-seaboard-pattaya.jpg",
     imageAlt:
-      "Wide-angle view of Optimist dinghies rounding an orange race mark off a tropical headland in the Gulf of Thailand.",
+      "Optimist dinghies racing off Pattaya at the 2026 18th Eastern Seaboard Regatta hosted by Royal Varuna Yacht Club.",
     imageCaption:
-      "Four youth and open dinghy fleets (Optimist Gold, Optimist Silver, ILCA 4, and ILCA 6) contested 8 races each off Pattaya at the 18th Eastern Seaboard Regatta.",
+      "Optimist fleet racing off Pattaya at the 2026 18th Eastern Seaboard Regatta hosted by Royal Varuna Yacht Club.",
+    imageCredit: "Photo © Chainarong Phrammanee / Royal Varuna Yacht Club (via Sail-World)",
+    imageCreditUrl: "https://www.sail-world.com/news/301250/Eastern-Seaboard-Regatta-2026",
   },
   "australian-2026-ilca-optimist-and-zhik-youth-sail-results": {
     imageUrl: "/news/australia-youth-championships.jpg",
     imageAlt:
-      "Wide-angle view of youth dinghy fleets racing across the River Derwent in Hobart, Tasmania, with Mount Wellington in the background.",
+      "ILCA fleet racing on the River Derwent in Hobart at the 2026 ILCA Oceania & Australian Open & Youth Championships.",
     imageCaption:
-      "Championship racing on the River Derwent in Hobart alongside Australian state Optimist and Zhik Youth Sail series scorecards.",
+      "ILCA fleet racing on the River Derwent in Hobart during the 2026 ILCA Oceania & Australian Open & Youth Championships at the Royal Yacht Club of Tasmania.",
+    imageCredit: "Photo © Jane Austin / 2026 ILCA Oceania & Australian Championships (via Sail-World)",
+    imageCreditUrl:
+      "https://www.sail-world.com/news/292765/ILCA-Oceania-and-AUS-Open-and-Youth-Championship-day-3",
   },
   "2026-asian-games-and-youth-worlds-coverage": {
     imageUrl: "/news/asian-games-gamagori.jpg",
     imageAlt:
-      "Wide-angle view of dinghy and skiff fleets racing across Mikawa Bay off Kaiyoh Yacht Harbor in Gamagori, Japan.",
+      "ILCA racing at Kaiyoh Yacht Harbor in Gamagori, Japan during the 20th Asian Games Aichi-Nagoya 2026.",
     imageCaption:
-      "International championship coverage now spans the 20th Asian Games in Gamagori, the ILCA 4 Youth World Championships, and regional Asian Cup regattas.",
+      "ILCA racing at Kaiyoh Yacht Harbor in Gamagori, Japan during the 20th Asian Games Aichi-Nagoya 2026.",
+    imageCredit: "Photo © Junichi Hirai / World Sailing (via Sail-World)",
+    imageCreditUrl: "https://www.sail-world.com/news/300410/First-Olympic-spots-for-LA28-decided",
   },
 };
 
@@ -66,6 +81,8 @@ function withArticleMedia(article: PublishedNewsArticle): PublishedNewsArticle {
     imageUrl: article.imageUrl ?? media.imageUrl,
     imageAlt: article.imageAlt ?? media.imageAlt,
     imageCaption: article.imageCaption ?? media.imageCaption,
+    imageCredit: article.imageCredit ?? media.imageCredit,
+    imageCreditUrl: article.imageCreditUrl ?? media.imageCreditUrl,
   };
 }
 
@@ -382,7 +399,7 @@ async function readPublishedNewsArticle(
 
 const getCachedPublishedNews = unstable_cache(
   readPublishedNews,
-  ["published-news-v3"],
+  ["published-news-v4"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -392,7 +409,7 @@ const getCachedPublishedNews = unstable_cache(
 function cachedArticleLookup(slug: string) {
   return unstable_cache(
     () => readPublishedNewsArticle(slug),
-    ["published-news-article-v3", slug],
+    ["published-news-article-v4", slug],
     {
       revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
       tags: [CACHE_TAG_NEWS_ARTICLES],

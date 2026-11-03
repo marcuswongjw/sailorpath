@@ -31,7 +31,8 @@ vi.mock("@/lib/news", () => ({
       sourceLabel: "Open 18th Eastern Seaboard Regatta 2026 scorecards",
       tags: ["thailand", "eastern-seaboard"],
       imageUrl: "/news/eastern-seaboard-pattaya.jpg",
-      imageAlt: "Wide-angle view of Optimist dinghies rounding an orange race mark.",
+      imageAlt: "Optimist dinghies racing off Pattaya at the 2026 18th Eastern Seaboard Regatta.",
+      imageCredit: "Photo © Chainarong Phrammanee / Royal Varuna Yacht Club (via Sail-World)",
     },
   ]),
 }));

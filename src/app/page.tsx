@@ -434,16 +434,23 @@ export default async function HomePage() {
                   className="flex flex-col overflow-hidden rounded-xl border border-cool-veil bg-sailcloth transition-colors hover:border-reef-line"
                 >
                   {update.imageUrl ? (
-                    <Link href={`/news/${update.slug}`} className="block border-b border-cool-veil bg-warm-white">
-                      <Image
-                        src={update.imageUrl}
-                        alt={update.imageAlt || update.title}
-                        width={1376}
-                        height={768}
-                        unoptimized
-                        className="aspect-video w-full object-cover"
-                      />
-                    </Link>
+                    <figure className="border-b border-cool-veil bg-warm-white">
+                      <Link href={`/news/${update.slug}`} className="block">
+                        <Image
+                          src={update.imageUrl}
+                          alt={update.imageAlt || update.title}
+                          width={800}
+                          height={534}
+                          unoptimized
+                          className="aspect-video w-full object-cover"
+                        />
+                      </Link>
+                      {update.imageCredit ? (
+                        <figcaption className="border-t border-cool-veil bg-warm-white px-4 py-1.5 text-[11px] leading-4 text-slate-soft">
+                          {update.imageCredit}
+                        </figcaption>
+                      ) : null}
+                    </figure>
                   ) : null}
                   <div className="flex flex-1 flex-col p-5">
                     <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">
