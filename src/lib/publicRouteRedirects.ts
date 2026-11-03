@@ -26,5 +26,6 @@ export function legacySearchHref(params: Query): string {
 
 export const PRIVATE_WORKSPACE_REDIRECTS = {
   "/parent": "/account/parent",
+  "/coach": "/account/coach",
   "/coach-tools": "/account/coach",
 } as const;

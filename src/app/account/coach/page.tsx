@@ -40,6 +40,15 @@ export default async function CoachToolsPage() {
               Explore Coach Demo
             </Link>
           </div>
+          <p className="pt-2 text-xs text-[var(--sp-slate-soft)]">
+            New to SailorPath?{" "}
+            <Link
+              href="/register?role=coach&next=%2Faccount%2Fcoach"
+              className="font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+            >
+              Create a coach account
+            </Link>
+          </p>
         </div>
       </div>
     );
@@ -47,20 +56,42 @@ export default async function CoachToolsPage() {
 
   if (auth.role !== "coach" && auth.role !== "superadmin") {
     const [request] = await db
-      .select({ status: coachAccessRequests.status })
+      .select({
+        status: coachAccessRequests.status,
+        source: coachAccessRequests.source,
+        inviteToken: coachAccessRequests.inviteToken,
+      })
       .from(coachAccessRequests)
       .where(eq(coachAccessRequests.requesterId, auth.userId))
       .limit(1)
       .catch(() => []);
+    const hasAdminInvite =
+      request?.source === "admin" &&
+      request?.status === "pending" &&
+      Boolean(request?.inviteToken);
+
     return (
       <div className="mx-auto max-w-lg px-4 py-20 text-center">
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 shadow-xs space-y-4">
-          <h1 className="text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">Coach access required</h1>
+          <h1 className="text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
+            {hasAdminInvite ? "Coach invitation pending" : "Coach access required"}
+          </h1>
           <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
-            Your account is active, but it has not been approved for coach tools yet.
+            {hasAdminInvite
+              ? "A SailorPath administrator has invited your account to use coach tools. Review and accept the invitation to activate your squad workspace."
+              : "Your account is active, but it has not been approved for coach tools yet."}
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <CoachAccessRequestButton initiallyPending={request?.status === "pending"} />
+            {hasAdminInvite && request?.inviteToken ? (
+              <Link
+                href={`/account/coach-invite?token=${encodeURIComponent(request.inviteToken)}&action=accept`}
+                className="sp-btn-primary"
+              >
+                Review Coach Invitation
+              </Link>
+            ) : (
+              <CoachAccessRequestButton initiallyPending={request?.status === "pending"} />
+            )}
             <Link
               href="/demo/coach"
               className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-[15px] font-semibold transition-colors"

@@ -55,7 +55,7 @@ export default async function AthletePage({ searchParams }: AthletePageProps) {
               <span>Sign in</span>
             </Link>
             <Link
-              href="/demo/sailor"
+              href="/sample?view=sailor"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-6 py-3 text-[15px] font-semibold transition-all shadow-2xs"
             >
               <Sparkles className="h-4 w-4 text-[var(--sp-racing-orange)]" />
@@ -155,7 +155,7 @@ export default async function AthletePage({ searchParams }: AthletePageProps) {
               <span>Claim Sailor Profile</span>
             </Link>
             <Link
-              href="/demo/sailor"
+              href="/sample?view=sailor"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-6 py-3 text-[15px] font-semibold transition-all shadow-2xs"
             >
               <Sparkles className="h-4 w-4 text-[var(--sp-racing-orange)]" />

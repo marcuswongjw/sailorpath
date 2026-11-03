@@ -17,6 +17,34 @@ import type {
   NoteCategory,
 } from "./types";
 
+type GearItem = NonNullable<Athlete["primaryGear"]>[number];
+
+function recomputeGearAlerts(gear: GearItem[]) {
+  const alerts: { label: string; reason: string }[] = [];
+  let alertCount = 0;
+  for (const g of gear) {
+    if (g.status === "retired") continue;
+    const simplified = toSimplifiedCondition(g.condition);
+    if (simplified === "needs_attention" || simplified === "practice_only") {
+      alertCount += 1;
+      if (alerts.length < 4) {
+        alerts.push({
+          label:
+            g.label ||
+            [g.brand, g.model].filter(Boolean).join(" ") ||
+            g.category ||
+            "Gear",
+          reason:
+            simplified === "needs_attention"
+              ? "Marked as needing repair or replacement before racing."
+              : "Marked practice only — inspect or rotate before championship racing.",
+        });
+      }
+    }
+  }
+  return { equipmentAlertCount: alertCount, equipmentAlerts: alerts };
+}
+
 export type FamilyDashboardInitialData = {
   athletes: Athlete[];
   upcomingRegattas?: UpcomingRegatta[];
@@ -110,7 +138,7 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
         credentials: "include",
       });
       if (res.status === 401) {
-        router.replace(`/login?next=${encodeURIComponent("/parent")}`);
+        router.replace(`/login?next=${encodeURIComponent("/account/parent")}`);
         return;
       }
       const data = await res.json();
@@ -267,11 +295,13 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
     setAthletes((prev) =>
       prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
+        const nextGear = (ath.primaryGear || []).map((g) =>
+          g.id === gearId ? { ...g, condition: nextCondition } : g
+        );
         return {
           ...ath,
-          primaryGear: (ath.primaryGear || []).map((g) =>
-            g.id === gearId ? { ...g, condition: nextCondition } : g
-          ),
+          primaryGear: nextGear,
+          ...recomputeGearAlerts(nextGear),
         };
       })
     );
@@ -307,11 +337,13 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
       setAthletes((prev) =>
         prev.map((ath) => {
           if (ath.id !== athleteId) return ath;
+          const revertedGear = (ath.primaryGear || []).map((g) =>
+            g.id === gearId ? { ...g, condition: currentCondition } : g
+          );
           return {
             ...ath,
-            primaryGear: (ath.primaryGear || []).map((g) =>
-              g.id === gearId ? { ...g, condition: currentCondition } : g
-            ),
+            primaryGear: revertedGear,
+            ...recomputeGearAlerts(revertedGear),
           };
         })
       );
@@ -393,9 +425,11 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
     setAthletes((prev) =>
       prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
+        const nextGear = (ath.primaryGear || []).filter((g) => g.id !== gearId);
         return {
           ...ath,
-          primaryGear: (ath.primaryGear || []).filter((g) => g.id !== gearId),
+          primaryGear: nextGear,
+          ...recomputeGearAlerts(nextGear),
         };
       })
     );
@@ -424,7 +458,7 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
             if (ath.id !== athleteId) return ath;
             const gear = [...(ath.primaryGear || [])];
             gear.splice(Math.min(gearIndex, gear.length), 0, removedGear);
-            return { ...ath, primaryGear: gear };
+            return { ...ath, primaryGear: gear, ...recomputeGearAlerts(gear) };
           })
         );
       }
@@ -468,9 +502,11 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
           prev.map((ath) => {
             if (ath.id !== athleteId) return ath;
             const existing = ath.primaryGear || [];
+            const nextGear = [...existing, ...newItems];
             return {
               ...ath,
-              primaryGear: [...existing, ...newItems],
+              primaryGear: nextGear,
+              ...recomputeGearAlerts(nextGear),
             };
           })
         );
@@ -569,9 +605,11 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
           prev.map((ath) => {
             if (ath.id !== athleteId) return ath;
             const existing = ath.primaryGear || [];
+            const nextGear = [...existing, newItem];
             return {
               ...ath,
-              primaryGear: [...existing, newItem],
+              primaryGear: nextGear,
+              ...recomputeGearAlerts(nextGear),
             };
           })
         );
@@ -609,21 +647,23 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
         prev.map((ath) => {
           if (ath.id !== athleteId) return ath;
           const existing = ath.primaryGear || [];
+          const nextGear = [
+            ...existing.filter((x) => x.id !== data.item.id),
+            {
+              id: data.item.id,
+              category: data.item.category,
+              brand: data.item.brand,
+              model: data.item.model,
+              label: data.item.label,
+              condition: data.item.condition,
+              status: data.item.status,
+              isPrimary: data.item.isPrimary,
+            },
+          ];
           return {
             ...ath,
-            primaryGear: [
-              ...existing.filter((x) => x.id !== data.item.id),
-              {
-                id: data.item.id,
-                category: data.item.category,
-                brand: data.item.brand,
-                model: data.item.model,
-                label: data.item.label,
-                condition: data.item.condition,
-                status: data.item.status,
-                isPrimary: data.item.isPrimary,
-              },
-            ],
+            primaryGear: nextGear,
+            ...recomputeGearAlerts(nextGear),
           };
         })
       );

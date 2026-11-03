@@ -86,11 +86,18 @@ function SelectionTrialCell({ athlete }: { athlete: Athlete }) {
   );
 }
 
-export function AthleteInsightGrid({ athlete }: { athlete: Athlete }) {
+export function AthleteInsightGrid({
+  athlete,
+  demoMode = false,
+}: {
+  athlete: Athlete;
+  demoMode?: boolean;
+}) {
   const fleetHref =
     athlete.standing?.fleet === "Gold"
       ? "/sg/optimist/gold"
       : "/sg/optimist/silver";
+  const profileHref = demoMode ? "/sample" : `/sailors/${athlete.handle}`;
 
   return (
     <section className={`${CARD} p-5 sm:p-6`}>
@@ -174,7 +181,7 @@ export function AthleteInsightGrid({ athlete }: { athlete: Athlete }) {
                 <Sailboat className="h-3.5 w-3.5" />
                 Recent Results
               </span>
-              <Link href={`/sailors/${athlete.handle}`} className={LINK_TEAL}>
+              <Link href={profileHref} className={LINK_TEAL}>
                 All →
               </Link>
             </div>
@@ -209,7 +216,7 @@ export function AthleteInsightGrid({ athlete }: { athlete: Athlete }) {
           </div>
           <div className="pt-2">
             <Link
-              href={`/sailors/${athlete.handle}`}
+              href={profileHref}
               className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-1"
             >
               View Full Profile →

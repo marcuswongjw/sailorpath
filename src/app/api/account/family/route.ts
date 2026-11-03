@@ -4,6 +4,7 @@ import { getAuthContext, jsonError } from "@/lib/auth";
 import { db, withSequentialDatabaseReads } from "@/db";
 import {
   coachDevelopmentRecords,
+  coachSailorNotes,
   equipmentItems,
   parentNotes,
   regattaResults,
@@ -136,6 +137,7 @@ export async function GET() {
       allNotes,
       selectionData,
       allCoachRecords,
+      allSharedCoachNotes,
       upcomingRegattas,
     ] = await withSequentialDatabaseReads([
       () => loadPersonalSeasons(
@@ -222,6 +224,24 @@ export async function GET() {
             )
             .orderBy(desc(coachDevelopmentRecords.recordDate))
             .limit(20)
+            .catch(() => [])
+        : Promise.resolve([]),
+      () => ids.length
+        ? db
+            .select({
+              id: coachSailorNotes.id,
+              sailorId: coachSailorNotes.sailorId,
+              note: coachSailorNotes.note,
+              updatedAt: coachSailorNotes.updatedAt,
+            })
+            .from(coachSailorNotes)
+            .where(
+              and(
+                inArray(coachSailorNotes.sailorId, ids),
+                eq(coachSailorNotes.visibility, "shared")
+              )
+            )
+            .orderBy(desc(coachSailorNotes.updatedAt))
             .catch(() => [])
         : Promise.resolve([]),
       () => db
@@ -349,6 +369,23 @@ export async function GET() {
         });
       }
       coachFeedbackBySailor.set(cr.sailorId, list);
+    }
+    for (const cn of allSharedCoachNotes) {
+      const trimmedNote = cn.note.trim();
+      if (!trimmedNote) continue;
+      const list = coachFeedbackBySailor.get(cn.sailorId) || [];
+      if (list.length < 10) {
+        list.unshift({
+          id: cn.id,
+          type: "debrief",
+          category: "Coach Note",
+          title: "Coach Summary Note",
+          detail: trimmedNote,
+          recordDate: String(cn.updatedAt).slice(0, 10),
+          status: "active",
+        });
+      }
+      coachFeedbackBySailor.set(cn.sailorId, list);
     }
 
     // Notes per sailor (already filtered to author; keep 10 each)

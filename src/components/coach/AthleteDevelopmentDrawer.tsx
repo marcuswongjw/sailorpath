@@ -516,7 +516,7 @@ export function AthleteDevelopmentDrawer({
                               type="button"
                               onClick={() => onDeleteRecord(record.id)}
                               title="Delete record"
-                              className={`opacity-80 sm:opacity-0 sm:group-hover:opacity-100 rounded p-1.5 ${MUTED} hover:text-rose-600 transition`}
+                              className={`opacity-80 sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100 sm:group-focus-within:opacity-100 rounded p-1.5 ${MUTED} hover:text-rose-600 transition`}
                             >
                               <Trash2 className="h-3 w-3" />
                             </button>

@@ -21,12 +21,14 @@ export type AthleteSelectorProps = {
   athletes: Athlete[];
   selectedAthleteId: string | "all";
   onSelectAthlete: (id: string | "all") => void;
+  demoMode?: boolean;
 };
 
 export function AthleteSelector({
   athletes,
   selectedAthleteId,
   onSelectAthlete,
+  demoMode = false,
 }: AthleteSelectorProps) {
   return (
     <>
@@ -137,7 +139,7 @@ export function AthleteSelector({
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
                   <Link
-                    href={`/athlete?id=${a.id}`}
+                    href={demoMode ? "/sample?view=sailor" : `/athlete?id=${a.id}`}
                     className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
                   >
                     Athlete Hub ↗
