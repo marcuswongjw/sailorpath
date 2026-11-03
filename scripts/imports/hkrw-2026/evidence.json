@@ -1,0 +1,34 @@
+{
+  "regatta_event": "Hong Kong Race Week 2026",
+  "event_id": "8b2aa46e-12e7-55ee-afd4-2b927edd02cf",
+  "organizer": "Sailing Federation of Hong Kong, China (HKSF) & Royal Hong Kong Yacht Club (RHKYC)",
+  "venue": "Royal Hong Kong Yacht Club, Middle Island, Hong Kong",
+  "dates": "27 January \u2013 1 February 2026",
+  "sources": [
+    {
+      "class": "29er",
+      "name": "2026 29er Asian Championship",
+      "url": "https://www.rhkyc.org.hk/storage/app/media/Sailing/result/HONG-KONG-RACE-WEEK/2026/29er.htm",
+      "format": "Sailwave HTML",
+      "entries": 25,
+      "races": 11,
+      "discards": 2
+    },
+    {
+      "class": "ILCA 6",
+      "name": "Hong Kong Race Week 2026 (ILCA 6)",
+      "url": "https://www.rhkyc.org.hk/storage/app/media/Sailing/result/HONG-KONG-RACE-WEEK/2026/ILCA6.htm",
+      "format": "Sailwave HTML",
+      "entries": 13,
+      "races": 8,
+      "discards": 2
+    }
+  ],
+  "verification_methodology": "100% of ranks, sailor names, sail numbers, discards, and net totals mathematically and table verified against official RHKYC Sailwave scorecards.",
+  "pdf_corroboration_status": "No standalone PDF was published by RHKYC for HKRW 2026; official Sailwave HTML results published on the official RHKYC server (matching how Optimist and ILCA 4 were published) were used.",
+  "sheets_imported": 2,
+  "total_entries": 38,
+  "total_sailors_involved": 63,
+  "new_profiles_created": 35,
+  "existing_profiles_matched": 28
+}
