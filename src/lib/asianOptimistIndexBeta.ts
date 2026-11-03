@@ -353,6 +353,18 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     note: "National championship recognized by the Yachting Association of India (YAI). 32 starters, 10 completed races.",
   },
   {
+    id: "ksaf-presidents-cup-youth-nationals-2026",
+    name: "2026 KSAF President's Cup National Youth Sailing Championships (Optimist)",
+    host: "KOR",
+    dates: "8–11 May 2026 · Seoul",
+    grade: 40,
+    starters: 38,
+    verifiedMnas: 1,
+    races: 8,
+    check: "meets",
+    note: "National youth sailing championships organized by the Korea Sailing Federation (대한요트협회 / KSAF). 38 starters, 8 completed races.",
+  },
+  {
     id: "other-national-championships",
     name: "Hong Kong, Japan, UAE, Oman and other Asian & Oceanian national championships",
     host: "Various",
