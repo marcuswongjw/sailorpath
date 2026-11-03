@@ -1,0 +1,46 @@
+{
+  "regatta_name": "2026 ASAF Cup Optimist Open Championships",
+  "event_slug": "asaf-cup-optimist-open-championships-2026",
+  "event_id": "034bf987-fc94-5d18-8f28-62f0e71b1380",
+  "dates": "2026-08-05 to 2026-08-10",
+  "venue": "Guanyinting, Penghu, Chinese Taipei",
+  "sanctioning_bodies": [
+    "Asian Sailing Federation (ASAF)",
+    "Chinese Taipei Sailing Association (CTSA)",
+    "Penghu Sailing Association"
+  ],
+  "official_url": "https://www.racingrulesofsailing.org/documents/15171/event",
+  "documents": {
+    "competitors_register": "https://www.racingrulesofsailing.org/documents/201182",
+    "nor_pdf": "https://www.racingrulesofsailing.org/documents/200314",
+    "boys_results_pdf": "https://www.racingrulesofsailing.org/documents/201421",
+    "girls_results_pdf": "https://www.racingrulesofsailing.org/documents/201422",
+    "novice_results_pdf": "https://www.racingrulesofsailing.org/documents/201423"
+  },
+  "fleets": [
+    {
+      "id": "boys",
+      "entries": 34,
+      "races": 8,
+      "discards": 1
+    },
+    {
+      "id": "girls",
+      "entries": 21,
+      "races": 8,
+      "discards": 1
+    },
+    {
+      "id": "novice",
+      "entries": 16,
+      "races": 11,
+      "discards": 0
+    }
+  ],
+  "total_entries": 71,
+  "total_race_scores": 616,
+  "matched_existing_sailors": 54,
+  "new_sailor_profiles_created": 17,
+  "mathematical_verification": "100% verified (sum(race_scores) == total_points and total_points - discard == net_points across all 71 entries)",
+  "pdf_corroboration_status": "Verified against official PDF pages rendered to high-resolution PNG screenshots in scripts/imports/penghu-2026/screenshots/."
+}

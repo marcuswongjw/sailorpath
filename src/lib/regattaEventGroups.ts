@@ -45,6 +45,7 @@ type Fleet =
   | "intermediate"
   | "green"
   | "newborn"
+  | "novice"
   | "boys"
   | "girls"
   | "alpha"
@@ -137,7 +138,7 @@ function publicFleet(row: RegattaRecord): Fleet | null {
       || blob.match(/\bclass[\s_-]*([ab])\b/);
     if (classFleet) return classFleet[1] === "a" ? "class-a" : "class-b";
     if (
-      division === "main" || division === "intermediate" || division === "green" || division === "newborn" ||
+      division === "main" || division === "intermediate" || division === "green" || division === "newborn" || division === "novice" ||
       division === "boys" || division === "girls" ||
       division === "alpha" || division === "bravo" || division === "charlie"
     ) {
@@ -208,7 +209,7 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
     };
   }
   if (
-    fleet === "main" || fleet === "intermediate" || fleet === "green" || fleet === "newborn" ||
+    fleet === "main" || fleet === "intermediate" || fleet === "green" || fleet === "newborn" || fleet === "novice" ||
     fleet === "boys" || fleet === "girls" ||
     fleet === "alpha" || fleet === "bravo" || fleet === "charlie"
   ) {
@@ -337,6 +338,7 @@ const FLEET_ORDER: Fleet[] = [
   "charlie",
   "open",
   "newborn",
+  "novice",
   "ilca4-boys",
   "ilca4-girls",
   "ilca4",
