@@ -11,82 +11,92 @@ export const dynamic = "force-dynamic";
 
 export default function ClaimProfilePage() {
   return (
-    <div className="mx-auto max-w-lg px-4 py-12 sm:py-16 space-y-8">
+    <div className="mx-auto max-w-lg px-4 py-12 sm:py-16 space-y-8 text-charcoal">
       <div className="text-center space-y-3">
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          Claim your profile
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">
+          Profile verification
+        </p>
+        <h1 className="text-2xl sm:text-3xl font-black text-harbour-shadow tracking-tight">
+          Claim your sailor profile
         </h1>
-        <p className="text-sm text-slate-400 leading-relaxed">
-          Find your sailor page, create an account, and submit a claim so you
-          can edit your logbook, journey, and privacy settings.
+        <p className="text-sm text-slate-soft leading-relaxed">
+          Find your public competition profile, sign in, and submit a claim as
+          the sailor or parent/guardian to unlock your private logbook,
+          equipment locker, and privacy controls.
         </p>
       </div>
 
       <ol className="space-y-4">
-        <li className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 flex gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-racing-deep text-xs font-black">
+        <li className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-xs flex gap-3.5">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-harbour text-xs font-black">
             1
           </span>
           <div>
-            <p className="text-sm font-bold text-white flex items-center gap-2">
-              <Search className="h-4 w-4 text-slate-500" />
-              Find your name
+            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-2">
+              <Search className="h-4 w-4 text-harbour" aria-hidden="true" />
+              Find your profile
             </p>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              Search by name or sail number. Open your public profile.
+            <p className="text-xs text-slate-soft mt-1 leading-relaxed">
+              Search by sailor name, sail number, or club in the public directory
+              and open your sailor profile page.
             </p>
             <Link
               href="/sailors"
-              className="inline-flex mt-3 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[15px] font-semibold text-white"
+              className="sp-primary inline-flex mt-3 px-4 py-2 text-sm font-semibold"
             >
               Search sailors
             </Link>
           </div>
         </li>
-        <li className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 flex gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-racing-deep text-xs font-black">
+        <li className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-xs flex gap-3.5">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-harbour text-xs font-black">
             2
           </span>
           <div>
-            <p className="text-sm font-bold text-white flex items-center gap-2">
-              <UserPlus className="h-4 w-4 text-slate-500" />
-              Sign in or register
+            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-2">
+              <UserPlus className="h-4 w-4 text-harbour" aria-hidden="true" />
+              Sign in or create an account
             </p>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              You need an account so we can verify claims and save your edits.
+            <p className="text-xs text-slate-soft mt-1 leading-relaxed">
+              An account lets us verify your claim and keep private notes,
+              equipment records, and consent settings tied to you.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <Link
-                href="/login"
-                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[15px] font-semibold text-white hover:border-orange-500/40"
+                href="/login?next=%2Fsailors"
+                className="sp-secondary inline-flex px-4 py-2 text-sm font-semibold"
               >
-                Log in
+                Sign in
               </Link>
               <Link
                 href="/register"
-                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[15px] font-semibold text-white hover:border-orange-500/40"
+                className="sp-secondary inline-flex px-4 py-2 text-sm font-semibold"
               >
                 Create account
               </Link>
             </div>
           </div>
         </li>
-        <li className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 flex gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-racing-deep text-xs font-black">
+        <li className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-xs flex gap-3.5">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-harbour text-xs font-black">
             3
           </span>
           <div>
-            <p className="text-sm font-bold text-white flex items-center gap-2">
-              <Link2 className="h-4 w-4 text-slate-500" />
-              Submit a claim on your profile
+            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-2">
+              <Link2 className="h-4 w-4 text-harbour" aria-hidden="true" />
+              Submit your claim for review
             </p>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              On the sailor page, use Claim this profile and choose{" "}
-              <strong className="text-slate-300">Parent</strong> or{" "}
-              <strong className="text-slate-300">Sailor</strong>. An admin will
-              review and link the account. Parents then use the{" "}
-              <Link href="/parent" className="text-emerald-400 font-semibold">
-                Parent dashboard
+            <p className="text-xs text-slate-soft mt-1 leading-relaxed">
+              On the sailor profile page, select{" "}
+              <strong className="text-charcoal">Claim this profile</strong> and
+              choose <strong className="text-charcoal">Parent</strong> or{" "}
+              <strong className="text-charcoal">Sailor</strong>. Once reviewed
+              and approved, your profile will appear in your{" "}
+              <Link
+                href="/account/parent"
+                className="text-harbour font-semibold hover:underline"
+              >
+                Sailing workspace
               </Link>
               .
             </p>
@@ -94,13 +104,17 @@ export default function ClaimProfilePage() {
         </li>
       </ol>
 
-      <p className="text-center text-[13px] text-slate-600">
-        <Link href="/" className="text-slate-500 hover:text-white">
+      <p className="text-center text-[13px] text-slate-soft">
+        <Link href="/" className="font-semibold text-harbour hover:underline">
           ← Home
         </Link>
         {" · "}
-        <Link href="/sample" className="text-slate-500 hover:text-white">
-          Tour demo profile
+        <Link href="/sample" className="font-semibold text-harbour hover:underline">
+          Explore sample profile
+        </Link>
+        {" · "}
+        <Link href="/demo/parent" className="font-semibold text-harbour hover:underline">
+          Try parent demo
         </Link>
       </p>
     </div>

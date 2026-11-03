@@ -93,6 +93,65 @@ function withArticleMedia(article: PublishedNewsArticle): PublishedNewsArticle {
  */
 const FALLBACK_ARTICLES: PublishedNewsArticle[] = [
   {
+    slug: "asian-2026-multiclass-and-national-championships-published",
+    title:
+      "2026 Asian Multi-Class & National Championships Published: Langkawi Perdana, Hong Kong Race Week, Indonesia, Philippines & All Japan 420",
+    summary:
+      "SailorPath publishes verified scorecards across 2026 Asian regional and national championships, including the 22nd Langkawi International Regatta Perdana across 7 classes, Hong Kong Race Week (29er Asian Championship & ILCA 6), INA Regatta II Indonesia National Sailing Championship, Philippine National Sailing Championship, and 38th All Japan 420 Championship.",
+    body: `SailorPath has published a new wave of 2026 Asian multi-class and national championship scorecards, expanding cross-border benchmarking across Southeast and East Asia for single-handed dinghies, double-handed skiffs, and windsurfing fleets.
+
+## 22nd Langkawi International Regatta Perdana 2026 (Malaysia)
+
+All seven class scorecards from the 22nd Langkawi International Regatta Perdana (29 January – 1 February 2026, 209 competitors) are now live, visually verified against the 11-page official Malaysian Sailing Association final results PDF:
+
+• Optimist Overall (111 entries, 5 races)
+• ILCA 4 (30 entries), ILCA 6 (16 entries), and ILCA 7 (9 entries)
+• International 420 (16 entries, with full helm and crew attribution)
+• Windsurfing Bic Techno 293 (15 entries) and Windsurfing Open / iQFOiL (12 entries)
+
+## Hong Kong Race Week 2026 & 29er Asian Championship
+
+Alongside existing Optimist and ILCA 4 sheets from Hong Kong Race Week 2026, SailorPath has added the visually PDF-verified scorecards for:
+
+• 29er (2026 29er Asian Championship — 21 entries, 13 races, 2 discards, with full helm and crew links)
+• ILCA 6 (21 entries, 11 races, 1 discard)
+
+## Indonesia, Philippines & All Japan National Championships
+
+We have also completed imports for three national championship series across the region:
+
+• 38th All Japan 420 Class Championship 2026 (Tottori, Japan — 26 entries across Qualifying & Final series, visually verified against the official JSAF/J420 final PDF)
+• INA Regatta II — Indonesia National Sailing Championship 2026 (Jakarta — 104 entries across Optimist Boys & Girls, ILCA 4, ILCA 6, ILCA 7, Techno 293, and iQFOiL)
+• Philippine National Sailing Championship 2026 (Subic Bay — Optimist Gold & Silver, ILCA 4, ILCA 6, and ILCA 7)
+
+Source and verification note: Where official organiser PDFs were published (Langkawi International Regatta Perdana, Hong Kong Race Week 29er & ILCA 6, and the 38th All Japan 420 Championship), every race score, discard, and net total was visually reconciled against the official PDF tables. For INA Regatta II and the Philippine National Sailing Championship, scorecards are verified against the official RacingRulesOfSailing.org event notice boards and Federation records and are transparently marked as digital-source verified rather than PDF-verified.`,
+    kind: "result_report",
+    authorDisplayName: "SailorPath",
+    publishedAt: "2026-11-03T10:00:00.000+08:00",
+    updatedAt: "2026-11-03T10:00:00.000+08:00",
+    relatedClass: "Optimist",
+    relatedRegion: "Asia",
+    sourceUrl: "https://sailorpath.com/results",
+    sourceLabel: "Browse published Asian championship scorecards",
+    tags: [
+      "asia",
+      "malaysia",
+      "hong-kong",
+      "indonesia",
+      "philippines",
+      "japan",
+      "optimist",
+      "ilca-4",
+      "ilca-6",
+      "ilca-7",
+      "29er",
+      "420",
+      "techno-293",
+      "iqfoil",
+      "results",
+    ],
+  },
+  {
     slug: "18th-eastern-seaboard-regatta-2026-results-published",
     title:
       "18th Eastern Seaboard Regatta 2026: Optimist Gold, Silver, ILCA 4 & ILCA 6 Scorecards Published",
@@ -141,10 +200,10 @@ Explore all four fleet scorecards at /regattas/eastern-seaboard-regatta-2026.`,
   {
     slug: "australian-2026-ilca-optimist-and-zhik-youth-sail-results",
     title:
-      "Australian 2026 Championship Coverage: ILCA Oceania & Australian Championships, Optimist States, and Zhik Youth Sail",
+      "Australian 2026 Championship Coverage: ILCA Oceania & Australian Championships, Optimist States, 29er & 420 Nationals, and Zhik Youth Sail",
     summary:
-      "SailorPath publishes 50 verified Australian championship fleet sheets across the 2026 ILCA Oceania & Australian Championships in Hobart, Musto Australian and State Optimist Championships, and the nationwide Zhik Youth Sail series.",
-    body: `To support cross-border benchmarking across Asia and Oceania, SailorPath has completed a major expansion of 2026 Australian youth and open championship records across 50 fleet sheets and more than 5,000 individual race scores.
+      "SailorPath publishes 52 verified Australian championship fleet sheets across the 2026 ILCA Oceania & Australian Championships in Hobart, Musto Australian and State Optimist Championships, Australian 29er and 420 National Championships, and the nationwide Zhik Youth Sail series.",
+    body: `To support cross-border benchmarking across Asia and Oceania, SailorPath has completed a major expansion of 2026 Australian youth and open championship records across 52 fleet sheets and 5,491 individual race scores.
 
 ## 2026 ILCA Oceania & Australian Championships (Hobart, Tasmania)
 
@@ -164,6 +223,13 @@ Nine completed Open and Intermediate fleet scorecards (260 entries, 1,470 race s
 • 2026 VIODA International Optimist Victorian & Open Championship (Open and Intermediate fleets)
 • 2026 NSW, ACT, and Tasmanian Optimist State Championships (Open and Intermediate fleets)
 
+## 2026 Australian 29er & International 420 National Championships
+
+Two national double-handed youth championship scorecards are also published with full helm and crew attribution:
+
+• 2026 Australian 29er Championship (Royal Yacht Club of Tasmania — 21 entries, 14 races, 2 discards)
+• 2026 International 420 Class Australian Championship (13 entries, 12 races, 2 discards)
+
 ## 2026 Zhik Youth Sail State Championships (36 Fleet Sheets)
 
 We have also imported 36 completed class sheets (478 entries, 3,554 race scores) across seven 2026 Zhik Youth Sail state championships—Tasmania, Northern Territory, Queensland, South Australia, Western Australia, New South Wales, and the ACT:
@@ -173,11 +239,11 @@ We have also imported 36 completed class sheets (478 entries, 3,554 race scores)
 • 29er and 420 double-handed youth fleets
 • iQFOiL and Techno 293 windsurfing fleets
 
-Source and verification note: Where official organiser PDFs were not published for the Australian Optimist state championships and Zhik Youth Sail portals, scorecards were verified directly against the official digital scoring systems (SailingResults.net, Sailwave, TopYacht, Sportspage, and SailSys) and are transparently marked as digital-source verified rather than PDF-verified. Zhik Youth Sail Victoria 2026 is recorded as un-sailed (0 races completed due to severe weather).`,
+Source and verification note: Where official organiser PDFs were not published for the Australian Optimist state championships, 29er/420 Nationals, and Zhik Youth Sail portals, scorecards were verified directly against the official digital scoring systems (SailingResults.net, Sailwave, TopYacht, Sportspage, and SailSys) and are transparently marked as digital-source verified rather than PDF-verified. Zhik Youth Sail Victoria 2026 is recorded as un-sailed (0 races completed due to severe weather).`,
     kind: "result_report",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-10-30T11:00:00.000+08:00",
-    updatedAt: "2026-10-30T11:00:00.000+08:00",
+    updatedAt: "2026-11-03T09:00:00.000+08:00",
     relatedClass: "Optimist",
     relatedRegion: "Oceania",
     sourceUrl: "https://sailorpath.com/results",
@@ -399,7 +465,7 @@ async function readPublishedNewsArticle(
 
 const getCachedPublishedNews = unstable_cache(
   readPublishedNews,
-  ["published-news-v4"],
+  ["published-news-v5"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -409,7 +475,7 @@ const getCachedPublishedNews = unstable_cache(
 function cachedArticleLookup(slug: string) {
   return unstable_cache(
     () => readPublishedNewsArticle(slug),
-    ["published-news-article-v4", slug],
+    ["published-news-article-v5", slug],
     {
       revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
       tags: [CACHE_TAG_NEWS_ARTICLES],

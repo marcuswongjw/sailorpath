@@ -1,0 +1,29 @@
+{
+  "regatta_name": "YAI Junior National Sailing Championship 2023",
+  "sanctioning_authority": "Yachting Association of India (YAI)",
+  "official_url": "https://www.yai.org.in/documents-and-rules/results-of-events/261-yai-youth-nationals-2023-results/file.html",
+  "pdf_url": "https://www.yai.org.in/documents-and-rules/results-of-events/261-yai-youth-nationals-2023-results/file.html",
+  "venue": "Colaba, Mumbai, India",
+  "dates": "06 \u2013 12 October 2023",
+  "classes": [
+    "29er",
+    "420",
+    "ILCA 4",
+    "ILCA 4",
+    "ILCA 6",
+    "optimist"
+  ],
+  "fleets_imported": [
+    "29er",
+    "420",
+    "ILCA 4 (Boys)",
+    "ILCA 4 (Girls)",
+    "ILCA 6",
+    "Optimist"
+  ],
+  "total_entries": 82,
+  "total_participants": 88,
+  "total_race_scores": 820,
+  "mathematical_verification": "100% verified (sum(clean_scores) == gross and gross - discard == net)",
+  "pdf_corroboration_status": "Verified against official YAI PDF pages rendered to high-resolution PNG screenshots in scripts/imports/india-2023/screenshots/."
+}

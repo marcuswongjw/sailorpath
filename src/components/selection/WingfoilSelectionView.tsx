@@ -62,27 +62,24 @@ export function WingfoilSelectionView() {
         </div>
 
         {/* Survey Deadline Callout Banner */}
-        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="rounded-2xl border border-cool-veil bg-sailcloth p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-              <p className="text-xs font-bold text-amber-800 dark:text-amber-200 uppercase tracking-wide">
-                Category Selection Survey Deadline: {policy.qualifier.surveyDeadline}
+              <Calendar className="h-4 w-4 text-harbour" />
+              <p className="text-xs font-bold text-harbour-shadow uppercase tracking-wide">
+                Category Selection Survey Closed: {policy.qualifier.surveyDeadline}
               </p>
             </div>
             <p className="text-xs text-slate-soft">
-              Athletes must choose which category they will participate in for funding support prior to the qualifying event.
+              Athletes selected their target funding category ahead of the 24–25 October 2026 Selection Trials.
             </p>
           </div>
-          <a
-            href={policy.qualifier.surveyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-3.5 py-2 text-xs font-bold text-white transition-colors shrink-0 shadow-sm"
+          <Link
+            href="/sg/wingfoil"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-cool-veil bg-warm-white hover:border-harbour px-3.5 py-2 text-xs font-bold text-harbour-shadow transition-colors shrink-0 shadow-2xs"
           >
-            <span>Complete Survey</span>
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
+            <span>View Selection Trial Results</span>
+          </Link>
         </div>
       </div>
 
@@ -119,9 +116,9 @@ export function WingfoilSelectionView() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
           <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
-            <p className="font-bold text-slate-soft uppercase tracking-wider text-[12px]">Dates</p>
+            <p className="font-bold text-slate-soft uppercase tracking-wider text-[12px]">Dates (Completed)</p>
             <p className="text-sm font-extrabold text-charcoal">{policy.qualifier.dates}</p>
-            <p className="text-slate-soft">Mandatory participation: non-attendees will not be considered.</p>
+            <p className="text-slate-soft">Mandatory qualifying regatta concluded; non-attendees were not eligible for consideration.</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
             <p className="font-bold text-slate-soft uppercase tracking-wider text-[12px]">Equipment Format</p>

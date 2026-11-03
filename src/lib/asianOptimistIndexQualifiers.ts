@@ -18,10 +18,9 @@ export type AsianOptimistIndexQualifierSource = {
 /**
  * Public, source-backed 2026 qualifier ledger.
  *
- * These records are deliberately not a 2026 points table yet. They identify the
- * two imported external result sheets and the two primary SailorPath results
- * that are ready for a 2026 scoring calculation once the Colombo championship
- * anchor is complete and the published formula is enabled.
+ * These records define the verified regional and national championship result
+ * sheets that feed the SailorPath Asian & Oceania Optimist Index standings and
+ * qualifier register.
  */
 export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
   {
@@ -192,17 +191,17 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
   },
   {
     id: "eastern-seaboard-regatta-2026",
-    name: "Eastern Seaboard Regatta — Optimist",
+    name: "18th Eastern Seaboard Regatta — Optimist",
     hostCountry: "Thailand",
-    startDate: "2026-10-29",
-    endDate: "2026-10-31",
-    officialResultsUrl: "https://www.racingrulesofsailing.org/documents/198658",
+    startDate: "2026-10-28",
+    endDate: "2026-11-01",
+    officialResultsUrl: "https://www.racingrulesofsailing.org/documents/15166/event",
     officialResultsSourceName:
-      "18th Eastern Seaboard Regatta Notice of Race — final classification pending",
-    sailorPathRegattaSlug: null,
-    usesSailorPathResults: false,
-    resultCount: null,
-    resultStatus: "scheduled",
+      "Royal Varuna Yacht Club final results (Optimist Gold & Silver)",
+    sailorPathRegattaSlug: "eastern-seaboard-regatta-2026",
+    usesSailorPathResults: true,
+    resultCount: 135,
+    resultStatus: "verified",
   },
 ] as const satisfies readonly AsianOptimistIndexQualifierSource[];
 

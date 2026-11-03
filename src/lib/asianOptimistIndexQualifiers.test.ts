@@ -5,33 +5,34 @@ import {
 } from "@/lib/asianOptimistIndexQualifiers";
 
 describe("Asian Optimist Index 2026 qualifier ledger", () => {
-  it("keeps eleven verified inputs and one scheduled Thai candidate", () => {
+  it("keeps twelve verified regional and national championship inputs", () => {
     expect(ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS).toHaveLength(12);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => !qualifier.usesSailorPathResults
       )
-    ).toHaveLength(3);
+    ).toHaveLength(2);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter(
         (qualifier) => qualifier.usesSailorPathResults
       )
-    ).toHaveLength(9);
+    ).toHaveLength(10);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.map(
         (qualifier) => qualifier.resultCount
       )
-    ).toEqual([284, 292, 50, 59, 106, 65, 83, 77, 58, 45, 43, null]);
+    ).toEqual([284, 292, 50, 59, 106, 65, 83, 77, 58, 45, 43, 135]);
     expect(
       ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.find(
         (qualifier) => qualifier.id === "eastern-seaboard-regatta-2026"
       )
     ).toMatchObject({
       hostCountry: "Thailand",
-      resultStatus: "scheduled",
-      sailorPathRegattaSlug: null,
-      startDate: "2026-10-29",
-      endDate: "2026-10-31",
+      resultStatus: "verified",
+      sailorPathRegattaSlug: "eastern-seaboard-regatta-2026",
+      startDate: "2026-10-28",
+      endDate: "2026-11-01",
+      resultCount: 135,
     });
   });
 

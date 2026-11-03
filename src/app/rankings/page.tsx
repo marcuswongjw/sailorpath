@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Trophy, Sailboat, Medal, Wind, Waves } from "lucide-react";
+import { Trophy, Sailboat, Medal, Wind, Waves, Globe } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Current sailing rankings & race results | SailorPath",
   description:
-    "View current Singapore Optimist (Gold/Silver), ILCA (ILCA 4, ILCA 6, ILCA 7), WingFoil, and Techno 293 standings.",
+    "View current Singapore Optimist (Gold/Silver), Asian & Oceania Optimist Index, ILCA (ILCA 4, ILCA 6, ILCA 7), WingFoil, Techno 293, and iQFOiL standings.",
 };
 
 export const revalidate = 3600;
@@ -18,7 +18,7 @@ export default function RankingsHubPage() {
           Current rankings
         </h1>
         <p className="text-sm text-[var(--sp-slate-soft)] max-w-lg mx-auto leading-relaxed">
-          Singapore youth dinghy and windsurfing series — pick a class to view current standings.
+          Singapore youth dinghy and windsurfing series, plus the regional Asian &amp; Oceania Optimist Index — pick a class to view current standings.
         </p>
       </div>
 
@@ -36,7 +36,7 @@ export default function RankingsHubPage() {
             Class hub
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
             href="/sg/optimist/gold"
             className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-racing-orange)] hover:shadow-md transition-all"
@@ -64,6 +64,21 @@ export default function RankingsHubPage() {
             </h3>
             <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
               Best 3 of 5 series standings for Silver fleet.
+            </p>
+          </Link>
+
+          <Link
+            href="/optimist/asian-index"
+            className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] hover:shadow-md transition-all"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-aqua-mist)] mb-3">
+              <Globe className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
+            </div>
+            <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-harbour-teal)] transition-colors">
+              Asian &amp; Oceania Index
+            </h3>
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
+              Rolling 12-month regional Optimist benchmark (Beta).
             </p>
           </Link>
         </div>
@@ -133,7 +148,7 @@ export default function RankingsHubPage() {
             Windsurfing &amp; Foiling
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
             href="/sg/wingfoil"
             className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] hover:shadow-md transition-all"
@@ -161,6 +176,21 @@ export default function RankingsHubPage() {
             </h3>
             <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
               Southwest Monsoon Grand Prix series &amp; race results.
+            </p>
+          </Link>
+
+          <Link
+            href="/sg/iqfoil"
+            className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] hover:shadow-md transition-all"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-aqua-mist)] mb-3">
+              <Wind className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
+            </div>
+            <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-harbour-teal)] transition-colors">
+              iQFOiL
+            </h3>
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
+              Singapore iQFOiL class hub &amp; published regatta results.
             </p>
           </Link>
         </div>

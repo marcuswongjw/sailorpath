@@ -22,7 +22,7 @@ const hubs = [
     href: "/classes/optimist",
     name: "Optimist",
     status: "Class",
-    note: "The one-design pram for young sailors, with class history and links to the Singapore standings.",
+    note: "The one-design pram for young sailors, with class history and links to Singapore standings and the Asian & Oceania Optimist Index.",
   },
 ] as const;
 
