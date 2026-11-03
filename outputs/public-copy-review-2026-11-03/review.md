@@ -24,3 +24,15 @@ The existing published `langkawi-international-regatta-perdana-2026-29er` row re
 ## Validation
 
 Focused tests cover alphabetical display, stable event links and active fleets, calendar links, alias handling, event overview, news media on both database and fallback paths, and existing event/calendar/homepage behavior. TypeScript and lint checks pass. Before/after route snapshots and the exact copy-only SQL are stored in this folder. Live release checks are recorded after deployment.
+
+## Live verification
+
+- Production deployment `dpl_9AUxQkVWr4GAqmEoXQRPaAcpXs1H` is READY on sailorpath.com at commit `31af226ca37344e0800b3bd2b4d5497aa1ea5af4`.
+- 135 focused tests across 17 files pass after incorporating the latest main-branch imports.
+- Final 61-route snapshot: no HTTP page errors and no remaining flagged stale copy. The three legacy redirects remain intentional.
+- All seven update images return HTTP 200 with image content types.
+- Visually confirmed Eastern Seaboard's alphabetical badges/tabs and that ILCA 6 opens its own 11-competitor result sheet.
+- Visually confirmed the refreshed regional article and its original illustration, descriptive alt text, caption and credit.
+- Refreshed only the `public-wingfoil` and `public-techno293` production cache tags to remove two cached copies of the old board-scorecard label, then verified both pages again.
+- Screenshots saved as `/tmp/sailorpath-alphabetical-classes.png` and `/tmp/sailorpath-update-imagery.png`.
+- Deployment-scoped error/fatal runtime-log count for the post-release window returned no entries.
