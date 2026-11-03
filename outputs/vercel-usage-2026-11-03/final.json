@@ -1,0 +1,122 @@
+[
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026",
+    "status": 200,
+    "cache": "MISS",
+    "type": "text/html; charset=utf-8",
+    "bytes": 908714,
+    "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/opengraph-image?d6b649af0a4ab2d6",
+    "status": 200,
+    "cache": "MISS",
+    "type": "image/png",
+    "bytes": 33899,
+    "cacheControl": "no-store"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/opengraph-image?d6b649af0a4ab2d6",
+    "status": 200,
+    "cache": "MISS",
+    "type": "image/png",
+    "bytes": 33899,
+    "cacheControl": "no-store"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/opengraph-image?d6b649af0a4ab2d6",
+    "status": 200,
+    "cache": "MISS",
+    "type": "image/png",
+    "bytes": 33899,
+    "cacheControl": "no-store"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "status": 200,
+    "cache": "MISS",
+    "type": "text/html; charset=utf-8",
+    "bytes": 204057,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-6/opengraph-image?5a398c279da2139c",
+    "status": 200,
+    "cache": "MISS",
+    "type": "image/png",
+    "bytes": 54817,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-6/opengraph-image?5a398c279da2139c",
+    "status": 200,
+    "cache": "HIT",
+    "type": "image/png",
+    "bytes": 54817,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-4",
+    "status": 200,
+    "cache": "MISS",
+    "type": "text/html; charset=utf-8",
+    "bytes": 828998,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-4",
+    "status": 200,
+    "cache": "HIT",
+    "type": "text/html; charset=utf-8",
+    "bytes": 828998,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "status": 200,
+    "cache": "HIT",
+    "type": "text/html; charset=utf-8",
+    "bytes": 204057,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "status": 200,
+    "cache": "HIT",
+    "type": "text/html; charset=utf-8",
+    "bytes": 204057,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/sailors/mikaelawong",
+    "status": 200,
+    "cache": "MISS",
+    "type": "text/html; charset=utf-8",
+    "bytes": 130165,
+    "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/sailors/mikaelawong",
+    "status": 200,
+    "cache": "MISS",
+    "type": "text/html; charset=utf-8",
+    "bytes": 130165,
+    "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/news/profile-sharing.png",
+    "status": 200,
+    "cache": "MISS",
+    "type": "image/png",
+    "bytes": 171183,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  },
+  {
+    "url": "https://sailorpath.com/news/profile-sharing.png",
+    "status": 200,
+    "cache": "HIT",
+    "type": "image/png",
+    "bytes": 171183,
+    "cacheControl": "public, max-age=0, must-revalidate"
+  }
+]

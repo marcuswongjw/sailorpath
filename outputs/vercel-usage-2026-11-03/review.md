@@ -20,3 +20,7 @@ The connected billing tool returned a bounded team-wide daily billing summary. I
 ## Validation
 
 51 focused tests across 14 files passed, including real temporary-Git fixtures for build decisions, outage handling, public links, scorecard lookup, privacy filtering, share images and invalidation. TypeScript and targeted lint checks passed. Production readback on revision 15a09c7 showed a MISS followed by a HIT for both Eastern Seaboard ILCA scorecards. The news image also returned a HIT and Mikaela’s profile remained private/no-store. Both share-image requests missed, prompting the explicit Vercel CDN header. The full CI suite, including the original bundle budget, passed.
+
+## Final production check
+
+Release e44bc780 is live on sailorpath.com. The release passed 1,718 tests across 321 files, and its client JS totals 3,254,562 bytes against the 3,410,000-byte cap. The two Eastern Seaboard ILCA scorecards, the ILCA 6 share PNG and the profile-sharing news image each returned a cache HIT on repeat requests. Mikaela’s public profile retained private/no-store headers. The event overview's image renderer returned its generic fallback PNG with no-store, as configured. See final.json for the anonymous GET responses.
