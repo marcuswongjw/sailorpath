@@ -242,6 +242,20 @@ export const ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS = [
     resultCount: 32,
     resultStatus: "verified",
   },
+  {
+    id: "ksaf-presidents-cup-youth-nationals-2026-optimist",
+    name: "2026 KSAF President's Cup National Youth Sailing Championships — Optimist",
+    hostCountry: "South Korea",
+    startDate: "2026-05-08",
+    endDate: "2026-05-11",
+    officialResultsUrl:
+      "https://www.ksaf.org/events/overview/overview/?mode=view&tourcd=20260202092105461&page=",
+    officialResultsSourceName: "Korea Sailing Federation (대한요트협회 / KSAF)",
+    sailorPathRegattaSlug: "ksaf-presidents-cup-youth-nationals-2026-optimist",
+    usesSailorPathResults: true,
+    resultCount: 38,
+    resultStatus: "verified",
+  },
 ] as const satisfies readonly AsianOptimistIndexQualifierSource[];
 
 export function formatAsianIndexDateRange(startDate: string, endDate: string): string {

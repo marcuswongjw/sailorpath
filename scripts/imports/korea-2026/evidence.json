@@ -1,0 +1,101 @@
+{
+  "regatta_name": "2026 KSAF President's Cup National Youth Sailing Championships",
+  "korean_regatta_name": "2026 대한요트협회장배(청소년) 전국요트대회",
+  "event_slug": "ksaf-presidents-cup-youth-nationals-2026",
+  "event_id": "3eab275b-24b8-5e99-8c85-79df5829649a",
+  "dates": "2026-05-08 to 2026-05-11",
+  "start_date": "2026-05-08",
+  "end_date": "2026-05-11",
+  "venue": "Seoul Water Leisure Sports Center, Hangang River, Seoul, South Korea",
+  "organizer": "Korea Sailing Federation (대한요트협회 / KSAF)",
+  "official_url": "https://www.ksaf.org/events/overview/overview/?mode=view&tourcd=20260202092105461&page=",
+  "documents": {
+    "official_results_pdf": "성적_공식_2026.05.11.(월)_2026 대한요트협회장배(청소년) 전국요트대회.pdf",
+    "participant_roster_xls": "2026 대한요트협회장배(청소년) 전국요트대회 참가선수 명단.xls"
+  },
+  "fleets": [
+    {
+      "fleet_id": "optimist",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — Optimist",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-optimist",
+      "boat_class": "optimist",
+      "division": "Open",
+      "entries_count": 38,
+      "races_count": 8
+    },
+    {
+      "fleet_id": "ilca-4",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — ILCA 4",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-ilca-4",
+      "boat_class": "ILCA 4",
+      "division": "Open",
+      "entries_count": 12,
+      "races_count": 9
+    },
+    {
+      "fleet_id": "ilca-6",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — ILCA 6",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-ilca-6",
+      "boat_class": "ILCA 6",
+      "division": "Open",
+      "entries_count": 12,
+      "races_count": 7
+    },
+    {
+      "fleet_id": "ilca-7",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — ILCA 7",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-ilca-7",
+      "boat_class": "ILCA 7",
+      "division": "High School Boys",
+      "entries_count": 9,
+      "races_count": 8
+    },
+    {
+      "fleet_id": "420",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — 420",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-420",
+      "boat_class": "420",
+      "division": "Open",
+      "entries_count": 9,
+      "races_count": 8
+    },
+    {
+      "fleet_id": "iqfoil-hs-boys",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — iQFoil High School Boys",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-iqfoil-hs-boys",
+      "boat_class": "iQFoil",
+      "division": "High School Boys",
+      "entries_count": 9,
+      "races_count": 9
+    },
+    {
+      "fleet_id": "iqfoil-hs-girls",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — iQFoil High School Girls",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-iqfoil-hs-girls",
+      "boat_class": "iQFoil",
+      "division": "High School Girls",
+      "entries_count": 2,
+      "races_count": 8
+    },
+    {
+      "fleet_id": "iqfoil-ms",
+      "name": "2026 KSAF President's Cup National Youth Sailing Championships — iQFoil Middle School",
+      "slug": "ksaf-presidents-cup-youth-nationals-2026-iqfoil-ms",
+      "boat_class": "iQFoil",
+      "division": "Middle School",
+      "entries_count": 4,
+      "races_count": 8
+    }
+  ],
+  "sailors_summary": {
+    "total_unique_sailors": 104,
+    "matched_existing_profiles": 35,
+    "new_profiles": 69
+  },
+  "verification_summary": {
+    "total_results": 95,
+    "total_participants": 104,
+    "total_race_results": 769,
+    "arithmetic_verification": "100% passed (sum of races == total, total - discard == net)"
+  }
+}
