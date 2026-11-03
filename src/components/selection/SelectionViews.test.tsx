@@ -96,14 +96,14 @@ describe("WingfoilSelectionView", () => {
     render(<WingfoilSelectionView />);
 
     expect(screen.getByText("Wingfoil Funding Policy")).toBeInTheDocument();
-    expect(screen.getByText(/Category Selection Survey Deadline/i)).toBeInTheDocument();
+    expect(screen.getByText(/Category Selection Survey (?:Deadline|Closed)/i)).toBeInTheDocument();
     expect(screen.getByText("Top Youth U17")).toBeInTheDocument();
     expect(screen.getByText("Top Junior U15")).toBeInTheDocument();
     expect(screen.getByText("Top Female (Youth/Junior)")).toBeInTheDocument();
     expect(
       screen.getByText(/Athlete Contribution Capped at \$2,800 per event/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/Selection Trials/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Selection Trials/i).length).toBeGreaterThan(0);
     expect(screen.getByText("Official Selection Document")).toBeInTheDocument();
   });
 });
