@@ -23,7 +23,7 @@ export default async function Image({
   try {
     const resolved = await resolveFleetResultSheet(regatta_slug, fleet);
     if (!resolved) return renderResultShareImage(emptySheet);
-    return renderResultShareImage(resolved.sheet);
+    return renderResultShareImage(resolved.sheet, { cachePublicResult: true });
   } catch {
     return renderResultShareImage(emptySheet);
   }

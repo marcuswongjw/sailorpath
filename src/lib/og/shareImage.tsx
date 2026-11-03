@@ -101,7 +101,8 @@ export async function renderProfileShareImage(share: SailorShareModel) {
 }
 
 export async function renderResultShareImage(
-  sheet: Pick<ResultSheetShare, "regattaName" | "classLabel" | "datesText" | "top3">
+  sheet: Pick<ResultSheetShare, "regattaName" | "classLabel" | "datesText" | "top3">,
+  { cachePublicResult = false } = {},
 ) {
   const font = await fontOptions();
   const regatta = ogText(sheet.regattaName, 70) || "SailorPath results";
@@ -145,6 +146,12 @@ export async function renderResultShareImage(
         )}
       </div>
     ),
-    { ...SHARE_IMAGE_SIZE, fonts: font.fonts }
+    {
+      ...SHARE_IMAGE_SIZE,
+      fonts: font.fonts,
+      headers: cachePublicResult
+        ? { "Vercel-CDN-Cache-Control": "public, s-maxage=3600" }
+        : { "Cache-Control": "no-store" },
+    }
   );
 }

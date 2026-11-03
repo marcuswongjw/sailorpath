@@ -23,7 +23,7 @@ export default async function Image({
   try {
     const loaded = await resolveClassScorecard(regatta_slug, "optimist");
     if (loaded.status !== "ready") return renderResultShareImage(emptySheet);
-    return renderResultShareImage(loaded.sheet);
+    return renderResultShareImage(loaded.sheet, { cachePublicResult: true });
   } catch {
     return renderResultShareImage(emptySheet);
   }
