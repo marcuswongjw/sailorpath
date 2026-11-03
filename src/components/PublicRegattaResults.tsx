@@ -300,6 +300,22 @@ export function PublicRegattaResults({
                         {result.entrySailNumber ? ` · Sail ${result.entrySailNumber}` : ""}
                       </p>
                     )}
+                    {result.participants && result.participants.length > 1 && (
+                      <div className="mt-1.5 flex flex-wrap gap-1.5 items-center">
+                        {result.participants.map((member) => (
+                          member.handle ? (
+                            <Link
+                              key={member.id || member.handle}
+                              href={`/sailors/${member.handle}`}
+                              className="inline-flex items-center gap-1 rounded-md bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[11px] font-semibold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)] transition-colors border border-[var(--sp-cool-veil)]"
+                            >
+                              <span className="text-[10px] uppercase font-bold text-[var(--sp-charcoal)] opacity-75">{member.role}:</span>
+                              <span className="hover:underline">{member.sailorName || member.sourceName}</span>
+                            </Link>
+                          ) : null
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <p className="mt-1 text-[11px] text-[var(--sp-charcoal)]">
@@ -441,6 +457,22 @@ export function PublicRegattaResults({
                       Crew · {crew}
                       {result.entrySailNumber ? ` · Sail ${result.entrySailNumber}` : ""}
                     </p>
+                  )}
+                  {result.participants && result.participants.length > 1 && (
+                    <div className="mt-1 flex flex-wrap gap-1 items-center">
+                      {result.participants.map((member) => (
+                        member.handle ? (
+                          <Link
+                            key={member.id || member.handle}
+                            href={`/sailors/${member.handle}`}
+                            className="inline-flex items-center gap-1 rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)] transition-colors border border-[var(--sp-cool-veil)]"
+                          >
+                            <span className="text-[9px] uppercase font-bold text-[var(--sp-charcoal)] opacity-75">{member.role}:</span>
+                            <span className="hover:underline">{member.sailorName || member.sourceName}</span>
+                          </Link>
+                        ) : null
+                      ))}
+                    </div>
                   )}
                 </td>
                 <td className="hidden sm:table-cell px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">

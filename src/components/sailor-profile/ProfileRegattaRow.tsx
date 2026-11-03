@@ -275,10 +275,33 @@ export function ProfileRegattaRow({
               .join(" · ")}
           </p>
           {crewLabel && (
-            <p className="mt-1 text-[11px] font-semibold text-harbour">
-              Crew entry · {crewLabel}
-              {res.entrySailNumber ? ` · Sail ${res.entrySailNumber}` : ""}
-            </p>
+            <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] font-semibold text-harbour">
+              <span>Crew entry ·</span>
+              {crewMembers.map((member, i) => {
+                const name = member.sailorName || member.sourceName;
+                const roleSuffix = member.role !== "unknown" ? ` (${member.role})` : "";
+                const isCurrentSailor = member.sailorId === res.sailorId;
+                return (
+                  <span key={member.id || i} className="inline-flex items-center">
+                    {i > 0 && <span className="mr-1 text-slate-soft">/</span>}
+                    {member.handle && !isCurrentSailor ? (
+                      <Link
+                        href={`/sailors/${member.handle}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="hover:underline font-bold text-harbour-shadow hover:text-harbour transition-colors"
+                      >
+                        {name}{roleSuffix}
+                      </Link>
+                    ) : (
+                      <span className={isCurrentSailor ? "font-bold text-harbour" : ""}>
+                        {name}{roleSuffix}
+                      </span>
+                    )}
+                  </span>
+                );
+              })}
+              {res.entrySailNumber ? <span className="text-slate-soft font-normal">· Sail {res.entrySailNumber}</span> : null}
+            </div>
           )}
           {/* Mobile: complementary score only */}
           {(() => {
