@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { connection } from "next/server";
 import { db } from "@/db";
 import { regattaEvents } from "@/db/schema";
 import { applyRegattaEventCopy } from "@/lib/regattaEventCopy";
@@ -17,6 +18,8 @@ export async function withSavedEventCopy(event: RegattaEventDef): Promise<Regatt
       .limit(1);
     return applyRegattaEventCopy(event, saved);
   } catch {
+    // Keep a temporary copy lookup failure out of the full-route cache.
+    await connection();
     return event;
   }
 }

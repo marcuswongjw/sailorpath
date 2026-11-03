@@ -1,0 +1,132 @@
+[
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-4",
+    "attempt": 1,
+    "status": 200,
+    "seconds": 0.338,
+    "bytes": 815293,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-4",
+    "attempt": 2,
+    "status": 200,
+    "seconds": 0.279,
+    "bytes": 815293,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "attempt": 1,
+    "status": 200,
+    "seconds": 0.16,
+    "bytes": 194888,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026/results/ilca-6",
+    "attempt": 2,
+    "status": 200,
+    "seconds": 0.141,
+    "bytes": 194888,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026",
+    "attempt": 1,
+    "status": 200,
+    "seconds": 0.285,
+    "bytes": 876265,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/regattas/eastern-seaboard-regatta-2026",
+    "attempt": 2,
+    "status": 200,
+    "seconds": 0.289,
+    "bytes": 876265,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/sailors/mikaelawong",
+    "attempt": 1,
+    "status": 200,
+    "seconds": 0.161,
+    "bytes": 124511,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/sailors/mikaelawong",
+    "attempt": 2,
+    "status": 200,
+    "seconds": 0.12,
+    "bytes": 124511,
+    "headers": {
+      "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "x-vercel-cache": "MISS",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/news",
+    "attempt": 1,
+    "status": 200,
+    "seconds": 0.094,
+    "bytes": 51785,
+    "headers": {
+      "cache-control": "public, max-age=0, must-revalidate",
+      "x-vercel-cache": "HIT",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/news",
+    "attempt": 2,
+    "status": 200,
+    "seconds": 0.092,
+    "bytes": 51785,
+    "headers": {
+      "cache-control": "public, max-age=0, must-revalidate",
+      "x-vercel-cache": "HIT",
+      "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+    }
+  },
+  {
+    "path": "/news/profile-sharing.png",
+    "attempt": 1,
+    "status": 404
+  },
+  {
+    "path": "/news/profile-sharing.png",
+    "attempt": 2,
+    "status": 404
+  }
+]

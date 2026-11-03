@@ -333,7 +333,7 @@ function PrizeSailorName({ name, handle, profileHandles }: { name: string; handl
     );
   }
   return (
-    <Link
+    <Link prefetch={false}
       href={`/sailors/${handle}`}
       className="font-black text-harbour hover:text-harbour-deep hover:underline text-[13px] sm:text-sm leading-snug break-words"
     >

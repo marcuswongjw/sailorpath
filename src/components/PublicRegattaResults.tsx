@@ -97,7 +97,7 @@ function ClaimProfileLinks({ result }: { result: PublicRegattaResult }) {
   return (
     <div className="mt-1 flex flex-col gap-0.5">
       {links.map((link) => (
-        <Link
+        <Link prefetch={false}
           key={link.handle}
           href={claimProfileHref(link.handle)}
           className="text-[11px] font-semibold leading-snug text-[var(--sp-harbour-teal)] hover:underline"
@@ -304,7 +304,7 @@ export function PublicRegattaResults({
                       <div className="mt-1.5 flex flex-wrap gap-1.5 items-center">
                         {result.participants.map((member) => (
                           member.handle ? (
-                            <Link
+                            <Link prefetch={false}
                               key={member.id || member.handle}
                               href={`/sailors/${member.handle}`}
                               className="inline-flex items-center gap-1 rounded-md bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[11px] font-semibold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)] transition-colors border border-[var(--sp-cool-veil)]"
@@ -462,7 +462,7 @@ export function PublicRegattaResults({
                     <div className="mt-1 flex flex-wrap gap-1 items-center">
                       {result.participants.map((member) => (
                         member.handle ? (
-                          <Link
+                          <Link prefetch={false}
                             key={member.id || member.handle}
                             href={`/sailors/${member.handle}`}
                             className="inline-flex items-center gap-1 rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)] transition-colors border border-[var(--sp-cool-veil)]"

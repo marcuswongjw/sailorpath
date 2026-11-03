@@ -141,7 +141,7 @@ export function ClassRegattaListTable({ regattas }: ClassRegattaListTableProps) 
                     </td>
                     <td className="py-3.5 px-4">
                       <div className="space-y-0.5">
-                        <Link
+                        <Link prefetch={false}
                           href={row.canonicalHref}
                           className="font-black text-sm text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-racing-orange)] transition-colors inline-flex items-center gap-1.5"
                           onClick={(e) => e.stopPropagation()}
@@ -191,7 +191,7 @@ export function ClassRegattaListTable({ regattas }: ClassRegattaListTableProps) 
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-right">
-                      <Link
+                      <Link prefetch={false}
                         href={row.canonicalHref}
                         className="text-[var(--sp-slate-soft)] group-hover:text-[var(--sp-harbour-teal)] transition-colors inline-block"
                         onClick={(e) => e.stopPropagation()}

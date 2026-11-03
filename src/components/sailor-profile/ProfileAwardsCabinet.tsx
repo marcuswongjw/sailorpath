@@ -254,7 +254,7 @@ export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
                 <div className="flex items-center gap-1.5 min-w-0">
                   <Calendar className="h-3 w-3 text-slate-soft shrink-0" aria-hidden />
                   {regattaHref ? (
-                    <Link
+                    <Link prefetch={false}
                       href={regattaHref}
                       className="font-bold text-charcoal hover:text-harbour hover:underline truncate"
                       title={award.regattaName}

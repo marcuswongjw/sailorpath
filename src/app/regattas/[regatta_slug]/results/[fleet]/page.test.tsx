@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   savedHub: vi.fn(),
   notFound: vi.fn(() => { throw new Error("NOT_FOUND"); }),
 }));
+vi.mock("next/server", () => ({ connection: vi.fn(async () => {}) }));
 vi.mock("@/db", () => ({
   db: { select: mocks.select },
   getDatabaseUrlMeta: () => false,
