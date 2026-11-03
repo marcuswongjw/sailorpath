@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { formatNewsDate, listPublishedNews } from "@/lib/news";
 
@@ -29,35 +30,49 @@ export default async function NewsPage() {
           {updates.map((update) => (
             <article
               key={update.slug}
-              className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-xs sm:p-6"
+              className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-xs"
             >
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">
-                <time dateTime={update.publishedAt}>{formatNewsDate(update.publishedAt)}</time>
-                <span aria-hidden="true">·</span>
-                <span className="capitalize">{update.kind.replace(/_/g, " ")}</span>
-                {update.relatedRegion ? (
-                  <span className="rounded-full bg-aqua-mist px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
-                    {update.relatedRegion}
-                  </span>
-                ) : null}
-                {update.relatedClass ? (
-                  <span className="rounded-full border border-cool-veil bg-sailcloth px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
-                    {update.relatedClass}
-                  </span>
-                ) : null}
-              </div>
-              <h2 className="mt-2 text-xl font-bold text-harbour-shadow">
-                <Link href={`/news/${update.slug}`} className="hover:underline">
-                  {update.title}
+              {update.imageUrl ? (
+                <Link href={`/news/${update.slug}`} className="block border-b border-cool-veil bg-sailcloth">
+                  <Image
+                    src={update.imageUrl}
+                    alt={update.imageAlt || update.title}
+                    width={1376}
+                    height={768}
+                    unoptimized
+                    className="aspect-video w-full object-cover"
+                  />
                 </Link>
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-charcoal">{update.summary}</p>
-              <Link
-                href={`/news/${update.slug}`}
-                className="mt-4 inline-flex text-sm font-bold text-harbour hover:underline"
-              >
-                Read update →
-              </Link>
+              ) : null}
+              <div className="p-5 sm:p-6">
+                <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">
+                  <time dateTime={update.publishedAt}>{formatNewsDate(update.publishedAt)}</time>
+                  <span aria-hidden="true">·</span>
+                  <span className="capitalize">{update.kind.replace(/_/g, " ")}</span>
+                  {update.relatedRegion ? (
+                    <span className="rounded-full bg-aqua-mist px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
+                      {update.relatedRegion}
+                    </span>
+                  ) : null}
+                  {update.relatedClass ? (
+                    <span className="rounded-full border border-cool-veil bg-sailcloth px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
+                      {update.relatedClass}
+                    </span>
+                  ) : null}
+                </div>
+                <h2 className="mt-2 text-xl font-bold text-harbour-shadow">
+                  <Link href={`/news/${update.slug}`} className="hover:underline">
+                    {update.title}
+                  </Link>
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-charcoal">{update.summary}</p>
+                <Link
+                  href={`/news/${update.slug}`}
+                  className="mt-4 inline-flex text-sm font-bold text-harbour hover:underline"
+                >
+                  Read update →
+                </Link>
+              </div>
             </article>
           ))}
         </section>

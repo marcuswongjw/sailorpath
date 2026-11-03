@@ -508,7 +508,11 @@ export function savedEventHubForSlug(
   const sample = [...chosen.values()][0];
   const name =
     sample.eventName?.trim() ||
-    sample.name.replace(/\(.*?\)/g, " ").replace(/\s+/g, " ").trim();
+    sample.name
+      .replace(/\(.*?\)/g, " ")
+      .replace(/\s+(?:—|–)\s+[^—–]+$/, "")
+      .replace(/\s+/g, " ")
+      .trim();
   const event: RegattaEventDef = {
     slug: eventSlug,
     name,

@@ -26,7 +26,48 @@ export type PublishedNewsArticle = {
   sourceUrl: string | null;
   sourceLabel: string | null;
   tags: string[];
+  imageUrl?: string | null;
+  imageAlt?: string | null;
+  imageCaption?: string | null;
 };
+
+const ARTICLE_MEDIA_BY_SLUG: Record<
+  string,
+  { imageUrl: string; imageAlt: string; imageCaption: string }
+> = {
+  "18th-eastern-seaboard-regatta-2026-results-published": {
+    imageUrl: "/news/eastern-seaboard-pattaya.jpg",
+    imageAlt:
+      "Wide-angle view of Optimist dinghies rounding an orange race mark off a tropical headland in the Gulf of Thailand.",
+    imageCaption:
+      "Four youth and open dinghy fleets (Optimist Gold, Optimist Silver, ILCA 4, and ILCA 6) contested 8 races each off Pattaya at the 18th Eastern Seaboard Regatta.",
+  },
+  "australian-2026-ilca-optimist-and-zhik-youth-sail-results": {
+    imageUrl: "/news/australia-youth-championships.jpg",
+    imageAlt:
+      "Wide-angle view of youth dinghy fleets racing across the River Derwent in Hobart, Tasmania, with Mount Wellington in the background.",
+    imageCaption:
+      "Championship racing on the River Derwent in Hobart alongside Australian state Optimist and Zhik Youth Sail series scorecards.",
+  },
+  "2026-asian-games-and-youth-worlds-coverage": {
+    imageUrl: "/news/asian-games-gamagori.jpg",
+    imageAlt:
+      "Wide-angle view of dinghy and skiff fleets racing across Mikawa Bay off Kaiyoh Yacht Harbor in Gamagori, Japan.",
+    imageCaption:
+      "International championship coverage now spans the 20th Asian Games in Gamagori, the ILCA 4 Youth World Championships, and regional Asian Cup regattas.",
+  },
+};
+
+function withArticleMedia(article: PublishedNewsArticle): PublishedNewsArticle {
+  const media = ARTICLE_MEDIA_BY_SLUG[article.slug];
+  if (!media) return article;
+  return {
+    ...article,
+    imageUrl: article.imageUrl ?? media.imageUrl,
+    imageAlt: article.imageAlt ?? media.imageAlt,
+    imageCaption: article.imageCaption ?? media.imageCaption,
+  };
+}
 
 /**
  * Keeps the release-updates surface useful before the editorial migration has
@@ -285,7 +326,7 @@ function toPublishedArticle(row: PublicNewsRow): PublishedNewsArticle {
     throw new Error(`Published news article ${row.slug} is missing published_at`);
   }
 
-  return {
+  return withArticleMedia({
     slug: row.slug,
     title: row.title,
     summary: row.summary,
@@ -299,7 +340,7 @@ function toPublishedArticle(row: PublicNewsRow): PublishedNewsArticle {
     sourceUrl: row.sourceUrl,
     sourceLabel: row.sourceLabel,
     tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === "string") : [],
-  };
+  });
 }
 
 async function readPublishedNews(): Promise<PublishedNewsArticle[]> {
@@ -313,7 +354,7 @@ async function readPublishedNews(): Promise<PublishedNewsArticle[]> {
   const existingSlugs = new Set(publishedRows.map((row) => row.slug));
   const missingFallbacks = FALLBACK_ARTICLES.filter(
     (article) => !existingSlugs.has(article.slug)
-  );
+  ).map(withArticleMedia);
 
   return [...publishedRows, ...missingFallbacks].sort((a, b) =>
     b.publishedAt.localeCompare(a.publishedAt)
@@ -335,12 +376,13 @@ async function readPublishedNewsArticle(
     .limit(1);
 
   if (row) return toPublishedArticle(row);
-  return FALLBACK_ARTICLES.find((article) => article.slug === slug) ?? null;
+  const fallback = FALLBACK_ARTICLES.find((article) => article.slug === slug);
+  return fallback ? withArticleMedia(fallback) : null;
 }
 
 const getCachedPublishedNews = unstable_cache(
   readPublishedNews,
-  ["published-news-v2"],
+  ["published-news-v3"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -350,7 +392,7 @@ const getCachedPublishedNews = unstable_cache(
 function cachedArticleLookup(slug: string) {
   return unstable_cache(
     () => readPublishedNewsArticle(slug),
-    ["published-news-article-v2", slug],
+    ["published-news-article-v3", slug],
     {
       revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
       tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -364,7 +406,7 @@ export async function listPublishedNews(): Promise<PublishedNewsArticle[]> {
     return await getCachedPublishedNews();
   } catch (error) {
     console.warn("[news] published article query failed; serving release-update fallback", error);
-    return FALLBACK_ARTICLES;
+    return FALLBACK_ARTICLES.map(withArticleMedia);
   }
 }
 
@@ -379,7 +421,8 @@ export async function getPublishedNewsArticle(
     return await cachedArticleLookup(normalized)();
   } catch (error) {
     console.warn("[news] article query failed; serving release-update fallback", error);
-    return FALLBACK_ARTICLES.find((article) => article.slug === normalized) ?? null;
+    const fallback = FALLBACK_ARTICLES.find((article) => article.slug === normalized);
+    return fallback ? withArticleMedia(fallback) : null;
   }
 }
 

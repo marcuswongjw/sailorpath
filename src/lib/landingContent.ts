@@ -77,6 +77,19 @@ export function landingAdditionalFleetCount(
   return Math.max(0, matching - 1);
 }
 
+export function landingRegattaName(row: Pick<RegattaRecord, "name" | "eventName">): string {
+  const raw = String(row.name || row.eventName || "").trim();
+  const stripped = raw
+    .replace(
+      /\s*\((?:[^)]*\b(?:Optimist|ILCA\s*[467]?|Laser|Gold|Silver|Bronze|Emerald|Open|Main|Intermediate|Green|Newborn|Boys|Girls|Men|Women|Youth|Overall|Fleet|Class\s*[AB]|29er|420|iQFOiL|WindFoil|Windfoil|WingFoil|Wingfoil|Windsurfing|Techno(?:\s*293)?|X-?15)\b[^)]*)\)\s*$/i,
+      "",
+    )
+    .replace(/\s+(?:—|–)\s+[^—–]+$/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return stripped || raw;
+}
+
 export function landingResultStatus(row: RegattaRecord) {
   return organiserResultStatus(row);
 }

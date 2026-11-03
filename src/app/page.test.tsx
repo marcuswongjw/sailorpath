@@ -30,6 +30,8 @@ vi.mock("@/lib/news", () => ({
       sourceUrl: "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026",
       sourceLabel: "Open 18th Eastern Seaboard Regatta 2026 scorecards",
       tags: ["thailand", "eastern-seaboard"],
+      imageUrl: "/news/eastern-seaboard-pattaya.jpg",
+      imageAlt: "Wide-angle view of Optimist dinghies rounding an orange race mark.",
     },
   ]),
 }));
@@ -88,10 +90,10 @@ describe("public landing page", () => {
     expect(html).not.toContain("Find a sailor or regatta");
   });
 
-  it("shows the latest completed scorecards and omits future or incomplete events", async () => {
+  it("shows the latest completed scorecards using only the regatta name and omits future or incomplete events", async () => {
     getPublicRegattas.mockResolvedValue([
       regatta({ id: "older", name: "Older Scorecard", slug: "older-scorecard", endDate: "2026-08-01" }),
-      regatta({ id: "newest", name: "Newest Scorecard", slug: "newest-scorecard", endDate: "2026-10-01" }),
+      regatta({ id: "newest", name: "18th Eastern Seaboard Regatta 2026 — ILCA 4", slug: "newest-scorecard", endDate: "2026-10-01", boatClass: "ILCA 4" }),
       regatta({ id: "middle", name: "Middle Scorecard", slug: "middle-scorecard", endDate: "2026-09-01" }),
       regatta({ id: "upcoming", name: "Upcoming Event", slug: "upcoming-event", endDate: "2099-01-01" }),
       regatta({ id: "incomplete", name: "Incomplete Event", slug: "incomplete-event", raceCount: 0 }),
@@ -100,7 +102,8 @@ describe("public landing page", () => {
     const html = renderToStaticMarkup(await HomePage());
 
     expect(html).toContain("Recent regatta results");
-    expect(html).toContain("Newest Scorecard");
+    expect(html).toContain("18th Eastern Seaboard Regatta 2026");
+    expect(html).not.toContain("18th Eastern Seaboard Regatta 2026 — ILCA 4");
     expect(html).toContain("Middle Scorecard");
     expect(html).toContain("Older Scorecard");
     expect(html).not.toContain("Upcoming Event");
@@ -118,7 +121,7 @@ describe("public landing page", () => {
     expect(label?.parentElement?.textContent).toContain("4");
   });
 
-  it("marks parent and coach destinations as private and highlights the public Asian Index", async () => {
+  it("marks parent and coach destinations as private, highlights the public Asian Index, and omits the sailing classes grid", async () => {
     getPublicRegattas.mockResolvedValue([]);
 
     const html = renderToStaticMarkup(await HomePage());
@@ -131,11 +134,12 @@ describe("public landing page", () => {
     expect(html).toContain("Asian &amp; Oceania Optimist Index");
     expect(html).toContain('href="/optimist/asian-index"');
     expect(html).toContain('href="/optimist/asian-index/methodology"');
-    expect(html).toContain('href="/classes/x15"');
-    expect(html).not.toContain('href="/classes/x-15"');
+    expect(html).not.toContain("Explore sailing classes");
+    expect(html).not.toContain("Browse all class hubs");
     expect(html).toContain("classes with results");
     expect(html).toContain("Latest coverage &amp; release notes");
     expect(html).toContain("/news/18th-eastern-seaboard-regatta-2026-results-published");
+    expect(html).toContain("/news/eastern-seaboard-pattaya.jpg");
   });
 
   it("keeps the page usable if recent public results cannot be loaded", async () => {

@@ -4,6 +4,7 @@ import {
   recentLandingResults,
   distinctRecentLandingResults,
   landingAdditionalFleetCount,
+  landingRegattaName,
   upcomingLandingEvents,
   landingResultStatus,
   landingCountry,
@@ -42,5 +43,19 @@ describe("landing event selection", () => {
   it("normalises legacy Singapore country codes", () => {
     expect(landingCountry(row({geography:"SG"}))).toBe("Singapore");
     expect(landingCountry(row({geography:"SGP"}))).toBe("Singapore");
+  });
+  it("strips class and fleet suffixes from recent regatta result titles", () => {
+    expect(landingRegattaName({ name: "18th Eastern Seaboard Regatta 2026 — ILCA 4" })).toBe(
+      "18th Eastern Seaboard Regatta 2026",
+    );
+    expect(landingRegattaName({ name: "2026 ACT Optimist Championship — Intermediate Fleet" })).toBe(
+      "2026 ACT Optimist Championship",
+    );
+    expect(landingRegattaName({ name: "HKODA Open and National Championships 2026 — Optimist Main" })).toBe(
+      "HKODA Open and National Championships 2026",
+    );
+    expect(landingRegattaName({ name: "20th Asian Games 2026 (ILCA 6)" })).toBe(
+      "20th Asian Games 2026",
+    );
   });
 });

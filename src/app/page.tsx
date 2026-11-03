@@ -1,7 +1,6 @@
-import { sailingClassDisplayLabel } from "@/lib/classPresentation";
-import { PUBLIC_CLASS_HUBS as classHubs } from "@/lib/publicClassHubs";
 import { publishedResultClasses } from "@/lib/classRegistry";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { organizationWebsiteJsonLd } from "@/lib/publicSeo";
@@ -15,6 +14,7 @@ import {
   recentLandingResults,
   distinctRecentLandingResults,
   landingAdditionalFleetCount,
+  landingRegattaName,
   upcomingLandingEvents,
   landingResultStatus,
   landingCountry,
@@ -22,7 +22,6 @@ import {
 } from "@/lib/landingContent";
 import { formatNewsDate, listPublishedNews, type PublishedNewsArticle } from "@/lib/news";
 import { SAMPLE_SAILOR } from "@/lib/sampleProfile";
-import { ClassSilhouetteIcon } from "@/components/ui/ClassSilhouetteIcon";
 import type { RegattaRecord } from "@/lib/ranking";
 import {
   ArrowRight,
@@ -208,7 +207,7 @@ export default async function HomePage() {
                     href={resultHref(row, publicRegattas)}
                     className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
                   >
-                    <p className="text-xs font-bold uppercase tracking-wide text-harbour">{sailingClassDisplayLabel(row.boatClass) || row.division || "Sailing"} · {formatLandingDate(row.endDate || row.date)}</p>
+                    <p className="text-xs font-bold uppercase tracking-wide text-harbour">{formatLandingDate(row.endDate || row.date)}</p>
                     <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
                       <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-harbour">{landingResultStatus(row)}</span>
                       {counts && (counts[row.id] || 0) < row.totalFleetSize && <span className="rounded-full bg-orange-50 px-2.5 py-1 text-orange-900">Partial import</span>}
@@ -219,7 +218,7 @@ export default async function HomePage() {
                         </span>
                       )}
                     </div>
-                    <h3 className="mt-2 text-base font-semibold text-charcoal group-hover:text-harbour">{row.name}</h3>
+                    <h3 className="mt-2 text-base font-semibold text-charcoal group-hover:text-harbour">{landingRegattaName(row)}</h3>
                     <p className="mt-2 text-sm text-slate-soft">{row.venue || "Venue details"}</p>
                     <p className="mt-3 text-sm font-medium text-charcoal">{counts && counts[row.id] < row.totalFleetSize ? `${counts[row.id]} of ${row.totalFleetSize} entries imported` : `${row.totalFleetSize} entries`} · {row.raceCount} races</p>
                     <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">
@@ -295,78 +294,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-
-      {/* ── Singapore class records ──────────────────────────────────────── */}
-      <section className="bg-warm-white py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <p className="text-xs font-medium uppercase tracking-[0.04em] text-harbour">
-              Explore sailing classes
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold leading-8 text-charcoal">
-              Standings &amp; published results
-            </h2>
-            <p className="mt-3 text-base leading-6 text-slate-soft">
-              Browse Singapore class standings and published records, plus the international X-15 class hub.
-            </p>
-            <Link
-              href="/classes"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline"
-            >
-              Browse all class hubs <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {classHubs.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-warm-white border border-cool-veil text-harbour">
-                    <ClassSilhouetteIcon boatClass={item.name} className="h-6 w-6 text-harbour" />
-                  </span>
-                  <span className="rounded-full bg-aqua-mist px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
-                    Singapore series
-                  </span>
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-charcoal">
-                  {item.name}
-                </h3>
-                <p className="mt-1 text-sm font-medium text-harbour">{item.tagline}</p>
-                <p className="mt-2 text-sm leading-5 text-slate-soft">{item.note}</p>
-                <ArrowRight
-                  className="mt-4 h-4 w-4 text-harbour transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </Link>
-            ))}
-            <Link
-              href="/classes/x15"
-              className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-warm-white border border-cool-veil text-harbour">
-                  <ClassSilhouetteIcon boatClass="X-15" className="h-6 w-6 text-harbour" />
-                </span>
-                <span className="rounded-full border border-cool-veil bg-warm-white px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
-                  International hub
-                </span>
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-charcoal">X-15</h3>
-              <p className="mt-1 text-sm font-medium text-harbour">International class hub</p>
-              <p className="mt-2 text-sm leading-5 text-slate-soft">
-                Follow the event calendar and source-linked class context.
-              </p>
-              <ArrowRight
-                className="mt-4 h-4 w-4 text-harbour transition-transform group-hover:translate-x-1"
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       <section className="bg-warm-white px-4 py-12 sm:px-6 sm:py-16" aria-labelledby="claim-profile-heading">
         <div className="mx-auto grid max-w-6xl items-center gap-8 md:grid-cols-2 md:gap-12">
@@ -504,28 +431,42 @@ export default async function HomePage() {
               {latestUpdates.map((update) => (
                 <article
                   key={update.slug}
-                  className="flex flex-col rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line"
+                  className="flex flex-col overflow-hidden rounded-xl border border-cool-veil bg-sailcloth transition-colors hover:border-reef-line"
                 >
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">
-                    <Newspaper className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                    <time dateTime={update.publishedAt}>{formatNewsDate(update.publishedAt)}</time>
-                    <span aria-hidden="true">·</span>
-                    <span className="capitalize">{update.kind.replace(/_/g, " ")}</span>
-                  </div>
-                  <h3 className="mt-3 text-base font-semibold text-charcoal">
-                    <Link href={`/news/${update.slug}`} className="hover:text-harbour hover:underline">
-                      {update.title}
+                  {update.imageUrl ? (
+                    <Link href={`/news/${update.slug}`} className="block border-b border-cool-veil bg-warm-white">
+                      <Image
+                        src={update.imageUrl}
+                        alt={update.imageAlt || update.title}
+                        width={1376}
+                        height={768}
+                        unoptimized
+                        className="aspect-video w-full object-cover"
+                      />
                     </Link>
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-slate-soft line-clamp-3">
-                    {update.summary}
-                  </p>
-                  <Link
-                    href={`/news/${update.slug}`}
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-harbour hover:underline"
-                  >
-                    Read update <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  ) : null}
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">
+                      <Newspaper className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      <time dateTime={update.publishedAt}>{formatNewsDate(update.publishedAt)}</time>
+                      <span aria-hidden="true">·</span>
+                      <span className="capitalize">{update.kind.replace(/_/g, " ")}</span>
+                    </div>
+                    <h3 className="mt-3 text-base font-semibold text-charcoal">
+                      <Link href={`/news/${update.slug}`} className="hover:text-harbour hover:underline">
+                        {update.title}
+                      </Link>
+                    </h3>
+                    <p className="mt-2 flex-1 text-sm leading-6 text-slate-soft line-clamp-3">
+                      {update.summary}
+                    </p>
+                    <Link
+                      href={`/news/${update.slug}`}
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-harbour hover:underline"
+                    >
+                      Read update <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
                 </article>
               ))}
             </div>
