@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { compareClassLabels } from "@/lib/classPresentation";
 import Link from "next/link";
 import {
   prizeNameKey,
@@ -225,7 +226,8 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
         (cat) => cat.winners.length > 0 && !isSchoolCategory(cat.categoryName)
       ),
     }))
-    .filter((fleet) => fleet.categories.length > 0);
+    .filter((fleet) => fleet.categories.length > 0)
+    .sort((a, b) => compareClassLabels(`${a.boatClass} ${a.fleetName}`, `${b.boatClass} ${b.fleetName}`));
 
   const [selectedFleetIdx, setSelectedFleetIdx] = useState(0);
   const currentFleet: RegattaPrizeFleet | undefined =

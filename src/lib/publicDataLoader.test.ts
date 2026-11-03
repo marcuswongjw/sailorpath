@@ -127,7 +127,7 @@ describe("publicDataLoader shared layer", () => {
     expect(rows[0]).toMatchObject({
       name: "Sample iQFoil Open",
       fleetKey: "iqfoil",
-      source: { kind: "normalized_result", label: "Canonical class sheet" },
+      source: { kind: "normalized_result", label: "Published scorecard" },
     });
   });
 });

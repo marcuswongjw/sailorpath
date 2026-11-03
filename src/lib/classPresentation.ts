@@ -1,5 +1,10 @@
 import { canonicalBoatClass, matchesSailingClass, normalizeSailingClassToken, resolveSailingClass } from "./classRegistry";
 
+/** One visible alphabetical order for classes, rigs and fleet suffixes. */
+export function compareClassLabels(a: string, b: string): number {
+  return sailingClassDisplayLabel(a).localeCompare(sailingClassDisplayLabel(b), "en", { numeric: true, sensitivity: "base" });
+}
+
 /** Public class labels follow the registry; an unspecified ILCA rig stays unspecified. */
 export function classFilterLabel(value: string | null | undefined): string {
   const raw = String(value || "").trim();
@@ -40,11 +45,11 @@ export function classFilterOptions(values: readonly (string | null | undefined)[
     const label = classFilterLabel(value);
     if (label && label !== "all" && !unique.has(label.toLowerCase())) unique.set(label.toLowerCase(), label);
   }
-  return [...unique.values()].sort((a, b) => a.localeCompare(b));
+  return [...unique.values()].sort(compareClassLabels);
 }
 
 export function classDisplayLabels(values: readonly (string | null | undefined)[]): string[] {
-  return [...new Set(values.map(sailingClassDisplayLabel).filter(Boolean))];
+  return [...new Set(values.map(sailingClassDisplayLabel).filter(Boolean))].sort(compareClassLabels);
 }
 
 /** Accept existing URL keys, canonical labels, and historical spellings. */

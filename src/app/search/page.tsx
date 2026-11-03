@@ -72,7 +72,7 @@ export default async function SearchPage({
           {query.q ? `Results for “${query.q}”` : "Search sailors and regattas"}
         </h1>
         <p className="mt-3 text-base leading-7 text-slate-soft">
-          Public sailor records and published events. Filters run on the server, so the list is in the page itself.
+          Find public sailor records and published events. Search by name, sail number, club or nationality, and use the filters to narrow your results.
         </p>
       </header>
       <SearchFilters q={query.q} fleet={query.fleet} club={query.club} nationality={query.nationality} />

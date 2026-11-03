@@ -30,7 +30,7 @@ const SECTIONS = [
   ["examples", "7. Worked examples"],
   ["register", "8. Register, nominations and baseline"],
   ["governance", "9. Verification, corrections, governance"],
-  ["launch", "10. Before launch"],
+  ["launch", "10. Publication checklist"],
   ["revisions", "Revision log"],
 ] as const;
 
@@ -654,9 +654,10 @@ export default function AsianOptimistIndexMethodologyPage() {
           </p>
         </Section>
 
-        <Section id="launch" title="10. Items to complete before launch">
+        <Section id="launch" title="10. Publication and ongoing review">
           <p>
-            The following are operational launch requirements, rather than unresolved scoring rules:
+            These operational requirements apply to publication and ongoing maintenance
+            of the Index. They do not change the scoring rules above:
           </p>
           <Bullets
             items={[

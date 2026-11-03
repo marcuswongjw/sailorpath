@@ -1,4 +1,5 @@
 import { hasOverallPrizeWinners } from "@/lib/regattaPrizes";
+import { compareClassLabels } from "@/lib/classPresentation";
 import { searchSailorsEnhanced } from "@/lib/search";
 import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
 import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
@@ -350,6 +351,7 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
       : defaultEventFleetKey(event, slices);
   const active = slices.find((s) => s.def.key === activeKey) ?? slices[0];
   if (!active) return null;
+  const orderedSlices = [...slices].sort((a, b) => compareClassLabels(a.def.label, b.def.label));
   const prizeView = prizeViewForSlice(event, active);
   let staticProfileHandles: Record<string, string> = {};
   if (!active.regatta) {
@@ -402,7 +404,7 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
         className="flex flex-wrap gap-0 border-b border-[var(--sp-cool-veil)]"
         role="tablist"
       >
-        {slices.map((slice) => {
+        {orderedSlices.map((slice) => {
           const isActive = slice.def.key === active.def.key;
           return (
             <Link

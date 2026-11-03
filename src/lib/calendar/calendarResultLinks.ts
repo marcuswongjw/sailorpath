@@ -1,6 +1,7 @@
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import type { RegattaRecord } from "@/lib/ranking";
 import { sailingClassKeyOf } from "@/lib/classRegistry";
+import { compareClassLabels } from "@/lib/classPresentation";
 
 /**
  * Calendar entries and published results do not share slugs.
@@ -158,14 +159,7 @@ export function matchCalendarResults(
     best.set(key, current ? prefer(current, row) : row);
   }
 
-  const rank = (row: RegattaRecord) => {
-    const family = publicResultClass(row.boatClass) === "ilca4" ? 1 : 0;
-    const division = divisionKey(row);
-    const fleet = division === "gold" ? 0 : division === "silver" ? 1 : 2;
-    return family * 10 + fleet;
-  };
-
   return Array.from(best.values()).sort(
-    (a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name)
+    (a, b) => compareClassLabels(`${a.boatClass} ${a.division || ""}`, `${b.boatClass} ${b.division || ""}`) || a.name.localeCompare(b.name)
   );
 }

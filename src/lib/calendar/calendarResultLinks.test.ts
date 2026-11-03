@@ -61,9 +61,9 @@ const published: RegattaRecord[] = [
 describe("matchCalendarResults", () => {
   it("opens Temasek on the 2026 Optimist fleets and ILCA 4, not ILCA 6", () => {
     expect(matchCalendarResults("temasek-regatta-2026", published).map((r) => r.slug)).toEqual([
+      "temasek-ilca-jun-26-2026-06-20",
       "202606-temasek-gold-2026-06-20",
       "temasek-silver-jun-26-2026-06-20",
-      "temasek-ilca-jun-26-2026-06-20",
     ]);
   });
 
@@ -73,17 +73,17 @@ describe("matchCalendarResults", () => {
       "safyc-silver-jul-26-2026-07-04",
     ]);
     expect(matchCalendarResults("22nd-safyc-regatta-2026", published).map((r) => r.slug)).toEqual([
+      "safyc-ilca4-feb-26-2026-02-14",
       "safyc-gold-mar-26-2026-03-28",
       "safyc-silver-mar-26-2026-03-28",
-      "safyc-ilca4-feb-26-2026-02-14",
     ]);
   });
 
   it("keeps the fuller Cincapura sheet when the same fleet was imported twice", () => {
     expect(matchCalendarResults("cincapura-regatta-2026", published).map((r) => r.slug)).toEqual([
+      "cincapura-ilca4-jul-26-2026-07-18",
       "cincapura-regatta-2026-gold",
       "cincapura-regatta-2026-silver",
-      "cincapura-ilca4-jul-26-2026-07-18",
     ]);
   });
 

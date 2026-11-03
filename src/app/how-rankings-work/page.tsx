@@ -24,11 +24,10 @@ export default function HowRankingsWorkPage() {
           How rankings work
         </h1>
         <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
-          Technical notes on Singapore Optimist series scoring and ILCA (ILCA 4,
-          ILCA 6, ILCA 7) national rankings used in SailorPath, plus a reference
-          to the Asian &amp; Oceania Optimist Index. For sailors and parents,
-          the public boards show the same results — this page is for those who
-          want the rules in detail.
+          How SailorPath calculates Singapore Optimist and ILCA 4, ILCA 6 and
+          ILCA 7 standings, with links to the separate Asian &amp; Oceania
+          Optimist Index. A published regatta result does not automatically
+          count towards a ranking series.
         </p>
       </div>
 
@@ -71,9 +70,9 @@ export default function HowRankingsWorkPage() {
             half may be flagged for auto-drop.
           </li>
           <li>
-            <strong className="text-[var(--sp-harbour-shadow)]">Nat A/B previews</strong> — admin
-            tools estimate national squad shortlists from Gold standings and age
-            buckets for selection planning.
+            <strong className="text-[var(--sp-harbour-shadow)]">Selection decisions</strong> —
+            check the relevant sailing authority&apos;s published selection policy.
+            SailorPath standings do not confirm a sailor&apos;s selection.
           </li>
         </ul>
         <p className="text-xs pt-2">
@@ -104,9 +103,9 @@ export default function HowRankingsWorkPage() {
             are computed from open regatta performance.
           </li>
           <li>
-            <strong className="text-[var(--sp-harbour-shadow)]">Dual sail numbers</strong> —
-            Optimist and ILCA 4 numbers can live on one profile for under-15
-            dual-class sailors.
+            <strong className="text-[var(--sp-harbour-shadow)]">Sailor records</strong> —
+            one profile can include results and sail numbers from multiple classes.
+            Each result retains its class and fleet.
           </li>
         </ul>
         <div className="flex flex-wrap gap-4 text-xs pt-2">

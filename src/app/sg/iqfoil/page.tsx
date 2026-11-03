@@ -28,9 +28,8 @@ export default async function IQFoilPage() {
             Published results
           </h2>
           <p className="mt-1">
-            iQFOiL uses SailorPath&apos;s canonical event, class-sheet, sailor-result, and
-            race-score model. Published records link directly to their event results and sailor
-            histories.
+            Browse published iQFOiL scorecards, individual race scores and linked
+            sailor histories. Each scorecard keeps its event and fleet context.
           </p>
         </div>
 
