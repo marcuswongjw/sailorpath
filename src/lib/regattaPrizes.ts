@@ -1,5 +1,8 @@
+import { prizeNameKey } from "./prizeNameKey";
 import { INTERNATIONAL_REGATTA_PRIZE_SCHEDULES, getInternationalRegattaPrizeSchedule } from "./internationalRegattaPrizes";
 import { EASTERN_SEABOARD_2026_PRIZES, EASTERN_SEABOARD_2026_PRIZE_SLUGS } from "./easternSeaboard2026Prizes";
+
+export { prizeNameKey };
 
 /**
  * Official Notice of Race (NoR) Prize Categories & Verified Winners
@@ -42,14 +45,6 @@ export type RegattaPrizeFleet = {
   boatClass: string;
   categories: PrizeCategory[];
 };
-
-/** Stable key for matching a prize name to a published result name. */
-export function prizeNameKey(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
-}
 
 export type RegattaPrizeSchedule = {
   /** Use only the NoR categories, without adding unawarded finishing-place badges. */

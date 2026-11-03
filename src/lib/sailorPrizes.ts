@@ -290,29 +290,7 @@ export function getSailorPrizes(
   return sortSailorAwards(awards);
 }
 
-/**
- * Calculates medal counts from a list of sailor awards.
- */
-export function getSailorMedalCounts(awards: SailorPrizeAward[]): SailorMedalCounts {
-  let gold = 0;
-  let silver = 0;
-  let bronze = 0;
-
-  for (const a of awards) {
-    if (a.medal === "gold") gold++;
-    else if (a.medal === "silver") silver++;
-    else if (a.medal === "bronze") bronze++;
-  }
-
-  return {
-    gold,
-    silver,
-    bronze,
-    total: awards.length,
-    podiums: gold + silver + bronze,
-  };
-}
-
+export { getSailorMedalCounts } from "./sailorMedalCounts";
 
 /** Prefer the same event's named/NoR award over a duplicate generic podium. */
 export function mergeSailorPrizes(...groups: SailorPrizeAward[][]): SailorPrizeAward[] {

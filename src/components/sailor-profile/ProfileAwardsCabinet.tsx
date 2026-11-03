@@ -8,8 +8,8 @@ import { Trophy, Compass, Calendar, MapPin } from "lucide-react";
 import {
   type SailorPrizeAward,
   type SailorMedalCounts,
-  getSailorMedalCounts,
 } from "@/lib/sailorPrizes";
+import { getSailorMedalCounts } from "@/lib/sailorMedalCounts";
 import { PROFILE_CARD_CLASS as cardClass } from "./helpers";
 import {
   EMPTY_AWARD_FILTERS, awardDateLabel, awardLocation, awardYear, browseSailorAwards,

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { compareClassLabels } from "@/lib/classPresentation";
 import Link from "next/link";
+import { prizeNameKey } from "@/lib/prizeNameKey";
 import {
-  prizeNameKey,
   type PrizeCategory,
   type RegattaPrizeFleet,
   type RegattaPrizeSchedule,

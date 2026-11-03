@@ -16,6 +16,8 @@ The connected billing tool returned a bounded team-wide daily billing summary. I
 - Dense fleet, crew, podium, prize, profile-result and award links do not automatically prefetch destinations. Actual client navigation and the main site navigation remain available.
 - Documentation/import-evidence-only previews can skip the build using the last successful preview SHA. Runtime, dependency, build-script, unknown-file, missing-history and multi-commit changes build safely. Production and explicit redeployments always build.
 
+- Sailor profiles receive only the awards matched on the server. The full historical prize catalogue stays out of the client bundle. The same award calculation powers the sample profile.
+
 ## Validation
 
 51 focused tests across 14 files passed, including real temporary-Git fixtures for build decisions, outage handling, public links, scorecard lookup, privacy filtering, share images and invalidation. TypeScript and targeted lint checks passed. Production cache verification is recorded after release.

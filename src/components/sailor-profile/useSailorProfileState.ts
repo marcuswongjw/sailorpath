@@ -46,7 +46,7 @@ import type {
   SailorProfileViewProps,
 } from "./types";
 import type { ProfileSectionTab } from "./ProfileClassNavigation";
-import { getSailorPrizes, getSailorMedalCounts, mergeSailorPrizes } from "@/lib/sailorPrizes";
+import { getSailorMedalCounts } from "@/lib/sailorMedalCounts";
 import type { ProfileOwnerForm } from "@/components/sailor-profile/ProfileOwnerEditor";
 import { errorMessage } from "@/lib/errors";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
@@ -330,6 +330,10 @@ export function useSailorProfileState({
       if (data.handleChanged && data.sailor?.handle) {
         router.replace(`/sailors/${encodeURIComponent(data.sailor.handle)}`);
         return;
+      }
+      const awardFields = ["club", "school", "sailNumber", "sailNumberIlca4"] as const;
+      if (awardFields.some((field) => data.sailor[field] !== displaySailor[field])) {
+        router.refresh();
       }
       setTimeout(() => setSaveMsg(null), 2500);
     } catch (e: unknown) {
@@ -742,8 +746,8 @@ export function useSailorProfileState({
 
   // Cross-class official Notice of Race (NoR) prizes and verified awards
   const awards = useMemo(
-    () => mergeSailorPrizes(getSailorPrizes(displaySailor, results), initialPrizeAwards || []),
-    [displaySailor, results, initialPrizeAwards]
+    () => initialPrizeAwards || [],
+    [initialPrizeAwards]
   );
   const awardCounts = useMemo(() => getSailorMedalCounts(awards), [awards]);
 
