@@ -1,6 +1,7 @@
 import { getCachedPublicRegattas } from "@/lib/queries";
 import { publishedResultClasses } from "@/lib/classRegistry";
 import { PUBLIC_CLASS_HUBS } from "@/lib/publicClassHubs";
+import { ClassSilhouetteIcon } from "@/components/ui/ClassSilhouetteIcon";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -55,7 +56,12 @@ export default async function ClassesIndexPage() {
             const hub = PUBLIC_CLASS_HUBS.find((item) => item.name === name);
             return (
               <article key={name} className="rounded-2xl border border-cool-veil bg-warm-white p-6">
-                <h3 className="text-xl font-bold text-harbour-shadow">{name}</h3>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cool-veil bg-sailcloth text-harbour">
+                    <ClassSilhouetteIcon boatClass={name} className="h-6 w-6 text-harbour" />
+                  </span>
+                  <h3 className="text-xl font-bold text-harbour-shadow">{name}</h3>
+                </div>
                 <Link href={`/results?class=${encodeURIComponent(name)}`} className="mt-3 block text-sm font-semibold text-harbour hover:underline">Browse {name} results</Link>
                 {hub && <Link href={hub.href} className="mt-3 block text-sm font-semibold text-harbour hover:underline">Singapore standings and results</Link>}
               </article>

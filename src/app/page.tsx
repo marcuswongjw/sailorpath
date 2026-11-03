@@ -11,13 +11,24 @@ import { findEventSliceForRegattaSlug } from "@/lib/regattaEvents";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 import { todayYmdSg } from "@/lib/datesSg";
 import { getPublicCalendarData } from "@/lib/calendar/publicCalendar";
-import { recentLandingResults, upcomingLandingEvents, landingResultStatus, landingCountry, formatLandingDate } from "@/lib/landingContent";
+import {
+  recentLandingResults,
+  distinctRecentLandingResults,
+  landingAdditionalFleetCount,
+  upcomingLandingEvents,
+  landingResultStatus,
+  landingCountry,
+  formatLandingDate,
+} from "@/lib/landingContent";
+import { formatNewsDate, listPublishedNews, type PublishedNewsArticle } from "@/lib/news";
 import { SAMPLE_SAILOR } from "@/lib/sampleProfile";
+import { ClassSilhouetteIcon } from "@/components/ui/ClassSilhouetteIcon";
 import type { RegattaRecord } from "@/lib/ranking";
 import {
   ArrowRight,
   ChartNoAxesColumnIncreasing,
   CalendarDays,
+  Newspaper,
   Search,
   Trophy,
   UserRound,
@@ -72,14 +83,18 @@ export default async function HomePage() {
   let counts: Record<string, number> | undefined;
   let upcoming: RegattaRecord[] = [];
   let calendarAvailable = true;
-  const [countResult, calendarResult] = await Promise.allSettled([
+  let latestUpdates: PublishedNewsArticle[] = [];
+  const [countResult, calendarResult, newsResult] = await Promise.allSettled([
     getLandingResultCounts(candidates.map((row) => row.id)),
     getPublicCalendarData(),
+    listPublishedNews(),
   ]);
   if (countResult.status === "fulfilled") counts = countResult.value;
   if (calendarResult.status === "fulfilled") upcoming = upcomingLandingEvents(calendarResult.value.allRegattas, today);
   else calendarAvailable = false;
-  const latestResults = recentLandingResults(publicRegattas, today, counts).slice(0, 3);
+  if (newsResult.status === "fulfilled") latestUpdates = newsResult.value.slice(0, 3);
+  const scoredResults = recentLandingResults(publicRegattas, today, counts);
+  const latestResults = distinctRecentLandingResults(publicRegattas, today, counts, 3);
   const countryCount = new Set(publicRegattas.map(landingCountry).filter(Boolean)).size;
   const stats = [
     { value: publicRegattas.length ? String(publishedResultClasses(publicRegattas).length) : "—", label: "classes with results" },
@@ -94,12 +109,12 @@ export default async function HomePage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="border-b border-cool-veil">
-        <div className="mx-auto max-w-3xl px-4 py-10 text-center sm:px-6 sm:py-14 lg:py-16">
+        <div className="mx-auto max-w-5xl px-4 py-10 text-center sm:px-6 sm:py-14 lg:py-16">
           <div className="mx-auto mb-6 inline-block max-w-full rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-balance text-harbour-shadow shadow-xs">
             Sailing results, class standings &amp; sailor profiles
           </div>
 
-          <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.75rem] font-bold leading-[1.12] text-harbour-shadow tracking-tight">
+          <h1 className="mx-auto max-w-3xl text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.75rem] font-bold leading-[1.12] text-harbour-shadow tracking-tight">
             Sailing results and rankings,{" "}
             <span className="sm:whitespace-nowrap inline-block">
               <span className="text-racing-orange">race by race.</span>
@@ -111,28 +126,62 @@ export default async function HomePage() {
             record in one place. Find your next regatta and follow every finish.
           </p>
 
-          <form action="/sailors" role="search" className="mx-auto mt-7 max-w-xl text-left">
-            <label htmlFor="home-sailor-search" className="mb-2 block text-sm font-semibold text-harbour-shadow">Find a sailor profile</label>
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <input
-                id="home-sailor-search"
-                type="search"
-                name="q"
-                enterKeyHint="search"
-                aria-label="Search sailors"
-                placeholder="Sailor name, sail number, or club"
-                className="min-h-12 w-full min-w-0 rounded-xl border border-cool-veil bg-warm-white px-4 py-3 text-base text-charcoal shadow-sm placeholder:text-slate-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour"
-              />
-              <button type="submit" className="sp-primary inline-flex min-h-12 shrink-0 items-center justify-center gap-2 px-5 text-sm font-semibold">
-                <Search className="h-4 w-4" aria-hidden />Find a sailor
-              </button>
-            </div>
-            <p className="mt-2 text-xs leading-5 text-slate-soft">Browse results and public profiles for free. No account needed.</p>
-          </form>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-harbour">
-            <Link href="/results" className="inline-flex min-h-11 items-center gap-2 hover:underline"><Trophy className="h-4 w-4" aria-hidden />Browse published results<ArrowRight className="h-4 w-4" aria-hidden /></Link>
-            <Link href="/rankings" className="inline-flex min-h-11 items-center gap-2 hover:underline">View rankings<ArrowRight className="h-4 w-4" aria-hidden /></Link>
+          <search className="mx-auto mt-7 max-w-xl text-left">
+            <form action="/sailors" method="GET">
+              <label htmlFor="home-sailor-search" className="mb-2 block text-sm font-semibold text-harbour-shadow">Find a sailor profile</label>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <input
+                  id="home-sailor-search"
+                  type="search"
+                  name="q"
+                  enterKeyHint="search"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  aria-label="Search sailors"
+                  aria-describedby="home-sailor-search-hint"
+                  placeholder="Sailor name, sail number, or club"
+                  className="min-h-12 w-full min-w-0 rounded-xl border border-cool-veil bg-warm-white px-4 py-3 text-base text-charcoal shadow-sm placeholder:text-slate-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour"
+                />
+                <button type="submit" className="sp-primary inline-flex min-h-12 shrink-0 items-center justify-center gap-2 px-5 text-sm font-semibold">
+                  <Search className="h-4 w-4" aria-hidden="true" />Find a sailor
+                </button>
+              </div>
+              <p id="home-sailor-search-hint" className="mt-2 text-xs leading-5 text-slate-soft">Browse results and public profiles for free. No account needed.</p>
+            </form>
+          </search>
+
+          <div className="mx-auto mt-4 flex max-w-xl flex-wrap items-center justify-center gap-2 text-xs">
+            <span className="font-semibold text-slate-soft">Quick jump:</span>
+            <Link href="/sg/optimist/gold" className="rounded-full border border-cool-veil bg-warm-white px-3 py-1 font-semibold text-harbour hover:border-reef-line hover:bg-aqua-mist">
+              Optimist Gold
+            </Link>
+            <Link href="/sg/ilca4" className="rounded-full border border-cool-veil bg-warm-white px-3 py-1 font-semibold text-harbour hover:border-reef-line hover:bg-aqua-mist">
+              ILCA 4
+            </Link>
+            <Link href="/optimist/asian-index" className="rounded-full border border-cool-veil bg-warm-white px-3 py-1 font-semibold text-harbour hover:border-reef-line hover:bg-aqua-mist">
+              Asian &amp; Oceania Index
+            </Link>
+            <Link href="/sample" className="rounded-full border border-cool-veil bg-warm-white px-3 py-1 font-semibold text-harbour hover:border-reef-line hover:bg-aqua-mist">
+              Sample profile
+            </Link>
           </div>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-harbour">
+            <Link href="/results" className="inline-flex min-h-11 items-center gap-2 hover:underline"><Trophy className="h-4 w-4" aria-hidden="true" />Browse published results<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+            <Link href="/rankings" className="inline-flex min-h-11 items-center gap-2 hover:underline">View rankings<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+          </div>
+
+          <dl className="mt-10 grid grid-cols-2 gap-3 text-left sm:gap-4 lg:grid-cols-4">
+            {stats.map(({ value, label }) => (
+              <div key={label} className="sp-card px-4 py-4 sm:px-5 sm:py-5">
+                <dt className="text-2xl font-bold tabular-nums text-harbour-shadow sm:text-3xl">
+                  {value}
+                </dt>
+                <dd className="mt-1 text-xs sm:text-sm text-slate-soft leading-snug">{label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -146,31 +195,39 @@ export default async function HomePage() {
               <p className="mt-2 text-sm leading-6 text-slate-soft">Published scorecards from recent events. Source status is shown on each card.</p>
             </div>
             <Link href="/results" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
-              All results <ArrowRight className="h-4 w-4" aria-hidden />
+              All results <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
           {latestResults.length ? (
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {latestResults.map((row) => (
-                <Link
-                  key={row.id}
-                  href={resultHref(row, publicRegattas)}
-                  className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
-                >
-                  <p className="text-xs font-bold uppercase tracking-wide text-harbour">{sailingClassDisplayLabel(row.boatClass) || row.division || "Sailing"} · {formatLandingDate(row.endDate || row.date)}</p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
-                    <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-harbour">{landingResultStatus(row)}</span>
-                    {counts && (counts[row.id] || 0) < row.totalFleetSize && <span className="rounded-full bg-orange-50 px-2.5 py-1 text-orange-900">Partial import</span>}
-                    {landingCountry(row) && <span className="rounded-full border border-cool-veil px-2.5 py-1 text-harbour">{landingCountry(row)}</span>}
-                  </div>
-                  <h3 className="mt-2 text-base font-semibold text-charcoal group-hover:text-harbour">{row.name}</h3>
-                  <p className="mt-2 text-sm text-slate-soft">{row.venue || "Venue details"}</p>
-                  <p className="mt-3 text-sm font-medium text-charcoal">{counts && counts[row.id] < row.totalFleetSize ? `${counts[row.id]} of ${row.totalFleetSize} entries imported` : `${row.totalFleetSize} entries`} · {row.raceCount} races</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">
-                    Open scorecard <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-                  </span>
-                </Link>
-              ))}
+              {latestResults.map((row) => {
+                const extraFleets = landingAdditionalFleetCount(row, scoredResults, publicRegattas);
+                return (
+                  <Link
+                    key={row.id}
+                    href={resultHref(row, publicRegattas)}
+                    className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
+                  >
+                    <p className="text-xs font-bold uppercase tracking-wide text-harbour">{sailingClassDisplayLabel(row.boatClass) || row.division || "Sailing"} · {formatLandingDate(row.endDate || row.date)}</p>
+                    <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
+                      <span className="rounded-full bg-aqua-mist px-2.5 py-1 text-harbour">{landingResultStatus(row)}</span>
+                      {counts && (counts[row.id] || 0) < row.totalFleetSize && <span className="rounded-full bg-orange-50 px-2.5 py-1 text-orange-900">Partial import</span>}
+                      {landingCountry(row) && <span className="rounded-full border border-cool-veil px-2.5 py-1 text-harbour">{landingCountry(row)}</span>}
+                      {extraFleets > 0 && (
+                        <span className="rounded-full border border-cool-veil bg-warm-white px-2.5 py-1 text-harbour">
+                          +{extraFleets} more {extraFleets === 1 ? "fleet" : "fleets"}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="mt-2 text-base font-semibold text-charcoal group-hover:text-harbour">{row.name}</h3>
+                    <p className="mt-2 text-sm text-slate-soft">{row.venue || "Venue details"}</p>
+                    <p className="mt-3 text-sm font-medium text-charcoal">{counts && counts[row.id] < row.totalFleetSize ? `${counts[row.id]} of ${row.totalFleetSize} entries imported` : `${row.totalFleetSize} entries`} · {row.raceCount} races</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">
+                      Open scorecard <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           ) : (
             <p className="mt-6 rounded-xl border border-dashed border-cool-veil bg-sailcloth p-6 text-sm text-slate-soft">
@@ -181,20 +238,36 @@ export default async function HomePage() {
       </section>
 
 
-      <section className="bg-sailcloth px-4 py-10 sm:px-6">
-        <div className="mx-auto max-w-3xl rounded-xl border border-cool-veil bg-warm-white p-6 sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Independent index · V1 beta</p>
-          <h2 className="mt-2 text-xl font-semibold text-harbour-shadow">Asian &amp; Oceania Optimist Index</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-soft">
-            Explore an independent analytical index built from verified results, with live beta standings and a published methodology. It is not an official IODA or national-federation ranking.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-            <Link href="/optimist/asian-index" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
-              Explore the index <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-            <Link href="/optimist/asian-index/methodology" className="text-sm font-semibold text-harbour hover:underline">
-              Read the methodology
-            </Link>
+      <section className="bg-sailcloth px-4 py-10 sm:px-6 lg:px-8" aria-labelledby="asian-index-heading">
+        <div className="mx-auto grid max-w-7xl gap-6 rounded-2xl border border-cool-veil bg-warm-white p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Independent index · V1 beta</p>
+            <h2 id="asian-index-heading" className="mt-2 text-2xl font-semibold text-harbour-shadow">Asian &amp; Oceania Optimist Index</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-soft">
+              Explore an independent analytical index built from verified results, with live beta standings and a published methodology. It is not an official IODA or national-federation ranking.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link href="/optimist/asian-index" className="sp-primary inline-flex min-h-10 items-center gap-2 px-4 text-sm font-semibold">
+                Explore the index <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link href="/optimist/asian-index/methodology" className="text-sm font-semibold text-harbour hover:underline">
+                Read the methodology
+              </Link>
+            </div>
+          </div>
+          <div className="grid gap-2.5 rounded-xl border border-cool-veil bg-sailcloth p-4 text-xs sm:grid-cols-3 lg:grid-cols-1">
+            <div className="flex items-center justify-between gap-2 rounded-lg bg-warm-white px-3 py-2.5">
+              <span className="font-bold text-harbour">Grade 150</span>
+              <span className="text-slate-soft">IODA World &amp; Continental Championships</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 rounded-lg bg-warm-white px-3 py-2.5">
+              <span className="font-bold text-harbour">Grade 75</span>
+              <span className="text-slate-soft">Designated Major International Opens</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 rounded-lg bg-warm-white px-3 py-2.5">
+              <span className="font-bold text-harbour">Grade 40</span>
+              <span className="text-slate-soft">Designated National Championships</span>
+            </div>
           </div>
         </div>
       </section>
@@ -208,33 +281,17 @@ export default async function HomePage() {
               <h2 id="upcoming-regattas-heading" className="mt-2 text-2xl font-semibold text-harbour-shadow">Upcoming regattas</h2>
               <p className="mt-2 text-sm text-slate-soft">Dates and classes from the calendar. Check the organiser’s latest notice before entering.</p>
             </div>
-            <Link href="/calendar" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">View calendar <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href="/calendar" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">View calendar <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
           </div>
           {upcoming.length ? <div className="mt-6 grid gap-4 md:grid-cols-3">
             {upcoming.map((event) => <Link key={event.slug} href={`/calendar?q=${encodeURIComponent(event.name)}`} className="rounded-xl border border-cool-veil bg-sailcloth p-5 hover:border-reef-line hover:bg-aqua-mist">
-              <p className="flex items-center gap-2 text-sm font-semibold text-harbour"><CalendarDays className="h-4 w-4 shrink-0" aria-hidden />{formatLandingDate(event.date)}{event.endDate && event.endDate !== event.date ? ` – ${formatLandingDate(event.endDate)}` : ""}</p>
+              <p className="flex items-center gap-2 text-sm font-semibold text-harbour"><CalendarDays className="h-4 w-4 shrink-0" aria-hidden="true" />{formatLandingDate(event.date)}{event.endDate && event.endDate !== event.date ? ` – ${formatLandingDate(event.endDate)}` : ""}</p>
               <h3 className="mt-3 text-base font-semibold text-charcoal">{event.name}</h3>
               <p className="mt-2 text-sm text-slate-soft">{event.venue || "Venue to be confirmed"}</p>
               <p className="mt-3 text-sm font-medium text-harbour">{(event.classes?.length ? event.classes : [event.boatClass]).filter(Boolean).join(" · ")}</p>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">View event in calendar <ArrowRight className="h-4 w-4" aria-hidden /></span>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour">View event in calendar <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
             </Link>)}
           </div> : <p className="mt-6 rounded-xl border border-dashed border-cool-veil p-5 text-sm text-slate-soft">{calendarAvailable ? "No upcoming events are listed right now. Check the calendar for the full schedule." : "Upcoming events are temporarily unavailable. Please check the calendar again shortly."}</p>}
-        </div>
-      </section>
-
-      {/* ── Stats ───────────────────────────────────────────────────────── */}
-      <section className="bg-sailcloth py-8 sm:py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <dl className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {stats.map(({ value, label }) => (
-              <div key={label} className="sp-card px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
-                <dt className="text-2xl font-bold tabular-nums text-harbour-shadow sm:text-3xl lg:text-4xl">
-                  {value}
-                </dt>
-                <dd className="mt-1.5 text-xs sm:text-sm text-slate-soft leading-snug">{label}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
@@ -256,7 +313,7 @@ export default async function HomePage() {
               href="/classes"
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline"
             >
-              Browse all class hubs <ArrowRight className="h-4 w-4" aria-hidden />
+              Browse all class hubs <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -266,7 +323,14 @@ export default async function HomePage() {
                 href={item.href}
                 className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
               >
-                <Trophy className="h-5 w-5 text-harbour" aria-hidden />
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-warm-white border border-cool-veil text-harbour">
+                    <ClassSilhouetteIcon boatClass={item.name} className="h-6 w-6 text-harbour" />
+                  </span>
+                  <span className="rounded-full bg-aqua-mist px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
+                    Singapore series
+                  </span>
+                </div>
                 <h3 className="mt-4 text-base font-semibold text-charcoal">
                   {item.name}
                 </h3>
@@ -274,15 +338,22 @@ export default async function HomePage() {
                 <p className="mt-2 text-sm leading-5 text-slate-soft">{item.note}</p>
                 <ArrowRight
                   className="mt-4 h-4 w-4 text-harbour transition-transform group-hover:translate-x-1"
-                  aria-hidden
+                  aria-hidden="true"
                 />
               </Link>
             ))}
             <Link
-              href="/classes/x-15"
+              href="/classes/x15"
               className="group rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line hover:bg-aqua-mist"
             >
-              <Trophy className="h-5 w-5 text-harbour" aria-hidden />
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-warm-white border border-cool-veil text-harbour">
+                  <ClassSilhouetteIcon boatClass="X-15" className="h-6 w-6 text-harbour" />
+                </span>
+                <span className="rounded-full border border-cool-veil bg-warm-white px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
+                  International hub
+                </span>
+              </div>
               <h3 className="mt-4 text-base font-semibold text-charcoal">X-15</h3>
               <p className="mt-1 text-sm font-medium text-harbour">International class hub</p>
               <p className="mt-2 text-sm leading-5 text-slate-soft">
@@ -290,7 +361,7 @@ export default async function HomePage() {
               </p>
               <ArrowRight
                 className="mt-4 h-4 w-4 text-harbour transition-transform group-hover:translate-x-1"
-                aria-hidden
+                aria-hidden="true"
               />
             </Link>
           </div>
@@ -305,15 +376,15 @@ export default async function HomePage() {
             <ol className="mt-6 space-y-5">
               {[ ["Find your profile", "Search your name, sail number or club to see your published results."], ["Request access", "Claim as the sailor or request parent access. We review the connection before approving it."], ["Unlock your private tools", "After approval, add race notes, equipment and milestones alongside your results."] ].map(([title, detail], i) => <li key={title} className="flex gap-3"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-sm font-bold text-harbour">{i + 1}</span><div><h3 className="text-sm font-semibold text-charcoal">{title}</h3><p className="mt-1 text-sm leading-6 text-slate-soft">{detail}</p></div></li>)}
             </ol>
-            <Link href="/sailors" className="sp-primary mt-6 inline-flex min-h-11 items-center gap-2 px-5 text-sm font-semibold">Find and claim your profile <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href="/sailors" className="sp-primary mt-6 inline-flex min-h-11 items-center gap-2 px-5 text-sm font-semibold">Find and claim your profile <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
           </div>
           <div className="rounded-2xl border border-cool-veil bg-sailcloth p-6 sm:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Sample profile · demonstration data</p>
-            <div className="mt-5 flex items-center gap-4"><div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-xl font-bold text-harbour" aria-hidden>KT</div><div><h3 className="text-xl font-semibold text-harbour-shadow">{SAMPLE_SAILOR.name}</h3><p className="mt-1 text-sm text-slate-soft">{SAMPLE_SAILOR.sailNumber} · Optimist / ILCA 4</p></div></div>
+            <div className="mt-5 flex items-center gap-4"><div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-xl font-bold text-harbour" aria-hidden="true">KT</div><div><h3 className="text-xl font-semibold text-harbour-shadow">{SAMPLE_SAILOR.name}</h3><p className="mt-1 text-sm text-slate-soft">{SAMPLE_SAILOR.sailNumber} · Optimist / ILCA 4</p></div></div>
             <div className="mt-6 divide-y divide-cool-veil rounded-xl border border-cool-veil bg-warm-white px-4">
               {[ ["Race-by-race results", "Finishes, penalties and discarded scores"], ["Sailing milestones", "Your achievements over time"], ["Private logbook after approval", "Race notes and equipment in one place"] ].map(([label, detail]) => <div key={label} className="py-4"><p className="text-sm font-semibold text-harbour">{label}</p><p className="mt-1 text-xs leading-5 text-slate-soft">{detail}</p></div>)}
             </div>
-            <Link href="/sample" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">Explore the sample profile <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href="/sample" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">Explore the sample profile <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
           </div>
         </div>
       </section>
@@ -335,7 +406,7 @@ export default async function HomePage() {
             {/* For sailors */}
             <article className="sp-card flex flex-col p-6">
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-aqua-mist text-harbour">
-                <UserRound className="h-5 w-5" aria-hidden />
+                <UserRound className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-base font-semibold text-charcoal">For sailors</h3>
               <p className="mt-1 text-sm font-medium text-harbour">
@@ -356,7 +427,7 @@ export default async function HomePage() {
             {/* For parents */}
             <article className="sp-card flex flex-col p-6">
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-aqua-mist text-harbour">
-                <UsersRound className="h-5 w-5" aria-hidden />
+                <UsersRound className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-base font-semibold text-charcoal">For parents</h3>
               <span className="mt-2 w-fit rounded-full bg-aqua-mist px-2.5 py-1 text-[11px] font-bold text-harbour">Private workspace · sign-in required</span>
@@ -372,14 +443,20 @@ export default async function HomePage() {
                 className="sp-secondary mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 px-4 text-sm font-semibold"
               >
                 Explore parent tools
-                <ArrowRight className="h-4 w-4" aria-hidden />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/demo/parent"
+                className="mt-2.5 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-harbour hover:underline"
+              >
+                Try interactive parent demo <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </article>
 
             {/* For coaches */}
             <article className="sp-card flex flex-col p-6">
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-aqua-mist text-harbour">
-                <ChartNoAxesColumnIncreasing className="h-5 w-5" aria-hidden />
+                <ChartNoAxesColumnIncreasing className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-base font-semibold text-charcoal">For coaches</h3>
               <span className="mt-2 w-fit rounded-full bg-aqua-mist px-2.5 py-1 text-[11px] font-bold text-harbour">Private workspace · sign-in required</span>
@@ -395,13 +472,66 @@ export default async function HomePage() {
                 className="sp-secondary mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 px-4 text-sm font-semibold"
               >
                 Explore coach tools
-                <ArrowRight className="h-4 w-4" aria-hidden />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/demo/coach"
+                className="mt-2.5 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-harbour hover:underline"
+              >
+                Try interactive coach demo <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </article>
 
           </div>
         </div>
       </section>
+
+      {/* ── Latest updates (/news) ──────────────────────────────────────── */}
+      {latestUpdates.length > 0 && (
+        <section className="bg-warm-white py-12 sm:py-16" aria-labelledby="latest-updates-heading">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">SailorPath updates</p>
+                <h2 id="latest-updates-heading" className="mt-2 text-2xl font-semibold text-harbour-shadow">Latest coverage &amp; release notes</h2>
+                <p className="mt-2 text-sm leading-6 text-slate-soft">New championship scorecards, methodology notes and privacy updates.</p>
+              </div>
+              <Link href="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-harbour hover:underline">
+                All updates <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {latestUpdates.map((update) => (
+                <article
+                  key={update.slug}
+                  className="flex flex-col rounded-xl border border-cool-veil bg-sailcloth p-5 transition-colors hover:border-reef-line"
+                >
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-harbour">
+                    <Newspaper className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                    <time dateTime={update.publishedAt}>{formatNewsDate(update.publishedAt)}</time>
+                    <span aria-hidden="true">·</span>
+                    <span className="capitalize">{update.kind.replace(/_/g, " ")}</span>
+                  </div>
+                  <h3 className="mt-3 text-base font-semibold text-charcoal">
+                    <Link href={`/news/${update.slug}`} className="hover:text-harbour hover:underline">
+                      {update.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-slate-soft line-clamp-3">
+                    {update.summary}
+                  </p>
+                  <Link
+                    href={`/news/${update.slug}`}
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-harbour hover:underline"
+                  >
+                    Read update <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
     </div>
     </>

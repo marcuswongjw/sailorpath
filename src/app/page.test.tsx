@@ -13,6 +13,26 @@ vi.mock("@/lib/queries", () => ({
 
 vi.mock("@/lib/calendar/publicCalendar", () => ({ getPublicCalendarData: vi.fn() }));
 vi.mock("@/lib/datesSg", () => ({ todayYmdSg: () => "2026-10-22" }));
+vi.mock("@/lib/news", () => ({
+  formatNewsDate: () => "2 November 2026",
+  listPublishedNews: vi.fn().mockResolvedValue([
+    {
+      slug: "18th-eastern-seaboard-regatta-2026-results-published",
+      title: "18th Eastern Seaboard Regatta 2026: Optimist Gold, Silver, ILCA 4 & ILCA 6 Scorecards Published",
+      summary: "Complete race-by-race scorecards for all 209 competitors.",
+      body: "Complete race-by-race scorecards.",
+      kind: "result_report",
+      authorDisplayName: "SailorPath",
+      publishedAt: "2026-11-02T09:00:00.000+08:00",
+      updatedAt: "2026-11-02T09:00:00.000+08:00",
+      relatedClass: "Optimist",
+      relatedRegion: "Asia",
+      sourceUrl: "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026",
+      sourceLabel: "Open 18th Eastern Seaboard Regatta 2026 scorecards",
+      tags: ["thailand", "eastern-seaboard"],
+    },
+  ]),
+}));
 
 import { getPublicCalendarData } from "@/lib/calendar/publicCalendar";
 import { getLandingTotals, getLandingResultCounts } from "@/lib/landingStats";
@@ -106,11 +126,16 @@ describe("public landing page", () => {
     expect(html).toContain("Private workspace · sign-in required");
     expect(html).toContain("Explore parent tools");
     expect(html).toContain("Explore coach tools");
+    expect(html).toContain('href="/demo/parent"');
+    expect(html).toContain('href="/demo/coach"');
     expect(html).toContain("Asian &amp; Oceania Optimist Index");
     expect(html).toContain('href="/optimist/asian-index"');
     expect(html).toContain('href="/optimist/asian-index/methodology"');
-    expect(html).toContain('href="/classes/x-15"');
+    expect(html).toContain('href="/classes/x15"');
+    expect(html).not.toContain('href="/classes/x-15"');
     expect(html).toContain("classes with results");
+    expect(html).toContain("Latest coverage &amp; release notes");
+    expect(html).toContain("/news/18th-eastern-seaboard-regatta-2026-results-published");
   });
 
   it("keeps the page usable if recent public results cannot be loaded", async () => {

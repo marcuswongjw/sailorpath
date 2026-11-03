@@ -35,6 +35,16 @@ export default async function NewsPage() {
                 <time dateTime={update.publishedAt}>{formatNewsDate(update.publishedAt)}</time>
                 <span aria-hidden="true">·</span>
                 <span className="capitalize">{update.kind.replace(/_/g, " ")}</span>
+                {update.relatedRegion ? (
+                  <span className="rounded-full bg-aqua-mist px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
+                    {update.relatedRegion}
+                  </span>
+                ) : null}
+                {update.relatedClass ? (
+                  <span className="rounded-full border border-cool-veil bg-sailcloth px-2.5 py-0.5 text-[11px] font-semibold text-harbour">
+                    {update.relatedClass}
+                  </span>
+                ) : null}
               </div>
               <h2 className="mt-2 text-xl font-bold text-harbour-shadow">
                 <Link href={`/news/${update.slug}`} className="hover:underline">
