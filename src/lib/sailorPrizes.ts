@@ -11,12 +11,16 @@ import {
   type RegattaPrizeSchedule,
   prizeNameKey,
 } from "./regattaPrizes";
+import { sortSailorAwards } from "./sailorAwardBrowse";
 
 export interface SailorPrizeAward {
   id: string;
   regattaName: string;
   regattaSlug: string;
   regattaDate?: string;
+  regattaEndDate?: string;
+  venue?: string;
+  geography?: string;
   datesText?: string;
   year: number;
   boatClass: string;
@@ -143,6 +147,9 @@ export function getSailorPrizes(
     regattaSlug?: string;
     regattaName?: string;
     regattaDate?: string;
+    regattaEndDate?: string | null;
+    regattaVenue?: string | null;
+    geography?: string | null;
     boatClass?: string;
     division?: string;
     fleetSize?: number;
@@ -169,6 +176,10 @@ export function getSailorPrizes(
   // 1. Search in Official NoR Prize Schedules
   for (const schedule of schedules) {
     for (const fleet of schedule.fleets) {
+      const eventResult = results.find((result) =>
+        result.regattaSlug && (result.regattaSlug === schedule.regattaSlug || getRegattaPrizeSchedule(result.regattaSlug)?.regattaSlug === schedule.regattaSlug) &&
+        (!result.boatClass || result.boatClass === fleet.boatClass) &&
+        (!/gold|silver/i.test(result.division || "") || fleet.classWide || fleet.fleetName.toLowerCase().includes((result.division || "").toLowerCase())));
       for (const cat of fleet.categories) {
         // Skip purely internal school divisions per user rule
         const catLower = cat.categoryName.toLowerCase();
@@ -196,6 +207,10 @@ export function getSailorPrizes(
                 id: awardId,
                 regattaName: schedule.regattaName,
                 regattaSlug: schedule.regattaSlug,
+                regattaDate: eventResult?.regattaDate,
+                regattaEndDate: eventResult?.regattaEndDate || undefined,
+                venue: eventResult?.regattaVenue || schedule.venue || undefined,
+                geography: eventResult?.geography || undefined,
                 datesText: schedule.datesText,
                 year: schedule.year,
                 boatClass: fleet.boatClass,
@@ -229,6 +244,7 @@ export function getSailorPrizes(
       !String(res.regattaSlug || "").startsWith("log-")
     ) {
       const regSlug = res.regattaSlug || (res.regattaName || "").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      if (getRegattaPrizeSchedule(regSlug)?.recordedPodiumPolicy === "official-categories-only") continue;
       const boatClass = res.boatClass || "Optimist";
       const year = Number(String(res.regattaDate || "").slice(0, 4)) || 2026;
       const dedupeKey = `${regSlug}-${boatClass}-overall-${res.rank}`;
@@ -251,6 +267,9 @@ export function getSailorPrizes(
           regattaName: res.regattaName || "Regatta",
           regattaSlug: regSlug,
           regattaDate: res.regattaDate,
+          regattaEndDate: res.regattaEndDate || undefined,
+          venue: res.regattaVenue || undefined,
+          geography: res.geography || undefined,
           year,
           boatClass,
           fleetName: res.division || "Open Fleet",
@@ -268,46 +287,16 @@ export function getSailorPrizes(
     }
   }
 
-  // Sort awards: Gold first, then Silver, then Bronze, then newest year/regatta
-  awards.sort((a, b) => {
-    const medalOrder = { gold: 0, silver: 1, bronze: 2, other: 3 };
-    const diff = medalOrder[a.medal] - medalOrder[b.medal];
-    if (diff !== 0) return diff;
-    return a.rank - b.rank;
-  });
-
-  return awards;
+  return sortSailorAwards(awards);
 }
 
-/**
- * Calculates medal counts from a list of sailor awards.
- */
-export function getSailorMedalCounts(awards: SailorPrizeAward[]): SailorMedalCounts {
-  let gold = 0;
-  let silver = 0;
-  let bronze = 0;
-
-  for (const a of awards) {
-    if (a.medal === "gold") gold++;
-    else if (a.medal === "silver") silver++;
-    else if (a.medal === "bronze") bronze++;
-  }
-
-  return {
-    gold,
-    silver,
-    bronze,
-    total: awards.length,
-    podiums: gold + silver + bronze,
-  };
-}
-
+export { getSailorMedalCounts } from "./sailorMedalCounts";
 
 /** Prefer the same event's named/NoR award over a duplicate generic podium. */
 export function mergeSailorPrizes(...groups: SailorPrizeAward[][]): SailorPrizeAward[] {
   const all = [...new Map(groups.flat().map((award) => [award.id, award])).values()];
   const eventKey = (award: SailorPrizeAward) => getRegattaPrizeSchedule(award.regattaSlug)?.regattaSlug || award.regattaSlug;
-  return all.filter((award) => award.sourceUrl || award.isOfficialNoR || !all.some((other) =>
+  return sortSailorAwards(all.filter((award) => award.sourceUrl || award.isOfficialNoR || !all.some((other) =>
     other !== award && /^(open|overall)(?:$|\s|\()/i.test(other.categoryName) && (other.sourceUrl || other.isOfficialNoR) && eventKey(other) === eventKey(award) && other.boatClass === award.boatClass &&
-    (!/gold|silver/i.test(award.fleetName) || other.fleetName.toLowerCase().includes(award.fleetName.toLowerCase()))));
+    (!/gold|silver/i.test(award.fleetName) || other.fleetName.toLowerCase().includes(award.fleetName.toLowerCase())))));
 }

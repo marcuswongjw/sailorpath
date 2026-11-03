@@ -3,7 +3,7 @@ import { eventHubShare } from "@/lib/publicSeo";
 import { getRegattaEvent } from "@/lib/regattaEvents";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 export const alt = "SailorPath regatta results";
 export const size = SHARE_IMAGE_SIZE;
 export const contentType = "image/png";

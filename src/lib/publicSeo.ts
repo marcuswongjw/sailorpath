@@ -1,4 +1,5 @@
 import type { Metadata, MetadataRoute } from "next";
+import { classDisplayLabels } from "@/lib/classPresentation";
 import { classResultsHref } from "@/lib/calendar/calendarResultLinks";
 import { COUNTRIES } from "@/lib/countries";
 import { normalizeHandle, validateHandle } from "@/lib/handles";
@@ -434,7 +435,7 @@ export function resultSheetFromEventSlice(
 export function eventHubShare(event: RegattaEventDef): ResultSheetShare {
   const dates = eventDatesFromText(event.datesText);
   const year = yearFromText(event.name) ?? yearFromText(event.datesText);
-  const classes = event.slices.map((slice) => slice.label).filter(Boolean);
+  const classes = classDisplayLabels(event.slices.map((slice) => slice.label));
   const description = classes.length
     ? `Published results for ${event.name}. Classes: ${classes.join(", ")}.`
     : `Published results for ${event.name}.`;

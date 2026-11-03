@@ -34,7 +34,12 @@ async function calculateSailorPrizeAwards(
           return person?.sailorId === sailor.id ? [{ ...winner, sailorName: sailor.name, sailorHandle: sailor.handle }] : [];
         });
       }) })) })) };
-      awards.push(...getSailorPrizes(sailor, [], [personal]).map((award) => ({ ...award, schoolName: undefined })));
+      awards.push(...getSailorPrizes(sailor, [], [personal]).map((award) => ({
+        ...award, schoolName: undefined, regattaDate: regatta.date,
+        regattaEndDate: regatta.endDate || undefined,
+        venue: regatta.venue || schedule.venue || undefined,
+        geography: regatta.geography || undefined,
+      })));
     } catch (error) {
       // Do not persist incomplete awards when a source read fails.
       throw error;
@@ -46,7 +51,7 @@ async function calculateSailorPrizeAwards(
 // Cache the derived awards rather than replaying every historic fleet read on
 // each profile request. Publishing/results changes invalidate both inputs.
 const cachedAwards = unstable_cache(calculateSailorPrizeAwards,
-  ["profile-derived-awards-v2-minimal-identity"],
+  ["profile-derived-awards-v3-dates-location"],
   { revalidate: 3600, tags: [CACHE_TAG_PUBLIC_REGATTAS, CACHE_TAG_FLEET_RANKINGS] });
 export async function loadSailorPrizeAwards(
   sailor: { id: string; name: string; handle: string },

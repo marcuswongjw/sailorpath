@@ -253,7 +253,7 @@ export function ProfileRegattaRow({
         </span>
         <div className="min-w-0">
           {canLink ? (
-            <Link
+            <Link prefetch={false}
               href={regattaHref}
               onClick={(e) => e.stopPropagation()}
               className="text-[13px] font-bold text-harbour-shadow truncate block hover:text-harbour"
@@ -287,7 +287,7 @@ export function ProfileRegattaRow({
                   <span key={member.sailorId || member.handle || i} className="inline-flex items-center">
                     {i > 0 && <span className="mr-1 text-slate-soft">/</span>}
                     {member.handle && !isCurrentSailor ? (
-                      <Link
+                      <Link prefetch={false}
                         href={`/sailors/${member.handle}`}
                         onClick={(e) => e.stopPropagation()}
                         className="hover:underline font-bold text-harbour-shadow hover:text-harbour transition-colors"

@@ -12,6 +12,7 @@ describe("event overview", () => {
     expect(screen.getByText("Middle Island")).toBeTruthy();
     expect(screen.getAllByText("WingFoil")).toHaveLength(1);
     expect(screen.getByText("Optimist Gold")).toBeTruthy();
+    expect(screen.getByRole("region", { name: "Scheduled classes" }).querySelector("li")?.textContent).toBe("Optimist Gold");
     expect(screen.getByRole("link", { name: "Entry information" }).getAttribute("href")).toBe("https://example.org/entry");
     expect(screen.getByRole("link", { name: "Official notice board" }).getAttribute("href")).toBe("https://example.org/board");
     expect(screen.getByRole("button", { name: /Add to calendar/ })).toBeTruthy();

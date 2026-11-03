@@ -1,4 +1,6 @@
 import { hasOverallPrizeWinners } from "@/lib/regattaPrizes";
+import { connection } from "next/server";
+import { compareClassLabels } from "@/lib/classPresentation";
 import { searchSailorsEnhanced } from "@/lib/search";
 import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
 import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
@@ -133,7 +135,7 @@ function BoardClassPanel({
                 <RankMedalBadge rank={r.rank} className="h-7 w-7 text-xs" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)]">
-                    {profileHandles[prizeNameKey(r.name)] ? <Link href={`/sailors/${encodeURIComponent(profileHandles[prizeNameKey(r.name)])}`} className="hover:underline">{r.name}</Link> : r.name}
+                    {profileHandles[prizeNameKey(r.name)] ? <Link prefetch={false} href={`/sailors/${encodeURIComponent(profileHandles[prizeNameKey(r.name)])}`} className="hover:underline">{r.name}</Link> : r.name}
                   </p>
                   <p className="truncate text-xs text-[var(--sp-charcoal-slate)]">
                     {[r.sailNumber, r.club || r.schoolName].filter(Boolean).join(" · ")}
@@ -158,7 +160,7 @@ function BoardClassPanel({
       {classHref && (
         <p className="text-[13px] text-[var(--sp-slate-soft)]">
           Full {slice.label} series scorecards live on the{" "}
-          <Link
+          <Link prefetch={false}
             href={classHref}
             className="font-semibold text-[var(--sp-harbour-teal)] hover:underline"
           >
@@ -264,6 +266,8 @@ async function DbSlicePanel({
   try {
     results = await getResultsForRegatta(regatta.id);
   } catch (error) {
+    // A temporary outage must never become the shared cached scorecard.
+    await connection();
     const message =
       error instanceof DbUnavailableError ? error.message : "DB error";
     return <DbOffline message={message} />;
@@ -288,7 +292,8 @@ async function DbSlicePanel({
           profileHandles={profileHandles}
         />
       )}
-      {!hasOverallPrizeWinners(fleets) && <RegattaFleetPodium results={results} />}
+      {prizeView?.schedule.recordedPodiumPolicy !== "official-categories-only" &&
+        !hasOverallPrizeWinners(fleets) && <RegattaFleetPodium results={results} />}
       <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed">
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
@@ -338,6 +343,7 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
     event = withPublishedEventSlices(event, allRegattas);
     slices = resolveEventSlices(event, allRegattas);
   } catch (error) {
+    await connection();
     const message =
       error instanceof DbUnavailableError ? error.message : "DB error";
     return <DbOffline message={message} />;
@@ -349,6 +355,7 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
       : defaultEventFleetKey(event, slices);
   const active = slices.find((s) => s.def.key === activeKey) ?? slices[0];
   if (!active) return null;
+  const orderedSlices = [...slices].sort((a, b) => compareClassLabels(a.def.label, b.def.label));
   const prizeView = prizeViewForSlice(event, active);
   let staticProfileHandles: Record<string, string> = {};
   if (!active.regatta) {
@@ -401,10 +408,10 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
         className="flex flex-wrap gap-0 border-b border-[var(--sp-cool-veil)]"
         role="tablist"
       >
-        {slices.map((slice) => {
+        {orderedSlices.map((slice) => {
           const isActive = slice.def.key === active.def.key;
           return (
-            <Link
+            <Link prefetch={false}
               key={slice.def.key}
               href={`/regattas/${encodeURIComponent(event.slug)}/results/${encodeURIComponent(slice.def.key)}`}
               role="tab"

@@ -35,6 +35,7 @@ import {
 } from "@/lib/classRegistry";
 import { hubHrefForClassSlug } from "@/lib/regattaEventGroups";
 import type { RegattaRecord } from "@/lib/ranking";
+import { compareClassLabels } from "@/lib/classPresentation";
 
 export type PublicCalendarEvent = {
   id: string;
@@ -214,7 +215,7 @@ export function getPublicCalendarEvents(options?: {
         endDate: occ.endDate,
         venue: occ.venue || event.venue,
         organizer: event.organizer,
-        classes: classBadges,
+        classes: classBadges.sort(compareClassLabels),
         timingStatus,
         resultStatus: bestResultStatus,
         resultSummary,
@@ -449,13 +450,13 @@ export function getNormalizedClassRegattas(
         resultStatus: raceCount > 0 ? "final" : "provisional",
         resultsSummary:
           raceCount > 0
-            ? `Canonical class sheet · ${competitorCount} competitors`
-            : "Canonical class sheet",
+            ? `Published scorecard · ${competitorCount} competitors`
+            : "Published scorecard",
         competitorCount,
         canonicalHref:
           href ||
           `/regattas/${encodeURIComponent(regatta.eventSlug || regatta.slug)}?fleet=${encodeURIComponent(boatClass)}`,
-        source: { kind: "normalized_result", label: "Canonical class sheet" },
+        source: { kind: "normalized_result", label: "Published scorecard" },
       };
     })
     .sort((a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name));

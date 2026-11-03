@@ -20,9 +20,9 @@ export default function AboutPage() {
       <section className="mx-auto max-w-5xl space-y-10 px-4 py-12 sm:px-6 sm:py-16">
         <div className="grid gap-5 sm:grid-cols-3">
           {[
-            { title: "Follow your class", text: "Explore Optimist, ILCA, 29er, 420, WingFoil, X-15, Techno 293, iQFOiL and windsurfing standings and race results. Each class keeps its own scoring context.", href: "/rankings", label: "Explore standings", icon: Trophy },
+            { title: "Follow your class", text: "Browse published race results across dinghy, skiff and board classes. Singapore class standings, the Asian & Oceania Optimist Index and class guides each explain their own scoring and coverage.", href: "/classes", label: "Explore classes", icon: Trophy },
             { title: "Find your next regatta", text: "Browse upcoming and past weekends, filter by class, region or year, and open the results for a specific fleet.", href: "/calendar", label: "Browse regattas", icon: CalendarDays },
-            { title: "Keep your record together", text: "Find your sailor profile, follow published results and milestones, and request ownership to manage your profile details.", href: "/sailors", label: "Find your profile", icon: UserRound },
+            { title: "Keep your record together", text: "Find your sailor profile, browse awards from newest to oldest, and filter honours by date, location, class or medal. Claim your profile to manage your details and sharing choices.", href: "/sailors", label: "Find your profile", icon: UserRound },
           ].map(({ title, text, href, label, icon: Icon }) => (
             <article key={title} className="sp-card flex flex-col p-6">
               <Icon className="h-6 w-6 text-harbour" aria-hidden />

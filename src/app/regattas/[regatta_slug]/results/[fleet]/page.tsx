@@ -6,7 +6,13 @@ import { withSavedEventCopy } from "@/lib/loadRegattaEventCopy";
 import { resolveFleetResultSheet } from "@/lib/publicShareData";
 import { shareMetadata, sportsEventJsonLd } from "@/lib/publicSeo";
 
-export const dynamic = "force-dynamic";
+// Public-only scorecards share a cached render. Import tags refresh them.
+export const revalidate = 3600;
+
+// Generate only requested sheets, rather than rebuilding the archive on deploy.
+export function generateStaticParams() {
+  return [];
+}
 
 export async function generateMetadata({
   params,

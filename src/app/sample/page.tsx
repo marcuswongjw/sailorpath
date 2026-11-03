@@ -1,3 +1,4 @@
+import { getSailorPrizes, mergeSailorPrizes } from "@/lib/sailorPrizes";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -90,6 +91,7 @@ export default async function SampleProfilePage({
         </div>
       </div>
       <SailorProfileView
+        initialPrizeAwards={mergeSailorPrizes(getSailorPrizes(SAMPLE_SAILOR, SAMPLE_RESULTS))}
         initialSailor={SAMPLE_SAILOR}
         initialResults={SAMPLE_RESULTS}
         initialEquipment={SAMPLE_EQUIPMENT}

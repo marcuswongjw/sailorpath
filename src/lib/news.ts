@@ -40,9 +40,37 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageAlt: string;
     imageCaption: string;
     imageCredit: string;
-    imageCreditUrl: string;
+    imageCreditUrl: string | null;
   }
 > = {
+  "asian-2026-multiclass-and-national-championships-published": {
+    imageUrl: "/news/asian-championship-coverage.png",
+    imageAlt: "An illustrated network of Asian sailing venues connected to published class scorecards.",
+    imageCaption: "Illustration of SailorPath's regional championship coverage; not an event photograph or geographic map.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "privacy-first-profiles-guardian-consent-and-evidence-protections": {
+    imageUrl: "/news/profile-sharing.png",
+    imageAlt: "Public competition records beside a locked panel representing private notes and evidence.",
+    imageCaption: "Profile sharing choices control optional personal information. Family notes and supporting evidence remain private.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "a-clearer-public-sailing-record": {
+    imageUrl: "/news/public-sailing-record.png",
+    imageAlt: "Illustrated result, award and sailor record cards connected in one sailing history.",
+    imageCaption: "A product illustration of connected competition records, separate from private workspaces.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "x-15-pilot-opens-ahead-of-worlds": {
+    imageUrl: "/news/x15-class-guide.png",
+    imageAlt: "An illustrated wingfoil rider above the water beside X-15 class guide cards.",
+    imageCaption: "X-15 one-design wingfoil racing, illustrated. Open the class hub for event information and reviewed scorecards.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
   "18th-eastern-seaboard-regatta-2026-results-published": {
     imageUrl: "/news/eastern-seaboard-pattaya.jpg",
     imageAlt:
@@ -95,19 +123,18 @@ const FALLBACK_ARTICLES: PublishedNewsArticle[] = [
   {
     slug: "asian-2026-multiclass-and-national-championships-published",
     title:
-      "2026 Asian Multi-Class & National Championships Published: Langkawi Perdana, Hong Kong Race Week, Indonesia, Philippines & All Japan 420",
+      "Asian championship coverage: regional opens and national results",
     summary:
-      "SailorPath publishes verified scorecards across 2026 Asian regional and national championships, including the 22nd Langkawi International Regatta Perdana across 7 classes, Hong Kong Race Week (29er Asian Championship & ILCA 6), INA Regatta II Indonesia National Sailing Championship, Philippine National Sailing Championship, and 38th All Japan 420 Championship.",
+      "Explore published 2026 championship scorecards from Langkawi Perdana, Hong Kong Race Week, Indonesia, the Philippines and the All Japan 420 Championship, with class and fleet details on each event page.",
     body: `SailorPath has published a new wave of 2026 Asian multi-class and national championship scorecards, expanding cross-border benchmarking across Southeast and East Asia for single-handed dinghies, double-handed skiffs, and windsurfing fleets.
 
 ## 22nd Langkawi International Regatta Perdana 2026 (Malaysia)
 
-All seven class scorecards from the 22nd Langkawi International Regatta Perdana (29 January – 1 February 2026, 209 competitors) are now live, visually verified against the 11-page official Malaysian Sailing Association final results PDF:
+Published Langkawi scorecards cover dinghy, skiff and board classes. Open the event's class list to see the available fleets and source references:
 
-• Optimist Overall (111 entries, 5 races)
-• ILCA 4 (30 entries), ILCA 6 (16 entries), and ILCA 7 (9 entries)
-• International 420 (16 entries, with full helm and crew attribution)
-• Windsurfing Bic Techno 293 (15 entries) and Windsurfing Open / iQFOiL (12 entries)
+• 29er and International 420
+• ILCA 4, ILCA 6 and ILCA 7
+• iQFOiL, Optimist and Techno 293
 
 ## Hong Kong Race Week 2026 & 29er Asian Championship
 
@@ -121,14 +148,18 @@ Alongside existing Optimist and ILCA 4 sheets from Hong Kong Race Week 2026, Sai
 We have also completed imports for three national championship series across the region:
 
 • 38th All Japan 420 Class Championship 2026 (Tottori, Japan — 26 entries across Qualifying & Final series, visually verified against the official JSAF/J420 final PDF)
-• INA Regatta II — Indonesia National Sailing Championship 2026 (Jakarta — 104 entries across Optimist Boys & Girls, ILCA 4, ILCA 6, ILCA 7, Techno 293, and iQFOiL)
-• Philippine National Sailing Championship 2026 (Subic Bay — Optimist Gold & Silver, ILCA 4, ILCA 6, and ILCA 7)
+• INA Regatta II — Indonesia National Sailing Championship 2026 (Jakarta — 420, ILCA 4, ILCA 6, ILCA 7, iQFOiL, Optimist and Techno 293)
+• Philippine National Sailing Championship 2026 (Manila Bay — 420, ILCA 4, ILCA 6, ILCA 7 and Optimist Class A & Class B)
 
-Source and verification note: Where official organiser PDFs were published (Langkawi International Regatta Perdana, Hong Kong Race Week 29er & ILCA 6, and the 38th All Japan 420 Championship), every race score, discard, and net total was visually reconciled against the official PDF tables. For INA Regatta II and the Philippine National Sailing Championship, scorecards are verified against the official RacingRulesOfSailing.org event notice boards and Federation records and are transparently marked as digital-source verified rather than PDF-verified.`,
+## Taiwan and historical Indian results
+
+The archive also includes the 2026 Taiwan President's Cup and the 2023 YAI Junior National Sailing Championship in India. The Indian results retain their original 2023 event date.
+
+Source note: These imports retain organiser or federation result references, including official PDF evidence for Indonesia and the Philippines. Individual scorecards show the available race scores and fleet details. Entry totals, dates and divisions should be read from the linked scorecards and official documents rather than inferred across separate fleets.`,
     kind: "result_report",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-11-03T10:00:00.000+08:00",
-    updatedAt: "2026-11-03T10:00:00.000+08:00",
+    updatedAt: "2026-11-03T14:25:00.000+08:00",
     relatedClass: "Optimist",
     relatedRegion: "Asia",
     sourceUrl: "https://sailorpath.com/results",
@@ -203,7 +234,7 @@ Explore all four fleet scorecards at /regattas/eastern-seaboard-regatta-2026.`,
       "Australian 2026 Championship Coverage: ILCA Oceania & Australian Championships, Optimist States, 29er & 420 Nationals, and Zhik Youth Sail",
     summary:
       "SailorPath publishes 52 verified Australian championship fleet sheets across the 2026 ILCA Oceania & Australian Championships in Hobart, Musto Australian and State Optimist Championships, Australian 29er and 420 National Championships, and the nationwide Zhik Youth Sail series.",
-    body: `To support cross-border benchmarking across Asia and Oceania, SailorPath has completed a major expansion of 2026 Australian youth and open championship records across 52 fleet sheets and 5,491 individual race scores.
+    body: `To support cross-border benchmarking across Asia and Oceania, SailorPath has completed a major expansion of 2026 Australian youth and open championship records across 52 fleet sheets and 7,780 individual race scores.
 
 ## 2026 ILCA Oceania & Australian Championships (Hobart, Tasmania)
 
@@ -227,8 +258,8 @@ Nine completed Open and Intermediate fleet scorecards (260 entries, 1,470 race s
 
 Two national double-handed youth championship scorecards are also published with full helm and crew attribution:
 
-• 2026 Australian 29er Championship (Royal Yacht Club of Tasmania — 21 entries, 14 races, 2 discards)
-• 2026 International 420 Class Australian Championship (13 entries, 12 races, 2 discards)
+• 2026 Australian 29er Championship (Sandy Bay Sailing Club, Hobart — 21 entries, 14 races)
+• 2026 International 420 Class Australian Championship (Albury Wodonga Sailing Club, Lake Hume — 17 entries, 10 races)
 
 ## 2026 Zhik Youth Sail State Championships (36 Fleet Sheets)
 
@@ -243,7 +274,7 @@ Source and verification note: Where official organiser PDFs were not published f
     kind: "result_report",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-10-30T11:00:00.000+08:00",
-    updatedAt: "2026-11-03T09:00:00.000+08:00",
+    updatedAt: "2026-11-03T14:25:00.000+08:00",
     relatedClass: "Optimist",
     relatedRegion: "Oceania",
     sourceUrl: "https://sailorpath.com/results",
@@ -265,15 +296,15 @@ Source and verification note: Where official organiser PDFs were not published f
     title:
       "Strengthening Youth Sailor Privacy: Consent-Gated Photos, Private Evidence, and Claim Protections",
     summary:
-      "How SailorPath protects youth athletes by keeping public profiles strictly focused on verified competition records while gating photos, personal notes, and uploaded evidence behind approved claims and guardian consent.",
+      "How public competition records, optional profile sharing, approved profile claims and private workspaces fit together for youth sailors and their families.",
     body: `Because youth sailing records involve minor athletes, SailorPath is built around a strict separation between the public competition record and private athlete or family data. Over the past week, we shipped a series of security and privacy upgrades across public profiles, file storage, and claim workflows.
 
 ## Verified Results by Default, Optional Sharing by Choice
 
-Unclaimed sailor profiles on SailorPath display only verified competition history—regatta finishes, sail numbers used at each event, class standings, and official championship awards.
+Public sailor profiles bring together published competition history—regatta finishes, event sail numbers, class standings and recorded awards. Public records may also include nationality, gender, club and birth year.
 
 • Profile photos and avatars are stored in private buckets and are never publicly served unless an authorised profile owner or verified parent/guardian has explicitly enabled public sharing.
-• Date-of-birth records used to verify age-group eligibility and youth index cutoffs remain protected and are never exposed on public profile pages.
+• Full dates of birth and weight are private unless an authorised profile manager chooses to share them. Birth year may appear as part of the public competition record.
 • Personal race notes, equipment locker items, and coach debriefs live exclusively inside authenticated Sailor, Parent, and Coach workspaces.
 
 ## Hardened Evidence Storage and Claim Quotas
@@ -285,11 +316,13 @@ When sailors or parents submit supporting documentation or result evidence, thos
 
 ## International Championship Awards on Public Profiles
 
-We also refined how official division awards—such as Girls' overall podiums, U16/U12 prizes, and double-handed 29er helm and crew medals—are displayed on public profiles. Every award badge links back to the specific division scorecard where it was won.`,
+Official category awards and recorded podium finishes appear together on sailor profiles. Event and source links let visitors check the relevant scorecard or published award evidence. Profiles can include separate girls' awards, U16/U12 prizes and double-handed helm and crew honours.
+
+Awards now appear newest first. Visitors can change the sort order and combine year, date range, location, boat class, medal and text filters. The medal totals reflect the filtered list.`,
     kind: "product_update",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-10-27T10:00:00.000+08:00",
-    updatedAt: "2026-10-27T10:00:00.000+08:00",
+    updatedAt: "2026-11-03T14:25:00.000+08:00",
     relatedClass: null,
     relatedRegion: "International",
     sourceUrl: "https://sailorpath.com/privacy",
@@ -349,11 +382,11 @@ Each imported scorecard links directly to its source attribution and updates the
     summary:
       "SailorPath now separates public results discovery from private account, parent and coach workspaces.",
     body:
-      "SailorPath now separates public results discovery from private account, parent and coach workspaces. Public profiles use a verified-results-first default and optional profile sharing is off until an authorised owner chooses it.",
+      "Browse published sailing results, class standings and sailor profiles without an account. Approved profile claims connect sailors and families to their private workspaces. Optional personal information is controlled through profile sharing choices; private notes, equipment records and supporting evidence are separate from the public competition record.",
     kind: "product_update",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-10-15T00:00:00.000+08:00",
-    updatedAt: "2026-10-15T00:00:00.000+08:00",
+    updatedAt: "2026-11-03T14:25:00.000+08:00",
     relatedClass: null,
     relatedRegion: "Singapore",
     sourceUrl: null,
@@ -362,15 +395,15 @@ Each imported scorecard links directly to its source attribution and updates the
   },
   {
     slug: "x-15-pilot-opens-ahead-of-worlds",
-    title: "X-15 pilot opens ahead of Worlds",
+    title: "X-15 class guide: Worlds, Asian Championships and reviewed results",
     summary:
-      "The X-15 hub brings together reviewed Ibiza and Thailand event context without publishing an unsupported ranking.",
+      "Find official X-15 championship information, class history and links to reviewed scorecards in the one-design wingfoil class hub.",
     body:
-      "The X-15 class hub brings together reviewed Ibiza and Thailand event context with a transparent beta methodology. It does not publish a numbered ranking before official final results are available and source-linked. Open the X-15 class hub for that context.",
+      "The X-15 class hub brings together the 2026 World Championships in Ibiza and Asian Championships in Thailand, class history and official event links. Reviewed scorecards appear as they are published on SailorPath. X-15 event results are separate from generic WingFoil results, and SailorPath does not publish an X-15 national ranking. Open the class hub for current event and result availability.",
     kind: "class_announcement",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-10-15T00:00:00.000+08:00",
-    updatedAt: "2026-10-15T00:00:00.000+08:00",
+    updatedAt: "2026-11-03T14:25:00.000+08:00",
     relatedClass: "X-15",
     relatedRegion: "International",
     sourceUrl: null,
@@ -465,7 +498,7 @@ async function readPublishedNewsArticle(
 
 const getCachedPublishedNews = unstable_cache(
   readPublishedNews,
-  ["published-news-v5"],
+  ["published-news-v6-reviewed-copy-media"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -475,7 +508,7 @@ const getCachedPublishedNews = unstable_cache(
 function cachedArticleLookup(slug: string) {
   return unstable_cache(
     () => readPublishedNewsArticle(slug),
-    ["published-news-article-v5", slug],
+    ["published-news-article-v6-reviewed-copy-media", slug],
     {
       revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
       tags: [CACHE_TAG_NEWS_ARTICLES],

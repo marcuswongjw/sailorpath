@@ -1,3 +1,4 @@
+import { getSailorPrizes, mergeSailorPrizes } from "@/lib/sailorPrizes";
 import { loadSailorPrizeAwards } from "@/lib/loadSailorPrizeAwards";
 import { PROFILE_ILCA_CLASSES, profileIlcaClassOf, profileIlcaLabel } from "@/lib/profileClasses";
 import type { SeriesStandingProps } from "@/components/sailor-profile/types";
@@ -281,9 +282,13 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
     notFound();
   }
 
-  const initialPrizeAwards = await loadSailorPrizeAwards(sailor, results || []).catch(() => []);
+  const resultAwards = await loadSailorPrizeAwards(sailor, results || []).catch(() => []);
   const canSeePrivate = access.canSeePrivate;
   const publicSailor = toPublicSailorProps(sailor, { canSeePrivate });
+  const initialPrizeAwards = mergeSailorPrizes(
+    getSailorPrizes(publicSailor, (results || []).map((result) => ({ ...result, boatClass: result.boatClass ?? "Optimist" }))),
+    resultAwards,
+  );
   const equipment = toPublicEquipmentProps(sailor, canSeePrivate);
   const seoSailor = toPublicSailorProps(sailor, { canSeePrivate: false });
   const share = sailorShareModel({

@@ -42,6 +42,7 @@ describe('public sailor results query', () => {
     await database.query(`insert into regatta_race_results (regatta_result_id,race_number,score,discarded,raw_value) values ($1,1,3,true,'(3)')`, [id(20)]);
     await database.query(`update sailors set dob='2012-08-23', school='Hidden fixture school', show_school_on_public_profile=false where id=$1`, [id(1)]);
     mock.reads.length = 0;
+    await database.query(`update regattas set end_date='2026-01-04', venue='Pattaya' where id=$1`, [id(10)]);
     const scorecard = await getResultsForRegatta(id(10));
     expect(scorecard[0].birthYear).toBe(2012);
     expect(scorecard[0]).not.toHaveProperty('dob');
@@ -52,6 +53,7 @@ describe('public sailor results query', () => {
     const rows = await getResultsForSailor(id(1));
     expect(rows.map(row=>row.regattaSlug).sort()).toEqual(['published-crew','published-direct']);
     expect(rows.find(row=>row.regattaSlug==='published-crew')?.participants).toHaveLength(1);
+    expect(rows.find(row=>row.regattaSlug==='published-direct')).toMatchObject({ regattaDate: '2026-01-01', regattaEndDate: '2026-01-04', regattaVenue: 'Pattaya' });
     expect(rows.find(row=>row.regattaSlug==='log-personal')).toBeUndefined();
   });
 });

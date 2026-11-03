@@ -47,7 +47,9 @@ export const resolveFleetResultSheet = cache(
     const direct = getRegattaEvent(regattaSlug);
     let published: RegattaRecord[] = [];
     if (getDatabaseUrlMeta()) {
-      published = await getCachedPublicRegattas().catch(() => []);
+      // An outage is not proof that a published fleet is missing. Let the
+      // caller handle it, so ISR cannot persist a false not-found response.
+      published = await getCachedPublicRegattas();
     }
     const grouped = direct
       ? null

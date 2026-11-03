@@ -1,4 +1,8 @@
+import { prizeNameKey } from "./prizeNameKey";
 import { INTERNATIONAL_REGATTA_PRIZE_SCHEDULES, getInternationalRegattaPrizeSchedule } from "./internationalRegattaPrizes";
+import { EASTERN_SEABOARD_2026_PRIZES, EASTERN_SEABOARD_2026_PRIZE_SLUGS } from "./easternSeaboard2026Prizes";
+
+export { prizeNameKey };
 
 /**
  * Official Notice of Race (NoR) Prize Categories & Verified Winners
@@ -33,6 +37,8 @@ export type PrizeCategory = {
 };
 
 export type RegattaPrizeFleet = {
+  /** Explicit awards across all final fleets in this class, not per-fleet prizes. */
+  classWide?: boolean;
   /** Restrict awards to a separately scored division, e.g. Girls. */
   division?: string;
   fleetName: string;
@@ -40,15 +46,9 @@ export type RegattaPrizeFleet = {
   categories: PrizeCategory[];
 };
 
-/** Stable key for matching a prize name to a published result name. */
-export function prizeNameKey(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
-}
-
 export type RegattaPrizeSchedule = {
+  /** Use only the NoR categories, without adding unawarded finishing-place badges. */
+  recordedPodiumPolicy?: "official-categories-only";
   sourceDescription?: string;
   sourceUrl?: string;
   sourceKind?: "organiser-report" | "notice-of-race";
@@ -5138,6 +5138,7 @@ export const CSC_OPTIMIST_SILVER_2026_PRIZES: RegattaPrizeSchedule = {
 };
 
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+  EASTERN_SEABOARD_2026_PRIZES,
   ...INTERNATIONAL_REGATTA_PRIZE_SCHEDULES,
   CSC_OPTIMIST_GOLD_2026_PRIZES,
   CSC_OPTIMIST_SILVER_2026_PRIZES,
@@ -5167,6 +5168,7 @@ function slugHasAdjacentTokens(slug: string, left: string, right: string): boole
 
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
+  if (EASTERN_SEABOARD_2026_PRIZE_SLUGS.has(s)) return EASTERN_SEABOARD_2026_PRIZES;
   const international = getInternationalRegattaPrizeSchedule(s);
   if (international) return international;
   const aliases: Record<string, RegattaPrizeSchedule> = {
@@ -5350,6 +5352,7 @@ function fleetsForSlug(
   const fleets = schedule.fleets.filter((f) => {
     if (!resolved) return true;
     if (f.fleetName === resolved) return true;
+    if (f.classWide && resolved.startsWith(`${f.boatClass} `)) return true;
     const fleet = f.fleetName.toLowerCase();
     const want = resolved.toLowerCase();
     return fleet.startsWith("techno") && want.startsWith("techno");
@@ -5399,7 +5402,7 @@ export function getPrizeDefinitionsForSheet(sheet: { slug: string; boatClass?: s
   if (!schedule) return null;
   const key = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
   const fleets = schedule.fleets.filter((fleet) => (!fleet.division || key(fleet.division) === key(sheet.division || "")) && key(fleet.boatClass) === key(sheet.boatClass || "Optimist") &&
-    (!/gold|silver/i.test(sheet.division || "") || fleet.fleetName.toLowerCase().includes((sheet.division || "").toLowerCase())));
+    (fleet.classWide || !/gold|silver/i.test(sheet.division || "") || fleet.fleetName.toLowerCase().includes((sheet.division || "").toLowerCase())));
   return fleets.length ? { schedule, fleets } : null;
 }
 

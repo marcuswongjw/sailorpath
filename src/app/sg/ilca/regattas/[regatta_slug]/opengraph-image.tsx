@@ -2,7 +2,7 @@ import { renderResultShareImage, SHARE_IMAGE_SIZE } from "@/lib/og/shareImage";
 import { resolveClassScorecard } from "@/lib/publicShareData";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 export const alt = "SailorPath ILCA results";
 export const size = SHARE_IMAGE_SIZE;
 export const contentType = "image/png";

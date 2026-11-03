@@ -39,6 +39,6 @@ export const PUBLIC_CLASS_HUBS = [
     name: "iQFOiL",
     href: "/sg/iqfoil",
     tagline: "Published regatta results",
-    note: "Normalized class sheets, sailor results, and race scores.",
+    note: "Published scorecards, sailor results and individual race scores.",
   },
 ] as const;

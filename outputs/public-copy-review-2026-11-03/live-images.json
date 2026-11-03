@@ -1,0 +1,44 @@
+[
+  {
+    "image": "asian-championship-coverage.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 199730
+  },
+  {
+    "image": "asian-games-gamagori.jpg",
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": 77536
+  },
+  {
+    "image": "australia-youth-championships.jpg",
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": 78461
+  },
+  {
+    "image": "eastern-seaboard-pattaya.jpg",
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": 58726
+  },
+  {
+    "image": "profile-sharing.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 171183
+  },
+  {
+    "image": "public-sailing-record.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 154573
+  },
+  {
+    "image": "x15-class-guide.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": 185785
+  }
+]

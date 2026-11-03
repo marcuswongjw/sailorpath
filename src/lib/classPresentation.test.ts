@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { classDisplayLabels, classFilterKey, classFilterLabel, classFilterMatches, classFilterOptions, sailingClassDisplayLabel } from "./classPresentation";
+import { classDisplayLabels, classFilterKey, classFilterLabel, classFilterMatches, classFilterOptions, compareClassLabels, sailingClassDisplayLabel } from "./classPresentation";
 
 describe("public class presentation", () => {
   it("combines spelling aliases while retaining distinct board disciplines and ILCA rigs", () => {
@@ -11,7 +11,12 @@ describe("public class presentation", () => {
     expect(sailingClassDisplayLabel("WindFoil - Women")).toBe("Windfoil - Women");
     expect(sailingClassDisplayLabel("Optimist Gold")).toBe("Optimist Gold");
     expect(sailingClassDisplayLabel("Techno 293+")).toBe("Techno 293+");
-    expect(classDisplayLabels(["Wingfoil", "WingFoil", "Optimist Gold", "Optimist Silver"])).toEqual(["WingFoil", "Optimist Gold", "Optimist Silver"]);
+    expect(classDisplayLabels(["Wingfoil", "WingFoil", "Optimist Gold", "Optimist Silver"])).toEqual(["Optimist Gold", "Optimist Silver", "WingFoil"]);
+  });
+  it("alphabetises every regatta's classes and fleet suffixes without mutating the source", () => {
+    const classes = ["Optimist Silver", "ILCA 6 Open", "Optimist Gold", "ILCA 4 Open", "420", "29er"];
+    expect([...classes].sort(compareClassLabels)).toEqual(["29er", "420", "ILCA 4 Open", "ILCA 6 Open", "Optimist Gold", "Optimist Silver"]);
+    expect(classes[0]).toBe("Optimist Silver");
   });
   it("accepts old filter addresses without including neighbouring disciplines", () => {
     expect(classFilterLabel("Wingfoil")).toBe("WingFoil");
