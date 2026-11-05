@@ -19,6 +19,7 @@ type Owned = {
   handle: string;
   sailNumber: string;
   club: string;
+  ownerRelation?: string | null;
 };
 
 type Claim = {
@@ -340,7 +341,7 @@ function AccountInner() {
         onRespond={respondToInvite}
       />
 
-      <AccountWorkspaces isCoach={isCoach} isSuperadmin={isSuperadmin} />
+      <AccountWorkspaces isCoach={isCoach} isParent={role === "parent" || owned.some((sailor) => sailor.ownerRelation === "parent")} isSuperadmin={isSuperadmin} />
 
       {/* Managed profiles */}
       {!isCoach && (

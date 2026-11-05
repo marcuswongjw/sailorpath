@@ -18,7 +18,7 @@ describe("account workspace navigation", () => {
     state.role = "sailor";
     state.isSuperadmin = false;
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({
-      owned: [{ id: "sailor", name: "Test Sailor", handle: "test-sailor", sailNumber: "SGP 1", club: "CSC" }],
+      owned: [{ id: "sailor", name: "Test Sailor", handle: "test-sailor", sailNumber: "SGP 1", club: "CSC", ownerRelation: "sailor" }],
       claims: [], user: { id: "user", fullName: "Test Parent", email: "parent@example.com", role: state.role },
     }) }));
   });
@@ -27,7 +27,7 @@ describe("account workspace navigation", () => {
     const user = userEvent.setup();
     render(<AccountPage />);
     const sailing = await screen.findByRole("region", { name: "Continue your sailing" });
-    expect(within(sailing).getByRole("link", { name: /Family dashboard/ })).toHaveAttribute("href", "/account/parent");
+    expect(within(sailing).queryByRole("link", { name: /Family dashboard/ })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open logbook" })).toHaveAttribute("href", "/athlete?id=sailor");
     const summary = screen.getByText("Account settings", { selector: "summary" });
     const details = summary.closest("details")!;
@@ -37,6 +37,12 @@ describe("account workspace navigation", () => {
     expect(details).toHaveAttribute("open");
     expect(within(details).getByRole("button", { name: "Update password" })).toBeVisible();
     expect(within(details).getByRole("checkbox")).toBeChecked();
+  });
+
+  it("shows the family dashboard for parent accounts", async () => {
+    state.role = "parent";
+    render(<AccountPage />);
+    expect(await screen.findByRole("link", { name: /Family dashboard/ })).toHaveAttribute("href", "/account/parent");
   });
 
   it("keeps coach workspaces and admin links restricted to their existing roles", async () => {

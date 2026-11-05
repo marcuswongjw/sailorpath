@@ -1,11 +1,10 @@
 import Link from "next/link";
 
-export function AccountWorkspaces({ isCoach, isSuperadmin }: { isCoach: boolean; isSuperadmin: boolean }) {
+export function AccountWorkspaces({ isCoach, isParent, isSuperadmin }: { isCoach: boolean; isParent: boolean; isSuperadmin: boolean }) {
   const workspaces = [
     { href: "/athlete", title: "My logbook", description: "Add regatta results, source documents and equipment." },
-    ...(isCoach
-      ? [{ href: "/account/coach", title: "Squad dashboard", description: "Review your squad, results and development priorities." }]
-      : [{ href: "/account/parent", title: "Family dashboard", description: "See linked sailors, standings and race-day preparation." }]),
+    ...(isCoach ? [{ href: "/account/coach", title: "Squad dashboard", description: "Review your squad, results and development priorities." }] : []),
+    ...(isParent ? [{ href: "/account/parent", title: "Family dashboard", description: "See linked sailors, standings and race-day preparation." }] : []),
     { href: "/following", title: "Following", description: "Catch up on results for the sailors you follow." },
     ...(isSuperadmin
       ? [{ href: "https://admin.sailorpath.com/", title: "Admin console", description: "Review requests and maintain sailing records." }]

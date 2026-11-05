@@ -26,7 +26,7 @@ const serverHost = () => "";
 
 /** The public navigation is intentionally identical before and after sign-in. */
 export function SiteHeader() {
-  const { email, owned, ready, signOut } = useAccount();
+  const { email, owned, role, ready, signOut } = useAccount();
   const pathname = usePathname();
   const host = useSyncExternalStore(subscribeToHost, browserHost, serverHost);
   const adminPage =
@@ -53,7 +53,9 @@ export function SiteHeader() {
   }, []);
 
   const closeMobile = () => setMobileOpen(false);
-  const primaryProfile = owned[0];
+  const primaryProfile = owned.find((sailor) => sailor.ownerRelation === "sailor");
+  const showParentWorkspace = role === "parent" || owned.some((sailor) => sailor.ownerRelation === "parent");
+  const showCoachWorkspace = role === "coach";
 
   return (
     <header className="sticky top-0 z-[60] w-full border-b border-harbour-shadow bg-harbour text-sailcloth">
@@ -135,20 +137,20 @@ export function SiteHeader() {
                       My profile
                     </Link>
                   )}
-                  <Link
+                  {showParentWorkspace && <Link
                     href="/account/parent"
                     onClick={() => setAccountOpen(false)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
                   >
                     Parent workspace
-                  </Link>
-                  <Link
+                  </Link>}
+                  {showCoachWorkspace && <Link
                     href="/account/coach"
                     onClick={() => setAccountOpen(false)}
                     className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
                   >
                     Coach workspace
-                  </Link>
+                  </Link>}
                   <button
                     type="button"
                     onClick={() => void signOut()}
@@ -229,20 +231,27 @@ export function SiteHeader() {
                 >
                   Account
                 </Link>
-                <Link
+                {primaryProfile && <Link
+                  href={`/sailors/${primaryProfile.handle}`}
+                  onClick={closeMobile}
+                  className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid"
+                >
+                  My profile
+                </Link>}
+                {showParentWorkspace && <Link
                   href="/account/parent"
                   onClick={closeMobile}
                   className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid"
                 >
                   Parent workspace
-                </Link>
-                <Link
+                </Link>}
+                {showCoachWorkspace && <Link
                   href="/account/coach"
                   onClick={closeMobile}
                   className="rounded-lg px-3 py-2.5 text-sm font-semibold hover:bg-harbour-mid"
                 >
                   Coach workspace
-                </Link>
+                </Link>}
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-2">
