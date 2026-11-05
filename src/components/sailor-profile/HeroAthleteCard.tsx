@@ -623,7 +623,7 @@ export function HeroAthleteCard({
               </p>
               )}
             </div>
-            {rank.hasRank && (
+            {rank.hasRank && rank.basisDetail && (
               <p className="mt-2 text-[13px] leading-relaxed text-charcoal">{rank.basisDetail}</p>
             )}
           </div>
@@ -648,7 +648,7 @@ export function HeroAthleteCard({
                 {classRegattaCount}
               </p>
               <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
-                {activeClassLabel} logged
+                {activeClassLabel} {activeIsIlca ? "logged" : "regattas logged"}
               </p>
             </div>
 

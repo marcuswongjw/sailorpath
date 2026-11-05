@@ -75,7 +75,7 @@ export function describeProfileRank(input: {
       : kind === "official-list"
         ? "Official national list"
         : standing?.fleet
-          ? `${standing.fleet} fleet series`
+          ? standing.fleet.toLowerCase() === "gold" ? "Singapore Optimist Gold Fleet" : `${standing.fleet} fleet series`
           : "Series ranking";
 
   const basisDetail =
@@ -83,7 +83,7 @@ export function describeProfileRank(input: {
       ? `Calculated from recorded ${className} results. This sailor is not on the managed national ranking list.`
       : kind === "official-list"
         ? `Place on the managed ${className} national ranking list for this series.`
-        : "Optimist series rank for this ranking cycle.";
+        : "";
 
   return {
     hasRank: numbers != null,

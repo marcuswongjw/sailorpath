@@ -159,7 +159,7 @@ export function ProfilePerformanceSummary({
             </select>
           </label>
           <p className="text-[12px] text-slate-soft mt-0.5 mb-4 font-medium">
-            Finishing position by regatta (lower is better)
+            Finishing position by regatta
             {trendCaption}
           </p>
           {trendPoints.length >= 2 ? (

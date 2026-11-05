@@ -51,7 +51,7 @@ export function ProfileStandingCard({
               {standingIsIlca ? `${profileIlcaLabel(ilcaClass)} standing` : "Optimist standing"}
             </p>
             <p className="text-[13px] text-slate-soft mt-0.5">
-              Rank basis: {rank.basisLabel.toLowerCase()}
+              {standingIsIlca ? `Rank basis: ${rank.basisLabel.toLowerCase()}` : standing.fleet?.toLowerCase() === "gold" ? "Singapore Optimist Gold Fleet Ranking" : `Rank basis: ${rank.basisLabel.toLowerCase()}`}
             </p>
             <p className="text-[12px] text-slate-soft mt-0.5">{rank.cycleLabel}</p>
           </div>
@@ -71,7 +71,7 @@ export function ProfileStandingCard({
       </div>
 
       <p className="mt-3 text-[13px] leading-relaxed text-slate-soft">
-        Best three of five scoring events. {standingIsIlca ? "Higher points are better." : "Lower total scores are better."}
+        {standingIsIlca ? "Best three of five scoring events. Higher points are better." : "Best 3 out of 5 ranking regattas"}
       </p>
 
       {/* Desktop: 5-column score grid */}

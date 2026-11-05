@@ -113,8 +113,8 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByText("Singapore")).toBeInTheDocument();
 
     expect(screen.getByLabelText("4 of 68")).toBeInTheDocument();
-    expect(screen.getByText("Gold fleet series")).toBeInTheDocument();
-    expect(screen.getByText("Optimist series rank for this ranking cycle.")).toBeVisible();
+    expect(screen.getByText("Singapore Optimist Gold Fleet")).toBeInTheDocument();
+    expect(screen.queryByText("Optimist series rank for this ranking cycle.")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "What this rank means" })).toBeNull();
     expect(screen.queryByText("Status")).not.toBeInTheDocument();
     expect(screen.queryByText("Active competitor")).not.toBeInTheDocument();
@@ -124,7 +124,7 @@ describe("HeroAthleteCard", () => {
         screen.getByRole("group", { name: "15 Optimist regattas" })
       ).getByText("15")
     ).toBeInTheDocument();
-    expect(screen.getByText("Optimist logged")).toBeInTheDocument();
+    expect(screen.getByText("Optimist regattas logged")).toBeInTheDocument();
     expect(screen.getByText("6 awards")).toBeInTheDocument();
     expect(screen.getByText("View awards")).toBeInTheDocument();
     expect(screen.getByLabelText("Optimist")).toBeInTheDocument();

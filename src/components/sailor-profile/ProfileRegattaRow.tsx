@@ -14,6 +14,7 @@ import {
   ExternalLink,
   BookOpen,
 } from "lucide-react";
+import { qualifyingParticipation } from "@/lib/qualifyingParticipation";
 import { formatEventWhen } from "@/lib/profileUi";
 import {
   buildResultTags,
@@ -113,6 +114,7 @@ export function ProfileRegattaRow({
     (a, b) => a.raceNumber - b.raceNumber
   );
   const fleetSize = res.totalFleetSize ?? res.fleetSize;
+  const qualifyingCount = qualifyingParticipation(res.regattaSlug);
   const nonRanking = !regattaCountsForRanking(res);
   const canExpand =
     officialRaces.length > 0 ||
@@ -238,7 +240,7 @@ export function ProfileRegattaRow({
             isIlcaRow
               ? "High Ranking Points (1st = fleet size)"
               : fleetSize
-                ? `Place ${leftValue} of ${fleetSize} sailors`
+                ? `Place ${leftValue} of ${fleetSize} sailors in the final fleet`
                 : "Finishing place"
           }
         >
@@ -276,6 +278,9 @@ export function ProfileRegattaRow({
               .filter(Boolean)
               .join(" · ")}
           </p>
+          {qualifyingCount != null && (
+            <p className="mt-0.5 text-[13px] text-slate-soft">{qualifyingCount} sailors in qualifying</p>
+          )}
           {crewLabel && (
             <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] font-semibold text-harbour">
               <span>Crew entry ·</span>

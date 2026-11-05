@@ -45,7 +45,7 @@ describe("describeProfileRank", () => {
         fleet: "Gold",
       },
     });
-    expect(ranked.basisLabel).toBe("Gold fleet series");
+    expect(ranked.basisLabel).toBe("Singapore Optimist Gold Fleet");
     expect(ranked.rankLabel).toBe("4 of 68");
 
     const empty = describeProfileRank({

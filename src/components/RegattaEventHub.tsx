@@ -4,6 +4,7 @@ import { compareClassLabels } from "@/lib/classPresentation";
 import { searchSailorsEnhanced } from "@/lib/search";
 import { RegattaFleetPodium } from "@/components/RegattaFleetPodium";
 import { prizeWinnerProfileHandles } from "@/lib/prizeWinnerProfiles";
+import { qualifyingParticipation } from "@/lib/qualifyingParticipation";
 import { organiserResultStatus } from "@/lib/resultCardStatus";
 import { ResultStatus } from "@/components/ResultStatus";
 import { withPublishedEventSlices } from "@/lib/regattaEventGroups";
@@ -63,7 +64,8 @@ function prizeViewForSlice(event: RegattaEventDef, slice: ResolvedEventSlice) {
 
 function sliceStatusText(slice: ResolvedEventSlice): string {
   if (slice.regatta) {
-    return `${organiserResultStatus(slice.regatta)} · ${slice.regatta.totalFleetSize} competitors`;
+    const qualifyingCount = qualifyingParticipation(slice.regatta.slug);
+    return `${organiserResultStatus(slice.regatta)} · ${slice.regatta.totalFleetSize} competitors${qualifyingCount ? ` · ${qualifyingCount} in qualifying` : ""}`;
   }
   const avail = getSliceResultAvailability(slice);
   if (avail.status === "unavailable") {
