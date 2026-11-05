@@ -32,10 +32,10 @@ describe("WingfoilView", () => {
     render(<WingfoilView />);
 
     expect(screen.getByText("WingFoil")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Event calendar/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Published results/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /^Scorecard$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Calendar$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Results$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Series standings$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Race scorecards$/i })).toBeInTheDocument();
 
     // Default tab is Regattas table
     expect(screen.getByText("2025 Northeast Monsoon Grand Prix Series 2")).toBeInTheDocument();
@@ -44,10 +44,10 @@ describe("WingfoilView", () => {
   it("verifies Singapore Series and Rules & Format tabs are dropped", () => {
     render(<WingfoilView />);
 
-    expect(screen.getByRole("button", { name: /Event calendar/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Published results/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /^Scorecard$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Calendar$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Results$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Series standings$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Race scorecards$/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
     expect(screen.queryByRole("button", { name: /Rules & Format/i })).toBeNull();
   });
@@ -56,7 +56,7 @@ describe("WingfoilView", () => {
     render(<WingfoilView />);
 
     // Switch to Overall Championship
-    const champTab = screen.getByRole("button", { name: /Overall Championship/i });
+    const champTab = screen.getByRole("button", { name: /^Series standings$/i });
     fireEvent.click(champTab);
 
     // By default, NE Monsoon is selected in series view
@@ -78,7 +78,7 @@ describe("WingfoilView", () => {
   it("switches to Scorecard and renders regatta select dropdown & gender pills", () => {
     render(<WingfoilView />);
 
-    const resultsTab = screen.getByRole("button", { name: /^Scorecard$/i });
+    const resultsTab = screen.getByRole("button", { name: /^Race scorecards$/i });
     fireEvent.click(resultsTab);
 
     // Regatta dropdown
@@ -111,9 +111,9 @@ describe("WingfoilView", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /Published results/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^Results$/i }));
 
     expect(screen.getByText("Unregistered WingFoil Round")).toBeInTheDocument();
-    expect(screen.getByText("Specialist scorecard")).toBeInTheDocument();
+    expect(screen.getByText("Race scorecard")).toBeInTheDocument();
   });
 });

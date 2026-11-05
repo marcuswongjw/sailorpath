@@ -32,12 +32,12 @@ describe("Techno293View", () => {
     render(<Techno293View />);
 
     expect(screen.getByText("Techno 293")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Event calendar/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Published results/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /^Scorecard$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Calendar$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Results$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Series standings$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Race scorecards$/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
-    expect(screen.getByRole("button", { name: /Class Specs/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Class information/i })).toBeInTheDocument();
 
     // Default tab is Regattas table
     expect(screen.getByText("2025 Northeast Monsoon Grand Prix Series 2")).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("Techno293View", () => {
   it("switches to Overall Championship and displays series leader", () => {
     render(<Techno293View />);
 
-    const champTab = screen.getByRole("button", { name: /Overall Championship/i });
+    const champTab = screen.getByRole("button", { name: /^Series standings$/i });
     fireEvent.click(champTab);
 
     // Trevor Ng is the series leader in SW series
@@ -56,7 +56,7 @@ describe("Techno293View", () => {
   it("switches to Scorecard and renders regatta select dropdown & gender pills", () => {
     render(<Techno293View />);
 
-    const resultsTab = screen.getByRole("button", { name: /^Scorecard$/i });
+    const resultsTab = screen.getByRole("button", { name: /^Race scorecards$/i });
     fireEvent.click(resultsTab);
 
     // Regatta dropdown combobox
@@ -74,7 +74,7 @@ describe("Techno293View", () => {
   it("switches to Class Specs tab", () => {
     render(<Techno293View />);
 
-    const specsTab = screen.getByRole("button", { name: /Class Specs/i });
+    const specsTab = screen.getByRole("button", { name: /Class information/i });
     fireEvent.click(specsTab);
 
     expect(screen.getByText(/Techno 293 One Design Class Overview/i)).toBeInTheDocument();

@@ -24,7 +24,6 @@ import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { BoardClassHeader } from "@/components/board/BoardClassHeader";
 import {
-  boardClassSourceCounts,
   type BoardClassSourceCounts,
 } from "@/lib/boardClassHub";
 import { WingfoilSeriesView } from "./WingfoilSeriesView";
@@ -35,7 +34,6 @@ export function WingfoilView({
   initialRegattaId,
   initialPublishedRows,
   initialCalendarRows,
-  sourceCounts,
 }: {
   initialRegattas?: WingfoilRegatta[];
   initialTab?: "regattas" | "scorecards" | "series" | "results";
@@ -125,21 +123,17 @@ export function WingfoilView({
     [publishedRegattas]
   );
   const publishedResultRows = initialPublishedRows || publishedScorecardRows;
-  const publishedSourceCounts = sourceCounts || boardClassSourceCounts(publishedResultRows);
   const calendarRows = initialCalendarRows || getClassRegattas("wingfoil");
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
-      <BoardClassHeader
-        classKey="wingfoil"
-        publishedRecordCount={publishedResultRows.length}
-        sourceCounts={publishedSourceCounts}
-      />
+      <BoardClassHeader classKey="wingfoil" />
 
       <nav aria-label="WingFoil sections" className="flex items-center gap-1.5 rounded-xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] p-1 overflow-x-auto max-w-full shadow-xs">
           <button
             type="button"
             onClick={() => setActiveTab("regattas")}
+            aria-pressed={activeTab === "regattas"}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "regattas"
                 ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs font-black"
@@ -147,11 +141,12 @@ export function WingfoilView({
             }`}
           >
             <Calendar className="h-3.5 w-3.5" />
-            Event calendar
+            Calendar
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("scorecards")}
+            aria-pressed={activeTab === "scorecards"}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "scorecards"
                 ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs font-black"
@@ -159,11 +154,12 @@ export function WingfoilView({
             }`}
           >
             <Trophy className="h-3.5 w-3.5" />
-            Published results
+            Results
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("series")}
+            aria-pressed={activeTab === "series"}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "series"
                 ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs font-black"
@@ -171,18 +167,19 @@ export function WingfoilView({
             }`}
           >
             <Trophy className="h-3.5 w-3.5" />
-            Overall Championship
+            Series standings
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("results")}
+            aria-pressed={activeTab === "results"}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${
               activeTab === "results"
                 ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs font-black"
                 : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             }`}
           >
-            Scorecard
+            Race scorecards
           </button>
       </nav>
 
@@ -190,8 +187,7 @@ export function WingfoilView({
       {activeTab === "regattas" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
-            The event calendar is a schedule and discovery list. Use <strong>Published results</strong>{" "}
-            to browse every record currently visible on this class page.
+            Upcoming and past events for this class.
           </p>
           <ClassRegattaListTable
             classNameTitle="WingFoil"
@@ -203,7 +199,7 @@ export function WingfoilView({
       {activeTab === "scorecards" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-cool-veil bg-aqua-mist px-3 py-2 text-sm text-harbour-shadow">
-            Browse WingFoil event results and race scorecards. Some events may appear in both formats.
+            Find event results and race scorecards. Some events have more than one result sheet.
           </p>
           <ClassRegattaListTable
             classNameTitle="WingFoil"

@@ -16,22 +16,10 @@ export default async function IQFoilPage() {
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 space-y-5 px-3 py-8 sm:space-y-6 sm:px-6 sm:py-10 lg:px-8">
-      <BoardClassHeader
-        classKey="iqfoil"
-        publishedRecordCount={data.publishedRows.length}
-        sourceCounts={data.sourceCounts}
-      />
+      <BoardClassHeader classKey="iqfoil" />
 
       <section className="space-y-3" aria-labelledby="iqfoil-results-title">
-        <div className="rounded-xl border border-sky-200 bg-sky-50 px-3 py-2.5 text-xs leading-relaxed text-sky-950">
-          <h2 id="iqfoil-results-title" className="font-black text-sky-950">
-            Published results
-          </h2>
-          <p className="mt-1">
-            Browse published iQFOiL scorecards, individual race scores and linked
-            sailor histories. Each scorecard keeps its event and fleet context.
-          </p>
-        </div>
+        <h2 id="iqfoil-results-title" className="text-lg font-bold text-harbour-shadow">Results</h2>
 
         <ClassRegattaListTable classNameTitle="iQFOiL" regattas={data.publishedRows} />
       </section>

@@ -1,13 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import {
-  Search,
-  Trophy,
-  MapPin,
-  ChevronRight,
-} from "lucide-react";
+import { ChevronRight, MapPin, Search } from "lucide-react";
 import type { PublicClassRegattaRow } from "@/lib/publicDataLoader";
 
 export type ClassRegattaListTableProps = {
@@ -15,198 +9,70 @@ export type ClassRegattaListTableProps = {
   classNameTitle: string;
 };
 
-export function ClassRegattaListTable({ regattas }: ClassRegattaListTableProps) {
-  const [selectedYear, setSelectedYear] = useState<string>("all");
+export function ClassRegattaListTable({ regattas, classNameTitle }: ClassRegattaListTableProps) {
+  const [selectedYear, setSelectedYear] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState<"all" | "upcoming" | "past">("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-
-  const availableYears = useMemo(() => {
-    const years = new Set<string>();
-    for (const r of regattas) {
-      if (r.startDate) years.add(r.startDate.slice(0, 4));
-    }
-    return Array.from(years).sort((a, b) => b.localeCompare(a));
-  }, [regattas]);
-
-  const filteredRegattas = useMemo(() => {
-    return regattas.filter((r) => {
-      // Year filter
-      if (selectedYear !== "all" && !r.startDate.startsWith(selectedYear)) {
-        return false;
-      }
-      // Status filter
-      if (selectedStatus === "upcoming" && r.timingStatus === "completed") {
-        return false;
-      }
-      if (selectedStatus === "past" && r.timingStatus !== "completed") {
-        return false;
-      }
-      // Search
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const matchName = r.name.toLowerCase().includes(q);
-        const matchVenue = (r.venue || "").toLowerCase().includes(q);
-        const matchRound = (r.roundLabel || "").toLowerCase().includes(q);
-        if (!matchName && !matchVenue && !matchRound) return false;
-      }
-      return true;
-    });
+  const [searchQuery, setSearchQuery] = useState("");
+  const years = useMemo(() => [...new Set(regattas.map((row) => row.startDate.slice(0, 4)).filter(Boolean))].sort((a, b) => b.localeCompare(a)), [regattas]);
+  const filtered = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return regattas.filter((row) =>
+      (selectedYear === "all" || row.startDate.startsWith(selectedYear)) &&
+      (selectedStatus === "all" || (selectedStatus === "past" ? row.timingStatus === "completed" : row.timingStatus !== "completed")) &&
+      (!query || [row.name, row.venue, row.roundLabel].some((value) => value?.toLowerCase().includes(query)))
+    );
   }, [regattas, selectedYear, selectedStatus, searchQuery]);
 
   return (
-    <div className="space-y-4">
-      {/* Controls row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--sp-warm-white)] rounded-2xl border border-[var(--sp-cool-veil)] p-3.5 shadow-xs">
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Year selector */}
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs font-semibold text-[var(--sp-slate-soft)]">Year:</span>
-            <select
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3 py-1.5 text-xs font-bold text-[var(--sp-harbour-shadow)] focus:outline-none focus:border-[var(--sp-harbour-teal)]"
-            >
-              <option value="all">All years</option>
-              {availableYears.map((y) => (
-                <option key={y} value={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Status buttons */}
-          <div className="flex items-center gap-1 bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-xl p-1">
-            {(["all", "upcoming", "past"] as const).map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => setSelectedStatus(s)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                  selectedStatus === s
-                    ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
-                    : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
-                }`}
-              >
-                {s === "all" ? "All" : s === "upcoming" ? "Upcoming" : "Past"}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Search */}
-        <div className="relative w-full sm:w-60">
-          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search regatta or venue…"
-            className="sp-input w-full !pl-9 !py-1.5 text-xs"
-          />
-        </div>
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-end gap-3 rounded-2xl border border-cool-veil bg-warm-white p-4">
+        <label className="min-w-0 flex-1 sm:min-w-52">
+          <span className="mb-1 block text-xs font-semibold text-slate-soft">Search {classNameTitle} events</span>
+          <span className="relative block">
+            <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-soft" />
+            <input type="search" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Regatta or venue" className="sp-input w-full !pl-9 !py-2 text-sm" />
+          </span>
+        </label>
+        <label>
+          <span className="mb-1 block text-xs font-semibold text-slate-soft">Year</span>
+          <select value={selectedYear} onChange={(event) => setSelectedYear(event.target.value)} className="min-h-10 rounded-xl border border-cool-veil bg-sailcloth px-3 text-sm font-semibold text-harbour-shadow">
+            <option value="all">All years</option>
+            {years.map((year) => <option key={year} value={year}>{year}</option>)}
+          </select>
+        </label>
+        <label>
+          <span className="mb-1 block text-xs font-semibold text-slate-soft">When</span>
+          <select value={selectedStatus} onChange={(event) => setSelectedStatus(event.target.value as typeof selectedStatus)} className="min-h-10 rounded-xl border border-cool-veil bg-sailcloth px-3 text-sm font-semibold text-harbour-shadow">
+            <option value="all">All events</option><option value="upcoming">Upcoming / in progress</option><option value="past">Past</option>
+          </select>
+        </label>
       </div>
-
-      {/* Regattas Table Layout */}
-      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] overflow-hidden shadow-xs">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 text-[var(--sp-slate-soft)] uppercase tracking-wider font-bold">
-                <th className="py-3 px-4 min-w-[140px]">Dates</th>
-                <th className="py-3 px-4 min-w-[240px]">Regatta</th>
-                <th className="py-3 px-4 min-w-[160px]">Venue</th>
-                <th className="py-3 px-4 min-w-[180px]">Results</th>
-                <th className="py-3 px-4 text-right w-16"></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--sp-cool-veil)]">
-              {filteredRegattas.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="py-8 text-center text-slate-400">
-                    No regattas matching your filters.
-                  </td>
-                </tr>
-              ) : (
-                filteredRegattas.map((row) => (
-                  <tr
-                    key={row.id}
-                    className="hover:bg-[var(--sp-sailcloth)]/50 transition-colors group cursor-pointer"
-                    onClick={() => {
-                      window.location.href = row.canonicalHref;
-                    }}
-                  >
-                    <td className="py-3.5 px-4 font-mono font-bold text-[var(--sp-charcoal)] whitespace-nowrap">
-                      {row.datesText}
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <div className="space-y-0.5">
-                        <Link prefetch={false}
-                          href={row.canonicalHref}
-                          className="font-black text-sm text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-racing-orange)] transition-colors inline-flex items-center gap-1.5"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span>{row.name}</span>
-                        </Link>
-                        {row.roundLabel && (
-                          <div className="flex items-center gap-1.5 text-[11px] text-amber-800">
-                            <Trophy className="h-3 w-3 text-amber-600 shrink-0" />
-                            <span>
-                              {row.seriesLink?.seriesName} · <strong>{row.roundLabel}</strong>
-                            </span>
-                          </div>
-                        )}
-                        {row.source && (
-                          <span
-                            className={`inline-flex rounded-full border px-2 py-0.5 text-[10px] font-bold ${
-                              row.source.kind === "normalized_result"
-                                ? "border-sky-200 bg-sky-50 text-sky-800"
-                                : row.source.kind === "special_scorecard"
-                                  ? "border-violet-200 bg-violet-50 text-violet-800"
-                                  : "border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]"
-                            }`}
-                          >
-                            {row.source.label}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4 text-[var(--sp-charcoal-slate)]">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3 text-[var(--sp-slate-soft)] shrink-0" />
-                        <span>{row.venue}</span>
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
-                          row.resultStatus === "final"
-                            ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                            : row.resultStatus === "provisional"
-                            ? "bg-amber-50 text-amber-800 border border-amber-200"
-                            : "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]"
-                        }`}
-                      >
-                        {row.resultsSummary}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-right">
-                      <Link prefetch={false}
-                        href={row.canonicalHref}
-                        className="text-[var(--sp-slate-soft)] group-hover:text-[var(--sp-harbour-teal)] transition-colors inline-block"
-                        onClick={(e) => e.stopPropagation()}
-                        aria-label={`View ${row.name}`}
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {filtered.length === 0 ? (
+        <p className="rounded-2xl border border-cool-veil bg-warm-white p-6 text-sm text-slate-soft">No events match your filters.</p>
+      ) : (
+        <ul className="divide-y divide-cool-veil overflow-hidden rounded-2xl border border-cool-veil bg-warm-white">
+          {filtered.map((row) => (
+            <li key={`${row.source?.kind ?? "event"}:${row.id}`}>
+              <a href={row.canonicalHref} className="group flex items-center gap-3 px-4 py-4 hover:bg-sailcloth focus-visible:outline-2 focus-visible:outline-harbour sm:px-5">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <span className="text-sm font-bold text-harbour-shadow group-hover:text-harbour">{row.name}</span>
+                    <span className="text-xs font-semibold text-slate-soft">{row.datesText}</span>
+                  </div>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-soft">
+                    {row.venue && <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" aria-hidden="true" />{row.venue}</span>}
+                    {row.roundLabel && <span>{row.seriesLink?.seriesName ? `${row.seriesLink.seriesName} · ` : ""}{row.roundLabel}</span>}
+                    {row.source?.kind === "special_scorecard" && <span>Race scorecard</span>}
+                    {row.source?.kind === "normalized_result" && <span>Event result</span>}
+                  </div>
+                  <span className={`mt-2 inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${row.resultStatus === "final" ? "bg-emerald-50 text-emerald-800" : row.resultStatus === "provisional" ? "bg-amber-50 text-amber-800" : "bg-sailcloth text-slate-soft"}`}>{row.resultsSummary.replace(/^(?:Specialist|Published) scorecard(?: · )?/i, "") || "Results available"}</span>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-slate-soft group-hover:text-harbour" aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

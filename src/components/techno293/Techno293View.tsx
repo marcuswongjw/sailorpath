@@ -28,7 +28,6 @@ import {
 import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
 import { BoardClassHeader } from "@/components/board/BoardClassHeader";
 import {
-  boardClassSourceCounts,
   type BoardClassSourceCounts,
 } from "@/lib/boardClassHub";
 import { Techno293SeriesView } from "./Techno293SeriesView";
@@ -39,7 +38,6 @@ export function Techno293View({
   initialRegattaId,
   initialPublishedRows,
   initialCalendarRows,
-  sourceCounts,
 }: {
   initialRegattas?: Techno293Regatta[];
   initialTab?: "regattas" | "scorecards" | "series" | "results" | "specs";
@@ -134,21 +132,17 @@ export function Techno293View({
     [publishedRegattas]
   );
   const publishedResultRows = initialPublishedRows || publishedScorecardRows;
-  const publishedSourceCounts = sourceCounts || boardClassSourceCounts(publishedResultRows);
   const calendarRows = initialCalendarRows || getClassRegattas("techno293");
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
-      <BoardClassHeader
-        classKey="techno293"
-        publishedRecordCount={publishedResultRows.length}
-        sourceCounts={publishedSourceCounts}
-      />
+      <BoardClassHeader classKey="techno293" />
 
       <nav aria-label="Techno 293 sections" className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shadow-xs">
           <button
             type="button"
             onClick={() => setActiveTab("regattas")}
+            aria-pressed={activeTab === "regattas"}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "regattas"
                 ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
@@ -156,11 +150,12 @@ export function Techno293View({
             }`}
           >
             <Calendar className="h-3.5 w-3.5" />
-            <span>Event calendar</span>
+            <span>Calendar</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("scorecards")}
+            aria-pressed={activeTab === "scorecards"}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "scorecards"
                 ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
@@ -168,11 +163,12 @@ export function Techno293View({
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
-            <span>Published results</span>
+            <span>Results</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("series")}
+            aria-pressed={activeTab === "series"}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "series"
                 ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
@@ -180,11 +176,12 @@ export function Techno293View({
             }`}
           >
             <Trophy className="h-3.5 w-3.5" />
-            <span>Overall Championship</span>
+            <span>Series standings</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("results")}
+            aria-pressed={activeTab === "results"}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "results"
                 ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
@@ -192,11 +189,12 @@ export function Techno293View({
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
-            <span>Scorecard</span>
+            <span>Race scorecards</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("specs")}
+            aria-pressed={activeTab === "specs"}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "specs"
                 ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
@@ -204,7 +202,7 @@ export function Techno293View({
             }`}
           >
             <FileText className="h-3.5 w-3.5" />
-            <span>Class Specs</span>
+            <span>Class information</span>
           </button>
       </nav>
 
@@ -212,8 +210,7 @@ export function Techno293View({
       {activeTab === "regattas" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs text-[var(--sp-charcoal-slate)]">
-            The event calendar is a schedule and discovery list. Use <strong>Published results</strong>{" "}
-            to browse every record currently visible on this class page.
+            Upcoming and past events for this class.
           </p>
           <ClassRegattaListTable
             classNameTitle="Techno 293"
@@ -225,7 +222,7 @@ export function Techno293View({
       {activeTab === "scorecards" && (
         <div className="space-y-3">
           <p className="rounded-xl border border-cool-veil bg-aqua-mist px-3 py-2 text-sm text-harbour-shadow">
-            Browse Techno 293 event results and race scorecards. Some events may appear in both formats. Open Overall Championship for combined series standings.
+            Find event results and race scorecards. Some events have more than one result sheet.
           </p>
           <ClassRegattaListTable
             classNameTitle="Techno 293"
@@ -234,7 +231,7 @@ export function Techno293View({
         </div>
       )}
 
-      {/* Tab 1: Overall Championship */}
+      {/* Tab 1: Series standings */}
       {activeTab === "series" && (
         <Techno293SeriesView
           regattas={publishedRegattas}

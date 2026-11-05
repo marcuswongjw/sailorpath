@@ -9,7 +9,12 @@ describe("rankings hub", () => {
     expect(html).toContain('href="/classes/optimist"');
     expect(html).toContain('href="/sg/optimist/gold"');
     expect(html).toContain('href="/sg/optimist/silver"');
-    expect(html).toContain('href="/sg/wingfoil"');
+    expect(html).toContain("Singapore Optimist Gold Fleet ranking");
+    expect(html).toContain("Singapore Optimist Silver Fleet ranking");
+    expect(html).toContain("Singapore ILCA 4 national ranking");
+    expect(html).toContain("Singapore ILCA 6 national ranking");
+    for (const path of ["/sg/ilca7", "/sg/wingfoil", "/sg/techno293", "/sg/iqfoil"]) expect(html).not.toContain(`href="${path}"`);
+    expect(html).not.toContain("Windsurfing &amp; Foiling");
     expect(html).not.toContain("/classes/x15");
     expect(html).not.toContain("X-15");
   });
