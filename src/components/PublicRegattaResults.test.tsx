@@ -85,7 +85,7 @@ describe("PublicRegattaResults", () => {
 
     expect(html).toContain("R1");
     expect(html).toContain("R6");
-    expect(html).toContain("2 published race scores");
+    expect(html).not.toContain("<article");
     expect(html).toContain("(78 DSQ)");
     expect(html).toContain('title="Discarded score"');
   });

@@ -21,35 +21,30 @@ function result(id: string, name: string, rank: number): Result {
 }
 
 describe("public result comparison", () => {
-  it("keeps both views in the same sort order when switching views", async () => {
+  it("shows one score table immediately and sorts it from the mobile controls", async () => {
     const user = userEvent.setup();
     render(<PublicRegattaResults accent="orange" totalFleetSize={12} results={[result("b","Beta Sailor",2),result("a","Alpha Sailor",1)]} />);
-    const cardsButton = screen.getByRole("button",{name:"Sailor cards"});
-    const comparisonButton = screen.getByRole("button",{name:"Compare scores"});
-    const cards = document.getElementById(cardsButton.getAttribute("aria-controls")!)!;
-    const cardNames = () => within(cards).getAllByRole("article").map((card) => within(card).getByRole("link").textContent);
-    const tableNames = () => within(screen.getByRole("table",{name:"Regatta results"})).getAllByRole("row").slice(1).map((row) => within(row).getByRole("link").textContent);
-    expect(cardNames()).toEqual(["Alpha Sailor","Beta Sailor"]);
-    expect(tableNames()).toEqual(cardNames());
-
-    await user.selectOptions(screen.getByRole("combobox",{name:"Sort results"}),"name");
-    await user.click(screen.getByRole("button",{name:"Change to descending order"}));
-    expect(cardNames()).toEqual(["Beta Sailor","Alpha Sailor"]);
-    await user.click(comparisonButton);
-    expect(comparisonButton).toHaveAttribute("aria-pressed","true");
-    expect(cardsButton).toHaveAttribute("aria-pressed","false");
-    expect(tableNames()).toEqual(cardNames());
-    await user.click(cardsButton);
-    expect(cardsButton).toHaveAttribute("aria-pressed","true");
-    expect(cardNames()).toEqual(["Beta Sailor","Alpha Sailor"]);
+    const region = screen.getByRole("region", { name: "Scrollable regatta results" });
+    expect(region).not.toHaveClass("hidden");
+    expect(screen.getAllByRole("table")).toHaveLength(1);
+    expect(screen.queryByRole("article")).toBeNull();
+    const tableNames = () => within(screen.getByRole("table", { name: "Regatta results" }))
+      .getAllByRole("row").slice(1).map((row) => within(row).getByRole("link").textContent);
+    expect(tableNames()).toEqual(["Alpha Sailor", "Beta Sailor"]);
+    for (const name of ["Nationality", "Gender", "Birth year", "R1", "R2", "R3", "Total", "Nett"]) {
+      expect(screen.getByRole("columnheader", { name })).not.toHaveClass("hidden");
+    }
+    await user.selectOptions(screen.getByRole("combobox", { name: "Sort results" }), "name");
+    await user.click(screen.getByRole("button", { name: "Change to descending order" }));
+    expect(tableNames()).toEqual(["Beta Sailor", "Alpha Sailor"]);
   });
 
   it("keeps penalty notation and exposes both its meaning and discard status", () => {
     render(<PublicRegattaResults accent="sky" totalFleetSize={12} results={[result("b","Beta Sailor",2)]} />);
     const score = screen.getAllByTitle("Race 3: (12 DSQ). Discarded score. DSQ: Entry disqualified from the race.");
-    expect(score).toHaveLength(2);
+    expect(score).toHaveLength(1);
     for (const cell of score) expect(within(cell).getByText("(12 DSQ)")).toHaveAttribute("aria-hidden","true");
-    expect(screen.getByText("Discarded",{exact:true})).toBeInTheDocument();
+    expect(score[0]).toHaveClass("line-through");
     expect(screen.getByTitle("Race 2: score unavailable.")).toBeInTheDocument();
   });
 
