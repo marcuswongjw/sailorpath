@@ -37,6 +37,8 @@ type Fleet =
   | "gold"
   | "class-a"
   | "class-b"
+  | "class-c"
+  | `${"ilca6" | "29er" | "420" | "iqfoil"}-${"boys" | "girls"}`
   | "29er"
   | "windfoil"
   | "windsurfing-lt"
@@ -99,6 +101,11 @@ function mentionsWindsurfing(
 function publicFleet(row: RegattaRecord): Fleet | null {
   const boat = String(row.boatClass || "");
   const classKey = sailingClassKeyOf(boat);
+  const division = String(row.division || "").trim().toLowerCase();
+  if (classKey && ["ilca6", "29er", "420", "iqfoil"].includes(classKey) &&
+      (division === "boys" || division === "girls")) {
+    return `${classKey}-${division}` as Fleet;
+  }
   if (classKey === "x15") {
     const division = String(row.division || "Open").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     return `x15-${division || "open"}`;
@@ -134,9 +141,9 @@ function publicFleet(row: RegattaRecord): Fleet | null {
   const blob = `${row.division || ""} ${row.name} ${row.slug}`.toLowerCase();
   if (classKey === "optimist") {
     const division = String(row.division || "").trim().toLowerCase();
-    const classFleet = division.match(/^(?:optimist\s*)?class[\s_-]*([ab])$/)
-      || blob.match(/\bclass[\s_-]*([ab])\b/);
-    if (classFleet) return classFleet[1] === "a" ? "class-a" : "class-b";
+    const classFleet = division.match(/^(?:optimist\s*)?class[\s_-]*([abc])$/)
+      || blob.match(/\bclass[\s_-]*([abc])\b/);
+    if (classFleet) return `class-${classFleet[1]}` as Fleet;
     if (
       division === "main" || division === "intermediate" || division === "green" || division === "newborn" || division === "novice" ||
       division === "boys" || division === "girls" ||
@@ -182,11 +189,19 @@ function formatDay(ymd: string): string {
 }
 
 function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
+  const dividedClass = /^(ilca6|29er|420|iqfoil)-(boys|girls)$/.exec(fleet);
+  if (dividedClass) {
+    const series = dividedClass[1] as "ilca6" | "29er" | "420" | "iqfoil";
+    const division = dividedClass[2] === "boys" ? "Boys" : "Girls";
+    const label = `${{ ilca6: "ILCA 6", "29er": "29er", "420": "420", iqfoil: "iQFOiL" }[series]} ${division}`;
+    return { key: series === "ilca6" ? `ilca-6-${dividedClass[2]}` : fleet,
+      label, series, slugIncludes: [row.slug.toLowerCase()], prizeFleetName: label };
+  }
   if (fleet.startsWith("x15-")) {
     return { key: fleet, label: `X-15 ${row.division?.trim() || "Open"}`,
       series: "x15", slugIncludes: [row.slug.toLowerCase()] };
   }
-  if (fleet === "class-a" || fleet === "class-b") {
+  if (fleet === "class-a" || fleet === "class-b" || fleet === "class-c") {
     const label = `Optimist Class ${fleet.slice(-1).toUpperCase()}`;
     return { key: `optimist-${fleet}`, label, series: "optimist",
       slugIncludes: [row.slug.toLowerCase()], prizeFleetName: label };
@@ -328,6 +343,7 @@ const FLEET_ORDER: Fleet[] = [
   "silver",
   "class-a",
   "class-b",
+  "class-c",
   "main",
   "intermediate",
   "green",
@@ -343,12 +359,20 @@ const FLEET_ORDER: Fleet[] = [
   "ilca4-girls",
   "ilca4",
   "ilca6",
+  "ilca6-boys",
+  "ilca6-girls",
   "ilca7",
   "420",
+  "420-boys",
+  "420-girls",
   "29er",
+  "29er-boys",
+  "29er-girls",
   "wingfoil",
   "techno293",
   "iqfoil",
+  "iqfoil-boys",
+  "iqfoil-girls",
   "windfoil",
   "windsurfing-lt",
   "windsurfing",

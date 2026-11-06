@@ -1,0 +1,448 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214831",
+    "title": "2026ユースワールド代表選考 最終成績 420 Girls",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "d9638547b01eb5423984ffffd99d5ed900e2354355dbdb1a2146dda2d876ecf0"
+  },
+  "event": {
+    "slug": "japan-youth-worlds-selection-2026",
+    "name": "Japan Youth Worlds Selection Regatta 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-03",
+    "venue": "Sakaiminato Public Marina, Tottori, Japan",
+    "organizer": "Japan Sailing Federation and Tottori Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213070",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/16264/event",
+    "classes": [
+      "29er",
+      "420",
+      "ILCA 6",
+      "iQFOiL"
+    ],
+    "geography": "JPN",
+    "isSelectionTrial": true
+  },
+  "sheet": {
+    "slug": "japan-youth-worlds-selection-2026-420-girls",
+    "name": "Japan Youth Worlds Selection Regatta 2026 — 420 Girls",
+    "boatClass": "420",
+    "division": "Girls",
+    "raceCount": 10,
+    "totalFleetSize": 3,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "crew"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "村中 莉子 / 井口 梨沙",
+      "club": "鳥取県セーリング連盟",
+      "sailOrBoardNumber": "56085",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 15.0,
+      "nettScore": 12.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3)",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "2 / 1 / 1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "2 / 1 / 1"
+        }
+      ],
+      "participants": [
+        {
+          "name": "村中 莉子",
+          "role": "unknown",
+          "sailorId": "3d7d17df-71ad-4195-b41d-abdebbed13bc",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        },
+        {
+          "name": "井口 梨沙",
+          "role": "unknown",
+          "sailorId": "8ee0b341-b6ba-5089-aa24-d2846276d9cb",
+          "newProfile": {
+            "id": "8ee0b341-b6ba-5089-aa24-d2846276d9cb",
+            "name": "井口 梨沙",
+            "handle": "jpn-rrs26-41555bae0010",
+            "sailNumber": "56085",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "鳥取県セーリング連盟",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "3d7d17df-71ad-4195-b41d-abdebbed13bc",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 2,
+      "name": "福島 笑莉 / 實松 莉歩",
+      "club": "三重県立津工業高等学校/霞ヶ浦高等学校",
+      "sailOrBoardNumber": "55053",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 23.0,
+      "nettScore": 19.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(4 NSC)",
+          "sourceRaceDetail": "NSC / NSC / 4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "4 RET",
+          "sourceRaceDetail": "1 / RET / 4"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "4 DNE",
+          "sourceRaceDetail": "1 / DNE / 4"
+        }
+      ],
+      "participants": [
+        {
+          "name": "福島 笑莉",
+          "role": "unknown",
+          "sailorId": "96a88fad-d8a1-51f0-a5ef-c002146ebb42",
+          "newProfile": {
+            "id": "96a88fad-d8a1-51f0-a5ef-c002146ebb42",
+            "name": "福島 笑莉",
+            "handle": "jpn-rrs26-0065e52dbc6f",
+            "sailNumber": "55053",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校/霞ヶ浦高等学校",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "實松 莉歩",
+          "role": "unknown",
+          "sailorId": "17a5a5e2-0bf9-5e83-a0fe-17149b449d46",
+          "newProfile": {
+            "id": "17a5a5e2-0bf9-5e83-a0fe-17149b449d46",
+            "name": "實松 莉歩",
+            "handle": "jpn-rrs26-1548f3bc0f6d",
+            "sailNumber": "55053",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校/霞ヶ浦高等学校",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "96a88fad-d8a1-51f0-a5ef-c002146ebb42",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "96a88fad-d8a1-51f0-a5ef-c002146ebb42",
+        "name": "福島 笑莉",
+        "handle": "jpn-rrs26-0065e52dbc6f",
+        "sailNumber": "55053",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "三重県立津工業高等学校/霞ヶ浦高等学校",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 3,
+      "name": "中村 和愛 / 米澤 ジア",
+      "club": "山口県セーリング連盟/HOPE/江ノ島ヨットクラブジュニア",
+      "sailOrBoardNumber": "57109",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 25.0,
+      "nettScore": 22.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(3)",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "3 / 2 / 2"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "3 / 2 / 2"
+        }
+      ],
+      "participants": [
+        {
+          "name": "中村 和愛",
+          "role": "unknown",
+          "sailorId": "cc3fe966-6f54-5130-8969-d98a253c6281",
+          "newProfile": {
+            "id": "cc3fe966-6f54-5130-8969-d98a253c6281",
+            "name": "中村 和愛",
+            "handle": "jpn-rrs26-ebfdf793f204",
+            "sailNumber": "57109",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "山口県セーリング連盟/HOPE/江ノ島ヨットクラブジュニア",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "米澤 ジア",
+          "role": "unknown",
+          "sailorId": "f9f6c811-d2c7-52a9-8461-4d104039d28b",
+          "newProfile": {
+            "id": "f9f6c811-d2c7-52a9-8461-4d104039d28b",
+            "name": "米澤 ジア",
+            "handle": "jpn-rrs26-95ec6d1e07d3",
+            "sailNumber": "57109",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "山口県セーリング連盟/HOPE/江ノ島ヨットクラブジュニア",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "cc3fe966-6f54-5130-8969-d98a253c6281",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "cc3fe966-6f54-5130-8969-d98a253c6281",
+        "name": "中村 和愛",
+        "handle": "jpn-rrs26-ebfdf793f204",
+        "sailNumber": "57109",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "山口県セーリング連盟/HOPE/江ノ島ヨットクラブジュニア",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    }
+  ]
+}

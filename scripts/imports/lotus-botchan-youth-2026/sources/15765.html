@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Racing Rules of Sailing</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='description' content='The unofficial site for the Racing Rules of Sailing which links definitions, cases, calls, and provides tools for sailors and race officials for a better understanding of how the rules are applied.'>
+
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-57x57-ee7f7b5c0119904cc7f1572c733170b1f280edd5f167f0c608af9d3ceaac50a8.png" sizes="57x57" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-60x60-6a299e553a2e160abc29f338b0720d9234cd062d79b49ee7a628fcfe4da3d21a.png" sizes="60x60" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-72x72-df32837adfcd89ec8610e66cd9f5c6139e939b3c914e94d25f581bc6a2de0d41.png" sizes="72x72" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-76x76-776777ff672e63fd717c934af4f56d400b123549a4dc1490e71744504d67a09d.png" sizes="76x76" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-114x114-88e6272c614a08baa815d728131b3ece3213d0f1cf261fc9a7308645b050bd0e.png" sizes="114x114" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-120x120-a9286cf054f97fc8bc5c4da261b667ebda97411a5776d602dd7322616b581900.png" sizes="120x120" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-144x144-ee8551c5badcd2719923b0e20708ef0e193e7847179898edcd4990ece0ea5d86.png" sizes="144x144" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-152x152-8471f782a6238f32cdd6cda5620a4de1c200fac0571e0edeae29cadc7bc036dc.png" sizes="152x152" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="/assetz/favicons/apple-icon-180x180-dcf75c84027307840ee6c699659c134a6e4c733c5413a906136a142290c655b1.png" sizes="180x180" />
+
+    <link rel="icon" type="image/png" href="/assetz/favicons/favicon-16x16-5be6c666cd29b30b62483b176106eb77ba3f4f66b5f3fe8b373f40ab3e087edd.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/assetz/favicons/favicon-32x32-fb2beabb22c0b3413628680bc70813a5e8eaae701241ef5fc8b6a7edb21e1a41.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/assetz/favicons/favicon-96x96-e3810479384c3c27adf5dc6c659481456edc713297409d119127982c833537e7.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/assetz/favicons/android-icon-144x144-ee8551c5badcd2719923b0e20708ef0e193e7847179898edcd4990ece0ea5d86.png" sizes="144x144" />
+    <link rel="icon" type="image/png" href="/assetz/favicons/android-icon-192x192-97300157c2c55006c2f07e76399ebe8d0162fa53e081c745fff040e02b5e6412.png" sizes="192x192" />
+
+    <meta property="og:image" content="https://www.racingrulesofsailing.org/assetz/new-logo-d26b7f423aaee56e392b06e962ac998f897c1e1e6975f819bddaf8e28bea0ab6.png" />
+
+    <link rel="manifest" href="https://www.racingrulesofsailing.org/assetz/favicons/manifest-2023f62e376578fede4ef5a66f83d89f6fa77f2a948ceb10c95d91c2fdaf567e.json">
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://www.racingrulesofsailing.org/assetz/favicons/ms-icon-144x144-ee8551c5badcd2719923b0e20708ef0e193e7847179898edcd4990ece0ea5d86.png">
+
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/assetz/application-686a8ba23fc1e5a6c3cab44c27cbff38e3623a47d42c9c85edf97505113a36cc.css" media="all" />
+    
+
+    <script src="/assetz/application-539d3989a31e819541a9d442925ae68dee8f7d245767f5806ed033e6ec4b55f7.js"></script>
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="GSKzW0TWYM4qb6ZijYdBDBtQZ2WjV_8TeKbbootlxa6jJWQgbZZa0xZdXrK0l8_nV5yo8ZVCAwmBWdqujlPN3w" />
+    <meta name="action-cable-url" content="wss://www.racingrulesofsailing.org/cable" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+      <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EQJE6CYNGP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-EQJE6CYNGP');
+  </script>
+
+  </head>
+  <body>
+    <a href="#main-content" class="visually-hidden-focusable skip-to-main-content">Skip to main content</a>
+    <div class='media-size'></div>
+    <div class='container-fluid'>
+
+      <nav class='navbar navbar-expand-lg navbar-dark bg-rrs-navy mb-3 px-3' aria-label="Event navigation">
+  <div class="container-fluid">
+
+    <div class="d-flex d-lg-none w-100 align-items-center">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#event-header-collapse" aria-controls="event-header-collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="flex-grow-1 d-flex justify-content-center align-items-center">
+        <a class="navbar-brand" style="margin-top: -5px;" href="/"><img alt="Racing Rules of Sailing" src="/assetz/new-logo-sm-565dbc78f60a65b887b7fca4d78901ee12ab52587ff47b4ee43636f56b5590bb.png" /></a>
+        <a class="navbar-brand" href="/">Racing Rules of Sailing</a>
+      </div>
+      <div style="width: 44px;"></div>
+    </div>
+
+    <div class="d-none d-lg-flex align-items-center">
+      <a class="navbar-brand" style="margin-top: -5px;" href="/"><img alt="Racing Rules of Sailing" src="/assetz/new-logo-sm-565dbc78f60a65b887b7fca4d78901ee12ab52587ff47b4ee43636f56b5590bb.png" /></a>
+      <a class="navbar-brand" href="/">Racing Rules of Sailing</a>
+    </div>
+
+    <div class="collapse navbar-collapse bg-rrs-navy" id="event-header-collapse">
+      <ul class="navbar-nav">
+
+
+          <li class="nav-item">
+            <a class="nav-link" title="Documents" href="/documents/15765/event">Documents</a>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Participant Actions">Actions</a>
+
+            <ul class="dropdown-menu">
+
+
+                <li>
+                  <a class="dropdown-item" target="_blank" title="Submit Hearing Request" href="/protests/new?event_id=15765"><i class='bi bi-plus-lg' aria-hidden='true'></i> Hearing Request</a>
+                </li>
+
+
+
+
+
+
+
+
+            </ul>
+          </li>
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Race Operations Information">Race Operations</a>
+
+            <ul class="dropdown-menu">
+
+
+
+
+
+
+                <li>
+                  <a class="dropdown-item" title="On the Water Penalties" href="/penalties/15765/event">OTW Penalties</a>
+                </li>
+
+
+                <li>
+                  <a class="dropdown-item" title="Hearing Schedule" href="/schedules/15765/event">Hearing Schedule</a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item" title="Hearing Decisions" href="/decisions/15765/event">Decisions</a>
+                </li>
+
+
+
+              <li><hr class="dropdown-divider"></li>
+
+                <li>
+                  <a class="dropdown-item" title="List of your Hearing Requests" href="/protests/competitor?event_id=15765">My Hearing Requests</a>
+                </li>
+
+
+
+
+            </ul>
+          </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Communications">Communications</a>
+
+          <ul class="dropdown-menu">
+
+            <li>
+              <a class="dropdown-item" title="Add a Contact to the event" href="/contacts/new?event_id=15765">New Contact</a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" title="Recent Notifications to Competitors" href="/messages/15765/event">Notifications</a>
+            </li>
+
+
+          </ul>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" title="Help" href="/help">Help</a>
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+
+          <li class='nav-item d-none d-md-block'>
+            <a class="nav-link" target="_blank" aria-label="What is this?" href="/pages/wind_credits">
+              <img class="me-3" height="35px" alt="WIND Rewards" src="/assetz/wind-logo-white-a94e18da3c6cbd63a2d5cf98559e28ab401e430b7cadb2e785b5052b7a793e07.png" />
+</a>          </li>
+          <li class='nav-item d-md-none'>
+            <a class="nav-link" title="What is this?" href="/pages/wind_credits">WIND</a>
+          </li>
+
+        <li class="nav-item dropdown pt-2 pl-5 pr-5">
+          <a class="dropdown-toggle d-none d-md-inline" data-bs-toggle="dropdown" title="Language" href="javascript:null();"><span class="flag-icon flag-icon-gb flag-icon-squared"></span></a>
+
+<a class="nav-link dropdown-toggle d-sm-inline d-md-none" data-bs-toggle="dropdown" title="Language" aria-expanded="false" href="#">Language [en] </span></a>
+
+<ul class="dropdown-menu">
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/de"><span class="flag-icon flag-icon-de flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/de">German</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/en"><span class="flag-icon flag-icon-gb flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/en">English</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/el"><span class="flag-icon flag-icon-gr flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/el">Greek</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/es"><span class="flag-icon flag-icon-es flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/es">Spanish</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/fr"><span class="flag-icon flag-icon-fr flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/fr">French</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/hu"><span class="flag-icon flag-icon-hu flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/hu">Hungarian</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/it"><span class="flag-icon flag-icon-it flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/it">Italian</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/ja"><span class="flag-icon flag-icon-jp flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/ja">Japanese</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/ko"><span class="flag-icon flag-icon-kr flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/ko">Korean</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/nl"><span class="flag-icon flag-icon-nl flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/nl">Dutch</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/no"><span class="flag-icon flag-icon-no flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/no">Norwegian</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/pt"><span class="flag-icon flag-icon-pt flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/pt">Portuguese</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/sv"><span class="flag-icon flag-icon-se flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/sv">Swedish</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/tr"><span class="flag-icon flag-icon-tr flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/tr">Turkish</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/zh-CN"><span class="flag-icon flag-icon-cn flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/zh-CN">Chinese CN</a>
+      </div>
+    </li>
+    <li>
+      <div style='padding-left: 5px;'>
+        <a href="/lang/zh-TW"><span class="flag-icon flag-icon-tw flag-icon-squared flag-icon-border"></span></a>
+        <a class="text-black" href="/lang/zh-TW">Chinese TW</a>
+      </div>
+    </li>
+</ul>
+
+        </li>
+
+           <li class="nav-item nowrap pt-0625em">
+      <a id="sign-up-link" class="nav-link nav-sign-in" href="/users/sign_up">Sign Up</a>
+   </li>
+   <li class="nav-item nowrap pt-0625em">
+      <a class="nav-link nav-sign-in" href="/users/sign_in">Sign In</a>
+   </li>
+
+
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+      
+
+      <main id="main-content">
+        <div class="offset-md-1 col-md-10">
+
+  
+
+<div class='col-12'>
+
+
+    <div class='col-12 d-flex align-items-end gap-2 bb1 pb-2 mb-2'>
+        <figure class='flex-shrink-0 mb-0 event-image'>
+          <img alt="22th Botchan Cup Yacht Race 第22回坊っちゃんカップヨット大会" src="https://www.racingrulesofsailing.org/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NjIzMTQxLCJwdXIiOiJibG9iX2lkIn19--d96ee965509b546c8727ab982fa1519e35bc347f/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fbGltaXQiOls4MCwxNjBdfSwicHVyIjoidmFyaWF0aW9uIn19--f78ef8dbf5f8b0231548116b6b6ec65f62cd3a5c/ESAF%20%E6%AD%A3%E6%96%B9%E5%BD%A2%E5%9E%8B%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88.png" />
+        </figure>
+      <h3 class="mb-0" style="min-width: 0; text-wrap: balance;">
+        22th Botchan Cup Yacht Race 第22回坊っちゃんカップヨット大会
+      </h3>
+    </div>
+
+
+    <div class='col-12'>
+      <h4 class='mt-1'>Online Notice Board</h4>
+    </div>
+
+
+  <div class='col-12'>
+    <h5 class='ml-2'>Event Documents</h5>
+  </div>
+
+</div>
+
+
+
+  <div class='col-12' id='event-table-container'>
+      <div class='col-12 card px-2'>
+  <table class='table table-sm'>
+    <tbody id='document-table'>
+            <tr>
+        <th scope="row" colspan='2'>
+          <span class='font115'>Event</span>
+        </th>
+      </tr>
+    <tr id="document-row-213353">
+  <td>
+      <a target="_blank" href="/documents/213353">第22回坊ちゃんカップ 帆走指示書</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-10-23
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-213950">
+  <td>
+      <a target="_blank" href="/documents/213950">裁量ペナルティー</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-10-26
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-204194">
+  <td>
+      <a target="_blank" href="/documents/204194">支援艇申請書</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-08-31
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-204195">
+  <td>
+      <a target="_blank" href="/documents/204195">参加申込書</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-08-31
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-213949">
+  <td>
+      <a target="_blank" href="/documents/213949">第22回坊っちゃんカップレース公示rev1</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-10-26
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-203330">
+  <td>
+      <a target="_blank" href="/documents/203330">Notice of Public Links</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-08-26
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-214637">
+  <td>
+      <a target="_blank" href="/documents/214637">最終成績表【ILCA4】</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-11-01
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-214638">
+  <td>
+      <a target="_blank" href="/documents/214638">最終成績表【OP級-A】</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-11-01
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-214639">
+  <td>
+      <a target="_blank" href="/documents/214639">最終成績表【OP級-B】</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-11-01
+  </td>
+
+  </td>
+</tr>
+
+    <tr id="document-row-214641">
+  <td>
+      <a target="_blank" href="/documents/214641">最終成績表【OP級-C】</a>
+    
+  </td>
+  <td class="nowrap">
+    2026-11-01
+  </td>
+
+  </td>
+</tr>
+
+<hr/>
+
+    </tbody>
+  </table>
+</div>
+
+  </div>
+
+
+</div>
+
+      </main>
+
+      
+
+<div class='offset-md-1 col-md-10 text-center mt-3 mb-3'>
+
+  <a title="About RacingRulesOfSailing" href="/pages/about">About</a>
+  <span> / </span>
+  <a title="Terms Of Service" href="/pages/terms_of_service">Terms Of Service</a>
+  <span> / </span>
+  <a title="Privacy Policy" href="/pages/privacy_policy">Privacy Policy</a>
+  <span> / </span>
+  <a title="Help" href="/pages/help">Help</a>
+
+
+</div>
+
+
+      <footer class='mt-1 col-sm-12 bt1 mt-2 pt-2'>
+  <div class='row'>
+    <div class='col-sm-12 font90 mt-2 mb-4 text-center'>
+      <i>Powered by</i> <a href="https://www.racingrulesofsailing.org/">RacingRulesOfSailing.org</a>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+
+        <div class="cookies-eu js-cookies-eu" >
+      <span class="cookies-eu-content-holder">Cookies help us deliver our services. By using our services, you agree to our use of cookies.</span>
+      <span class="cookies-eu-button-holder">
+      <button class="cookies-eu-ok js-cookies-eu-ok"> OK </button>
+        <a href="/pages/cookies" class="cookies-eu-link" target="_blank"> Learn more </a>
+      </span>
+    </div>
+
+
+      <script>
+
+
+  </script>
+  <script>
+
+    window.setTimeout(function() {
+      $(".flash").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+      });
+    }, 5000);
+
+  </script>
+
+
+  </body>
+</html>
