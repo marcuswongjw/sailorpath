@@ -1,0 +1,172 @@
+[
+  {
+    "path": "/regattas/botchan-cup-2026/results/ilca-4",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 10,
+    "raceColumns": 6,
+    "seconds": 0.72,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/botchan-cup-2026/results/optimist-class-a",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 28,
+    "raceColumns": 6,
+    "seconds": 1.89,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/botchan-cup-2026/results/optimist-class-b",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 22,
+    "raceColumns": 6,
+    "seconds": 0.56,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/botchan-cup-2026/results/optimist-class-c",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 19,
+    "raceColumns": 9,
+    "seconds": 0.21,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/kaohsiung-lotus-pond-optimist-regatta-2026/results/optimist-boys",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 33,
+    "raceColumns": 3,
+    "seconds": 0.22,
+    "provisional": true,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/kaohsiung-lotus-pond-optimist-regatta-2026/results/optimist-girls",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 12,
+    "raceColumns": 3,
+    "seconds": 0.27,
+    "provisional": true,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/29er-boys",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 6,
+    "raceColumns": 12,
+    "seconds": 0.32,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/29er-girls",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 1,
+    "raceColumns": 12,
+    "seconds": 0.27,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/420-boys",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 7,
+    "raceColumns": 10,
+    "seconds": 0.27,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/420-girls",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 3,
+    "raceColumns": 10,
+    "seconds": 0.24,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/ilca-6-boys",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 17,
+    "raceColumns": 10,
+    "seconds": 0.26,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/ilca-6-girls",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 5,
+    "raceColumns": 10,
+    "seconds": 0.3,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/iqfoil-boys",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 1,
+    "raceColumns": 9,
+    "seconds": 0.27,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026/results/iqfoil-girls",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 1,
+    "raceColumns": 9,
+    "seconds": 0.22,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/botchan-cup-2026",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 28,
+    "raceColumns": 6,
+    "seconds": 0.22,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/japan-youth-worlds-selection-2026",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 17,
+    "raceColumns": 10,
+    "seconds": 0.29,
+    "provisional": false,
+    "scoreTable": true
+  },
+  {
+    "path": "/regattas/kaohsiung-lotus-pond-optimist-regatta-2026",
+    "status": 200,
+    "cache": "MISS",
+    "entries": 33,
+    "raceColumns": 3,
+    "seconds": 0.18,
+    "provisional": true,
+    "scoreTable": true
+  }
+]
