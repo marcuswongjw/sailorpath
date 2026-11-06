@@ -1,0 +1,200 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214827",
+    "title": "2026ユースワールド代表選考 最終成績 29er Girls",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "1614b1bec730657e6da3987c5ab90befc2e3a110c07b7c8762f434f9c17d5dd2"
+  },
+  "event": {
+    "slug": "japan-youth-worlds-selection-2026",
+    "name": "Japan Youth Worlds Selection Regatta 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-03",
+    "venue": "Sakaiminato Public Marina, Tottori, Japan",
+    "organizer": "Japan Sailing Federation and Tottori Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213070",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/16264/event",
+    "classes": [
+      "29er",
+      "420",
+      "ILCA 6",
+      "iQFOiL"
+    ],
+    "geography": "JPN",
+    "isSelectionTrial": true
+  },
+  "sheet": {
+    "slug": "japan-youth-worlds-selection-2026-29er-girls",
+    "name": "Japan Youth Worlds Selection Regatta 2026 — 29er Girls",
+    "boatClass": "29er",
+    "division": "Girls",
+    "raceCount": 12,
+    "totalFleetSize": 1,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "crew"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "舩澤 夏美 / 舩澤 夏子",
+      "club": "鳥取県セーリング連盟",
+      "sailOrBoardNumber": "3525",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 12.0,
+      "nettScore": 11.0,
+      "sourcePage": 2,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1)",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 11,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 12,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        }
+      ],
+      "participants": [
+        {
+          "name": "舩澤 夏美",
+          "role": "unknown",
+          "sailorId": "08ea54bb-85c7-57ec-852e-b4e43ec045ec",
+          "newProfile": {
+            "id": "08ea54bb-85c7-57ec-852e-b4e43ec045ec",
+            "name": "舩澤 夏美",
+            "handle": "jpn-rrs26-99fdb91be559",
+            "sailNumber": "3525",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "鳥取県セーリング連盟",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "舩澤 夏子",
+          "role": "unknown",
+          "sailorId": "96dac3a2-4d7f-53b0-af17-808c44056f3d",
+          "newProfile": {
+            "id": "96dac3a2-4d7f-53b0-af17-808c44056f3d",
+            "name": "舩澤 夏子",
+            "handle": "jpn-rrs26-8c0865ebd7fd",
+            "sailNumber": "3525",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "鳥取県セーリング連盟",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "08ea54bb-85c7-57ec-852e-b4e43ec045ec",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "08ea54bb-85c7-57ec-852e-b4e43ec045ec",
+        "name": "舩澤 夏美",
+        "handle": "jpn-rrs26-99fdb91be559",
+        "sailNumber": "3525",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "鳥取県セーリング連盟",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    }
+  ]
+}

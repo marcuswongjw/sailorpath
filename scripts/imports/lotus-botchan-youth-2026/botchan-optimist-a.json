@@ -1,0 +1,2197 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214638",
+    "title": "第22回坊っちゃんカップ 最終成績表 Optimist A",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "7482b7a2ac087ff15f10684c38d423cb4a6c5de71acbbb9225ab1a71002044ec"
+  },
+  "event": {
+    "slug": "botchan-cup-2026",
+    "name": "22nd Botchan Cup 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-01",
+    "venue": "Marine Park Niihama, Ehime, Japan",
+    "organizer": "Ehime Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213949",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/15765/event",
+    "classes": [
+      "ILCA 4",
+      "Optimist"
+    ],
+    "geography": "JPN"
+  },
+  "sheet": {
+    "slug": "botchan-cup-2026-botchan-optimist-a",
+    "name": "22nd Botchan Cup 2026 — Optimist Class A",
+    "boatClass": "Optimist",
+    "division": "Class A",
+    "raceCount": 6,
+    "totalFleetSize": 28,
+    "countsForRanking": false,
+    "status": "published"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "竹内 海聖",
+      "sailOrBoardNumber": "3344",
+      "club": "広島セーリングスクール",
+      "furigana": "タケウチ カイセイ",
+      "sourceSchoolYear": "中3",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 39.0,
+      "nettScore": 10.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "3 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 2 2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 4 4"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 1 1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 1 1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 2 2"
+        }
+      ],
+      "participants": [
+        {
+          "name": "竹内 海聖",
+          "role": "solo",
+          "sailorId": "2b82f965-5e0d-5063-bb05-b3f1cf099740",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "2b82f965-5e0d-5063-bb05-b3f1cf099740",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 2,
+      "name": "渡邉 幹人",
+      "sailOrBoardNumber": "3510",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "ワタナベ ミキト",
+      "sourceSchoolYear": "小６",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 43.0,
+      "nettScore": 14.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "1 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 1 1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 2 2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 2 2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "8 6 6"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 3 3"
+        }
+      ],
+      "participants": [
+        {
+          "name": "渡邉 幹人",
+          "role": "solo",
+          "sailorId": "5c3eff3d-3a16-506c-96de-861b6cb9abd9",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "5c3eff3d-3a16-506c-96de-861b6cb9abd9",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 3,
+      "name": "檜垣 菜々子",
+      "sailOrBoardNumber": "3434",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "furigana": "ヒガキナナコ",
+      "sourceSchoolYear": "中2",
+      "gender": "F",
+      "nationality": "JPN",
+      "grossScore": 47.0,
+      "nettScore": 18.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "2 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 4 4"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 3 3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 7 7"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "4 3 3"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 1 1"
+        }
+      ],
+      "participants": [
+        {
+          "name": "檜垣 菜々子",
+          "role": "solo",
+          "sailorId": "c764b218-e565-5b0b-905e-d56b0c7d4a9d",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "c764b218-e565-5b0b-905e-d56b0c7d4a9d",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 4,
+      "name": "廣田 穣",
+      "sailOrBoardNumber": "3395",
+      "club": "琵琶湖ヨットクラブ",
+      "furigana": "ヒロタ ジョウ",
+      "sourceSchoolYear": "中3",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 34.0,
+      "nettScore": 22.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "22 3 3"
+        },
+        {
+          "raceNumber": 2,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12)",
+          "sourceRaceDetail": "12 12 12"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 1 1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 4 4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8",
+          "sourceRaceDetail": "10 8 8"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 6 6"
+        }
+      ],
+      "participants": [
+        {
+          "name": "廣田 穣",
+          "role": "solo",
+          "sailorId": "1ceeb9fd-977e-5c55-bec1-1a0b14846e1b",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "1ceeb9fd-977e-5c55-bec1-1a0b14846e1b",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 5,
+      "name": "冨岡 奏馬",
+      "sailOrBoardNumber": "3171",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "トミオカ ソウマ",
+      "sourceSchoolYear": "小６",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 56.0,
+      "nettScore": 27.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "4 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 5 5"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 6 6"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9",
+          "sourceRaceDetail": "9 9 9"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 2 2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 5 5"
+        }
+      ],
+      "participants": [
+        {
+          "name": "冨岡 奏馬",
+          "role": "solo",
+          "sailorId": "2f1b2e31-5c69-5fd5-b56d-81eb700672ee",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "2f1b2e31-5c69-5fd5-b56d-81eb700672ee",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 6,
+      "name": "吉岡 祐月",
+      "sailOrBoardNumber": "3472",
+      "club": "真野浜セーリングクラブ",
+      "furigana": "ヨシオカ ユヅキ",
+      "sourceSchoolYear": "中2",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 50.0,
+      "nettScore": 37.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "12 1 1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 7 7"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12",
+          "sourceRaceDetail": "12 12 12"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 6 6"
+        },
+        {
+          "raceNumber": 5,
+          "score": 13.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(13)",
+          "sourceRaceDetail": "15 13 13"
+        },
+        {
+          "raceNumber": 6,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11",
+          "sourceRaceDetail": "12 11 11"
+        }
+      ],
+      "participants": [
+        {
+          "name": "吉岡 祐月",
+          "role": "solo",
+          "sailorId": "e373e71d-025b-55b0-acf6-ce6dfb8eb06c",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "e373e71d-025b-55b0-acf6-ce6dfb8eb06c",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 7,
+      "name": "山内 琉太郎",
+      "sailOrBoardNumber": "3392",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "ヤマウチ リュウタロウ",
+      "sourceSchoolYear": "中2",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 68.0,
+      "nettScore": 39.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "10 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9",
+          "sourceRaceDetail": "9 9 9"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8",
+          "sourceRaceDetail": "8 8 8"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14",
+          "sourceRaceDetail": "14 14 14"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "5 4 4"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 4 4"
+        }
+      ],
+      "participants": [
+        {
+          "name": "山内 琉太郎",
+          "role": "solo",
+          "sailorId": "bfb6cdc3-693b-59fe-920f-dfa21ea37457",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "bfb6cdc3-693b-59fe-920f-dfa21ea37457",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 8,
+      "name": "岡﨑 亘作",
+      "sailOrBoardNumber": "3275",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "オカザキ コウサク",
+      "sourceSchoolYear": "中１",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 60.0,
+      "nettScore": 40.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "18 2 2"
+        },
+        {
+          "raceNumber": 2,
+          "score": 20.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(20)",
+          "sourceRaceDetail": "20 20 20"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14",
+          "sourceRaceDetail": "14 14 14"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 3 3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14",
+          "sourceRaceDetail": "16 14 14"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 7 7"
+        }
+      ],
+      "participants": [
+        {
+          "name": "岡﨑 亘作",
+          "role": "solo",
+          "sailorId": "328e9f20-6d65-5279-b4ae-41eb8565343d",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "328e9f20-6d65-5279-b4ae-41eb8565343d",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 9,
+      "name": "廣田 士",
+      "sailOrBoardNumber": "2930",
+      "club": "琵琶湖ヨットクラブ",
+      "furigana": "ヒロタ ツカサ",
+      "sourceSchoolYear": "中１",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 64.0,
+      "nettScore": 45.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "26 4 4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8",
+          "sourceRaceDetail": "8 8 8"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11",
+          "sourceRaceDetail": "11 11 11"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12",
+          "sourceRaceDetail": "12 12 12"
+        },
+        {
+          "raceNumber": 5,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10",
+          "sourceRaceDetail": "12 10 10"
+        },
+        {
+          "raceNumber": 6,
+          "score": 19.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(19)",
+          "sourceRaceDetail": "22 19 19"
+        }
+      ],
+      "participants": [
+        {
+          "name": "廣田 士",
+          "role": "solo",
+          "sailorId": "7ab84ead-c647-53b3-b905-4045acfac377",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "7ab84ead-c647-53b3-b905-4045acfac377",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 10,
+      "name": "下村 英昭",
+      "sailOrBoardNumber": "3251",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "シモムラ ヒデアキ",
+      "sourceSchoolYear": "中１",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 83.0,
+      "nettScore": 54.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "9 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 3 3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15",
+          "sourceRaceDetail": "15 15 15"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10",
+          "sourceRaceDetail": "10 10 10"
+        },
+        {
+          "raceNumber": 5,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11",
+          "sourceRaceDetail": "13 11 11"
+        },
+        {
+          "raceNumber": 6,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15",
+          "sourceRaceDetail": "18 15 15"
+        }
+      ],
+      "participants": [
+        {
+          "name": "下村 英昭",
+          "role": "solo",
+          "sailorId": "480ebee0-7617-5942-ac38-521a36cb6531",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "480ebee0-7617-5942-ac38-521a36cb6531",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 11,
+      "name": "岩﨑 蒼",
+      "sailOrBoardNumber": "3252",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "イワサキ アオイ",
+      "sourceSchoolYear": "小６",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 90.0,
+      "nettScore": 61.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": true,
+          "raw": "(29 DNF)",
+          "sourceRaceDetail": "DNF DNF 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13",
+          "sourceRaceDetail": "13 13 13"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9",
+          "sourceRaceDetail": "9 9 9"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16",
+          "sourceRaceDetail": "16 16 16"
+        },
+        {
+          "raceNumber": 5,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15",
+          "sourceRaceDetail": "17 15 15"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8",
+          "sourceRaceDetail": "9 8 8"
+        }
+      ],
+      "participants": [
+        {
+          "name": "岩﨑 蒼",
+          "role": "solo",
+          "sailorId": "dd8236c3-b48d-5324-adcf-f7d91bf45666",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "dd8236c3-b48d-5324-adcf-f7d91bf45666",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 12,
+      "name": "川北 華子",
+      "sailOrBoardNumber": "3437",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "カワキタ ハナコ",
+      "sourceSchoolYear": "中2",
+      "gender": "F",
+      "nationality": "JPN",
+      "grossScore": 91.0,
+      "nettScore": 62.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "5 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 6 6"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13",
+          "sourceRaceDetail": "13 13 13"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 5 5"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "29 UFD",
+          "sourceRaceDetail": "7 UFD 29"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9",
+          "sourceRaceDetail": "10 9 9"
+        }
+      ],
+      "participants": [
+        {
+          "name": "川北 華子",
+          "role": "solo",
+          "sailorId": "b7d594e0-5ac0-5eb9-91eb-47f115074104",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "b7d594e0-5ac0-5eb9-91eb-47f115074104",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 13,
+      "name": "柘植莉世",
+      "sailOrBoardNumber": "3315",
+      "club": "三重県セーリング連盟ジュニアユースヨットクラブ",
+      "furigana": "ツゲリセ",
+      "sourceSchoolYear": "小５",
+      "gender": "F",
+      "nationality": "JPN",
+      "grossScore": 101.0,
+      "nettScore": 72.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "6 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18",
+          "sourceRaceDetail": "18 18 18"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 5 5"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20",
+          "sourceRaceDetail": "20 20 20"
+        },
+        {
+          "raceNumber": 5,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17",
+          "sourceRaceDetail": "19 17 17"
+        },
+        {
+          "raceNumber": 6,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12",
+          "sourceRaceDetail": "13 12 12"
+        }
+      ],
+      "participants": [
+        {
+          "name": "柘植莉世",
+          "role": "solo",
+          "sailorId": "79064913-e335-5eb2-9d2b-36cfcb1ade66",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "79064913-e335-5eb2-9d2b-36cfcb1ade66",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 14,
+      "name": "髙橋 実言",
+      "sailOrBoardNumber": "3104",
+      "club": "B&G松山海洋クラブ",
+      "furigana": "タカハシミコト",
+      "sourceSchoolYear": "小５",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 104.0,
+      "nettScore": 75.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "7 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21",
+          "sourceRaceDetail": "21 21 21"
+        },
+        {
+          "raceNumber": 3,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20",
+          "sourceRaceDetail": "20 20 20"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8",
+          "sourceRaceDetail": "8 8 8"
+        },
+        {
+          "raceNumber": 5,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12",
+          "sourceRaceDetail": "14 12 12"
+        },
+        {
+          "raceNumber": 6,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14",
+          "sourceRaceDetail": "17 14 14"
+        }
+      ],
+      "participants": [
+        {
+          "name": "髙橋 実言",
+          "role": "solo",
+          "sailorId": "696c994c-5f41-5ddf-b180-70b2c5f40b9f",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "696c994c-5f41-5ddf-b180-70b2c5f40b9f",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 15,
+      "name": "合田 光希",
+      "sailOrBoardNumber": "3119",
+      "club": "広島セーリングスクール",
+      "furigana": "ゴウダ ミツキ",
+      "sourceSchoolYear": "中１",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 106.0,
+      "nettScore": 77.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "8 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10",
+          "sourceRaceDetail": "10 10 10"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16",
+          "sourceRaceDetail": "16 16 16"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15",
+          "sourceRaceDetail": "15 15 15"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "9 7 7"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "29 UFD",
+          "sourceRaceDetail": "14 UFD 29"
+        }
+      ],
+      "participants": [
+        {
+          "name": "合田 光希",
+          "role": "solo",
+          "sailorId": "44230f67-3406-527a-9540-b01c9517ca4f",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "44230f67-3406-527a-9540-b01c9517ca4f",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 16,
+      "name": "宮地 雄大",
+      "sailOrBoardNumber": "2988",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "furigana": "ミヤヂ ユウダイ",
+      "sourceSchoolYear": "中3",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 110.0,
+      "nettScore": 81.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "11 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11",
+          "sourceRaceDetail": "11 11 11"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10",
+          "sourceRaceDetail": "10 10 10"
+        },
+        {
+          "raceNumber": 4,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21",
+          "sourceRaceDetail": "21 21 21"
+        },
+        {
+          "raceNumber": 5,
+          "score": 29.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "29 UFD",
+          "sourceRaceDetail": "3 UFD 29"
+        },
+        {
+          "raceNumber": 6,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10",
+          "sourceRaceDetail": "11 10 10"
+        }
+      ],
+      "participants": [
+        {
+          "name": "宮地 雄大",
+          "role": "solo",
+          "sailorId": "561c0b8a-613a-5e0d-8674-79b1debe2ebb",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "561c0b8a-613a-5e0d-8674-79b1debe2ebb",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 17,
+      "name": "中野 嘉隆",
+      "sailOrBoardNumber": "3347",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "furigana": "ナカノ ヨシタカ",
+      "sourceSchoolYear": "小４",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 111.0,
+      "nettScore": 82.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "13 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17",
+          "sourceRaceDetail": "17 17 17"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18",
+          "sourceRaceDetail": "18 18 18"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13",
+          "sourceRaceDetail": "13 13 13"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "6 5 5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "29 UFD",
+          "sourceRaceDetail": "8 UFD 29"
+        }
+      ],
+      "participants": [
+        {
+          "name": "中野 嘉隆",
+          "role": "solo",
+          "sailorId": "296aede8-004f-5c15-aa46-40339ad01e1b",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "296aede8-004f-5c15-aa46-40339ad01e1b",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 18,
+      "name": "松下 理咲",
+      "sailOrBoardNumber": "3029",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "マツシタ リサ",
+      "sourceSchoolYear": "中１",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 114.0,
+      "nettScore": 85.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "21 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22",
+          "sourceRaceDetail": "22 22 22"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 7 7"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18",
+          "sourceRaceDetail": "18 18 18"
+        },
+        {
+          "raceNumber": 5,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16",
+          "sourceRaceDetail": "18 16 16"
+        },
+        {
+          "raceNumber": 6,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22",
+          "sourceRaceDetail": "26 22 22"
+        }
+      ],
+      "participants": [
+        {
+          "name": "松下 理咲",
+          "role": "solo",
+          "sailorId": "90e79e5f-d8f5-570c-8bd4-6a2f8250fe44",
+          "newProfile": {
+            "id": "90e79e5f-d8f5-570c-8bd4-6a2f8250fe44",
+            "name": "松下 理咲",
+            "handle": "jpn-rrs26-a78ef7d67ca8",
+            "sailNumber": "3029",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G高松海洋クラブ",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "90e79e5f-d8f5-570c-8bd4-6a2f8250fe44",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "90e79e5f-d8f5-570c-8bd4-6a2f8250fe44",
+        "name": "松下 理咲",
+        "handle": "jpn-rrs26-a78ef7d67ca8",
+        "sailNumber": "3029",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G高松海洋クラブ",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 19,
+      "name": "城石 靖春",
+      "sailOrBoardNumber": "3250",
+      "club": "B&G高松海洋クラブ",
+      "furigana": "シロイシ ヤスハル",
+      "sourceSchoolYear": "小５",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 116.0,
+      "nettScore": 87.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "17 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15",
+          "sourceRaceDetail": "15 15 15"
+        },
+        {
+          "raceNumber": 3,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26",
+          "sourceRaceDetail": "26 26 26"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11",
+          "sourceRaceDetail": "11 11 11"
+        },
+        {
+          "raceNumber": 5,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18",
+          "sourceRaceDetail": "20 18 18"
+        },
+        {
+          "raceNumber": 6,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17",
+          "sourceRaceDetail": "20 17 17"
+        }
+      ],
+      "participants": [
+        {
+          "name": "城石 靖春",
+          "role": "solo",
+          "sailorId": "3c9f092c-76ef-56f9-a0c9-7e858a2450be",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "3c9f092c-76ef-56f9-a0c9-7e858a2450be",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 20,
+      "name": "ウッドワース横田 アイシス",
+      "sailOrBoardNumber": "2984",
+      "club": "琵琶湖ヨットクラブ",
+      "furigana": "ｳｯﾄﾞﾜｰｽﾖｺﾀｱｲｼｽ",
+      "sourceSchoolYear": "中2",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 131.0,
+      "nettScore": 102.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "23 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23",
+          "sourceRaceDetail": "23 23 23"
+        },
+        {
+          "raceNumber": 3,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22",
+          "sourceRaceDetail": "22 22 22"
+        },
+        {
+          "raceNumber": 4,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27",
+          "sourceRaceDetail": "27 27 27"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9",
+          "sourceRaceDetail": "11 9 9"
+        },
+        {
+          "raceNumber": 6,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21",
+          "sourceRaceDetail": "25 21 21"
+        }
+      ],
+      "participants": [
+        {
+          "name": "ウッドワース横田 アイシス",
+          "role": "solo",
+          "sailorId": "0cc7a2fb-c360-574c-b532-c9b119b39366",
+          "newProfile": {
+            "id": "0cc7a2fb-c360-574c-b532-c9b119b39366",
+            "name": "ウッドワース横田 アイシス",
+            "handle": "jpn-rrs26-e6e33673b005",
+            "sailNumber": "2984",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "琵琶湖ヨットクラブ",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "0cc7a2fb-c360-574c-b532-c9b119b39366",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "0cc7a2fb-c360-574c-b532-c9b119b39366",
+        "name": "ウッドワース横田 アイシス",
+        "handle": "jpn-rrs26-e6e33673b005",
+        "sailNumber": "2984",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "琵琶湖ヨットクラブ",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 21,
+      "name": "王 詢之",
+      "sailOrBoardNumber": "3102",
+      "club": "B&G松山海洋クラブ",
+      "furigana": "オウｼﾞｭﾝｼ",
+      "sourceSchoolYear": "小５",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 134.0,
+      "nettScore": 105.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "24 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "29 DNF",
+          "sourceRaceDetail": "DNF DNF 29"
+        },
+        {
+          "raceNumber": 3,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21",
+          "sourceRaceDetail": "21 21 21"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17",
+          "sourceRaceDetail": "17 17 17"
+        },
+        {
+          "raceNumber": 5,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22",
+          "sourceRaceDetail": "24 22 22"
+        },
+        {
+          "raceNumber": 6,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16",
+          "sourceRaceDetail": "19 16 16"
+        }
+      ],
+      "participants": [
+        {
+          "name": "王 詢之",
+          "role": "solo",
+          "sailorId": "b1e4fd3c-5d4f-5bda-b847-848263191516",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "b1e4fd3c-5d4f-5bda-b847-848263191516",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 22,
+      "name": "宮﨑 一帆",
+      "sailOrBoardNumber": "3311",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "furigana": "ミヤザキ カズホ",
+      "sourceSchoolYear": "小５",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 134.0,
+      "nettScore": 105.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "15 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16",
+          "sourceRaceDetail": "16 16 16"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19",
+          "sourceRaceDetail": "19 19 19"
+        },
+        {
+          "raceNumber": 4,
+          "score": 22.0,
+          "code": null,
+          "discarded": false,
+          "raw": "22",
+          "sourceRaceDetail": "22 22 22"
+        },
+        {
+          "raceNumber": 5,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19",
+          "sourceRaceDetail": "21 19 19"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "29 UFD",
+          "sourceRaceDetail": "16 UFD 29"
+        }
+      ],
+      "participants": [
+        {
+          "name": "宮﨑 一帆",
+          "role": "solo",
+          "sailorId": "a803d5b6-4b1b-589e-a69a-5eb8c513a528",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "a803d5b6-4b1b-589e-a69a-5eb8c513a528",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 23,
+      "name": "磯谷 柚月",
+      "sailOrBoardNumber": "3324",
+      "club": "三重県セーリング連盟ジュニアユースヨットクラブ",
+      "furigana": "イソガイ ユズキ",
+      "sourceSchoolYear": "中１",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 137.0,
+      "nettScore": 108.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "14 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14",
+          "sourceRaceDetail": "14 14 14"
+        },
+        {
+          "raceNumber": 3,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23",
+          "sourceRaceDetail": "23 23 23"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19",
+          "sourceRaceDetail": "19 19 19"
+        },
+        {
+          "raceNumber": 5,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23",
+          "sourceRaceDetail": "25 23 23"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29 DNC",
+          "sourceRaceDetail": "DNC DNC 29"
+        }
+      ],
+      "participants": [
+        {
+          "name": "磯谷 柚月",
+          "role": "solo",
+          "sailorId": "471dd794-a382-5c5d-9645-dcc2fabaa00a",
+          "newProfile": {
+            "id": "471dd794-a382-5c5d-9645-dcc2fabaa00a",
+            "name": "磯谷 柚月",
+            "handle": "jpn-rrs26-61e73475414b",
+            "sailNumber": "3324",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県セーリング連盟ジュニアユースヨットクラブ",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "471dd794-a382-5c5d-9645-dcc2fabaa00a",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "471dd794-a382-5c5d-9645-dcc2fabaa00a",
+        "name": "磯谷 柚月",
+        "handle": "jpn-rrs26-61e73475414b",
+        "sailNumber": "3324",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "三重県セーリング連盟ジュニアユースヨットクラブ",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 24,
+      "name": "田中 環",
+      "sailOrBoardNumber": "3432",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "furigana": "タナカタマキ",
+      "sourceSchoolYear": "小４",
+      "gender": "F",
+      "nationality": "JPN",
+      "grossScore": 137.0,
+      "nettScore": 108.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "16 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19",
+          "sourceRaceDetail": "19 19 19"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17",
+          "sourceRaceDetail": "17 17 17"
+        },
+        {
+          "raceNumber": 4,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23",
+          "sourceRaceDetail": "23 23 23"
+        },
+        {
+          "raceNumber": 5,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20",
+          "sourceRaceDetail": "22 20 20"
+        },
+        {
+          "raceNumber": 6,
+          "score": 29.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "29 UFD",
+          "sourceRaceDetail": "24 UFD 29"
+        }
+      ],
+      "participants": [
+        {
+          "name": "田中 環",
+          "role": "solo",
+          "sailorId": "390a1506-cdbf-598e-bffe-6c77a50bfbad",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "390a1506-cdbf-598e-bffe-6c77a50bfbad",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 25,
+      "name": "久保田 聖",
+      "sailOrBoardNumber": "3408",
+      "club": "B&G福岡ジュニアヨット海洋クラブ",
+      "furigana": "クボタ アツシ",
+      "sourceSchoolYear": "小５",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 146.0,
+      "nettScore": 117.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "25 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "29 DNF",
+          "sourceRaceDetail": "DNF DNF 29"
+        },
+        {
+          "raceNumber": 3,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24",
+          "sourceRaceDetail": "24 24 24"
+        },
+        {
+          "raceNumber": 4,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25",
+          "sourceRaceDetail": "25 25 25"
+        },
+        {
+          "raceNumber": 5,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26",
+          "sourceRaceDetail": "28 26 26"
+        },
+        {
+          "raceNumber": 6,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13",
+          "sourceRaceDetail": "15 13 13"
+        }
+      ],
+      "participants": [
+        {
+          "name": "久保田 聖",
+          "role": "solo",
+          "sailorId": "53d19e4a-4ca4-5cc8-b637-32a195361b3c",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "53d19e4a-4ca4-5cc8-b637-32a195361b3c",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 26,
+      "name": "檜垣 麻衣子",
+      "sailOrBoardNumber": "3414",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "furigana": "ヒガキマイコ",
+      "sourceSchoolYear": "小６",
+      "gender": "F",
+      "nationality": "JPN",
+      "grossScore": 152.0,
+      "nettScore": 123.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "20 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "29 DNF",
+          "sourceRaceDetail": "DNF DNF 29"
+        },
+        {
+          "raceNumber": 3,
+          "score": 27.0,
+          "code": null,
+          "discarded": false,
+          "raw": "27",
+          "sourceRaceDetail": "27 27 27"
+        },
+        {
+          "raceNumber": 4,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24",
+          "sourceRaceDetail": "24 24 24"
+        },
+        {
+          "raceNumber": 5,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25",
+          "sourceRaceDetail": "27 25 25"
+        },
+        {
+          "raceNumber": 6,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18",
+          "sourceRaceDetail": "21 18 18"
+        }
+      ],
+      "participants": [
+        {
+          "name": "檜垣 麻衣子",
+          "role": "solo",
+          "sailorId": "d4749289-b2f3-5607-9ae1-fa33bdbcdad5",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "d4749289-b2f3-5607-9ae1-fa33bdbcdad5",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 27,
+      "name": "梅村 旺来",
+      "sailOrBoardNumber": "3110",
+      "club": "B&G新居浜海洋クラブ",
+      "furigana": "ウメムラ オウキ",
+      "sourceSchoolYear": "小５",
+      "gender": "M",
+      "nationality": "JPN",
+      "grossScore": 153.0,
+      "nettScore": 124.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "19 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "29 DNF",
+          "sourceRaceDetail": "DNF DNF 29"
+        },
+        {
+          "raceNumber": 3,
+          "score": 28.0,
+          "code": null,
+          "discarded": false,
+          "raw": "28",
+          "sourceRaceDetail": "28 28 28"
+        },
+        {
+          "raceNumber": 4,
+          "score": 26.0,
+          "code": null,
+          "discarded": false,
+          "raw": "26",
+          "sourceRaceDetail": "26 26 26"
+        },
+        {
+          "raceNumber": 5,
+          "score": 21.0,
+          "code": null,
+          "discarded": false,
+          "raw": "21",
+          "sourceRaceDetail": "23 21 21"
+        },
+        {
+          "raceNumber": 6,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20",
+          "sourceRaceDetail": "23 20 20"
+        }
+      ],
+      "participants": [
+        {
+          "name": "梅村 旺来",
+          "role": "solo",
+          "sailorId": "d039c011-e3d2-5e4e-8ced-1ca85a3e71e4",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "d039c011-e3d2-5e4e-8ced-1ca85a3e71e4",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 28,
+      "name": "今井 寿",
+      "sailOrBoardNumber": "3046",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "furigana": "イマイ ヒサシ",
+      "sourceSchoolYear": "中1",
+      "gender": "M",
+      "nationality": null,
+      "grossScore": 159.0,
+      "nettScore": 130.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": true,
+          "raw": "(29 NSC)",
+          "sourceRaceDetail": "27 NSC 29"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNF",
+          "discarded": false,
+          "raw": "29 DNF",
+          "sourceRaceDetail": "DNF DNF 29"
+        },
+        {
+          "raceNumber": 3,
+          "score": 25.0,
+          "code": null,
+          "discarded": false,
+          "raw": "25",
+          "sourceRaceDetail": "25 25 25"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "NSC",
+          "discarded": false,
+          "raw": "29 NSC",
+          "sourceRaceDetail": "28 NSC 29"
+        },
+        {
+          "raceNumber": 5,
+          "score": 24.0,
+          "code": null,
+          "discarded": false,
+          "raw": "24",
+          "sourceRaceDetail": "26 24 24"
+        },
+        {
+          "raceNumber": 6,
+          "score": 23.0,
+          "code": null,
+          "discarded": false,
+          "raw": "23",
+          "sourceRaceDetail": "27 23 23"
+        }
+      ],
+      "participants": [
+        {
+          "name": "今井 寿",
+          "role": "solo",
+          "sailorId": "11a3098c-32f9-5ced-abea-7f3351514044",
+          "newProfile": {
+            "id": "11a3098c-32f9-5ced-abea-7f3351514044",
+            "name": "今井 寿",
+            "handle": "jpn-rrs26-24e2f1b60b39",
+            "sailNumber": "3046",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "瀬戸内ジュニアセーリングクラブ",
+            "nationality": null,
+            "gender": "M"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "11a3098c-32f9-5ced-abea-7f3351514044",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "11a3098c-32f9-5ced-abea-7f3351514044",
+        "name": "今井 寿",
+        "handle": "jpn-rrs26-24e2f1b60b39",
+        "sailNumber": "3046",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "瀬戸内ジュニアセーリングクラブ",
+        "nationality": null,
+        "gender": "M"
+      },
+      "officialNationality": null
+    }
+  ]
+}

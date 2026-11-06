@@ -38,6 +38,38 @@ describe("distinct official fleets and disciplines", () => {
     }
   });
 
+  it("keeps each Youth Worlds class and gender sheet separately reachable", () => {
+    const sheets = ["ILCA 6", "29er", "420", "iQFOiL"].flatMap((boatClass) =>
+      ["Boys", "Girls"].map((division) => row({
+        slug: `selection-${boatClass.toLowerCase().replace(/ /g, "")}-${division.toLowerCase()}`,
+        name: `Selection 2026 — ${boatClass} ${division}`, date: "2026-10-31",
+        eventSlug: "selection-2026", eventName: "Selection 2026", boatClass, division,
+        raceCount: 10, totalFleetSize: division === "Boys" ? 17 : 5,
+      })));
+    for (const sheet of sheets) {
+      const hub = savedEventHubForSlug(sheet.slug, sheets)!;
+      expect(hub.event.slices).toHaveLength(8);
+      const active = resolveEventSlices(hub.event, sheets).find((slice) => slice.def.key === hub.fleetKey);
+      expect(active?.regatta?.id).toBe(sheet.id);
+      expect(active?.def.label).toBe(`${sheet.boatClass} ${sheet.division}`);
+    }
+  });
+
+  it("keeps all three Botchan Optimist classes beside ILCA 4", () => {
+    const sheets = ["Class A", "Class B", "Class C"].map((division) => row({
+      slug: `botchan-2026-${division.toLowerCase().replace(/ /g, "-")}`,
+      name: `Botchan 2026 — Optimist ${division}`, date: "2026-10-31",
+      division, eventSlug: "botchan-2026", eventName: "Botchan 2026", raceCount: 6,
+    }));
+    sheets.push(row({ slug: "botchan-2026-ilca4", name: "Botchan 2026 — ILCA 4",
+      date: "2026-10-31", boatClass: "ILCA 4", division: "Open", eventSlug: "botchan-2026" }));
+    for (const sheet of sheets) {
+      const hub = savedEventHubForSlug(sheet.slug, sheets)!;
+      expect(hub.event.slices).toHaveLength(4);
+      expect(resolveEventSlices(hub.event, sheets).find((slice) => slice.def.key === hub.fleetKey)?.regatta?.id).toBe(sheet.id);
+    }
+  });
+
   it("does not let the 29er slice claim a Techno 293 sheet", () => {
     const event = getRegattaEvent("nsc-cup-2-2025")!;
     const sheet = row({ slug: "nsc-cup-2-2025-techno-293", name: "NSC Cup 2 2025 (Techno 293)",

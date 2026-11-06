@@ -1,0 +1,1009 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214831",
+    "title": "2026ユースワールド代表選考 最終成績 420 Boys",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "d9638547b01eb5423984ffffd99d5ed900e2354355dbdb1a2146dda2d876ecf0"
+  },
+  "event": {
+    "slug": "japan-youth-worlds-selection-2026",
+    "name": "Japan Youth Worlds Selection Regatta 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-03",
+    "venue": "Sakaiminato Public Marina, Tottori, Japan",
+    "organizer": "Japan Sailing Federation and Tottori Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213070",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/16264/event",
+    "classes": [
+      "29er",
+      "420",
+      "ILCA 6",
+      "iQFOiL"
+    ],
+    "geography": "JPN",
+    "isSelectionTrial": true
+  },
+  "sheet": {
+    "slug": "japan-youth-worlds-selection-2026-420-boys",
+    "name": "Japan Youth Worlds Selection Regatta 2026 — 420 Boys",
+    "boatClass": "420",
+    "division": "Boys",
+    "raceCount": 10,
+    "totalFleetSize": 7,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "crew"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "田中 大基 / 梶村 幸永",
+      "club": "山口県セーリング連盟/HOPE",
+      "sailOrBoardNumber": "57105",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 23.0,
+      "nettScore": 17.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(6)",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        }
+      ],
+      "participants": [
+        {
+          "name": "田中 大基",
+          "role": "unknown",
+          "sailorId": "ed724e62-5752-5327-8d54-4fcad0c02a4b",
+          "newProfile": {
+            "id": "ed724e62-5752-5327-8d54-4fcad0c02a4b",
+            "name": "田中 大基",
+            "handle": "jpn-rrs26-65d04e602e59",
+            "sailNumber": "57105",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "山口県セーリング連盟/HOPE",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "梶村 幸永",
+          "role": "unknown",
+          "sailorId": "738f45d1-1082-5a56-ae80-e6b46b569f15",
+          "newProfile": {
+            "id": "738f45d1-1082-5a56-ae80-e6b46b569f15",
+            "name": "梶村 幸永",
+            "handle": "jpn-rrs26-8277a563873f",
+            "sailNumber": "57105",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "山口県セーリング連盟/HOPE",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "ed724e62-5752-5327-8d54-4fcad0c02a4b",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "ed724e62-5752-5327-8d54-4fcad0c02a4b",
+        "name": "田中 大基",
+        "handle": "jpn-rrs26-65d04e602e59",
+        "sailNumber": "57105",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "山口県セーリング連盟/HOPE",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 2,
+      "name": "山本 汐穏 / 堀野 葵",
+      "club": "鳥取県セーリング連盟",
+      "sailOrBoardNumber": "56087",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 26.0,
+      "nettScore": 22.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4)",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        }
+      ],
+      "participants": [
+        {
+          "name": "山本 汐穏",
+          "role": "unknown",
+          "sailorId": "acc560b9-f226-51ca-9606-a32206715912",
+          "newProfile": {
+            "id": "acc560b9-f226-51ca-9606-a32206715912",
+            "name": "山本 汐穏",
+            "handle": "jpn-rrs26-14e941beccd2",
+            "sailNumber": "56087",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "鳥取県セーリング連盟",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "堀野 葵",
+          "role": "unknown",
+          "sailorId": "51090326-f0c9-5140-8db8-fbe90cbf12d5",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "acc560b9-f226-51ca-9606-a32206715912",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "acc560b9-f226-51ca-9606-a32206715912",
+        "name": "山本 汐穏",
+        "handle": "jpn-rrs26-14e941beccd2",
+        "sailNumber": "56087",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "鳥取県セーリング連盟",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 3,
+      "name": "青山 侑友 / 稲葉 奏介",
+      "club": "葉山町セーリング協会",
+      "sailOrBoardNumber": "57092",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 34.0,
+      "nettScore": 29.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(5)",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        }
+      ],
+      "participants": [
+        {
+          "name": "青山 侑友",
+          "role": "unknown",
+          "sailorId": "f261f31b-599c-5d97-bf9e-582efa0d366b",
+          "newProfile": {
+            "id": "f261f31b-599c-5d97-bf9e-582efa0d366b",
+            "name": "青山 侑友",
+            "handle": "jpn-rrs26-8294fe6082c9",
+            "sailNumber": "57092",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "葉山町セーリング協会",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "稲葉 奏介",
+          "role": "unknown",
+          "sailorId": "d22e0773-c61f-5310-b80e-9d5f2122406e",
+          "newProfile": {
+            "id": "d22e0773-c61f-5310-b80e-9d5f2122406e",
+            "name": "稲葉 奏介",
+            "handle": "jpn-rrs26-0d22425c94c3",
+            "sailNumber": "57092",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "葉山町セーリング協会",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "f261f31b-599c-5d97-bf9e-582efa0d366b",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "f261f31b-599c-5d97-bf9e-582efa0d366b",
+        "name": "青山 侑友",
+        "handle": "jpn-rrs26-8294fe6082c9",
+        "sailNumber": "57092",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "葉山町セーリング協会",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 4,
+      "name": "岡田 晴 / 宮嵜 吏壱",
+      "club": "三重県立津工業高等学校",
+      "sailOrBoardNumber": "57422",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 38.0,
+      "nettScore": 31.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(7)",
+          "sourceRaceDetail": "7 / 7 / 7"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        }
+      ],
+      "participants": [
+        {
+          "name": "岡田 晴",
+          "role": "unknown",
+          "sailorId": "553dba2f-58d9-54c1-bd31-4bd37a7f3489",
+          "newProfile": {
+            "id": "553dba2f-58d9-54c1-bd31-4bd37a7f3489",
+            "name": "岡田 晴",
+            "handle": "jpn-rrs26-34b9792f5f4f",
+            "sailNumber": "57422",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "宮嵜 吏壱",
+          "role": "unknown",
+          "sailorId": "039f04d9-c0b6-5447-a108-4a9046000f7c",
+          "newProfile": {
+            "id": "039f04d9-c0b6-5447-a108-4a9046000f7c",
+            "name": "宮嵜 吏壱",
+            "handle": "jpn-rrs26-ef202be52838",
+            "sailNumber": "57422",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "553dba2f-58d9-54c1-bd31-4bd37a7f3489",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "553dba2f-58d9-54c1-bd31-4bd37a7f3489",
+        "name": "岡田 晴",
+        "handle": "jpn-rrs26-34b9792f5f4f",
+        "sailNumber": "57422",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "三重県立津工業高等学校",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 5,
+      "name": "兼久 宗之 / 森山 斗輝",
+      "club": "鳥取県セーリング連盟",
+      "sailOrBoardNumber": "55240",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 41.0,
+      "nettScore": 34.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(7)",
+          "sourceRaceDetail": "7 / 7 / 7"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        }
+      ],
+      "participants": [
+        {
+          "name": "兼久 宗之",
+          "role": "unknown",
+          "sailorId": "99964fca-8cf3-5f2a-ad26-e7b593fc55a2",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        },
+        {
+          "name": "森山 斗輝",
+          "role": "unknown",
+          "sailorId": "dbbff3fc-2a59-587a-b1ee-d96191790460",
+          "newProfile": {
+            "id": "dbbff3fc-2a59-587a-b1ee-d96191790460",
+            "name": "森山 斗輝",
+            "handle": "jpn-rrs26-8e54268703d2",
+            "sailNumber": "55240",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "鳥取県セーリング連盟",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "99964fca-8cf3-5f2a-ad26-e7b593fc55a2",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 6,
+      "name": "畠中 康佑 / 山住 愛翔",
+      "club": "三重県立津工業高等学校",
+      "sailOrBoardNumber": "56392",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 59.0,
+      "nettScore": 51.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(8 RET)",
+          "sourceRaceDetail": "RET / RET / 8"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "8 UFD",
+          "sourceRaceDetail": "UFD / UFD / 8"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 / 7 / 7"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 / 7 / 7"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        }
+      ],
+      "participants": [
+        {
+          "name": "畠中 康佑",
+          "role": "unknown",
+          "sailorId": "8aa3b54b-684e-5eef-afc7-47e359202408",
+          "newProfile": {
+            "id": "8aa3b54b-684e-5eef-afc7-47e359202408",
+            "name": "畠中 康佑",
+            "handle": "jpn-rrs26-0ed70bc43174",
+            "sailNumber": "56392",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "山住 愛翔",
+          "role": "unknown",
+          "sailorId": "a8a9efd7-eb9d-5cb6-a6c1-beec90eb6317",
+          "newProfile": {
+            "id": "a8a9efd7-eb9d-5cb6-a6c1-beec90eb6317",
+            "name": "山住 愛翔",
+            "handle": "jpn-rrs26-61f4b5941c64",
+            "sailNumber": "56392",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "8aa3b54b-684e-5eef-afc7-47e359202408",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "8aa3b54b-684e-5eef-afc7-47e359202408",
+        "name": "畠中 康佑",
+        "handle": "jpn-rrs26-0ed70bc43174",
+        "sailNumber": "56392",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "三重県立津工業高等学校",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 7,
+      "name": "渕上 幸星 / 山中 柊都",
+      "club": "三重県立津工業高等学校",
+      "sailOrBoardNumber": "55525",
+      "gender": null,
+      "nationality": null,
+      "grossScore": 66.0,
+      "nettScore": 58.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": "UFD",
+          "discarded": true,
+          "raw": "(8 UFD)",
+          "sourceRaceDetail": "UFD / UFD / 8"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7",
+          "sourceRaceDetail": "7 / 7 / 7"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6",
+          "sourceRaceDetail": "6 / 6 / 6"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8.0,
+          "code": "UFD",
+          "discarded": false,
+          "raw": "8 UFD",
+          "sourceRaceDetail": "UFD / UFD / 8"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "8 DNE",
+          "sourceRaceDetail": "7 / DNE / 8"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8.0,
+          "code": "DNE",
+          "discarded": false,
+          "raw": "8 DNE",
+          "sourceRaceDetail": "7 / DNE / 8"
+        }
+      ],
+      "participants": [
+        {
+          "name": "渕上 幸星",
+          "role": "unknown",
+          "sailorId": "977d76ad-0559-5022-a08d-e3366282d003",
+          "newProfile": {
+            "id": "977d76ad-0559-5022-a08d-e3366282d003",
+            "name": "渕上 幸星",
+            "handle": "jpn-rrs26-5b63290a9ecd",
+            "sailNumber": "55525",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        },
+        {
+          "name": "山中 柊都",
+          "role": "unknown",
+          "sailorId": "24c9b1a5-c955-517b-9f4f-ad84188aa589",
+          "newProfile": {
+            "id": "24c9b1a5-c955-517b-9f4f-ad84188aa589",
+            "name": "山中 柊都",
+            "handle": "jpn-rrs26-6cabd7676f02",
+            "sailNumber": "55525",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "三重県立津工業高等学校",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "977d76ad-0559-5022-a08d-e3366282d003",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "977d76ad-0559-5022-a08d-e3366282d003",
+        "name": "渕上 幸星",
+        "handle": "jpn-rrs26-5b63290a9ecd",
+        "sailNumber": "55525",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "三重県立津工業高等学校",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    }
+  ]
+}

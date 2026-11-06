@@ -1,0 +1,2299 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214641",
+    "title": "第22回坊っちゃんカップ OP級Cクラス 総合成績表",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "ea2efff4f8ccf8f211f2d2b7ad38ef091c100440d95947bbc8af1b62e5edde54"
+  },
+  "event": {
+    "slug": "botchan-cup-2026",
+    "name": "22nd Botchan Cup 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-01",
+    "venue": "Marine Park Niihama, Ehime, Japan",
+    "organizer": "Ehime Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213949",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/15765/event",
+    "classes": [
+      "ILCA 4",
+      "Optimist"
+    ],
+    "geography": "JPN"
+  },
+  "sheet": {
+    "slug": "botchan-cup-2026-optimist-c",
+    "name": "22nd Botchan Cup 2026 — Optimist Class C",
+    "boatClass": "Optimist",
+    "division": "Class C",
+    "raceCount": 9,
+    "totalFleetSize": 19,
+    "countsForRanking": false,
+    "status": "published",
+    "scheduleNotes": "Final results. Optimist C uses 57 numbered heats. Each sailor has 9 scored heats. R1–R9 are that sailor’s chronological heat starts, not shared fleet races; each raw score retains its official heat number. Published tied ranks retained. No sail numbers or genders are printed in this sheet."
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "増田 凌久",
+      "club": "B&G高松海洋クラブ",
+      "sourceSchoolYear": "小４",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 11.0,
+      "nettScore": 11.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 2,
+          "raw": "1 [H2]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 5,
+          "raw": "1 [H5]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 14,
+          "raw": "1 [H14]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 25,
+          "raw": "1 [H25]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 31,
+          "raw": "1 [H31]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 38,
+          "raw": "2 [H38]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 40,
+          "raw": "1 [H40]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 49,
+          "raw": "1 [H49]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 57,
+          "raw": "2 [H57]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "増田 凌久",
+          "role": "solo",
+          "sailorId": "96c8e0c2-2224-53cf-8628-3dc439d3890b",
+          "newProfile": {
+            "id": "96c8e0c2-2224-53cf-8628-3dc439d3890b",
+            "name": "増田 凌久",
+            "handle": "jpn-rrs26-ad60fdcc4e00",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G高松海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "96c8e0c2-2224-53cf-8628-3dc439d3890b",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "96c8e0c2-2224-53cf-8628-3dc439d3890b",
+        "name": "増田 凌久",
+        "handle": "jpn-rrs26-ad60fdcc4e00",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G高松海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 2,
+      "name": "鵜飼 小豆",
+      "club": "B&G別府海洋クラブ",
+      "sourceSchoolYear": "小２",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 13.0,
+      "nettScore": 13.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 9,
+          "raw": "1 [H9]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 15,
+          "raw": "1 [H15]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 17,
+          "raw": "2 [H17]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 23,
+          "raw": "1 [H23]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 30,
+          "raw": "1 [H30]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 36,
+          "raw": "2 [H36]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 42,
+          "raw": "1 [H42]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 50,
+          "raw": "2 [H50]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 52,
+          "raw": "2 [H52]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "鵜飼 小豆",
+          "role": "solo",
+          "sailorId": "a76ec8e7-f0c4-5eb3-bf75-6af9394eb159",
+          "newProfile": {
+            "id": "a76ec8e7-f0c4-5eb3-bf75-6af9394eb159",
+            "name": "鵜飼 小豆",
+            "handle": "jpn-rrs26-b888dde5ac90",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G別府海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "a76ec8e7-f0c4-5eb3-bf75-6af9394eb159",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "a76ec8e7-f0c4-5eb3-bf75-6af9394eb159",
+        "name": "鵜飼 小豆",
+        "handle": "jpn-rrs26-b888dde5ac90",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G別府海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 3,
+      "name": "坂口 祐規",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "sourceSchoolYear": "小5",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 13.0,
+      "nettScore": 13.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 1,
+          "raw": "1 [H1]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 8,
+          "raw": "1 [H8]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 11,
+          "raw": "2 [H11]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 26,
+          "raw": "2 [H26]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 32,
+          "raw": "1 [H32]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 38,
+          "raw": "1 [H38]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 40,
+          "raw": "2 [H40]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 47,
+          "raw": "2 [H47]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 57,
+          "raw": "1 [H57]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "坂口 祐規",
+          "role": "solo",
+          "sailorId": "60780ff8-67e0-5453-9ff4-7af2b0707d10",
+          "newProfile": {
+            "id": "60780ff8-67e0-5453-9ff4-7af2b0707d10",
+            "name": "坂口 祐規",
+            "handle": "jpn-rrs26-a383664b11ce",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "瀬戸内ジュニアセーリングクラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "60780ff8-67e0-5453-9ff4-7af2b0707d10",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "60780ff8-67e0-5453-9ff4-7af2b0707d10",
+        "name": "坂口 祐規",
+        "handle": "jpn-rrs26-a383664b11ce",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "瀬戸内ジュニアセーリングクラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 4,
+      "name": "伊久 颯太",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "sourceSchoolYear": "小3",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 14.0,
+      "nettScore": 14.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 8,
+          "raw": "2 [H8]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 13,
+          "raw": "1 [H13]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 17,
+          "raw": "1 [H17]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 21,
+          "raw": "2 [H21]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 28,
+          "raw": "1 [H28]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 34,
+          "raw": "1 [H34]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 39,
+          "raw": "2 [H39]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 51,
+          "raw": "1 [H51]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 53,
+          "raw": "3 [H53]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "伊久 颯太",
+          "role": "solo",
+          "sailorId": "b5188321-b1ec-5168-a131-ee1084e73fd9",
+          "newProfile": {
+            "id": "b5188321-b1ec-5168-a131-ee1084e73fd9",
+            "name": "伊久 颯太",
+            "handle": "jpn-rrs26-87569a5d2627",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "瀬戸内ジュニアセーリングクラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "b5188321-b1ec-5168-a131-ee1084e73fd9",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "b5188321-b1ec-5168-a131-ee1084e73fd9",
+        "name": "伊久 颯太",
+        "handle": "jpn-rrs26-87569a5d2627",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "瀬戸内ジュニアセーリングクラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 4,
+      "name": "眞鍋 遼和",
+      "club": "琵琶湖ヨットクラブ",
+      "sourceSchoolYear": "小４",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 14.0,
+      "nettScore": 14.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 3,
+          "raw": "1 [H3]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 7,
+          "raw": "2 [H7]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 10,
+          "raw": "2 [H10]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 20,
+          "raw": "1 [H20]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 27,
+          "raw": "1 [H27]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 33,
+          "raw": "1 [H33]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 39,
+          "raw": "1 [H39]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 48,
+          "raw": "3 [H48]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 55,
+          "raw": "2 [H55]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "眞鍋 遼和",
+          "role": "solo",
+          "sailorId": "43345930-dfbb-5f65-ac5b-6a8e71462bd4",
+          "newProfile": {
+            "id": "43345930-dfbb-5f65-ac5b-6a8e71462bd4",
+            "name": "眞鍋 遼和",
+            "handle": "jpn-rrs26-64422b979a37",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "琵琶湖ヨットクラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "43345930-dfbb-5f65-ac5b-6a8e71462bd4",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "43345930-dfbb-5f65-ac5b-6a8e71462bd4",
+        "name": "眞鍋 遼和",
+        "handle": "jpn-rrs26-64422b979a37",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "琵琶湖ヨットクラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 6,
+      "name": "日野原 夕禅",
+      "club": "瀬戸内ジュニアセーリングクラブ",
+      "sourceSchoolYear": "小２",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 1,
+          "raw": "2 [H1]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 6,
+          "raw": "1 [H6]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 13,
+          "raw": "2 [H13]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 22,
+          "raw": "1 [H22]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 28,
+          "raw": "3 [H28]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 35,
+          "raw": "1 [H35]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 43,
+          "raw": "1 [H43]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 45,
+          "raw": "1 [H45]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 55,
+          "raw": "3 [H55]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "日野原 夕禅",
+          "role": "solo",
+          "sailorId": "73cdde1c-a233-5772-a884-f4c27cc9afd4",
+          "newProfile": {
+            "id": "73cdde1c-a233-5772-a884-f4c27cc9afd4",
+            "name": "日野原 夕禅",
+            "handle": "jpn-rrs26-b6519d63709c",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "瀬戸内ジュニアセーリングクラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "73cdde1c-a233-5772-a884-f4c27cc9afd4",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "73cdde1c-a233-5772-a884-f4c27cc9afd4",
+        "name": "日野原 夕禅",
+        "handle": "jpn-rrs26-b6519d63709c",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "瀬戸内ジュニアセーリングクラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 6,
+      "name": "曽和 蒼生",
+      "club": "琵琶湖ヨットクラブ",
+      "sourceSchoolYear": "小４",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 15.0,
+      "nettScore": 15.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 10,
+          "raw": "1 [H10]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 12,
+          "raw": "1 [H12]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 18,
+          "raw": "1 [H18]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 25,
+          "raw": "2 [H25]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 32,
+          "raw": "2 [H32]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 38,
+          "raw": "3 [H38]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 42,
+          "raw": "2 [H42]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 49,
+          "raw": "2 [H49]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 52,
+          "raw": "1 [H52]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "曽和 蒼生",
+          "role": "solo",
+          "sailorId": "29708cde-0ddc-5db5-978c-1857c93b70c7",
+          "newProfile": {
+            "id": "29708cde-0ddc-5db5-978c-1857c93b70c7",
+            "name": "曽和 蒼生",
+            "handle": "jpn-rrs26-4327b6b2a88b",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "琵琶湖ヨットクラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "29708cde-0ddc-5db5-978c-1857c93b70c7",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "29708cde-0ddc-5db5-978c-1857c93b70c7",
+        "name": "曽和 蒼生",
+        "handle": "jpn-rrs26-4327b6b2a88b",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "琵琶湖ヨットクラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 8,
+      "name": "眞鍋 季子",
+      "club": "琵琶湖ヨットクラブ",
+      "sourceSchoolYear": "小２",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 17.0,
+      "nettScore": 17.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 7,
+          "raw": "1 [H7]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 12,
+          "raw": "3 [H12]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 19,
+          "raw": "1 [H19]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 23,
+          "raw": "2 [H23]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 29,
+          "raw": "1 [H29]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 36,
+          "raw": "1 [H36]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 40,
+          "raw": "3 [H40]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 45,
+          "raw": "3 [H45]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 54,
+          "raw": "2 [H54]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "眞鍋 季子",
+          "role": "solo",
+          "sailorId": "9f6720e7-0448-57dc-bcda-d9046741a10a",
+          "newProfile": {
+            "id": "9f6720e7-0448-57dc-bcda-d9046741a10a",
+            "name": "眞鍋 季子",
+            "handle": "jpn-rrs26-ddc8d7144567",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "琵琶湖ヨットクラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "9f6720e7-0448-57dc-bcda-d9046741a10a",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "9f6720e7-0448-57dc-bcda-d9046741a10a",
+        "name": "眞鍋 季子",
+        "handle": "jpn-rrs26-ddc8d7144567",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "琵琶湖ヨットクラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 9,
+      "name": "竹田結衣",
+      "club": "B&G松山海洋クラブ",
+      "sourceSchoolYear": "小３",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 2,
+          "raw": "3 [H2]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 6,
+          "raw": "2 [H6]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 8,
+          "raw": "3 [H8]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 22,
+          "raw": "2 [H22]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 28,
+          "raw": "2 [H28]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 34,
+          "raw": "2 [H34]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 44,
+          "raw": "1 [H44]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 46,
+          "raw": "1 [H46]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 56,
+          "raw": "2 [H56]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "竹田結衣",
+          "role": "solo",
+          "sailorId": "02663a06-5c28-54b7-b931-f7dd91a12300",
+          "newProfile": {
+            "id": "02663a06-5c28-54b7-b931-f7dd91a12300",
+            "name": "竹田結衣",
+            "handle": "jpn-rrs26-fabfa46e6811",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G松山海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "02663a06-5c28-54b7-b931-f7dd91a12300",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "02663a06-5c28-54b7-b931-f7dd91a12300",
+        "name": "竹田結衣",
+        "handle": "jpn-rrs26-fabfa46e6811",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G松山海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 9,
+      "name": "瀧 湊友",
+      "club": "B&G別府海洋クラブ",
+      "sourceSchoolYear": "小５",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 4,
+          "raw": "1 [H4]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 9,
+          "raw": "2 [H9]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 18,
+          "raw": "2 [H18]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 20,
+          "raw": "2 [H20]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 26,
+          "raw": "1 [H26]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 32,
+          "raw": "3 [H32]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 43,
+          "raw": "3 [H43]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 47,
+          "raw": "1 [H47]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 57,
+          "raw": "3 [H57]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "瀧 湊友",
+          "role": "solo",
+          "sailorId": "5a95ec70-f77e-5987-b113-ffc26a488746",
+          "newProfile": {
+            "id": "5a95ec70-f77e-5987-b113-ffc26a488746",
+            "name": "瀧 湊友",
+            "handle": "jpn-rrs26-426462f088b1",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G別府海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "5a95ec70-f77e-5987-b113-ffc26a488746",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "5a95ec70-f77e-5987-b113-ffc26a488746",
+        "name": "瀧 湊友",
+        "handle": "jpn-rrs26-426462f088b1",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G別府海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 9,
+      "name": "冨岡 尊",
+      "club": "B&G高松海洋クラブ",
+      "sourceSchoolYear": "小３",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 18.0,
+      "nettScore": 18.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 5,
+          "raw": "2 [H5]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 7,
+          "raw": "3 [H7]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 16,
+          "raw": "1 [H16]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 24,
+          "raw": "1 [H24]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 31,
+          "raw": "2 [H31]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 37,
+          "raw": "3 [H37]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 45,
+          "raw": "2 [H45]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 47,
+          "raw": "3 [H47]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 53,
+          "raw": "1 [H53]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "冨岡 尊",
+          "role": "solo",
+          "sailorId": "4a33ca0c-8a2f-5b3a-83e1-de286e6f4fbd",
+          "newProfile": {
+            "id": "4a33ca0c-8a2f-5b3a-83e1-de286e6f4fbd",
+            "name": "冨岡 尊",
+            "handle": "jpn-rrs26-ccfbc9dcfd43",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G高松海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "4a33ca0c-8a2f-5b3a-83e1-de286e6f4fbd",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "4a33ca0c-8a2f-5b3a-83e1-de286e6f4fbd",
+        "name": "冨岡 尊",
+        "handle": "jpn-rrs26-ccfbc9dcfd43",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G高松海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 12,
+      "name": "久保田 誠",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "sourceSchoolYear": "小３",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 4,
+          "raw": "3 [H4]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 13,
+          "raw": "3 [H13]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 15,
+          "raw": "2 [H15]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 24,
+          "raw": "3 [H24]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 30,
+          "raw": "3 [H30]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 37,
+          "raw": "1 [H37]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 44,
+          "raw": "2 [H44]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 46,
+          "raw": "2 [H46]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 54,
+          "raw": "1 [H54]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "久保田 誠",
+          "role": "solo",
+          "sailorId": "bbd4156e-e042-5425-8160-fe2c4636c04c",
+          "newProfile": {
+            "id": "bbd4156e-e042-5425-8160-fe2c4636c04c",
+            "name": "久保田 誠",
+            "handle": "jpn-rrs26-5de4359ecf4e",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G兵庫ジュニア海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "bbd4156e-e042-5425-8160-fe2c4636c04c",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "bbd4156e-e042-5425-8160-fe2c4636c04c",
+        "name": "久保田 誠",
+        "handle": "jpn-rrs26-5de4359ecf4e",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G兵庫ジュニア海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 12,
+      "name": "坂田 龍之介",
+      "club": "B&G別府海洋クラブ",
+      "sourceSchoolYear": "小３",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 3,
+          "raw": "2 [H3]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 9,
+          "raw": "3 [H9]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 12,
+          "raw": "2 [H12]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 25,
+          "raw": "3 [H25]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 31,
+          "raw": "3 [H31]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 37,
+          "raw": "2 [H37]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 39,
+          "raw": "3 [H39]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 48,
+          "raw": "1 [H48]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 56,
+          "raw": "1 [H56]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "坂田 龍之介",
+          "role": "solo",
+          "sailorId": "041f96a3-10be-596e-9901-1d553a1c1cc7",
+          "newProfile": {
+            "id": "041f96a3-10be-596e-9901-1d553a1c1cc7",
+            "name": "坂田 龍之介",
+            "handle": "jpn-rrs26-edf4d33bbe34",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G別府海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "041f96a3-10be-596e-9901-1d553a1c1cc7",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "041f96a3-10be-596e-9901-1d553a1c1cc7",
+        "name": "坂田 龍之介",
+        "handle": "jpn-rrs26-edf4d33bbe34",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G別府海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 12,
+      "name": "飯塚 絵蓮",
+      "club": "B&G新居浜海洋クラブ",
+      "sourceSchoolYear": "小５",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 20.0,
+      "nettScore": 20.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 2,
+          "raw": "2 [H2]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 11,
+          "raw": "1 [H11]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 16,
+          "raw": "2 [H16]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 20,
+          "raw": "3 [H20]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 26,
+          "raw": "3 [H26]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 33,
+          "raw": "3 [H33]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 41,
+          "raw": "3 [H41]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 50,
+          "raw": "1 [H50]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 53,
+          "raw": "2 [H53]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "飯塚 絵蓮",
+          "role": "solo",
+          "sailorId": "e8217e17-3498-5a1f-95f5-d640c014ad9f",
+          "newProfile": {
+            "id": "e8217e17-3498-5a1f-95f5-d640c014ad9f",
+            "name": "飯塚 絵蓮",
+            "handle": "jpn-rrs26-c2793f080e1b",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G新居浜海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "e8217e17-3498-5a1f-95f5-d640c014ad9f",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "e8217e17-3498-5a1f-95f5-d640c014ad9f",
+        "name": "飯塚 絵蓮",
+        "handle": "jpn-rrs26-c2793f080e1b",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G新居浜海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 15,
+      "name": "堀士朗",
+      "club": "B&G兵庫ジュニア海洋クラブ",
+      "sourceSchoolYear": "小４",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 1,
+          "raw": "3 [H1]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 4,
+          "raw": "2 [H4]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 17,
+          "raw": "3 [H17]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 21,
+          "raw": "1 [H21]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 27,
+          "raw": "3 [H27]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 33,
+          "raw": "2 [H33]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 43,
+          "raw": "2 [H43]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 49,
+          "raw": "3 [H49]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 51,
+          "raw": "2 [H51]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "堀士朗",
+          "role": "solo",
+          "sailorId": "6e8ed94f-f48a-5f9b-8984-aa8ebe89e4c0",
+          "newProfile": {
+            "id": "6e8ed94f-f48a-5f9b-8984-aa8ebe89e4c0",
+            "name": "堀士朗",
+            "handle": "jpn-rrs26-62349420929b",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G兵庫ジュニア海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "6e8ed94f-f48a-5f9b-8984-aa8ebe89e4c0",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "6e8ed94f-f48a-5f9b-8984-aa8ebe89e4c0",
+        "name": "堀士朗",
+        "handle": "jpn-rrs26-62349420929b",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G兵庫ジュニア海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 15,
+      "name": "瀧 瑛友",
+      "club": "B&G別府海洋クラブ",
+      "sourceSchoolYear": "小３",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 21.0,
+      "nettScore": 21.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 3,
+          "raw": "3 [H3]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 15,
+          "raw": "3 [H15]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 18,
+          "raw": "3 [H18]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 24,
+          "raw": "2 [H24]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 30,
+          "raw": "2 [H30]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 36,
+          "raw": "3 [H36]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 41,
+          "raw": "1 [H41]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 51,
+          "raw": "3 [H51]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 55,
+          "raw": "1 [H55]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "瀧 瑛友",
+          "role": "solo",
+          "sailorId": "c3c9d3b2-85e2-5f8e-a0c6-466c7cfee4bf",
+          "newProfile": {
+            "id": "c3c9d3b2-85e2-5f8e-a0c6-466c7cfee4bf",
+            "name": "瀧 瑛友",
+            "handle": "jpn-rrs26-86cbb03868e9",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G別府海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "c3c9d3b2-85e2-5f8e-a0c6-466c7cfee4bf",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "c3c9d3b2-85e2-5f8e-a0c6-466c7cfee4bf",
+        "name": "瀧 瑛友",
+        "handle": "jpn-rrs26-86cbb03868e9",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G別府海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 17,
+      "name": "中村 美月",
+      "club": "B&G高松海洋クラブ",
+      "sourceSchoolYear": "小１",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 24.0,
+      "nettScore": 24.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 5,
+          "raw": "3 [H5]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 10,
+          "raw": "3 [H10]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 19,
+          "raw": "2 [H19]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 23,
+          "raw": "3 [H23]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 29,
+          "raw": "3 [H29]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 35,
+          "raw": "2 [H35]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 41,
+          "raw": "2 [H41]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 50,
+          "raw": "3 [H50]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 54,
+          "raw": "3 [H54]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "中村 美月",
+          "role": "solo",
+          "sailorId": "bd7f55b2-2a85-526f-b578-395300f44492",
+          "newProfile": {
+            "id": "bd7f55b2-2a85-526f-b578-395300f44492",
+            "name": "中村 美月",
+            "handle": "jpn-rrs26-d48ccd63d2f4",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G高松海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "bd7f55b2-2a85-526f-b578-395300f44492",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "bd7f55b2-2a85-526f-b578-395300f44492",
+        "name": "中村 美月",
+        "handle": "jpn-rrs26-d48ccd63d2f4",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G高松海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 18,
+      "name": "恒石 泰慶",
+      "club": "B&G高松海洋クラブ",
+      "sourceSchoolYear": "小４",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 25.0,
+      "nettScore": 25.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 14,
+          "raw": "2 [H14]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 16,
+          "raw": "3 [H16]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 19,
+          "raw": "3 [H19]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 21,
+          "raw": "3 [H21]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 27,
+          "raw": "2 [H27]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 34,
+          "raw": "3 [H34]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 44,
+          "raw": "3 [H44]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 46,
+          "raw": "3 [H46]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 52,
+          "raw": "3 [H52]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "恒石 泰慶",
+          "role": "solo",
+          "sailorId": "b507ed5a-f5e3-5179-9f0a-3a0f3c159817",
+          "newProfile": {
+            "id": "b507ed5a-f5e3-5179-9f0a-3a0f3c159817",
+            "name": "恒石 泰慶",
+            "handle": "jpn-rrs26-2a85d6beff1b",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G高松海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "b507ed5a-f5e3-5179-9f0a-3a0f3c159817",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "b507ed5a-f5e3-5179-9f0a-3a0f3c159817",
+        "name": "恒石 泰慶",
+        "handle": "jpn-rrs26-2a85d6beff1b",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G高松海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 18,
+      "name": "城石 清春",
+      "club": "B&G高松海洋クラブ",
+      "sourceSchoolYear": "小１",
+      "sailOrBoardNumber": null,
+      "gender": null,
+      "nationality": null,
+      "grossScore": 25.0,
+      "nettScore": 25.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 6,
+          "raw": "3 [H6]"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 11,
+          "raw": "3 [H11]"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 14,
+          "raw": "3 [H14]"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 22,
+          "raw": "3 [H22]"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 29,
+          "raw": "2 [H29]"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 35,
+          "raw": "3 [H35]"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 42,
+          "raw": "3 [H42]"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 48,
+          "raw": "2 [H48]"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "sourceHeat": 56,
+          "raw": "3 [H56]"
+        }
+      ],
+      "participants": [
+        {
+          "name": "城石 清春",
+          "role": "solo",
+          "sailorId": "289fdf58-dcc6-51bd-b982-02dc857d2bca",
+          "newProfile": {
+            "id": "289fdf58-dcc6-51bd-b982-02dc857d2bca",
+            "name": "城石 清春",
+            "handle": "jpn-rrs26-34a3fb8d1186",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "B&G高松海洋クラブ",
+            "nationality": null,
+            "gender": null
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "289fdf58-dcc6-51bd-b982-02dc857d2bca",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "289fdf58-dcc6-51bd-b982-02dc857d2bca",
+        "name": "城石 清春",
+        "handle": "jpn-rrs26-34a3fb8d1186",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "B&G高松海洋クラブ",
+        "nationality": null,
+        "gender": null
+      },
+      "officialNationality": null
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214827",
+    "title": "2026ユースワールド代表選考 最終成績 iQFOiL Boys",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "1614b1bec730657e6da3987c5ab90befc2e3a110c07b7c8762f434f9c17d5dd2"
+  },
+  "event": {
+    "slug": "japan-youth-worlds-selection-2026",
+    "name": "Japan Youth Worlds Selection Regatta 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-03",
+    "venue": "Sakaiminato Public Marina, Tottori, Japan",
+    "organizer": "Japan Sailing Federation and Tottori Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213070",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/16264/event",
+    "classes": [
+      "29er",
+      "420",
+      "ILCA 6",
+      "iQFOiL"
+    ],
+    "geography": "JPN",
+    "isSelectionTrial": true
+  },
+  "sheet": {
+    "slug": "japan-youth-worlds-selection-2026-iqfoil-boys",
+    "name": "Japan Youth Worlds Selection Regatta 2026 — iQFOiL Boys",
+    "boatClass": "iQFOiL",
+    "division": "Boys",
+    "raceCount": 9,
+    "totalFleetSize": 1,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "窪田 大雅",
+      "club": "神港学園高等学校",
+      "sailOrBoardNumber": "787",
+      "gender": "M",
+      "nationality": null,
+      "grossScore": 9.0,
+      "nettScore": 8.0,
+      "sourcePage": 3,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1)",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        }
+      ],
+      "participants": [
+        {
+          "name": "窪田 大雅",
+          "role": "solo",
+          "sailorId": "03ead49c-02c7-5d4b-a94a-a62a1b8b6961",
+          "newProfile": {
+            "id": "03ead49c-02c7-5d4b-a94a-a62a1b8b6961",
+            "name": "窪田 大雅",
+            "handle": "jpn-rrs26-b796152f125b",
+            "sailNumber": "",
+            "sailNumberIlca4": null,
+            "boardNumber": "787",
+            "club": "神港学園高等学校",
+            "nationality": null,
+            "gender": "M"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "03ead49c-02c7-5d4b-a94a-a62a1b8b6961",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "03ead49c-02c7-5d4b-a94a-a62a1b8b6961",
+        "name": "窪田 大雅",
+        "handle": "jpn-rrs26-b796152f125b",
+        "sailNumber": "",
+        "sailNumberIlca4": null,
+        "boardNumber": "787",
+        "club": "神港学園高等学校",
+        "nationality": null,
+        "gender": "M"
+      },
+      "officialNationality": null
+    }
+  ]
+}

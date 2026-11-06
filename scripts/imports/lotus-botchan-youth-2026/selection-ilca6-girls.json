@@ -1,0 +1,649 @@
+{
+  "officialSource": {
+    "url": "https://www.racingrulesofsailing.org/documents/214827",
+    "title": "2026ユースワールド代表選考 最終成績 ILCA 6 Girls",
+    "type": "pdf",
+    "publicationStatus": "Final",
+    "visuallyReviewed": true,
+    "sha256": "1614b1bec730657e6da3987c5ab90befc2e3a110c07b7c8762f434f9c17d5dd2"
+  },
+  "event": {
+    "slug": "japan-youth-worlds-selection-2026",
+    "name": "Japan Youth Worlds Selection Regatta 2026",
+    "startDate": "2026-10-31",
+    "endDate": "2026-11-03",
+    "venue": "Sakaiminato Public Marina, Tottori, Japan",
+    "organizer": "Japan Sailing Federation and Tottori Sailing Federation",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/213070",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/16264/event",
+    "classes": [
+      "29er",
+      "420",
+      "ILCA 6",
+      "iQFOiL"
+    ],
+    "geography": "JPN",
+    "isSelectionTrial": true
+  },
+  "sheet": {
+    "slug": "japan-youth-worlds-selection-2026-ilca6-girls",
+    "name": "Japan Youth Worlds Selection Regatta 2026 — ILCA 6 Girls",
+    "boatClass": "ILCA 6",
+    "division": "Girls",
+    "raceCount": 10,
+    "totalFleetSize": 5,
+    "countsForRanking": false,
+    "status": "published",
+    "entryType": "individual"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "ハムリン たりあ",
+      "club": "Kanagawa Youth / SAGA Sailing",
+      "sailOrBoardNumber": "169388",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 16.0,
+      "nettScore": 12.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4)",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        }
+      ],
+      "participants": [
+        {
+          "name": "ハムリン たりあ",
+          "role": "solo",
+          "sailorId": "8d60ff70-f9b9-5b8b-9743-8cae52baf57e",
+          "newProfile": {
+            "id": "8d60ff70-f9b9-5b8b-9743-8cae52baf57e",
+            "name": "ハムリン たりあ",
+            "handle": "jpn-rrs26-20579f46de43",
+            "sailNumber": "169388",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "Kanagawa Youth / SAGA Sailing",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "8d60ff70-f9b9-5b8b-9743-8cae52baf57e",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "8d60ff70-f9b9-5b8b-9743-8cae52baf57e",
+        "name": "ハムリン たりあ",
+        "handle": "jpn-rrs26-20579f46de43",
+        "sailNumber": "169388",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "Kanagawa Youth / SAGA Sailing",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 2,
+      "name": "飯島 來海",
+      "club": "神奈川県ユースヨットクラブ",
+      "sailOrBoardNumber": "212792",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 26.0,
+      "nettScore": 22.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4)",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        }
+      ],
+      "participants": [
+        {
+          "name": "飯島 來海",
+          "role": "solo",
+          "sailorId": "9c3ade2b-de62-533c-b6a8-977f1dbe8ac5",
+          "newProfile": {
+            "id": "9c3ade2b-de62-533c-b6a8-977f1dbe8ac5",
+            "name": "飯島 來海",
+            "handle": "jpn-rrs26-0427fa157dac",
+            "sailNumber": "212792",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "神奈川県ユースヨットクラブ",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "9c3ade2b-de62-533c-b6a8-977f1dbe8ac5",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "9c3ade2b-de62-533c-b6a8-977f1dbe8ac5",
+        "name": "飯島 來海",
+        "handle": "jpn-rrs26-0427fa157dac",
+        "sailNumber": "212792",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "神奈川県ユースヨットクラブ",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 3,
+      "name": "須永 言葉",
+      "club": "横須賀学院高等学校",
+      "sailOrBoardNumber": "217071",
+      "gender": "F",
+      "nationality": "JPN",
+      "grossScore": 29.0,
+      "nettScore": 25.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4)",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1",
+          "sourceRaceDetail": "1 / 1 / 1"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        }
+      ],
+      "participants": [
+        {
+          "name": "須永 言葉",
+          "role": "solo",
+          "sailorId": "a7def62a-9cc0-5c4d-a10a-6b8bd2eb3dc4",
+          "matchReason": "unique exact NFKC-normalized published name or registered alias"
+        }
+      ],
+      "sailorId": "a7def62a-9cc0-5c4d-a10a-6b8bd2eb3dc4",
+      "matchReason": "unique exact NFKC-normalized published name or registered alias",
+      "officialNationality": null
+    },
+    {
+      "rank": 4,
+      "name": "畠中 紗英",
+      "club": "江の島ヨットクラブジュニア",
+      "sailOrBoardNumber": "225553",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 29.0,
+      "nettScore": 25.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4)",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4",
+          "sourceRaceDetail": "4 / 4 / 4"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3",
+          "sourceRaceDetail": "3 / 3 / 3"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2",
+          "sourceRaceDetail": "2 / 2 / 2"
+        }
+      ],
+      "participants": [
+        {
+          "name": "畠中 紗英",
+          "role": "solo",
+          "sailorId": "bb2e9c8a-1f07-5354-a656-a5face8f29ed",
+          "newProfile": {
+            "id": "bb2e9c8a-1f07-5354-a656-a5face8f29ed",
+            "name": "畠中 紗英",
+            "handle": "jpn-rrs26-c28c4559d062",
+            "sailNumber": "225553",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "江の島ヨットクラブジュニア",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "bb2e9c8a-1f07-5354-a656-a5face8f29ed",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "bb2e9c8a-1f07-5354-a656-a5face8f29ed",
+        "name": "畠中 紗英",
+        "handle": "jpn-rrs26-c28c4559d062",
+        "sailNumber": "225553",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "江の島ヨットクラブジュニア",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    },
+    {
+      "rank": 5,
+      "name": "福居 彩葉",
+      "club": "和歌山県セーリング連盟",
+      "sailOrBoardNumber": "207879",
+      "gender": "F",
+      "nationality": null,
+      "grossScore": 57.0,
+      "nettScore": 51.0,
+      "sourcePage": 1,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(6 DNC)",
+          "sourceRaceDetail": "DNC / DNC / 6"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC",
+          "sourceRaceDetail": "DNC / DNC / 6"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC",
+          "sourceRaceDetail": "DNC / DNC / 6"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "6 RET",
+          "sourceRaceDetail": "RET / RET / 6"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC",
+          "sourceRaceDetail": "DNC / DNC / 6"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "6 DNC",
+          "sourceRaceDetail": "DNC / DNC / 6"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5",
+          "sourceRaceDetail": "5 / 5 / 5"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6.0,
+          "code": "RET",
+          "discarded": false,
+          "raw": "6 RET",
+          "sourceRaceDetail": "RET / RET / 6"
+        }
+      ],
+      "participants": [
+        {
+          "name": "福居 彩葉",
+          "role": "solo",
+          "sailorId": "ef2ece22-a401-5ad3-8f33-11d38de98672",
+          "newProfile": {
+            "id": "ef2ece22-a401-5ad3-8f33-11d38de98672",
+            "name": "福居 彩葉",
+            "handle": "jpn-rrs26-dd75e9ef9e2b",
+            "sailNumber": "207879",
+            "sailNumberIlca4": null,
+            "boardNumber": null,
+            "club": "和歌山県セーリング連盟",
+            "nationality": null,
+            "gender": "F"
+          },
+          "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity"
+        }
+      ],
+      "sailorId": "ef2ece22-a401-5ad3-8f33-11d38de98672",
+      "matchReason": "new profile; no exact official-name or registered-alias match; sail number alone not used as identity",
+      "newProfile": {
+        "id": "ef2ece22-a401-5ad3-8f33-11d38de98672",
+        "name": "福居 彩葉",
+        "handle": "jpn-rrs26-dd75e9ef9e2b",
+        "sailNumber": "207879",
+        "sailNumberIlca4": null,
+        "boardNumber": null,
+        "club": "和歌山県セーリング連盟",
+        "nationality": null,
+        "gender": "F"
+      },
+      "officialNationality": null
+    }
+  ]
+}
