@@ -140,7 +140,7 @@ describe("RegattaCalendarClient", () => {
   });
 
   it("shows an undated event without a fabricated date, countdown or calendar export", () => {
-    render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="Garda" />);
+    render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="45th Lake Garda" />);
     const section = screen.getByRole("region", { name: "Regattas awaiting confirmed dates" });
     expect(section).toHaveTextContent("45th Lake Garda Meeting Optimist");
     expect(section).toHaveTextContent("Exact dates are awaiting confirmation");
@@ -150,7 +150,7 @@ describe("RegattaCalendarClient", () => {
   });
 
   it("applies calendar region and class filters to undated events", () => {
-    render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="Garda" />);
+    render(<RegattaCalendarClient regattas={mockEvents} pendingRegattas={pending} initialSearch="45th Lake Garda" />);
     fireEvent.click(screen.getByRole("button", { name: /Singapore/ }));
     expect(screen.queryByText("45th Lake Garda Meeting Optimist")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "All Regions" }));
@@ -161,7 +161,7 @@ describe("RegattaCalendarClient", () => {
 
   it("hides an undated planning card after a dated record is available", () => {
     const dated = { ...mockEvents[0], slug: pending[0].slug, name: pending[0].name };
-    render(<RegattaCalendarClient regattas={[dated]} pendingRegattas={pending} initialSearch="Garda" />);
+    render(<RegattaCalendarClient regattas={[dated]} pendingRegattas={pending} initialSearch="45th Lake Garda" />);
     expect(screen.queryByRole("region", { name: "Regattas awaiting confirmed dates" })).not.toBeInTheDocument();
     expect(screen.getAllByText("45th Lake Garda Meeting Optimist")).toHaveLength(1);
   });

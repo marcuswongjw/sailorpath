@@ -11,6 +11,11 @@ describe("X-15 class hub", () => {
     expect(metadata.alternates).toEqual({ canonical: "/classes/x15" });
     expect(html).toContain("15–17 December training");
     expect(html).toContain("Port Nàutic Ibiza, Spain");
+    expect(html).toContain("107 riders from 24 nations");
+    expect(html).toContain("X-15 Emerging Nations Clinic");
+    expect(html).toContain("46th Singapore Open Windsurfing and Foiling Championships 2027");
+    expect(html).toContain("X-15 Youth World Championships");
+    expect(html).toContain("82L Lite Tech");
     expect(html).toContain("No reviewed X-15 scorecards");
     expect(html).toContain("docs.google.com/forms/");
     expect(html).not.toContain("instagram.com");

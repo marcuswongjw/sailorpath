@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { publishedX15Sheets, x15WorldsStatus } from "./x15";
+import { X15_EQUIPMENT_OVERVIEW, X15_NATIONAL_ASSOCIATIONS, publishedX15Sheets, x15WorldsStatus } from "./x15";
+import { X15_CALENDAR_ENTRIES, X15_LISTINGS, X15_PENDING_EVENTS } from "./x15Calendar";
 import { resolveSailingClass, supportsNationalRanking, requiresExplicitImportMetadata } from "./classRegistry";
 import type { RegattaRecord } from "./ranking";
 
@@ -18,5 +19,15 @@ describe("X-15 results preparation", () => {
     const row = (slug: string, extra = {}): RegattaRecord => ({ id: slug, slug, name: slug, date: "2026-11-08", boatClass: "X-15", totalFleetSize: 10, ...extra });
     const rows = [row("old", { date: "2025-01-01" }), row("new"), row("draft", { status: "draft" }), row("empty", { importedEntryCount: 0 }), row("wing", { boatClass: "WingFoil" })];
     expect(publishedX15Sheets(rows).map(r => r.slug)).toEqual(["new", "old"]);
+  });
+  it("splits X-15 official calendar listings cleanly into dated calendar entries and undated pending events", () => {
+    expect(X15_LISTINGS.length).toBeGreaterThanOrEqual(29);
+    expect(X15_CALENDAR_ENTRIES.length + X15_PENDING_EVENTS.length).toBe(X15_LISTINGS.length);
+    expect(X15_CALENDAR_ENTRIES.some((e) => e.slug === "x15-asian-cup-2026")).toBe(true);
+    expect(X15_CALENDAR_ENTRIES.some((e) => e.slug === "singapore-open-windsurfing-foiling-2027")).toBe(true);
+    expect(X15_CALENDAR_ENTRIES.some((e) => e.slug === "x15-youth-world-championships-2027")).toBe(true);
+    expect(X15_PENDING_EVENTS.some((e) => e.slug === "x15-world-championships-2027")).toBe(true);
+    expect(X15_EQUIPMENT_OVERVIEW.divisions).toHaveLength(6);
+    expect(X15_NATIONAL_ASSOCIATIONS.some((a) => a.country === "Singapore")).toBe(true);
   });
 });

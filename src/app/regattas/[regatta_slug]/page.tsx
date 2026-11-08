@@ -83,6 +83,14 @@ export async function generateMetadata({
         canonicalPath: `/regattas/${calendarEntry.slug}`,
       });
     }
+    const pendingEntry = PENDING_REGATTAS.find((entry) => entry.slug === regatta_slug);
+    if (pendingEntry) {
+      return shareMetadata({
+        title: `${pendingEntry.name} | SailorPath`,
+        description: `Venue, class and official event information for ${pendingEntry.name}.`,
+        canonicalPath: `/regattas/${pendingEntry.slug}`,
+      });
+    }
     return {};
   } catch {
     return {
@@ -189,7 +197,7 @@ export default async function RegattaRedirectPage({
   const pending = PENDING_REGATTAS.find((entry) => entry.slug === regatta_slug);
   if (pending) {
     return <div className="mx-auto w-full max-w-6xl space-y-7 px-4 py-8 sm:py-10">
-      <RegattaOverview name={pending.name} dates={`${pending.year} · Dates to be confirmed`} venue={pending.venue} organiser={pending.organizer} classes={[pending.boatClass]} region={pending.region} status="Dates TBC" websiteUrl={pending.officialUrl} />
+      <RegattaOverview name={pending.name} dates={`${pending.period || pending.year} · Dates to be confirmed`} venue={pending.venue} organiser={pending.organizer} classes={[pending.boatClass]} region={pending.region} status="Dates TBC" websiteUrl={pending.officialUrl} summary={pending.notice} />
       <section className="border-t border-[var(--sp-cool-veil)] pt-6"><h2 className="mb-3 text-lg font-bold text-[var(--sp-harbour-shadow)]">Fleet results</h2><p className="text-sm text-[var(--sp-charcoal-slate)]">Exact event dates are awaiting confirmation from the organiser.</p></section>
     </div>;
   }

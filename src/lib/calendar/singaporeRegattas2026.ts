@@ -1,3 +1,5 @@
+import { X15_CALENDAR_ENTRIES } from "@/lib/x15Calendar";
+
 /**
  * 2026 Singapore & International Youth Sailing Regatta Calendar
  *
@@ -741,4 +743,5 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     scheduleNotes: "Official dates: 21–29 August 2027 confirmed on the ILCA World Championship calendar.",
     totalFleetSize: 350,
   },
+  ...X15_CALENDAR_ENTRIES,
 ];

@@ -1,13 +1,17 @@
+import { X15_PENDING_EVENTS } from "@/lib/x15Calendar";
+
 /** Events requested for planning whose exact dates are not yet verified. */
 export type PendingRegatta = {
   slug: string;
   name: string;
   year: string;
+  period?: string;
   boatClass: string;
   region: string;
   venue: string;
   organizer: string;
   officialUrl: string;
+  notice?: string;
 };
 
 export const PENDING_REGATTAS: readonly PendingRegatta[] = [
@@ -31,6 +35,7 @@ export const PENDING_REGATTAS: readonly PendingRegatta[] = [
     organizer: "International Optimist Dinghy Association (IODA)",
     officialUrl: "https://optiworld.org",
   },
+  ...X15_PENDING_EVENTS,
 ];
 
 // Checked 2026-10-24: the organiser's calendar has no dated 45th edition.
