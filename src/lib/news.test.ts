@@ -10,7 +10,7 @@ beforeEach(() => { rows.published = []; });
 
 it("gives every published release update a relevant local image, description and credit", async () => {
   const articles = await listPublishedNews();
-  expect(articles).toHaveLength(7);
+  expect(articles).toHaveLength(9);
   for (const article of articles) {
     expect(article.imageUrl).toMatch(/^\/news\//);
     expect(article.imageAlt?.length).toBeGreaterThan(20);

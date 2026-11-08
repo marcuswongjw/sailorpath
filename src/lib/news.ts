@@ -43,6 +43,20 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: string | null;
   }
 > = {
+  "more-racing-from-taiwan-and-japan": {
+    imageUrl: "/news/asian-championship-coverage.png",
+    imageAlt: "Illustrated sailing venues connected to published class scorecards across Asia.",
+    imageCaption: "An illustration of SailorPath’s regional results coverage; not an event photograph or geographic map.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "easier-browsing-for-race-results-and-sailor-awards": {
+    imageUrl: "/news/public-sailing-record.png",
+    imageAlt: "Illustrated race result, award and sailor profile cards connected in one sailing history.",
+    imageCaption: "A product illustration of connected competition records and awards; not a screenshot of the interface.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
   "asian-2026-multiclass-and-national-championships-published": {
     imageUrl: "/news/asian-championship-coverage.png",
     imageAlt: "An illustrated network of Asian sailing venues connected to published class scorecards.",
@@ -121,6 +135,46 @@ function withArticleMedia(article: PublishedNewsArticle): PublishedNewsArticle {
  */
 const FALLBACK_ARTICLES: PublishedNewsArticle[] = [
   {
+    slug: "more-racing-from-taiwan-and-japan",
+    title: "More racing from Taiwan and Japan",
+    summary: "Explore newly added results from the Kaohsiung Lotus Pond Optimist Regatta, the 22nd Botchan Cup and Japan’s Youth Worlds selection regatta.",
+    body: `SailorPath’s results archive now includes the Kaohsiung Lotus Pond Optimist Regatta, the 22nd Botchan Cup and Japan’s Youth Worlds selection regatta.
+
+Explore fleet standings and individual race scores, with links to the official source documents. Double-handed entries connect both sailors to their shared boat result.
+
+Lotus Pond’s available fleet results remain provisional. Its team-racing bracket is linked separately and is not presented as a complete final classification.
+
+These overseas results contribute to sailors’ competition histories and do not count toward Singapore national rankings.`,
+    kind: "result_report",
+    authorDisplayName: "SailorPath",
+    publishedAt: "2026-11-08T22:44:06.000+08:00",
+    updatedAt: "2026-11-08T22:44:06.000+08:00",
+    relatedClass: null,
+    relatedRegion: "Asia",
+    sourceUrl: "https://sailorpath.com/results",
+    sourceLabel: "Browse the results",
+    tags: ["taiwan", "japan", "optimist", "ilca-4", "ilca-6", "420", "29er", "iqfoil", "results"],
+  },
+  {
+    slug: "easier-browsing-for-race-results-and-sailor-awards",
+    title: "Easier browsing for race results and sailor awards",
+    summary: "Browse race-by-race results in a scrolling mobile table, and explore sailor awards with newest-first sorting and filters for dates, location, class and honours.",
+    body: `Regatta results on mobile now use the same table format as desktop. Scroll across individual race scores, totals and net scores while keeping sailor names in view.
+
+On sailor profiles, awards appear newest first. Search and filter by year, location, boat class, medal or a custom date range, or change the order to explore earlier achievements and best placings.
+
+Together, these changes make it easier to follow a regatta and explore a sailor’s competition history.`,
+    kind: "product_update",
+    authorDisplayName: "SailorPath",
+    publishedAt: "2026-11-08T22:44:05.000+08:00",
+    updatedAt: "2026-11-08T22:44:06.000+08:00",
+    relatedClass: null,
+    relatedRegion: "International",
+    sourceUrl: "https://sailorpath.com/sailors",
+    sourceLabel: "Explore sailor profiles",
+    tags: ["product", "mobile", "results", "awards", "profiles"],
+  },
+  {
     slug: "asian-2026-multiclass-and-national-championships-published",
     title:
       "Asian championship coverage: regional opens and national results",
@@ -184,49 +238,22 @@ Source note: These imports retain organiser or federation result references, inc
   },
   {
     slug: "18th-eastern-seaboard-regatta-2026-results-published",
-    title:
-      "18th Eastern Seaboard Regatta 2026: Optimist Gold, Silver, ILCA 4 & ILCA 6 Scorecards Published",
-    summary:
-      "Complete race-by-race scorecards for all 209 competitors (1,672 race scores) at the 2026 18th Eastern Seaboard Regatta at Royal Varuna Yacht Club in Pattaya, Thailand, visually verified against the official notice-board PDFs.",
-    body: `Complete race-by-race scorecards from the 2026 18th Eastern Seaboard Regatta, hosted by Royal Varuna Yacht Club in Pattaya, Thailand (28 October – 1 November 2026), are now live on SailorPath.
+    title: "Eastern Seaboard 2026: final results confirmed",
+    summary: "Final results are now available for ILCA 4, ILCA 6, Optimist Gold and Optimist Silver, covering 209 competitors and 1,672 individual race scores.",
+    body: `Final results are now available for ILCA 4, ILCA 6, Optimist Gold and Optimist Silver at the 18th Eastern Seaboard Regatta.
 
-## Four Fleets, 209 Competitors, 1,672 Race Scores
+The four fleets cover 209 competitors and 1,672 individual race scores. Placings, scores, penalties and discards remain unchanged.
 
-All 13 pages of the official result PDFs posted on Racing Rules of Sailing Event Notice Board 15166 were visually inspected and reconciled row-by-row before publication:
-
-• Optimist Gold Fleet — 68 competitors, 8 races (Q1–Q5 and F1–F3), 2 discards (544 race scores)
-• Optimist Silver Fleet — 67 competitors, 8 races (Q1–Q5 and F1–F3), 2 discards (536 race scores)
-• ILCA 4 — 63 competitors, 8 races, 1 discard (504 race scores)
-• ILCA 6 Youth U19 — 11 competitors, 8 races, 1 discard (88 race scores)
-
-Across the four sheets, 176 entries matched existing verified sailor profiles and 33 new sailor profiles were created, with zero arithmetic or scoring reconciliation discrepancies between the official PDFs and the published tables.
-
-## Source Transparency & Identity Notes
-
-In keeping with SailorPath's data-integrity rules, several nuances from the official notice board documents are preserved directly in the scorecard metadata:
-
-• Final vs. Provisional status: Although the official notice board titles and filenames label both documents as Final (Result Optimist Final and Result ILCA4 & ILCA6 Final, dated 1 November 2026), the document headers inside the PDFs still read Provisional. SailorPath displays the status as Provisional until the organiser issues a header-updated revision, while recording the full PDF reconciliation in each entry's evidence trail.
-• Official Silver Fleet penalty points: Optimist Silver has 67 entries but applies 69-point scoring penalties in the official table; those exact published numeric values are preserved without synthetic recalculation.
-• Cross-border identity protection: Where two distinct sailors share a sail number across seasons or fleets (such as Yong Ai Chuang and Yong Ray Chuang on sail 323), verified birth-year and gender records keep their career profiles strictly separate.
-
-Explore all four fleet scorecards at /regattas/eastern-seaboard-regatta-2026.`,
+SailorPath now displays Final status in line with the organiser’s official notice-board labels. The retained source PDFs still contain provisional headers; this difference remains documented in the source evidence.`,
     kind: "result_report",
     authorDisplayName: "SailorPath",
     publishedAt: "2026-11-02T09:00:00.000+08:00",
-    updatedAt: "2026-11-02T09:00:00.000+08:00",
+    updatedAt: "2026-11-08T22:44:06.000+08:00",
     relatedClass: "Optimist",
     relatedRegion: "Asia",
     sourceUrl: "https://sailorpath.com/regattas/eastern-seaboard-regatta-2026",
-    sourceLabel: "Open 18th Eastern Seaboard Regatta 2026 scorecards",
-    tags: [
-      "thailand",
-      "eastern-seaboard",
-      "optimist",
-      "ilca-4",
-      "ilca-6",
-      "results",
-      "pdf-verified",
-    ],
+    sourceLabel: "Explore the results",
+    tags: ["thailand", "eastern-seaboard", "optimist", "ilca-4", "ilca-6", "results", "pdf-verified"],
   },
   {
     slug: "australian-2026-ilca-optimist-and-zhik-youth-sail-results",
@@ -498,7 +525,7 @@ async function readPublishedNewsArticle(
 
 const getCachedPublishedNews = unstable_cache(
   readPublishedNews,
-  ["published-news-v6-reviewed-copy-media"],
+  ["published-news-v7-november-updates"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -508,7 +535,7 @@ const getCachedPublishedNews = unstable_cache(
 function cachedArticleLookup(slug: string) {
   return unstable_cache(
     () => readPublishedNewsArticle(slug),
-    ["published-news-article-v6-reviewed-copy-media", slug],
+    ["published-news-article-v7-november-updates", slug],
     {
       revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
       tags: [CACHE_TAG_NEWS_ARTICLES],
