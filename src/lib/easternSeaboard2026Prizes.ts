@@ -26,7 +26,7 @@ export const EASTERN_SEABOARD_2026_PRIZES: RegattaPrizeSchedule = {
   "scoringRules": "Appendix A; eight completed races. ILCA: one discard. Optimist: five qualifying and three final races with two discards.",
   "sourceUrl": "https://www.racingrulesofsailing.org/documents/198658",
   "sourceKind": "notice-of-race",
-  "sourceDescription": "NoR 13.1 prize categories. Placings derived from the organiser’s published results, which are marked provisional. Optimist awards span Gold and Silver, with Gold placed before Silver.",
+  "sourceDescription": "NoR 13.1 prize categories. Placings derived from the organiser’s final results. Optimist awards span Gold and Silver, with Gold placed before Silver.",
   "recordedPodiumPolicy": "official-categories-only",
   "fleets": [
     {

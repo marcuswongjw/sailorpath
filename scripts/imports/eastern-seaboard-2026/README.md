@@ -61,3 +61,7 @@ There are no unresolved race-score discrepancies or pending identity matches in 
 - `production-audit.json`: readback summary.
 
 No application code or schema change is required for this data import. The import commit is prepared from the currently deployed remote revision in an isolated checkout, preserving the original checkout's unrelated local edits and unpushed commit. Source deployment is a separate operation from the completed production data import.
+
+## Final status update, 8 November 2026
+
+At the owner’s explicit request, SailorPath now classifies all four result sheets as Final, following the official notice board’s Final document labels. The public prize description also uses final results. The original PDF body wording remains in the retained PDFs and per-result evidence as historical provenance. Apply final-status-2026-11-08.sql after replaying the original import files. Its transaction verifies that every result and race row is byte-for-byte equivalent before and after the metadata update.
