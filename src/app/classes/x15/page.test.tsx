@@ -16,6 +16,11 @@ describe("X-15 class hub", () => {
     expect(html).toContain("46th Singapore Open Windsurfing and Foiling Championships 2027");
     expect(html).toContain("X-15 Youth World Championships");
     expect(html).toContain("82L Lite Tech");
+    expect(html).toContain('/classes/x15/ibiza-worlds-2026.jpg');
+    expect(html).toContain('fetchPriority="high"');
+    expect(html).toContain('/classes/x15/equipment-board-82l.jpg');
+    expect(html).toContain('/classes/x15/equipment-wing.jpg');
+    expect(html).toContain('/classes/x15/equipment-foil-system.jpg');
     expect(html).toContain("No reviewed X-15 scorecards");
     expect(html).toContain("docs.google.com/forms/");
     expect(html).not.toContain("instagram.com");

@@ -39,6 +39,13 @@ export const X15_AGM_2026 = {
   noticeUrl: "https://x-15class.org/blog/official-notice-international-x-15-class-agm-2026-elections-14-november-2026/",
 } as const;
 
+export const X15_QUICK_FACTS = [
+  { label: "World Sailing status", value: "Official One-Design Class", detail: "Recognised 8 Nov 2025 (Dún Laoghaire)" },
+  { label: "One-design board", value: "82L Lite Tech", detail: "Single hull across all youth & senior divisions" },
+  { label: "Standard foil set", value: "880 cm² front · 200 cm² tail", detail: "69 cm fuselage + optional 560 / 1200 cm² front wings" },
+  { label: "Age & gender divisions", value: "U13 · U15 · U17 · U19 · Senior", detail: "2-wing quiver limit from U15 upward" },
+] as const;
+
 export const X15_EQUIPMENT_OVERVIEW = {
   board: "82L Lite Tech (all divisions)",
   defaultFrontFoil: "880 cm² front wing (optional 560 cm² and 1200 cm²)",
@@ -46,13 +53,42 @@ export const X15_EQUIPMENT_OVERVIEW = {
   evolutionPolicy: "Two-year equipment evolution cycle; previous-generation masts, wings and foils remain class-legal for 2026 competition.",
   equipmentUrl: "https://x-15class.org/equipment/",
   rulesUrl: "https://x-15class.org/rules/",
+  hardwareCards: [
+    {
+      title: "82L Lite Tech One-Design Board",
+      subtitle: "All divisions (U13 to Senior)",
+      description: "Every division races on the same 82-litre Starboard X-15 Lite Tech board with a compact outline, low-drag bottom rocker and dual footstrap rows. Each board removes 6 kg of coastal plastic and plants three mangrove trees.",
+      imageSrc: "/classes/x15/equipment-board-82l.jpg",
+      imageAlt: "Four red Starboard X-15 82L Lite Tech one-design wingfoil boards lined up on a sandy beach",
+      width: 720,
+      height: 719,
+    },
+    {
+      title: "Division-Matched X-15 Wing Quiver",
+      subtitle: "4.5m to 6.5m class wings",
+      description: "Riders register up to two class-approved X-15 wings (one 4.5m wing in U13) matched to their age and gender division, keeping racing fair across 6 to 25+ knots without an expensive quiver arms race.",
+      imageSrc: "/classes/x15/equipment-wing.jpg",
+      imageAlt: "Overhead view of an X-15 wingfoil racer foiling upwind with a red and white X-15 one-design wing",
+      width: 720,
+      height: 719,
+    },
+    {
+      title: "100cm Mast & Modular Foil System",
+      subtitle: "880 cm² default · 560 / 1200 cm² options",
+      description: "U13 and U15 use the 100cm V8 Aluminium DT mast, while U17, U19 and Seniors race on the 100cm Carbon DT mast—paired with a 69 cm fuselage, 200 cm² tail wing, and angled shims for rake tuning.",
+      imageSrc: "/classes/x15/equipment-foil-system.jpg",
+      imageAlt: "Exploded view of the X-15 100cm mast, 69cm fuselage, 200cm² tail wing, and 560, 880, and 1200 cm² front foil wings",
+      width: 720,
+      height: 720,
+    },
+  ],
   divisions: [
-    { division: "U13", wings: "4.5m", mast: "100cm V8 Alu DT Base", foil: "880 / 200 / 69" },
-    { division: "U15", wings: "5m & 4m", mast: "100cm V8 Alu DT Base", foil: "880 / 200 / 69" },
-    { division: "U17", wings: "5.5m & 4m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
-    { division: "U19", wings: "6m & 4.5m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
-    { division: "Senior Female", wings: "6m & 4.5m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
-    { division: "Senior Male", wings: "6.5m & 5m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
+    { division: "U13", mastTier: "Alu Mast", wings: "4.5m (1 wing)", mast: "100cm V8 Alu DT Base", foil: "880 / 200 / 69" },
+    { division: "U15", mastTier: "Alu Mast", wings: "5m & 4m", mast: "100cm V8 Alu DT Base", foil: "880 / 200 / 69" },
+    { division: "U17", mastTier: "Carbon Mast", wings: "5.5m & 4m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
+    { division: "U19", mastTier: "Carbon Mast", wings: "6m & 4.5m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
+    { division: "Senior Female", mastTier: "Carbon Mast", wings: "6m & 4.5m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
+    { division: "Senior Male", mastTier: "Carbon Mast", wings: "6.5m & 5m", mast: "100cm Carbon DT Base", foil: "880 / 200 / 69" },
   ],
 } as const;
 
