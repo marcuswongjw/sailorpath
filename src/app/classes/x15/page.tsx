@@ -198,11 +198,11 @@ export default async function X15ClassHub() {
           </p>
         </div>
 
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- A full document request retries a failed server-side results load. */}
         {!available ? (
           <div role="status" className="rounded-2xl border border-cool-veil bg-warm-white p-6">
             <p className="font-bold text-harbour-shadow">Results are temporarily unavailable</p>
             <p className="mt-2 text-sm text-slate-soft">The event guide is still available below.</p>
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- A full document request retries a failed server-side results load. */}
             <a href="/classes/x15#results" className="mt-3 inline-block text-sm font-bold text-harbour hover:underline">
               Try loading results again
             </a>
