@@ -60,3 +60,16 @@ describe('separate ILCA profile flows', () => {
     expect(result.current.activeResultsList.map(row=>row.id)).toEqual(['6']);
   });
 });
+
+
+describe('X-15 rider profiles', () => {
+  it('opens the X-15 result history with no borrowed Optimist or ILCA standing', () => {
+    const {result} = renderHook(() => useSailorProfileState({...props,initialResults:[{id:'x15-worlds',regattaId:'x15-worlds',regattaName:'X-15 Worlds',boatClass:'X-15',regattaDate:'2026-11-04',rank:1,geography:'ESP'}]}));
+    expect(result.current.resultsTab).toBe('x15');
+    expect(result.current.selectedClassLabel).toBe('X-15');
+    expect(result.current.classChoices).toEqual([{id:'x15',label:'X-15',count:1}]);
+    expect(result.current.activeResultsList.map(row=>row.id)).toEqual(['x15-worlds']);
+    expect(result.current.onBoardClass).toBe(true);
+    expect(result.current.activeStanding).toBeNull();
+  });
+});

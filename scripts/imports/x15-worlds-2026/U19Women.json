@@ -1,0 +1,691 @@
+{
+  "officialSource": {
+    "url": "https://23eastevents.com/results/2026_X15Worlds_U19Women.html",
+    "title": "2026 X-15 World Championships — U19 and U17 Women — Overall (official Sailwave results)",
+    "type": "html",
+    "visuallyReviewed": true,
+    "pdfCorroboration": false,
+    "sha256": "d27647d5232f06f9e65e46e381014a763eddf614d7da8d67b071f7aa513a7c8c",
+    "checkedOn": "2026-11-09",
+    "review": "All rows, race scores, codes, exclusions, board numbers and totals visually checked against the official rendered HTML table. No official final-results PDF located.",
+    "screenshotSha256": "1070874e5a096e3995ec04fc0f169e87512351339baee9eb4372e43bc063f42b",
+    "status": "post-event overall standings; championship completion confirmed by class association on 9 November 2026"
+  },
+  "event": {
+    "slug": "x15-world-championships-2026",
+    "name": "X-15 World Championships 2026",
+    "startDate": "2026-11-04",
+    "endDate": "2026-11-08",
+    "venue": "Port Nàutic Ibiza, Spain",
+    "organizer": "Club Mare Nostrum",
+    "classes": [
+      "X-15"
+    ],
+    "geography": "ESP",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/214967",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/15364/event"
+  },
+  "sheet": {
+    "slug": "x15-worlds-2026-u19-and-u17-women",
+    "name": "X-15 World Championships 2026 (U19 and U17 Women)",
+    "boatClass": "X-15",
+    "division": "U19 and U17 Women",
+    "raceCount": 3,
+    "totalFleetSize": 10,
+    "countsForRanking": false,
+    "status": "published",
+    "scheduleNotes": "Final results. Official digital scorecard visually checked. PDF corroboration unavailable. One printed discard per rider. Outside Singapore national rankings."
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "Yana Li",
+      "officialName": "Yana Li",
+      "sailOrBoardNumber": "23",
+      "nationality": "CHN",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 13.0,
+      "nettScore": 2.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(11.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "sailorId": "e5d5e06e-8ad3-5a45-91a7-1b80eca34f37",
+      "newProfile": {
+        "id": "e5d5e06e-8ad3-5a45-91a7-1b80eca34f37",
+        "name": "Yana Li",
+        "handle": "yanali-x15",
+        "sailNumber": "",
+        "boardNumber": "23",
+        "club": null,
+        "nationality": "CHN",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Yana Li",
+          "sailorId": "e5d5e06e-8ad3-5a45-91a7-1b80eca34f37",
+          "role": "solo",
+          "newProfile": {
+            "id": "e5d5e06e-8ad3-5a45-91a7-1b80eca34f37",
+            "name": "Yana Li",
+            "handle": "yanali-x15",
+            "sailNumber": "",
+            "boardNumber": "23",
+            "club": null,
+            "nationality": "CHN",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 2,
+      "name": "Anae Rio",
+      "officialName": "Anae Rio",
+      "sailOrBoardNumber": "26",
+      "nationality": "FRA",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 6.0,
+      "nettScore": 4.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(2.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "sailorId": "8c26ba0f-f865-58ac-9540-135cb01c90d6",
+      "newProfile": {
+        "id": "8c26ba0f-f865-58ac-9540-135cb01c90d6",
+        "name": "Anae Rio",
+        "handle": "anaerio-x15",
+        "sailNumber": "",
+        "boardNumber": "26",
+        "club": null,
+        "nationality": "FRA",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Anae Rio",
+          "sailorId": "8c26ba0f-f865-58ac-9540-135cb01c90d6",
+          "role": "solo",
+          "newProfile": {
+            "id": "8c26ba0f-f865-58ac-9540-135cb01c90d6",
+            "name": "Anae Rio",
+            "handle": "anaerio-x15",
+            "sailNumber": "",
+            "boardNumber": "26",
+            "club": null,
+            "nationality": "FRA",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 3,
+      "name": "Ane Fiskvik Mjoen",
+      "officialName": "Ane Fiskvik Mjoen",
+      "sailOrBoardNumber": "66",
+      "nationality": "NOR",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 23.0,
+      "nettScore": 12.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(11.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "07a611fd-a224-5af4-870f-5310b2cd6897",
+      "newProfile": {
+        "id": "07a611fd-a224-5af4-870f-5310b2cd6897",
+        "name": "Ane Fiskvik Mjoen",
+        "handle": "anefiskvikmjoen-x15",
+        "sailNumber": "",
+        "boardNumber": "66",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Ane Fiskvik Mjoen",
+          "sailorId": "07a611fd-a224-5af4-870f-5310b2cd6897",
+          "role": "solo",
+          "newProfile": {
+            "id": "07a611fd-a224-5af4-870f-5310b2cd6897",
+            "name": "Ane Fiskvik Mjoen",
+            "handle": "anefiskvikmjoen-x15",
+            "sailNumber": "",
+            "boardNumber": "66",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 4,
+      "name": "Blanka Jerzelkowska",
+      "officialName": "Blanka Jerzelkowska",
+      "sailOrBoardNumber": "63",
+      "nationality": "POL",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 25.0,
+      "nettScore": 14.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(11.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "6c10262d-0470-5431-9240-bc9e2b67a52a",
+      "newProfile": {
+        "id": "6c10262d-0470-5431-9240-bc9e2b67a52a",
+        "name": "Blanka Jerzelkowska",
+        "handle": "blankajerzelkowska-x15",
+        "sailNumber": "",
+        "boardNumber": "63",
+        "club": null,
+        "nationality": "POL",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Blanka Jerzelkowska",
+          "sailorId": "6c10262d-0470-5431-9240-bc9e2b67a52a",
+          "role": "solo",
+          "newProfile": {
+            "id": "6c10262d-0470-5431-9240-bc9e2b67a52a",
+            "name": "Blanka Jerzelkowska",
+            "handle": "blankajerzelkowska-x15",
+            "sailNumber": "",
+            "boardNumber": "63",
+            "club": null,
+            "nationality": "POL",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Sandra Bratli",
+      "officialName": "Sandra Bratli",
+      "sailOrBoardNumber": "58",
+      "nationality": "NOR",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 33.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(11.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "6fee713d-3d87-5a8e-a2aa-ff00812945f7",
+      "newProfile": {
+        "id": "6fee713d-3d87-5a8e-a2aa-ff00812945f7",
+        "name": "Sandra Bratli",
+        "handle": "sandrabratli-x15",
+        "sailNumber": "",
+        "boardNumber": "58",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Sandra Bratli",
+          "sailorId": "6fee713d-3d87-5a8e-a2aa-ff00812945f7",
+          "role": "solo",
+          "newProfile": {
+            "id": "6fee713d-3d87-5a8e-a2aa-ff00812945f7",
+            "name": "Sandra Bratli",
+            "handle": "sandrabratli-x15",
+            "sailNumber": "",
+            "boardNumber": "58",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Neus Pericas Perez",
+      "officialName": "Neus Pericas Perez",
+      "sailOrBoardNumber": "57",
+      "nationality": "ESP",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 33.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(11.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "2f6ae528-716d-5c06-a2bb-9e037a8e6093",
+      "newProfile": {
+        "id": "2f6ae528-716d-5c06-a2bb-9e037a8e6093",
+        "name": "Neus Pericas Perez",
+        "handle": "neuspericasperez-x15",
+        "sailNumber": "",
+        "boardNumber": "57",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Neus Pericas Perez",
+          "sailorId": "2f6ae528-716d-5c06-a2bb-9e037a8e6093",
+          "role": "solo",
+          "newProfile": {
+            "id": "2f6ae528-716d-5c06-a2bb-9e037a8e6093",
+            "name": "Neus Pericas Perez",
+            "handle": "neuspericasperez-x15",
+            "sailNumber": "",
+            "boardNumber": "57",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Valentina Cifre Garcia",
+      "officialName": "Valentina Cifre Garcia",
+      "sailOrBoardNumber": "55",
+      "nationality": "ESP",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 33.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(11.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "5ac3dc36-1b71-5b57-99ae-f762617cb4d3",
+      "newProfile": {
+        "id": "5ac3dc36-1b71-5b57-99ae-f762617cb4d3",
+        "name": "Valentina Cifre Garcia",
+        "handle": "valentinacifregarcia-x15",
+        "sailNumber": "",
+        "boardNumber": "55",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Valentina Cifre Garcia",
+          "sailorId": "5ac3dc36-1b71-5b57-99ae-f762617cb4d3",
+          "role": "solo",
+          "newProfile": {
+            "id": "5ac3dc36-1b71-5b57-99ae-f762617cb4d3",
+            "name": "Valentina Cifre Garcia",
+            "handle": "valentinacifregarcia-x15",
+            "sailNumber": "",
+            "boardNumber": "55",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Enoha Laurent",
+      "officialName": "Enoha Laurent",
+      "sailOrBoardNumber": "53",
+      "nationality": "FRA",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 33.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(11.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "dbc2496e-bb1c-553d-a19a-2601cf6c92bb",
+      "newProfile": {
+        "id": "dbc2496e-bb1c-553d-a19a-2601cf6c92bb",
+        "name": "Enoha Laurent",
+        "handle": "enohalaurent-x15",
+        "sailNumber": "",
+        "boardNumber": "53",
+        "club": null,
+        "nationality": "FRA",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Enoha Laurent",
+          "sailorId": "dbc2496e-bb1c-553d-a19a-2601cf6c92bb",
+          "role": "solo",
+          "newProfile": {
+            "id": "dbc2496e-bb1c-553d-a19a-2601cf6c92bb",
+            "name": "Enoha Laurent",
+            "handle": "enohalaurent-x15",
+            "sailNumber": "",
+            "boardNumber": "53",
+            "club": null,
+            "nationality": "FRA",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Sofia Vaclavkova",
+      "officialName": "Sofia Vaclavkova",
+      "sailOrBoardNumber": "24",
+      "nationality": "CZE",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 33.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(11.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "47748721-d285-5316-be3d-25acd499097f",
+      "newProfile": {
+        "id": "47748721-d285-5316-be3d-25acd499097f",
+        "name": "Sofia Vaclavkova",
+        "handle": "sofiavaclavkova-x15",
+        "sailNumber": "",
+        "boardNumber": "24",
+        "club": null,
+        "nationality": "CZE",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Sofia Vaclavkova",
+          "sailorId": "47748721-d285-5316-be3d-25acd499097f",
+          "role": "solo",
+          "newProfile": {
+            "id": "47748721-d285-5316-be3d-25acd499097f",
+            "name": "Sofia Vaclavkova",
+            "handle": "sofiavaclavkova-x15",
+            "sailNumber": "",
+            "boardNumber": "24",
+            "club": null,
+            "nationality": "CZE",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Claire Couvreux",
+      "officialName": "Claire Couvreux",
+      "sailOrBoardNumber": "73",
+      "nationality": "USA",
+      "gender": "F",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 33.0,
+      "nettScore": 22.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": "RET",
+          "discarded": true,
+          "raw": "(11.0 RET)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "11.0 DNC"
+        }
+      ],
+      "sailorId": "79493d2e-d0d8-5e82-a8b8-d5a121c91d76",
+      "newProfile": {
+        "id": "79493d2e-d0d8-5e82-a8b8-d5a121c91d76",
+        "name": "Claire Couvreux",
+        "handle": "clairecouvreux-x15",
+        "sailNumber": "",
+        "boardNumber": "73",
+        "club": null,
+        "nationality": "USA",
+        "gender": "F"
+      },
+      "participants": [
+        {
+          "name": "Claire Couvreux",
+          "sailorId": "79493d2e-d0d8-5e82-a8b8-d5a121c91d76",
+          "role": "solo",
+          "newProfile": {
+            "id": "79493d2e-d0d8-5e82-a8b8-d5a121c91d76",
+            "name": "Claire Couvreux",
+            "handle": "clairecouvreux-x15",
+            "sailNumber": "",
+            "boardNumber": "73",
+            "club": null,
+            "nationality": "USA",
+            "gender": "F"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    }
+  ]
+}

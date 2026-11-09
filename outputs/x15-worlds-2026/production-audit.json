@@ -1,0 +1,96 @@
+{
+  "sheets": [
+    {
+      "slug": "x15-worlds-2026-senior-men",
+      "status": "published",
+      "entries": 38,
+      "discards": 0,
+      "division": "Senior Men",
+      "boat_class": "X-15",
+      "race_count": 2,
+      "race_scores": 76,
+      "total_fleet_size": 38,
+      "counts_for_ranking": false
+    },
+    {
+      "slug": "x15-worlds-2026-senior-women",
+      "status": "published",
+      "entries": 16,
+      "discards": 0,
+      "division": "Senior Women",
+      "boat_class": "X-15",
+      "race_count": 2,
+      "race_scores": 32,
+      "total_fleet_size": 16,
+      "counts_for_ranking": false
+    },
+    {
+      "slug": "x15-worlds-2026-u15-and-u13",
+      "status": "published",
+      "entries": 15,
+      "discards": 15,
+      "division": "U15 and U13",
+      "boat_class": "X-15",
+      "race_count": 4,
+      "race_scores": 60,
+      "total_fleet_size": 15,
+      "counts_for_ranking": false
+    },
+    {
+      "slug": "x15-worlds-2026-u19-and-u17-men",
+      "status": "published",
+      "entries": 28,
+      "discards": 28,
+      "division": "U19 and U17 Men",
+      "boat_class": "X-15",
+      "race_count": 4,
+      "race_scores": 112,
+      "total_fleet_size": 28,
+      "counts_for_ranking": false
+    },
+    {
+      "slug": "x15-worlds-2026-u19-and-u17-women",
+      "status": "published",
+      "entries": 10,
+      "discards": 10,
+      "division": "U19 and U17 Women",
+      "boat_class": "X-15",
+      "race_count": 3,
+      "race_scores": 30,
+      "total_fleet_size": 10,
+      "counts_for_ranking": false
+    }
+  ],
+  "discards": 53,
+  "profiles": 107,
+  "rows_with_nationality": 107,
+  "race_scores": 310,
+  "result_rows": 107,
+  "parent_events": 1,
+  "u19_men_top_four": [
+    {
+      "name": "Holland Vierling",
+      "nett": 3,
+      "rank": 1
+    },
+    {
+      "name": "Baptiste Loire",
+      "nett": 6,
+      "rank": 2
+    },
+    {
+      "name": "Leo Zabell",
+      "nett": 15,
+      "rank": 3
+    },
+    {
+      "name": "Antoni Lutomski",
+      "nett": 16,
+      "rank": 4
+    }
+  ],
+  "participant_links": 107,
+  "verified_digital_rows": 107,
+  "ranking_eligible_sheets": 0,
+  "reconciliation_exceptions": 0
+}

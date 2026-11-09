@@ -9,6 +9,8 @@ describe("boardDisciplineOf", () => {
   it("keeps Windsurfing apart from WingFoil", () => {
     expect(boardDisciplineOf("Windsurfing LT")).toBe("windsurfing");
     expect(boardDisciplineOf("Windsurfing")).toBe("windsurfing");
+    expect(boardDisciplineOf("X-15")).toBe("x15");
+    expect(boardDisciplineOf("X15")).toBe("x15");
     expect(boardDisciplineOf("WingFoil")).toBe("wingfoil");
     expect(boardDisciplineOf("Wing Foil")).toBe("wingfoil");
     expect(boardDisciplineOf("Techno 293")).toBe("techno293");
