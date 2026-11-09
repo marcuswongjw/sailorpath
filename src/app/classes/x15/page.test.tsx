@@ -21,6 +21,8 @@ describe("X-15 class hub", () => {
     expect(html).toContain('/classes/x15/equipment-board-82l.jpg');
     expect(html).toContain('/classes/x15/equipment-wing.jpg');
     expect(html).toContain('/classes/x15/equipment-foil-system.jpg');
+    expect(html).toContain("snap-x snap-mandatory");
+    expect(html).toContain('aria-label="Event overview for X-15 Asian Cup 2026"');
     expect(html).toContain("No reviewed X-15 scorecards");
     expect(html).toContain("docs.google.com/forms/");
     expect(html).not.toContain("instagram.com");
