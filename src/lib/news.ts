@@ -43,6 +43,13 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: string | null;
   }
 > = {
+  "first-x15-world-championships-ibiza-2026": {
+    imageUrl: "/news/x15-worlds-2026-ibiza.jpg",
+    imageAlt: "Riders carrying X-15 boards and foils prepare at Port Nàutic Ibiza during the inaugural World Championships.",
+    imageCaption: "Riders prepare at Port Nàutic Ibiza during the inaugural X-15 World Championships.",
+    imageCredit: "Photo supplied from the championship media gallery",
+    imageCreditUrl: "https://drive.google.com/file/d/1WVoXt-Z9Uu4JsYsJwvSftH4PNqE1wQ2w/view",
+  },
   "more-racing-from-taiwan-and-japan": {
     imageUrl: "/news/asian-championship-coverage.png",
     imageAlt: "Illustrated sailing venues connected to published class scorecards across Asia.",
@@ -134,6 +141,37 @@ function withArticleMedia(article: PublishedNewsArticle): PublishedNewsArticle {
  * same records; a successful database read always takes precedence.
  */
 const FALLBACK_ARTICLES: PublishedNewsArticle[] = [
+  {
+    slug: "first-x15-world-championships-ibiza-2026",
+    title: "History made in Ibiza at the first X-15 World Championships",
+    summary: "Five inaugural world champions were crowned as 107 riders from 24 nations gathered in Ibiza for the first-ever X-15 World Championships.",
+    body: `The first-ever X-15 World Championships brought 107 riders from 24 nations to Ibiza, Spain, from 4–8 November 2026, with five inaugural world titles on the line.
+
+Hosted by Club Mare Nostrum at Port Nàutic Ibiza, the championship united experienced international sailors and emerging young wingfoilers on one-design equipment.
+
+## The first X-15 world champions
+
+• Senior Men: Kamil Manowiecki — Poland
+• Senior Women: Jette Koep — Germany
+• U19 Men: Holland Vierling — USA
+• U19 Women: Yana Li — China
+• U15: Benjamin Almeida — Brazil
+
+Light winds limited racing during the week, leaving the senior titles decided by the opening-day results. A late breeze on Sunday gave the youth and junior fleets another opportunity to race and settle their championships.
+
+Beyond the results, Ibiza marked the beginning of a new world championship community, bringing riders of different ages and backgrounds together to compete and share their experience.
+
+Explore all five fleet standings and individual race scores on SailorPath.`,
+    kind: "result_report",
+    authorDisplayName: "SailorPath",
+    publishedAt: "2026-11-09T16:10:59.000+08:00",
+    updatedAt: "2026-11-09T16:10:59.000+08:00",
+    relatedClass: "X-15",
+    relatedRegion: "Europe",
+    sourceUrl: "https://sailorpath.com/regattas/x15-world-championships-2026",
+    sourceLabel: "View the X-15 World Championships results",
+    tags: ["x15", "world-championships", "ibiza", "spain", "wingfoiling", "results"],
+  },
   {
     slug: "more-racing-from-taiwan-and-japan",
     title: "More racing from Taiwan and Japan",
@@ -525,7 +563,7 @@ async function readPublishedNewsArticle(
 
 const getCachedPublishedNews = unstable_cache(
   readPublishedNews,
-  ["published-news-v7-november-updates"],
+  ["published-news-v8-x15-worlds"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_NEWS_ARTICLES],
@@ -535,7 +573,7 @@ const getCachedPublishedNews = unstable_cache(
 function cachedArticleLookup(slug: string) {
   return unstable_cache(
     () => readPublishedNewsArticle(slug),
-    ["published-news-article-v7-november-updates", slug],
+    ["published-news-article-v8-x15-worlds", slug],
     {
       revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
       tags: [CACHE_TAG_NEWS_ARTICLES],
