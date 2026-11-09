@@ -68,8 +68,17 @@ export default function RootLayout({
               <NavigationProgress />
             </Suspense>
             <UsageBeacon />
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-lg focus:bg-harbour focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg focus:outline-2 focus:outline-offset-2 focus:outline-racing-orange"
+            >
+              Skip to main content
+            </a>
             <SiteHeader />
-            <main className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip *:min-w-0 *:max-w-full">
+            <main
+              id="main-content"
+              className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip *:min-w-0 *:max-w-full"
+            >
               {children}
             </main>
             <SiteFooter />
