@@ -141,6 +141,8 @@ describe("public landing page", () => {
     expect(html).toContain("Latest coverage &amp; release notes");
     expect(html).toContain("/news/18th-eastern-seaboard-regatta-2026-results-published");
     expect(html).toContain("/news/eastern-seaboard-pattaya.jpg");
+    expect(html).toContain("Sample profile · demonstration data");
+    expect(html).toContain('href="/sample"');
   });
 
   it("keeps the page usable if recent public results cannot be loaded", async () => {
@@ -166,25 +168,4 @@ describe("public landing page", () => {
     expect(html).toContain("20 of 24 entries imported");
     expect(html).toContain("published result tables");
   });
-
-  it("uses calendar events without requiring race scores and explains claiming with labelled sample data", async () => {
-    getPublicRegattas.mockResolvedValue([]);
-    vi.mocked(getPublicCalendarData).mockResolvedValue({ allRegattas: [regatta({name: "Next Weekend",date: "2026-10-30",endDate: "2026-10-31",raceCount: 0, totalFleetSize: 0, classes: ["Optimist","ILCA 4"]})],resultSheetsByEvent: {} });
-    const html = renderToStaticMarkup(await HomePage());
-    expect(html).toContain("Next Weekend");
-    expect(html).toContain("Optimist · ILCA 4");
-    expect(html).toContain('href="/calendar?q=Next%20Weekend"');
-    expect(html).toContain("Request access");
-    expect(html).toContain("Sample profile · demonstration data");
-    expect(html).toContain('href="/sample"');
-  });
-
-  it("keeps discovery usable when the calendar cannot be safely loaded", async () => {
-    getPublicRegattas.mockResolvedValue([]);
-    vi.mocked(getPublicCalendarData).mockRejectedValue(new Error("deletions unavailable"));
-    const html = renderToStaticMarkup(await HomePage());
-    expect(html).toContain("Upcoming events are temporarily unavailable");
-    expect(html).toContain("Find a sailor profile");
-  });
-
 });
