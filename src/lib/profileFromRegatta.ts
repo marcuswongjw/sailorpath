@@ -18,7 +18,7 @@ import { sailingClassKeyOf } from "@/lib/classRegistry";
 /** Techno 293, iQFOiL, and WingFoil share sailors.board_number. */
 export function isBoardSailClass(boatClass: string | null | undefined): boolean {
   const key = sailingClassKeyOf(boatClass);
-  return key === "wingfoil" || key === "iqfoil" || key === "techno293";
+  return key === "x15" || key === "wingfoil" || key === "iqfoil" || key === "techno293";
 }
 
 export type ProfileFieldSource = {

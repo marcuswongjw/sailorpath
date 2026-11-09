@@ -1,0 +1,965 @@
+[
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Kamil Manowiecki",
+    "nationality": "POL",
+    "boardNumber": "116",
+    "sailorId": "d63c8fb8-c610-52f3-aa60-fd59da54f3b8",
+    "handle": "kamilmanowiecki-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Romain Ghio",
+    "nationality": "FRA",
+    "boardNumber": "95",
+    "sailorId": "70596590-d10b-51c1-bdb8-958e2d9ff4c3",
+    "handle": "romainghio-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Kai Mirel",
+    "nationality": "USA",
+    "boardNumber": "117",
+    "sailorId": "d8731a69-3a18-5033-bff5-e67f0f5da684",
+    "handle": "kaimirel-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Mala'e McElheny",
+    "nationality": "USA",
+    "boardNumber": "113",
+    "sailorId": "24c42408-f584-5700-b955-02058bf880ac",
+    "handle": "malaemcelheny-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Luis Bohm",
+    "nationality": "AUT",
+    "boardNumber": "106",
+    "sailorId": "bf5cedec-4ec4-55fe-8f4c-9bccddeeefee",
+    "handle": "luisbohm-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Bartosz Peczka",
+    "nationality": "POL",
+    "boardNumber": "132",
+    "sailorId": "d2a6d4a1-ccd4-5578-bd61-58c3a8b18d47",
+    "handle": "bartoszpeczka-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Ancor Sosa",
+    "nationality": "ESP",
+    "boardNumber": "92",
+    "sailorId": "389f5015-a4f9-52ec-a6cf-d4ab4dee4585",
+    "handle": "ancorsosa-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Maksym Oberemko",
+    "nationality": "ESP",
+    "boardNumber": "114",
+    "sailorId": "ef830f33-4bd4-5ad9-b6d7-06428e06ccb3",
+    "handle": "maksymoberemko-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Jan Goralski",
+    "nationality": "POL",
+    "boardNumber": "122",
+    "sailorId": "88f24aef-088b-5619-9414-91dfb8320f36",
+    "handle": "jangoralski-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Maximo Nores",
+    "nationality": "USA",
+    "boardNumber": "89",
+    "sailorId": "37b3b215-368d-5c72-aaef-50595d8f5f31",
+    "handle": "maximonores-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Tamas Szamody",
+    "nationality": "HUN",
+    "boardNumber": "107",
+    "sailorId": "b85298d9-32b7-579b-b5a6-a334c15e6316",
+    "handle": "tamasszamody-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Daniel Dolega",
+    "nationality": "POL",
+    "boardNumber": "129",
+    "sailorId": "0fdda959-c95a-5bbe-99b9-6cdb4098d2e2",
+    "handle": "danieldolega-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Angel Medina Rodriguez",
+    "nationality": "ESP",
+    "boardNumber": "134",
+    "sailorId": "7454f88c-e4f2-5dc6-a5c2-2a596dfd287e",
+    "handle": "angelmedinarodriguez-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Kristof Kovacs",
+    "nationality": "HUN",
+    "boardNumber": "105",
+    "sailorId": "e0bafce8-e647-5060-9339-8c23e893060d",
+    "handle": "kristofkovacs-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Henry Myers",
+    "nationality": "AUS",
+    "boardNumber": "88",
+    "sailorId": "96d8f9b2-4473-54dc-909e-fa4c2ab89488",
+    "handle": "henrymyers-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Nick Goodchild",
+    "nationality": "GBR",
+    "boardNumber": "91",
+    "sailorId": "8a0e074d-57d3-587c-81fd-a211ed37dd16",
+    "handle": "nickgoodchild-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Rafferty Read",
+    "nationality": "GBR",
+    "boardNumber": "94",
+    "sailorId": "d77b48d6-52fb-5adf-b14f-68393530fb0d",
+    "handle": "raffertyread-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Petr Vaclavek",
+    "nationality": "CZE",
+    "boardNumber": "128",
+    "sailorId": "4976ad37-f0f2-5f2c-961f-7b066ec56db3",
+    "handle": "petrvaclavek-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Szymon Cieslak",
+    "nationality": "POL",
+    "boardNumber": "97",
+    "sailorId": "f6efda0d-7a21-56bc-bc99-df20350bd44c",
+    "handle": "szymoncieslak-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Neil Fraser",
+    "nationality": "GBR",
+    "boardNumber": "90",
+    "sailorId": "f38572f0-06f4-5672-88cb-2ae720fd9af0",
+    "handle": "neilfraser-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Devin Hauser",
+    "nationality": "SUI",
+    "boardNumber": "127",
+    "sailorId": "b47d955e-8a30-58c1-9c7f-7d058c8fcd87",
+    "handle": "devinhauser-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Kuba Staite",
+    "nationality": "GBR",
+    "boardNumber": "115",
+    "sailorId": "80f3d70e-47a1-566a-90de-c1734e81507d",
+    "handle": "kubastaite-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Era Lin",
+    "nationality": "HKG",
+    "boardNumber": "126",
+    "sailorId": "4efa5a7e-e5e0-57b7-bf93-530b137991ea",
+    "handle": "eralin-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Angel Granda Roque",
+    "nationality": "ESP",
+    "boardNumber": "135",
+    "sailorId": "e81cd1be-c533-533b-ac1c-32d2ec2b3a4c",
+    "handle": "angelgrandaroque-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Philip Vittle",
+    "nationality": "GBR",
+    "boardNumber": "93",
+    "sailorId": "018f49d9-41ec-58dc-b2be-b125bd19d19f",
+    "handle": "philipvittle-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Bartosz Hryniewicz",
+    "nationality": "POL",
+    "boardNumber": "133",
+    "sailorId": "7230ade2-f4d0-597c-ab65-d4453ef9079b",
+    "handle": "bartoszhryniewicz-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Kaan Parlas",
+    "nationality": "TUR",
+    "boardNumber": "118",
+    "sailorId": "0207d69b-487f-52d0-a36d-d9397dbb2ab6",
+    "handle": "kaanparlas-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Martin Booth",
+    "nationality": "GBR",
+    "boardNumber": "111",
+    "sailorId": "4b09691b-ec36-5b27-b5eb-a24cce808414",
+    "handle": "martinbooth-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Jonathan Bleikvin",
+    "nationality": "NOR",
+    "boardNumber": "120",
+    "sailorId": "6df74fc6-02fb-5c0e-914b-04ceed664af6",
+    "handle": "jonathanbleikvin-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Bence Sinthavong",
+    "nationality": "HUN",
+    "boardNumber": "131",
+    "sailorId": "1af460fc-0dde-550f-8006-d526eafa9a9d",
+    "handle": "bencesinthavong-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Malo Maisonneuve",
+    "nationality": "FRA",
+    "boardNumber": "112",
+    "sailorId": "5ce5670e-9cc6-5ff0-8d34-b93b07b9f53d",
+    "handle": "malomaisonneuve-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Decimo (Dudu) Mazzocato",
+    "nationality": "BRA",
+    "boardNumber": "123",
+    "sailorId": "ac074b4f-99b3-5858-a2e4-32426a56b291",
+    "handle": "decimodudumazzocato-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Christopher Maxo Gundersen",
+    "nationality": "NOR",
+    "boardNumber": "130",
+    "sailorId": "fd174a2f-d9e1-57d7-a525-71f26e2dcf3d",
+    "handle": "christophermaxogundersen-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Joseph McIvor",
+    "nationality": "GBR",
+    "boardNumber": "119",
+    "sailorId": "93868c1b-c592-51a9-9300-f9e361042740",
+    "handle": "josephmcivor-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Guy Spreckley",
+    "nationality": "GBR",
+    "boardNumber": "125",
+    "sailorId": "e2c0f6c4-b4f2-5180-9bdb-aceab30f46db",
+    "handle": "guyspreckley-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Henk Van Niejenhuis",
+    "nationality": "NED",
+    "boardNumber": "124",
+    "sailorId": "92c8b117-9882-52c5-a7ce-fff0153c8a45",
+    "handle": "henkvanniejenhuis-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "John Porro",
+    "nationality": "GBR",
+    "boardNumber": "121",
+    "sailorId": "563f03c8-7122-5a45-80ff-198125cb980d",
+    "handle": "johnporro-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-men",
+    "name": "Ethan Doyle",
+    "nationality": "USA",
+    "boardNumber": "104",
+    "sailorId": "4da0abee-3842-5a53-8671-0b0047b7db67",
+    "handle": "ethandoyle-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Jette Koep",
+    "nationality": "GER",
+    "boardNumber": "27",
+    "sailorId": "f72c0494-bba8-54be-9326-615785ba54d3",
+    "handle": "jettekoep-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Pola Wawrzyniak",
+    "nationality": "POL",
+    "boardNumber": "70",
+    "sailorId": "8532d933-36a0-5455-8d0e-f4def6d14bda",
+    "handle": "polawawrzyniak-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Marcelina Korszon",
+    "nationality": "POL",
+    "boardNumber": "71",
+    "sailorId": "cb92bd1e-9a7e-5922-83e7-70b0b26d88bd",
+    "handle": "marcelinakorszon-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Cindy Robert",
+    "nationality": "SUI",
+    "boardNumber": "68",
+    "sailorId": "014a15de-f3c2-5923-8db7-dd618c629b80",
+    "handle": "cindyrobert-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Berta Campos Blanco",
+    "nationality": "ESP",
+    "boardNumber": "25",
+    "sailorId": "6d6745fe-ee91-56e9-911e-2979849e03aa",
+    "handle": "bertacamposblanco-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Monika Mikkola",
+    "nationality": "FIN",
+    "boardNumber": "67",
+    "sailorId": "5d24ee2a-471c-5e61-aaa6-4ed16c8c982c",
+    "handle": "monikamikkola-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Karolina Kluszczynska",
+    "nationality": "POL",
+    "boardNumber": "72",
+    "sailorId": "d45d7660-adbc-59d3-a2f0-d6c4b8e7c696",
+    "handle": "karolinakluszczynska-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Alice Read",
+    "nationality": "GBR",
+    "boardNumber": "24",
+    "sailorId": "1fa346b1-2f5c-5807-9912-6df898e7a53a",
+    "handle": "aliceread-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Dominique Stater",
+    "nationality": "USA",
+    "boardNumber": "74",
+    "sailorId": "f55df78c-4fa5-50c2-b96b-24ea47bb6f5e",
+    "handle": "dominiquestater-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Asya Anastasya Varicioglu",
+    "nationality": "TUR",
+    "boardNumber": "28",
+    "sailorId": "f71c369b-b7cd-51f7-9717-e13be2930771",
+    "handle": "asyaanastasyavaricioglu-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Isabelle Fellows",
+    "nationality": "GBR",
+    "boardNumber": "22",
+    "sailorId": "2f818c8a-bd29-5972-b81a-ae8f25b65d10",
+    "handle": "isabellefellows-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Virag Szenasi",
+    "nationality": "HUN",
+    "boardNumber": "76",
+    "sailorId": "7889dbd1-8a76-5789-a1b7-834ef96b411b",
+    "handle": "viragszenasi-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Siren Sundby",
+    "nationality": "NOR",
+    "boardNumber": "66",
+    "sailorId": "f5456036-259d-5e76-93d2-1cc723b1aefa",
+    "handle": "sirensundby-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Sara Ortiz Vey",
+    "nationality": "GUA",
+    "boardNumber": "23",
+    "sailorId": "4b3e5a97-3dfe-567a-ab9c-07b1b73a93bd",
+    "handle": "saraortizvey-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Kinga Zsilak",
+    "nationality": "HUN",
+    "boardNumber": "69",
+    "sailorId": "0b4fdbda-0483-5d83-8b41-d3bbc3e02c51",
+    "handle": "kingazsilak-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-senior-women",
+    "name": "Likun Zha",
+    "nationality": "USA",
+    "boardNumber": "75",
+    "sailorId": "7de06f1a-ba46-5b84-ac11-cf42739219e7",
+    "handle": "likunzha-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Benjamin Almeida",
+    "nationality": "BRA",
+    "boardNumber": "45",
+    "sailorId": "6f327ee4-03ca-5f58-b99c-882df0deba2a",
+    "handle": "benjaminalmeida-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Harrison Doyle",
+    "nationality": "USA",
+    "boardNumber": "42",
+    "sailorId": "6a0e25ac-33ac-5557-a483-1fde81648a36",
+    "handle": "harrisondoyle-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Kacper Hryniewicz",
+    "nationality": "POL",
+    "boardNumber": "50",
+    "sailorId": "68d312c7-d92f-5765-bc79-00987e96e3e6",
+    "handle": "kacperhryniewicz-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Ji Laizhi Andy",
+    "nationality": "HKG",
+    "boardNumber": "46",
+    "sailorId": "7e4d246e-70f4-576b-8dc7-a26356f6e98a",
+    "handle": "jilaizhiandy-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Viktor Vaclavek",
+    "nationality": "CZE",
+    "boardNumber": "40",
+    "sailorId": "2206e542-e092-5e4c-9017-d13167f4c1ef",
+    "handle": "viktorvaclavek-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Thanawat Promwaen (Shane)",
+    "nationality": "THA",
+    "boardNumber": "37",
+    "sailorId": "2670b077-48f6-5c31-a9d5-2dd6833ebbdb",
+    "handle": "thanawatpromwaenshane-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Jakub Kohlicek",
+    "nationality": "CZE",
+    "boardNumber": "47",
+    "sailorId": "fc6e0d18-a937-544a-9745-d9bc44dc796e",
+    "handle": "jakubkohlicek-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Alp Yavrucuk",
+    "nationality": "TUR",
+    "boardNumber": "48",
+    "sailorId": "642f0809-b1f7-5fae-977e-fd97f4aa8def",
+    "handle": "alpyavrucuk-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Kilic Eryilmaz",
+    "nationality": "TUR",
+    "boardNumber": "44",
+    "sailorId": "b049cba3-733f-58a2-bb6e-51ca2cb39f87",
+    "handle": "kiliceryilmaz-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Zhihong Jet Ting",
+    "nationality": "USA",
+    "boardNumber": "38",
+    "sailorId": "997f4c81-35e2-5d0b-8fdc-a63959adbccf",
+    "handle": "zhihongjetting-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Carl Axel Sternell",
+    "nationality": "NOR",
+    "boardNumber": "49",
+    "sailorId": "11f5cae8-3ad9-55e2-8db6-64bee9cb90fc",
+    "handle": "carlaxelsternell-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Kora Polacsko-Szenasi",
+    "nationality": "HUN",
+    "boardNumber": "39",
+    "sailorId": "8e072380-7c85-5754-8b72-5cbd3ceca3d5",
+    "handle": "korapolacskoszenasi-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Kayla Nicolau Rebassa",
+    "nationality": "ESP",
+    "boardNumber": "41",
+    "sailorId": "ad6e82ed-5e7b-594a-8a68-df2c0599eedb",
+    "handle": "kaylanicolaurebassa-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Miquel Pericas Perez",
+    "nationality": "ESP",
+    "boardNumber": "51",
+    "sailorId": "e9f2c195-47b2-50a6-a87d-69e4bb901d23",
+    "handle": "miquelpericasperez-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u15-and-u13",
+    "name": "Alp Gencalp",
+    "nationality": "TUR",
+    "boardNumber": "43",
+    "sailorId": "0f574e06-fb50-5581-b400-92155ecfb730",
+    "handle": "alpgencalp-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Holland Vierling",
+    "nationality": "USA",
+    "boardNumber": "74",
+    "sailorId": "9643a3c3-c78d-52b0-8ad2-84a1f359cb38",
+    "handle": "hollandvierling-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Baptiste Loire",
+    "nationality": "FRA",
+    "boardNumber": "101",
+    "sailorId": "e34d9c2a-a50a-50ef-8e1d-b9b054011563",
+    "handle": "baptisteloire-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Leo Zabell",
+    "nationality": "ESP",
+    "boardNumber": "76",
+    "sailorId": "a47d8924-0ce1-53bf-b0e8-a65d367412c5",
+    "handle": "leozabell-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Antoni Lutomski",
+    "nationality": "POL",
+    "boardNumber": "71",
+    "sailorId": "79dc82ab-f5c6-52b3-9a10-f1025cd88d37",
+    "handle": "antonilutomski-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Botond Virag",
+    "nationality": "HUN",
+    "boardNumber": "60",
+    "sailorId": "199b7e4d-7603-5b91-8ab9-92360e611d69",
+    "handle": "botondvirag-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Mack Wong",
+    "nationality": "HKG",
+    "boardNumber": "102",
+    "sailorId": "983252bf-8a99-5f85-a6ea-837957551ac6",
+    "handle": "mackwong-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Martinius Hopstock",
+    "nationality": "NOR",
+    "boardNumber": "99",
+    "sailorId": "883372dd-92d3-5d1b-9cf0-289b445b0680",
+    "handle": "martiniushopstock-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Jean Paul Liechti",
+    "nationality": "COL",
+    "boardNumber": "59",
+    "sailorId": "8d4e508b-61b1-597d-892e-d5eccf300428",
+    "handle": "jeanpaulliechti-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Idan Shubin",
+    "nationality": "NOR",
+    "boardNumber": "69",
+    "sailorId": "ce0857fc-426e-5273-a084-fa037dd46dfe",
+    "handle": "idanshubin-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Mark Mains",
+    "nationality": "CAN",
+    "boardNumber": "22",
+    "sailorId": "8a256d34-2f73-56de-b0f5-939d77d6c68e",
+    "handle": "markmains-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Platon Kuzmenko",
+    "nationality": "ESP",
+    "boardNumber": "98",
+    "sailorId": "09e553ec-35f2-5a56-ad5c-6aec7a889346",
+    "handle": "platonkuzmenko-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Jakub Balewicz",
+    "nationality": "POL",
+    "boardNumber": "72",
+    "sailorId": "badd66d4-b6aa-54ba-8e24-a04de9485e3c",
+    "handle": "jakubbalewicz-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Nicolas Sixto",
+    "nationality": "ARG",
+    "boardNumber": "21",
+    "sailorId": "4bc621e4-f8f1-5e73-8868-a9a59984907c",
+    "handle": "nicolassixto-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Martin Medina",
+    "nationality": "ESP",
+    "boardNumber": "64",
+    "sailorId": "4cef1851-d3eb-558e-a4f9-b880030c4076",
+    "handle": "martinmedina-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "David Bratli",
+    "nationality": "NOR",
+    "boardNumber": "68",
+    "sailorId": "f8e81dde-809d-5703-a5d9-46371f4eb9cd",
+    "handle": "davidbratli-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Matthew Couvreux",
+    "nationality": "USA",
+    "boardNumber": "52",
+    "sailorId": "92784042-941d-525a-8840-d7590f0e03d5",
+    "handle": "matthewcouvreux-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Theo Bruhin",
+    "nationality": "SUI",
+    "boardNumber": "62",
+    "sailorId": "c5753c6e-b638-5f2a-9cd4-fc6a545fed8b",
+    "handle": "theobruhin-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Axel Espeli-Blankholm",
+    "nationality": "NOR",
+    "boardNumber": "67",
+    "sailorId": "559456f1-1ac1-5a06-aed5-a816bd556070",
+    "handle": "axelespeliblankholm-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Oscar Melet",
+    "nationality": "USA",
+    "boardNumber": "75",
+    "sailorId": "a04d2517-7846-5f06-bfc0-abb5e9f1e73b",
+    "handle": "oscarmelet-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Matteo Manzoli",
+    "nationality": "ITA",
+    "boardNumber": "28",
+    "sailorId": "5e1b3468-8b6d-54ac-ae18-cba96b01d736",
+    "handle": "matteomanzoli-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Ole Joss Jacobsen Lepperoed",
+    "nationality": "NOR",
+    "boardNumber": "100",
+    "sailorId": "9e23c291-5e1c-576c-bc52-3e1918a138ae",
+    "handle": "olejossjacobsenlepperoed-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Phil Hargreaves",
+    "nationality": "CAN",
+    "boardNumber": "61",
+    "sailorId": "cf308256-9b5f-5a35-8e58-f7adc47910df",
+    "handle": "philhargreaves-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Gustav Poschke",
+    "nationality": "GER",
+    "boardNumber": "27",
+    "sailorId": "b04f743f-9e30-5630-858b-09e10c033cc4",
+    "handle": "gustavposchke-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Vinicio Vila",
+    "nationality": "ARG",
+    "boardNumber": "103",
+    "sailorId": "60f833cb-5458-5297-bc95-b43cb3023a03",
+    "handle": "viniciovila-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Maxime Romero",
+    "nationality": "ESP",
+    "boardNumber": "54",
+    "sailorId": "79f9dd44-de60-50e7-89b2-8e57ee3459da",
+    "handle": "maximeromero-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Emirhan Reis Kankiran",
+    "nationality": "TUR",
+    "boardNumber": "56",
+    "sailorId": "ce4430e7-f2a1-5bbc-8b4a-7228507b1dfd",
+    "handle": "emirhanreiskankiran-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Gerard Rius",
+    "nationality": "ESP",
+    "boardNumber": "25",
+    "sailorId": "2fb7813e-8316-53ba-9ca4-e339ffe58877",
+    "handle": "gerardrius-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-men",
+    "name": "Tinic Sohlberg",
+    "nationality": "NOR",
+    "boardNumber": "70",
+    "sailorId": "9c5dc38e-16fe-5685-959f-9e3adbb48ee6",
+    "handle": "tinicsohlberg-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Yana Li",
+    "nationality": "CHN",
+    "boardNumber": "23",
+    "sailorId": "e5d5e06e-8ad3-5a45-91a7-1b80eca34f37",
+    "handle": "yanali-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Anae Rio",
+    "nationality": "FRA",
+    "boardNumber": "26",
+    "sailorId": "8c26ba0f-f865-58ac-9540-135cb01c90d6",
+    "handle": "anaerio-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Ane Fiskvik Mjoen",
+    "nationality": "NOR",
+    "boardNumber": "66",
+    "sailorId": "07a611fd-a224-5af4-870f-5310b2cd6897",
+    "handle": "anefiskvikmjoen-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Blanka Jerzelkowska",
+    "nationality": "POL",
+    "boardNumber": "63",
+    "sailorId": "6c10262d-0470-5431-9240-bc9e2b67a52a",
+    "handle": "blankajerzelkowska-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Sandra Bratli",
+    "nationality": "NOR",
+    "boardNumber": "58",
+    "sailorId": "6fee713d-3d87-5a8e-a2aa-ff00812945f7",
+    "handle": "sandrabratli-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Neus Pericas Perez",
+    "nationality": "ESP",
+    "boardNumber": "57",
+    "sailorId": "2f6ae528-716d-5c06-a2bb-9e037a8e6093",
+    "handle": "neuspericasperez-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Valentina Cifre Garcia",
+    "nationality": "ESP",
+    "boardNumber": "55",
+    "sailorId": "5ac3dc36-1b71-5b57-99ae-f762617cb4d3",
+    "handle": "valentinacifregarcia-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Enoha Laurent",
+    "nationality": "FRA",
+    "boardNumber": "53",
+    "sailorId": "dbc2496e-bb1c-553d-a19a-2601cf6c92bb",
+    "handle": "enohalaurent-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Sofia Vaclavkova",
+    "nationality": "CZE",
+    "boardNumber": "24",
+    "sailorId": "47748721-d285-5316-be3d-25acd499097f",
+    "handle": "sofiavaclavkova-x15",
+    "existing": false
+  },
+  {
+    "sheet": "x15-worlds-2026-u19-and-u17-women",
+    "name": "Claire Couvreux",
+    "nationality": "USA",
+    "boardNumber": "73",
+    "sailorId": "79493d2e-d0d8-5e82-a8b8-d5a121c91d76",
+    "handle": "clairecouvreux-x15",
+    "existing": false
+  }
+]

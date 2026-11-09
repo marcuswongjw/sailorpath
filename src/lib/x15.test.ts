@@ -31,3 +31,47 @@ describe("X-15 results preparation", () => {
     expect(X15_NATIONAL_ASSOCIATIONS.some((a) => a.country === "Singapore")).toBe(true);
   });
 });
+
+describe("reviewed X-15 Worlds 2026 scorecards", () => {
+  it("keeps all five independently scored divisions in the saved parent hub", async () => {
+    const { savedEventHubForSlug } = await import("./regattaEventGroups");
+    const manifests = await Promise.all(["SeniorMen", "SeniorWomen", "U19Men", "U19Women", "U15"].map(async (file) => {
+      const { readFile } = await import("node:fs/promises");
+      return JSON.parse(await readFile(new URL(`../../scripts/imports/x15-worlds-2026/${file}.json`, import.meta.url), "utf8"));
+    }));
+    const rows: RegattaRecord[] = manifests.map(({ event, sheet }) => ({
+      id: sheet.slug, slug: sheet.slug, name: sheet.name, boatClass: sheet.boatClass,
+      division: sheet.division, totalFleetSize: sheet.totalFleetSize, raceCount: sheet.raceCount,
+      date: event.startDate, endDate: event.endDate, eventSlug: event.slug,
+      eventName: event.name, venue: event.venue, countsForRanking: false,
+    }));
+    const hub = savedEventHubForSlug("x15-world-championships-2026", rows);
+    expect(hub?.event.slices.map((slice) => slice.key)).toEqual([
+      "x15-senior-men", "x15-senior-women", "x15-u15-and-u13", "x15-u19-and-u17-men", "x15-u19-and-u17-women",
+    ]);
+    for (const row of rows) {
+      expect(savedEventHubForSlug(row.slug, rows)?.fleetKey).toBe(`x15-${row.division!.toLowerCase().replaceAll(" ", "-")}`);
+    }
+    expect(publishedX15Sheets(rows)).toHaveLength(5);
+    expect(rows.reduce((sum, row) => sum + row.totalFleetSize, 0)).toBe(107);
+  });
+});
+
+describe("X-15 Worlds source scoring", () => {
+  it("retains half points, a discarded black flag, and official tied ranks", async () => {
+    const { readFile } = await import("node:fs/promises");
+    const load = async (file: string) => JSON.parse(await readFile(new URL(`../../scripts/imports/x15-worlds-2026/${file}.json`, import.meta.url), "utf8"));
+    const senior = await load("SeniorMen");
+    expect(senior.results[0]).toMatchObject({ name: "Kamil Manowiecki", nationality: "POL", grossScore: 1, nettScore: 1 });
+    expect(senior.results[0].races.map((race: { score: number }) => race.score)).toEqual([0.5, 0.5]);
+    expect(senior.results[14].races[0]).toMatchObject({ score: 19.5, code: "BFD", discarded: false });
+    expect(senior.results.slice(-3).map((row: { rank: number }) => row.rank)).toEqual([36, 36, 36]);
+    const youthWomen = await load("U19Women");
+    expect(youthWomen.results[0]).toMatchObject({ name: "Yana Li", nationality: "CHN", grossScore: 13, nettScore: 2 });
+    expect(youthWomen.results[0].races[0]).toMatchObject({ score: 11, code: "BFD", discarded: true });
+    expect(youthWomen.results[0].birthYear).toBeUndefined();
+    const youthMen = await load("U19Men");
+    expect(youthMen.results.slice(2, 4).map((row: { name: string; rank: number }) => [row.name, row.rank])).toEqual([["Leo Zabell", 3], ["Antoni Lutomski", 4]]);
+    expect(youthMen.officialSource.discrepancy).toContain("award attribution awaits organiser clarification");
+  });
+});

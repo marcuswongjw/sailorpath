@@ -4,6 +4,7 @@ import { sailingClassKeyOf } from "@/lib/classRegistry";
 
 /** Board classes that can lead a sailor profile. Windsurfing is not WingFoil. */
 export const BOARD_DISCIPLINES = [
+  "x15",
   "techno293",
   "wingfoil",
   "iqfoil",
@@ -50,6 +51,7 @@ export function boardDisciplineOf(
 ): BoardDiscipline | null {
   const classKey = sailingClassKeyOf(boatClass);
   if (["windsurfing", "windsurfing-lt", "windfoil"].includes(classKey || "")) return "windsurfing";
+  if (classKey === "x15") return "x15";
   if (classKey === "wingfoil") return "wingfoil";
   if (classKey === "iqfoil") return "iqfoil";
   if (classKey === "techno293") return "techno293";
@@ -78,6 +80,8 @@ export function disciplineLabel(id: ProfileDiscipline): string {
       return "ILCA 7";
     case "techno293":
       return "Techno 293";
+    case "x15":
+      return "X-15";
     case "wingfoil":
       return "WingFoil";
     case "iqfoil":

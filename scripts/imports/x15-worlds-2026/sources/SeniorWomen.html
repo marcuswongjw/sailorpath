@@ -1,0 +1,436 @@
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="Sailwave results">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Results for 2026 X-15 World Championships</title>
+
+<style type="text/css">
+/* --- Page & Frame Setup --- */
+body {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4faff;
+}
+
+#wrap {
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: left;
+    border-radius: 8px; /* Adds subtle rounded corners to top and bottom graphics */
+    overflow: hidden;   /* Clips graphic banners perfectly to rounded corners */
+}
+
+.regatta-header {
+    background-image: url('https://23eastevents.com/results/artwork/2026_X15_Worlds_header.png');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top center;
+    width: 100%;
+    height: 160px;
+}
+
+/* Reduced bottom padding to 110px so Aqua Speed bubble overlaps content/frame */
+.content-area {
+    padding: 20px 40px 110px 40px;
+}
+
+/* Header Headings */
+.event-title {
+    text-align: center;
+
+    font-size: 1.8em;
+    margin: 10px 0 5px 0;
+}
+
+.event-location {
+    text-align: center;
+    color: #003366;
+    font-size: 1.4em;
+    margin: 10px 0 5px 0;
+}
+
+.provisional-status {
+    text-align: center;
+    font-size: 0.9em;
+            color: #666;
+    margin: 0 0 25px 0;
+}
+
+/* Center Fleet Titles & Captions */
+h2, h3, .caption {
+    text-align: center !important;
+}
+
+.sailwave-credits {
+    text-align: center;
+    font-size: 0.8em;
+    color: #666;
+    margin: 20px 0 0 0;
+}
+
+/* FLOATING FOOTER POSITIONING */
+.regatta-footer-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.regatta-footer-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Sailwave Style Injection --- */
+body {font: 72% arial, helvetica, sans-serif; text-align: center;}
+.hardleft  {text-align: left; float: left;  margin: 15px 0  15px 25px;}
+.hardright {text-align: right; float: right; margin: 15px 25px 15px 0;}
+table {text-align: left; margin: 0px auto 30px auto; font-size: 1em; border-collapse: collapse; border: 1px #999 solid;}
+td, th {padding: 4px; border: 1px #999 solid; vertical-align: top;}
+.caption {padding: 5px; text-align: center; border: 0; font-weight: bold; color: #666;}
+h1 {font-size: 1.6em; color: #C3453A !important;}
+h2 {font-size: 1.4em;}
+h3 {font-size: 1.2em;}
+p {text-align: center;}
+th {background-color: #C3453A; color: #ffffff;}
+.contents {text-align: left; margin-left: 20%;}
+.even {background-color: #d7d7d7;}
+a.racelink:link    {color: #ffffff;}
+a.racelink:visited {color: #ffffff;}
+.natflag {border: 1px #999 solid;}
+.nattext {font-size: 0.8em;}
+.place1 {font-weight: bold; background-color: #ffffaa;}
+.place2 {font-weight: bold; background-color: #aaaaff;}
+.place3 {font-weight: bold; background-color: #ffaaaa;}
+.placen {}
+tr:hover {background: #F7F4E1;}
+td:hover {background: #C3453A;}
+
+
+
+</style>
+
+<script type="text/javascript">
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+
+function swGetURLArgs() {
+
+  var url = location.href;
+  var qs  = url.substring(url.indexOf('?') + 1).split('&');
+
+  for(var i = 0, result = {}; i < qs.length; i++) {
+    qs[i]            = qs[i].split('=');
+    result[qs[i][0]] = decodeURIComponent(qs[i][1]);
+  }
+
+  return result;
+}
+
+//
+//  name=HighlightWins3
+//  dependencies=jQuery
+//  description=Highlight winning scores in summary tables.
+//  author=Jon Eskdale based on an idea by Colin Jenkins
+//  date=2015-08-18
+//  version=1.6 2018-11-15
+//  url=http://sailwave.com
+//  email=jon@sailwave.com
+//  twitter=eskdale
+//  comments=Edit colours to colours of your choice
+//
+
+$(document).ready(function() {
+var winsSelector = '.summaryrace';
+var winsText     = /\b1\.0/;
+var twoText              = /\b2\.0/;
+var threeText    = /\b3\.0/;
+
+// Edit these colours to change the highlight colours for 1st, 2nd and 3rd
+var winsColour   = '#ffd700';
+var twoColour    = '#6a91c5';
+var threeColour  = '#da6841';
+//var twoColour  = '#ffe768';
+//var threeColour  = '#fff0a1';
+
+// create array of race column numbers for first table (summarytable)
+var ths = document.getElementsByTagName('col');
+var column =[];
+for (var i=0; i<ths.length; i++) {
+        if (ths[i].classList[0] === "race") {
+                column.push(i);
+        } else {
+                if (column.length !=0) {
+                        break;
+                }
+        }
+}
+//console.log(column);
+
+//  Set a class of summaryrace for all race cells in summary table body
+//
+for (var i=0; i<column.length; i++) {
+        $(".summarytable tbody tr td:nth-child(" + (column[i]+1) +")").addClass("summaryrace");
+}
+
+// Change the background color for cells with class of summaryrace and that match regular expression text
+$(function () {
+
+  $(winsSelector).filter(function() {
+    return winsText.test($(this).text());
+  }).css("background", winsColour);
+  $(winsSelector).filter(function() {
+        return twoText.test($(this).text());
+  }).css("background", twoColour);
+  $(winsSelector).filter(function() {
+        return threeText.test($(this).text());
+  }).css("background", threeColour);
+
+});
+});
+</script>
+
+</head>
+
+<body>
+
+<div id="wrap">
+
+<div class="regatta-header"></div>
+
+<div class="content-area">
+
+    <h1 class="event-title">2026 X-15 World Championships</h1>
+
+    <h1 class="event-location">Ibiza (ESP) - 04-08 November 2026</h1>
+
+<div id="wrap">
+<div class="content-padding">
+<style>
+div.applicant-break {page-break-after:always;}
+</style>
+<h3 class="seriestitle">Senior Women</h3>
+<h3 class="summarytitle">Overall</h3>
+<div class="caption summarycaption">Sailed: 2, Discards: 0, To count: 2, Entries: 16, Scoring system: Appendix A</div>
+<table class="summarytable" cellspacing="0" cellpadding="0" border="0">
+<colgroup span="8">
+<col class="rank" />
+<col class="nat" />
+<col class="sailno" />
+<col class="helmname" />
+<col class="nett" />
+<col class="total" />
+<col class="race" />
+<col class="race" />
+</colgroup>
+<thead>
+<tr class="titlerow">
+<th>Rank</th>
+<th>Nat</th>
+<th>Sailnumber</th>
+<th>Name</th>
+<th>Nett</th>
+<th>Total</th>
+<th>R1</th>
+<th>R2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd summaryrow">
+<td>1st</td>
+<td><img class="natflag" title="GER" src="https://23eastevents.com/results/flags/GER.jpg"></td>
+<td>27</td>
+<td>Jette Koep</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>2nd</td>
+<td><img class="natflag" title="POL" src="https://23eastevents.com/results/flags/POL.jpg"></td>
+<td>70</td>
+<td>Pola Wawrzyniak</td>
+<td>7.0</td>
+<td>7.0</td>
+<td>2.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>3rd</td>
+<td><img class="natflag" title="POL" src="https://23eastevents.com/results/flags/POL.jpg"></td>
+<td>71</td>
+<td>Marcelina Korszon</td>
+<td>9.0</td>
+<td>9.0</td>
+<td>3.0</td>
+<td>6.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>4th</td>
+<td><img class="natflag" title="SUI" src="https://23eastevents.com/results/flags/SUI.jpg"></td>
+<td>68</td>
+<td>Cindy Robert</td>
+<td>13.0</td>
+<td>13.0</td>
+<td>4.0</td>
+<td>9.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>5th</td>
+<td><img class="natflag" title="ESP" src="https://23eastevents.com/results/flags/ESP.jpg"></td>
+<td>25</td>
+<td>Berta Campos Blanco</td>
+<td>18.0</td>
+<td>18.0</td>
+<td>5.0</td>
+<td>13.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>6th</td>
+<td><img class="natflag" title="FIN" src="https://23eastevents.com/results/flags/FIN.jpg"></td>
+<td>67</td>
+<td>Monika Mikkola</td>
+<td>19.0</td>
+<td>19.0</td>
+<td>17.0 BFD</td>
+<td>2.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>7th</td>
+<td><img class="natflag" title="POL" src="https://23eastevents.com/results/flags/POL.jpg"></td>
+<td>72</td>
+<td>Karolina Kluszczynska</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>17.0 BFD</td>
+<td>3.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>8th</td>
+<td><img class="natflag" title="GBR" src="https://23eastevents.com/results/flags/GBR.jpg"></td>
+<td>24</td>
+<td>Alice Read</td>
+<td>21.0</td>
+<td>21.0</td>
+<td>17.0 BFD</td>
+<td>4.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>9th</td>
+<td><img class="natflag" title="USA" src="https://23eastevents.com/results/flags/USA.jpg"></td>
+<td>74</td>
+<td>Dominique Stater</td>
+<td>24.0</td>
+<td>24.0</td>
+<td>17.0 BFD</td>
+<td>7.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>10th</td>
+<td><img class="natflag" title="TUR" src="https://23eastevents.com/results/flags/TUR.jpg"></td>
+<td>28</td>
+<td>Asya Anastasya Varicioglu</td>
+<td>25.0</td>
+<td>25.0</td>
+<td>17.0 BFD</td>
+<td>8.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>11th</td>
+<td><img class="natflag" title="GBR" src="https://23eastevents.com/results/flags/GBR.jpg"></td>
+<td>22</td>
+<td>Isabelle Fellows</td>
+<td>27.0</td>
+<td>27.0</td>
+<td>17.0 BFD</td>
+<td>10.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>12th</td>
+<td><img class="natflag" title="HUN" src="https://23eastevents.com/results/flags/HUN.jpg"></td>
+<td>76</td>
+<td>Virag Szenasi</td>
+<td>28.0</td>
+<td>28.0</td>
+<td>17.0 BFD</td>
+<td>11.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>13th</td>
+<td><img class="natflag" title="NOR" src="https://23eastevents.com/results/flags/NOR.jpg"></td>
+<td>66</td>
+<td>Siren Sundby M</td>
+<td>29.0</td>
+<td>29.0</td>
+<td>17.0 BFD</td>
+<td>12.0</td>
+</tr>
+<tr class="even summaryrow">
+<td>14th</td>
+<td><img class="natflag" title="GUA" src="https://23eastevents.com/results/flags/GUA.jpg"></td>
+<td>23</td>
+<td>Sara Ortiz Vey</td>
+<td>31.0</td>
+<td>31.0</td>
+<td>17.0 BFD</td>
+<td>14.0</td>
+</tr>
+<tr class="odd summaryrow">
+<td>15th</td>
+<td><img class="natflag" title="HUN" src="https://23eastevents.com/results/flags/HUN.jpg"></td>
+<td>69</td>
+<td>Kinga Zsilak M</td>
+<td>34.0</td>
+<td>34.0</td>
+<td>17.0 BFD</td>
+<td>17.0 DNC</td>
+</tr>
+<tr class="even summaryrow">
+<td>15th</td>
+<td><img class="natflag" title="USA" src="https://23eastevents.com/results/flags/USA.jpg"></td>
+<td>75</td>
+<td>Likun Zha M</td>
+<td>34.0</td>
+<td>34.0</td>
+<td>17.0 RET</td>
+<td>17.0 NSC</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="sailwave-credits">
+        This event has been scored with <a href="http://www.sailwave.com">Sailwave Scoring Software</a>
+    </div>
+
+</div> <!-- End content-area -->
+
+<!-- Floating Footer Graphic Layer -->
+<div class="regatta-footer-container">
+    <img class="regatta-footer-img" src="https://23eastevents.com/results/artwork/2026_X15_Worlds_footer.png" alt="Regatta Footer & Sponsors" />
+</div>
+
+</div> <!-- End wrap -->
+
+<div id="scrollbottom"></div>
+
+</body>
+</html>
+

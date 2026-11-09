@@ -690,6 +690,7 @@ export function useSailorProfileState({
     const ilca6: ProfileResult[] = [];
     const ilca7: ProfileResult[] = [];
     const boards: Record<BoardDiscipline, ProfileResult[]> = {
+      x15: [],
       techno293: [],
       wingfoil: [],
       iqfoil: [],
@@ -805,7 +806,7 @@ export function useSailorProfileState({
     : null;
   const classChoices = useMemo(() => {
     const choices: { id: ProfileDiscipline; label: string; count: number }[] = [];
-    for (const discipline of ["techno293", "wingfoil", "iqfoil", "windsurfing"] as const) {
+    for (const discipline of ["x15", "techno293", "wingfoil", "iqfoil", "windsurfing"] as const) {
       const list = classBuckets.boards[discipline];
       if (!list.length) continue;
       choices.push({

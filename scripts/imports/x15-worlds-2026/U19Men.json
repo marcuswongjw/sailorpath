@@ -1,0 +1,2058 @@
+{
+  "officialSource": {
+    "url": "https://23eastevents.com/results/2026_X15Worlds_U19Men.html",
+    "title": "2026 X-15 World Championships — U19 and U17 Men — Overall (official Sailwave results)",
+    "type": "html",
+    "visuallyReviewed": true,
+    "pdfCorroboration": false,
+    "sha256": "23fd374d0ca19e072e1edcf87e81d0ac4dbdbd0dabdfa20566d90431b476ecd6",
+    "checkedOn": "2026-11-09",
+    "review": "All rows, race scores, codes, exclusions, board numbers and totals visually checked against the official rendered HTML table. No official final-results PDF located.",
+    "screenshotSha256": "08a2e19e8ed3adeb630ed172a91c08bb76f642db32cf92ff63cdf8b1630d911f",
+    "status": "post-event overall standings; championship completion confirmed by class association on 9 November 2026",
+    "discrepancy": "Official scoring table: Leo Zabell 3rd (15 nett), Antoni Lutomski 4th (16 nett). Class recap names Lutomski third. Import preserves the scored table; award attribution awaits organiser clarification."
+  },
+  "event": {
+    "slug": "x15-world-championships-2026",
+    "name": "X-15 World Championships 2026",
+    "startDate": "2026-11-04",
+    "endDate": "2026-11-08",
+    "venue": "Port Nàutic Ibiza, Spain",
+    "organizer": "Club Mare Nostrum",
+    "classes": [
+      "X-15"
+    ],
+    "geography": "ESP",
+    "norUrl": "https://www.racingrulesofsailing.org/documents/214967",
+    "noticeBoardUrl": "https://www.racingrulesofsailing.org/documents/15364/event"
+  },
+  "sheet": {
+    "slug": "x15-worlds-2026-u19-and-u17-men",
+    "name": "X-15 World Championships 2026 (U19 and U17 Men)",
+    "boatClass": "X-15",
+    "division": "U19 and U17 Men",
+    "raceCount": 4,
+    "totalFleetSize": 28,
+    "countsForRanking": false,
+    "status": "published",
+    "scheduleNotes": "Final results. Official digital scorecard visually checked. PDF corroboration unavailable. One printed discard per rider. The scored table places Leo Zabell third and Antoni Lutomski fourth; the class recap differs. Results follow the official scoring table; award attribution is unconfirmed. Outside Singapore national rankings."
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "Holland Vierling",
+      "officialName": "Holland Vierling",
+      "sailOrBoardNumber": "74",
+      "nationality": "USA",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 4.0,
+      "nettScore": 3.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(1.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1.0,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ],
+      "sailorId": "9643a3c3-c78d-52b0-8ad2-84a1f359cb38",
+      "newProfile": {
+        "id": "9643a3c3-c78d-52b0-8ad2-84a1f359cb38",
+        "name": "Holland Vierling",
+        "handle": "hollandvierling-x15",
+        "sailNumber": "",
+        "boardNumber": "74",
+        "club": null,
+        "nationality": "USA",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Holland Vierling",
+          "sailorId": "9643a3c3-c78d-52b0-8ad2-84a1f359cb38",
+          "role": "solo",
+          "newProfile": {
+            "id": "9643a3c3-c78d-52b0-8ad2-84a1f359cb38",
+            "name": "Holland Vierling",
+            "handle": "hollandvierling-x15",
+            "sailNumber": "",
+            "boardNumber": "74",
+            "club": null,
+            "nationality": "USA",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 2,
+      "name": "Baptiste Loire",
+      "officialName": "Baptiste Loire",
+      "sailOrBoardNumber": "101",
+      "nationality": "FRA",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 10.0,
+      "nettScore": 6.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(4.0)"
+        }
+      ],
+      "sailorId": "e34d9c2a-a50a-50ef-8e1d-b9b054011563",
+      "newProfile": {
+        "id": "e34d9c2a-a50a-50ef-8e1d-b9b054011563",
+        "name": "Baptiste Loire",
+        "handle": "baptisteloire-x15",
+        "sailNumber": "",
+        "boardNumber": "101",
+        "club": null,
+        "nationality": "FRA",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Baptiste Loire",
+          "sailorId": "e34d9c2a-a50a-50ef-8e1d-b9b054011563",
+          "role": "solo",
+          "newProfile": {
+            "id": "e34d9c2a-a50a-50ef-8e1d-b9b054011563",
+            "name": "Baptiste Loire",
+            "handle": "baptisteloire-x15",
+            "sailNumber": "",
+            "boardNumber": "101",
+            "club": null,
+            "nationality": "FRA",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 3,
+      "name": "Leo Zabell",
+      "officialName": "Leo Zabell",
+      "sailOrBoardNumber": "76",
+      "nationality": "ESP",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 24.0,
+      "nettScore": 15.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ],
+      "sailorId": "a47d8924-0ce1-53bf-b0e8-a65d367412c5",
+      "newProfile": {
+        "id": "a47d8924-0ce1-53bf-b0e8-a65d367412c5",
+        "name": "Leo Zabell",
+        "handle": "leozabell-x15",
+        "sailNumber": "",
+        "boardNumber": "76",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Leo Zabell",
+          "sailorId": "a47d8924-0ce1-53bf-b0e8-a65d367412c5",
+          "role": "solo",
+          "newProfile": {
+            "id": "a47d8924-0ce1-53bf-b0e8-a65d367412c5",
+            "name": "Leo Zabell",
+            "handle": "leozabell-x15",
+            "sailNumber": "",
+            "boardNumber": "76",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 4,
+      "name": "Antoni Lutomski",
+      "officialName": "Antoni Lutomski",
+      "sailOrBoardNumber": "71",
+      "nationality": "POL",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 25.0,
+      "nettScore": 16.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(9.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        }
+      ],
+      "sailorId": "79dc82ab-f5c6-52b3-9a10-f1025cd88d37",
+      "newProfile": {
+        "id": "79dc82ab-f5c6-52b3-9a10-f1025cd88d37",
+        "name": "Antoni Lutomski",
+        "handle": "antonilutomski-x15",
+        "sailNumber": "",
+        "boardNumber": "71",
+        "club": null,
+        "nationality": "POL",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Antoni Lutomski",
+          "sailorId": "79dc82ab-f5c6-52b3-9a10-f1025cd88d37",
+          "role": "solo",
+          "newProfile": {
+            "id": "79dc82ab-f5c6-52b3-9a10-f1025cd88d37",
+            "name": "Antoni Lutomski",
+            "handle": "antonilutomski-x15",
+            "sailNumber": "",
+            "boardNumber": "71",
+            "club": null,
+            "nationality": "POL",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 5,
+      "name": "Botond Virag",
+      "officialName": "Botond Virag",
+      "sailOrBoardNumber": "60",
+      "nationality": "HUN",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 24.0,
+      "nettScore": 17.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(7.0)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ],
+      "sailorId": "199b7e4d-7603-5b91-8ab9-92360e611d69",
+      "newProfile": {
+        "id": "199b7e4d-7603-5b91-8ab9-92360e611d69",
+        "name": "Botond Virag",
+        "handle": "botondvirag-x15",
+        "sailNumber": "",
+        "boardNumber": "60",
+        "club": null,
+        "nationality": "HUN",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Botond Virag",
+          "sailorId": "199b7e4d-7603-5b91-8ab9-92360e611d69",
+          "role": "solo",
+          "newProfile": {
+            "id": "199b7e4d-7603-5b91-8ab9-92360e611d69",
+            "name": "Botond Virag",
+            "handle": "botondvirag-x15",
+            "sailNumber": "",
+            "boardNumber": "60",
+            "club": null,
+            "nationality": "HUN",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 6,
+      "name": "Mack Wong",
+      "officialName": "Mack Wong",
+      "sailOrBoardNumber": "102",
+      "nationality": "HKG",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 48.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ],
+      "sailorId": "983252bf-8a99-5f85-a6ea-837957551ac6",
+      "newProfile": {
+        "id": "983252bf-8a99-5f85-a6ea-837957551ac6",
+        "name": "Mack Wong",
+        "handle": "mackwong-x15",
+        "sailNumber": "",
+        "boardNumber": "102",
+        "club": null,
+        "nationality": "HKG",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Mack Wong",
+          "sailorId": "983252bf-8a99-5f85-a6ea-837957551ac6",
+          "role": "solo",
+          "newProfile": {
+            "id": "983252bf-8a99-5f85-a6ea-837957551ac6",
+            "name": "Mack Wong",
+            "handle": "mackwong-x15",
+            "sailNumber": "",
+            "boardNumber": "102",
+            "club": null,
+            "nationality": "HKG",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 7,
+      "name": "Martinius Hopstock",
+      "officialName": "Martinius Hopstock",
+      "sailOrBoardNumber": "99",
+      "nationality": "NOR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 30.0,
+      "nettScore": 19.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 11.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(11.0)"
+        }
+      ],
+      "sailorId": "883372dd-92d3-5d1b-9cf0-289b445b0680",
+      "newProfile": {
+        "id": "883372dd-92d3-5d1b-9cf0-289b445b0680",
+        "name": "Martinius Hopstock",
+        "handle": "martiniushopstock-x15",
+        "sailNumber": "",
+        "boardNumber": "99",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Martinius Hopstock",
+          "sailorId": "883372dd-92d3-5d1b-9cf0-289b445b0680",
+          "role": "solo",
+          "newProfile": {
+            "id": "883372dd-92d3-5d1b-9cf0-289b445b0680",
+            "name": "Martinius Hopstock",
+            "handle": "martiniushopstock-x15",
+            "sailNumber": "",
+            "boardNumber": "99",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 8,
+      "name": "Jean Paul Liechti",
+      "officialName": "Jean Paul Liechti",
+      "sailOrBoardNumber": "59",
+      "nationality": "COL",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 37.0,
+      "nettScore": 25.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7.0,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 12.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(12.0)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        }
+      ],
+      "sailorId": "8d4e508b-61b1-597d-892e-d5eccf300428",
+      "newProfile": {
+        "id": "8d4e508b-61b1-597d-892e-d5eccf300428",
+        "name": "Jean Paul Liechti",
+        "handle": "jeanpaulliechti-x15",
+        "sailNumber": "",
+        "boardNumber": "59",
+        "club": null,
+        "nationality": "COL",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Jean Paul Liechti",
+          "sailorId": "8d4e508b-61b1-597d-892e-d5eccf300428",
+          "role": "solo",
+          "newProfile": {
+            "id": "8d4e508b-61b1-597d-892e-d5eccf300428",
+            "name": "Jean Paul Liechti",
+            "handle": "jeanpaulliechti-x15",
+            "sailNumber": "",
+            "boardNumber": "59",
+            "club": null,
+            "nationality": "COL",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 9,
+      "name": "Idan Shubin",
+      "officialName": "Idan Shubin",
+      "sailOrBoardNumber": "69",
+      "nationality": "NOR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 43.0,
+      "nettScore": 27.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6.0,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 16.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(16.0)"
+        }
+      ],
+      "sailorId": "ce0857fc-426e-5273-a084-fa037dd46dfe",
+      "newProfile": {
+        "id": "ce0857fc-426e-5273-a084-fa037dd46dfe",
+        "name": "Idan Shubin",
+        "handle": "idanshubin-x15",
+        "sailNumber": "",
+        "boardNumber": "69",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Idan Shubin",
+          "sailorId": "ce0857fc-426e-5273-a084-fa037dd46dfe",
+          "role": "solo",
+          "newProfile": {
+            "id": "ce0857fc-426e-5273-a084-fa037dd46dfe",
+            "name": "Idan Shubin",
+            "handle": "idanshubin-x15",
+            "sailNumber": "",
+            "boardNumber": "69",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 10,
+      "name": "Mark Mains",
+      "officialName": "Mark Mains",
+      "sailOrBoardNumber": "22",
+      "nationality": "CAN",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 60.0,
+      "nettScore": 31.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(29.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8.0,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        }
+      ],
+      "sailorId": "8a256d34-2f73-56de-b0f5-939d77d6c68e",
+      "newProfile": {
+        "id": "8a256d34-2f73-56de-b0f5-939d77d6c68e",
+        "name": "Mark Mains",
+        "handle": "markmains-x15",
+        "sailNumber": "",
+        "boardNumber": "22",
+        "club": null,
+        "nationality": "CAN",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Mark Mains",
+          "sailorId": "8a256d34-2f73-56de-b0f5-939d77d6c68e",
+          "role": "solo",
+          "newProfile": {
+            "id": "8a256d34-2f73-56de-b0f5-939d77d6c68e",
+            "name": "Mark Mains",
+            "handle": "markmains-x15",
+            "sailNumber": "",
+            "boardNumber": "22",
+            "club": null,
+            "nationality": "CAN",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 11,
+      "name": "Platon Kuzmenko",
+      "officialName": "Platon Kuzmenko",
+      "sailOrBoardNumber": "98",
+      "nationality": "ESP",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 64.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(29.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "BFD",
+          "discarded": false,
+          "raw": "29.0 BFD"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4.0,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2.0,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ],
+      "sailorId": "09e553ec-35f2-5a56-ad5c-6aec7a889346",
+      "newProfile": {
+        "id": "09e553ec-35f2-5a56-ad5c-6aec7a889346",
+        "name": "Platon Kuzmenko",
+        "handle": "platonkuzmenko-x15",
+        "sailNumber": "",
+        "boardNumber": "98",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Platon Kuzmenko",
+          "sailorId": "09e553ec-35f2-5a56-ad5c-6aec7a889346",
+          "role": "solo",
+          "newProfile": {
+            "id": "09e553ec-35f2-5a56-ad5c-6aec7a889346",
+            "name": "Platon Kuzmenko",
+            "handle": "platonkuzmenko-x15",
+            "sailNumber": "",
+            "boardNumber": "98",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 12,
+      "name": "Jakub Balewicz",
+      "officialName": "Jakub Balewicz",
+      "sailOrBoardNumber": "72",
+      "nationality": "POL",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 64.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "(29.0 DSQ)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3.0,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ],
+      "sailorId": "badd66d4-b6aa-54ba-8e24-a04de9485e3c",
+      "newProfile": {
+        "id": "badd66d4-b6aa-54ba-8e24-a04de9485e3c",
+        "name": "Jakub Balewicz",
+        "handle": "jakubbalewicz-x15",
+        "sailNumber": "",
+        "boardNumber": "72",
+        "club": null,
+        "nationality": "POL",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Jakub Balewicz",
+          "sailorId": "badd66d4-b6aa-54ba-8e24-a04de9485e3c",
+          "role": "solo",
+          "newProfile": {
+            "id": "badd66d4-b6aa-54ba-8e24-a04de9485e3c",
+            "name": "Jakub Balewicz",
+            "handle": "jakubbalewicz-x15",
+            "sailNumber": "",
+            "boardNumber": "72",
+            "club": null,
+            "nationality": "POL",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 13,
+      "name": "Nicolas Sixto",
+      "officialName": "Nicolas Sixto",
+      "sailOrBoardNumber": "21",
+      "nationality": "ARG",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 53.0,
+      "nettScore": 35.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 12.0,
+          "code": null,
+          "discarded": false,
+          "raw": "12.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9.0,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 18.0,
+          "code": null,
+          "discarded": true,
+          "raw": "(18.0)"
+        }
+      ],
+      "sailorId": "4bc621e4-f8f1-5e73-8868-a9a59984907c",
+      "newProfile": {
+        "id": "4bc621e4-f8f1-5e73-8868-a9a59984907c",
+        "name": "Nicolas Sixto",
+        "handle": "nicolassixto-x15",
+        "sailNumber": "",
+        "boardNumber": "21",
+        "club": null,
+        "nationality": "ARG",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Nicolas Sixto",
+          "sailorId": "4bc621e4-f8f1-5e73-8868-a9a59984907c",
+          "role": "solo",
+          "newProfile": {
+            "id": "4bc621e4-f8f1-5e73-8868-a9a59984907c",
+            "name": "Nicolas Sixto",
+            "handle": "nicolassixto-x15",
+            "sailNumber": "",
+            "boardNumber": "21",
+            "club": null,
+            "nationality": "ARG",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 14,
+      "name": "Martin Medina",
+      "officialName": "Martin Medina",
+      "sailOrBoardNumber": "64",
+      "nationality": "ESP",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 67.0,
+      "nettScore": 38.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 4,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        }
+      ],
+      "sailorId": "4cef1851-d3eb-558e-a4f9-b880030c4076",
+      "newProfile": {
+        "id": "4cef1851-d3eb-558e-a4f9-b880030c4076",
+        "name": "Martin Medina",
+        "handle": "martinmedina-x15",
+        "sailNumber": "",
+        "boardNumber": "64",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Martin Medina",
+          "sailorId": "4cef1851-d3eb-558e-a4f9-b880030c4076",
+          "role": "solo",
+          "newProfile": {
+            "id": "4cef1851-d3eb-558e-a4f9-b880030c4076",
+            "name": "Martin Medina",
+            "handle": "martinmedina-x15",
+            "sailNumber": "",
+            "boardNumber": "64",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 15,
+      "name": "David Bratli",
+      "officialName": "David Bratli",
+      "sailOrBoardNumber": "68",
+      "nationality": "NOR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 73.0,
+      "nettScore": 44.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 10.0,
+          "code": null,
+          "discarded": false,
+          "raw": "10.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5.0,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ],
+      "sailorId": "f8e81dde-809d-5703-a5d9-46371f4eb9cd",
+      "newProfile": {
+        "id": "f8e81dde-809d-5703-a5d9-46371f4eb9cd",
+        "name": "David Bratli",
+        "handle": "davidbratli-x15",
+        "sailNumber": "",
+        "boardNumber": "68",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "David Bratli",
+          "sailorId": "f8e81dde-809d-5703-a5d9-46371f4eb9cd",
+          "role": "solo",
+          "newProfile": {
+            "id": "f8e81dde-809d-5703-a5d9-46371f4eb9cd",
+            "name": "David Bratli",
+            "handle": "davidbratli-x15",
+            "sailNumber": "",
+            "boardNumber": "68",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 16,
+      "name": "Matthew Couvreux",
+      "officialName": "Matthew Couvreux",
+      "sailOrBoardNumber": "52",
+      "nationality": "USA",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 75.0,
+      "nettScore": 46.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 11.0,
+          "code": null,
+          "discarded": false,
+          "raw": "11.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        }
+      ],
+      "sailorId": "92784042-941d-525a-8840-d7590f0e03d5",
+      "newProfile": {
+        "id": "92784042-941d-525a-8840-d7590f0e03d5",
+        "name": "Matthew Couvreux",
+        "handle": "matthewcouvreux-x15",
+        "sailNumber": "",
+        "boardNumber": "52",
+        "club": null,
+        "nationality": "USA",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Matthew Couvreux",
+          "sailorId": "92784042-941d-525a-8840-d7590f0e03d5",
+          "role": "solo",
+          "newProfile": {
+            "id": "92784042-941d-525a-8840-d7590f0e03d5",
+            "name": "Matthew Couvreux",
+            "handle": "matthewcouvreux-x15",
+            "sailNumber": "",
+            "boardNumber": "52",
+            "club": null,
+            "nationality": "USA",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 17,
+      "name": "Theo Bruhin",
+      "officialName": "Theo Bruhin",
+      "sailOrBoardNumber": "62",
+      "nationality": "SUI",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 77.0,
+      "nettScore": 48.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        }
+      ],
+      "sailorId": "c5753c6e-b638-5f2a-9cd4-fc6a545fed8b",
+      "newProfile": {
+        "id": "c5753c6e-b638-5f2a-9cd4-fc6a545fed8b",
+        "name": "Theo Bruhin",
+        "handle": "theobruhin-x15",
+        "sailNumber": "",
+        "boardNumber": "62",
+        "club": null,
+        "nationality": "SUI",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Theo Bruhin",
+          "sailorId": "c5753c6e-b638-5f2a-9cd4-fc6a545fed8b",
+          "role": "solo",
+          "newProfile": {
+            "id": "c5753c6e-b638-5f2a-9cd4-fc6a545fed8b",
+            "name": "Theo Bruhin",
+            "handle": "theobruhin-x15",
+            "sailNumber": "",
+            "boardNumber": "62",
+            "club": null,
+            "nationality": "SUI",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 18,
+      "name": "Axel Espeli-Blankholm",
+      "officialName": "Axel Espeli-Blankholm",
+      "sailOrBoardNumber": "67",
+      "nationality": "NOR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 78.0,
+      "nettScore": 49.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 14.0,
+          "code": null,
+          "discarded": false,
+          "raw": "14.0"
+        }
+      ],
+      "sailorId": "559456f1-1ac1-5a06-aed5-a816bd556070",
+      "newProfile": {
+        "id": "559456f1-1ac1-5a06-aed5-a816bd556070",
+        "name": "Axel Espeli-Blankholm",
+        "handle": "axelespeliblankholm-x15",
+        "sailNumber": "",
+        "boardNumber": "67",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Axel Espeli-Blankholm",
+          "sailorId": "559456f1-1ac1-5a06-aed5-a816bd556070",
+          "role": "solo",
+          "newProfile": {
+            "id": "559456f1-1ac1-5a06-aed5-a816bd556070",
+            "name": "Axel Espeli-Blankholm",
+            "handle": "axelespeliblankholm-x15",
+            "sailNumber": "",
+            "boardNumber": "67",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 19,
+      "name": "Oscar Melet",
+      "officialName": "Oscar Melet",
+      "sailOrBoardNumber": "75",
+      "nationality": "USA",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 86.0,
+      "nettScore": 57.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 15.0,
+          "code": null,
+          "discarded": false,
+          "raw": "15.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "a04d2517-7846-5f06-bfc0-abb5e9f1e73b",
+      "newProfile": {
+        "id": "a04d2517-7846-5f06-bfc0-abb5e9f1e73b",
+        "name": "Oscar Melet",
+        "handle": "oscarmelet-x15",
+        "sailNumber": "",
+        "boardNumber": "75",
+        "club": null,
+        "nationality": "USA",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Oscar Melet",
+          "sailorId": "a04d2517-7846-5f06-bfc0-abb5e9f1e73b",
+          "role": "solo",
+          "newProfile": {
+            "id": "a04d2517-7846-5f06-bfc0-abb5e9f1e73b",
+            "name": "Oscar Melet",
+            "handle": "oscarmelet-x15",
+            "sailNumber": "",
+            "boardNumber": "75",
+            "club": null,
+            "nationality": "USA",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 20,
+      "name": "Matteo Manzoli",
+      "officialName": "Matteo Manzoli",
+      "sailOrBoardNumber": "28",
+      "nationality": "ITA",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 88.0,
+      "nettScore": 59.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 13.0,
+          "code": null,
+          "discarded": false,
+          "raw": "13.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        }
+      ],
+      "sailorId": "5e1b3468-8b6d-54ac-ae18-cba96b01d736",
+      "newProfile": {
+        "id": "5e1b3468-8b6d-54ac-ae18-cba96b01d736",
+        "name": "Matteo Manzoli",
+        "handle": "matteomanzoli-x15",
+        "sailNumber": "",
+        "boardNumber": "28",
+        "club": null,
+        "nationality": "ITA",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Matteo Manzoli",
+          "sailorId": "5e1b3468-8b6d-54ac-ae18-cba96b01d736",
+          "role": "solo",
+          "newProfile": {
+            "id": "5e1b3468-8b6d-54ac-ae18-cba96b01d736",
+            "name": "Matteo Manzoli",
+            "handle": "matteomanzoli-x15",
+            "sailNumber": "",
+            "boardNumber": "28",
+            "club": null,
+            "nationality": "ITA",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 21,
+      "name": "Ole Joss Jacobsen Lepperoed",
+      "officialName": "Ole Joss Jacobsen Lepperoed",
+      "sailOrBoardNumber": "100",
+      "nationality": "NOR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 95.0,
+      "nettScore": 66.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(29.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 17.0,
+          "code": null,
+          "discarded": false,
+          "raw": "17.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        }
+      ],
+      "sailorId": "9e23c291-5e1c-576c-bc52-3e1918a138ae",
+      "newProfile": {
+        "id": "9e23c291-5e1c-576c-bc52-3e1918a138ae",
+        "name": "Ole Joss Jacobsen Lepperoed",
+        "handle": "olejossjacobsenlepperoed-x15",
+        "sailNumber": "",
+        "boardNumber": "100",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Ole Joss Jacobsen Lepperoed",
+          "sailorId": "9e23c291-5e1c-576c-bc52-3e1918a138ae",
+          "role": "solo",
+          "newProfile": {
+            "id": "9e23c291-5e1c-576c-bc52-3e1918a138ae",
+            "name": "Ole Joss Jacobsen Lepperoed",
+            "handle": "olejossjacobsenlepperoed-x15",
+            "sailNumber": "",
+            "boardNumber": "100",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 22,
+      "name": "Phil Hargreaves",
+      "officialName": "Phil Hargreaves",
+      "sailOrBoardNumber": "61",
+      "nationality": "CAN",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 103.0,
+      "nettScore": 74.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 16.0,
+          "code": null,
+          "discarded": false,
+          "raw": "16.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "cf308256-9b5f-5a35-8e58-f7adc47910df",
+      "newProfile": {
+        "id": "cf308256-9b5f-5a35-8e58-f7adc47910df",
+        "name": "Phil Hargreaves",
+        "handle": "philhargreaves-x15",
+        "sailNumber": "",
+        "boardNumber": "61",
+        "club": null,
+        "nationality": "CAN",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Phil Hargreaves",
+          "sailorId": "cf308256-9b5f-5a35-8e58-f7adc47910df",
+          "role": "solo",
+          "newProfile": {
+            "id": "cf308256-9b5f-5a35-8e58-f7adc47910df",
+            "name": "Phil Hargreaves",
+            "handle": "philhargreaves-x15",
+            "sailNumber": "",
+            "boardNumber": "61",
+            "club": null,
+            "nationality": "CAN",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 23,
+      "name": "Gustav Poschke",
+      "officialName": "Gustav Poschke",
+      "sailOrBoardNumber": "27",
+      "nationality": "GER",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 105.0,
+      "nettScore": 76.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 18.0,
+          "code": null,
+          "discarded": false,
+          "raw": "18.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "b04f743f-9e30-5630-858b-09e10c033cc4",
+      "newProfile": {
+        "id": "b04f743f-9e30-5630-858b-09e10c033cc4",
+        "name": "Gustav Poschke",
+        "handle": "gustavposchke-x15",
+        "sailNumber": "",
+        "boardNumber": "27",
+        "club": null,
+        "nationality": "GER",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Gustav Poschke",
+          "sailorId": "b04f743f-9e30-5630-858b-09e10c033cc4",
+          "role": "solo",
+          "newProfile": {
+            "id": "b04f743f-9e30-5630-858b-09e10c033cc4",
+            "name": "Gustav Poschke",
+            "handle": "gustavposchke-x15",
+            "sailNumber": "",
+            "boardNumber": "27",
+            "club": null,
+            "nationality": "GER",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 24,
+      "name": "Vinicio Vila",
+      "officialName": "Vinicio Vila",
+      "sailOrBoardNumber": "103",
+      "nationality": "ARG",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 106.0,
+      "nettScore": 77.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 19.0,
+          "code": null,
+          "discarded": false,
+          "raw": "19.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "60f833cb-5458-5297-bc95-b43cb3023a03",
+      "newProfile": {
+        "id": "60f833cb-5458-5297-bc95-b43cb3023a03",
+        "name": "Vinicio Vila",
+        "handle": "viniciovila-x15",
+        "sailNumber": "",
+        "boardNumber": "103",
+        "club": null,
+        "nationality": "ARG",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Vinicio Vila",
+          "sailorId": "60f833cb-5458-5297-bc95-b43cb3023a03",
+          "role": "solo",
+          "newProfile": {
+            "id": "60f833cb-5458-5297-bc95-b43cb3023a03",
+            "name": "Vinicio Vila",
+            "handle": "viniciovila-x15",
+            "sailNumber": "",
+            "boardNumber": "103",
+            "club": null,
+            "nationality": "ARG",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 25,
+      "name": "Maxime Romero",
+      "officialName": "Maxime Romero",
+      "sailOrBoardNumber": "54",
+      "nationality": "ESP",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 107.0,
+      "nettScore": 78.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 20.0,
+          "code": null,
+          "discarded": false,
+          "raw": "20.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "79f9dd44-de60-50e7-89b2-8e57ee3459da",
+      "newProfile": {
+        "id": "79f9dd44-de60-50e7-89b2-8e57ee3459da",
+        "name": "Maxime Romero",
+        "handle": "maximeromero-x15",
+        "sailNumber": "",
+        "boardNumber": "54",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Maxime Romero",
+          "sailorId": "79f9dd44-de60-50e7-89b2-8e57ee3459da",
+          "role": "solo",
+          "newProfile": {
+            "id": "79f9dd44-de60-50e7-89b2-8e57ee3459da",
+            "name": "Maxime Romero",
+            "handle": "maximeromero-x15",
+            "sailNumber": "",
+            "boardNumber": "54",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 26,
+      "name": "Emirhan Reis Kankiran",
+      "officialName": "Emirhan Reis Kankiran",
+      "sailOrBoardNumber": "56",
+      "nationality": "TUR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U17",
+      "masterCategory": null,
+      "grossScore": 116.0,
+      "nettScore": 87.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "BFD",
+          "discarded": true,
+          "raw": "(29.0 BFD)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "ce4430e7-f2a1-5bbc-8b4a-7228507b1dfd",
+      "newProfile": {
+        "id": "ce4430e7-f2a1-5bbc-8b4a-7228507b1dfd",
+        "name": "Emirhan Reis Kankiran",
+        "handle": "emirhanreiskankiran-x15",
+        "sailNumber": "",
+        "boardNumber": "56",
+        "club": null,
+        "nationality": "TUR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Emirhan Reis Kankiran",
+          "sailorId": "ce4430e7-f2a1-5bbc-8b4a-7228507b1dfd",
+          "role": "solo",
+          "newProfile": {
+            "id": "ce4430e7-f2a1-5bbc-8b4a-7228507b1dfd",
+            "name": "Emirhan Reis Kankiran",
+            "handle": "emirhanreiskankiran-x15",
+            "sailNumber": "",
+            "boardNumber": "56",
+            "club": null,
+            "nationality": "TUR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 26,
+      "name": "Gerard Rius",
+      "officialName": "Gerard Rius",
+      "sailOrBoardNumber": "25",
+      "nationality": "ESP",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 116.0,
+      "nettScore": 87.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "2fb7813e-8316-53ba-9ca4-e339ffe58877",
+      "newProfile": {
+        "id": "2fb7813e-8316-53ba-9ca4-e339ffe58877",
+        "name": "Gerard Rius",
+        "handle": "gerardrius-x15",
+        "sailNumber": "",
+        "boardNumber": "25",
+        "club": null,
+        "nationality": "ESP",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Gerard Rius",
+          "sailorId": "2fb7813e-8316-53ba-9ca4-e339ffe58877",
+          "role": "solo",
+          "newProfile": {
+            "id": "2fb7813e-8316-53ba-9ca4-e339ffe58877",
+            "name": "Gerard Rius",
+            "handle": "gerardrius-x15",
+            "sailNumber": "",
+            "boardNumber": "25",
+            "club": null,
+            "nationality": "ESP",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    },
+    {
+      "rank": 26,
+      "name": "Tinic Sohlberg",
+      "officialName": "Tinic Sohlberg",
+      "sailOrBoardNumber": "70",
+      "nationality": "NOR",
+      "gender": "M",
+      "club": null,
+      "sourceDivision": "U19",
+      "masterCategory": null,
+      "grossScore": 116.0,
+      "nettScore": 87.0,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": true,
+          "raw": "(29.0 DNC)"
+        },
+        {
+          "raceNumber": 2,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 3,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        },
+        {
+          "raceNumber": 4,
+          "score": 29.0,
+          "code": "DNC",
+          "discarded": false,
+          "raw": "29.0 DNC"
+        }
+      ],
+      "sailorId": "9c5dc38e-16fe-5685-959f-9e3adbb48ee6",
+      "newProfile": {
+        "id": "9c5dc38e-16fe-5685-959f-9e3adbb48ee6",
+        "name": "Tinic Sohlberg",
+        "handle": "tinicsohlberg-x15",
+        "sailNumber": "",
+        "boardNumber": "70",
+        "club": null,
+        "nationality": "NOR",
+        "gender": "M"
+      },
+      "participants": [
+        {
+          "name": "Tinic Sohlberg",
+          "sailorId": "9c5dc38e-16fe-5685-959f-9e3adbb48ee6",
+          "role": "solo",
+          "newProfile": {
+            "id": "9c5dc38e-16fe-5685-959f-9e3adbb48ee6",
+            "name": "Tinic Sohlberg",
+            "handle": "tinicsohlberg-x15",
+            "sailNumber": "",
+            "boardNumber": "70",
+            "club": null,
+            "nationality": "NOR",
+            "gender": "M"
+          }
+        }
+      ],
+      "matchReason": "New profile: no unique exact normalized name, registered alias, existing entry label or reordered-name match in production. Event board numbers are reused across fleets and are not identity keys."
+    }
+  ]
+}

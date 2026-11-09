@@ -1,7 +1,7 @@
 import { sailingClassKeyOf } from "@/lib/classRegistry";
 import type { RegattaRecord } from "@/lib/ranking";
 
-export const X15_SOURCE_CHECKED_ON = "8 November 2026";
+export const X15_SOURCE_CHECKED_ON = "9 November 2026";
 
 export const X15_WORLDS_2026 = {
   eventSlug: "x15-world-championships-2026",
