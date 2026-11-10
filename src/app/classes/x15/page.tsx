@@ -7,20 +7,16 @@ import {
   ArrowRight,
   Award,
   Globe,
-  CheckCircle2,
   ChevronDown,
   Sparkles,
 } from "lucide-react";
 import { getCachedPublicRegattas } from "@/lib/queries";
-import { directoryFromPublished } from "@/lib/regattaDirectory";
 import {
-  X15_AGM_2026,
   X15_ASIANS_2026,
   X15_EQUIPMENT_OVERVIEW,
   X15_HISTORY,
   X15_NATIONAL_ASSOCIATIONS,
   X15_QUICK_FACTS,
-  X15_SOURCE_CHECKED_ON,
   X15_WORLDS_2026,
   publishedX15Sheets,
   x15WorldsStatus,
@@ -59,14 +55,6 @@ function OfficialLink({
 }
 
 export default async function X15ClassHub() {
-  let available = true;
-  let sheets: ReturnType<typeof publishedX15Sheets> = [];
-  try {
-    sheets = publishedX15Sheets(await getCachedPublicRegattas());
-  } catch {
-    available = false;
-  }
-  const results = directoryFromPublished(sheets);
   const worlds = X15_WORLDS_2026;
   const today = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Europe/Madrid",
@@ -74,7 +62,14 @@ export default async function X15ClassHub() {
     month: "2-digit",
     day: "2-digit",
   }).format(new Date());
-  const status = x15WorldsStatus(today, sheets.some((row) => row.eventSlug === worlds.eventSlug));
+  let hasReviewedResults = false;
+  try {
+    const sheets = publishedX15Sheets(await getCachedPublicRegattas());
+    hasReviewedResults = sheets.some((row) => row.eventSlug === worlds.eventSlug);
+  } catch {
+    hasReviewedResults = false;
+  }
+  const status = x15WorldsStatus(today, hasReviewedResults);
   const confirmedEvents = X15_LISTINGS.filter((item) => item.startDate);
   const provisionalEvents = X15_LISTINGS.filter((item) => !item.startDate);
 
@@ -101,16 +96,12 @@ export default async function X15ClassHub() {
             <h1 className="mt-3.5 text-2xl font-black tracking-tight sm:mt-4 sm:text-5xl">
               Follow the X-15 class
             </h1>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-soft-aqua sm:mt-4 sm:text-base sm:leading-7">
-              Official events, one-design equipment rules, national associations and race results for riders, families and coaches. Follow the inaugural World Championships in Ibiza ({worlds.confirmedFleetSummary}) and the 2026–2027 international circuit.
-            </p>
 
             <nav
               aria-label="On this X-15 page"
               className="-mx-5 mt-5 flex gap-2 overflow-x-auto overscroll-x-contain px-5 pb-1 text-xs font-bold sm:mx-0 sm:mt-6 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 sm:text-sm"
             >
               {[
-                ["#results", "Race results"],
                 ["#events", "2026 championships"],
                 ["#calendar", "2026–2027 calendar"],
                 ["#equipment", "Equipment & divisions"],
@@ -196,101 +187,13 @@ export default async function X15ClassHub() {
         </dl>
       </header>
 
-      {/* RACE RESULTS SECTION */}
-      <section id="results" aria-labelledby="x15-results-heading" className="scroll-mt-20 space-y-4 sm:scroll-mt-24">
-        <div className="flex flex-wrap items-end justify-between gap-2.5">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-harbour">On the water</p>
-            <h2 id="x15-results-heading" className="mt-1 text-xl font-black text-harbour-shadow sm:text-2xl">
-              Race results
-            </h2>
-          </div>
-          <p className="rounded-full bg-aqua-mist px-3 py-1 text-xs font-bold text-harbour">
-            Event placings · separate from open WingFoil &amp; national rankings
-          </p>
-        </div>
-
-        {!available ? (
-          <div role="status" className="rounded-2xl border border-cool-veil bg-warm-white p-5 sm:p-6">
-            <p className="font-bold text-harbour-shadow">Results are temporarily unavailable</p>
-            <p className="mt-2 text-sm text-slate-soft">The event guide is still available below.</p>
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- A full document request retries a failed server-side results load. */}
-            <a href="/classes/x15#results" className="mt-3 inline-flex min-h-10 items-center text-sm font-bold text-harbour hover:underline">
-              Try loading results again
-            </a>
-          </div>
-        ) : results.length ? (
-          <div className="grid gap-4 sm:grid-cols-2">
-            {results.map((event) => (
-              <article key={event.slug} className="rounded-2xl border border-cool-veil bg-warm-white p-5 shadow-2xs">
-                <p className="text-xs font-semibold text-slate-soft">{event.date}</p>
-                <h3 className="mt-2 text-lg font-bold text-harbour-shadow">{event.name}</h3>
-                <ul role="list" className="mt-4 space-y-2">
-                  {event.fleets?.map((fleet) => (
-                    <li key={fleet.id}>
-                      <Link
-                        href={fleet.href}
-                        className="inline-flex min-h-10 items-center gap-2 py-1 text-sm font-bold text-harbour hover:underline"
-                      >
-                        {fleet.label}
-                        <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0" />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-5 rounded-2xl border border-cool-veil bg-aqua-mist p-5 sm:gap-6 sm:p-8 lg:grid-cols-[1.35fr_1fr] lg:items-center">
-            <div>
-              <h3 className="text-base font-bold text-harbour-shadow sm:text-lg">
-                {status === "Upcoming"
-                  ? "Worlds racing starts on 4 November"
-                  : status === "Racing window"
-                    ? "Worlds racing is scheduled for 4–8 November"
-                    : "Worlds results are awaiting review"}
-              </h3>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-charcoal">
-                No reviewed X-15 scorecards are published on SailorPath yet. Official race scores, category placings and rider profile links will appear here as results are reviewed.
-              </p>
-              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-                <OfficialLink href={worlds.websiteUrl}>Check the organiser’s latest updates</OfficialLink>
-                <Link
-                  href="/calendar?class=x15"
-                  className="inline-flex min-h-10 items-center gap-1.5 py-1 text-sm font-bold text-harbour hover:underline"
-                >
-                  Browse X-15 regatta calendar <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0" />
-                </Link>
-              </div>
-            </div>
-            <div className="rounded-xl border border-cool-veil bg-warm-white p-4 text-xs leading-5 text-charcoal">
-              <p className="font-bold text-harbour-shadow">How SailorPath handles X-15 results</p>
-              <ul role="list" className="mt-2 space-y-1.5 text-slate-soft">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-harbour" />
-                  <span>Each official division (Senior, U19, U17, U15, U13) is preserved as published by the race committee.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-harbour" />
-                  <span>Verified against official final result sheets before appearing on rider profiles.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* 2026 CHAMPIONSHIP & CLINIC GUIDE */}
+      {/* 2026 CHAMPIONSHIP */}
       <section id="events" aria-labelledby="x15-events-heading" className="scroll-mt-20 space-y-5 sm:scroll-mt-24">
-        <div className="flex flex-wrap items-end justify-between gap-2">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-harbour">Major 2026 showcases</p>
-            <h2 id="x15-events-heading" className="mt-1 text-xl font-black text-harbour-shadow sm:text-2xl">
-              2026 championship &amp; clinic guide
-            </h2>
-          </div>
-          <p className="text-xs text-slate-soft">Sources checked {X15_SOURCE_CHECKED_ON}</p>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-harbour">Major 2026 showcases</p>
+          <h2 id="x15-events-heading" className="mt-1 text-xl font-black text-harbour-shadow sm:text-2xl">
+            2026 championship
+          </h2>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 md:gap-6">
@@ -333,7 +236,7 @@ export default async function X15ClassHub() {
                 </dl>
 
                 <p className="mt-3.5 text-sm leading-6 text-charcoal sm:mt-4">
-                  Registration opened on 4 November, with racing scheduled through 8 November for {worlds.confirmedFleetSummary}.
+                  The inaugural World Championships, bringing together international riders to compete across senior, youth and junior divisions in Port Nàutic Ibiza, Spain.
                 </p>
 
                 <p className="mt-4 text-xs font-bold uppercase tracking-wider text-slate-soft">
@@ -349,9 +252,6 @@ export default async function X15ClassHub() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-2.5 text-xs text-slate-soft">
-                  Masters and additional youth/junior divisions have separate championship awards.
-                </p>
               </div>
             </div>
 
@@ -365,10 +265,6 @@ export default async function X15ClassHub() {
                 >
                   SailorPath event page →
                 </Link>
-              </div>
-              <div className="flex flex-wrap gap-x-5 gap-y-1">
-                <OfficialLink href={worlds.fleetReportUrl}>107-sailor fleet announcement (24 nations)</OfficialLink>
-                <OfficialLink href={worlds.noticeUrl}>Class entry guidance</OfficialLink>
               </div>
             </div>
           </article>
@@ -417,12 +313,7 @@ export default async function X15ClassHub() {
                 </p>
 
                 <p className="mt-3 text-sm leading-6 text-charcoal">
-                  The official class calendar lists an updated December window at Amara Watersports Club: a three-day{" "}
-                  <strong>{X15_ASIANS_2026.clinicName}</strong> (15–17 December, clinic enquiries via{" "}
-                  <a href={`mailto:${X15_ASIANS_2026.clinicContactEmail}`} className="font-semibold text-harbour underline">
-                    {X15_ASIANS_2026.clinicContactEmail}
-                  </a>
-                  ) leads directly into three days of racing (18–20 December). The organiser’s registration form covers clinic sign-up, equipment charter and race entry; riders under 18 require guardian consent.
+                  The premier Asian continental event on the X-15 circuit, featuring three days of championship racing preceded by training and the Emerging Nations Clinic at Amara Watersports Club.
                 </p>
               </div>
             </div>
@@ -438,28 +329,9 @@ export default async function X15ClassHub() {
                   SailorPath event page →
                 </Link>
               </div>
-              <div className="flex flex-wrap gap-x-5 gap-y-1">
-                <OfficialLink href={X15_ASIANS_2026.sourceUrl}>Japan WingFoil Association event notice</OfficialLink>
-              </div>
             </div>
           </article>
         </div>
-
-        {/* GOVERNANCE CALLOUT */}
-        <article className="rounded-2xl border border-cool-veil bg-warm-white p-4 sm:p-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-            <div className="space-y-1">
-              <p className="text-xs font-bold uppercase tracking-wider text-harbour">
-                Class governance · {X15_AGM_2026.date}
-              </p>
-              <h3 className="text-base font-bold text-harbour-shadow">{X15_AGM_2026.title}</h3>
-              <p className="text-sm text-charcoal">
-                Online Annual General Meeting covering class rule updates, Executive Committee elections, Class President and Sustainability Lead appointments.
-              </p>
-            </div>
-            <OfficialLink href={X15_AGM_2026.noticeUrl}>Official AGM notice</OfficialLink>
-          </div>
-        </article>
       </section>
 
       {/* 2026–2027 INTERNATIONAL CIRCUIT CALENDAR */}

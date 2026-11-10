@@ -47,6 +47,7 @@ next-env.d.ts
 # temporary scratch files
 /tmp/
 tmp/
+/generated_images/
 .claude/
 .manus/
 .work/
