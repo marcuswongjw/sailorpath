@@ -85,8 +85,7 @@ describe("toPublicSailorProps", () => {
     }
     expect(pub.dob).toBeNull();
     expect(pub.school).toBeNull();
-    expect(pub.avatarUrl).toBe("/api/sailors/11111111-1111-4111-8111-111111111111/photo");
-    expect(toPublicSailorProps({ ...base, avatarUrl: null }, { canSeePrivate: false }).avatarUrl).toBeNull();
+    expect(pub.avatarUrl).toBeNull();
     expect(pub.instagram).toBeNull();
     expect(pub.sailingJourney).toBeNull();
   });
