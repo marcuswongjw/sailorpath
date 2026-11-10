@@ -9,7 +9,6 @@ import {
   minCompletedRacesForCategory,
   normalizeX15RankingDivision,
   reindexDivisionStarters,
-  smallFleetMultiplier,
   type X15RiderResultCandidate,
 } from "./x15Ranking";
 
