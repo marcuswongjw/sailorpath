@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { getAuthContext } from "@/lib/auth";
 import { canManageSailor } from "@/lib/claimAccess";
-import { avatarObjectPath, isPhotoSailorId, portraitFile } from "@/lib/profilePhoto";
+import { avatarObjectPath, isPhotoSailorId, portraitAsset } from "@/lib/profilePhoto";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -25,10 +25,10 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
       const auth = await getAuthContext();
       if (!auth || !await canManageSailor(id, auth.userId, auth.role === "superadmin", sailor.parentId)) return missing();
     }
-    const file = portraitFile(sailor.avatarUrl);
-    if (file) {
-      const bytes = await readFile(path.join(process.cwd(), "private/athlete-portraits/team-singapore", file));
-      return new Response(new Uint8Array(bytes), { headers: { ...HEADERS, "Content-Type": file.endsWith(".png") ? "image/png" : file.endsWith(".webp") ? "image/webp" : "image/jpeg" } });
+    const asset = portraitAsset(sailor.avatarUrl);
+    if (asset) {
+      const bytes = await readFile(path.join(process.cwd(), "private/athlete-portraits", asset.folder, asset.file));
+      return new Response(new Uint8Array(bytes), { headers: { ...HEADERS, "Content-Type": asset.file.endsWith(".png") ? "image/png" : asset.file.endsWith(".webp") ? "image/webp" : "image/jpeg" } });
     }
     const storageUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
     const object = avatarObjectPath(sailor.avatarUrl, id, storageUrl);

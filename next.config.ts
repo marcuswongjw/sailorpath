@@ -65,7 +65,7 @@ const nextConfig: NextConfig = {
   // Photo endpoints must never enter the shared optimiser cache. Proxy matching
   // alone does not intercept the platform image service; allow only brand assets.
   images: { localPatterns: [{ pathname: "/brand/**", search: "" }] },
-  outputFileTracingIncludes: { "/*": ["./src/assets/fonts/Montserrat-Bold.ttf"], "/api/sailors/*/photo": ["./private/athlete-portraits/team-singapore/*"] },
+  outputFileTracingIncludes: { "/*": ["./src/assets/fonts/Montserrat-Bold.ttf"], "/api/sailors/*/photo": ["./private/athlete-portraits/team-singapore/*", "./private/athlete-portraits/international/*"] },
   // Optimist Gold/Silver prerender the full board. Preview builds exceed
   // Next's 60s default and the deploy is marked failed.
   staticPageGenerationTimeout: 180,

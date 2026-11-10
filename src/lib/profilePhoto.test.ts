@@ -16,6 +16,7 @@ describe("profile photo boundaries", () => {
   });
   it("confines bundled portraits to the fixed private directory", () => {
     expect(portraitFile("https://sailorpath.com/athlete-portraits/team-singapore/example.jpg")).toBe("example.jpg");
+    expect(portraitFile("https://sailorpath.com/athlete-portraits/international/matt-wearn.jpg")).toBe("matt-wearn.jpg");
     expect(portraitFile("https://evil.test/athlete-portraits/team-singapore/example.jpg")).toBeNull();
     expect(portraitFile("/athlete-portraits/team-singapore/../../secret.txt")).toBeNull();
   });

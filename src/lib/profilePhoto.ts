@@ -12,12 +12,18 @@ export function profilePhotoUrl(id: string, value: string | null | undefined): s
   return portrait ? `${endpoint}?portrait=${portrait}` : endpoint;
 }
 
-export function portraitFile(value: string): string | null {
+export function portraitAsset(value: string): { folder: "team-singapore" | "international"; file: string } | null {
   try {
     const url = new URL(value, "https://sailorpath.com");
     if (url.origin !== "https://sailorpath.com" || url.search || url.hash) return null;
-    return url.pathname.match(/^\/athlete-portraits\/team-singapore\/([a-z0-9-]+\.(?:jpg|png|webp))$/)?.[1] || null;
+    const match = url.pathname.match(/^\/athlete-portraits\/(team-singapore|international)\/([a-z0-9-]+\.(?:jpg|png|webp))$/);
+    if (!match) return null;
+    return { folder: match[1] as "team-singapore" | "international", file: match[2] };
   } catch { return null; }
+}
+
+export function portraitFile(value: string): string | null {
+  return portraitAsset(value)?.file || null;
 }
 
 export function avatarObjectPath(value: string, sailorId: string, storageUrl: string): string | null {

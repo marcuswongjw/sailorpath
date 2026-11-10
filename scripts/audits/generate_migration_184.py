@@ -1,355 +1,329 @@
 #!/usr/bin/env python3
-"""Generate Migration 184: Daily Audit Demographics, Keep-Separates, Deferred Result Import, and Monitor Updates."""
+"""Generate Migration 184: Google-Researched Sailor Enrichments, Sail Number '0' Backfills, Gender Normalization, and Verified Olympian Portraits."""
 
-import os
 import json
 
 def main():
-    migration_path = "src/db/migrations/184_daily_audit_enrichment_kaohsiung_pulau_ujong_and_cleanup.sql"
-    
-    sql_lines = [
-        "-- Migration 184: Daily Audit Demographics, Keep-Separates, Deferred Result Import, and Monitor Updates",
-        "-- Generated: 2026-11-10",
-        "--",
-        "-- 1. Enrich 13 verified sailor genders (Worrakan Saksriklom + 12 Japanese youth sailors)",
-        "-- 2. Register 6 keep-separate sailor pairs in admin_change_log",
-        "-- 3. Prune orphaned composite profile 'Sean Kum / Nigel Tan' (reassigning result sailor_id to helm)",
-        "-- 4. Import deferred rank 6 Christian Wiedmann in 37th Phuket King's Cup 2025 ILCA 7 to Apiwat Christian Wiedmann",
-        "-- 5. Populate official results PDF URLs across 7 Pulau Ujong 2026 regatta records",
-        "-- 6. Update result_import_monitors status for Pulau Ujong, Japan Youth Worlds, Botchan Cup, and Kaohsiung",
-        "",
-        "BEGIN;",
-        ""
+    with open("/tmp/researched_sailors_db.json") as f:
+        t1 = f.read()
+    researched = {r["name"]: r for r in json.loads(t1[t1.find("{"):])["rows"]}
+
+    with open("/tmp/sail_number_zero_backfills.json") as f:
+        t2 = f.read()
+    sn_zero_rows = json.loads(t2[t2.find("{"):])["rows"]
+
+    def get_id(name):
+        if name not in researched:
+            raise KeyError(f"Missing sailor in researched_sailors_db.json: {name}")
+        return researched[name]["id"]
+
+    # 1. Nationality enrichments
+    nat_updates = [
+        (get_id("Rob Carmichael"), "Rob Carmichael", "THA", "UWC Thailand / Phuket King's Cup ILCA 7"),
     ]
 
-    # 1. Verified Gender Enrichments
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 1. VERIFIED GENDER ENRICHMENTS (13 SAILORS)")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
+    # 2. Sail number '0' backfills
+    sail_number_updates = []
+    for r in sn_zero_rows:
+        entry_sn = (r.get("entry_sail_number") or "").strip()
+        if not entry_sn or entry_sn in ("0", "TBD"):
+            continue
+        sail_number_updates.append((
+            r["id"],
+            r["name"],
+            entry_sn,
+            r.get("boat_class") or "",
+            r.get("regatta_name") or "",
+            r.get("date") or "",
+        ))
 
-    gender_enrichments = [
-        ("b1252473-a364-5f83-851b-8d9740d7e233", "Worrakan Saksriklom", "M", "22nd Langkawi International Regatta Perdana 2026 — 420 Men"),
-        ("2b3ed2fa-a6ec-59ac-9227-b780e15f2b69", "マーズデン 琥海", "M", "Japan Youth Worlds Selection Regatta 2026 — 29er Boys"),
-        ("666f2ed9-9cd6-5af3-8dcb-e752818002b2", "岡田 海洋", "M", "Japan Youth Worlds Selection Regatta 2026 — 29er Boys"),
-        ("0d5fdc5a-4c9a-50c7-9302-a694d6d1c260", "栗田 大河", "M", "Japan Youth Worlds Selection Regatta 2026 — 29er Boys"),
-        ("4864e2f5-368a-5772-b72e-aa639bc5a6ec", "臼井 翔海", "M", "Japan Youth Worlds Selection Regatta 2026 — 29er Boys"),
-        ("21c91ef1-9491-5cad-9b2a-57ea50a269ce", "金井 稜", "M", "Japan Youth Worlds Selection Regatta 2026 — 29er Boys"),
-        ("4ebdde56-268f-5a4a-8f7b-e29d047e0f97", "長堀 滉", "M", "Japan Youth Worlds Selection Regatta 2026 — 29er Boys"),
-        ("039f04d9-c0b6-5447-a108-4a9046000f7c", "宮嵜 吏壱", "M", "Japan Youth Worlds Selection Regatta 2026 — 420 Boys"),
-        ("24c9b1a5-c955-517b-9f4f-ad84188aa589", "山中 柊都", "M", "Japan Youth Worlds Selection Regatta 2026 — 420 Boys"),
-        ("a8a9efd7-eb9d-5cb6-a6c1-beec90eb6317", "山住 愛翔", "M", "Japan Youth Worlds Selection Regatta 2026 — 420 Boys"),
-        ("738f45d1-1082-5a56-ae80-e6b46b569f15", "梶村 幸永", "M", "Japan Youth Worlds Selection Regatta 2026 — 420 Boys"),
-        ("dbbff3fc-2a59-587a-b1ee-d96191790460", "森山 斗輝", "M", "Japan Youth Worlds Selection Regatta 2026 — 420 Boys"),
-        ("d22e0773-c61f-5310-b80e-9d5f2122406e", "稲葉 奏介", "M", "Japan Youth Worlds Selection Regatta 2026 — 420 Boys"),
+    # 3. Gender enrichments (missing genders)
+    gender_updates = [
+        ("91d872b9-db2a-4d54-a62b-16cd7852e967", "Charles Lim", "M", "Singapore Sailing Olympian (SGP)"),
+        (get_id("Rob Carmichael"), "Rob Carmichael", "M", "Phuket King's Cup ILCA 7 Men"),
+        (get_id("William Lawson"), "William Lawson", "M", "HHSC Australian Optimist Fleet"),
+        (get_id("Tom Kefford"), "Tom Kefford", "M", "CYC Australian Optimist Fleet"),
+        (get_id("Edward Payne"), "Edward Payne", "M", "HHSC Australian Optimist Fleet"),
+        (get_id("Sienna Murray"), "Sienna Murray", "F", "RPAYC Australian Optimist Fleet"),
+        (get_id("Olivia Dorling"), "Olivia Dorling", "F", "RPAYC Australian Optimist Fleet"),
+        (get_id("Kar Lai Kelly Lam"), "Kar Lai Kelly Lam", "F", "HKSF Hong Kong Optimist Fleet"),
+        (get_id("Ka Wai Chloe Wan"), "Ka Wai Chloe Wan", "F", "HKSF Hong Kong Optimist Fleet"),
+        (get_id("Isaac Wang"), "Isaac Wang", "M", "ABC Hong Kong Optimist Fleet"),
+        (get_id("Xavier Lam"), "Xavier Lam", "M", "HHYC Hong Kong Optimist Fleet"),
+        (get_id("Oliver Korn"), "Oliver Korn", "M", "GRSC Australian Optimist Fleet"),
     ]
 
-    for sid, name, gender, src in gender_enrichments:
-        sql_lines.append(f"-- {name} ({sid}) -> {gender} (Source: {src})")
-        sql_lines.append(f"UPDATE public.sailors SET gender = '{gender}', updated_at = clock_timestamp() WHERE id = '{sid}' AND gender IS NULL;")
-        sql_lines.append("")
-
-    # 2. Keep-Separate Registrations
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 2. KEEP-SEPARATE PAIR REGISTRATIONS (6 PAIRS)")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
-
-    keep_separates = [
-        (
-            "2bb09661-11b7-5714-a6b2-a495ed6f517f",
-            "6ab02afb-fd98-559c-a6dd-ef7543aa4d1c",
-            "Yi San Huang / Yi Huang",
-            "Distinct athletes: Taiwanese youth sailors from different associations/schools competing under sail 221513 vs TPE217273 in National President's Cup."
-        ),
-        (
-            "d1e310ac-9ea8-5b8e-959f-493fcb253c7e",
-            "d2384e74-ecef-53b2-8006-54f4ccdcbc36",
-            "Yu Lee / Shan-Yu Lee",
-            "Distinct athletes: Taiwanese youth sailors from different clubs and classes: Yu Lee (Yilan Sailing Committee, ILCA 6, TPE214516) vs Shan-Yu Lee (Lotus Pond Sailing Team Kaohsiung, Optimist, TPE773)."
-        ),
-        (
-            "9f555018-9102-4cc5-a99e-93ee77ccc96b",
-            "4d4f65b6-cb72-5665-b991-427a6f366a95",
-            "Vaishnavi V Kajale / V Vaishnavi",
-            "Distinct athletes: Indian athletes in entirely different disciplines: Vaishnavi V Kajale (Techno 293 windsurfing, YAI) vs V Vaishnavi (420 double-handed dinghy helm, YCH, IND 54658)."
-        ),
-        (
-            "6ab02afb-fd98-559c-a6dd-ef7543aa4d1c",
-            "83809dc2-7999-54be-8ab9-5eae50286b93",
-            "Yi Huang / Huang Yi Cheng Liam",
-            "Distinct athletes: Taiwanese youth sailor Yi Huang (TPE, Yilan) vs Singaporean youth sailor Huang Yi Cheng Liam (SGP, sail 3333)."
-        ),
-        (
-            "c1fef555-4202-4814-8fd3-b397ad4fa912",
-            "983252bf-8a99-5f85-a6ea-837957551ac6",
-            "Mark Wong / Mack Wong",
-            "Distinct athletes: Singapore national windfoiler Mark Wong (SGP, Constant Wind, sail 95) vs Hong Kong athlete Mack Wong (HKG)."
-        ),
-        (
-            "93cb42df-a8cb-419d-96c7-7c0c18738536",
-            "3e1da03f-d00f-5604-b46e-716456fd72ee",
-            "Ethan Kiu / Louis Polson (composite) / Louis Polson (individual)",
-            "Composite team pair entry vs individual sailor profile: Louis Polson is the individual 29er crew athlete."
-        )
+    # 4. Exact DOB / Birth Year Enrichments
+    dob_updates = [
+        ("680d176e-85d5-54f6-b2df-01ca565b7ecb", "Matt Wearn", "1995-09-30", True, "Olympedia / Australian Olympic Committee"),
+        ("2a7fedd4-73b4-5807-89ae-ec34197838c0", "Mara Stransky", "1999-02-13", True, "Olympedia (140654)"),
+        ("0ac22efe-1376-54c7-bd3e-ee7afcea883b", "Zoe Thomson", "1998-04-02", True, "Olympedia (153891)"),
+        ("8f66574a-1cc9-557a-b01b-87608ee05c60", "Elliot Hansen", "1994-02-12", True, "Olympedia (143186)"),
+        ("61a2dd17-eb19-5dfe-b8c2-97b02e4ba0d1", "Lorenzo Brando Chiavarini", "1994-01-17", True, "Olympedia (153999)"),
+        ("e65296f7-fdc4-582a-b74b-fc2463ea8228", "Nur Shazrin Mohamad Latif", "1998-02-02", True, "Olympedia (131040)"),
+        ("98bf4b68-3283-5b87-bbbe-d11c1977eafc", "Stephanie Norton", "2000-09-18", True, "Olympedia (143573)"),
+        ("f724016b-a2d6-5d4b-82a0-5ad506ba3bfb", "Arthit Mikhail Romanyk", "2001-01-16", True, "Olympedia (154051)"),
+        ("36b2c840-0917-5a4d-aa40-cd2be30c9780", "Supakon Pongwichean", "1995-04-20", True, "Olympedia (1304108)"),
+        ("cf6c134b-acef-4bcb-a77c-8639b4251b65", "Sophia Montgomery", "2003-04-04", True, "Olympedia (154050)"),
+        ("5179761d-9f8b-498d-bf0b-17cd8dcc4fd6", "Khairulnizam Mohd Afendy", "1993-05-27", True, "Olympedia (125480)"),
+        ("06bd4877-4d96-44b0-9f66-c14f0061fe59", "Nicholas Halliday", "1999-06-18", True, "Olympedia (153984)"),
+        ("85b27d22-63dd-4d37-a8a5-d5284edf08b2", "Ma Kwan Ching", "1997-08-31", True, "Olympedia (153981)"),
+        ("d792628c-3845-4a63-bb2c-4811e9d2dd56", "Cheng Ching Yin", "1999-08-10", True, "Olympedia (153983)"),
+        ("fd29d27b-51f0-47b5-b350-47174654ba5e", "Nethra Kumanan", "1997-08-21", True, "Olympedia (143739)"),
+        ("1b2c502f-5e5a-58e8-83f3-12817b1126f0", "Vishnu Saravanan", "1999-02-24", True, "Olympedia (143783)"),
+        ("f563ea85-dc20-5eb5-9f2a-4ae0a3427716", "Koh Seng Leong", "1983-09-19", True, "Olympedia (92947)"),
+        ("91d872b9-db2a-4d54-a62b-16cd7852e967", "Charles Lim", "1973-07-10", True, "Olympedia (62775)"),
+        ("e92c8a88-4f8a-5432-9e0d-42ad1e707486", "Colin Cheng Xinru", "1989-09-10", True, "Olympedia (121476)"),
+        ("4657a5d7-770c-456a-a381-4fb261c5e6e8", "Tan Wearn Haw", "1978-11-12", True, "Olympedia (92945)"),
+        ("df7c6bd6-12f7-412b-994a-f116e820e30d", "Ryan Lo Jun Han", "1997-02-26", True, "Olympedia (146534)"),
+        ("be779040-d45c-4052-b458-9c9e88803505", "Keira Carlyle", "2006-01-25", True, "OCA Hangzhou 2022 Asian Games Profile"),
+        ("20f686db-6a99-5bd1-8db1-23e5a24368d9", "Casey Imeneo", "1998-01-01", False, "Victorian Institute of Sport Profile"),
+        ("0746fdb3-9981-4881-8b8d-0db869997999", "Jonathan Chan", "2008-01-01", False, "Singapore Sailing 2025 Techno 293Plus Worlds (17yo in 2025)"),
+        (get_id("Ethan Lee"), "Ethan Lee", "2011-01-01", False, "Singapore Youth Sailing / Victoria School"),
+        (get_id("Wai Zhi Tong"), "Wai Zhi Tong", "2011-01-01", False, "Singapore Youth Sailing / CHIJ Secondary"),
+        (get_id("Rayson Lee Yin Yi"), "Rayson Lee Yin Yi", "2013-01-01", False, "racingrulesofsailing.org / Ai Tong School"),
+        (get_id("Eitan Oh"), "Eitan Oh", "2008-01-01", False, "racingrulesofsailing.org / Raffles Institution"),
+        (get_id("Foo Yuei Jit"), "Foo Yuei Jit", "2009-01-01", False, "racingrulesofsailing.org / SJI"),
     ]
 
-    for id1, id2, label, reason in keep_separates:
-        pair_key = "|".join(sorted([id1, id2]))
-        escaped_reason = reason.replace("'", "''")
-        escaped_label = label.replace("'", "''")
-        sql_lines.append(f"-- Keep-separate: {label}")
-        sql_lines.append(f"""INSERT INTO public.admin_change_log (
-  action, entity_type, entity_id, entity_label, summary, details, source, created_at
-) SELECT
-  'sailors.duplicates.keep_separate',
-  'sailor',
-  '{id1}',
-  '{escaped_label}',
-  'Confirmed these are different sailors.',
-  jsonb_build_object(
-    'pairKey', '{pair_key}',
-    'reason', '{escaped_reason}'
-  ),
-  'migration_184',
-  clock_timestamp()
-WHERE NOT EXISTS (
-  SELECT 1 FROM public.admin_change_log
-  WHERE action = 'sailors.duplicates.keep_separate'
-    AND details->>'pairKey' = '{pair_key}'
-);
-""")
+    # 5. Club Enrichments
+    club_updates = [
+        (get_id("Axl Tan Yi En"), "Axl Tan Yi En", "Constant Wind SeaSports", "racingrulesofsailing.org (Techno 293)"),
+        (get_id("Merelle Xuanying Tay"), "Merelle Xuanying Tay", "SAF Yacht Club", "racingrulesofsailing.org / Sailwave"),
+        (get_id("Low Hao Xuan Josh"), "Low Hao Xuan Josh", "SAF Yacht Club", "racingrulesofsailing.org"),
+        (get_id("Leopold Sayawaki-Kogut"), "Leopold Sayawaki-Kogut", "Changi Sailing Club", "Sailwave / Singapore regatta records"),
+        (get_id("Tham Wan Yew Amos"), "Tham Wan Yew Amos", "MOE Sea Sports Centre", "RSYC / MOE regatta records"),
+        (get_id("Moses Tan Hee"), "Moses Tan Hee", "SAF Yacht Club", "racingrulesofsailing.org / Sailwave"),
+        (get_id("Yap Swee Dean"), "Yap Swee Dean", "SAF Yacht Club", "racingrulesofsailing.org"),
+        (get_id("Balthazar Roche"), "Balthazar Roche", "Woollahra Sailing Club", "sailingresults.net / SSCBC"),
+        (get_id("Luca De Giosa"), "Luca De Giosa", "Hunters Hill Sailing Club", "sailingresults.net / HHSC"),
+        (get_id("Emerald Jacobsen"), "Emerald Jacobsen", "Woollahra Sailing Club", "sailingresults.net"),
+        (get_id("Sijia Deng"), "Sijia Deng", "Hunters Hill Sailing Club", "sailingresults.net / mysailing.com.au"),
+        (get_id("Emma Tomkins"), "Emma Tomkins", "Hunters Hill Sailing Club", "sailingresults.net"),
+        (get_id("Alix Nguyen-Minh"), "Alix Nguyen-Minh", "Aberdeen Boat Club", "racingrulesofsailing.org / HKRW"),
+        (get_id("Soki Higuchi"), "Soki Higuchi", "Shonan Junior Yacht Club", "racingrulesofsailing.org"),
+        (get_id("Kotaro Matsunaga"), "Kotaro Matsunaga", "Chuo Junior Yacht Club", "racingrulesofsailing.org"),
+        (get_id("Natsumi Kubota"), "Natsumi Kubota", "B&G Hyogo Junior Ocean Club", "racingrulesofsailing.org"),
+        (get_id("Kaito Nakamura"), "Kaito Nakamura", "Yumenoshima Yacht Club", "racingrulesofsailing.org"),
+        (get_id("Riko Muranaka"), "Riko Muranaka", "B&G Hyogo Junior Ocean Club", "JODA / objectstorage records"),
+        (get_id("Kaito Hirasawa"), "Kaito Hirasawa", "Team Koto", "JODA records"),
+        (get_id("Tadanao Matsuoka"), "Tadanao Matsuoka", "B&G Matsuyama Sailing Club", "JODA records"),
+        (get_id("Luqmaan Aneeq"), "Luqmaan Aneeq", "Royal College Sailing Team", "slsports.lk / Daily News Sri Lanka"),
+        (get_id("Mckaella Karunaratne"), "Mckaella Karunaratne", "Ladies' College Sailing Club", "The Morning / Daily News Sri Lanka"),
+        (get_id("Laila Hazari"), "Laila Hazari", "Methodist College Sailing Club", "Daily Mirror Sri Lanka"),
+        (get_id("Aung Sitt Maung"), "Aung Sitt Maung", "Yangon Sailing Club", "Myanmar Yachting Federation / ODAM"),
+        (get_id("Sitt May Chit Po"), "Sitt May Chit Po", "Yangon Sailing Club", "Myanmar Yachting Federation / ODAM"),
+        (get_id("Aung Kaung Myat"), "Aung Kaung Myat", "Yangon Sailing Club", "Myanmar Yachting Federation / ODAM"),
+        (get_id("Arman Aye"), "Arman Aye", "Yangon Sailing Club", "Myanmar Yachting Federation / ODAM"),
+        (get_id("Shoom Lai Khin"), "Shoom Lai Khin", "Yangon Sailing Club", "Myanmar Yachting Federation / ODAM"),
+        (get_id("Eaint Po Mo Chit"), "Eaint Po Mo Chit", "Yangon Sailing Club", "Myanmar Yachting Federation / ODAM"),
+        (get_id("Rob Carmichael"), "Rob Carmichael", "UWC Thailand", "Phuket / UWC Thailand"),
+        ("4657a5d7-770c-456a-a381-4fb261c5e6e8", "Tan Wearn Haw", "Singapore Sailing Federation", "SNOC / Olympedia"),
+        ("98bf4b68-3283-5b87-bbbe-d11c1977eafc", "Stephanie Norton", "Royal Hong Kong Yacht Club", "HKSF / Olympedia"),
+        ("e65296f7-fdc4-582a-b74b-fc2463ea8228", "Nur Shazrin Mohamad Latif", "Malaysian Sailing Association", "Olympedia / MSA"),
+        ("06bd4877-4d96-44b0-9f66-c14f0061fe59", "Nicholas Halliday", "Royal Hong Kong Yacht Club", "HKSF"),
+        ("cf6c134b-acef-4bcb-a77c-8639b4251b65", "Sophia Montgomery", "Royal Varuna Yacht Club", "YRAT"),
+        ("fd29d27b-51f0-47b5-b350-47174654ba5e", "Nethra Kumanan", "Tamil Nadu Sailing Association", "YAI / TNSA"),
+        ("1b2c502f-5e5a-58e8-83f3-12817b1126f0", "Vishnu Saravanan", "Army Yachting Node", "YAI / Indian Army Sailing"),
+    ]
 
-    # 3. Prune Orphaned Composite Sailor Profile
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 3. PRUNE ORPHANED COMPOSITE PROFILE 'Sean Kum / Nigel Tan'")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
-    sql_lines.append("-- Reassign 20th Asian Games 29er result sailor_id from composite shell to helm Sean Kum Kok Wei")
-    sql_lines.append("""UPDATE public.regatta_results
-SET sailor_id = 'e84ec5f5-02aa-4b5b-889a-edf1eefdbfbf',
-    updated_at = clock_timestamp()
-WHERE id = '3e18a002-a020-4100-8001-000000000032'
-  AND sailor_id = 'a403cd69-658e-42c1-9d5a-e5b78e466a33';
+    # 6. School Enrichments
+    school_updates = [
+        (get_id("Axl Tan Yi En"), "Axl Tan Yi En", "Anglo-Chinese School (Barker Road)", "racingrulesofsailing.org"),
+        (get_id("Cleo Seah En Rui"), "Cleo Seah En Rui", "Nanyang Polytechnic", "racingrulesofsailing.org"),
+        (get_id("Elizabeth Victoria Say"), "Elizabeth Victoria Say", "Dunman High School", "racingrulesofsailing.org"),
+        (get_id("Merelle Xuanying Tay"), "Merelle Xuanying Tay", "St. Hilda's Secondary School", "racingrulesofsailing.org"),
+        (get_id("Low Hao Xuan Josh"), "Low Hao Xuan Josh", "Victoria School", "moe.edu.sg / racingrulesofsailing.org"),
+        (get_id("Leopold Sayawaki-Kogut"), "Leopold Sayawaki-Kogut", "The Japanese School", "Sailwave / Singapore Youth Regatta"),
+        (get_id("Tham Wan Yew Amos"), "Tham Wan Yew Amos", "Victoria School", "moe.edu.sg"),
+        (get_id("Moses Tan Hee"), "Moses Tan Hee", "Anglo-Chinese School (Junior)", "racingrulesofsailing.org"),
+        (get_id("Catherine Maiden"), "Catherine Maiden", "Opera Estate Primary School", "racingrulesofsailing.org"),
+        (get_id("Cheung Kai Jeng Keenan"), "Cheung Kai Jeng Keenan", "Raffles Institution", "Raffles Press / racingrulesofsailing.org"),
+        (get_id("Cheung Shou Jeng Declan"), "Cheung Shou Jeng Declan", "Raffles Institution", "moe.edu.sg / racingrulesofsailing.org"),
+        (get_id("Yap Swee Dean"), "Yap Swee Dean", "Raffles Institution", "racingrulesofsailing.org"),
+        (get_id("Rayson Lee Yin Yi"), "Rayson Lee Yin Yi", "Ai Tong School", "moe.edu.sg / racingrulesofsailing.org"),
+        (get_id("Eitan Oh"), "Eitan Oh", "Raffles Institution", "racingrulesofsailing.org"),
+        (get_id("Foo Yuei Jit"), "Foo Yuei Jit", "Anderson Serangoon Junior College", "racingrulesofsailing.org"),
+        (get_id("Clive Wei Jun Seah"), "Clive Wei Jun Seah", "Catholic Junior College", "racingrulesofsailing.org"),
+        (get_id("Mathias Yu Da Wong"), "Mathias Yu Da Wong", "Raffles Institution", "racingrulesofsailing.org"),
+        (get_id("Ethan Lee"), "Ethan Lee", "Victoria School", "racingrulesofsailing.org"),
+        (get_id("Wai Zhi Tong"), "Wai Zhi Tong", "CHIJ Secondary (Toa Payoh)", "racingrulesofsailing.org"),
+        (get_id("Zeph Wan"), "Zeph Wan", "Anglo-Chinese School (Independent)", "racingrulesofsailing.org"),
+        (get_id("Desiree Lee Yuet Chi"), "Desiree Lee Yuet Chi", "Tanjong Katong Girls' School", "racingrulesofsailing.org"),
+        (get_id("Abigail Jia En Ling"), "Abigail Jia En Ling", "Dunman High School", "National School Games"),
+        (get_id("Arabelle En Xi Tan"), "Arabelle En Xi Tan", "Tanjong Katong Girls' School", "racingrulesofsailing.org"),
+        (get_id("Elisha Lim Yu Ting"), "Elisha Lim Yu Ting", "Raffles Girls' School", "racingrulesofsailing.org"),
+        (get_id("Eugene Tan Yi Ze"), "Eugene Tan Yi Ze", "St. Joseph's Institution Junior", "racingrulesofsailing.org"),
+        (get_id("Zachary Hong Yi Zhang"), "Zachary Hong Yi Zhang", "St. Joseph's Institution", "racingrulesofsailing.org"),
+        (get_id("Jonathan Ho Jian Yi"), "Jonathan Ho Jian Yi", "Anglo-Chinese School (Independent)", "racingrulesofsailing.org"),
+        (get_id("Aaron Abraham Say"), "Aaron Abraham Say", "Victoria School", "racingrulesofsailing.org"),
+        (get_id("Maia Kiran Lim Laurie"), "Maia Kiran Lim Laurie", "Singapore American School", "racingrulesofsailing.org"),
+        (get_id("Misa Lim Laurie"), "Misa Lim Laurie", "Singapore American School", "racingrulesofsailing.org"),
+        (get_id("Luqmaan Aneeq"), "Luqmaan Aneeq", "Royal College, Colombo", "slsports.lk"),
+        (get_id("Mckaella Karunaratne"), "Mckaella Karunaratne", "Ladies' College, Colombo", "Daily News Sri Lanka"),
+        (get_id("Laila Hazari"), "Laila Hazari", "Methodist College, Colombo", "Daily Mirror Sri Lanka"),
+    ]
 
--- Delete the empty composite sailor shell
-DELETE FROM public.sailors
-WHERE id = 'a403cd69-658e-42c1-9d5a-e5b78e466a33';
+    # 7. Verified Portraits
+    photo_updates = [
+        ("e92c8a88-4f8a-5432-9e0d-42ad1e707486", "Colin Cheng Xinru", "https://sailorpath.com/athlete-portraits/team-singapore/colin-cheng-xinru.jpg", "Olympedia 121476 official headshot"),
+        ("f563ea85-dc20-5eb5-9f2a-4ae0a3427716", "Koh Seng Leong", "https://sailorpath.com/athlete-portraits/team-singapore/koh-seng-leong.jpg", "Olympedia 92947 official headshot"),
+        ("91d872b9-db2a-4d54-a62b-16cd7852e967", "Charles Lim", "https://sailorpath.com/athlete-portraits/team-singapore/charles-lim.jpg", "Olympedia 62775 official headshot"),
+        ("680d176e-85d5-54f6-b2df-01ca565b7ecb", "Matt Wearn", "https://sailorpath.com/athlete-portraits/international/matt-wearn.jpg", "Olympedia 140820 Tokyo 2020 official headshot"),
+        ("2a7fedd4-73b4-5807-89ae-ec34197838c0", "Mara Stransky", "https://sailorpath.com/athlete-portraits/international/mara-stransky.jpg", "Olympedia 140654 Tokyo 2020 official headshot"),
+        ("0ac22efe-1376-54c7-bd3e-ee7afcea883b", "Zoe Thomson", "https://sailorpath.com/athlete-portraits/international/zoe-thomson.jpg", "Olympedia 153891 Paris 2024 official headshot"),
+        ("8f66574a-1cc9-557a-b01b-87608ee05c60", "Elliot Hansen", "https://sailorpath.com/athlete-portraits/international/elliot-hanson.jpg", "Olympedia 143186 Tokyo 2020 official headshot"),
+        ("61a2dd17-eb19-5dfe-b8c2-97b02e4ba0d1", "Lorenzo Brando Chiavarini", "https://sailorpath.com/athlete-portraits/international/lorenzo-chiavarini.jpg", "Olympedia 153999 FIV official headshot"),
+        ("e65296f7-fdc4-582a-b74b-fc2463ea8228", "Nur Shazrin Mohamad Latif", "https://sailorpath.com/athlete-portraits/international/nur-shazrin-mohamad-latif.jpg", "Olympedia 131040 29th SEA Games official headshot"),
+        ("98bf4b68-3283-5b87-bbbe-d11c1977eafc", "Stephanie Norton", "https://sailorpath.com/athlete-portraits/international/stephanie-norton.jpg", "Olympedia 143573 SF&OC HK official headshot"),
+        ("f724016b-a2d6-5d4b-82a0-5ad506ba3bfb", "Arthit Mikhail Romanyk", "https://sailorpath.com/athlete-portraits/international/arthit-mikhail-romanyk.jpg", "Olympedia 154051 Paris 2024 official headshot"),
+        ("cf6c134b-acef-4bcb-a77c-8639b4251b65", "Sophia Montgomery", "https://sailorpath.com/athlete-portraits/international/sophia-montgomery.jpg", "Olympedia 154050 Paris 2024 official headshot"),
+        ("5179761d-9f8b-498d-bf0b-17cd8dcc4fd6", "Khairulnizam Mohd Afendy", "https://sailorpath.com/athlete-portraits/international/khairulnizam-mohd-afendy.jpg", "Olympedia 125480 29th SEA Games official headshot"),
+        ("06bd4877-4d96-44b0-9f66-c14f0061fe59", "Nicholas Halliday", "https://sailorpath.com/athlete-portraits/international/nicholas-halliday.jpg", "Olympedia 153984 Paris 2024 official headshot"),
+        ("85b27d22-63dd-4d37-a8a5-d5284edf08b2", "Ma Kwan Ching", "https://sailorpath.com/athlete-portraits/international/ma-kwan-ching.jpg", "Olympedia 153981 Paris 2024 official headshot"),
+        ("d792628c-3845-4a63-bb2c-4811e9d2dd56", "Cheng Ching Yin", "https://sailorpath.com/athlete-portraits/international/cheng-ching-yin.jpg", "Olympedia 153983 Paris 2024 official headshot"),
+        ("fd29d27b-51f0-47b5-b350-47174654ba5e", "Nethra Kumanan", "https://sailorpath.com/athlete-portraits/international/nethra-kumanan.jpg", "Olympedia 143739 official headshot"),
+        ("1b2c502f-5e5a-58e8-83f3-12817b1126f0", "Vishnu Saravanan", "https://sailorpath.com/athlete-portraits/international/vishnu-saravanan.jpg", "Olympedia 143783 official headshot"),
+    ]
 
--- Record admin log
-INSERT INTO public.admin_change_log (
-  action, entity_type, entity_id, entity_label, summary, details, source, created_at
-) VALUES (
-  'sailors.prune_orphaned_composite',
-  'sailor',
-  'a403cd69-658e-42c1-9d5a-e5b78e466a33',
-  'Sean Kum / Nigel Tan',
-  'Pruned orphaned composite double-handed profile; reassigned result to individual helm Sean Kum Kok Wei.',
-  jsonb_build_object(
-    'helm_id', 'e84ec5f5-02aa-4b5b-889a-edf1eefdbfbf',
-    'crew_id', 'ca98c637-aebd-4f38-81c7-80345846c93a',
-    'regatta_result_id', '3e18a002-a020-4100-8001-000000000032'
-  ),
-  'migration_184',
-  clock_timestamp()
-);
-""")
+    lines = []
+    lines.append("-- Migration 184: Google-Researched Sailor Enrichments, Sail Number '0' Backfills, Gender Normalization, and Verified Olympian Portraits")
+    lines.append("--")
+    lines.append(f"-- 1. Normalizes legacy 'W' -> 'F' and 'Unknown' -> NULL genders across all sailors.")
+    lines.append(f"-- 2. Backfills {len(sail_number_updates)} sail numbers currently set to '0' with official entry_sail_number values.")
+    lines.append(f"-- 3. Enriches {len(nat_updates)} nationality, {len(gender_updates)} genders, {len(dob_updates)} DOBs, {len(club_updates)} clubs, and {len(school_updates)} schools from Google Search & Olympic/Federation records.")
+    lines.append(f"-- 4. Attaches {len(photo_updates)} verified official Olympic athlete portraits and clears Victoria Chan's unverified placeholder.")
+    lines.append("")
+    lines.append("BEGIN;")
+    lines.append("")
 
-    # 4. Import Deferred Phuket King's Cup 2025 ILCA 7 Result (Christian Wiedmann)
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 4. IMPORT DEFERRED PHUKET KING'S CUP 2025 ILCA 7 ENTRY (Christian Wiedmann)")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
-    sql_lines.append("""DO $$
-DECLARE
-  v_regatta_id uuid := 'f2d53719-ece3-5162-92dd-87b247029fcd';
-  v_sailor_id uuid := '3b468b8a-579d-5429-8d3f-27db5e17aed2'; -- Apiwat Christian Wiedmann
-  v_result_id uuid := 'b6c2d134-8c01-5d97-8c34-71285491ce60';
-  v_participant_id uuid := 'e49ab812-7091-5821-b845-a75d9284cf31';
-BEGIN
-  -- Insert regatta_results row if not exists
-  INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, entry_label, entry_sail_number, entry_type, rank,
-    total_score, nett_score, is_dns, is_overseas_commitment, verification_status,
-    evidence_name, evidence_type, evidence_notes, verified_at, created_at, updated_at
-  ) VALUES (
-    v_result_id,
-    v_regatta_id,
-    v_sailor_id,
-    'CHRISTIAN WIEDMANN',
-    'THA 49',
-    'individual',
-    6,
-    55.0,
-    43.0,
-    false,
-    false,
-    'verified',
-    '37th Phuket King’s Cup Regatta 2025 — ILCA 7 Open results',
-    'document',
-    'Official source document 169974, page 1; source name: CHRISTIAN WIEDMANN; sail: THA 49. User confirmed link to Apiwat Christian Wiedmann.',
-    clock_timestamp(),
-    clock_timestamp(),
-    clock_timestamp()
-  ) ON CONFLICT (id) DO UPDATE
-    SET sailor_id = EXCLUDED.sailor_id,
-        total_score = EXCLUDED.total_score,
-        nett_score = EXCLUDED.nett_score;
+    lines.append("-- ============================================================================")
+    lines.append("-- 1. GENDER NORMALIZATION ('W' -> 'F', 'Unknown' -> NULL)")
+    lines.append("-- ============================================================================")
+    lines.append("UPDATE public.sailors SET gender = 'F', updated_at = clock_timestamp() WHERE gender = 'W';")
+    lines.append("UPDATE public.sailors SET gender = NULL, updated_at = clock_timestamp() WHERE gender = 'Unknown';")
+    lines.append("")
 
-  -- Insert participant row
-  INSERT INTO public.regatta_result_participants (
-    id, regatta_result_id, sailor_id, source_name, display_order, role, match_status, ranking_credit, created_at, updated_at
-  ) VALUES (
-    v_participant_id,
-    v_result_id,
-    v_sailor_id,
-    'CHRISTIAN WIEDMANN',
-    1,
-    'solo',
-    'matched',
-    false,
-    clock_timestamp(),
-    clock_timestamp()
-  ) ON CONFLICT (id) DO NOTHING;
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 2. SAIL NUMBER '0' BACKFILLS ({len(sail_number_updates)} SAILORS)")
+    lines.append(f"-- ============================================================================")
+    for sid, name, entry_sn, boat_class, reg_name, reg_date in sail_number_updates:
+        s_name = name.replace("'", "''")
+        s_sn = entry_sn.replace("'", "''")
+        s_reg = reg_name.replace("'", "''")
+        lines.append(f"-- {s_name} ({sid}) -> Sail #{s_sn} (from {s_reg}, {reg_date})")
+        if "ILCA 4" in boat_class:
+            lines.append("UPDATE public.sailors")
+            lines.append(f"SET sail_number = '{s_sn}', sail_number_ilca4 = COALESCE(sail_number_ilca4, '{s_sn}'), updated_at = clock_timestamp()")
+            lines.append(f"WHERE id = '{sid}' AND sail_number = '0';")
+        else:
+            lines.append("UPDATE public.sailors")
+            lines.append(f"SET sail_number = '{s_sn}', updated_at = clock_timestamp()")
+            lines.append(f"WHERE id = '{sid}' AND sail_number = '0';")
+        lines.append("")
 
-  -- Insert 9 race results (R1..R9)
-  INSERT INTO public.regatta_race_results (regatta_result_id, race_number, score, scoring_code, discarded, raw_value)
-  VALUES 
-    (v_result_id, 1, 7.0, NULL, false, '7.0'),
-    (v_result_id, 2, 5.0, NULL, false, '5.0'),
-    (v_result_id, 3, 4.0, NULL, false, '4.0'),
-    (v_result_id, 4, 12.0, 'UFD', true, '(12.0 UFD)'),
-    (v_result_id, 5, 4.0, NULL, false, '4.0'),
-    (v_result_id, 6, 5.0, NULL, false, '5.0'),
-    (v_result_id, 7, 5.0, NULL, false, '5.0'),
-    (v_result_id, 8, 6.0, NULL, false, '6.0'),
-    (v_result_id, 9, 7.0, NULL, false, '7.0')
-  ON CONFLICT (regatta_result_id, race_number) DO UPDATE
-    SET score = EXCLUDED.score,
-        scoring_code = EXCLUDED.scoring_code,
-        discarded = EXCLUDED.discarded,
-        raw_value = EXCLUDED.raw_value;
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 3. NATIONALITY ENRICHMENTS ({len(nat_updates)} SAILOR)")
+    lines.append(f"-- ============================================================================")
+    for sid, name, nat, src in nat_updates:
+        lines.append(f"-- {name} ({sid}) -> {nat} ({src})")
+        lines.append(f"UPDATE public.sailors SET nationality = '{nat}', updated_at = clock_timestamp() WHERE id = '{sid}' AND (nationality IS NULL OR nationality = '');")
+        lines.append("")
 
-  -- Admin change log
-  INSERT INTO public.admin_change_log (
-    action, entity_type, entity_id, entity_label, summary, details, source, created_at
-  ) VALUES (
-    'regatta_results.import_deferred_entry',
-    'regatta_result',
-    v_result_id,
-    '37th Phuket King’s Cup Regatta 2025 — ILCA 7 (Rank 6: Apiwat Christian Wiedmann)',
-    'Imported verified deferred entry for Apiwat Christian Wiedmann in 37th Phuket King’s Cup 2025.',
-    jsonb_build_object(
-      'sailor_id', v_sailor_id,
-      'regatta_id', v_regatta_id,
-      'rank', 6,
-      'sail_number', 'THA 49'
-    ),
-    'migration_184',
-    clock_timestamp()
-  );
-END $$;
-""")
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 4. GENDER ENRICHMENTS ({len(gender_updates)} SAILORS)")
+    lines.append(f"-- ============================================================================")
+    for sid, name, g, src in gender_updates:
+        lines.append(f"-- {name} ({sid}) -> '{g}' ({src})")
+        lines.append(f"UPDATE public.sailors SET gender = '{g}', updated_at = clock_timestamp() WHERE id = '{sid}' AND (gender IS NULL OR gender = '');")
+        lines.append("")
 
-    # 5. Link Official Results PDF URLs for Pulau Ujong 2026
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 5. LINK OFFICIAL RESULTS PDF URLS FOR PULAU UJONG REGATTA 2026")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
-    sql_lines.append("""-- Update official results URLs on all 7 Pulau Ujong regattas
-UPDATE public.regattas
-SET official_results_url = 'https://s3.amazonaws.com/rrs.prod/2hseo0iwy31ouhxwrotf2g9blv1m?response-content-disposition=inline%3B%20filename%3D%22OP%20Gold%20Results%20Day%202_Correction.pdf%22%3B%20filename%2A%3DUTF-8%27%27OP%2520Gold%2520Results%2520Day%25202_Correction.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJH37WFGGNKRSBH6Q%2F20261023%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261023T002612Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=dd349b374a0926b046955d8b5e3c36663a7de282db155be4685829b256a06f7e',
-    official_results_source_name = 'RRS Official OP Gold Results Day 2 Correction PDF',
-    updated_at = clock_timestamp()
-WHERE slug = 'pulau-ujong-regatta-2026-gold';
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 5. DOB ENRICHMENTS ({len(dob_updates)} SAILORS)")
+    lines.append(f"-- ============================================================================")
+    for sid, name, dob_str, upgrade_jan1, src in dob_updates:
+        s_name = name.replace("'", "''")
+        s_src = src.replace("'", "''")
+        lines.append(f"-- {s_name} ({sid}) -> '{dob_str}' (Source: {s_src})")
+        lines.append("UPDATE public.sailors")
+        lines.append(f"SET dob = '{dob_str}'::date, updated_at = clock_timestamp()")
+        if upgrade_jan1:
+            lines.append(f"WHERE id = '{sid}' AND (dob IS NULL OR to_char(dob, 'MM-DD') = '01-01');")
+        else:
+            lines.append(f"WHERE id = '{sid}' AND dob IS NULL;")
+        lines.append("")
 
-UPDATE public.regattas
-SET official_results_url = 'https://s3.amazonaws.com/rrs.prod/w6ckxiy9uj5zyq86y8fqxzhere5f?response-content-disposition=inline%3B%20filename%3D%22OP%20Silver%20Final%20Results.pdf%22%3B%20filename%2A%3DUTF-8%27%27OP%2520Silver%2520Final%2520Results.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJH37WFGGNKRSBH6Q%2F20261023%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261023T002610Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=6772ef03716857789a9ca7f32c0e21d3325031fa842df07aa8c84927571d1e77',
-    official_results_source_name = 'RRS Official OP Silver Final Results PDF',
-    updated_at = clock_timestamp()
-WHERE slug = 'pulau-ujong-regatta-2026-silver';
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 6. CLUB ENRICHMENTS ({len(club_updates)} SAILORS)")
+    lines.append(f"-- ============================================================================")
+    for sid, name, club, src in club_updates:
+        s_name = name.replace("'", "''")
+        s_club = club.replace("'", "''")
+        s_src = src.replace("'", "''")
+        lines.append(f"-- {s_name} ({sid}) -> Club: '{s_club}' (Source: {s_src})")
+        lines.append("UPDATE public.sailors")
+        lines.append(f"SET club = '{s_club}', updated_at = clock_timestamp()")
+        lines.append(f"WHERE id = '{sid}' AND club IN ('N/A', 'Imported official result', 'Official regatta entry', 'Others', '', 'HKG', 'THA', 'MAS', 'IND', 'SGP', 'CSC', 'WVPR');")
+        lines.append("")
 
-UPDATE public.regattas
-SET official_results_url = 'https://s3.amazonaws.com/rrs.prod/mq6k5ew6z0da2xrjnrd42vsoz769?response-content-disposition=inline%3B%20filename%3D%22ILCA%204%20Final%20Results.pdf%22%3B%20filename%2A%3DUTF-8%27%27ILCA%25204%2520Final%2520Results.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJH37WFGGNKRSBH6Q%2F20261023%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261023T002609Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=50046af7c2fa4a3d51563aadeb99d10799b133c778f2a063ab83c1cd3dc763b3',
-    official_results_source_name = 'RRS Official ILCA 4 Final Results PDF',
-    updated_at = clock_timestamp()
-WHERE slug = 'pulau-ujong-ilca-feb-26-2026-02-21';
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 7. SCHOOL ENRICHMENTS ({len(school_updates)} SAILORS)")
+    lines.append(f"-- ============================================================================")
+    for sid, name, school, src in school_updates:
+        s_name = name.replace("'", "''")
+        s_school = school.replace("'", "''")
+        s_src = src.replace("'", "''")
+        lines.append(f"-- {s_name} ({sid}) -> School: '{s_school}' (Source: {s_src})")
+        lines.append("UPDATE public.sailors")
+        lines.append(f"SET school = '{s_school}', updated_at = clock_timestamp()")
+        lines.append(f"WHERE id = '{sid}' AND (school IS NULL OR school = '');")
+        lines.append("")
 
-UPDATE public.regattas
-SET official_results_url = 'https://s3.amazonaws.com/rrs.prod/40bzp5szsvm7dqz9a7phcysyd2ki?response-content-disposition=inline%3B%20filename%3D%22ILCA%206%20Final%20Results.pdf%22%3B%20filename%2A%3DUTF-8%27%27ILCA%25206%2520Final%2520Results.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJH37WFGGNKRSBH6Q%2F20261023%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261023T002607Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=c253976cd60a8524913b3a1fe3b0041b789ac06bf0a01d2411ee86e1c175cda3',
-    official_results_source_name = 'RRS Official ILCA 6 Final Results PDF',
-    updated_at = clock_timestamp()
-WHERE slug = 'pulau-ujong-2026-ilca-6';
+    lines.append(f"-- ============================================================================")
+    lines.append(f"-- 8. VERIFIED OLYMPIC PORTRAITS ({len(photo_updates)} SAILORS + 1 CLEAR)")
+    lines.append(f"-- ============================================================================")
+    lines.append("-- Clear unverified placeholder for Victoria Chan (97cbde3f-9b92-5b2b-abbd-416a43ad32c9)")
+    lines.append("UPDATE public.sailors SET avatar_url = NULL, show_profile_photo_on_public_profile = false, updated_at = clock_timestamp() WHERE id = '97cbde3f-9b92-5b2b-abbd-416a43ad32c9';")
+    lines.append("")
+    for sid, name, url, src in photo_updates:
+        s_name = name.replace("'", "''")
+        s_src = src.replace("'", "''")
+        lines.append(f"-- {s_name} ({sid}) -> {url} ({s_src})")
+        lines.append("UPDATE public.sailors")
+        lines.append(f"SET avatar_url = '{url}', show_profile_photo_on_public_profile = true, updated_at = clock_timestamp()")
+        lines.append(f"WHERE id = '{sid}';")
+        lines.append("")
 
-UPDATE public.regattas
-SET official_results_url = 'https://s3.amazonaws.com/rrs.prod/w1d8bksrws197j0jnbgksjxsmli8?response-content-disposition=inline%3B%20filename%3D%2229er%20and%20WSF%20Final%20Results.pdf%22%3B%20filename%2A%3DUTF-8%27%2729er%2520and%2520WSF%2520Final%2520Results.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJH37WFGGNKRSBH6Q%2F20261023%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261023T002611Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=f74620484272a6e367bf25c968638156fb27eb9f10511e2ec53d8654c6c87a6e',
-    official_results_source_name = 'RRS Official 29er and WSF Final Results PDF',
-    updated_at = clock_timestamp()
-WHERE slug IN ('pulau-ujong-2026-29er', 'pulau-ujong-2026-techno293', 'pulau-ujong-2026-iqfoil');
-""")
+    lines.append("-- ============================================================================")
+    lines.append("-- 9. AUDIT LOG ENTRY")
+    lines.append("-- ============================================================================")
+    lines.append("INSERT INTO public.admin_change_log (")
+    lines.append("  action, entity_type, entity_id, entity_label, summary, details, source, created_at")
+    lines.append(") VALUES (")
+    lines.append("  'sailors.demographics_enrichment',")
+    lines.append("  'sailor',")
+    lines.append("  '00000000-0000-0000-0000-000000000000',")
+    lines.append("  'Google Research Profile Enrichment — Migration 184',")
+    lines.append(f"  'Normalized genders, backfilled {len(sail_number_updates)} sail_number=0 entries, enriched {len(dob_updates)} DOBs, {len(club_updates)} clubs, {len(school_updates)} schools, {len(gender_updates)} genders, and attached {len(photo_updates)} verified Olympic athlete portraits.',")
+    lines.append("  jsonb_build_object(")
+    lines.append(f"    'sail_numbers_backfilled', {len(sail_number_updates)},")
+    lines.append(f"    'genders_enriched', {len(gender_updates)},")
+    lines.append(f"    'dobs_enriched', {len(dob_updates)},")
+    lines.append(f"    'clubs_enriched', {len(club_updates)},")
+    lines.append(f"    'schools_enriched', {len(school_updates)},")
+    lines.append(f"    'photos_attached', {len(photo_updates)}")
+    lines.append("  ),")
+    lines.append("  'migration_184',")
+    lines.append("  clock_timestamp()")
+    lines.append(");")
+    lines.append("")
+    lines.append("COMMIT;")
+    lines.append("")
 
-    # 6. Update Result Import Monitors Status
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 6. UPDATE RESULT IMPORT MONITORS STATUS")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
-    sql_lines.append("""-- Pulau Ujong Regatta 2026: set event_url and mark reviewed
-UPDATE public.result_import_monitors
-SET event_url = 'https://www.racingrulesofsailing.org/documents/13180/event',
-    report = jsonb_set(report, '{status}', '"reviewed"')
-WHERE event_id = '058ec35f-c7f7-4677-bd76-39ec738332c6';
-
--- Japan Youth Worlds Selection Regatta 2026: mark reviewed (Notice of Race verified)
-UPDATE public.result_import_monitors
-SET report = jsonb_set(report, '{status}', '"reviewed"')
-WHERE event_id = 'dd16f02b-2b0a-48bd-b058-5b5ee9f39b11';
-
--- 22nd Botchan Cup 2026: mark reviewed (Notice of Race verified)
-UPDATE public.result_import_monitors
-SET report = jsonb_set(report, '{status}', '"reviewed"')
-WHERE event_id = '8d8bbdc1-a75a-4d3b-ab7c-275bc078b6b9';
-
--- Kaohsiung Lotus Pond Optimist Regatta 2026: mark reviewed (Official provisional/final PDF corroborated)
-UPDATE public.result_import_monitors
-SET report = jsonb_set(
-      jsonb_set(report, '{status}', '"reviewed"'),
-      '{pdfCorroboration}', '"verified"'
-    )
-WHERE event_id = 'a9c9af76-240d-4a4b-950b-de5ea77dc495';
-""")
-
-    # 7. Summary Log
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("-- 7. AUDIT SUMMARY LOG")
-    sql_lines.append("-- ============================================================================")
-    sql_lines.append("")
-    sql_lines.append("""INSERT INTO public.admin_change_log (
-  action, entity_type, entity_id, entity_label, summary, details, source, created_at
-) VALUES (
-  'sailors.demographics_enrichment',
-  'sailor',
-  'b1252473-a364-5f83-851b-8d9740d7e233',
-  'Worrakan Saksriklom et al.',
-  'Enriched 13 verified sailor genders (THA + JPN); registered 6 keep-separate pairs; pruned orphaned composite profile Sean Kum / Nigel Tan; imported deferred Phuket King''s Cup entry for Apiwat Christian Wiedmann; linked official PDFs for 7 Pulau Ujong regattas; updated monitor statuses for Pulau Ujong, Japan Youth Worlds, Botchan Cup, and Kaohsiung.',
-  jsonb_build_object(
-    'gender_enrichments_count', 13,
-    'keep_separates_count', 6,
-    'pruned_profile', 'a403cd69-658e-42c1-9d5a-e5b78e466a33',
-    'imported_result_sailor', '3b468b8a-579d-5429-8d3f-27db5e17aed2',
-    'pulau_ujong_event_id', '058ec35f-c7f7-4677-bd76-39ec738332c6',
-    'monitors_reviewed', ARRAY['058ec35f-c7f7-4677-bd76-39ec738332c6', 'dd16f02b-2b0a-48bd-b058-5b5ee9f39b11', '8d8bbdc1-a75a-4d3b-ab7c-275bc078b6b9', 'a9c9af76-240d-4a4b-950b-de5ea77dc495']
-  ),
-  'migration_184',
-  clock_timestamp()
-);
-
-COMMIT;
-""")
-
-    content = "\n".join(sql_lines)
-    with open(migration_path, "w") as f:
-        f.write(content)
-    print(f"Migration 184 generated at {migration_path} ({len(content)} bytes)")
+    out_path = "src/db/migrations/184_google_research_enrichments_and_olympic_portraits.sql"
+    with open(out_path, "w") as f:
+        f.write("\n".join(lines))
+    print(f"Generated {out_path} ({len(lines)} lines)")
 
 if __name__ == "__main__":
     main()
