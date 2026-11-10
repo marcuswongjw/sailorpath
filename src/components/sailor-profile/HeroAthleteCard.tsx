@@ -84,6 +84,7 @@ export interface HeroAthleteCardProps {
   avatarBusy?: boolean;
   avatarMsg?: string | null;
   onUploadAvatar?: (file: File) => void;
+  onTogglePhotoVisibility?: (makeVisible?: boolean) => void;
   showWeight?: boolean;
   bornYear?: string | null;
   fullDobLabel?: string | null;
@@ -153,6 +154,7 @@ export function HeroAthleteCard({
   avatarBusy = false,
   avatarMsg = null,
   onUploadAvatar,
+  onTogglePhotoVisibility,
   showWeight = false,
   bornYear,
   fullDobLabel,
@@ -269,52 +271,103 @@ export function HeroAthleteCard({
         {/* Top identity row: Avatar + Name/Badges + Class Switcher */}
         <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
           <div className="flex items-start gap-3.5 sm:gap-4.5 min-w-0">
-            {/* Avatar */}
-            <div className="relative shrink-0">
-              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
-                {displaySailor.avatarUrl && (!previewPublic || displaySailor.showProfilePhotoOnPublicProfile) ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}
-                    alt={displaySailor.name}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="flex flex-col items-center justify-center leading-none">
-                    <Anchor
-                      className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
-                      aria-hidden
+            {/* Avatar & Owner Controls */}
+            <div className="flex flex-col items-center gap-1.5 shrink-0">
+              <div className="relative">
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
+                  {displaySailor.avatarUrl && (!previewPublic || displaySailor.showProfilePhotoOnPublicProfile) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}
+                      alt={displaySailor.name}
+                      className="h-full w-full object-cover"
                     />
-                    <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
-                      {initials(displaySailor.name)}
+                  ) : (
+                    <span className="flex flex-col items-center justify-center leading-none">
+                      <Anchor
+                        className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
+                        aria-hidden
+                      />
+                      <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
+                        {initials(displaySailor.name)}
+                      </span>
                     </span>
-                  </span>
+                  )}
+                </div>
+
+                {ownerView && !demoMode && onUploadAvatar && (
+                  <>
+                    <button
+                      type="button"
+                      disabled={avatarBusy}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="absolute inset-0 rounded-2xl bg-charcoal/60 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-sailcloth cursor-pointer"
+                      title="Upload athlete photo"
+                      aria-label="Upload athlete photo"
+                    >
+                      <Camera className="h-5 w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={avatarBusy}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="absolute -bottom-1 -right-1 rounded-full bg-harbour border-2 border-warm-white p-1 text-sailcloth shadow-xs hover:bg-harbour-shadow transition flex items-center justify-center cursor-pointer"
+                      title="Upload athlete photo"
+                      aria-label="Upload athlete photo button"
+                    >
+                      <Camera className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      className="hidden"
+                      onChange={(e) => {
+                        const f = e.target.files?.[0];
+                        if (f) onUploadAvatar(f);
+                        e.target.value = "";
+                      }}
+                    />
+                  </>
                 )}
               </div>
 
-              {ownerView && !demoMode && onUploadAvatar && (
-                <>
-                  <button
-                    type="button"
-                    disabled={avatarBusy}
-                    onClick={() => fileInputRef.current?.click()}
-                    className="absolute inset-0 rounded-2xl bg-charcoal/60 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-sailcloth"
-                    title="Upload athlete photo"
-                  >
-                    <Camera className="h-5 w-5" />
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,image/gif"
-                    className="hidden"
-                    onChange={(e) => {
-                      const f = e.target.files?.[0];
-                      if (f) onUploadAvatar(f);
-                      e.target.value = "";
-                    }}
-                  />
-                </>
+              {/* Photo visibility status & toggle for owners */}
+              {ownerView && !previewPublic && displaySailor.avatarUrl && (
+                <button
+                  type="button"
+                  disabled={avatarBusy}
+                  onClick={() =>
+                    onTogglePhotoVisibility?.(!displaySailor.showProfilePhotoOnPublicProfile)
+                  }
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold transition shadow-2xs cursor-pointer ${
+                    displaySailor.showProfilePhotoOnPublicProfile
+                      ? "bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100"
+                      : "bg-amber-50 border border-amber-300 text-amber-900 hover:bg-amber-100"
+                  }`}
+                  title={
+                    displaySailor.showProfilePhotoOnPublicProfile
+                      ? "Photo is visible to public visitors. Click to hide."
+                      : "Photo is hidden from public visitors. Click to make public."
+                  }
+                  aria-label={
+                    displaySailor.showProfilePhotoOnPublicProfile
+                      ? "Photo visible to public. Click to hide."
+                      : "Photo hidden from public. Click to show."
+                  }
+                >
+                  {displaySailor.showProfilePhotoOnPublicProfile ? (
+                    <>
+                      <Eye className="h-3 w-3 text-emerald-600" />
+                      <span>Public</span>
+                    </>
+                  ) : (
+                    <>
+                      <EyeOff className="h-3 w-3 text-amber-600" />
+                      <span>Hidden</span>
+                    </>
+                  )}
+                </button>
               )}
             </div>
 

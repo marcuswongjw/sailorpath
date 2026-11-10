@@ -322,4 +322,69 @@ describe("HeroAthleteCard", () => {
       screen.getByText("No ranked ILCA 4 results for this series yet.")
     ).toBeInTheDocument();
   });
+
+  it("surfaces photo visibility badge and triggers onTogglePhotoVisibility in owner mode", async () => {
+    const onToggle = vi.fn();
+    const { rerender } = render(
+      <HeroAthleteCard
+        {...defaultProps}
+        ownerView
+        isOwner
+        displaySailor={{
+          ...defaultProps.displaySailor,
+          avatarUrl: "https://example.com/avatar.jpg",
+          showProfilePhotoOnPublicProfile: true,
+        }}
+        onTogglePhotoVisibility={onToggle}
+      />
+    );
+
+    const publicBadge = screen.getByRole("button", {
+      name: /Photo visible to public\. Click to hide\./,
+    });
+    expect(publicBadge).toBeInTheDocument();
+    await userEvent.click(publicBadge);
+    expect(onToggle).toHaveBeenCalledWith(false);
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        ownerView
+        isOwner
+        displaySailor={{
+          ...defaultProps.displaySailor,
+          avatarUrl: "https://example.com/avatar.jpg",
+          showProfilePhotoOnPublicProfile: false,
+        }}
+        onTogglePhotoVisibility={onToggle}
+      />
+    );
+
+    const hiddenBadge = screen.getByRole("button", {
+      name: /Photo hidden from public\. Click to show\./,
+    });
+    expect(hiddenBadge).toBeInTheDocument();
+    await userEvent.click(hiddenBadge);
+    expect(onToggle).toHaveBeenCalledWith(true);
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        ownerView
+        isOwner
+        previewPublic
+        displaySailor={{
+          ...defaultProps.displaySailor,
+          avatarUrl: "https://example.com/avatar.jpg",
+          showProfilePhotoOnPublicProfile: false,
+        }}
+        onTogglePhotoVisibility={onToggle}
+      />
+    );
+    expect(
+      screen.queryByRole("button", {
+        name: /Photo hidden from public\. Click to show\./,
+      })
+    ).toBeNull();
+  });
 });

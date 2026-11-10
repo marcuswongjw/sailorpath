@@ -6,7 +6,11 @@ vi.mock("next/cache", () => ({
 }));
 
 import { revalidatePath, revalidateTag } from "next/cache";
-import { revalidatePublicNews, revalidatePublicRankings } from "./revalidatePublic";
+import {
+  revalidatePublicNews,
+  revalidatePublicRankings,
+  revalidatePublicSailor,
+} from "./revalidatePublic";
 
 describe("public cache refresh", () => {
   beforeEach(() => {
@@ -37,5 +41,14 @@ describe("public cache refresh", () => {
     expect(vi.mocked(revalidateTag)).toHaveBeenCalledWith(expect.any(String), "max");
     expect(vi.mocked(revalidatePath)).toHaveBeenCalledWith("/news");
     expect(vi.mocked(revalidatePath)).toHaveBeenCalledWith("/news/harbour-cup");
+  });
+
+  it("invalidates both canonical and legacy paths for the sailor handle and any previous handle", () => {
+    revalidatePublicSailor("adison-ein", "old-adison");
+    expect(vi.mocked(revalidateTag)).toHaveBeenCalledWith("fleet-rankings", "max");
+    expect(vi.mocked(revalidatePath)).toHaveBeenCalledWith("/sailors/adison-ein");
+    expect(vi.mocked(revalidatePath)).toHaveBeenCalledWith("/adison-ein");
+    expect(vi.mocked(revalidatePath)).toHaveBeenCalledWith("/sailors/old-adison");
+    expect(vi.mocked(revalidatePath)).toHaveBeenCalledWith("/old-adison");
   });
 });

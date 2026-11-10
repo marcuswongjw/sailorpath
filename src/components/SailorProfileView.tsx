@@ -117,6 +117,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     showEquipment,
     saveProfile,
     uploadAvatar,
+    togglePhotoVisibility,
     resetObsForm,
     startEditObservation,
     saveObservation,
@@ -271,6 +272,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         avatarBusy={avatarBusy}
         avatarMsg={avatarMsg}
         onUploadAvatar={(f) => void uploadAvatar(f)}
+        onTogglePhotoVisibility={togglePhotoVisibility}
         showWeight={showWeight}
         bornYear={bornYear}
         fullDobLabel={fullDobLabel}

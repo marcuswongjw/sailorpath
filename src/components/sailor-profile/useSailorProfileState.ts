@@ -380,16 +380,23 @@ export function useSailorProfileState({
         body: JSON.stringify({
           sailorId: initialSailor.id,
           avatarUrl: publicUrl,
+          showProfilePhotoOnPublicProfile: true,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not save photo");
       setDisplaySailor((s: SailorRecordProps) => ({
         ...s,
-        avatarUrl: data.sailor.avatarUrl || publicUrl,
+        avatarUrl: data.sailor?.avatarUrl || publicUrl,
+        showProfilePhotoOnPublicProfile: true,
       }));
-      setAvatarMsg("Photo updated");
-      setTimeout(() => setAvatarMsg(null), 2500);
+      setPublicVisibility((prev) => ({
+        ...prev,
+        showProfilePhotoOnPublicProfile: true,
+      }));
+      setAvatarMsg("Photo updated & visible on public profile");
+      toast.success("Photo updated & visible on public profile");
+      setTimeout(() => setAvatarMsg(null), 3000);
     } catch (e: unknown) {
       setAvatarMsg(
         errorMessage(
@@ -397,6 +404,50 @@ export function useSailorProfileState({
           "We couldn’t upload the photo. Try again or contact support if the problem continues."
         )
       );
+    } finally {
+      setAvatarBusy(false);
+    }
+  };
+
+  const togglePhotoVisibility = async (makeVisible?: boolean) => {
+    if (demoMode) {
+      toast.info("Profile photo visibility cannot be changed in demo mode.");
+      return;
+    }
+    const currentVis = Boolean(displaySailor.showProfilePhotoOnPublicProfile);
+    const nextState = makeVisible !== undefined ? makeVisible : !currentVis;
+    setAvatarBusy(true);
+    setAvatarMsg(null);
+    try {
+      const res = await fetch("/api/account/sailor", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          showProfilePhotoOnPublicProfile: nextState,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not update photo visibility");
+      setDisplaySailor((s: SailorRecordProps) => ({
+        ...s,
+        showProfilePhotoOnPublicProfile: nextState,
+      }));
+      setPublicVisibility((prev) => ({
+        ...prev,
+        showProfilePhotoOnPublicProfile: nextState,
+      }));
+      const msg = nextState
+        ? "Photo is now public for visitors"
+        : "Photo is now hidden from visitors";
+      setAvatarMsg(msg);
+      toast.success(msg);
+      setTimeout(() => setAvatarMsg(null), 3000);
+    } catch (e: unknown) {
+      const err = errorMessage(e, "Could not update photo visibility");
+      setAvatarMsg(err);
+      toast.error(err);
     } finally {
       setAvatarBusy(false);
     }
@@ -1263,6 +1314,7 @@ export function useSailorProfileState({
     showEquipment,
     saveProfile,
     uploadAvatar,
+    togglePhotoVisibility,
     resetObsForm,
     startEditObservation,
     saveObservation,

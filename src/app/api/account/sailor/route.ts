@@ -9,7 +9,10 @@ import { birthYear } from "@/lib/age";
 import { validateHandle } from "@/lib/handles";
 import { normalizeDob, cleanOptimistSailNumber } from "@/lib/normalize";
 import { notifySuperadminClaimedProfileUpdate } from "@/lib/notifications";
-import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import {
+  revalidatePublicRankings,
+  revalidatePublicSailor,
+} from "@/lib/revalidatePublic";
 import {
   asHttpUrl,
   asOptionalNumber,
@@ -416,6 +419,10 @@ export async function PATCH(req: Request) {
 
     revalidatePublicRankings(
       `account-sailor:${updated?.handle || sailor.handle}`
+    );
+    revalidatePublicSailor(
+      updated?.handle || sailor.handle,
+      previousHandle
     );
     return NextResponse.json({
       ok: true,

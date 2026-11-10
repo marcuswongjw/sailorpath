@@ -1,5 +1,6 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import {
+  CACHE_TAG_FLEET_RANKINGS,
   CACHE_TAG_NEWS_ARTICLES,
   PUBLIC_RANKING_CACHE_TAGS,
 } from "@/lib/cacheTags";
@@ -64,3 +65,31 @@ export function revalidatePublicNews(slug?: string): void {
     console.warn("[revalidatePublicNews] failed", slug || "", error);
   }
 }
+
+/**
+ * Invalidate public sailor profile caches when an athlete or parent updates profile details.
+ * Refreshes both the canonical `/sailors/[handle]` route and the legacy shorthand `/[handle]`,
+ * plus any previous handle routes if the handle changed.
+ */
+export function revalidatePublicSailor(
+  handle: string,
+  previousHandle?: string | null
+): void {
+  try {
+    revalidateTag(CACHE_TAG_FLEET_RANKINGS, "max");
+    const handles = [handle, previousHandle].filter(
+      (h): h is string => typeof h === "string" && h.trim().length > 0
+    );
+    for (const h of new Set(handles)) {
+      const encoded = encodeURIComponent(h);
+      revalidatePath(`/sailors/${encoded}`);
+      revalidatePath(`/${encoded}`);
+    }
+    if (process.env.NODE_ENV !== "production") {
+      console.info("[revalidatePublicSailor]", handle, previousHandle ?? "");
+    }
+  } catch (error) {
+    console.warn("[revalidatePublicSailor] failed", handle, error);
+  }
+}
+

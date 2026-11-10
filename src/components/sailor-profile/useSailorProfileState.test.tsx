@@ -2,7 +2,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 vi.mock('next/navigation', () => ({useRouter: () => ({push: vi.fn(),replace: vi.fn(),refresh: vi.fn()})}));
-vi.mock('@/components/ui/FeedbackProvider', () => ({useFeedback: () => ({toast:{error:vi.fn()}, confirm:vi.fn()})}));
+vi.mock('@/components/ui/FeedbackProvider', () => ({useFeedback: () => ({toast:{error:vi.fn(), success:vi.fn(), info:vi.fn()}, confirm:vi.fn()})}));
 vi.mock('@/lib/supabase/browser', () => ({createBrowserSupabase: vi.fn()}));
 import { useSailorProfileState } from './useSailorProfileState';
 import type { SailorProfileViewProps, SeriesStandingProps } from './types';
@@ -58,6 +58,50 @@ describe('separate ILCA profile flows', () => {
     expect(result.current.classChoices).toEqual([{id:'ilca6',label:'ILCA 6',count:1}]);
     expect(result.current.primaryIsIlca).toBe(true);
     expect(result.current.activeResultsList.map(row=>row.id)).toEqual(['6']);
+  });
+  it('toggles photo visibility and updates local displaySailor and publicVisibility', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        ok: true,
+        sailor: {
+          id: 's1',
+          showProfilePhotoOnPublicProfile: true,
+        },
+      }),
+    });
+    global.fetch = fetchMock;
+
+    const { result } = renderHook(() =>
+      useSailorProfileState({
+        ...props,
+        initialSailor: {
+          ...props.initialSailor,
+          avatarUrl: 'https://example.com/photo.jpg',
+          showProfilePhotoOnPublicProfile: false,
+        },
+      })
+    );
+
+    expect(result.current.publicVisibility.showProfilePhotoOnPublicProfile).toBe(false);
+    expect(result.current.displaySailor.showProfilePhotoOnPublicProfile).toBe(false);
+
+    await act(async () => {
+      await result.current.togglePhotoVisibility(true);
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/account/sailor',
+      expect.objectContaining({
+        method: 'PATCH',
+        body: JSON.stringify({
+          sailorId: 's1',
+          showProfilePhotoOnPublicProfile: true,
+        }),
+      })
+    );
+    expect(result.current.publicVisibility.showProfilePhotoOnPublicProfile).toBe(true);
+    expect(result.current.displaySailor.showProfilePhotoOnPublicProfile).toBe(true);
   });
 });
 
