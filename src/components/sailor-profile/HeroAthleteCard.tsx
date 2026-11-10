@@ -275,7 +275,7 @@ export function HeroAthleteCard({
             <div className="flex flex-col items-center gap-1.5 shrink-0">
               <div className="relative">
                 <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
-                  {displaySailor.avatarUrl && (!previewPublic || displaySailor.showProfilePhotoOnPublicProfile) ? (
+                  {displaySailor.avatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}

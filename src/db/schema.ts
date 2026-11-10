@@ -136,7 +136,7 @@ export const sailors = pgTable("sailors", {
     .default(false)
     .notNull(),
   showProfilePhotoOnPublicProfile: boolean("show_profile_photo_on_public_profile")
-    .default(false)
+    .default(true)
     .notNull(),
   showSocialLinksOnPublicProfile: boolean("show_social_links_on_public_profile")
     .default(false)
