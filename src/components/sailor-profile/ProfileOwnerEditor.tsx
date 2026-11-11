@@ -76,7 +76,9 @@ export function ProfileOwnerEditor({
           <textarea
             value={form.bio}
             onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
+            maxLength={500}
             rows={3}
+            placeholder="Share a short public bio (max 500 characters)..."
             className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>

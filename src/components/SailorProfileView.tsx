@@ -150,6 +150,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     noc,
     activeStanding,
     standingIsIlca,
+    showRankSection,
     activeBoatClass,
     onBoardClass,
     boardSummary,
@@ -362,7 +363,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         journeyCount={displayJourney.length}
         awardsCount={visibleAwards.length}
         resultsCount={activeResultsList.length}
-        showStanding={Boolean(activeStanding)}
+        showStanding={showRankSection}
         showEquipment={
           hasBoardResults && !hasOptimistResults && !hasIlcaResults
             ? showEquipmentSection
@@ -399,7 +400,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           activeResultsList={activeResultsList}
           primaryIsIlca={primaryIsIlca}
           classLabel={selectedClassLabel}
-          hideStanding={onBoardClass}
+          hideStanding={onBoardClass || !showRankSection}
           onNavigateTab={(tab) => setSectionTab(tab as ProfileSectionTab)}
           onOpenResult={(regattaId) => {
             pendingResultFocus.current = regattaId;

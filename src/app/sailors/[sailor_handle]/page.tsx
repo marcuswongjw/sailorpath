@@ -226,13 +226,14 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
           boatClass.includes("optimist")
         );
       });
+      const isSgpSailor = isSgpNationality(sailor.nationality);
       const hasSeriesStamp = Boolean(
         sailor.currentFleet || sailor.goldEntryDate || sailor.silverEntryDate
       );
       const mayHaveSingaporeSeries =
+        isSgpSailor &&
         !isExplicitGuest(sailor) &&
-        (hasSeriesStamp ||
-          (isSgpNationality(sailor.nationality) && hasOptimistResult));
+        (hasSeriesStamp || hasOptimistResult);
 
       if (mayHaveSingaporeSeries) {
         seriesStanding = await getSailorSeriesStanding(sailor.id).catch(
@@ -240,12 +241,17 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
         );
       }
 
-      const presentIlcaClasses = new Set((results || []).map((result) => profileIlcaClassOf(result.boatClass)).filter(Boolean));
-      if (mayHaveIlca && !presentIlcaClasses.size) presentIlcaClasses.add("ilca4");
-      // Load one board at a time to bound pressure on the shared database pool.
-      for (const key of PROFILE_ILCA_CLASSES) {
-        if (!presentIlcaClasses.has(key)) continue;
-        ilcaStandings[key] = await getSailorIlcaStanding(sailor.id, profileIlcaLabel(key)).catch(() => null);
+      if (isSgpSailor) {
+        const presentIlcaClasses = new Set((results || []).map((result) => profileIlcaClassOf(result.boatClass)).filter(Boolean));
+        if (mayHaveIlca && !presentIlcaClasses.size) presentIlcaClasses.add("ilca4");
+        // Only ILCA 4 and ILCA 6 have Singapore national rankings; skip ILCA 7 and recorded-results fallbacks.
+        for (const key of ["ilca4", "ilca6"] as const) {
+          if (!presentIlcaClasses.has(key)) continue;
+          const standing = await getSailorIlcaStanding(sailor.id, profileIlcaLabel(key)).catch(() => null);
+          if (standing && standing.rankBasis !== "recorded-results") {
+            ilcaStandings[key] = standing;
+          }
+        }
       }
       ilcaStanding = ilcaStandings.ilca4;
 

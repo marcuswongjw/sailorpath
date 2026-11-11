@@ -23,7 +23,7 @@ describe('ILCA profile rendering', () => {
     render(<SailorProfileView initialSailor={{id:'mixed',name:'Mixed Rig Sailor',handle:'mixed',nationality:'SGP'}} initialEquipment={{}} initialResults={rows} />);
     expect(screen.getByRole('tab',{name:'ILCA 7'})).toHaveAttribute('aria-selected','true');
     expect(screen.getByRole('heading',{name:'Recent ILCA 7 regattas'})).toBeInTheDocument();
-    expect(screen.getByText('ILCA 7 rank')).toBeInTheDocument();
+    expect(screen.queryByText('ILCA 7 rank')).toBeNull();
     expect(screen.getByRole('group',{name:'1 ILCA 7 regattas'})).toBeInTheDocument();
     for (const rig of [4,6,7]) {
       await user.click(screen.getByRole('tab',{name:`ILCA ${rig}`}));

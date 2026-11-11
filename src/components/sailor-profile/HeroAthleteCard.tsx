@@ -26,7 +26,7 @@ import {
   nationalityLabel,
   initials,
 } from "./helpers";
-import { describeProfileRank } from "./rankBasis";
+import { describeProfileRank, shouldShowProfileRankSection } from "./rankBasis";
 import { FollowSailorButton } from "@/components/FollowSailorButton";
 import { knownBirthYearLabel } from "@/lib/age";
 import { formatSailNumber } from "@/lib/countries";
@@ -184,6 +184,11 @@ export function HeroAthleteCard({
   const rank = describeProfileRank({
     standing: activeStanding,
     boatClass: activeBoatClass,
+  });
+  const showRankSection = shouldShowProfileRankSection({
+    nationality: displaySailor.nationality,
+    boatClass: activeBoatClass,
+    standing: activeStanding,
   });
   const classOptions = (
     preferIlcaFirst
@@ -589,9 +594,38 @@ export function HeroAthleteCard({
         </div>
 
         {bioParagraph ? (
-          <p className="text-[13px] sm:text-sm leading-relaxed text-charcoal max-w-2xl bg-sailcloth/60 border-l-2 border-harbour pl-3 py-1 rounded-r-lg">
-            {bioParagraph}
-          </p>
+          <section
+            aria-label="Bio"
+            className="rounded-xl border border-cool-veil bg-sailcloth/60 p-3.5 sm:p-4"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-soft">
+              Bio
+            </p>
+            <p className="mt-1.5 text-[13px] sm:text-sm leading-relaxed text-charcoal max-w-3xl">
+              {bioParagraph}
+            </p>
+          </section>
+        ) : ownerView && !demoMode && onToggleEditing ? (
+          <section
+            aria-label="Bio"
+            className="rounded-xl border border-dashed border-cool-veil bg-sailcloth/40 p-3.5 sm:p-4 flex items-center justify-between gap-3"
+          >
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-soft">
+                Bio
+              </p>
+              <p className="mt-1 text-[13px] text-slate-soft">
+                Add a short bio to introduce this sailor.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onToggleEditing}
+              className="shrink-0 text-[12px] font-bold text-harbour hover:underline cursor-pointer"
+            >
+              Add bio
+            </button>
+          </section>
         ) : null}
 
         <div className="space-y-2.5 pt-1">
@@ -604,6 +638,7 @@ export function HeroAthleteCard({
             />
           ) : (
           <>
+          {showRankSection && (
           <div className="rounded-2xl border border-cool-veil bg-sailcloth/70 p-4 sm:p-5">
             <div className="flex items-center justify-between gap-3 text-slate-soft text-[12px] font-bold uppercase tracking-wider">
               <span>
@@ -652,6 +687,7 @@ export function HeroAthleteCard({
               <p className="mt-2 text-[13px] leading-relaxed text-charcoal">{rank.basisDetail}</p>
             )}
           </div>
+          )}
 
           <div
             className={`grid grid-cols-1 gap-2.5 ${

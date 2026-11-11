@@ -1,6 +1,7 @@
 "use client";
 
 import { PROFILE_ILCA_CLASSES, isProfileIlcaClass, profileIlcaLabel, type ProfileIlcaClass } from "@/lib/profileClasses";
+import { shouldShowProfileRankSection } from "./rankBasis";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { geographySelectOptions, normalizeGeography } from "@/lib/countries";
@@ -1127,6 +1128,13 @@ export function useSailorProfileState({
   const standingIsIlca = Boolean(selectedIlcaClass && ilcaStanding);
   const activeStanding = onBoardClass ? null : selectedIlcaClass ? ilcaStanding : initialSeriesStanding ?? null;
   const activeBoatClass: "optimist" | ProfileIlcaClass = selectedIlcaClass || "optimist";
+  const showRankSection =
+    !onBoardClass &&
+    shouldShowProfileRankSection({
+      nationality: displaySailor.nationality,
+      boatClass: activeBoatClass,
+      standing: activeStanding,
+    });
   const selectedClassLabel = onBoardClass
     ? boardSummary?.label || disciplineLabel(resultsTab)
     : selectedIlcaClass ? profileIlcaLabel(selectedIlcaClass) : "Optimist";
@@ -1353,6 +1361,7 @@ export function useSailorProfileState({
     showMedals,
     activeStanding,
     standingIsIlca,
+    showRankSection,
     activeBoatClass,
     onBoardClass,
     boardSummary,

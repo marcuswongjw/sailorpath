@@ -151,6 +151,7 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByText("View awards")).toBeInTheDocument();
     expect(screen.getByLabelText("Optimist")).toBeInTheDocument();
 
+    expect(screen.getByRole("region", { name: "Bio" })).toBeInTheDocument();
     expect(screen.getByText(/Dedicated youth Optimist sailor/)).toBeInTheDocument();
   });
 
@@ -245,8 +246,8 @@ describe("HeroAthleteCard", () => {
           fleetSize: 36,
           fleet: "Open",
           periodLabel: "ILCA 4 · ranking as of 2026-09-30",
-          rankBasis: "recorded-results",
-          unrestricted: true,
+          rankBasis: "official-list",
+          unrestricted: false,
         }}
       />
     );
@@ -254,7 +255,7 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByLabelText("ILCA 4")).toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: /Optimist/ })).toBeNull();
     expect(screen.getByLabelText("12 of 36")).toBeInTheDocument();
-    expect(screen.getByText("Recorded results")).toBeInTheDocument();
+    expect(screen.getByText("Official national list")).toBeInTheDocument();
     expect(screen.queryByText("Status")).not.toBeInTheDocument();
     expect(screen.queryByText("Active competitor")).not.toBeInTheDocument();
     expect(
@@ -330,19 +331,51 @@ describe("HeroAthleteCard", () => {
     expect(onSelectClass).toHaveBeenCalledWith("techno293");
   });
 
-  it("explains a missing rank instead of showing a dash", () => {
-    render(
+  it("hides the rank section for non-Singapore sailors, non-national classes, and unranked sailors", () => {
+    const { rerender } = render(
       <HeroAthleteCard
         {...defaultProps}
+        displaySailor={{ ...defaultProps.displaySailor, nationality: "THA" }}
         standingIsIlca
         selectedBoatClass="ilca4"
         activeStanding={null}
       />
     );
+    expect(screen.queryByText(/No ranked/i)).toBeNull();
+    expect(screen.queryByText(/ILCA 4 rank/i)).toBeNull();
 
-    expect(
-      screen.getByText("No ranked ILCA 4 results for this series yet.")
-    ).toBeInTheDocument();
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        standingIsIlca
+        selectedBoatClass="ilca7"
+        activeStanding={{
+          ...defaultProps.activeStanding,
+          boatClass: "ILCA 7",
+          overallRank: 3,
+          fleetSize: 12,
+          rankBasis: "official-list",
+        }}
+      />
+    );
+    expect(screen.queryByText(/ILCA 7 rank/i)).toBeNull();
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        standingIsIlca
+        selectedBoatClass="ilca4"
+        activeStanding={{
+          ...defaultProps.activeStanding,
+          boatClass: "ILCA 4",
+          overallRank: 12,
+          fleetSize: 36,
+          rankBasis: "recorded-results",
+          unrestricted: true,
+        }}
+      />
+    );
+    expect(screen.queryByText(/ILCA 4 rank/i)).toBeNull();
   });
 
   it("always renders profile photos publicly without a visibility toggle and offers Remove photo for owners", async () => {

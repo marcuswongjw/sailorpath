@@ -1,3 +1,4 @@
+import { isSingaporeNationality } from "@/lib/ilca4NationalList";
 import { isProfileIlcaClass, profileIlcaLabel, type ProfileIlcaClass } from "@/lib/profileClasses";
 /**
  * Labels for the profile rank so a visitor can tell an official-list
@@ -55,6 +56,36 @@ function usableRank(standing: StandingLike): {
   if (!Number.isFinite(rank) || rank <= 0) return null;
   if (!Number.isFinite(fleetSize) || fleetSize <= 0) return null;
   return { rank, fleetSize };
+}
+
+export type SingaporeNationalRankingClass = "optimist" | "ilca4" | "ilca6";
+
+/** Classes backed by an official Singapore national ranking board. */
+export function isSingaporeNationalRankingClass(
+  boatClass: string | null | undefined
+): boatClass is SingaporeNationalRankingClass {
+  return boatClass === "optimist" || boatClass === "ilca4" || boatClass === "ilca6";
+}
+
+/**
+ * Only Singapore sailors who hold a position on a Singapore national ranking
+ * (Optimist, ILCA 4, or ILCA 6) should display the profile rank section.
+ */
+export function shouldShowProfileRankSection(input: {
+  nationality?: string | null;
+  boatClass: string | null | undefined;
+  standing: StandingLike;
+}): boolean {
+  if (!isSingaporeNationality(input.nationality)) return false;
+  if (!isSingaporeNationalRankingClass(input.boatClass)) return false;
+  if (usableRank(input.standing) == null) return false;
+  if (
+    isProfileIlcaClass(input.boatClass) &&
+    rankBasisKind(input.standing, input.boatClass) === "recorded-results"
+  ) {
+    return false;
+  }
+  return true;
 }
 
 export function describeProfileRank(input: {

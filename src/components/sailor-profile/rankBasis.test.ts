@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { describeProfileRank } from "./rankBasis";
+import { describeProfileRank, shouldShowProfileRankSection } from "./rankBasis";
 
 describe("describeProfileRank", () => {
   it("labels an ILCA rank on the managed list as official", () => {
@@ -56,5 +56,71 @@ describe("describeProfileRank", () => {
     expect(empty.emptyMessage).toBe(
       "No ranked ILCA 4 results for this series yet."
     );
+  });
+});
+
+describe("shouldShowProfileRankSection", () => {
+  const validStanding = { overallRank: 4, fleetSize: 68, rankBasis: "official-list" as const };
+
+  it("returns true for Singapore sailors ranked in Optimist, ILCA 4, or ILCA 6", () => {
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "SGP",
+        boatClass: "optimist",
+        standing: { overallRank: 4, fleetSize: 68 },
+      })
+    ).toBe(true);
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "Singapore",
+        boatClass: "ilca4",
+        standing: validStanding,
+      })
+    ).toBe(true);
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "SGP",
+        boatClass: "ilca6",
+        standing: validStanding,
+      })
+    ).toBe(true);
+  });
+
+  it("returns false for non-Singapore sailors, ILCA 7, unranked sailors, or recorded-results fallbacks", () => {
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "THA",
+        boatClass: "optimist",
+        standing: validStanding,
+      })
+    ).toBe(false);
+    expect(
+      shouldShowProfileRankSection({
+        nationality: null,
+        boatClass: "ilca4",
+        standing: validStanding,
+      })
+    ).toBe(false);
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "SGP",
+        boatClass: "ilca7",
+        standing: validStanding,
+      })
+    ).toBe(false);
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "SGP",
+        boatClass: "ilca4",
+        standing: { overallRank: 12, fleetSize: 36, rankBasis: "recorded-results", unrestricted: true },
+      })
+    ).toBe(false);
+    expect(
+      shouldShowProfileRankSection({
+        nationality: "SGP",
+        boatClass: "ilca4",
+        standing: null,
+      })
+    ).toBe(false);
   });
 });
