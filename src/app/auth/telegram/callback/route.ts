@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { completeTelegramSignIn } from "@/lib/telegram/accounts";
+import { optInFromLogin } from "@/lib/telegram/bot/store";
 import { isTelegramLoginConfigured, readTelegramConfig } from "@/lib/telegram/config";
 import { verifyTelegramIdTokenFromIssuer } from "@/lib/telegram/jwks";
 import {
@@ -62,7 +63,21 @@ export async function GET(request: NextRequest) {
       sessionUserId,
       claims,
     });
-    if (outcome === "linked") return redirectNext(request, tx.next, "connected");
+    if (tx.botAccess) {
+      try {
+        await optInFromLogin({
+          userId: outcome.userId,
+          telegramUserId: claims.telegramUserId,
+          username: claims.username,
+          displayName: claims.name,
+        });
+      } catch (optInError) {
+        console.error("[telegram] bot opt-in failed", {
+          message: optInError instanceof Error ? optInError.message : "opt-in failed",
+        });
+      }
+    }
+    if (outcome.status === "linked") return redirectNext(request, tx.next, "connected");
     return redirectNext(request, tx.next);
   } catch (error) {
     console.error("[telegram] sign-in failed", {

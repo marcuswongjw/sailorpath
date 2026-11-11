@@ -17,7 +17,7 @@ export async function completeTelegramSignIn(input: {
   mode: "login" | "link";
   sessionUserId: string | null;
   claims: TelegramIdTokenClaims;
-}): Promise<"signed-in" | "linked"> {
+}): Promise<{ status: "signed-in" | "linked"; userId: string }> {
   const linked = await findBySub(input.claims.sub);
   const sessionLink = input.sessionUserId ? await findByUser(input.sessionUserId) : null;
   const decision = decideTelegramAccount({
@@ -34,7 +34,7 @@ export async function completeTelegramSignIn(input: {
 
   if (decision.action === "link") {
     await linkTelegram(decision.userId, input.claims);
-    return "linked";
+    return { status: "linked", userId: decision.userId };
   }
 
   const userId =
@@ -47,7 +47,7 @@ export async function completeTelegramSignIn(input: {
   });
   await clearPlaceholderProfileEmail(userId);
   await establishSupabaseSession(userId);
-  return "signed-in";
+  return { status: "signed-in", userId };
 }
 
 export async function unlinkTelegram(userId: string): Promise<void> {

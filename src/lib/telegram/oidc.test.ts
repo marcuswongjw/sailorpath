@@ -124,9 +124,25 @@ describe("Telegram authorization request", () => {
     expect(url.searchParams.get("code_challenge_method")).toBe("S256");
     expect(url.searchParams.get("scope")).toBe("openid profile");
     expect(url.searchParams.get("scope")).not.toContain("phone");
+    expect(url.searchParams.get("scope")).not.toContain("bot_access");
     expect(url.searchParams.get("redirect_uri")).toBe(
       "https://sailorpath.com/auth/telegram/callback"
     );
+  });
+
+  it("adds bot access only when the person opts in", () => {
+    const url = new URL(
+      buildTelegramAuthorizeUrl({
+        clientId,
+        redirectUri: `https://sailorpath.com${TELEGRAM_CALLBACK_PATH}`,
+        state: "state-value",
+        codeChallenge: "challenge-value",
+        nonce: "nonce-value",
+        botAccess: true,
+      })
+    );
+    expect(url.searchParams.get("scope")).toBe("openid profile telegram:bot_access");
+    expect(url.searchParams.get("scope")).not.toContain("phone");
   });
 
   it("sends the client secret only as HTTP Basic auth", () => {

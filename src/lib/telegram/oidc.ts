@@ -68,19 +68,24 @@ export function telegramCallbackUrl(requestUrl: string): string {
   return `${url.origin}${TELEGRAM_CALLBACK_PATH}`;
 }
 
-/** Authorization request. Scope is public profile only — never phone. */
+/** Authorization request. Profile by default. Bot messages are an extra, optional scope. */
+export function telegramAuthorizeScopes(botAccess: boolean): string {
+  return botAccess ? `${TELEGRAM_SCOPES} telegram:bot_access` : TELEGRAM_SCOPES;
+}
+
 export function buildTelegramAuthorizeUrl(input: {
   clientId: string;
   redirectUri: string;
   state: string;
   codeChallenge: string;
   nonce: string;
+  botAccess?: boolean;
 }): string {
   const url = new URL(TELEGRAM_AUTHORIZE_URL);
   url.searchParams.set("client_id", input.clientId);
   url.searchParams.set("redirect_uri", input.redirectUri);
   url.searchParams.set("response_type", "code");
-  url.searchParams.set("scope", TELEGRAM_SCOPES);
+  url.searchParams.set("scope", telegramAuthorizeScopes(input.botAccess === true));
   url.searchParams.set("state", input.state);
   url.searchParams.set("code_challenge", input.codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
@@ -235,6 +240,7 @@ export type TelegramOidcTransaction = {
   userId: string | null;
   next: string;
   exp: number;
+  botAccess?: boolean;
 };
 
 export function sealTelegramTransaction(tx: TelegramOidcTransaction, secret: string): string {

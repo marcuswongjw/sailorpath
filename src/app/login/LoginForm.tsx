@@ -13,7 +13,13 @@ const subscribeToHost = () => () => {};
 const getBrowserHost = () => window.location.hostname;
 const getServerHost = () => "";
 
-export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
+export function LoginForm({
+  telegramEnabled,
+  telegramBotEnabled = false,
+}: {
+  telegramEnabled: boolean;
+  telegramBotEnabled?: boolean;
+}) {
   const searchParams = useSearchParams();
   const currentHost = useSyncExternalStore(
     subscribeToHost,
@@ -32,7 +38,10 @@ export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
   );
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const telegramHref = `/auth/telegram?next=${encodeURIComponent(nextTarget)}`;
+  const [telegramUpdates, setTelegramUpdates] = useState(false);
+  const telegramHref = `/auth/telegram?next=${encodeURIComponent(nextTarget)}${
+    telegramUpdates ? "&updates=1" : ""
+  }`;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -162,6 +171,19 @@ export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
               <TelegramMark className="h-5 w-5" />
               Log in with Telegram
             </a>
+            {telegramBotEnabled ? (
+              <label className="flex items-start gap-2 text-left text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 accent-[var(--sp-harbour-teal)]"
+                  checked={telegramUpdates}
+                  onChange={(event) => setTelegramUpdates(event.target.checked)}
+                />
+                <span>
+                  Let SailorPath message me on Telegram. This is optional, and you can still sign in without it.
+                </span>
+              </label>
+            ) : null}
             <p className="text-center text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">
               Uses your Telegram public name and username. A phone number is not requested.
             </p>
@@ -189,7 +211,10 @@ export function LoginFormFallback() {
   );
 }
 
-export default function LoginFormWithSuspense(props: { telegramEnabled: boolean }) {
+export default function LoginFormWithSuspense(props: {
+  telegramEnabled: boolean;
+  telegramBotEnabled?: boolean;
+}) {
   return (
     <Suspense fallback={<LoginFormFallback />}>
       <LoginForm {...props} />

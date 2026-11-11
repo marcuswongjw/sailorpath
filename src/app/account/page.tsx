@@ -16,6 +16,10 @@ import {
   TelegramAccountSection,
   type TelegramAccountStatus,
 } from "@/components/account/TelegramAccountSection";
+import {
+  TelegramUpdatesSection,
+  type TelegramUpdatesStatus,
+} from "@/components/account/TelegramUpdatesSection";
 import { TELEGRAM_ACCOUNT_NOTICES } from "@/lib/telegram/messages";
 
 type Owned = {
@@ -77,6 +81,7 @@ function AccountInner() {
   const [claimBusy, setClaimBusy] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [telegram, setTelegram] = useState<TelegramAccountStatus | null>(null);
+  const [telegramUpdates, setTelegramUpdates] = useState<TelegramUpdatesStatus | null>(null);
   const settingsRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -124,6 +129,14 @@ function AccountInner() {
             linked: Boolean(data.telegram.linked),
             username: typeof data.telegram.username === "string" ? data.telegram.username : null,
             canDisconnect: Boolean(data.telegram.canDisconnect),
+          });
+        }
+        if (data.telegramUpdates && typeof data.telegramUpdates === "object") {
+          setTelegramUpdates({
+            enabled: Boolean(data.telegramUpdates.enabled),
+            optedIn: Boolean(data.telegramUpdates.optedIn),
+            username:
+              typeof data.telegramUpdates.username === "string" ? data.telegramUpdates.username : null,
           });
         }
 
@@ -680,7 +693,10 @@ function AccountInner() {
           <TelegramAccountSection
             status={telegram}
             notice={TELEGRAM_ACCOUNT_NOTICES[searchParams.get("telegram") || ""] ?? null}
+            botEnabled={telegramUpdates?.enabled === true}
           />
+
+          <TelegramUpdatesSection status={telegramUpdates} />
 
           <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
             <div className="flex items-center gap-2">

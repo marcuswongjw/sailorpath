@@ -8,6 +8,7 @@ import {
   Calendar,
   Gauge,
   Inbox,
+  Megaphone,
   Settings,
   FilePenLine,
   Menu,
@@ -20,7 +21,7 @@ import {
 } from "@/components/admin/adminNav";
 
 type Item = {
-  area: AdminArea | "editorial";
+  area: AdminArea | "editorial" | "messages";
   label: string;
   href: string;
   active: boolean;
@@ -49,7 +50,7 @@ export function AdminSidebar({
   inboxIncomplete = false,
   onNavigate = confirmAdminLeave,
 }: {
-  activeArea: AdminArea | "editorial";
+  activeArea: AdminArea | "editorial" | "messages";
   sailorsView?: string;
   inboxView?: string;
   insightsView?: string;
@@ -113,6 +114,12 @@ export function AdminSidebar({
       label: "Editorial",
       href: "/admin/news",
       active: activeArea === "editorial",
+    },
+    {
+      area: "messages",
+      label: "Messages",
+      href: "/admin/messages",
+      active: activeArea === "messages",
     },
     {
       area: "insights",
@@ -324,6 +331,9 @@ export function AdminSidebar({
                 <span className="inline-flex items-center gap-2">
                   {item.area === "editorial" && (
                     <FilePenLine className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {item.area === "messages" && (
+                    <Megaphone className="h-4 w-4" aria-hidden="true" />
                   )}
                   {item.area === "overview" && (
                     <Gauge className="h-4 w-4" aria-hidden="true" />
