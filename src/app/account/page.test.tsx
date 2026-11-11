@@ -111,4 +111,64 @@ describe("account workspace navigation", () => {
     expect(screen.queryByRole("link", { name: /Admin console/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Request coach access" })).not.toBeInTheDocument();
   });
+
+  it("shows unified onboarding and omits My logbook when no sailor profile is linked", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          owned: [],
+          claims: [
+            {
+              id: "inv-1",
+              status: "pending",
+              source: "admin",
+              relation: "parent",
+              sailorName: "Invite Sailor",
+              sailorHandle: "invite-sailor",
+              createdAt: "2026-11-10T00:00:00Z",
+            },
+          ],
+          email: "parent@example.com",
+          user: { id: "user", fullName: "Test Parent", email: "parent@example.com", role: "sailor" },
+        }),
+      })
+    );
+    render(<AccountPage />);
+    const sailing = await screen.findByRole("region", { name: "Continue your sailing" });
+    expect(within(sailing).queryByRole("link", { name: /My logbook/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Find & claim a sailor profile/ })).toHaveAttribute("href", "/sailors");
+    // Pending admin invite is shown in SailorInviteAccept once, not duplicated under Claim requests.
+    expect(screen.getAllByRole("button", { name: "Accept" })).toHaveLength(1);
+    expect(screen.queryByRole("heading", { name: "Claim requests" })).not.toBeInTheDocument();
+  });
+
+  it("expands Account settings from workspace link and shows accessible password error and visibility toggle", async () => {
+    const user = userEvent.setup();
+    render(<AccountPage />);
+    const sailing = await screen.findByRole("region", { name: "Continue your sailing" });
+    const summary = screen.getByText("Account settings", { selector: "summary" });
+    const details = summary.closest("details")!;
+    expect(details).not.toHaveAttribute("open");
+
+    await user.click(within(sailing).getByRole("link", { name: "Account settings" }));
+    expect(details).toHaveAttribute("open");
+
+    const newPwInput = screen.getByLabelText("New password");
+    const toggle = screen.getByRole("button", { name: "Show passwords" });
+    expect(newPwInput).toHaveAttribute("type", "password");
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+
+    await user.click(toggle);
+    expect(newPwInput).toHaveAttribute("type", "text");
+    expect(screen.getByRole("button", { name: "Hide passwords" })).toHaveAttribute("aria-pressed", "true");
+
+    await user.type(newPwInput, "123");
+    await user.click(screen.getByRole("button", { name: "Update password" }));
+    const alert = screen.getByRole("alert");
+    expect(alert).toHaveTextContent("Password must be at least 6 characters.");
+    expect(alert.className).toContain("text-rose-700");
+    expect(newPwInput).toHaveAttribute("aria-invalid", "true");
+  });
 });
