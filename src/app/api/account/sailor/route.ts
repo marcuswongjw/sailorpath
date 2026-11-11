@@ -230,10 +230,11 @@ export async function PATCH(req: Request) {
     patch.isPublicWeight = false;
     patch.isPublicDob = false;
     patch.isPublicEquipment = false;
+    // Profile pictures are always public when set; only removing avatarUrl hides a photo.
+    patch.showProfilePhotoOnPublicProfile = true;
     const publicVisibilityKeys = [
       "showSchoolOnPublicProfile",
       "showEquipmentOnPublicProfile",
-      "showProfilePhotoOnPublicProfile",
       "showSocialLinksOnPublicProfile",
       "showSailingMilestonesOnPublicProfile",
     ] as const;
@@ -241,8 +242,7 @@ export async function PATCH(req: Request) {
       (key) => typeof body[key] === "boolean" && body[key] !== sailor[key]
     );
     // A child cannot evade consent by changing DOB first or in this request.
-    const changingPublishedPhoto = body.avatarUrl !== undefined && patch.avatarUrl !== sailor.avatarUrl &&
-      (sailor.showProfilePhotoOnPublicProfile || body.showProfilePhotoOnPublicProfile === true);
+    const changingPublishedPhoto = body.avatarUrl !== undefined && patch.avatarUrl !== sailor.avatarUrl;
     const changingDob = body.dob !== undefined && patch.dob !== sailor.dob;
     const needsGuardian = requiresGuardianConsent(sailor.dob) ||
       (body.dob !== undefined && requiresGuardianConsent(patch.dob as string | null));
@@ -328,6 +328,21 @@ export async function PATCH(req: Request) {
           .where(eq(regattaResults.sailorId, sailorId));
       } catch (stampErr) {
         console.warn("result demographics stamp after account sailor PATCH", stampErr);
+      }
+    }
+
+    if (body.avatarUrl !== undefined && patch.avatarUrl === null && sailor.avatarUrl && updated) {
+      try {
+        const storageUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
+        const { avatarObjectPath } = await import("@/lib/profilePhoto");
+        const object = avatarObjectPath(sailor.avatarUrl, sailorId, storageUrl);
+        if (object) {
+          const { createServerSupabase } = await import("@/lib/supabase/server");
+          const supabase = await createServerSupabase();
+          await supabase.storage.from("avatars").remove([object]);
+        }
+      } catch (storageErr) {
+        console.warn("avatar storage cleanup skipped", storageErr);
       }
     }
 

@@ -84,7 +84,7 @@ export interface HeroAthleteCardProps {
   avatarBusy?: boolean;
   avatarMsg?: string | null;
   onUploadAvatar?: (file: File) => void;
-  onTogglePhotoVisibility?: (makeVisible?: boolean) => void;
+  onRemoveAvatar?: () => void;
   showWeight?: boolean;
   bornYear?: string | null;
   fullDobLabel?: string | null;
@@ -154,7 +154,7 @@ export function HeroAthleteCard({
   avatarBusy = false,
   avatarMsg = null,
   onUploadAvatar,
-  onTogglePhotoVisibility,
+  onRemoveAvatar,
   showWeight = false,
   bornYear,
   fullDobLabel,
@@ -275,7 +275,7 @@ export function HeroAthleteCard({
             <div className="flex flex-col items-center gap-1.5 shrink-0">
               <div className="relative">
                 <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
-                  {displaySailor.avatarUrl && (!previewPublic || displaySailor.showProfilePhotoOnPublicProfile) ? (
+                  {displaySailor.avatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}
@@ -331,42 +331,14 @@ export function HeroAthleteCard({
                   </>
                 )}
               </div>
-
-              {/* Photo visibility status & toggle for owners */}
-              {ownerView && !previewPublic && displaySailor.avatarUrl && (
+              {ownerView && !demoMode && displaySailor.avatarUrl && onRemoveAvatar && (
                 <button
                   type="button"
                   disabled={avatarBusy}
-                  onClick={() =>
-                    onTogglePhotoVisibility?.(!displaySailor.showProfilePhotoOnPublicProfile)
-                  }
-                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold transition shadow-2xs cursor-pointer ${
-                    displaySailor.showProfilePhotoOnPublicProfile
-                      ? "bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100"
-                      : "bg-amber-50 border border-amber-300 text-amber-900 hover:bg-amber-100"
-                  }`}
-                  title={
-                    displaySailor.showProfilePhotoOnPublicProfile
-                      ? "Photo is visible to public visitors. Click to hide."
-                      : "Photo is hidden from public visitors. Click to make public."
-                  }
-                  aria-label={
-                    displaySailor.showProfilePhotoOnPublicProfile
-                      ? "Photo visible to public. Click to hide."
-                      : "Photo hidden from public. Click to show."
-                  }
+                  onClick={onRemoveAvatar}
+                  className="text-[11px] font-semibold text-slate-soft hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  {displaySailor.showProfilePhotoOnPublicProfile ? (
-                    <>
-                      <Eye className="h-3 w-3 text-emerald-600" />
-                      <span>Public</span>
-                    </>
-                  ) : (
-                    <>
-                      <EyeOff className="h-3 w-3 text-amber-600" />
-                      <span>Hidden</span>
-                    </>
-                  )}
+                  Remove photo
                 </button>
               )}
             </div>

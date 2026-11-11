@@ -132,6 +132,7 @@ function AthleteWorkspace({
     buildProfileForm(athlete)
   );
   const [savingProfile, setSavingProfile] = useState(false);
+  const [removingAvatar, setRemovingAvatar] = useState(false);
 
   // Dirty tracking: notify parent when the profile form diverges from the
   // saved athlete record (baseline recomputes automatically after save)
@@ -224,6 +225,38 @@ function AthleteWorkspace({
     }
   };
 
+  const handleRemovePhoto = async () => {
+    const ok = await confirm({
+      title: "Remove profile photo",
+      message: "Your profile photo is public. Removing it deletes the image from your profile.",
+      confirmLabel: "Remove photo",
+      tone: "danger",
+    });
+    if (!ok) return;
+
+    setRemovingAvatar(true);
+    try {
+      const res = await fetch("/api/account/sailor", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sailorId: athlete.id,
+          avatarUrl: null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to remove photo");
+      setAthlete((prev) => ({ ...prev, avatarUrl: null }));
+      setProfileForm((prev) => ({ ...prev, avatarUrl: "" }));
+      toast.success("Profile photo removed.");
+      router.refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to remove photo");
+    } finally {
+      setRemovingAvatar(false);
+    }
+  };
+
   const handleDeleteResult = async (resultId: string, eventName: string) => {
     const ok = await confirm({
       title: "Delete Regatta Result",
@@ -299,18 +332,30 @@ function AthleteWorkspace({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             {/* Avatar */}
-            <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] shrink-0 shadow-2xs">
-              {athlete.avatarUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || "/avatar-demo.png"}
-                  alt={athlete.name}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="h-full w-full flex items-center justify-center text-[var(--sp-slate-soft)]">
-                  <User className="h-8 w-8" />
-                </div>
+            <div className="flex flex-col items-center gap-1.5 shrink-0">
+              <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] shadow-2xs">
+                {athlete.avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || "/avatar-demo.png"}
+                    alt={athlete.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center text-[var(--sp-slate-soft)]">
+                    <User className="h-8 w-8" />
+                  </div>
+                )}
+              </div>
+              {athlete.avatarUrl && (
+                <button
+                  type="button"
+                  disabled={removingAvatar}
+                  onClick={() => void handleRemovePhoto()}
+                  className="text-[11px] font-semibold text-[var(--sp-slate-soft)] hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {removingAvatar ? "Removing..." : "Remove photo"}
+                </button>
               )}
             </div>
 

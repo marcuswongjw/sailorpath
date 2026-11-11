@@ -3,13 +3,11 @@ import path from "node:path";
 import { eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
-import { getAuthContext } from "@/lib/auth";
-import { canManageSailor } from "@/lib/claimAccess";
 import { avatarObjectPath, isPhotoSailorId, portraitAsset } from "@/lib/profilePhoto";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
-const HEADERS = { "Cache-Control": "private, no-store, max-age=0", "X-Content-Type-Options": "nosniff", "Vary": "Cookie" };
+const HEADERS = { "Cache-Control": "private, no-store, max-age=0", "X-Content-Type-Options": "nosniff" };
 const missing = (reason?: string, details?: Record<string, string>) =>
   Response.json(
     { error: "Photo not found" },
@@ -39,25 +37,18 @@ function detectImageType(type: string | null | undefined, objectPath: string, bu
   return null;
 }
 
-/** Public photo endpoint: serves published athlete photos or authorized owner views. */
+/** Public photo endpoint: serves current athlete photos publicly and immediately denies removed photos. */
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await context.params;
     if (!isPhotoSailorId(id)) return missing("invalid-sailor-id");
+    // Deliberately uncached: a stale public profile must not keep a removed photo readable.
     const [sailor] = await db
-      .select({
-        avatarUrl: sailors.avatarUrl,
-        parentId: sailors.parentId,
-        isPublic: sailors.showProfilePhotoOnPublicProfile,
-      })
+      .select({ avatarUrl: sailors.avatarUrl })
       .from(sailors)
       .where(eq(sailors.id, id))
       .limit(1);
     if (!sailor?.avatarUrl) return missing("no-avatar-url");
-    if (!sailor.isPublic) {
-      const auth = await getAuthContext();
-      if (!auth || !await canManageSailor(id, auth.userId, auth.role === "superadmin", sailor.parentId)) return missing("not-public");
-    }
     const asset = portraitAsset(sailor.avatarUrl);
     if (asset) {
       const bytes = await readFile(path.join(process.cwd(), "private/athlete-portraits", asset.folder, asset.file));
@@ -119,7 +110,6 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
     }
 
     const supabase = await createServerSupabase();
-
     let bodyBytes: Uint8Array | null = null;
     let contentType: string | null = null;
 

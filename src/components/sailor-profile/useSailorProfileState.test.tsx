@@ -1,8 +1,9 @@
 /** @vitest-environment jsdom */
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+const confirmMock = vi.hoisted(() => vi.fn().mockResolvedValue(true));
 vi.mock('next/navigation', () => ({useRouter: () => ({push: vi.fn(),replace: vi.fn(),refresh: vi.fn()})}));
-vi.mock('@/components/ui/FeedbackProvider', () => ({useFeedback: () => ({toast:{error:vi.fn(), success:vi.fn(), info:vi.fn()}, confirm:vi.fn()})}));
+vi.mock('@/components/ui/FeedbackProvider', () => ({useFeedback: () => ({toast:{error:vi.fn(), success:vi.fn(), info:vi.fn()}, confirm:confirmMock})}));
 vi.mock('@/lib/supabase/browser', () => ({createBrowserSupabase: vi.fn()}));
 import { useSailorProfileState } from './useSailorProfileState';
 import type { SailorProfileViewProps, SeriesStandingProps } from './types';
@@ -59,14 +60,14 @@ describe('separate ILCA profile flows', () => {
     expect(result.current.primaryIsIlca).toBe(true);
     expect(result.current.activeResultsList.map(row=>row.id)).toEqual(['6']);
   });
-  it('toggles photo visibility and updates local displaySailor and publicVisibility', async () => {
+  it('removes profile avatar completely and exposes no photo visibility toggle setting', async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
         ok: true,
         sailor: {
           id: 's1',
-          showProfilePhotoOnPublicProfile: true,
+          avatarUrl: null,
         },
       }),
     });
@@ -83,25 +84,25 @@ describe('separate ILCA profile flows', () => {
       })
     );
 
-    expect(result.current.publicVisibility.showProfilePhotoOnPublicProfile).toBe(false);
-    expect(result.current.displaySailor.showProfilePhotoOnPublicProfile).toBe(false);
+    expect('showProfilePhotoOnPublicProfile' in result.current.publicVisibility).toBe(false);
+    expect(result.current.displaySailor.avatarUrl).toBe('https://example.com/photo.jpg');
 
     await act(async () => {
-      await result.current.togglePhotoVisibility(true);
+      await result.current.removeAvatar();
     });
 
+    expect(confirmMock).toHaveBeenCalledTimes(1);
     expect(fetchMock).toHaveBeenCalledWith(
       '/api/account/sailor',
       expect.objectContaining({
         method: 'PATCH',
         body: JSON.stringify({
           sailorId: 's1',
-          showProfilePhotoOnPublicProfile: true,
+          avatarUrl: null,
         }),
       })
     );
-    expect(result.current.publicVisibility.showProfilePhotoOnPublicProfile).toBe(true);
-    expect(result.current.displaySailor.showProfilePhotoOnPublicProfile).toBe(true);
+    expect(result.current.displaySailor.avatarUrl).toBeNull();
   });
 });
 

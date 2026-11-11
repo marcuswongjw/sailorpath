@@ -35,14 +35,12 @@ type Props = {
   publicVisibility: {
     showSchoolOnPublicProfile: boolean;
     showEquipmentOnPublicProfile: boolean;
-    showProfilePhotoOnPublicProfile: boolean;
     showSocialLinksOnPublicProfile: boolean;
     showSailingMilestonesOnPublicProfile: boolean;
   };
   setPublicVisibility: React.Dispatch<React.SetStateAction<{
     showSchoolOnPublicProfile: boolean;
     showEquipmentOnPublicProfile: boolean;
-    showProfilePhotoOnPublicProfile: boolean;
     showSocialLinksOnPublicProfile: boolean;
     showSailingMilestonesOnPublicProfile: boolean;
   }>>;
@@ -143,7 +141,6 @@ export function ProfileOwnerEditor({
             {([
               ["showSchoolOnPublicProfile", "Show school name"],
               ["showEquipmentOnPublicProfile", "Show equipment brands/models"],
-              ["showProfilePhotoOnPublicProfile", "Show profile photo"],
               ["showSocialLinksOnPublicProfile", "Show social links"],
               ["showSailingMilestonesOnPublicProfile", "Show owner-written milestones"],
             ] as const).map(([key, label]) => (
@@ -153,7 +150,7 @@ export function ProfileOwnerEditor({
               </label>
             ))}
           </div>
-          <p className="text-xs leading-5 text-slate-soft">Equipment notes, history, exact date of birth and weight are never public. For sailors under 18, a parent or guardian manages these switches.</p>
+          <p className="text-xs leading-5 text-slate-soft">Profile pictures are always public when uploaded — remove your photo from the profile header to hide it. Equipment notes, history, exact date of birth and weight are never public. For sailors under 18, a parent or guardian manages these switches.</p>
         </div>
       </div>
       <div className="flex items-center gap-3 pt-2">

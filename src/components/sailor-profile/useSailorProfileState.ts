@@ -75,7 +75,6 @@ export function useSailorProfileState({
   const [publicVisibility, setPublicVisibility] = useState({
     showSchoolOnPublicProfile: Boolean(initialSailor.showSchoolOnPublicProfile),
     showEquipmentOnPublicProfile: Boolean(initialSailor.showEquipmentOnPublicProfile),
-    showProfilePhotoOnPublicProfile: Boolean(initialSailor.showProfilePhotoOnPublicProfile),
     showSocialLinksOnPublicProfile: Boolean(initialSailor.showSocialLinksOnPublicProfile),
     showSailingMilestonesOnPublicProfile: Boolean(initialSailor.showSailingMilestonesOnPublicProfile),
   });
@@ -307,7 +306,6 @@ export function useSailorProfileState({
       setPublicVisibility({
         showSchoolOnPublicProfile: Boolean(data.sailor.showSchoolOnPublicProfile),
         showEquipmentOnPublicProfile: Boolean(data.sailor.showEquipmentOnPublicProfile),
-        showProfilePhotoOnPublicProfile: Boolean(data.sailor.showProfilePhotoOnPublicProfile),
         showSocialLinksOnPublicProfile: Boolean(data.sailor.showSocialLinksOnPublicProfile),
         showSailingMilestonesOnPublicProfile: Boolean(data.sailor.showSailingMilestonesOnPublicProfile),
       });
@@ -380,7 +378,6 @@ export function useSailorProfileState({
         body: JSON.stringify({
           sailorId: initialSailor.id,
           avatarUrl: publicUrl,
-          showProfilePhotoOnPublicProfile: true,
         }),
       });
       const data = await res.json();
@@ -390,13 +387,9 @@ export function useSailorProfileState({
         avatarUrl: data.sailor?.avatarUrl || publicUrl,
         showProfilePhotoOnPublicProfile: true,
       }));
-      setPublicVisibility((prev) => ({
-        ...prev,
-        showProfilePhotoOnPublicProfile: true,
-      }));
-      setAvatarMsg("Photo updated & visible on public profile");
-      toast.success("Photo updated & visible on public profile");
-      setTimeout(() => setAvatarMsg(null), 3000);
+      setAvatarMsg("Photo updated");
+      toast.success("Photo updated");
+      setTimeout(() => setAvatarMsg(null), 2500);
     } catch (e: unknown) {
       setAvatarMsg(
         errorMessage(
@@ -409,13 +402,18 @@ export function useSailorProfileState({
     }
   };
 
-  const togglePhotoVisibility = async (makeVisible?: boolean) => {
+  const removeAvatar = async () => {
     if (demoMode) {
-      toast.info("Profile photo visibility cannot be changed in demo mode.");
+      setAvatarMsg("Demo only — photo not removed");
       return;
     }
-    const currentVis = Boolean(displaySailor.showProfilePhotoOnPublicProfile);
-    const nextState = makeVisible !== undefined ? makeVisible : !currentVis;
+    const ok = await confirm({
+      title: "Remove profile photo",
+      message: "Your profile photo is public. Removing it deletes the image from your profile.",
+      confirmLabel: "Remove photo",
+      tone: "danger",
+    });
+    if (!ok) return;
     setAvatarBusy(true);
     setAvatarMsg(null);
     try {
@@ -425,29 +423,20 @@ export function useSailorProfileState({
         credentials: "include",
         body: JSON.stringify({
           sailorId: initialSailor.id,
-          showProfilePhotoOnPublicProfile: nextState,
+          avatarUrl: null,
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not update photo visibility");
+      if (!res.ok) throw new Error(data.error || "Could not remove photo");
       setDisplaySailor((s: SailorRecordProps) => ({
         ...s,
-        showProfilePhotoOnPublicProfile: nextState,
+        avatarUrl: null,
       }));
-      setPublicVisibility((prev) => ({
-        ...prev,
-        showProfilePhotoOnPublicProfile: nextState,
-      }));
-      const msg = nextState
-        ? "Photo is now public for visitors"
-        : "Photo is now hidden from visitors";
-      setAvatarMsg(msg);
-      toast.success(msg);
-      setTimeout(() => setAvatarMsg(null), 3000);
+      setAvatarMsg("Photo removed");
+      setTimeout(() => setAvatarMsg(null), 2500);
+      router.refresh();
     } catch (e: unknown) {
-      const err = errorMessage(e, "Could not update photo visibility");
-      setAvatarMsg(err);
-      toast.error(err);
+      setAvatarMsg(errorMessage(e, "We couldn’t remove the photo."));
     } finally {
       setAvatarBusy(false);
     }
@@ -1314,7 +1303,7 @@ export function useSailorProfileState({
     showEquipment,
     saveProfile,
     uploadAvatar,
-    togglePhotoVisibility,
+    removeAvatar,
     resetObsForm,
     startEditObservation,
     saveObservation,

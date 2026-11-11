@@ -19,6 +19,28 @@ describe("HeroAthleteCard", () => {
     rerender(<HeroAthleteCard {...props} displaySailor={{ ...props.displaySailor, showSchoolOnPublicProfile: true }} previewPublic />);
     expect(screen.getByText("Private school")).toBeInTheDocument();
   });
+
+  it("always displays profile pictures publicly and exposes remove photo in owner view", async () => {
+    const onRemoveAvatar = vi.fn();
+    const props = {
+      activeStanding: null,
+      standingIsIlca: false,
+      displaySailor: {
+        id: "11111111-1111-4111-8111-111111111111",
+        handle: "qa-sailor",
+        name: "QA Sailor",
+        avatarUrl: "https://sailorpath.com/athlete-portraits/team-singapore/example.jpg",
+        showProfilePhotoOnPublicProfile: false,
+      },
+    };
+    const { rerender } = render(<HeroAthleteCard {...props} previewPublic />);
+    expect(screen.getByRole("img", { name: "QA Sailor" })).toBeInTheDocument();
+
+    rerender(<HeroAthleteCard {...props} ownerView onRemoveAvatar={onRemoveAvatar} />);
+    const removeBtn = screen.getByRole("button", { name: "Remove photo" });
+    await userEvent.click(removeBtn);
+    expect(onRemoveAvatar).toHaveBeenCalledTimes(1);
+  });
   const defaultProps = {
     displaySailor: {
       id: "s1",
@@ -323,8 +345,8 @@ describe("HeroAthleteCard", () => {
     ).toBeInTheDocument();
   });
 
-  it("surfaces photo visibility badge and triggers onTogglePhotoVisibility in owner mode", async () => {
-    const onToggle = vi.fn();
+  it("always renders profile photos publicly without a visibility toggle and offers Remove photo for owners", async () => {
+    const onRemoveAvatar = vi.fn();
     const { rerender } = render(
       <HeroAthleteCard
         {...defaultProps}
@@ -333,44 +355,26 @@ describe("HeroAthleteCard", () => {
         displaySailor={{
           ...defaultProps.displaySailor,
           avatarUrl: "https://example.com/avatar.jpg",
-          showProfilePhotoOnPublicProfile: true,
-        }}
-        onTogglePhotoVisibility={onToggle}
-      />
-    );
-
-    const publicBadge = screen.getByRole("button", {
-      name: /Photo visible to public\. Click to hide\./,
-    });
-    expect(publicBadge).toBeInTheDocument();
-    await userEvent.click(publicBadge);
-    expect(onToggle).toHaveBeenCalledWith(false);
-
-    rerender(
-      <HeroAthleteCard
-        {...defaultProps}
-        ownerView
-        isOwner
-        displaySailor={{
-          ...defaultProps.displaySailor,
-          avatarUrl: "https://example.com/avatar.jpg",
           showProfilePhotoOnPublicProfile: false,
         }}
-        onTogglePhotoVisibility={onToggle}
+        onRemoveAvatar={onRemoveAvatar}
       />
     );
 
-    const hiddenBadge = screen.getByRole("button", {
-      name: /Photo hidden from public\. Click to show\./,
-    });
-    expect(hiddenBadge).toBeInTheDocument();
-    await userEvent.click(hiddenBadge);
-    expect(onToggle).toHaveBeenCalledWith(true);
+    expect(screen.getByRole("img", { name: "Ethan Wong" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Photo (visible|hidden)/i })
+    ).toBeNull();
+
+    const removeBtn = screen.getByRole("button", { name: "Remove photo" });
+    expect(removeBtn).toBeInTheDocument();
+    await userEvent.click(removeBtn);
+    expect(onRemoveAvatar).toHaveBeenCalledTimes(1);
 
     rerender(
       <HeroAthleteCard
         {...defaultProps}
-        ownerView
+        ownerView={false}
         isOwner
         previewPublic
         displaySailor={{
@@ -378,13 +382,25 @@ describe("HeroAthleteCard", () => {
           avatarUrl: "https://example.com/avatar.jpg",
           showProfilePhotoOnPublicProfile: false,
         }}
-        onTogglePhotoVisibility={onToggle}
+        onRemoveAvatar={onRemoveAvatar}
       />
     );
-    expect(
-      screen.queryByRole("button", {
-        name: /Photo hidden from public\. Click to show\./,
-      })
-    ).toBeNull();
+    expect(screen.getByRole("img", { name: "Ethan Wong" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Remove photo" })).toBeNull();
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        ownerView
+        isOwner
+        displaySailor={{
+          ...defaultProps.displaySailor,
+          avatarUrl: null,
+        }}
+        onRemoveAvatar={onRemoveAvatar}
+      />
+    );
+    expect(screen.queryByRole("img", { name: "Ethan Wong" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Remove photo" })).toBeNull();
   });
 });
