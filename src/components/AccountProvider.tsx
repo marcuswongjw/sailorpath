@@ -97,7 +97,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
           data: { session },
         } = await supabase.auth.getSession();
         if (cancelled) return;
-        setEmail(session?.user?.email ?? null);
+        setEmail(session?.user?.email || session?.user?.phone || (session?.user ? "Account" : null));
         setReady(true);
         if (session?.user) {
           await loadAccount();
@@ -108,7 +108,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
         }
 
         const { data } = supabase.auth.onAuthStateChange((_e, s) => {
-          setEmail(s?.user?.email ?? null);
+          setEmail(s?.user?.email || s?.user?.phone || (s?.user ? "Account" : null));
           if (s?.user) void loadAccount();
           else {
             setIsSuperadmin(false);
@@ -130,14 +130,17 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     try {
-      if (cookieHeaderHasAuthSession(document.cookie)) {
-        const { createBrowserSupabase } = await import("@/lib/supabase/browser");
-        await createBrowserSupabase().auth.signOut();
-      }
+      const { createBrowserSupabase } = await import("@/lib/supabase/browser");
+      await createBrowserSupabase().auth.signOut();
     } catch {
       /* ignore */
     }
+    setEmail(null);
+    setRole(null);
+    setIsSuperadmin(false);
+    setOwned([]);
     router.replace("/");
+    router.refresh();
   }, [router]);
 
   const value = useMemo<AccountState>(

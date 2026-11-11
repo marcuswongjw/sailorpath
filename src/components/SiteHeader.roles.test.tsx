@@ -14,11 +14,13 @@ describe("account navigation by role", () => {
   beforeEach(() => {
     state.role = "sailor";
     state.owned = [{ id: "1", name: "Sailor", handle: "sailor", ownerRelation: "sailor" }];
+    state.signOut.mockClear();
   });
 
   it("shows a sailor their profile without parent or coach workspaces on desktop and mobile", async () => {
     const user = userEvent.setup();
     render(<SiteHeader />);
+    expect(screen.getByRole("button", { name: "Log out" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Account" }));
     expect(screen.getByRole("link", { name: "My profile" })).toHaveAttribute("href", "/sailors/sailor");
     expect(screen.queryByRole("link", { name: /workspace/i })).not.toBeInTheDocument();
@@ -26,6 +28,8 @@ describe("account navigation by role", () => {
     const mobile = screen.getByRole("navigation", { name: "Mobile public" }).parentElement!;
     expect(within(mobile).getByRole("link", { name: "My profile" })).toHaveAttribute("href", "/sailors/sailor");
     expect(within(mobile).queryByRole("link", { name: /workspace/i })).not.toBeInTheDocument();
+    await user.click(within(mobile).getByRole("button", { name: "Log out" }));
+    expect(state.signOut).toHaveBeenCalledTimes(1);
   });
 
   it.each([

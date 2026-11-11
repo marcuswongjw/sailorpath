@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
-import { Menu, Search, X, ChevronDown } from "lucide-react";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { Menu, Search, X, ChevronDown, LogOut } from "lucide-react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
 
@@ -36,6 +36,7 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [quickSearchOpen, setQuickSearchOpen] = useState(false);
+  const accountMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -48,8 +49,20 @@ export function SiteHeader() {
         setAccountOpen(false);
       }
     };
+    const onPointerDown = (event: MouseEvent) => {
+      if (
+        accountMenuRef.current &&
+        !accountMenuRef.current.contains(event.target as Node)
+      ) {
+        setAccountOpen(false);
+      }
+    };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("mousedown", onPointerDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("mousedown", onPointerDown);
+    };
   }, []);
 
   const closeMobile = () => setMobileOpen(false);
@@ -104,62 +117,68 @@ export function SiteHeader() {
           {!ready ? (
             <span className="text-sm text-soft-aqua">…</span>
           ) : email ? (
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setAccountOpen((open) => !open)}
-                aria-expanded={accountOpen}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-sailcloth hover:text-white"
-              >
-                Account{" "}
-                <ChevronDown
-                  className={`h-4 w-4 transition-transform ${accountOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-              {accountOpen && (
-                <div className="absolute right-0 top-8 w-56 rounded-xl border border-cool-veil bg-warm-white p-2 text-charcoal shadow-xl">
-                  <p className="truncate px-3 py-2 text-xs text-slate-soft">
-                    {email}
-                  </p>
-                  <Link
-                    href="/account"
-                    onClick={() => setAccountOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
-                  >
-                    My account
-                  </Link>
-                  {primaryProfile && (
+            <div className="flex items-center gap-3">
+              <div className="relative" ref={accountMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setAccountOpen((open) => !open)}
+                  aria-expanded={accountOpen}
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-sailcloth hover:text-white"
+                >
+                  Account{" "}
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${accountOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {accountOpen && (
+                  <div className="absolute right-0 top-9 w-56 rounded-xl border border-cool-veil bg-warm-white p-2 text-charcoal shadow-xl">
+                    <p className="truncate px-3 py-2 text-xs text-slate-soft">
+                      {email}
+                    </p>
                     <Link
-                      href={`/sailors/${primaryProfile.handle}`}
+                      href="/account"
                       onClick={() => setAccountOpen(false)}
                       className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
                     >
-                      My profile
+                      My account
                     </Link>
-                  )}
-                  {showParentWorkspace && <Link
-                    href="/account/parent"
-                    onClick={() => setAccountOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
-                  >
-                    Parent workspace
-                  </Link>}
-                  {showCoachWorkspace && <Link
-                    href="/account/coach"
-                    onClick={() => setAccountOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
-                  >
-                    Coach workspace
-                  </Link>}
-                  <button
-                    type="button"
-                    onClick={() => void signOut()}
-                    className="block w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-rose-700 hover:bg-rose-50"
-                  >
-                    Log out
-                  </button>
-                </div>
-              )}
+                    {primaryProfile && (
+                      <Link
+                        href={`/sailors/${primaryProfile.handle}`}
+                        onClick={() => setAccountOpen(false)}
+                        className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
+                      >
+                        My profile
+                      </Link>
+                    )}
+                    {showParentWorkspace && <Link
+                      href="/account/parent"
+                      onClick={() => setAccountOpen(false)}
+                      className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
+                    >
+                      Parent workspace
+                    </Link>}
+                    {showCoachWorkspace && <Link
+                      href="/account/coach"
+                      onClick={() => setAccountOpen(false)}
+                      className="block rounded-lg px-3 py-2 text-sm font-semibold hover:bg-sailcloth"
+                    >
+                      Coach workspace
+                    </Link>}
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setAccountOpen(false);
+                  void signOut();
+                }}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-soft-aqua/50 px-3 py-1.5 text-sm font-semibold text-sailcloth transition-colors hover:bg-harbour-mid hover:text-white"
+              >
+                <LogOut className="h-4 w-4" aria-hidden="true" />
+                Log out
+              </button>
             </div>
           ) : (
             <>
@@ -252,6 +271,17 @@ export function SiteHeader() {
                 >
                   Coach workspace
                 </Link>}
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeMobile();
+                    void signOut();
+                  }}
+                  className="mt-1 inline-flex w-full items-center gap-2 rounded-lg border border-soft-aqua/40 px-3 py-2.5 text-left text-sm font-semibold text-sailcloth hover:bg-harbour-mid hover:text-white"
+                >
+                  <LogOut className="h-4 w-4" aria-hidden="true" />
+                  Log out
+                </button>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-2">

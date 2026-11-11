@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AccountPage from "./page";
 
-const state = vi.hoisted(() => ({ role: "sailor", isSuperadmin: false }));
+const state = vi.hoisted(() => ({ role: "sailor", isSuperadmin: false, signOut: vi.fn() }));
 const params = new URLSearchParams();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ replace: vi.fn() }), useSearchParams: () => params }));
 vi.mock("@/components/AccountProvider", () => ({ useAccount: () => state }));
@@ -23,10 +23,13 @@ describe("account workspace navigation", () => {
     }) }));
   });
 
-  it("puts sailing and managed profiles before expandable account settings", async () => {
+  it("puts sailing and managed profiles before expandable account settings and exposes Log out", async () => {
     const user = userEvent.setup();
+    state.signOut.mockClear();
     render(<AccountPage />);
     const sailing = await screen.findByRole("region", { name: "Continue your sailing" });
+    await user.click(screen.getByRole("button", { name: "Log out" }));
+    expect(state.signOut).toHaveBeenCalledTimes(1);
     expect(within(sailing).queryByRole("link", { name: /Family dashboard/ })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open logbook" })).toHaveAttribute("href", "/athlete?id=sailor");
     const summary = screen.getByText("Account settings", { selector: "summary" });

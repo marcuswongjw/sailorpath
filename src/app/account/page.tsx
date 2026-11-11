@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { User, Mail, Calendar, Edit2, Check, Lock } from "lucide-react";
+import { User, Mail, Calendar, Edit2, Check, Lock, LogOut } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
+import { PhoneLoginSettings } from "@/components/auth/PhoneLoginSettings";
 import { AccountWorkspaces } from "@/components/account/AccountWorkspaces";
 import {
   InviteActions,
@@ -58,10 +59,11 @@ type UserProfileData = {
 function AccountInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { role, isSuperadmin } = useAccount();
+  const { role, isSuperadmin, signOut } = useAccount();
   const isCoach = role === "coach";
   const welcome = searchParams.get("welcome") === "1";
   const [email, setEmail] = useState<string | null>(null);
+  const [phone, setPhone] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [editName, setEditName] = useState("");
@@ -104,6 +106,7 @@ function AccountInner() {
           return;
         }
         setEmail(session.user.email ?? null);
+        setPhone(session.user.phone_confirmed_at ? session.user.phone ?? null : null);
 
         try {
           await fetch("/api/auth/ensure-profile", {
@@ -348,6 +351,19 @@ function AccountInner() {
     }
   };
 
+  const handleSignOut = async () => {
+    if (signOut) {
+      await signOut();
+      return;
+    }
+    try {
+      await createBrowserSupabase().auth.signOut();
+    } catch {
+      /* ignore */
+    }
+    router.replace("/");
+  };
+
   if (loading) {
     return (
       <div className="min-h-[50vh] flex items-center justify-center text-sm text-[var(--sp-slate-soft)] px-4">
@@ -358,19 +374,29 @@ function AccountInner() {
 
   return (
     <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
-      <div>
-        <h1 className="font-display text-2xl sm:text-3xl font-bold text-[var(--sp-harbour-teal)] tracking-tight">
-          My account
-        </h1>
-        <p className="mt-1 text-sm text-[var(--sp-slate-soft)] break-all">
-          Signed in as{" "}
-          <span className="font-semibold text-[var(--sp-charcoal)]">
-            {userProfile?.fullName || email}
-          </span>
-          {userProfile?.fullName && email ? (
-            <span className="text-[var(--sp-slate-soft)]"> ({email})</span>
-          ) : null}
-        </p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-[var(--sp-harbour-teal)] tracking-tight">
+            My account
+          </h1>
+          <p className="mt-1 text-sm text-[var(--sp-slate-soft)] break-all">
+            Signed in as{" "}
+            <span className="font-semibold text-[var(--sp-charcoal)]">
+              {userProfile?.fullName || email}
+            </span>
+            {userProfile?.fullName && email ? (
+              <span className="text-[var(--sp-slate-soft)]"> ({email})</span>
+            ) : null}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => void handleSignOut()}
+          className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 self-start rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-semibold text-[var(--sp-charcoal)] shadow-2xs transition-colors hover:border-rose-300 hover:bg-rose-50 hover:text-rose-800"
+        >
+          <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+          Log out
+        </button>
       </div>
 
       {welcome && (
@@ -749,6 +775,8 @@ function AccountInner() {
               Sailors you follow
             </Link>
           </section>
+
+          {process.env.NEXT_PUBLIC_AUTH_PHONE_ENABLED === "true" && <PhoneLoginSettings initialPhone={phone} />}
 
           {/* Account security */}
           <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 w-full shadow-xs">
