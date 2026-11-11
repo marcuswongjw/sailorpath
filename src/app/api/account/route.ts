@@ -2,8 +2,14 @@ import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
-import { db, withDatabaseRetry, withSequentialDatabaseReads } from "@/db";
-import { sailorClaims, sailors, profiles } from "@/db/schema";
+import { db, formatDbError, withDatabaseRetry, withSequentialDatabaseReads } from "@/db";
+import { sailorClaims, sailors, profiles, telegramIdentities } from "@/db/schema";
+import { isGoogleAuthEnabled } from "@/lib/google/auth";
+import { isTelegramBotConfigured } from "@/lib/telegram/bot/config";
+import { getTelegramUpdateStatus } from "@/lib/telegram/bot/store";
+import { createServerSupabase } from "@/lib/supabase/server";
+import { isTelegramLoginConfigured } from "@/lib/telegram/config";
+import { canDisconnectTelegram, contactEmail, isTelegramPlaceholderEmail } from "@/lib/telegram/email";
 
 /** Logged-in account: user profile + owned sailors + claim requests */
 export async function GET() {
@@ -60,6 +66,40 @@ export async function GET() {
     );
 
     const profileRow = profileRows[0];
+    const visibleEmail = contactEmail(profileRow?.email, auth.email);
+    let telegram: {
+      enabled: boolean;
+      linked: boolean;
+      username: string | null;
+      canDisconnect: boolean;
+    } = {
+      enabled: isTelegramLoginConfigured(),
+      linked: false,
+      username: null,
+      canDisconnect: false,
+    };
+    if (telegram.enabled) {
+      try {
+        const [link] = await db
+          .select({ username: telegramIdentities.username })
+          .from(telegramIdentities)
+          .where(eq(telegramIdentities.userId, auth.userId))
+          .limit(1);
+        if (link) {
+          telegram = {
+            enabled: true,
+            linked: true,
+            username: link.username,
+            canDisconnect: canDisconnectTelegram(auth.email),
+          };
+        }
+      } catch (error) {
+        const missing =
+          /telegram_identities/i.test(formatDbError(error)) &&
+          /does not exist|42P01/i.test(formatDbError(error));
+        if (!missing) throw error;
+      }
+    }
 
     const claimMap = new Map(
       approvedClaims.map((c) => [c.sailorId, c.relation])
@@ -95,7 +135,7 @@ export async function GET() {
     const isSuperadmin = auth.role === "superadmin";
     const userProfile = {
       id: auth.userId,
-      email: profileRow?.email || auth.email || "",
+      email: visibleEmail,
       fullName: profileRow?.fullName || "",
       role: profileRow?.role || auth.role,
       createdAt: profileRow?.createdAt ? profileRow.createdAt.toISOString() : null,
@@ -105,15 +145,46 @@ export async function GET() {
     return NextResponse.json({
       user: userProfile,
       profile: userProfile,
-      email: profileRow?.email || auth.email,
+      email: visibleEmail,
       fullName: profileRow?.fullName || "",
       role: auth.role,
       isSuperadmin,
       owned,
       claims,
+      telegram,
+      google: {
+        enabled: isGoogleAuthEnabled(),
+        linked: await googleIdentityLinked(),
+      },
+      telegramUpdates: await telegramUpdateStatus(auth.userId),
     });
   } catch (e) {
     return jsonError(e);
+  }
+}
+
+async function googleIdentityLinked(): Promise<boolean> {
+  if (!isGoogleAuthEnabled()) return false;
+  try {
+    const supabase = await createServerSupabase();
+    const { data } = await supabase.auth.getUser();
+    const providers = data.user?.app_metadata?.providers;
+    if (Array.isArray(providers) && providers.some((provider) => provider === "google")) {
+      return true;
+    }
+    return Boolean(data.user?.identities?.some((identity) => identity.provider === "google"));
+  } catch {
+    return false;
+  }
+}
+
+async function telegramUpdateStatus(userId: string) {
+  if (!isTelegramBotConfigured()) return { enabled: false, optedIn: false, username: null };
+  try {
+    const status = await getTelegramUpdateStatus(userId);
+    return { enabled: true, ...status };
+  } catch {
+    return { enabled: false, optedIn: false, username: null };
   }
 }
 
@@ -149,7 +220,7 @@ async function handlePATCH(req: Request) {
 
     if (typeof email === "string") {
       const trimmedEmail = email.trim().toLowerCase();
-      if (!trimmedEmail || !trimmedEmail.includes("@")) {
+      if (!trimmedEmail || !trimmedEmail.includes("@") || isTelegramPlaceholderEmail(trimmedEmail)) {
         return NextResponse.json(
           { error: "Please provide a valid email address" },
           { status: 400 }
@@ -176,7 +247,7 @@ async function handlePATCH(req: Request) {
       if (existing.length === 0) {
         await db.insert(profiles).values({
           id: auth.userId,
-          email: updates.email || auth.email || "",
+          email: updates.email || contactEmail(null, auth.email),
           fullName: updates.fullName || "User",
           role: auth.role,
         });
@@ -203,7 +274,7 @@ async function handlePATCH(req: Request) {
 
     const userProfile = {
       id: auth.userId,
-      email: updatedRow?.email || auth.email || "",
+      email: contactEmail(updatedRow?.email, auth.email),
       fullName: updatedRow?.fullName || "",
       role: updatedRow?.role || auth.role,
       createdAt: updatedRow?.createdAt ? updatedRow.createdAt.toISOString() : null,

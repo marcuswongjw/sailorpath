@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <h1 className="text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)]">
             Privacy
           </h1>
-          <p className="text-xs font-medium text-[var(--sp-slate-soft)]">Effective 3 November 2026</p>
+          <p className="text-xs font-medium text-[var(--sp-slate-soft)]">Effective 11 November 2026</p>
           <p className="text-[var(--sp-charcoal-slate)]">
             This page explains what information SailorPath uses, what may appear
             publicly, and how sailors and families can ask for help with their
@@ -64,7 +64,16 @@ export default function PrivacyPage() {
             add notes or equipment, or contact support. Claim notes, supporting
             evidence, and account details may be reviewed by authorized
             administrators to decide whether an account should be linked to a
-            sailor.
+            sailor. If you sign in with Telegram, SailorPath receives your
+            Telegram user id, public name, username, and profile photo URL.
+            Telegram does not provide an email address, and SailorPath does not
+            request a phone number. A Telegram login is not matched to an
+            existing account by name. You can connect Telegram to an account
+            you already use from account settings. If you sign in with Google,
+            SailorPath receives the name and email address on that Google
+            account. A Google login is added to an existing account only when
+            the email address matches and is already verified, or when you
+            connect it yourself from account settings.
           </p>
         </PolicySection>
 

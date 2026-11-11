@@ -5,6 +5,7 @@ import {
   getAuthCookieOptions,
   safeAuthNext,
 } from "@/lib/supabase/cookie-options";
+import { googleCallbackFailureTarget } from "@/lib/google/auth";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -23,9 +24,14 @@ export async function GET(request: Request) {
     "";
 
   if (!code || !supabaseUrl || !supabaseAnonKey) {
-    return NextResponse.redirect(
-      `${origin}/login?error=${encodeURIComponent("Could not authenticate")}`
-    );
+    const destination = !code
+      ? googleCallbackFailureTarget({
+          origin,
+          next: searchParams.get("next"),
+          oauthError: searchParams.get("error"),
+        })
+      : `${origin}/login?error=${encodeURIComponent("Could not authenticate")}`;
+    return NextResponse.redirect(destination);
   }
 
   const cookieStore = await cookies();

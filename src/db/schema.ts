@@ -40,6 +40,88 @@ export const profiles = pgTable("profiles", {
     .notNull(),
 }).enableRLS();
 
+/**
+ * One Telegram Login subject per SailorPath account.
+ * Matching is by `sub` only — never by display name.
+ */
+export const telegramIdentities = pgTable(
+  "telegram_identities",
+  {
+    telegramSub: text("telegram_sub").primaryKey().notNull(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => profiles.id, { onDelete: "cascade" }),
+    telegramUserId: text("telegram_user_id"),
+    username: text("username"),
+    displayName: text("display_name"),
+    photoUrl: text("photo_url"),
+    linkedAt: timestamp("linked_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdUnq: unique("telegram_identities_user_id_unq").on(table.userId),
+  })
+).enableRLS();
+
+/** Opt-in Telegram bot messages. Separate from login so a user can subscribe without OIDC. */
+export const telegramSubscriptions = pgTable("telegram_subscriptions", {
+  userId: uuid("user_id")
+    .primaryKey()
+    .notNull()
+    .references(() => profiles.id, { onDelete: "cascade" }),
+  telegramUserId: text("telegram_user_id"),
+  chatId: text("chat_id"),
+  username: text("username"),
+  displayName: text("display_name"),
+  optedIn: boolean("opted_in").default(false).notNull(),
+  optedInAt: timestamp("opted_in_at", { withTimezone: true }),
+  optedOutAt: timestamp("opted_out_at", { withTimezone: true }),
+  blockedAt: timestamp("blocked_at", { withTimezone: true }),
+  source: text("source", { enum: ["login", "deeplink"] }).default("deeplink").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+}).enableRLS();
+
+export const telegramLinkTokens = pgTable("telegram_link_tokens", {
+  tokenHash: text("token_hash").primaryKey().notNull(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => profiles.id, { onDelete: "cascade" }),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  usedAt: timestamp("used_at", { withTimezone: true }),
+}).enableRLS();
+
+export const telegramBroadcasts = pgTable("telegram_broadcasts", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  actorUserId: uuid("actor_user_id").references(() => profiles.id, { onDelete: "set null" }),
+  body: text("body").notNull(),
+  buttonLabel: text("button_label"),
+  buttonUrl: text("button_url"),
+  audience: text("audience", { enum: ["all", "class", "country"] }).notNull(),
+  audienceValue: text("audience_value"),
+  status: text("status", { enum: ["sending", "sent"] }).default("sending").notNull(),
+  targetedCount: integer("targeted_count").default(0).notNull(),
+  deliveredCount: integer("delivered_count").default(0).notNull(),
+  failedCount: integer("failed_count").default(0).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  finishedAt: timestamp("finished_at", { withTimezone: true }),
+}).enableRLS();
+
+export const telegramBroadcastDeliveries = pgTable("telegram_broadcast_deliveries", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  broadcastId: uuid("broadcast_id")
+    .notNull()
+    .references(() => telegramBroadcasts.id, { onDelete: "cascade" }),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => profiles.id, { onDelete: "cascade" }),
+  chatId: text("chat_id").notNull(),
+  status: text("status", { enum: ["pending", "sent", "failed", "blocked"] })
+    .default("pending")
+    .notNull(),
+  error: text("error"),
+  sentAt: timestamp("sent_at", { withTimezone: true }),
+}).enableRLS();
+
 /** A coach may request access, but only a superadmin may grant the coach role. */
 export const coachAccessRequests = pgTable(
   "coach_access_requests",

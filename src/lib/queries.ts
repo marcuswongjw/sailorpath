@@ -54,6 +54,7 @@ import {
 import { applyProjectedGoldParticipationDropped } from "@/lib/goldFleetDrop";
 import { applyProjectedSilverParticipationDropped } from "@/lib/silverSeriesDrop";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
+import { contactEmail } from "@/lib/telegram/email";
 import { superadminRoleDecision, type AppRole } from "@/lib/superadminEmail";
 import { normalizeGender } from "@/lib/gender";
 import {
@@ -1702,28 +1703,30 @@ export async function ensureProfileForUser(user: {
       return { profile: { ...existing[0], role }, created: false };
     }
 
+    const storedEmail = contactEmail(null, user.email);
     const fullName =
       (user.user_metadata?.full_name as string) ||
       (user.user_metadata?.handle as string) ||
-      user.email?.split("@")[0] ||
+      (storedEmail ? storedEmail.split("@")[0] : "") ||
       "Sailor";
 
     const decision = superadminRoleDecision(null, user.email);
     const role = decision.role;
+    const emailUpdate = storedEmail ? { email: storedEmail } : {};
 
     const [row] = await db
       .insert(profiles)
       .values({
         id: user.id,
-        email: user.email || "",
+        email: storedEmail,
         fullName,
         role,
       })
       .onConflictDoUpdate({
         target: profiles.id,
         set: decision.persistSuperadmin
-          ? { email: user.email || "", role: "superadmin", updatedAt: new Date() }
-          : { email: user.email || "", updatedAt: new Date() },
+          ? { ...emailUpdate, role: "superadmin", updatedAt: new Date() }
+          : { ...emailUpdate, updatedAt: new Date() },
       })
       .returning({ id: profiles.id, role: profiles.role });
 

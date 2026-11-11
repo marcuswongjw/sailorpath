@@ -58,6 +58,12 @@ describe("publish follower emails", () => {
           notifyFollowedResults: null,
           sailorId: "sailor-missing",
         },
+        {
+          followerProfileId: "parent-4",
+          followerEmail: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa@telegram.sailorpath.invalid",
+          notifyFollowedResults: true,
+          sailorId: "sailor-a",
+        },
       ],
     });
 
