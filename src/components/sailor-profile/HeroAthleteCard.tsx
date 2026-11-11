@@ -282,292 +282,119 @@ export function HeroAthleteCard({
   );
 
   return (
-    <header className={`${cardClass} p-5 sm:p-6 overflow-hidden relative shadow-xs`}>
-      <div className="relative z-10 flex flex-col gap-5">
-        {/* Top identity row: Avatar + Name/Badges + Class Switcher */}
-        <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-          <div className="flex items-start gap-3.5 sm:gap-4.5 min-w-0">
-            {/* Avatar & Owner Controls */}
-            <div className="flex flex-col items-center gap-1.5 shrink-0">
-              <div className="relative">
-                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
-                  {(() => {
-                    const photoSrc = profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl);
-                    return displaySailor.avatarUrl && (!photoSrc || failedPhotoUrl !== photoSrc) ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={photoSrc || undefined}
-                        alt={displaySailor.name}
-                        onError={() => {
-                          if (photoSrc) setFailedPhotoUrl(photoSrc);
-                        }}
-                        className="h-full w-full object-cover object-top"
-                      />
-                    ) : (
-                      <span className="flex flex-col items-center justify-center leading-none">
-                        <Anchor
-                          className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
-                          aria-hidden
-                        />
-                        <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
-                          {initials(displaySailor.name)}
-                        </span>
-                      </span>
-                    );
-                  })()}
-                  {avatarBusy && (
-                    <span
-                      aria-label="Updating photo"
-                      className="absolute inset-0 bg-charcoal/60 flex items-center justify-center text-sailcloth"
-                    >
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    </span>
-                  )}
-                </div>
+    <header className={`${cardClass} overflow-hidden relative shadow-xs`}>
+      {/* LinkedIn-style cover banner */}
+      <div
+        aria-hidden="true"
+        className="relative h-24 sm:h-28 w-full overflow-hidden bg-gradient-to-r from-harbour-shadow via-harbour to-aqua-deep"
+      >
+        <svg
+          className="absolute inset-0 h-full w-full opacity-15"
+          viewBox="0 0 800 120"
+          preserveAspectRatio="none"
+          fill="none"
+        >
+          <path
+            d="M0 78 C 140 42, 280 108, 440 68 C 580 32, 700 88, 800 56 L 800 120 L 0 120 Z"
+            fill="currentColor"
+            className="text-sailcloth"
+          />
+          <path
+            d="M0 96 C 180 68, 340 116, 520 86 C 650 64, 730 98, 800 84"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-soft-aqua"
+          />
+        </svg>
+      </div>
 
-                {ownerView && !demoMode && onUploadAvatar && (
-                  <>
-                    <button
-                      type="button"
-                      disabled={avatarBusy}
-                      onClick={() => fileInputRef.current?.click()}
-                      className="group absolute inset-0 rounded-2xl transition-colors hover:bg-charcoal/55 focus-visible:bg-charcoal/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour flex items-center justify-center text-sailcloth cursor-pointer"
-                      aria-label="Upload athlete photo"
-                    >
-                      <Camera className="h-5 w-5 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity" aria-hidden />
-                      <span
-                        aria-hidden
-                        className="absolute -bottom-1 -right-1 rounded-full bg-harbour border-2 border-warm-white p-1.5 text-sailcloth shadow-xs group-hover:bg-harbour-shadow transition flex items-center justify-center"
-                      >
-                        <Camera className="h-3.5 w-3.5" />
-                      </span>
-                    </button>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
-                      className="hidden"
-                      onChange={(e) => {
-                        const f = e.target.files?.[0];
-                        if (f) onUploadAvatar(f);
-                        e.target.value = "";
+      <div className="relative z-10 px-5 pb-5 sm:px-6 sm:pb-6 flex flex-col gap-4">
+        {/* Overlapping round avatar + Class switcher */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="-mt-12 sm:-mt-14 flex flex-col items-center gap-1.5 shrink-0">
+            <div className="relative">
+              <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-full bg-harbour border-4 border-warm-white text-sailcloth flex items-center justify-center overflow-hidden shadow-md">
+                {(() => {
+                  const photoSrc = profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl);
+                  return displaySailor.avatarUrl && (!photoSrc || failedPhotoUrl !== photoSrc) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={photoSrc || undefined}
+                      alt={displaySailor.name}
+                      onError={() => {
+                        if (photoSrc) setFailedPhotoUrl(photoSrc);
                       }}
+                      className="h-full w-full object-cover object-top"
                     />
-                  </>
+                  ) : (
+                    <span className="flex flex-col items-center justify-center leading-none">
+                      <Anchor
+                        className="h-6 w-6 sm:h-7 sm:w-7 opacity-90 mb-0.5 text-soft-aqua"
+                        aria-hidden
+                      />
+                      <span className="text-sm sm:text-base font-black tracking-wide text-sailcloth">
+                        {initials(displaySailor.name)}
+                      </span>
+                    </span>
+                  );
+                })()}
+                {avatarBusy && (
+                  <span
+                    aria-label="Updating photo"
+                    className="absolute inset-0 bg-charcoal/60 flex items-center justify-center text-sailcloth"
+                  >
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  </span>
                 )}
               </div>
-              {ownerView && !demoMode && displaySailor.avatarUrl && onRemoveAvatar && (
-                <button
-                  type="button"
-                  disabled={avatarBusy}
-                  onClick={onRemoveAvatar}
-                  className="text-[11px] font-semibold text-slate-soft hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
-                >
-                  Remove photo
-                </button>
+
+              {ownerView && !demoMode && onUploadAvatar && (
+                <>
+                  <button
+                    type="button"
+                    disabled={avatarBusy}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="group absolute inset-0 rounded-full transition-colors hover:bg-charcoal/45 focus-visible:bg-charcoal/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour flex items-center justify-center text-sailcloth cursor-pointer"
+                    aria-label="Upload athlete photo"
+                  >
+                    <Camera className="h-5 w-5 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity" aria-hidden />
+                    <span
+                      aria-hidden
+                      className="absolute bottom-0.5 right-0.5 rounded-full bg-warm-white border border-cool-veil p-1.5 text-harbour shadow-sm group-hover:bg-sailcloth transition flex items-center justify-center"
+                    >
+                      <Camera className="h-3.5 w-3.5" />
+                    </span>
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    className="hidden"
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) onUploadAvatar(f);
+                      e.target.value = "";
+                    }}
+                  />
+                </>
               )}
             </div>
-
-            {/* Name + Badges + Passport Metadata */}
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-harbour-shadow tracking-tight">
-                  {displaySailor.name}
-                </h1>
-
-                {!boardSummary && resolvedNatSquad && (
-                  <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[13px] font-bold ${natSquadBadgeClass(
-                      resolvedNatSquad
-                    )}`}
-                  >
-                    {resolvedNatSquad}
-                  </span>
-                )}
-
-                {profileClaimed || profileVerified ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
-                    <BadgeCheck className="h-3 w-3 text-emerald-600" />
-                    Claimed
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[11px] font-bold text-amber-800">
-                    <ShieldAlert className="h-3 w-3 text-amber-600" />
-                    Unclaimed
-                  </span>
-                )}
-              </div>
-
-              {/* Identity passport: sail numbers · club · nation · age · weight */}
-              <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] sm:text-[13px] text-slate-soft">
-                {(() => {
-                  const parts: ReactNode[] = [];
-                  const push = (node: ReactNode, key: string) => {
-                    if (parts.length > 0) {
-                      parts.push(
-                        <span
-                          key={`sep-${key}`}
-                          className="text-neutral-600"
-                          aria-hidden
-                        >
-                          ·
-                        </span>
-                      );
-                    }
-                    parts.push(<span key={key}>{node}</span>);
-                  };
-
-                  // Optimist sail stays off a board-class view.
-                  if (
-                    !boardSummary &&
-                    !leftOptimistYear &&
-                    sailDisplay &&
-                    sailDisplay !== "—" &&
-                    !/^SGP\s*0+$/i.test(sailDisplay)
-                  ) {
-                    push(
-                      <span className="tabular-nums font-bold text-harbour-shadow">
-                        {formatSailNumber(sailDisplay, displaySailor.nationality) ||
-                          (sailDisplay.includes(" ")
-                            ? sailDisplay
-                            : `${noc} ${sailDisplay}`)}
-                      </span>,
-                      "opt-sail"
-                    );
-                  }
-
-                  // ILCA sail stays off a board-class view.
-                  if (!boardSummary && sailIlca4) {
-                    push(
-                      <span className="tabular-nums font-bold text-harbour">
-                        ILCA{" "}
-                        {sailIlca4.includes(" ")
-                          ? sailIlca4
-                          : `${noc} ${sailIlca4}`}
-                      </span>,
-                      "ilca-sail"
-                    );
-                  }
-
-                  if (boardNumber && boardNumber !== "0") {
-                    push(
-                      <span className="tabular-nums font-bold text-harbour-shadow">
-                        Board {boardNumber}
-                      </span>,
-                      "board-number"
-                    );
-                  }
-
-                  // Club
-                  if (displaySailor.club) {
-                    push(
-                      <span className="text-charcoal font-semibold">
-                        {String(displaySailor.club)}
-                      </span>,
-                      "club"
-                    );
-                  }
-
-                  // School
-                  if (displaySailor.school && (!previewPublic || displaySailor.showSchoolOnPublicProfile)) {
-                    push(
-                      <span className="text-slate-soft">
-                        {String(displaySailor.school)}
-                      </span>,
-                      "school"
-                    );
-                  }
-
-                  // Nationality
-                  push(
-                    <span className="inline-flex items-center gap-1 text-charcoal">
-                      <span aria-hidden>
-                        {nationalityFlag(displaySailor.nationality)}
-                      </span>
-                      {nationalityLabel(displaySailor.nationality)}
-                    </span>,
-                    "nat"
-                  );
-
-                  // Age / Born Year. Unknown years stay off the card entirely.
-                  const yearLabel = knownBirthYearLabel(bornYear);
-                  const dobText = String(fullDobLabel || "").trim();
-                  const dobLabel =
-                    showFullDob && dobText && dobText !== "—" && dobText !== "-"
-                      ? dobText
-                      : null;
-                  if (yearLabel || dobLabel) {
-                    push(
-                      dobLabel ? (
-                        <>
-                          Born{" "}
-                          <span className="text-charcoal font-semibold">
-                            {dobLabel}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          Born{" "}
-                          <span className="text-charcoal font-semibold">
-                            {yearLabel}
-                          </span>
-                        </>
-                      ),
-                      "born"
-                    );
-                  }
-
-                  // Weight
-                  if (showWeight && displaySailor.weight != null) {
-                    push(
-                      <>
-                        <span className="text-charcoal font-semibold">
-                          {displaySailor.weight} kg
-                        </span>
-                      </>,
-                      "weight"
-                    );
-                  }
-
-                  // Drop label
-                  const dropYmd = boardSummary
-                    ? ""
-                    : displaySailor.dropDate
-                    ? String(displaySailor.dropDate).slice(0, 10)
-                    : "";
-                  if (/^\d{4}-\d{2}-\d{2}$/.test(dropYmd)) {
-                    const dropLabel = (() => {
-                      try {
-                        return new Date(`${dropYmd}T12:00:00+08:00`).toLocaleDateString(
-                          "en-SG",
-                          {
-                            month: "short",
-                            year: "numeric",
-                            timeZone: "Asia/Singapore",
-                          }
-                        );
-                      } catch {
-                        return dropYmd.slice(0, 7);
-                      }
-                    })();
-                    push(
-                      <span className="text-racing-orange font-semibold">
-                        Left series {dropLabel}
-                      </span>,
-                      "drop"
-                    );
-                  }
-
-                  return parts;
-                })()}
-              </div>
-            </div>
+            {ownerView && !demoMode && displaySailor.avatarUrl && onRemoveAvatar && (
+              <button
+                type="button"
+                disabled={avatarBusy}
+                onClick={onRemoveAvatar}
+                className="text-[11px] font-semibold text-slate-soft hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                Remove photo
+              </button>
+            )}
           </div>
 
-          <div className="w-full sm:w-auto shrink-0 sm:pt-1">
+          <div className="pt-3 flex flex-col items-end min-w-0">
             {showClassSelector ? (
               <div
-                className="flex rounded-xl bg-sailcloth border border-cool-veil p-1 w-full sm:w-auto"
+                className="flex rounded-full bg-sailcloth border border-cool-veil p-1 max-w-full overflow-x-auto"
                 role="tablist"
                 aria-label="Sailing class"
               >
@@ -586,7 +413,7 @@ export function HeroAthleteCard({
                         }
                       }}
                       aria-label={choice.label}
-                      className={`flex-1 sm:flex-none rounded-lg px-3 py-2 text-[13px] font-bold transition min-h-[40px] ${
+                      className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition whitespace-nowrap cursor-pointer ${
                         selected
                           ? "bg-harbour text-sailcloth shadow-xs"
                           : "text-slate-soft hover:text-charcoal"
@@ -600,22 +427,393 @@ export function HeroAthleteCard({
             ) : (
               <p
                 aria-label={singleClass[1]}
-                className="inline-flex items-center rounded-xl bg-harbour px-3 py-2 text-[13px] font-bold text-sailcloth min-h-[40px]"
+                className="inline-flex items-center rounded-full bg-harbour px-3.5 py-1.5 text-xs font-bold text-sailcloth"
               >
                 {singleClass[1]}
               </p>
             )}
             {boardSummary?.sharedDivision && (
-              <p className="mt-1 text-[12px] font-semibold text-slate-soft sm:text-right">
+              <p className="mt-1 text-[12px] font-semibold text-slate-soft text-right">
                 {boardSummary.sharedDivision}
               </p>
             )}
           </div>
         </div>
 
+        {/* LinkedIn-style stacked identity hierarchy */}
+        <div className="min-w-0 space-y-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-black text-harbour-shadow tracking-tight">
+              {displaySailor.name}
+            </h1>
+
+            {!boardSummary && resolvedNatSquad && (
+              <span
+                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${natSquadBadgeClass(
+                  resolvedNatSquad
+                )}`}
+              >
+                {resolvedNatSquad}
+              </span>
+            )}
+
+            {profileClaimed || profileVerified ? (
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+                <BadgeCheck className="h-3 w-3 text-emerald-600" />
+                Claimed
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                <ShieldAlert className="h-3 w-3 text-amber-600" />
+                Unclaimed
+              </span>
+            )}
+          </div>
+
+          {(() => {
+            const headlineParts: ReactNode[] = [];
+            const pushHeadline = (node: ReactNode, key: string) => {
+              if (headlineParts.length > 0) {
+                headlineParts.push(
+                  <span key={`hsep-${key}`} className="text-slate-soft" aria-hidden>
+                    ·
+                  </span>
+                );
+              }
+              headlineParts.push(<span key={key}>{node}</span>);
+            };
+
+            if (
+              !boardSummary &&
+              !leftOptimistYear &&
+              sailDisplay &&
+              sailDisplay !== "—" &&
+              !/^SGP\s*0+$/i.test(sailDisplay)
+            ) {
+              pushHeadline(
+                <span className="tabular-nums font-bold text-harbour-shadow">
+                  {formatSailNumber(sailDisplay, displaySailor.nationality) ||
+                    (sailDisplay.includes(" ") ? sailDisplay : `${noc} ${sailDisplay}`)}
+                </span>,
+                "opt-sail"
+              );
+            }
+
+            if (!boardSummary && sailIlca4) {
+              pushHeadline(
+                <span className="tabular-nums font-bold text-harbour">
+                  ILCA{" "}
+                  {sailIlca4.includes(" ") ? sailIlca4 : `${noc} ${sailIlca4}`}
+                </span>,
+                "ilca-sail"
+              );
+            }
+
+            if (boardNumber && boardNumber !== "0") {
+              pushHeadline(
+                <span className="tabular-nums font-bold text-harbour-shadow">
+                  Board {boardNumber}
+                </span>,
+                "board-number"
+              );
+            }
+
+            if (displaySailor.club) {
+              pushHeadline(
+                <span className="font-semibold text-charcoal">
+                  {String(displaySailor.club)}
+                </span>,
+                "club"
+              );
+            }
+
+            if (
+              displaySailor.school &&
+              (!previewPublic || displaySailor.showSchoolOnPublicProfile)
+            ) {
+              pushHeadline(
+                <span className="text-slate-soft font-medium">
+                  {String(displaySailor.school)}
+                </span>,
+                "school"
+              );
+            }
+
+            const metaParts: ReactNode[] = [];
+            const pushMeta = (node: ReactNode, key: string) => {
+              if (metaParts.length > 0) {
+                metaParts.push(
+                  <span key={`msep-${key}`} className="text-slate-soft" aria-hidden>
+                    ·
+                  </span>
+                );
+              }
+              metaParts.push(<span key={key}>{node}</span>);
+            };
+
+            pushMeta(
+              <span className="inline-flex items-center gap-1 text-charcoal">
+                <span aria-hidden>{nationalityFlag(displaySailor.nationality)}</span>
+                {nationalityLabel(displaySailor.nationality)}
+              </span>,
+              "nat"
+            );
+
+            const yearLabel = knownBirthYearLabel(bornYear);
+            const dobText = String(fullDobLabel || "").trim();
+            const dobLabel =
+              showFullDob && dobText && dobText !== "—" && dobText !== "-"
+                ? dobText
+                : null;
+            if (yearLabel || dobLabel) {
+              pushMeta(
+                dobLabel ? (
+                  <>
+                    Born <span className="text-charcoal font-semibold">{dobLabel}</span>
+                  </>
+                ) : (
+                  <>
+                    Born <span className="text-charcoal font-semibold">{yearLabel}</span>
+                  </>
+                ),
+                "born"
+              );
+            }
+
+            if (showWeight && displaySailor.weight != null) {
+              pushMeta(
+                <span className="text-charcoal font-semibold">
+                  {displaySailor.weight} kg
+                </span>,
+                "weight"
+              );
+            }
+
+            const dropYmd = boardSummary
+              ? ""
+              : displaySailor.dropDate
+              ? String(displaySailor.dropDate).slice(0, 10)
+              : "";
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dropYmd)) {
+              const dropLabel = (() => {
+                try {
+                  return new Date(`${dropYmd}T12:00:00+08:00`).toLocaleDateString(
+                    "en-SG",
+                    {
+                      month: "short",
+                      year: "numeric",
+                      timeZone: "Asia/Singapore",
+                    }
+                  );
+                } catch {
+                  return dropYmd.slice(0, 7);
+                }
+              })();
+              pushMeta(
+                <span className="text-racing-orange font-semibold">
+                  Left series {dropLabel}
+                </span>,
+                "drop"
+              );
+            }
+
+            return (
+              <div className="space-y-1">
+                {headlineParts.length > 0 && (
+                  <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-charcoal">
+                    {headlineParts}
+                  </p>
+                )}
+                <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:text-[13px] text-slate-soft">
+                  {metaParts}
+                </p>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* LinkedIn-style Action Pill Row */}
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
+          <div className="flex flex-wrap items-center gap-2">
+            {followControl ? (
+              <FollowSailorButton
+                sailorId={followControl.sailorId}
+                initiallyFollowing={followControl.following}
+                disabled={followControl.disabled}
+                disabledReason="You already manage this sailor"
+                nextPath={
+                  followControl.nextPath ||
+                  (displaySailor.handle ? `/sailors/${displaySailor.handle}` : "/following")
+                }
+              />
+            ) : null}
+
+            <button
+              type="button"
+              onClick={handleShare}
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-cool-veil bg-warm-white px-4 py-1.5 text-[13px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-3.5 w-3.5 text-emerald-600" />
+                  <span className="text-emerald-700">Copied link</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="h-3.5 w-3.5 text-harbour" />
+                  <span>Share profile</span>
+                </>
+              )}
+            </button>
+
+            {showUnclaimedBanner && onRequestAccess && (
+              <button
+                type="button"
+                onClick={onRequestAccess}
+                className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-cool-veil bg-warm-white hover:bg-sailcloth px-4 py-1.5 text-[13px] font-bold text-harbour transition touch-manipulation cursor-pointer shadow-2xs"
+              >
+                <UserPlus className="h-3.5 w-3.5" aria-hidden />
+                Request profile access
+              </button>
+            )}
+
+            {!showUnclaimedBanner && !demoMode && !isLoggedIn && !profileClaimed && (
+              <Link
+                href={`/login?next=${encodeURIComponent(
+                  `/sailors/${displaySailor.handle || ""}`
+                )}`}
+                className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-harbour hover:bg-harbour-shadow px-4 py-1.5 text-[13px] font-bold text-white shadow-xs transition"
+              >
+                <UserPlus className="h-3.5 w-3.5" aria-hidden />
+                Claim this profile
+              </Link>
+            )}
+
+            {!showUnclaimedBanner &&
+              canClaim &&
+              claimStatus !== "pending" &&
+              onToggleClaimPanel && (
+                <button
+                  type="button"
+                  disabled={demoMode && !onDemoClaim}
+                  onClick={() => {
+                    if (demoMode) {
+                      onDemoClaim?.();
+                      return;
+                    }
+                    onToggleClaimPanel();
+                  }}
+                  className={
+                    profileClaimed && !demoMode
+                      ? "inline-flex min-h-10 items-center gap-1.5 rounded-full border border-cool-veil bg-warm-white hover:bg-sailcloth px-4 py-1.5 text-[13px] font-bold text-charcoal transition touch-manipulation disabled:opacity-50 cursor-pointer shadow-2xs"
+                      : "inline-flex min-h-10 items-center gap-1.5 rounded-full bg-harbour hover:bg-harbour-shadow px-4 py-1.5 text-[13px] font-bold text-white shadow-xs transition touch-manipulation disabled:opacity-50 cursor-pointer"
+                  }
+                >
+                  <UserPlus className="h-3.5 w-3.5" aria-hidden />
+                  {demoMode
+                    ? "Claim profile (demo)"
+                    : claimPanelOpen
+                      ? "Cancel"
+                      : profileClaimed
+                        ? "Request access"
+                        : "Claim this profile"}
+                </button>
+              )}
+
+            {canClaim && claimStatus === "pending" && (
+              <span className="text-[12px] font-semibold text-amber-800 px-3 py-1.5 bg-amber-50 rounded-full border border-amber-200">
+                Claim pending review
+              </span>
+            )}
+          </div>
+
+          {isOwner && (
+            <div className="flex items-center gap-2">
+              {onTogglePreviewPublic && (
+                <button
+                  type="button"
+                  onClick={onTogglePreviewPublic}
+                  className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
+                    previewPublic
+                      ? "border-harbour/40 bg-aqua-mist text-harbour"
+                      : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
+                  }`}
+                >
+                  {previewPublic ? (
+                    <EyeOff className="h-3.5 w-3.5 text-harbour" />
+                  ) : (
+                    <Eye className="h-3.5 w-3.5 text-slate-soft" />
+                  )}
+                  {previewPublic ? "Exit preview" : "Preview public"}
+                </button>
+              )}
+
+              {!previewPublic && onToggleEditing && (
+                <button
+                  type="button"
+                  onClick={onToggleEditing}
+                  className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
+                    editing
+                      ? "border-harbour/40 bg-aqua-mist text-harbour"
+                      : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
+                  }`}
+                >
+                  <Pencil className="h-3.5 w-3.5 text-harbour" />
+                  {editing ? "Close editor" : "Edit profile"}
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        {((followControl && !followControl.disabled) || showUnclaimedBanner) && (
+          <div className="space-y-1 text-xs leading-5 text-slate-soft">
+            {followControl && !followControl.disabled && (
+              <p>
+                Follow to keep this sailor’s results in your Following feed.
+                {isLoggedIn ? "" : " Sign in to save your follows."}
+              </p>
+            )}
+            {showUnclaimedBanner && (
+              <p>
+                <span className="font-semibold text-charcoal">
+                  Your profile or your child’s?
+                </span>{" "}
+                We review requests before granting access.
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Feedback messages */}
+        {avatarMsg && (
+          <p
+            role={avatarStatus === "error" ? "alert" : "status"}
+            className={`text-[13px] font-medium ${
+              avatarStatus === "error" ? "text-rose-600" : "text-emerald-600"
+            }`}
+          >
+            {avatarMsg}
+          </p>
+        )}
+        {claimMsg && (
+          <p
+            className={`text-[13px] font-medium ${
+              claimStatus === "error" ? "text-rose-600" : "text-emerald-600"
+            }`}
+          >
+            {claimMsg}{" "}
+            {claimStatus === "pending" && !demoMode && (
+              <Link href="/account" className="underline font-bold text-harbour">
+                My account
+              </Link>
+            )}
+          </p>
+        )}
+
         <section
           aria-label="Bio"
-          className="rounded-xl border border-cool-veil bg-sailcloth/60 p-3.5 sm:p-4"
+          className="border-t border-cool-veil pt-4"
         >
           <div className="flex items-center justify-between gap-3">
             <p className="text-[11px] font-bold uppercase tracking-wider text-slate-soft">
@@ -755,8 +953,8 @@ export function HeroAthleteCard({
           )}
 
           <div
-            className={`grid grid-cols-1 gap-2.5 ${
-              hasMedals && medals && awardTotal > 0 ? "sm:grid-cols-2" : ""
+            className={`grid gap-2.5 ${
+              hasMedals && medals && awardTotal > 0 ? "grid-cols-2" : "grid-cols-1"
             }`}
           >
             <div
@@ -803,188 +1001,6 @@ export function HeroAthleteCard({
           </>
           )}
         </div>
-
-        {/* Action Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-cool-veil">
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Share Profile button */}
-            {followControl ? (
-              <FollowSailorButton
-                sailorId={followControl.sailorId}
-                initiallyFollowing={followControl.following}
-                disabled={followControl.disabled}
-                disabledReason="You already manage this sailor"
-                nextPath={followControl.nextPath || (displaySailor.handle ? `/sailors/${displaySailor.handle}` : "/following")}
-              />
-            ) : null}
-            <button
-              type="button"
-              onClick={handleShare}
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[13px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-3.5 w-3.5 text-emerald-600" />
-                  <span className="text-emerald-700">Copied link</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="h-3.5 w-3.5 text-harbour" />
-                  <span>Share profile</span>
-                </>
-              )}
-            </button>
-
-            {/* Single unified claim / access request action */}
-            {showUnclaimedBanner && onRequestAccess && (
-              <button
-                type="button"
-                onClick={onRequestAccess}
-                className="sp-secondary inline-flex min-h-11 items-center gap-1.5 px-4 py-2 text-[13px] font-bold touch-manipulation cursor-pointer"
-              >
-                <UserPlus className="h-3.5 w-3.5" aria-hidden />
-                Request profile access
-              </button>
-            )}
-
-            {!showUnclaimedBanner &&
-              !demoMode &&
-              !isLoggedIn &&
-              !profileClaimed && (
-                <Link
-                  href={`/login?next=${encodeURIComponent(
-                    `/sailors/${displaySailor.handle || ""}`
-                  )}`}
-                  className="sp-primary inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 text-[13px] font-bold text-white shadow-xs"
-                >
-                  <UserPlus className="h-3.5 w-3.5" aria-hidden />
-                  Claim this profile
-                </Link>
-              )}
-
-            {!showUnclaimedBanner &&
-              canClaim &&
-              claimStatus !== "pending" &&
-              onToggleClaimPanel && (
-                <button
-                  type="button"
-                  disabled={demoMode && !onDemoClaim}
-                  onClick={() => {
-                    if (demoMode) {
-                      onDemoClaim?.();
-                      return;
-                    }
-                    onToggleClaimPanel();
-                  }}
-                  className={
-                    profileClaimed && !demoMode
-                      ? "sp-secondary inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 text-[13px] font-bold touch-manipulation disabled:opacity-50 cursor-pointer"
-                      : "sp-primary inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 text-[13px] font-bold text-white shadow-xs touch-manipulation disabled:opacity-50 cursor-pointer"
-                  }
-                >
-                  <UserPlus className="h-3.5 w-3.5" aria-hidden />
-                  {demoMode
-                    ? "Claim profile (demo)"
-                    : claimPanelOpen
-                      ? "Cancel"
-                      : profileClaimed
-                        ? "Request access"
-                        : "Claim this profile"}
-                </button>
-              )}
-
-            {canClaim && claimStatus === "pending" && (
-              <span className="text-[12px] font-semibold text-amber-800 px-2.5 py-1.5 bg-amber-50 rounded-lg border border-amber-200">
-                Claim pending review
-              </span>
-            )}
-          </div>
-
-          {/* Owner controls: Edit & Preview Public */}
-          {isOwner && (
-            <div className="flex items-center gap-2">
-              {onTogglePreviewPublic && (
-                <button
-                  type="button"
-                  onClick={onTogglePreviewPublic}
-                  className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
-                    previewPublic
-                      ? "border-harbour/40 bg-aqua-mist text-harbour"
-                      : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
-                  }`}
-                >
-                  {previewPublic ? (
-                    <EyeOff className="h-3.5 w-3.5 text-harbour" />
-                  ) : (
-                    <Eye className="h-3.5 w-3.5 text-slate-soft" />
-                  )}
-                  {previewPublic ? "Exit preview" : "Preview public"}
-                </button>
-              )}
-
-              {!previewPublic && onToggleEditing && (
-                <button
-                  type="button"
-                  onClick={onToggleEditing}
-                  className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
-                    editing
-                      ? "border-harbour/40 bg-aqua-mist text-harbour"
-                      : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
-                  }`}
-                >
-                  <Pencil className="h-3.5 w-3.5 text-harbour" />
-                  {editing ? "Close editor" : "Edit profile"}
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-
-        {(followControl || showUnclaimedBanner) && (
-          <div className="space-y-1 text-xs leading-5 text-slate-soft">
-            {followControl && (
-              <p>
-                {followControl.disabled
-                  ? "You already manage this sailor. Your account has links to the sailing workspace."
-                  : `Follow to keep this sailor’s results in your Following feed.${isLoggedIn ? "" : " Sign in to save your follows."}`}
-              </p>
-            )}
-            {showUnclaimedBanner && (
-              <p>
-                <span className="font-semibold text-charcoal">
-                  Your profile or your child’s?
-                </span>{" "}
-                We review requests before granting access.
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* Feedback messages */}
-        {avatarMsg && (
-          <p
-            role={avatarStatus === "error" ? "alert" : "status"}
-            className={`text-[13px] font-medium ${
-              avatarStatus === "error" ? "text-rose-600" : "text-emerald-600"
-            }`}
-          >
-            {avatarMsg}
-          </p>
-        )}
-        {claimMsg && (
-          <p
-            className={`text-[13px] font-medium ${
-              claimStatus === "error" ? "text-rose-600" : "text-emerald-600"
-            }`}
-          >
-            {claimMsg}{" "}
-            {claimStatus === "pending" && !demoMode && (
-              <Link href="/account" className="underline font-bold text-harbour">
-                My account
-              </Link>
-            )}
-          </p>
-        )}
       </div>
     </header>
   );
@@ -1027,8 +1043,8 @@ function BoardSummaryCards({
       </div>
 
       <div
-        className={`grid grid-cols-1 gap-2.5 ${
-          awardTotal > 0 ? "sm:grid-cols-2" : ""
+        className={`grid gap-2.5 ${
+          awardTotal > 0 ? "grid-cols-2" : "grid-cols-1"
         }`}
       >
         <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5">

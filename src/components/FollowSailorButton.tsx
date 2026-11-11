@@ -70,7 +70,7 @@ export function FollowSailorButton({
         disabled={disabled || busy}
         aria-pressed={following}
         title={disabled ? disabledReason : undefined}
-        className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation shadow-2xs ${
+        className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-4 py-1.5 text-[13px] font-bold transition touch-manipulation shadow-2xs ${
           disabled
             ? "cursor-not-allowed border-cool-veil bg-sailcloth text-slate-soft"
             : following

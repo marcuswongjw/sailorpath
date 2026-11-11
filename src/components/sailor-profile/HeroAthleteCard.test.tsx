@@ -91,6 +91,9 @@ describe("HeroAthleteCard", () => {
       />
     );
     expect(screen.getByRole("button", { name: "Follow" })).toBeDisabled();
+    expect(
+      screen.queryByText(/Your account has links to the sailing workspace/)
+    ).toBeNull();
   });
 
   it("hides a generated results bio and still shows the follow form before sign-in", () => {
@@ -149,6 +152,9 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByText("Optimist regattas logged")).toBeInTheDocument();
     expect(screen.getByText("6 awards")).toBeInTheDocument();
     expect(screen.getByText("View awards")).toBeInTheDocument();
+    expect(
+      screen.getByRole("group", { name: "15 Optimist regattas" }).parentElement
+    ).toHaveClass("grid-cols-2");
     expect(screen.getByLabelText("Optimist")).toBeInTheDocument();
 
     expect(screen.getByRole("region", { name: "Bio" })).toBeInTheDocument();

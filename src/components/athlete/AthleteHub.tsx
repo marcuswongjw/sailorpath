@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import {
   Trophy,
   User,
-  Sailboat,
   FileText,
   ExternalLink,
   Plus,
@@ -328,15 +327,19 @@ function AthleteWorkspace({
     return true;
   });
 
+  const evidenceDocs = useMemo(
+    () => results.filter((r) => r.evidenceUrl || r.officialUrl),
+    [results]
+  );
+
   return (
-    <div className="space-y-6">
-      {/* Athlete Header Card */}
-      <div className="rounded-3xl border border-[var(--sp-cool-veil)] p-6 sm:p-8 bg-[var(--sp-warm-white)] shadow-xs relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            {/* Avatar */}
-            <div className="flex flex-col items-center gap-1.5 shrink-0">
-              <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] shadow-2xs">
+    <div className="space-y-5">
+      {/* Compact Header & Underline Tabs */}
+      <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs overflow-hidden">
+        <div className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-4 min-w-0">
+            <div className="flex flex-col items-center gap-1 shrink-0">
+              <div className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-full overflow-hidden bg-[var(--sp-sailcloth)] border-2 border-[var(--sp-cool-veil)] shadow-2xs">
                 {athlete.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -346,7 +349,7 @@ function AthleteWorkspace({
                   />
                 ) : (
                   <div className="h-full w-full flex items-center justify-center text-[var(--sp-slate-soft)]">
-                    <User className="h-8 w-8" />
+                    <User className="h-7 w-7" />
                   </div>
                 )}
               </div>
@@ -357,51 +360,38 @@ function AthleteWorkspace({
                   onClick={() => void handleRemovePhoto()}
                   className="text-[11px] font-semibold text-[var(--sp-slate-soft)] hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  {removingAvatar ? "Removing..." : "Remove photo"}
+                  {removingAvatar ? "Removing…" : "Remove photo"}
                 </button>
               )}
             </div>
 
-            {/* Identity Info */}
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-charcoal)] tracking-tight">
-                  {athlete.name}
-                </h1>
-                {athlete.currentFleet && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
-                    {athlete.currentFleet} Fleet
-                  </span>
-                )}
-                {athlete.nationalSquadStatus && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
-                    National Squad
-                  </span>
-                )}
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--sp-slate-soft)]">
-                {athlete.sailNumber && (
-                  <span className="font-mono font-bold text-[var(--sp-charcoal)]">
-                    Sail: {athlete.nationality || "SIN"} {athlete.sailNumber}
-                  </span>
-                )}
-                {athlete.club && <span>· Club: {athlete.club}</span>}
-                {athlete.school && <span>· School: {athlete.school}</span>}
-              </div>
+            <div className="min-w-0 space-y-1">
+              <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] tracking-tight truncate">
+                {athlete.name}
+              </h1>
+              <p className="text-xs text-[var(--sp-slate-soft)] truncate">
+                {[
+                  athlete.sailNumber
+                    ? `${athlete.nationality || "SGP"} ${athlete.sailNumber}`
+                    : null,
+                  athlete.club || null,
+                  athlete.currentFleet ? `${athlete.currentFleet} Fleet` : null,
+                ]
+                  .filter(Boolean)
+                  .join(" · ") || "Sailor logbook"}
+              </p>
             </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="flex items-center gap-2 sm:self-start">
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
             <Link
               href={`/sailors/${athlete.handle}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-3.5 py-2 text-xs font-bold transition-all shadow-2xs"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-4 py-2 text-xs font-bold transition-colors shadow-2xs"
             >
-              <span>View Public Profile</span>
-              <ExternalLink className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
+              <span>Public profile</span>
+              <ExternalLink className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" aria-hidden="true" />
             </Link>
             <button
               type="button"
@@ -409,176 +399,115 @@ function AthleteWorkspace({
                 setEditingResult(null);
                 setEvidenceModalOpen(true);
               }}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-4 py-2 text-[15px] font-semibold transition-all shadow-xs"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-5 py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer"
             >
-              <Plus className="h-4 w-4" />
-              <span>Log Score</span>
+              <Plus className="h-4 w-4" aria-hidden="true" />
+              <span>Log regatta</span>
             </button>
           </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="mt-8 pt-4 border-t border-[var(--sp-cool-veil)] flex gap-2 overflow-x-auto scrollbar-thin">
-          <button
-            type="button"
-            onClick={() => changeTab("results")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-              activeTab === "results"
-                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
-            }`}
-          >
-            <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)]" />
-            <span>Regattas &amp; Evidence Logbook</span>
-            <span className={`ml-1 rounded-full px-2 py-0.5 text-[11px] font-bold ${
-              activeTab === "results" ? "bg-white/20 text-white" : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]"
-            }`}>
-              {results.length}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => changeTab("profile")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-              activeTab === "profile"
-                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
-            }`}
-          >
-            <User className="h-4 w-4" />
-            <span>Athlete Profile</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => changeTab("equipment")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-              activeTab === "equipment"
-                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
-            }`}
-          >
-            <Sailboat className="h-4 w-4" />
-            <span>Equipment Locker</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => changeTab("documents")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-              activeTab === "documents"
-                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
-            }`}
-          >
-            <FileText className="h-4 w-4" />
-            <span>Evidence Documents</span>
-            <span className={`ml-1 rounded-full px-2 py-0.5 text-[11px] font-bold ${
-              activeTab === "documents" ? "bg-white/20 text-white" : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]"
-            }`}>
-              {results.filter((r) => r.evidenceUrl || r.officialUrl).length}
-            </span>
-          </button>
-        </div>
+        <nav
+          aria-label="Logbook sections"
+          role="tablist"
+          className="border-t border-[var(--sp-cool-veil)] px-5 sm:px-6 flex gap-6 overflow-x-auto scrollbar-thin"
+        >
+          {(
+            [
+              { id: "results", label: "Logbook", count: results.length },
+              { id: "profile", label: "Profile" },
+              { id: "equipment", label: "Equipment" },
+              { id: "documents", label: "Documents", count: evidenceDocs.length },
+            ] as Array<{ id: WorkspaceTab; label: string; count?: number }>
+          ).map((tab) => {
+            const selected = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                onClick={() => changeTab(tab.id)}
+                className={`inline-flex min-h-11 items-center gap-2 border-b-2 py-3 text-xs sm:text-[13px] font-bold transition-colors whitespace-nowrap cursor-pointer ${
+                  selected
+                    ? "border-[var(--sp-harbour-teal)] text-[var(--sp-harbour-teal)]"
+                    : "border-transparent text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)]"
+                }`}
+              >
+                <span>{tab.label}</span>
+                {typeof tab.count === "number" && (
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${
+                      selected
+                        ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                        : "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]"
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
       </div>
 
-      {/* Tab 1: Regattas & Results Logbook */}
+      {/* Tab 1: Regattas Logbook */}
       {activeTab === "results" && (
         <div className="space-y-4">
-          {/* Filter Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-2 rounded-2xl">
+          {results.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setResultFilter("all")}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  resultFilter === "all"
-                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                    : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-white"
-                }`}
-              >
-                All ({results.length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setResultFilter("verified")}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  resultFilter === "verified"
-                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                    : "text-[var(--sp-slate-soft)] hover:text-emerald-700 hover:bg-emerald-50"
-                }`}
-              >
-                Verified ✓ ({verifiedCount})
-              </button>
-              <button
-                type="button"
-                onClick={() => setResultFilter("under_review")}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  resultFilter === "under_review"
-                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                    : "text-[var(--sp-slate-soft)] hover:text-sky-700 hover:bg-sky-50"
-                }`}
-              >
-                Under Review ({underReviewCount})
-              </button>
-              <button
-                type="button"
-                onClick={() => setResultFilter("self")}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  resultFilter === "self"
-                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                    : "text-[var(--sp-slate-soft)] hover:text-amber-800 hover:bg-amber-50"
-                }`}
-              >
-                Self-Reported ({selfCount})
-              </button>
-              {rejectedCount > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setResultFilter("rejected")}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    resultFilter === "rejected"
-                      ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                      : "text-[var(--sp-slate-soft)] hover:text-rose-700 hover:bg-rose-50"
-                  }`}
-                >
-                  Rejected ✕ ({rejectedCount})
-                </button>
-              )}
+              {(
+                [
+                  { id: "all", label: "All", count: results.length },
+                  { id: "verified", label: "Verified", count: verifiedCount },
+                  { id: "under_review", label: "Under review", count: underReviewCount },
+                  { id: "self", label: "Self-reported", count: selfCount },
+                  ...(rejectedCount > 0
+                    ? [{ id: "rejected" as const, label: "Rejected", count: rejectedCount }]
+                    : []),
+                ] as Array<{
+                  id: "all" | "verified" | "under_review" | "self" | "rejected";
+                  label: string;
+                  count: number;
+                }>
+              ).map((chip) => {
+                const active = resultFilter === chip.id;
+                return (
+                  <button
+                    key={chip.id}
+                    type="button"
+                    onClick={() => setResultFilter(chip.id)}
+                    className={`min-h-9 rounded-full border px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
+                      active
+                        ? "border-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)] text-white shadow-2xs"
+                        : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
+                    }`}
+                  >
+                    {chip.label} ({chip.count})
+                  </button>
+                );
+              })}
             </div>
+          )}
 
-            <button
-              type="button"
-              onClick={() => {
-                setEditingResult(null);
-                setEvidenceModalOpen(true);
-              }}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-harbour-teal)]/40 bg-white hover:bg-[var(--sp-sailcloth)] active:scale-[0.98] px-4 py-2 text-[15px] font-semibold text-[var(--sp-harbour-teal)] transition-all shadow-2xs"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Log Regatta Score &amp; Evidence</span>
-            </button>
-          </div>
-
-          {/* Results List */}
           {loadingResults ? (
-            <div className="p-12 text-center text-[var(--sp-slate-soft)] flex items-center justify-center gap-2">
-              <Loader2 className="h-5 w-5 animate-spin text-[var(--sp-racing-orange)]" />
-              <span>Loading regatta logbook...</span>
+            <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-12 text-center text-sm text-[var(--sp-slate-soft)] flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin text-[var(--sp-harbour-teal)]" />
+              <span>Loading regatta logbook…</span>
             </div>
           ) : filteredResults.length === 0 ? (
             results.length === 0 ? (
-              <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-12 text-center space-y-4 shadow-xs">
-                <div className="mx-auto h-12 w-12 rounded-2xl bg-[var(--sp-racing-mist)]/30 text-[var(--sp-racing-orange)] flex items-center justify-center border border-[var(--sp-racing-orange)]/30">
-                  <Trophy className="h-6 w-6" />
+              <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-10 text-center space-y-4 shadow-xs">
+                <div className="mx-auto h-11 w-11 rounded-2xl bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] flex items-center justify-center">
+                  <Trophy className="h-5 w-5" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
-                    Log your first regatta
-                  </h3>
-                  <p className="text-xs text-[var(--sp-slate-soft)] max-w-sm mx-auto">
-                    Log personal, club, or overseas regattas to track performance — attach official evidence to earn a Verified ✓ badge.
+                  <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
+                    No regattas logged yet
+                  </h2>
+                  <p className="text-xs text-[var(--sp-slate-soft)] max-w-sm mx-auto leading-relaxed">
+                    Add overseas, club, or non-ranking regattas and attach official results to earn a Verified badge.
                   </p>
                 </div>
                 <button
@@ -587,493 +516,440 @@ function AthleteWorkspace({
                     setEditingResult(null);
                     setEvidenceModalOpen(true);
                   }}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-[15px] font-semibold transition-all shadow-xs"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-sm font-semibold transition-colors shadow-xs cursor-pointer"
                 >
                   <Plus className="h-4 w-4" />
-                  <span>Log Regatta Score</span>
+                  <span>Log your first regatta</span>
                 </button>
               </div>
             ) : (
               <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 text-center text-xs text-[var(--sp-slate-soft)] shadow-xs">
-                No regattas match the selected filter.
+                No regattas match this filter.
               </div>
             )
           ) : (
-            <div className="space-y-3">
-              {filteredResults.map((r) => (
-                <div
-                  key={r.id}
-                  className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs transition-all hover:border-[var(--sp-aqua-deep)]/40 hover:shadow-sm space-y-3"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h4 className="text-base font-bold text-[var(--sp-charcoal)]">
-                          {r.regattaName}
-                        </h4>
-                        {r.countsForRanking ? (
-                          <span className="rounded-full bg-teal-50 border border-teal-200 px-2.5 py-0.5 text-[11px] font-black uppercase text-[var(--sp-harbour-teal)]">
-                            Singapore Series Ranking
+            <ul className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] divide-y divide-[var(--sp-cool-veil)] shadow-xs overflow-hidden">
+              {filteredResults.map((r) => {
+                const verified = isResultVerified(r);
+                return (
+                  <li key={r.id} className="p-4 sm:px-6 sm:py-4 space-y-2.5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                      <div className="min-w-0 space-y-0.5">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-sm sm:text-base font-bold text-[var(--sp-charcoal)]">
+                            {r.regattaName}
+                          </h3>
+                          {!r.countsForRanking && (
+                            <span className="rounded-full bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[11px] font-semibold text-[var(--sp-slate-soft)]">
+                              Personal log
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-[var(--sp-slate-soft)]">
+                          {String(r.regattaDate).slice(0, 10)}
+                          {r.regattaEndDate
+                            ? ` – ${String(r.regattaEndDate).slice(0, 10)}`
+                            : ""}
+                          {r.venue ? ` · ${r.venue}` : ""}
+                          {r.boatClass ? ` · ${sailingClassDisplayLabel(r.boatClass)}` : ""}
+                          {r.division ? ` · ${r.division}` : ""}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                        <div className="sm:text-right">
+                          <p className="text-sm font-semibold text-[var(--sp-charcoal)] tabular-nums">
+                            Place{" "}
+                            <span className="text-base font-black text-[var(--sp-harbour-shadow)]">
+                              {r.rank}
+                            </span>
+                            {r.totalFleetSize ? (
+                              <span className="text-xs font-normal text-[var(--sp-slate-soft)]">
+                                {" "}
+                                / {r.totalFleetSize}
+                              </span>
+                            ) : null}
+                          </p>
+                          {r.nettScore != null && (
+                            <p className="text-[11px] font-mono text-[var(--sp-slate-soft)]">
+                              nett {r.nettScore} pts
+                            </p>
+                          )}
+                        </div>
+
+                        {verified ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-[11px] font-bold text-emerald-800">
+                            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
+                            Verified
+                          </span>
+                        ) : r.verificationStatus === "pending_review" ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-2.5 py-1 text-[11px] font-bold text-sky-800">
+                            <Clock className="h-3.5 w-3.5 text-sky-600" aria-hidden="true" />
+                            Under review
+                          </span>
+                        ) : r.verificationStatus === "rejected" ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-2.5 py-1 text-[11px] font-bold text-rose-800">
+                            <AlertCircle className="h-3.5 w-3.5 text-rose-600" aria-hidden="true" />
+                            Rejected
                           </span>
                         ) : (
-                          <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-0.5 text-[11px] font-black uppercase text-[var(--sp-slate-soft)]">
-                            Non-Ranking / Overseas Logbook
+                          <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2.5 py-1 text-[11px] font-bold text-amber-800">
+                            Self-reported
                           </span>
                         )}
                       </div>
-
-                      <p className="text-xs text-[var(--sp-slate-soft)] font-medium">
-                        {String(r.regattaDate).slice(0, 10)}
-                        {r.regattaEndDate
-                          ? ` to ${String(r.regattaEndDate).slice(0, 10)}`
-                          : ""}
-                        {r.venue ? ` · ${r.venue}` : ""}
-                        {r.boatClass ? ` · ${sailingClassDisplayLabel(r.boatClass)}` : ""}
-                        {r.division ? ` · ${r.division}` : ""}
-                      </p>
                     </div>
 
-                    {/* Finish Position & Badges */}
-                    <div className="flex items-center gap-3 self-start sm:self-center">
-                      <div className="text-right">
-                        <div className="text-sm font-semibold text-[var(--sp-charcoal)]">
-                          Place{" "}
-                          <span className="font-mono text-lg font-black text-[var(--sp-harbour-shadow)]">
-                            {r.rank}
-                          </span>
-                          {r.totalFleetSize ? (
-                            <span className="text-xs font-normal text-[var(--sp-slate-soft)]">
-                              {" "}
-                              / {r.totalFleetSize}
-                            </span>
-                          ) : null}
+                    {r.verificationStatus === "rejected" && (
+                      <div className="rounded-xl border border-rose-200 bg-rose-50/90 px-3 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-rose-900">
+                        <span>
+                          <strong>Review note:</strong>{" "}
+                          {r.evidenceNotes ||
+                            "Official score documentation or results URL is required."}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditingResult(r);
+                            setEvidenceModalOpen(true);
+                          }}
+                          className="shrink-0 font-bold text-rose-700 hover:underline text-left sm:text-right cursor-pointer"
+                        >
+                          Re-submit evidence →
+                        </button>
+                      </div>
+                    )}
+
+                    {(r.evidenceUrl || r.officialUrl || (r.evidenceNotes && r.verificationStatus !== "rejected") || !verified) && (
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5 text-xs">
+                        <div className="flex flex-wrap items-center gap-3 text-[var(--sp-slate-soft)]">
+                          {r.evidenceUrl && (
+                            <a
+                              href={r.evidenceUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+                            >
+                              {r.evidenceType === "image" ? (
+                                <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                              ) : (
+                                <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                              )}
+                              <span>{r.evidenceName || "Evidence document"}</span>
+                            </a>
+                          )}
+                          {r.officialUrl && (
+                            <a
+                              href={r.officialUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+                            >
+                              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                              <span>Official results</span>
+                            </a>
+                          )}
+                          {r.evidenceNotes && r.verificationStatus !== "rejected" && (
+                            <span className="italic">“{r.evidenceNotes}”</span>
+                          )}
                         </div>
-                        {r.nettScore != null && (
-                          <div className="text-[13px] font-mono text-[var(--sp-slate-soft)]">
-                            nett {r.nettScore} pts
+
+                        {!verified && (
+                          <div className="flex items-center gap-3 ml-auto">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingResult(r);
+                                setEvidenceModalOpen(true);
+                              }}
+                              className="inline-flex min-h-9 items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline cursor-pointer"
+                            >
+                              <Edit2 className="h-3 w-3" aria-hidden="true" />
+                              <span>Edit / Evidence</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteResult(r.id, r.regattaName)}
+                              className="inline-flex min-h-9 items-center gap-1 font-semibold text-rose-700 hover:underline cursor-pointer"
+                            >
+                              <Trash2 className="h-3 w-3" aria-hidden="true" />
+                              <span>Delete</span>
+                            </button>
                           </div>
                         )}
                       </div>
-
-                      {/* Verification Status Badge */}
-                      <div>
-                        {isResultVerified(r) ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
-                            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
-                            Verified ✓
-                          </span>
-                        ) : r.verificationStatus === "pending_review" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-3 py-1 text-xs font-bold text-sky-800">
-                            <Clock className="h-3.5 w-3.5 text-sky-600" />
-                            Under Review
-                          </span>
-                        ) : r.verificationStatus === "rejected" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-bold text-rose-800">
-                            <AlertCircle className="h-3.5 w-3.5 text-rose-600" />
-                            Rejected ✕
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-800">
-                            Self-Reported
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Rejected Alert Notice with Re-submit callout */}
-                  {r.verificationStatus === "rejected" && (
-                    <div className="rounded-xl border border-rose-200 bg-rose-50/90 p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-rose-950">
-                      <div className="flex items-start gap-2">
-                        <AlertCircle className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-rose-950">Review Note: </span>
-                          <span className="text-rose-800">
-                            {r.evidenceNotes || "Official score documentation or official results URL is required for verification."}
-                          </span>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditingResult(r);
-                          setEvidenceModalOpen(true);
-                        }}
-                        className="shrink-0 inline-flex items-center gap-1 font-bold text-rose-700 hover:text-rose-900 hover:underline text-[11px]"
-                      >
-                        <span>Why? / Re-submit evidence</span>
-                        <ExternalLink className="h-3 w-3" />
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Evidence Row */}
-                  {(r.evidenceUrl || r.officialUrl || r.evidenceNotes) && (
-                    <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] text-xs text-[var(--sp-charcoal)]">
-                      {r.evidenceUrl && (
-                        <a
-                          href={r.evidenceUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 text-[var(--sp-harbour-teal)] hover:underline font-bold"
-                        >
-                          {r.evidenceType === "image" ? (
-                            <ImageIcon className="h-3.5 w-3.5" />
-                          ) : (
-                            <FileText className="h-3.5 w-3.5" />
-                          )}
-                          <span>
-                            {r.evidenceName || "View Evidence Document"}
-                          </span>
-                        </a>
-                      )}
-                      {r.officialUrl && (
-                        <a
-                          href={r.officialUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 text-[var(--sp-harbour-teal)] hover:underline font-bold"
-                        >
-                          <ExternalLink className="h-3.5 w-3.5" />
-                          <span>Official Online Results</span>
-                        </a>
-                      )}
-                      {r.evidenceNotes && r.verificationStatus !== "rejected" && (
-                        <span className="text-[var(--sp-slate-soft)] italic">
-                          “{r.evidenceNotes}”
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Actions on unverified / self-logged results vs Official regatta notice */}
-                  {isResultVerified(r) ? (
-                    <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-[var(--sp-cool-veil)] text-xs text-[var(--sp-slate-soft)]">
-                      <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-800">
-                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
-                        Verified Official Result
-                      </span>
-                      <span className="text-[13px] text-[var(--sp-slate-soft)] font-medium">
-                        {r.countsForRanking ? "National Ranking Series" : "Official Event Record"}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-[var(--sp-cool-veil)]">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditingResult(r);
-                          setEvidenceModalOpen(true);
-                        }}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3 py-1.5 text-xs font-bold text-[var(--sp-charcoal)] transition-all shadow-2xs"
-                      >
-                        <Edit2 className="h-3 w-3 text-[var(--sp-slate-soft)]" />
-                        <span>Edit / Attach Evidence</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteResult(r.id, r.regattaName)}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-100 px-3 py-1.5 text-xs font-bold text-rose-700 transition-all"
-                      >
-                        <Trash2 className="h-3 w-3" />
-                        <span>Delete</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           )}
         </div>
       )}
 
-      {/* Tab 2: Athlete Profile Editor */}
+      {/* Tab 2: Profile Editor */}
       {activeTab === "profile" && (
         <form
           onSubmit={handleSaveProfile}
-          className="rounded-3xl border border-[var(--sp-cool-veil)] p-6 sm:p-8 space-y-6 bg-[var(--sp-warm-white)] shadow-xs"
+          className="rounded-3xl border border-[var(--sp-cool-veil)] p-5 sm:p-6 space-y-6 bg-[var(--sp-warm-white)] shadow-xs"
         >
-          <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-4">
-            <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)] flex items-center gap-2">
-              <User className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
-              Athlete Personal &amp; Equipment Details
-            </h3>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--sp-cool-veil)] pb-4">
+            <div>
+              <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
+                Profile &amp; boat details
+              </h2>
+              <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
+                Shown on your public sailor profile.
+              </p>
+            </div>
             <button
               type="submit"
               disabled={savingProfile}
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-[15px] font-semibold text-white transition-all disabled:opacity-50 shadow-xs"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-colors disabled:opacity-50 shadow-xs cursor-pointer"
             >
               {savingProfile ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Saving...</span>
+                  <span>Saving…</span>
                 </>
               ) : (
                 <>
                   <Save className="h-4 w-4" />
-                  <span>Save Changes</span>
+                  <span>Save changes</span>
                 </>
               )}
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <ProfileIdentityFields
-              form={profileForm}
-              onFieldChange={(key, value) =>
-                setProfileForm((f) => ({ ...f, [key]: value }))
-              }
-            />
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Gender
-              </label>
-              <select
-                value={profileForm.gender}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, gender: e.target.value })
-                }
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              >
-                <option value="M">Male (Boy)</option>
-                <option value="F">Female (Girl)</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Nationality (NOC)
-              </label>
-              <GeographySelect
-                value={profileForm.nationality}
-                onChange={(val) =>
-                  setProfileForm({
-                    ...profileForm,
-                    nationality: val || "SGP",
-                  })
-                }
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Public Bio
-              </label>
-              <textarea
-                value={profileForm.bio}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, bio: e.target.value })
-                }
-                maxLength={500}
-                rows={3}
-                placeholder="Share a short public bio (max 500 characters)..."
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-          </div>
-
-          <div className="pt-4 border-t border-[var(--sp-cool-veil)]">
-            <h4 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] mb-3">
-              Standard Boat Gear &amp; Rig Configuration
-            </h4>
+          <div className="divide-y divide-[var(--sp-cool-veil)] space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <ProfileIdentityFields
+                form={profileForm}
+                onFieldChange={(key, value) =>
+                  setProfileForm((f) => ({ ...f, [key]: value }))
+                }
+              />
+
               <div>
                 <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Hull Brand
+                  Gender
                 </label>
-                <input
-                  type="text"
-                  value={profileForm.hullBrand}
+                <select
+                  value={profileForm.gender}
                   onChange={(e) =>
-                    setProfileForm({
-                      ...profileForm,
-                      hullBrand: e.target.value,
-                    })
+                    setProfileForm({ ...profileForm, gender: e.target.value })
                   }
-                  placeholder="e.g. Winner 3D Star, Devoti, Far East"
-                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                />
+                  className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                >
+                  <option value="M">Male (Boy)</option>
+                  <option value="F">Female (Girl)</option>
+                </select>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Sail Make &amp; Model
+                  Nationality (NOC)
                 </label>
-                <input
-                  type="text"
-                  value={profileForm.sailMake}
-                  onChange={(e) =>
+                <GeographySelect
+                  value={profileForm.nationality}
+                  onChange={(val) =>
                     setProfileForm({
                       ...profileForm,
-                      sailMake: e.target.value,
+                      nationality: val || "SGP",
                     })
                   }
-                  placeholder="e.g. North Sails P-5, Olimpic, J-Sails"
-                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               </div>
 
-              <div>
+              <div className="sm:col-span-2">
                 <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Foils (Daggerboard / Rudder)
+                  Public bio
                 </label>
-                <input
-                  type="text"
-                  value={profileForm.foilBrand}
+                <textarea
+                  value={profileForm.bio}
                   onChange={(e) =>
-                    setProfileForm({
-                      ...profileForm,
-                      foilBrand: e.target.value,
-                    })
+                    setProfileForm({ ...profileForm, bio: e.target.value })
                   }
-                  placeholder="e.g. DSK Flashtep, Optiparts"
-                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Spar / Mast System
-                </label>
-                <input
-                  type="text"
-                  value={profileForm.mast}
-                  onChange={(e) =>
-                    setProfileForm({ ...profileForm, mast: e.target.value })
-                  }
-                  placeholder="e.g. Optimax MK4, Blackgold"
-                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  maxLength={500}
+                  rows={3}
+                  placeholder="Share a short public bio (max 500 characters)..."
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               </div>
             </div>
-          </div>
 
-          <div className="pt-4 border-t border-[var(--sp-cool-veil)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[var(--sp-sailcloth)]/70 border border-[var(--sp-cool-veil)]">
-            <div>
-              <h4 className="text-xs font-bold text-[var(--sp-charcoal)]">
-                Career Milestones &amp; Sailing Journey
-              </h4>
-              <p className="text-[13px] text-[var(--sp-slate-soft)] mt-0.5">
-                Key moments, breakthroughs, and campaigns. Athletes and parents can add, edit, or customize any milestone.
-              </p>
+            <div className="pt-6 space-y-3">
+              <h3 className="text-sm font-bold text-[var(--sp-harbour-shadow)]">
+                Boat &amp; rig setup
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                    Hull brand
+                  </label>
+                  <input
+                    type="text"
+                    value={profileForm.hullBrand}
+                    onChange={(e) =>
+                      setProfileForm({
+                        ...profileForm,
+                        hullBrand: e.target.value,
+                      })
+                    }
+                    placeholder="e.g. Winner 3D Star, Devoti"
+                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                    Sail make &amp; model
+                  </label>
+                  <input
+                    type="text"
+                    value={profileForm.sailMake}
+                    onChange={(e) =>
+                      setProfileForm({
+                        ...profileForm,
+                        sailMake: e.target.value,
+                      })
+                    }
+                    placeholder="e.g. North Sails P-5, Olimpic"
+                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                    Foils
+                  </label>
+                  <input
+                    type="text"
+                    value={profileForm.foilBrand}
+                    onChange={(e) =>
+                      setProfileForm({
+                        ...profileForm,
+                        foilBrand: e.target.value,
+                      })
+                    }
+                    placeholder="e.g. DSK Flashtep, Optiparts"
+                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                    Mast &amp; spars
+                  </label>
+                  <input
+                    type="text"
+                    value={profileForm.mast}
+                    onChange={(e) =>
+                      setProfileForm({ ...profileForm, mast: e.target.value })
+                    }
+                    placeholder="e.g. Optimax MK4, Blackgold"
+                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  />
+                </div>
+              </div>
             </div>
-            <Link
-              href={
-                athlete.handle
-                  ? `/sailors/${encodeURIComponent(athlete.handle)}#profile-journey`
-                  : `/sailor/${athlete.id}#profile-journey`
-              }
-              className="inline-flex items-center gap-1.5 shrink-0 rounded-xl border border-[var(--sp-harbour-teal)]/40 bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-teal)] transition-all shadow-2xs"
-            >
-              <span>Edit Milestones</span>
-              <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
+
+            <div className="pt-6 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div>
+                <p className="font-bold text-[var(--sp-charcoal)]">
+                  Career milestones &amp; sailing journey
+                </p>
+                <p className="text-[var(--sp-slate-soft)] mt-0.5">
+                  Add or edit milestones directly on your public profile.
+                </p>
+              </div>
+              <Link
+                href={
+                  athlete.handle
+                    ? `/sailors/${encodeURIComponent(athlete.handle)}#profile-journey`
+                    : `/sailor/${athlete.id}#profile-journey`
+                }
+                className="inline-flex min-h-10 items-center gap-1.5 font-bold text-[var(--sp-harbour-teal)] hover:underline"
+              >
+                <span>Edit milestones</span>
+                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </form>
       )}
 
       {/* Tab 3: Equipment Locker */}
       {activeTab === "equipment" && (
-        <div className="space-y-4">
-          <EquipmentInventory
-            sailorId={athlete.id}
-            isOwner={true}
-            canSeeEquipment={true}
-            mayHaveIlca={Boolean(athlete.sailNumberIlca4)}
-          />
-        </div>
+        <EquipmentInventory
+          sailorId={athlete.id}
+          isOwner={true}
+          canSeeEquipment={true}
+          mayHaveIlca={Boolean(athlete.sailNumberIlca4)}
+        />
       )}
 
-      {/* Tab 4: Verified Documents & Evidence Library */}
+      {/* Tab 4: Evidence Documents */}
       {activeTab === "documents" && (
-        <div className="rounded-3xl border border-[var(--sp-cool-veil)] p-6 sm:p-8 space-y-6 bg-[var(--sp-warm-white)] shadow-xs">
-          <div>
-            <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)] flex items-center gap-2">
-              <FileText className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
-              Evidence Documents &amp; Official Results Sheets
-            </h3>
-            <p className="text-xs text-[var(--sp-slate-soft)] mt-1">
-              Official scorecards, noticeboards, and race committee results sheets attached to {athlete.name}&apos;s profile.
+        evidenceDocs.length === 0 ? (
+          <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-10 text-center space-y-2 shadow-xs">
+            <p className="text-sm font-bold text-[var(--sp-charcoal)]">
+              No evidence documents yet
+            </p>
+            <p className="text-xs text-[var(--sp-slate-soft)] max-w-sm mx-auto">
+              Attach scorecards, noticeboards, or official result links when logging a regatta to view them here.
             </p>
           </div>
+        ) : (
+          <ul className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] divide-y divide-[var(--sp-cool-veil)] shadow-xs overflow-hidden">
+            {evidenceDocs.map((r) => (
+              <li
+                key={r.id}
+                className="p-4 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+              >
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
+                    {r.regattaName}
+                  </p>
+                  <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
+                    {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
+                    {r.totalFleetSize ? ` / ${r.totalFleetSize}` : ""}
+                  </p>
+                </div>
 
-          {results.filter((r) => r.evidenceUrl || r.officialUrl).length === 0 ? (
-            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-8 text-center text-xs text-[var(--sp-slate-soft)]">
-              No evidence documents uploaded yet. When you log non-ranking regattas and attach PDFs or photos, they appear in this library.
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {results
-                .filter((r) => r.evidenceUrl || r.officialUrl)
-                .map((r) => (
-                  <div
-                    key={r.id}
-                    className="rounded-2xl border border-[var(--sp-cool-veil)] bg-white p-4 space-y-2 hover:border-[var(--sp-aqua-deep)]/50 transition-all shadow-2xs"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="font-bold text-[var(--sp-charcoal)] text-xs">
-                          {r.regattaName}
-                        </p>
-                        <p className="text-[13px] text-[var(--sp-slate-soft)]">
-                          {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
-                          {r.totalFleetSize ? ` / ${r.totalFleetSize}` : ""}
-                        </p>
-                      </div>
-                      <div>
-                        {isResultVerified(r) ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
-                            Verified ✓
-                          </span>
-                        ) : r.verificationStatus === "rejected" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-bold text-rose-800">
-                            Rejected ✕
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-2.5 py-0.5 text-[11px] font-bold text-sky-800">
-                            Under Review
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="pt-2 flex flex-wrap gap-2 text-xs">
-                      {r.evidenceUrl && (
-                        <a
-                          href={r.evidenceUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 px-3 py-1.5 font-bold text-[11px] transition-colors"
-                        >
-                          {r.evidenceType === "image" ? (
-                            <ImageIcon className="h-3.5 w-3.5 text-sky-700" />
-                          ) : (
-                            <FileText className="h-3.5 w-3.5 text-sky-700" />
-                          )}
-                          <span>
-                            {r.evidenceName || "View Evidence Document"}
-                          </span>
-                        </a>
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  {r.evidenceUrl && (
+                    <a
+                      href={r.evidenceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 hover:bg-sky-100 text-sky-800 px-3 py-1 text-xs font-semibold transition-colors"
+                    >
+                      {r.evidenceType === "image" ? (
+                        <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                      ) : (
+                        <FileText className="h-3.5 w-3.5" aria-hidden="true" />
                       )}
-                      {r.officialUrl && (
-                        <a
-                          href={r.officialUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-[var(--sp-harbour-teal)] border border-teal-200 px-3 py-1.5 font-bold text-[11px] transition-colors"
-                        >
-                          <ExternalLink className="h-3.5 w-3.5" />
-                          <span>Official URL</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                ))}
-            </div>
-          )}
-        </div>
+                      <span>{r.evidenceName || "Evidence"}</span>
+                    </a>
+                  )}
+                  {r.officialUrl && (
+                    <a
+                      href={r.officialUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 hover:bg-teal-100 text-[var(--sp-harbour-teal)] px-3 py-1 text-xs font-semibold transition-colors"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Official link</span>
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )
       )}
 
       {/* Regatta Evidence Modal */}
@@ -1170,37 +1046,28 @@ export function AthleteHub({
     <div className="space-y-6">
       {/* Athlete Switcher (for parents managing multiple children) */}
       {athletes.length > 1 && (
-        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-2.5 flex items-center justify-between gap-4 overflow-x-auto">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-[var(--sp-slate-soft)] flex items-center gap-1.5 pl-2 shrink-0">
-              <Users className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-              <span>Select Athlete:</span>
-            </span>
-            <div className="flex items-center gap-1.5">
-              {athletes.map((ath) => (
-                <button
-                  key={ath.id}
-                  type="button"
-                  onClick={() => void handleSelectAthlete(ath.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                    ath.id === selectedId
-                      ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
-                      : "bg-white text-[var(--sp-charcoal)] hover:bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)]"
-                  }`}
-                >
-                  {ath.name}
-                  {ath.ownerRelation ? ` (${ath.ownerRelation})` : ""}
-                </button>
-              ))}
-            </div>
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-2.5 flex items-center gap-2 overflow-x-auto">
+          <span className="text-xs font-bold text-[var(--sp-slate-soft)] flex items-center gap-1.5 pl-2 shrink-0">
+            <Users className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+            <span>Select Athlete:</span>
+          </span>
+          <div className="flex items-center gap-1.5">
+            {athletes.map((ath) => (
+              <button
+                key={ath.id}
+                type="button"
+                onClick={() => void handleSelectAthlete(ath.id)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+                  ath.id === selectedId
+                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                    : "bg-white text-[var(--sp-charcoal)] hover:bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)]"
+                }`}
+              >
+                {ath.name}
+                {ath.ownerRelation ? ` (${ath.ownerRelation})` : ""}
+              </button>
+            ))}
           </div>
-
-          <Link
-            href="/claim-profile"
-            className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline whitespace-nowrap pr-2"
-          >
-            + Link Another Sailor
-          </Link>
         </div>
       )}
 

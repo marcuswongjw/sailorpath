@@ -139,8 +139,37 @@ describe("account workspace navigation", () => {
     const sailing = await screen.findByRole("region", { name: "Continue your sailing" });
     expect(within(sailing).queryByRole("link", { name: /My logbook/ })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Find & claim a sailor profile/ })).toHaveAttribute("href", "/sailors");
-    // Pending admin invite is shown in SailorInviteAccept once, not duplicated under Claim requests.
+    // Pending admin invite is shown in SailorInviteAccept once, and Claim requests is removed.
     expect(screen.getAllByRole("button", { name: "Accept" })).toHaveLength(1);
+    expect(screen.queryByRole("heading", { name: "Claim requests" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /\+ Link another/i })).not.toBeInTheDocument();
+  });
+
+  it("omits + Link another and Claim requests for claimed individual sailors", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          owned: [{ id: "sailor", name: "Test Sailor", handle: "test-sailor", sailNumber: "SGP 1", club: "CSC", ownerRelation: "sailor" }],
+          claims: [
+            {
+              id: "c-1",
+              status: "pending",
+              source: "self",
+              relation: "sailor",
+              sailorName: "Another Sailor",
+              sailorHandle: "another-sailor",
+              createdAt: "2026-11-10T00:00:00Z",
+            },
+          ],
+          user: { id: "user", fullName: "Test Sailor", email: "sailor@example.com", role: "sailor" },
+        }),
+      })
+    );
+    render(<AccountPage />);
+    await screen.findByRole("region", { name: "Your sailor profile" });
+    expect(screen.queryByRole("link", { name: /\+ Link another/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Claim requests" })).not.toBeInTheDocument();
   });
 

@@ -15,7 +15,6 @@ import {
   Eye,
   EyeOff,
   Compass,
-  Clock,
 } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
@@ -72,17 +71,6 @@ function initialsFor(name: string): string {
   if (parts.length === 0) return "SP";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-}
-
-function formatClaimDate(value?: string | null): string | null {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-  return date.toLocaleDateString("en-SG", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
 }
 
 function roleLabel(role?: string | null): string {
@@ -480,10 +468,6 @@ function AccountInner() {
     return <AccountSkeleton />;
   }
 
-  // Pending admin invites are already surfaced prominently in SailorInviteAccept.
-  const visibleClaims = claims.filter(
-    (c) => !(c.status === "pending" && c.source === "admin")
-  );
   const displayRole = userProfile?.role || role;
   const isParentWorkspace =
     role === "parent" || owned.some((sailor) => sailor.ownerRelation === "parent");
@@ -608,7 +592,7 @@ function AccountInner() {
         <section
           id="profiles"
           aria-label="Your sailor profile"
-          className="rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6 space-y-4 w-full shadow-xs"
+          className="rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6 w-full shadow-xs"
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5 min-w-0">
@@ -643,15 +627,6 @@ function AccountInner() {
               </Link>
             </div>
           </div>
-          <div className="flex items-center justify-between gap-2 border-t border-cool-veil/70 pt-3 text-xs text-slate-soft">
-            <span>Manage regatta evidence, boat setup, and profile details.</span>
-            <Link
-              href="/sailors"
-              className="shrink-0 font-semibold text-harbour hover:underline"
-            >
-              + Link another
-            </Link>
-          </div>
         </section>
       )}
 
@@ -660,17 +635,9 @@ function AccountInner() {
           id="profiles"
           className="rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6 space-y-3 w-full shadow-xs"
         >
-          <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-bold text-charcoal uppercase tracking-wider">
-              Profiles you manage
-            </h2>
-            <Link
-              href="/sailors"
-              className="text-xs font-semibold text-harbour hover:underline"
-            >
-              + Link another sailor
-            </Link>
-          </div>
+          <h2 className="text-sm font-bold text-charcoal uppercase tracking-wider">
+            Profiles you manage
+          </h2>
           <ul className="divide-y divide-cool-veil">
             {owned.map((s) => (
               <li
@@ -719,65 +686,6 @@ function AccountInner() {
       )}
 
       {isIndividualSailor && workspacesSection}
-
-      {/* Claims */}
-      {!isCoach && visibleClaims.length > 0 && (
-        <section className="rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6 space-y-3 w-full shadow-xs">
-          <h2 className="text-sm font-bold text-charcoal uppercase tracking-wider">
-            Claim requests
-          </h2>
-          <ul className="divide-y divide-cool-veil">
-            {visibleClaims.map((c) => {
-              const formattedDate = formatClaimDate(c.createdAt);
-              return (
-                <li
-                  key={c.id}
-                  className="py-3 first:pt-1 last:pb-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
-                >
-                  <div className="min-w-0">
-                    <p className="font-bold text-sm text-charcoal truncate">
-                      {c.sailorName}
-                    </p>
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-slate-soft mt-0.5">
-                      <Link
-                        href={`/sailors/${c.sailorHandle}`}
-                        className="hover:text-harbour hover:underline"
-                      >
-                        /{c.sailorHandle}
-                      </Link>
-                      {formattedDate && (
-                        <>
-                          <span aria-hidden="true">·</span>
-                          <span>Requested {formattedDate}</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 self-start sm:self-center">
-                    {c.status === "pending" && (
-                      <span className="inline-flex items-center gap-1 text-slate-soft">
-                        <Clock className="h-3 w-3" aria-hidden="true" />
-                        <span>Usually reviewed within 24h</span>
-                      </span>
-                    )}
-                    <span
-                      className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${
-                        c.status === "approved"
-                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                          : c.status === "rejected"
-                            ? "bg-rose-50 text-rose-800 border border-rose-200"
-                            : "bg-amber-50 text-amber-800 border border-amber-200"
-                      }`}
-                    >
-                      {c.status === "rejected" ? "Not approved" : c.status}
-                    </span>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      )}
 
       <details
         ref={settingsRef}

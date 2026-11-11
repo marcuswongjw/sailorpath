@@ -168,7 +168,7 @@ export default async function AthletePage({ searchParams }: AthletePageProps) {
   }
 
   return (
-    <div className="mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+    <div className="mx-auto max-w-4xl w-full px-4 sm:px-6 py-8 sm:py-10">
       <AthleteHub
         athletes={athletes}
         currentSailorId={sp.id}

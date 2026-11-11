@@ -2,6 +2,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { PersonalSeasonCard } from "@/components/PersonalSeasonCard";
+import { FollowingHome } from "@/components/FollowingHome";
 import { decorateSeasonSlots, explainSeasonPlace } from "@/lib/personalSeason";
 import type { PersonalSeasonView } from "@/lib/personalSeason";
 
@@ -68,5 +69,55 @@ describe("PersonalSeasonCard", () => {
       "href",
       "/ava-tan#results"
     );
+  });
+
+  it("renders updated copy and omits Why this place on the Following page", () => {
+    const slots = decorateSeasonSlots([
+      { regattaId: "a", regattaName: "NSC", score: 4 },
+    ]);
+    const season: PersonalSeasonView = {
+      sailorId: "ava",
+      sailorName: "Ava Tan",
+      handle: "ava-tan",
+      periodLabel: "Jul – Dec 2026",
+      fleet: "Gold",
+      ilcaClass: null,
+      rank: 4,
+      fleetSize: 42,
+      best3: 18,
+      higherIsBetter: false,
+      slots,
+      nextCountingEvent: null,
+      why: ["Leading mark in Gold fleet."],
+      resultsHref: "/sailors/ava-tan#results",
+      lastResultDate: "2026-09-01",
+      tiedWith: 0,
+    };
+
+    render(
+      <FollowingHome
+        sailors={[
+          {
+            sailorId: "ava",
+            name: "Ava Tan",
+            handle: "ava-tan",
+            club: "CSC",
+            fleet: "Gold",
+            periodLabel: "Jul – Dec 2026",
+            periodRank: 4,
+            fleetSize: 42,
+            lastResultDate: "2026-09-01",
+            season,
+          },
+        ]}
+      />
+    );
+
+    expect(
+      screen.getByText(
+        "Follow their performance over the last 6 months. You will also get an email when their results publish."
+      )
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Why this place")).not.toBeInTheDocument();
   });
 });

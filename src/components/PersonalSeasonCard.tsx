@@ -74,7 +74,13 @@ function SlotCell({ slot }: { slot: PersonalSeasonSlot }) {
   );
 }
 
-export function PersonalSeasonCard({ season }: { season: PersonalSeasonView }) {
+export function PersonalSeasonCard({
+  season,
+  showExplanation = true,
+}: {
+  season: PersonalSeasonView;
+  showExplanation?: boolean;
+}) {
   const fleetLabel = season.fleet === "ILCA" ? season.ilcaClass || "ILCA" : season.fleet;
   const place =
     season.rank != null && season.fleetSize != null
@@ -121,39 +127,41 @@ export function PersonalSeasonCard({ season }: { season: PersonalSeasonView }) {
         ))}
       </div>
 
-      <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-3 space-y-2">
-        <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--sp-harbour-teal)]">
-          Why this place
-        </p>
-        {season.why.map((line) => (
-          <p key={line} className="text-sm leading-relaxed text-[var(--sp-charcoal)]">
-            {line}
+      {showExplanation ? (
+        <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-3 space-y-2">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--sp-harbour-teal)]">
+            Why this place
           </p>
-        ))}
-        <p className="text-sm text-[var(--sp-charcoal-slate)]">
-          {season.nextCountingEvent ? (
-            <>
-              Next counting event:{" "}
-              {season.nextCountingEvent.href ? (
-                <Link
-                  href={season.nextCountingEvent.href}
-                  className="font-bold text-[var(--sp-harbour-teal)] hover:underline"
-                >
-                  {season.nextCountingEvent.name}
-                </Link>
-              ) : (
-                <span className="font-bold text-[var(--sp-harbour-shadow)]">
-                  {season.nextCountingEvent.name}
-                </span>
-              )}
-              {" "}
-              on {formatSeasonDate(season.nextCountingEvent.date)}
-            </>
-          ) : (
-            "No future counting event is on the calendar for this class yet."
-          )}
-        </p>
-      </div>
+          {season.why.map((line) => (
+            <p key={line} className="text-sm leading-relaxed text-[var(--sp-charcoal)]">
+              {line}
+            </p>
+          ))}
+          <p className="text-sm text-[var(--sp-charcoal-slate)]">
+            {season.nextCountingEvent ? (
+              <>
+                Next counting event:{" "}
+                {season.nextCountingEvent.href ? (
+                  <Link
+                    href={season.nextCountingEvent.href}
+                    className="font-bold text-[var(--sp-harbour-teal)] hover:underline"
+                  >
+                    {season.nextCountingEvent.name}
+                  </Link>
+                ) : (
+                  <span className="font-bold text-[var(--sp-harbour-shadow)]">
+                    {season.nextCountingEvent.name}
+                  </span>
+                )}
+                {" "}
+                on {formatSeasonDate(season.nextCountingEvent.date)}
+              </>
+            ) : (
+              "No future counting event is on the calendar for this class yet."
+            )}
+          </p>
+        </div>
+      ) : null}
 
       <Link
         href={season.resultsHref}

@@ -43,7 +43,7 @@ export function FollowingHome({
             Following
           </h1>
           <p className="mt-2 text-sm text-[var(--sp-charcoal-slate)] max-w-xl">
-            Track sailors without claiming their profiles. You get this half’s place, and an email when their results publish.
+            Follow their performance over the last 6 months. You will also get an email when their results publish.
           </p>
         </div>
         <Link
@@ -95,7 +95,7 @@ export function FollowingHome({
                   {busyId === sailor.sailorId ? "Removing…" : "Unfollow"}
                 </button>
               </div>
-              <PersonalSeasonCard season={sailor.season} />
+              <PersonalSeasonCard season={sailor.season} showExplanation={false} />
             </article>
           ))}
         </div>
