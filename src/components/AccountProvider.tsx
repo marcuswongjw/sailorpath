@@ -64,7 +64,9 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       }
       const data = await res.json();
       setOwned(data.owned || []);
-      if (data.email) setEmail(data.email);
+      if (data.email || data.user?.id || data.role) {
+        setEmail((prev) => data.email || prev || data.user?.fullName || "Account");
+      }
       const r = data.role || null;
       setRole(r);
       setIsSuperadmin(r === "superadmin" || Boolean(data.isSuperadmin));
@@ -105,6 +107,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
           setIsSuperadmin(false);
           setOwned([]);
           setRole(null);
+          await loadAccount();
         }
 
         const { data } = supabase.auth.onAuthStateChange((_e, s) => {

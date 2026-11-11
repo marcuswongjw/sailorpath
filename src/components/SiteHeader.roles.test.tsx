@@ -20,7 +20,10 @@ describe("account navigation by role", () => {
   it("shows a sailor their profile without parent or coach workspaces on desktop and mobile", async () => {
     const user = userEvent.setup();
     render(<SiteHeader />);
-    expect(screen.getByRole("button", { name: "Log out" })).toBeInTheDocument();
+    const headerLogOutButtons = screen.getAllByRole("button", { name: "Log out" });
+    expect(headerLogOutButtons.length).toBeGreaterThanOrEqual(2);
+    await user.click(headerLogOutButtons[1]);
+    expect(state.signOut).toHaveBeenCalledTimes(1);
     await user.click(screen.getByRole("button", { name: "Account" }));
     expect(screen.getByRole("link", { name: "My profile" })).toHaveAttribute("href", "/sailors/sailor");
     expect(screen.queryByRole("link", { name: /workspace/i })).not.toBeInTheDocument();
@@ -29,7 +32,7 @@ describe("account navigation by role", () => {
     expect(within(mobile).getByRole("link", { name: "My profile" })).toHaveAttribute("href", "/sailors/sailor");
     expect(within(mobile).queryByRole("link", { name: /workspace/i })).not.toBeInTheDocument();
     await user.click(within(mobile).getByRole("button", { name: "Log out" }));
-    expect(state.signOut).toHaveBeenCalledTimes(1);
+    expect(state.signOut).toHaveBeenCalledTimes(2);
   });
 
   it.each([
