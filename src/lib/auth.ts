@@ -9,6 +9,7 @@ import {
 } from "@/db";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { contactEmail } from "@/lib/telegram/email";
 import {
   superadminRoleDecision,
   type AppRole,
@@ -193,16 +194,17 @@ async function getAuthContextWithinDeadline(): Promise<AuthContext | null> {
   if (!rows[0] || decision.persistSuperadmin) {
     try {
       if (!rows[0]) {
+        const storedEmail = contactEmail(null, user.email);
         const fullName =
           (user.user_metadata?.full_name as string) ||
           (user.user_metadata?.handle as string) ||
-          user.email?.split("@")[0] ||
+          (storedEmail ? storedEmail.split("@")[0] : "") ||
           "User";
         await db
           .insert(profiles)
           .values({
             id: user.id,
-            email: user.email || "",
+            email: storedEmail,
             fullName,
             role: decision.role,
           })

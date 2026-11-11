@@ -40,6 +40,29 @@ export const profiles = pgTable("profiles", {
     .notNull(),
 }).enableRLS();
 
+/**
+ * One Telegram Login subject per SailorPath account.
+ * Matching is by `sub` only — never by display name.
+ */
+export const telegramIdentities = pgTable(
+  "telegram_identities",
+  {
+    telegramSub: text("telegram_sub").primaryKey().notNull(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => profiles.id, { onDelete: "cascade" }),
+    telegramUserId: text("telegram_user_id"),
+    username: text("username"),
+    displayName: text("display_name"),
+    photoUrl: text("photo_url"),
+    linkedAt: timestamp("linked_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdUnq: unique("telegram_identities_user_id_unq").on(table.userId),
+  })
+).enableRLS();
+
 /** A coach may request access, but only a superadmin may grant the coach role. */
 export const coachAccessRequests = pgTable(
   "coach_access_requests",

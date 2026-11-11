@@ -39,6 +39,35 @@ describe("account workspace navigation", () => {
     expect(within(details).getByRole("checkbox")).toBeChecked();
   });
 
+  it("shows Connect Telegram in account settings when Telegram login is configured", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          owned: [],
+          claims: [],
+          email: "parent@example.com",
+          user: {
+            id: "user",
+            fullName: "Test Parent",
+            email: "parent@example.com",
+            role: "sailor",
+          },
+          telegram: { enabled: true, linked: false, username: null, canDisconnect: false },
+        }),
+      })
+    );
+    const user = userEvent.setup();
+    render(<AccountPage />);
+    const summary = await screen.findByText("Account settings", { selector: "summary" });
+    await user.click(summary);
+    expect(screen.getByRole("link", { name: "Connect Telegram" })).toHaveAttribute(
+      "href",
+      "/auth/telegram?mode=link&next=%2Faccount%23settings"
+    );
+  });
+
   it("shows the family dashboard for parent accounts", async () => {
     state.role = "parent";
     render(<AccountPage />);

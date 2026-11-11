@@ -1,4 +1,5 @@
 import { notifyFollowedResultsEnabled } from "@/lib/followSailors";
+import { isTelegramPlaceholderEmail } from "@/lib/telegram/email";
 import { ordinalPlace } from "@/lib/personalSeason";
 import { sendResendTextEmail } from "@/lib/notifications";
 
@@ -58,7 +59,7 @@ export function buildFollowerPublishNotices(input: {
   for (const follow of input.follows) {
     if (!notifyFollowedResultsEnabled(follow.notifyFollowedResults)) continue;
     const email = String(follow.followerEmail || "").trim();
-    if (!email) continue;
+    if (!email || isTelegramPlaceholderEmail(email)) continue;
     const finisher = finishersBySailor.get(follow.sailorId);
     if (!finisher) continue;
     const current = byFollower.get(follow.followerProfileId) || {

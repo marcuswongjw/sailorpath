@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { User, Mail, Calendar, Edit2, Check, Lock } from "lucide-react";
@@ -12,6 +12,11 @@ import {
   SailorInviteAccept,
   type SailorInviteClaim,
 } from "@/components/account/SailorInviteAccept";
+import {
+  TelegramAccountSection,
+  type TelegramAccountStatus,
+} from "@/components/account/TelegramAccountSection";
+import { TELEGRAM_ACCOUNT_NOTICES } from "@/lib/telegram/messages";
 
 type Owned = {
   id: string;
@@ -71,6 +76,8 @@ function AccountInner() {
   const [pwBusy, setPwBusy] = useState(false);
   const [claimBusy, setClaimBusy] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
+  const [telegram, setTelegram] = useState<TelegramAccountStatus | null>(null);
+  const settingsRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
     (async () => {
@@ -104,7 +111,21 @@ function AccountInner() {
         }
         setOwned(data.owned || []);
         setClaims(data.claims || []);
-        if (data.email) setEmail(data.email);
+        const contact =
+          typeof data.email === "string"
+            ? data.email
+            : typeof data.user?.email === "string"
+              ? data.user.email
+              : session.user.email || "";
+        setEmail(contact || null);
+        if (data.telegram && typeof data.telegram === "object") {
+          setTelegram({
+            enabled: Boolean(data.telegram.enabled),
+            linked: Boolean(data.telegram.linked),
+            username: typeof data.telegram.username === "string" ? data.telegram.username : null,
+            canDisconnect: Boolean(data.telegram.canDisconnect),
+          });
+        }
 
         const prof: UserProfileData = data.user || data.profile || {
           id: session.user.id,
@@ -113,14 +134,15 @@ function AccountInner() {
             (session.user.user_metadata?.handle as string) ||
             data.fullName ||
             "",
-          email: session.user.email || data.email || "",
+          email: contact,
           role: data.role || "sailor",
           createdAt: session.user.created_at || null,
         };
+        if (data.user) prof.email = contact;
         setUserProfile(prof);
         setNotifyFollowed(data.user?.notifyFollowedResults !== false);
         setEditName(prof.fullName || "");
-        setEditEmail(prof.email || session.user.email || "");
+        setEditEmail(prof.email || "");
       } catch (e) {
         setError(e instanceof Error ? e.message : "Error loading account");
       } finally {
@@ -128,6 +150,13 @@ function AccountInner() {
       }
     })();
   }, [router, searchParams]);
+
+  useEffect(() => {
+    if (loading) return;
+    if (searchParams.get("telegram") || window.location.hash === "#settings") {
+      settingsRef.current?.setAttribute("open", "");
+    }
+  }, [searchParams, loading]);
 
   const respondToInvite = async (
     claim: SailorInviteClaim,
@@ -177,7 +206,14 @@ function AccountInner() {
       setProfileMsg({ type: "error", text: "Please enter your name" });
       return;
     }
-    if (!editEmail.trim() || !editEmail.includes("@")) {
+    if (editEmail.trim() && !editEmail.includes("@")) {
+      setProfileMsg({
+        type: "error",
+        text: "Please enter a valid email address",
+      });
+      return;
+    }
+    if (!editEmail.trim() && (userProfile?.email || email)) {
       setProfileMsg({
         type: "error",
         text: "Please enter a valid email address",
@@ -193,7 +229,7 @@ function AccountInner() {
         credentials: "include",
         body: JSON.stringify({
           fullName: editName.trim(),
-          email: editEmail.trim(),
+          ...(editEmail.trim() ? { email: editEmail.trim() } : {}),
         }),
       });
       const resData = await res.json();
@@ -475,7 +511,7 @@ function AccountInner() {
         </section>
       )}
 
-      <details id="settings" className="group rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6">
+      <details id="settings" ref={settingsRef} className="group rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6">
         <summary className="min-h-11 cursor-pointer text-base font-bold text-harbour-shadow">
           Account settings
         </summary>
@@ -572,7 +608,7 @@ function AccountInner() {
                         value={editEmail}
                         onChange={(e) => setEditEmail(e.target.value)}
                         placeholder="name@example.com"
-                        required
+                        required={Boolean(userProfile?.email || email)}
                         className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
                       />
                     </div>
@@ -619,7 +655,7 @@ function AccountInner() {
                     <span>Email Address</span>
                   </div>
                   <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
-                    {userProfile?.email || email}
+                    {userProfile?.email || email || "Not provided"}
                   </p>
                 </div>
 
@@ -640,6 +676,11 @@ function AccountInner() {
               </div>
             )}
           </section>
+
+          <TelegramAccountSection
+            status={telegram}
+            notice={TELEGRAM_ACCOUNT_NOTICES[searchParams.get("telegram") || ""] ?? null}
+          />
 
           <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
             <div className="flex items-center gap-2">
