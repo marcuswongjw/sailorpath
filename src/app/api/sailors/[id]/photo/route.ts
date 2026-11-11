@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { getAuthContext } from "@/lib/auth";
@@ -85,6 +85,28 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
       });
     }
 
+    let dbObjExists = false;
+    let dbPubCheck: boolean | null = null;
+    let existingNames: string[] = [];
+    try {
+      const rows = await db.execute<{ name: string }>(
+        sql`SELECT name FROM storage.objects WHERE bucket_id = 'avatars' AND name = ${object} LIMIT 1`
+      );
+      dbObjExists = (rows.rows?.length ?? 0) > 0;
+      const pubRows = await db.execute<{ is_pub: boolean }>(
+        sql`SELECT private.is_published_avatar(${object}) as is_pub`
+      );
+      dbPubCheck = pubRows.rows?.[0]?.is_pub ?? null;
+      if (!dbObjExists) {
+        const altRows = await db.execute<{ name: string }>(
+          sql`SELECT name FROM storage.objects WHERE bucket_id = 'avatars' AND name LIKE ${id + "/%"} LIMIT 5`
+        );
+        existingNames = (altRows.rows || []).map((r) => String(r.name));
+      }
+    } catch {
+      // Storage schema not queried or not present in local test DB
+    }
+
     const supabase = await createServerSupabase();
 
     let bodyBytes: Uint8Array | null = null;
@@ -119,6 +141,8 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
         `${storageUrl}/storage/v1/object/public/avatars/${object}`,
         `${storageUrl}/storage/v1/render/image/authenticated/avatars/${object}`,
         sailor.avatarUrl,
+        ...existingNames.map((n) => `${storageUrl}/storage/v1/object/authenticated/avatars/${n}`),
+        ...existingNames.map((n) => `${storageUrl}/storage/v1/object/public/avatars/${n}`),
       ];
 
       const attempts: string[] = [];
@@ -150,6 +174,9 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
           "X-Photo-Object": object,
           "X-Photo-Storage-Url": storageUrl,
           "X-Photo-Attempts": attempts.join(", "),
+          "X-Photo-DB-Obj": dbObjExists ? "true" : "false",
+          "X-Photo-DB-Pub": String(dbPubCheck),
+          "X-Photo-Existing": existingNames.join(", "),
         });
       }
     }
