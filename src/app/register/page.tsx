@@ -252,12 +252,11 @@ function RegisterForm() {
           .
         </p>
         <p className="text-center text-xs text-[var(--sp-slate-soft)]">
-          Have an account?{" "}
           <Link
             href={`/login?next=${encodeURIComponent(nextTarget)}`}
             className="text-[var(--sp-harbour-teal)] font-bold hover:underline"
           >
-            Log in
+            Already have an account? Log in
           </Link>
         </p>
         {!isCoachSignup && (

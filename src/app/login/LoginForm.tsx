@@ -25,11 +25,13 @@ function loginErrorMessage(code: string | null): string | null {
   );
 }
 
-function signInSubtitle(googleEnabled: boolean, telegramEnabled: boolean): string {
-  if (googleEnabled && telegramEnabled) return "Email and password, Google, or Telegram";
-  if (googleEnabled) return "Email and password, or Google";
-  if (telegramEnabled) return "Email and password, or Telegram";
-  return "Email + password login";
+function automaticAccountLine(googleEnabled: boolean, telegramEnabled: boolean): string | null {
+  if (googleEnabled && telegramEnabled) {
+    return "New to SailorPath? Google and Telegram create your account automatically.";
+  }
+  if (googleEnabled) return "New to SailorPath? Google creates your account automatically.";
+  if (telegramEnabled) return "New to SailorPath? Telegram creates your account automatically.";
+  return null;
 }
 
 export function LoginForm({
@@ -63,6 +65,7 @@ export function LoginForm({
   const telegramHref = `/auth/telegram?next=${encodeURIComponent(nextTarget)}${
     telegramUpdates ? "&updates=1" : ""
   }`;
+  const accountLine = automaticAccountLine(googleEnabled, telegramEnabled);
 
   const onGoogle = async () => {
     setBusy(true);
@@ -139,10 +142,12 @@ export function LoginForm({
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 space-y-6 shadow-xs">
         <div className="text-center">
-          <h1 className="text-2xl font-black text-[var(--sp-harbour-shadow)]">Welcome back</h1>
-          <p className="text-xs text-[var(--sp-slate-soft)] mt-2">
-            {signInSubtitle(googleEnabled, telegramEnabled)}
-          </p>
+          <h1 className="text-2xl font-black text-[var(--sp-harbour-shadow)]">Log in or sign up</h1>
+          {accountLine ? (
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-2 leading-relaxed">
+              {accountLine}
+            </p>
+          ) : null}
         </div>
         {message && (
           <p className="text-xs font-bold text-[var(--sp-harbour-teal)] text-center">{message}</p>
@@ -244,12 +249,11 @@ export function LoginForm({
           </div>
         ) : null}
         <p className="text-center text-xs text-[var(--sp-slate-soft)]">
-          No account?{" "}
           <Link
             href={`/register?next=${encodeURIComponent(nextTarget)}`}
             className="text-[var(--sp-harbour-teal)] font-bold hover:underline"
           >
-            Register
+            New here? Create an account with email
           </Link>
         </p>
       </div>

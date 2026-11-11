@@ -181,20 +181,12 @@ export function SiteHeader() {
               </button>
             </div>
           ) : (
-            <>
-              <Link
-                href="/login"
-                className="text-sm font-semibold text-sailcloth hover:text-white"
-              >
-                Log in
-              </Link>
-              <Link
-                href="/register"
-                className="rounded-lg border border-soft-aqua/50 px-3 py-1.5 text-sm font-semibold text-sailcloth hover:bg-harbour-mid hover:text-white"
-              >
-                Create account
-              </Link>
-            </>
+            <Link
+              href="/login"
+              className="rounded-lg border border-soft-aqua/50 px-3 py-1.5 text-sm font-semibold text-sailcloth hover:bg-harbour-mid hover:text-white"
+            >
+              Log in or sign up
+            </Link>
           )}
         </div>
 
@@ -297,22 +289,13 @@ export function SiteHeader() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/login"
-                  onClick={closeMobile}
-                  className="rounded-lg border border-soft-aqua/50 px-3 py-2.5 text-center text-sm font-semibold"
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/register"
-                  onClick={closeMobile}
-                  className="rounded-lg bg-racing-orange px-3 py-2.5 text-center text-sm font-semibold text-white"
-                >
-                  Create account
-                </Link>
-              </div>
+              <Link
+                href="/login"
+                onClick={closeMobile}
+                className="block rounded-lg bg-racing-orange px-3 py-2.5 text-center text-sm font-semibold text-white"
+              >
+                Log in or sign up
+              </Link>
             )}
           </div>
         </div>

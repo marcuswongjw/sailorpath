@@ -235,16 +235,10 @@ export function IlcaRankingsView({
               <span>→</span>
             </Link>
             <Link
-              href="/register?next=%2Fsg%2Filca4"
+              href="/login?next=%2Fsg%2Filca4"
               className="inline-flex rounded-full bg-harbour px-3.5 py-1.5 text-xs font-bold text-white hover:bg-harbour-deep shadow-xs"
             >
-              Create account
-            </Link>
-            <Link
-              href="/login?next=%2Fsg%2Filca4"
-              className="text-xs font-semibold text-slate-soft hover:text-charcoal px-1.5 py-1"
-            >
-              Log in
+              Log in or sign up
             </Link>
           </div>
         </div>

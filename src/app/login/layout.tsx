@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Log in | SailorPath",
-  description: "Log in to manage your SailorPath account and claimed sailor profiles.",
+  title: "Log in or sign up | SailorPath",
+  description: "Log in to SailorPath, or create an account with Google, Telegram, or email.",
 };
 
 export default function LoginLayout({ children }: Readonly<{ children: React.ReactNode }>) {
