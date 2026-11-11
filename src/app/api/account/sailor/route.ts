@@ -242,12 +242,13 @@ export async function PATCH(req: Request) {
       (key) => typeof body[key] === "boolean" && body[key] !== sailor[key]
     );
     // A child cannot evade consent by changing DOB first or in this request.
-    const changingPublishedPhoto = body.avatarUrl !== undefined && patch.avatarUrl !== sailor.avatarUrl;
+    // Profile photo upload/removal is permitted for any approved sailor/parent owner
+    // (matching Storage folder RLS), while school/social/milestones visibility and DOB require guardian consent.
     const changingDob = body.dob !== undefined && patch.dob !== sailor.dob;
     const needsGuardian = requiresGuardianConsent(sailor.dob) ||
       (body.dob !== undefined && requiresGuardianConsent(patch.dob as string | null));
     if (
-      (changingPublicVisibility || changingDob || changingPublishedPhoto) && needsGuardian &&
+      (changingPublicVisibility || changingDob) && needsGuardian &&
       auth.role !== "superadmin" &&
       !(await canGiveGuardianConsent(sailorId, auth.userId, sailor))
     ) {

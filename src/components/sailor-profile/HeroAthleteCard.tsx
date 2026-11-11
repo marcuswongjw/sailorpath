@@ -19,6 +19,7 @@ import {
   BadgeCheck,
   ShieldAlert,
   Medal,
+  Loader2,
 } from "lucide-react";
 import {
   PROFILE_CARD_CLASS as cardClass,
@@ -83,6 +84,7 @@ export interface HeroAthleteCardProps {
   onToggleEditing?: () => void;
   avatarBusy?: boolean;
   avatarMsg?: string | null;
+  avatarStatus?: "ok" | "error" | null;
   onUploadAvatar?: (file: File) => void;
   onRemoveAvatar?: () => void;
   showWeight?: boolean;
@@ -153,6 +155,7 @@ export function HeroAthleteCard({
   onToggleEditing,
   avatarBusy = false,
   avatarMsg = null,
+  avatarStatus = null,
   onUploadAvatar,
   onRemoveAvatar,
   showWeight = false,
@@ -298,6 +301,14 @@ export function HeroAthleteCard({
                       </span>
                     </span>
                   )}
+                  {avatarBusy && (
+                    <span
+                      aria-label="Updating photo"
+                      className="absolute inset-0 bg-charcoal/60 flex items-center justify-center text-sailcloth"
+                    >
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    </span>
+                  )}
                 </div>
 
                 {ownerView && !demoMode && onUploadAvatar && (
@@ -325,7 +336,7 @@ export function HeroAthleteCard({
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      accept="image/jpeg,image/png,image/webp"
                       className="hidden"
                       onChange={(e) => {
                         const f = e.target.files?.[0];
@@ -868,7 +879,14 @@ export function HeroAthleteCard({
 
         {/* Feedback messages */}
         {avatarMsg && (
-          <p className="text-[13px] font-medium text-emerald-600">{avatarMsg}</p>
+          <p
+            role={avatarStatus === "error" ? "alert" : "status"}
+            className={`text-[13px] font-medium ${
+              avatarStatus === "error" ? "text-rose-600" : "text-emerald-600"
+            }`}
+          >
+            {avatarMsg}
+          </p>
         )}
         {claimMsg && (
           <p

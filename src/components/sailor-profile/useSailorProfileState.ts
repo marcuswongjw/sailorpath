@@ -143,6 +143,7 @@ export function useSailorProfileState({
   const [personalMsg, setPersonalMsg] = useState<string | null>(null);
   const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarMsg, setAvatarMsg] = useState<string | null>(null);
+  const [avatarStatus, setAvatarStatus] = useState<"ok" | "error" | null>(null);
   const [journey, setJourney] = useState<JourneyHighlight[]>(() =>
     parseSailingJourney(initialSailor.sailingJourney)
   );
@@ -344,21 +345,30 @@ export function useSailorProfileState({
 
   const uploadAvatar = async (file: File) => {
     if (demoMode) {
+      setAvatarStatus("error");
       setAvatarMsg("Demo only — photo not uploaded");
       return;
     }
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      setAvatarMsg("Please choose a JPG, PNG or WebP image");
+      const msg = "Please choose a JPG, PNG or WebP image";
+      setAvatarStatus("error");
+      setAvatarMsg(msg);
+      toast.error(msg);
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      setAvatarMsg("Image must be under 5 MB");
+      const msg = "Image must be under 5 MB";
+      setAvatarStatus("error");
+      setAvatarMsg(msg);
+      toast.error(msg);
       return;
     }
     setAvatarBusy(true);
+    setAvatarStatus(null);
     setAvatarMsg(null);
+    let uploadedPath: string | null = null;
+    const supabase = createBrowserSupabase();
     try {
-      const supabase = createBrowserSupabase();
       const ext =
         file.type === "image/png"
           ? "png"
@@ -370,6 +380,7 @@ export function useSailorProfileState({
         .from("avatars")
         .upload(path, file, { upsert: false, contentType: file.type, cacheControl: "0" });
       if (upErr) throw upErr;
+      uploadedPath = path;
       const { data: pub } = supabase.storage.from("avatars").getPublicUrl(path);
       const publicUrl = pub.publicUrl;
       const res = await fetch("/api/account/sailor", {
@@ -383,21 +394,31 @@ export function useSailorProfileState({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not save photo");
+      uploadedPath = null;
       setDisplaySailor((s: SailorRecordProps) => ({
         ...s,
         avatarUrl: data.sailor?.avatarUrl || publicUrl,
         showProfilePhotoOnPublicProfile: true,
       }));
+      setAvatarStatus("ok");
       setAvatarMsg("Photo updated");
       toast.success("Photo updated");
-      setTimeout(() => setAvatarMsg(null), 2500);
+      router.refresh();
+      setTimeout(() => {
+        setAvatarMsg(null);
+        setAvatarStatus(null);
+      }, 2500);
     } catch (e: unknown) {
-      setAvatarMsg(
-        errorMessage(
-          e,
-          "We couldn’t upload the photo. Try again or contact support if the problem continues."
-        )
+      if (uploadedPath) {
+        await supabase.storage.from("avatars").remove([uploadedPath]).catch(() => null);
+      }
+      const msg = errorMessage(
+        e,
+        "We couldn’t upload the photo. Try again or contact support if the problem continues."
       );
+      setAvatarStatus("error");
+      setAvatarMsg(msg);
+      toast.error(msg);
     } finally {
       setAvatarBusy(false);
     }
@@ -405,6 +426,7 @@ export function useSailorProfileState({
 
   const removeAvatar = async () => {
     if (demoMode) {
+      setAvatarStatus("error");
       setAvatarMsg("Demo only — photo not removed");
       return;
     }
@@ -416,6 +438,7 @@ export function useSailorProfileState({
     });
     if (!ok) return;
     setAvatarBusy(true);
+    setAvatarStatus(null);
     setAvatarMsg(null);
     try {
       const res = await fetch("/api/account/sailor", {
@@ -433,11 +456,19 @@ export function useSailorProfileState({
         ...s,
         avatarUrl: null,
       }));
+      setAvatarStatus("ok");
       setAvatarMsg("Photo removed");
-      setTimeout(() => setAvatarMsg(null), 2500);
+      toast.success("Photo removed");
+      setTimeout(() => {
+        setAvatarMsg(null);
+        setAvatarStatus(null);
+      }, 2500);
       router.refresh();
     } catch (e: unknown) {
-      setAvatarMsg(errorMessage(e, "We couldn’t remove the photo."));
+      const msg = errorMessage(e, "We couldn’t remove the photo.");
+      setAvatarStatus("error");
+      setAvatarMsg(msg);
+      toast.error(msg);
     } finally {
       setAvatarBusy(false);
     }
@@ -1288,6 +1319,7 @@ export function useSailorProfileState({
     personalMsg,
     avatarBusy,
     avatarMsg,
+    avatarStatus,
     journey,
     journeyDraft,
     setJourneyDraft,

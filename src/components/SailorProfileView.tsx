@@ -95,6 +95,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     personalMsg,
     avatarBusy,
     avatarMsg,
+    avatarStatus,
     journeyDraft,
     setJourneyDraft,
     journeyBusy,
@@ -272,6 +273,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         onToggleEditing={() => setEditing((e) => !e)}
         avatarBusy={avatarBusy}
         avatarMsg={avatarMsg}
+        avatarStatus={avatarStatus}
         onUploadAvatar={(f) => void uploadAvatar(f)}
         onRemoveAvatar={() => void removeAvatar()}
         showWeight={showWeight}
