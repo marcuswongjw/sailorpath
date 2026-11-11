@@ -4,16 +4,41 @@ import { Suspense, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { TelegramMark } from "@/components/TelegramMark";
+import { GoogleMark } from "@/components/GoogleMark";
 import { trackClientUsage } from "@/lib/clientUsage";
+import { startGoogleSignIn } from "@/lib/google/auth";
+import { GOOGLE_LOGIN_ERRORS } from "@/lib/google/messages";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
-import { telegramLoginError } from "@/lib/telegram/messages";
+import { TELEGRAM_LOGIN_ERRORS } from "@/lib/telegram/messages";
 
 const subscribeToHost = () => () => {};
 const getBrowserHost = () => window.location.hostname;
 const getServerHost = () => "";
 
-export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
+function loginErrorMessage(code: string | null): string | null {
+  if (!code) return null;
+  return (
+    TELEGRAM_LOGIN_ERRORS[code] ??
+    GOOGLE_LOGIN_ERRORS[code] ??
+    "We couldn’t complete authentication. Please try again."
+  );
+}
+
+function signInSubtitle(googleEnabled: boolean, telegramEnabled: boolean): string {
+  if (googleEnabled && telegramEnabled) return "Email and password, Google, or Telegram";
+  if (googleEnabled) return "Email and password, or Google";
+  if (telegramEnabled) return "Email and password, or Telegram";
+  return "Email + password login";
+}
+
+export function LoginForm({
+  telegramEnabled,
+  googleEnabled,
+}: {
+  telegramEnabled: boolean;
+  googleEnabled: boolean;
+}) {
   const searchParams = useSearchParams();
   const currentHost = useSyncExternalStore(
     subscribeToHost,
@@ -28,11 +53,27 @@ export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(
-    telegramLoginError(searchParams.get("error"))
+    loginErrorMessage(searchParams.get("error"))
   );
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const telegramHref = `/auth/telegram?next=${encodeURIComponent(nextTarget)}`;
+
+  const onGoogle = async () => {
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      await startGoogleSignIn(createBrowserSupabase(), window.location.origin, nextTarget);
+    } catch (googleError) {
+      setError(
+        googleError instanceof Error
+          ? googleError.message
+          : "We couldn’t start Google sign-in. Please try again."
+      );
+      setBusy(false);
+    }
+  };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,7 +136,7 @@ export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
         <div className="text-center">
           <h1 className="text-2xl font-black text-[var(--sp-harbour-shadow)]">Welcome back</h1>
           <p className="text-xs text-[var(--sp-slate-soft)] mt-2">
-            {telegramEnabled ? "Email and password, or Telegram" : "Email + password login"}
+            {signInSubtitle(googleEnabled, telegramEnabled)}
           </p>
         </div>
         {message && (
@@ -146,7 +187,7 @@ export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
             {busy ? "Signing in…" : "Log in"}
           </button>
         </form>
-        {telegramEnabled ? (
+        {googleEnabled || telegramEnabled ? (
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <span className="h-px flex-1 bg-[var(--sp-cool-veil)]" />
@@ -155,15 +196,32 @@ export function LoginForm({ telegramEnabled }: { telegramEnabled: boolean }) {
               </span>
               <span className="h-px flex-1 bg-[var(--sp-cool-veil)]" />
             </div>
-            <a
-              href={telegramHref}
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white py-3 text-sm font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
-            >
-              <TelegramMark className="h-5 w-5" />
-              Log in with Telegram
-            </a>
+            {googleEnabled ? (
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => void onGoogle()}
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white py-3 text-sm font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] disabled:opacity-50"
+              >
+                <GoogleMark className="h-5 w-5" />
+                Continue with Google
+              </button>
+            ) : null}
+            {telegramEnabled ? (
+              <a
+                href={telegramHref}
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white py-3 text-sm font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
+              >
+                <TelegramMark className="h-5 w-5" />
+                Log in with Telegram
+              </a>
+            ) : null}
             <p className="text-center text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">
-              Uses your Telegram public name and username. A phone number is not requested.
+              {googleEnabled ? "Google uses the email on that account. " : ""}
+              {telegramEnabled
+                ? "Telegram uses your public name and username. "
+                : ""}
+              A phone number is not requested.
             </p>
           </div>
         ) : null}
@@ -189,7 +247,10 @@ export function LoginFormFallback() {
   );
 }
 
-export default function LoginFormWithSuspense(props: { telegramEnabled: boolean }) {
+export default function LoginFormWithSuspense(props: {
+  telegramEnabled: boolean;
+  googleEnabled: boolean;
+}) {
   return (
     <Suspense fallback={<LoginFormFallback />}>
       <LoginForm {...props} />

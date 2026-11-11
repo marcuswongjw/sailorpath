@@ -4,6 +4,8 @@ import { and, desc, eq, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db, formatDbError, withDatabaseRetry, withSequentialDatabaseReads } from "@/db";
 import { sailorClaims, sailors, profiles, telegramIdentities } from "@/db/schema";
+import { isGoogleAuthEnabled } from "@/lib/google/auth";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { isTelegramLoginConfigured } from "@/lib/telegram/config";
 import { canDisconnectTelegram, contactEmail, isTelegramPlaceholderEmail } from "@/lib/telegram/email";
 
@@ -148,9 +150,28 @@ export async function GET() {
       owned,
       claims,
       telegram,
+      google: {
+        enabled: isGoogleAuthEnabled(),
+        linked: await googleIdentityLinked(),
+      },
     });
   } catch (e) {
     return jsonError(e);
+  }
+}
+
+async function googleIdentityLinked(): Promise<boolean> {
+  if (!isGoogleAuthEnabled()) return false;
+  try {
+    const supabase = await createServerSupabase();
+    const { data } = await supabase.auth.getUser();
+    const providers = data.user?.app_metadata?.providers;
+    if (Array.isArray(providers) && providers.some((provider) => provider === "google")) {
+      return true;
+    }
+    return Boolean(data.user?.identities?.some((identity) => identity.provider === "google"));
+  } catch {
+    return false;
   }
 }
 

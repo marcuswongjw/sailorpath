@@ -16,6 +16,11 @@ import {
   TelegramAccountSection,
   type TelegramAccountStatus,
 } from "@/components/account/TelegramAccountSection";
+import {
+  GoogleAccountSection,
+  type GoogleAccountStatus,
+} from "@/components/account/GoogleAccountSection";
+import { GOOGLE_ACCOUNT_NOTICES } from "@/lib/google/messages";
 import { TELEGRAM_ACCOUNT_NOTICES } from "@/lib/telegram/messages";
 
 type Owned = {
@@ -77,6 +82,7 @@ function AccountInner() {
   const [claimBusy, setClaimBusy] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [telegram, setTelegram] = useState<TelegramAccountStatus | null>(null);
+  const [google, setGoogle] = useState<GoogleAccountStatus | null>(null);
   const settingsRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -124,6 +130,12 @@ function AccountInner() {
             linked: Boolean(data.telegram.linked),
             username: typeof data.telegram.username === "string" ? data.telegram.username : null,
             canDisconnect: Boolean(data.telegram.canDisconnect),
+          });
+        }
+        if (data.google && typeof data.google === "object") {
+          setGoogle({
+            enabled: Boolean(data.google.enabled),
+            linked: Boolean(data.google.linked),
           });
         }
 
@@ -676,6 +688,11 @@ function AccountInner() {
               </div>
             )}
           </section>
+
+          <GoogleAccountSection
+            status={google}
+            notice={GOOGLE_ACCOUNT_NOTICES[searchParams.get("google") || ""] ?? null}
+          />
 
           <TelegramAccountSection
             status={telegram}

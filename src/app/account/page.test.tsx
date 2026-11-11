@@ -68,6 +68,32 @@ describe("account workspace navigation", () => {
     );
   });
 
+  it("shows Connect Google in account settings when Google auth is enabled", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          owned: [],
+          claims: [],
+          email: "parent@example.com",
+          user: {
+            id: "user",
+            fullName: "Test Parent",
+            email: "parent@example.com",
+            role: "sailor",
+          },
+          google: { enabled: true, linked: false },
+        }),
+      })
+    );
+    const user = userEvent.setup();
+    render(<AccountPage />);
+    await user.click(await screen.findByText("Account settings", { selector: "summary" }));
+    expect(screen.getByRole("button", { name: "Connect Google" })).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Connect Telegram" })).not.toBeInTheDocument();
+  });
+
   it("shows the family dashboard for parent accounts", async () => {
     state.role = "parent";
     render(<AccountPage />);

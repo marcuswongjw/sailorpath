@@ -69,7 +69,11 @@ export default function PrivacyPage() {
             Telegram does not provide an email address, and SailorPath does not
             request a phone number. A Telegram login is not matched to an
             existing account by name. You can connect Telegram to an account
-            you already use from account settings.
+            you already use from account settings. If you sign in with Google,
+            SailorPath receives the name and email address on that Google
+            account. A Google login is added to an existing account only when
+            the email address matches and is already verified, or when you
+            connect it yourself from account settings.
           </p>
         </PolicySection>
 
