@@ -103,6 +103,17 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
         );
         existingNames = (altRows.rows || []).map((r) => String(r.name));
       }
+      // Ensure avatars bucket is public in storage.buckets as requested for all profile photos
+      await db.execute(sql`UPDATE storage.buckets SET public = true WHERE id = 'avatars' AND public = false`);
+      await db.execute(sql`
+        DO $$ BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM pg_policies WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname = 'Avatar public read'
+          ) THEN
+            CREATE POLICY "Avatar public read" ON storage.objects FOR SELECT USING (bucket_id = 'avatars');
+          END IF;
+        END $$;
+      `);
     } catch {
       // Storage schema not queried or not present in local test DB
     }
