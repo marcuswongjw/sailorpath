@@ -104,7 +104,7 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
     }
 
     if (!bodyBytes || !contentType) return missing();
-    return new Response(bodyBytes, { headers: { ...HEADERS, "Content-Type": contentType } });
+    return new Response(Buffer.from(bodyBytes), { headers: { ...HEADERS, "Content-Type": contentType } });
   } catch (error) {
     console.error("[profile-photo]", error);
     return Response.json({ error: "Photo temporarily unavailable" }, { status: 503, headers: HEADERS });
