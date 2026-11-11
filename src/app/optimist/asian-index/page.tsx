@@ -4,9 +4,9 @@ import { createAsianOptimistIndexProvisionalEntries } from "@/lib/asianOptimistI
 import { ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS } from "@/lib/asianOptimistIndexQualifiers";
 
 export const metadata: Metadata = {
-  title: "SailorPath Asian and Oceania Optimist Index (V1 Beta) | SailorPath",
+  title: "Asian and Oceania Optimist Index | SailorPath",
   description:
-    "An independent analytical index of verified Optimist results for Asian and Oceanian sailors. Standings, the V1 (Beta) methodology, and the 2026–27 event register.",
+    "An independent index of verified Optimist results for sailors representing Asian and Oceanian national authorities.",
   alternates: {
     canonical: "/optimist/asian-index",
   },
