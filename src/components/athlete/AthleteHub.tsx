@@ -1,10 +1,10 @@
 "use client";
 
 import { profilePhotoUrl } from "@/lib/profilePhoto";
-
 import { sailingClassDisplayLabel } from "@/lib/classPresentation";
+import { qualifyingParticipation } from "@/lib/qualifyingParticipation";
 
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -19,19 +19,21 @@ import {
   AlertCircle,
   Users,
   ImageIcon,
-  Save,
   Loader2,
   Clock,
+  BookOpen,
+  Pencil,
 } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import {
   RegattaEvidenceModal,
   type RegattaResultItem,
 } from "./RegattaEvidenceModal";
+import {
+  RegattaReflectionModal,
+  type LogbookReflection,
+} from "./RegattaReflectionModal";
 import { EquipmentInventory } from "@/components/equipment/EquipmentInventory";
-import { GeographySelect } from "@/components/CountrySelect";
-import { ProfileIdentityFields } from "@/components/sailor-profile/ProfileIdentityFields";
-import { qualifyingParticipation } from "@/lib/qualifyingParticipation";
 
 export type AthleteProfile = {
   id: string;
@@ -60,33 +62,11 @@ export type AthleteProfile = {
 
 type WorkspaceTab = "results" | "profile" | "equipment" | "documents";
 
-function buildProfileForm(a: AthleteProfile) {
-  return {
-    sailNumber: a.sailNumber || "",
-    sailNumberIlca4: a.sailNumberIlca4 || "",
-    boardNumber: a.boardNumber || "",
-    club: a.club || "",
-    school: a.school || "",
-    gender: a.gender || "M",
-    nationality: a.nationality || "SGP",
-    dob: a.dob ? String(a.dob).slice(0, 10) : "",
-    bio: a.bio || "",
-    instagram: a.instagram || "",
-    avatarUrl: a.avatarUrl || "",
-    hullBrand: a.hullBrand || "",
-    sailMake: a.sailMake || "",
-    foilBrand: a.foilBrand || "",
-    mast: a.mast || "",
-    equipmentNotes: a.equipmentNotes || "",
-  };
-}
-
 interface AthleteWorkspaceProps {
   athlete: AthleteProfile;
   initialTab?: WorkspaceTab;
   initialAction?: string;
   onTabChange?: (tab: WorkspaceTab) => void;
-  onDirtyChange?: (dirty: boolean) => void;
 }
 
 function AthleteWorkspace({
@@ -94,27 +74,22 @@ function AthleteWorkspace({
   initialTab = "results",
   initialAction,
   onTabChange,
-  onDirtyChange,
 }: AthleteWorkspaceProps) {
   const router = useRouter();
   const { toast, confirm } = useFeedback();
 
-  // Local athlete state so profile saves instantly refresh the header card
   const [athlete, setAthlete] = useState<AthleteProfile>(initialAthlete);
-
-  // Active tab
   const [activeTab, setActiveTab] = useState<WorkspaceTab>(initialTab);
 
   const changeTab = (tab: WorkspaceTab) => {
     setActiveTab(tab);
     onTabChange?.(tab);
-    // Keep the URL shareable/deep-linkable without a server roundtrip
     const url = new URL(window.location.href);
     url.searchParams.set("tab", tab);
     window.history.replaceState(null, "", url.toString());
   };
 
-  // Evidence modal state
+  // Evidence / result modal state
   const [evidenceModalOpen, setEvidenceModalOpen] = useState(
     initialAction === "new"
   );
@@ -122,34 +97,36 @@ function AthleteWorkspace({
     null
   );
 
-  // Results state
+  // Reflection modal state
+  const [reflectionTarget, setReflectionTarget] = useState<{
+    regattaId: string;
+    regattaName: string;
+  } | null>(null);
+
+  // Results & reflections state
   const [results, setResults] = useState<RegattaResultItem[]>([]);
+  const [reflections, setReflections] = useState<LogbookReflection[]>([]);
   const [loadingResults, setLoadingResults] = useState(true);
   const [resultFilter, setResultFilter] = useState<
     "all" | "verified" | "under_review" | "self" | "rejected"
   >("all");
-
-  // Profile edit form state
-  const [profileForm, setProfileForm] = useState(() =>
-    buildProfileForm(athlete)
-  );
-  const [savingProfile, setSavingProfile] = useState(false);
   const [removingAvatar, setRemovingAvatar] = useState(false);
-
-  // Dirty tracking: notify parent when the profile form diverges from the
-  // saved athlete record (baseline recomputes automatically after save)
-  const profileBaseline = useMemo(() => JSON.stringify(buildProfileForm(athlete)), [athlete]);
-  useEffect(() => {
-    onDirtyChange?.(JSON.stringify(profileForm) !== profileBaseline);
-  }, [profileForm, profileBaseline, onDirtyChange]);
 
   const fetchResults = useCallback(async () => {
     setLoadingResults(true);
     try {
-      const res = await fetch(`/api/account/results?sailorId=${athlete.id}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to load results");
+      const [resRes, obsRes] = await Promise.all([
+        fetch(`/api/account/results?sailorId=${athlete.id}`),
+        fetch(`/api/account/observations?sailorId=${athlete.id}`),
+      ]);
+      const data = await resRes.json();
+      if (!resRes.ok) throw new Error(data.error || "Failed to load results");
       setResults(data.results || []);
+
+      if (obsRes.ok) {
+        const obsData = await obsRes.json().catch(() => ({}));
+        setReflections(Array.isArray(obsData.observations) ? obsData.observations : []);
+      }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error fetching results");
     } finally {
@@ -162,11 +139,22 @@ function AthleteWorkspace({
     async function load() {
       setLoadingResults(true);
       try {
-        const res = await fetch(`/api/account/results?sailorId=${athlete.id}`);
-        const data = await res.json();
+        const [resRes, obsRes] = await Promise.all([
+          fetch(`/api/account/results?sailorId=${athlete.id}`),
+          fetch(`/api/account/observations?sailorId=${athlete.id}`),
+        ]);
+        const data = await resRes.json();
         if (!ignore) {
-          if (!res.ok) throw new Error(data.error || "Failed to load results");
+          if (!resRes.ok) throw new Error(data.error || "Failed to load results");
           setResults(data.results || []);
+          if (obsRes.ok) {
+            const obsData = await obsRes.json().catch(() => ({}));
+            if (!ignore) {
+              setReflections(
+                Array.isArray(obsData.observations) ? obsData.observations : []
+              );
+            }
+          }
         }
       } catch (err) {
         if (!ignore) {
@@ -183,50 +171,6 @@ function AthleteWorkspace({
       ignore = true;
     };
   }, [athlete.id, toast]);
-
-  const handleSaveProfile = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSavingProfile(true);
-    try {
-      const res = await fetch("/api/account/sailor", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sailorId: athlete.id,
-          ...profileForm,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to update profile");
-
-      // Synchronize local athlete state immediately
-      setAthlete((prev) => ({
-        ...prev,
-        sailNumber: profileForm.sailNumber,
-        sailNumberIlca4: profileForm.sailNumberIlca4,
-        boardNumber: profileForm.boardNumber,
-        club: profileForm.club,
-        school: profileForm.school,
-        gender: profileForm.gender,
-        nationality: profileForm.nationality,
-        dob: profileForm.dob,
-        bio: profileForm.bio,
-        instagram: profileForm.instagram,
-        hullBrand: profileForm.hullBrand,
-        sailMake: profileForm.sailMake,
-        foilBrand: profileForm.foilBrand,
-        mast: profileForm.mast,
-        equipmentNotes: profileForm.equipmentNotes,
-      }));
-
-      toast.success("Athlete profile details updated!");
-      router.refresh();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Update failed");
-    } finally {
-      setSavingProfile(false);
-    }
-  };
 
   const handleRemovePhoto = async () => {
     const ok = await confirm({
@@ -250,7 +194,6 @@ function AthleteWorkspace({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to remove photo");
       setAthlete((prev) => ({ ...prev, avatarUrl: null }));
-      setProfileForm((prev) => ({ ...prev, avatarUrl: "" }));
       toast.success("Profile photo removed.");
       router.refresh();
     } catch (err) {
@@ -285,8 +228,6 @@ function AthleteWorkspace({
   };
 
   const isResultVerified = (r: RegattaResultItem) => {
-    // Same rule as displayedResultVerificationStatus. Kept inline so the
-    // athlete hub does not pull another module into the client bundle.
     if (r.countsForRanking) return true;
     const slug = r.regattaSlug ?? r.slug ?? "";
     const stored = r.verificationStatus;
@@ -333,9 +274,36 @@ function AthleteWorkspace({
     [results]
   );
 
+  const reflectionsByRegatta = useMemo(() => {
+    const map = new Map<string, LogbookReflection[]>();
+    for (const item of reflections) {
+      const list = map.get(item.regattaId) || [];
+      list.push(item);
+      map.set(item.regattaId, list);
+    }
+    return map;
+  }, [reflections]);
+
+  const handleReflectionSaved = (saved: LogbookReflection) => {
+    setReflections((prev) => {
+      const rest = prev.filter(
+        (item) =>
+          !(
+            item.regattaId === saved.regattaId &&
+            item.raceNumber === saved.raceNumber
+          ) && item.id !== saved.id
+      );
+      return [...rest, saved].sort((a, b) => a.raceNumber - b.raceNumber);
+    });
+  };
+
+  const handleReflectionDeleted = (id: string) => {
+    setReflections((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
     <div className="space-y-5">
-      {/* Compact Header & Underline Tabs */}
+      {/* Compact Header & 3 Focused Underline Tabs */}
       <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs overflow-hidden">
         <div className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4 min-w-0">
@@ -387,12 +355,17 @@ function AthleteWorkspace({
           <div className="flex flex-wrap items-center gap-2 shrink-0">
             <Link
               href={`/sailors/${athlete.handle}`}
-              target="_blank"
-              rel="noreferrer"
               className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-4 py-2 text-xs font-bold transition-colors shadow-2xs"
             >
               <span>Public profile</span>
               <ExternalLink className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" aria-hidden="true" />
+            </Link>
+            <Link
+              href={`/sailors/${athlete.handle}?edit=1`}
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-4 py-2 text-xs font-bold transition-colors shadow-2xs"
+            >
+              <Pencil className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" aria-hidden="true" />
+              <span>Edit profile</span>
             </Link>
             <button
               type="button"
@@ -416,7 +389,6 @@ function AthleteWorkspace({
           {(
             [
               { id: "results", label: "Logbook", count: results.length },
-              { id: "profile", label: "Profile" },
               { id: "equipment", label: "Equipment" },
               { id: "documents", label: "Documents", count: evidenceDocs.length },
             ] as Array<{ id: WorkspaceTab; label: string; count?: number }>
@@ -453,7 +425,7 @@ function AthleteWorkspace({
         </nav>
       </div>
 
-      {/* Tab 1: Regattas Logbook */}
+      {/* Tab 1: Regattas Logbook & Reflections */}
       {activeTab === "results" && (
         <div className="space-y-4">
           {results.length > 0 && (
@@ -541,6 +513,9 @@ function AthleteWorkspace({
                 );
                 const effectiveFleetSize =
                   qualifyingParticipation(regSlug) ?? r.totalFleetSize;
+                const rowReflections =
+                  reflectionsByRegatta.get(r.regattaId) || [];
+
                 return (
                   <li key={r.id} className="p-4 sm:px-6 sm:py-4 space-y-2.5">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
@@ -630,49 +605,77 @@ function AthleteWorkspace({
                       </div>
                     )}
 
-                    {(r.evidenceUrl || r.officialUrl || showUserEvidenceNotes || !verified) && (
-                      <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5 text-xs">
-                        <div className="flex flex-wrap items-center gap-3 text-[var(--sp-slate-soft)]">
-                          {r.evidenceUrl && (
-                            <a
-                              href={r.evidenceUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline"
-                            >
-                              {r.evidenceType === "image" ? (
-                                <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                              ) : (
-                                <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-                              )}
-                              <span>{r.evidenceName || "Evidence document"}</span>
-                            </a>
-                          )}
-                          {r.officialUrl && (
-                            <a
-                              href={r.officialUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline"
-                            >
-                              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-                              <span>Official results</span>
-                            </a>
-                          )}
-                          {showUserEvidenceNotes && (
-                            <span className="italic">“{r.evidenceNotes}”</span>
-                          )}
-                        </div>
+                    {/* Reflection snippet if saved */}
+                    {rowReflections.length > 0 && rowReflections[0]?.note && (
+                      <p className="text-xs text-[var(--sp-charcoal)] bg-[var(--sp-sailcloth)]/60 rounded-xl px-3 py-2 leading-relaxed">
+                        <span className="font-semibold text-[var(--sp-harbour-teal)]">
+                          Reflection{rowReflections.length > 1 ? ` (${rowReflections.length})` : ""}:
+                        </span>{" "}
+                        {rowReflections[0].note}
+                      </p>
+                    )}
+
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5 text-xs">
+                      <div className="flex flex-wrap items-center gap-3 text-[var(--sp-slate-soft)]">
+                        {r.evidenceUrl && (
+                          <a
+                            href={r.evidenceUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+                          >
+                            {r.evidenceType === "image" ? (
+                              <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                            ) : (
+                              <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                            )}
+                            <span>{r.evidenceName || "Evidence document"}</span>
+                          </a>
+                        )}
+                        {r.officialUrl && (
+                          <a
+                            href={r.officialUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+                          >
+                            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>Official results</span>
+                          </a>
+                        )}
+                        {showUserEvidenceNotes && (
+                          <span className="italic">“{r.evidenceNotes}”</span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-3 ml-auto">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setReflectionTarget({
+                              regattaId: r.regattaId,
+                              regattaName: r.regattaName,
+                            })
+                          }
+                          className="inline-flex min-h-9 items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline cursor-pointer"
+                        >
+                          <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span>
+                            {rowReflections.length > 0
+                              ? `Reflections (${rowReflections.length})`
+                              : "+ Add reflection"}
+                          </span>
+                        </button>
 
                         {!verified && (
-                          <div className="flex items-center gap-3 ml-auto">
+                          <>
                             <button
                               type="button"
                               onClick={() => {
                                 setEditingResult(r);
                                 setEvidenceModalOpen(true);
                               }}
-                              className="inline-flex min-h-9 items-center gap-1 font-semibold text-[var(--sp-harbour-teal)] hover:underline cursor-pointer"
+                              className="inline-flex min-h-9 items-center gap-1 font-semibold text-[var(--sp-charcoal)] hover:underline cursor-pointer"
                             >
                               <Edit2 className="h-3 w-3" aria-hidden="true" />
                               <span>Edit / Evidence</span>
@@ -685,10 +688,10 @@ function AthleteWorkspace({
                               <Trash2 className="h-3 w-3" aria-hidden="true" />
                               <span>Delete</span>
                             </button>
-                          </div>
+                          </>
                         )}
                       </div>
-                    )}
+                    </div>
                   </li>
                 );
               })}
@@ -697,200 +700,28 @@ function AthleteWorkspace({
         </div>
       )}
 
-      {/* Tab 2: Profile Editor */}
+      {/* Fallback card if navigated directly via ?tab=profile */}
       {activeTab === "profile" && (
-        <form
-          onSubmit={handleSaveProfile}
-          className="rounded-3xl border border-[var(--sp-cool-veil)] p-5 sm:p-6 space-y-6 bg-[var(--sp-warm-white)] shadow-xs"
-        >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--sp-cool-veil)] pb-4">
-            <div>
-              <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
-                Profile &amp; boat details
-              </h2>
-              <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
-                Shown on your public sailor profile.
-              </p>
-            </div>
-            <button
-              type="submit"
-              disabled={savingProfile}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2 text-xs sm:text-sm font-bold text-white transition-colors disabled:opacity-50 shadow-xs cursor-pointer"
+        <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 sm:p-8 text-center space-y-3 shadow-xs">
+          <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
+            Profile editing is now on your public profile
+          </h2>
+          <p className="text-xs text-[var(--sp-slate-soft)] max-w-md mx-auto leading-relaxed">
+            Update your bio, sail numbers, club, school, and privacy settings in one place with Edit profile.
+          </p>
+          <div className="pt-1">
+            <Link
+              href={`/sailors/${athlete.handle}?edit=1`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-sm font-bold text-white shadow-xs transition-colors"
             >
-              {savingProfile ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Saving…</span>
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  <span>Save changes</span>
-                </>
-              )}
-            </button>
+              <Pencil className="h-4 w-4" aria-hidden="true" />
+              <span>Edit profile</span>
+            </Link>
           </div>
-
-          <div className="divide-y divide-[var(--sp-cool-veil)] space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <ProfileIdentityFields
-                form={profileForm}
-                onFieldChange={(key, value) =>
-                  setProfileForm((f) => ({ ...f, [key]: value }))
-                }
-              />
-
-              <div>
-                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Gender
-                </label>
-                <select
-                  value={profileForm.gender}
-                  onChange={(e) =>
-                    setProfileForm({ ...profileForm, gender: e.target.value })
-                  }
-                  className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                >
-                  <option value="M">Male (Boy)</option>
-                  <option value="F">Female (Girl)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Nationality (NOC)
-                </label>
-                <GeographySelect
-                  value={profileForm.nationality}
-                  onChange={(val) =>
-                    setProfileForm({
-                      ...profileForm,
-                      nationality: val || "SGP",
-                    })
-                  }
-                  className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                  Public bio
-                </label>
-                <textarea
-                  value={profileForm.bio}
-                  onChange={(e) =>
-                    setProfileForm({ ...profileForm, bio: e.target.value })
-                  }
-                  maxLength={500}
-                  rows={3}
-                  placeholder="Share a short public bio (max 500 characters)..."
-                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                />
-              </div>
-            </div>
-
-            <div className="pt-6 space-y-3">
-              <h3 className="text-sm font-bold text-[var(--sp-harbour-shadow)]">
-                Boat &amp; rig setup
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                    Hull brand
-                  </label>
-                  <input
-                    type="text"
-                    value={profileForm.hullBrand}
-                    onChange={(e) =>
-                      setProfileForm({
-                        ...profileForm,
-                        hullBrand: e.target.value,
-                      })
-                    }
-                    placeholder="e.g. Winner 3D Star, Devoti"
-                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                    Sail make &amp; model
-                  </label>
-                  <input
-                    type="text"
-                    value={profileForm.sailMake}
-                    onChange={(e) =>
-                      setProfileForm({
-                        ...profileForm,
-                        sailMake: e.target.value,
-                      })
-                    }
-                    placeholder="e.g. North Sails P-5, Olimpic"
-                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                    Foils
-                  </label>
-                  <input
-                    type="text"
-                    value={profileForm.foilBrand}
-                    onChange={(e) =>
-                      setProfileForm({
-                        ...profileForm,
-                        foilBrand: e.target.value,
-                      })
-                    }
-                    placeholder="e.g. DSK Flashtep, Optiparts"
-                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                    Mast &amp; spars
-                  </label>
-                  <input
-                    type="text"
-                    value={profileForm.mast}
-                    onChange={(e) =>
-                      setProfileForm({ ...profileForm, mast: e.target.value })
-                    }
-                    placeholder="e.g. Optimax MK4, Blackgold"
-                    className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-6 flex flex-wrap items-center justify-between gap-3 text-xs">
-              <div>
-                <p className="font-bold text-[var(--sp-charcoal)]">
-                  Career milestones &amp; sailing journey
-                </p>
-                <p className="text-[var(--sp-slate-soft)] mt-0.5">
-                  Add or edit milestones directly on your public profile.
-                </p>
-              </div>
-              <Link
-                href={
-                  athlete.handle
-                    ? `/sailors/${encodeURIComponent(athlete.handle)}#profile-journey`
-                    : `/sailor/${athlete.id}#profile-journey`
-                }
-                className="inline-flex min-h-10 items-center gap-1.5 font-bold text-[var(--sp-harbour-teal)] hover:underline"
-              >
-                <span>Edit milestones</span>
-                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </form>
+        </div>
       )}
 
-      {/* Tab 3: Equipment Locker */}
+      {/* Tab 2: Equipment Locker */}
       {activeTab === "equipment" && (
         <EquipmentInventory
           sailorId={athlete.id}
@@ -900,7 +731,7 @@ function AthleteWorkspace({
         />
       )}
 
-      {/* Tab 4: Evidence Documents */}
+      {/* Tab 3: Evidence Documents */}
       {activeTab === "documents" && (
         evidenceDocs.length === 0 ? (
           <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-10 text-center space-y-2 shadow-xs">
@@ -918,49 +749,49 @@ function AthleteWorkspace({
                 qualifyingParticipation(r.regattaSlug ?? r.slug ?? "") ??
                 r.totalFleetSize;
               return (
-              <li
-                key={r.id}
-                className="p-4 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-              >
-                <div className="min-w-0">
-                  <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
-                    {r.regattaName}
-                  </p>
-                  <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
-                    {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
-                    {effectiveFleetSize ? ` / ${effectiveFleetSize}` : ""}
-                  </p>
-                </div>
+                <li
+                  key={r.id}
+                  className="p-4 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
+                      {r.regattaName}
+                    </p>
+                    <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
+                      {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
+                      {effectiveFleetSize ? ` / ${effectiveFleetSize}` : ""}
+                    </p>
+                  </div>
 
-                <div className="flex flex-wrap items-center gap-2 shrink-0">
-                  {r.evidenceUrl && (
-                    <a
-                      href={r.evidenceUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 hover:bg-sky-100 text-sky-800 px-3 py-1 text-xs font-semibold transition-colors"
-                    >
-                      {r.evidenceType === "image" ? (
-                        <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                      ) : (
-                        <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-                      )}
-                      <span>{r.evidenceName || "Evidence"}</span>
-                    </a>
-                  )}
-                  {r.officialUrl && (
-                    <a
-                      href={r.officialUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 hover:bg-teal-100 text-[var(--sp-harbour-teal)] px-3 py-1 text-xs font-semibold transition-colors"
-                    >
-                      <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-                      <span>Official link</span>
-                    </a>
-                  )}
-                </div>
-              </li>
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    {r.evidenceUrl && (
+                      <a
+                        href={r.evidenceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 hover:bg-sky-100 text-sky-800 px-3 py-1 text-xs font-semibold transition-colors"
+                      >
+                        {r.evidenceType === "image" ? (
+                          <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                        ) : (
+                          <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                        )}
+                        <span>{r.evidenceName || "Evidence"}</span>
+                      </a>
+                    )}
+                    {r.officialUrl && (
+                      <a
+                        href={r.officialUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-teal-200 bg-teal-50 hover:bg-teal-100 text-[var(--sp-harbour-teal)] px-3 py-1 text-xs font-semibold transition-colors"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                        <span>Official link</span>
+                      </a>
+                    )}
+                  </div>
+                </li>
               );
             })}
           </ul>
@@ -979,6 +810,20 @@ function AthleteWorkspace({
         initialResult={editingResult}
         onSuccess={() => void fetchResults()}
       />
+
+      {/* Post-Regatta Reflections Modal */}
+      {reflectionTarget && (
+        <RegattaReflectionModal
+          isOpen={Boolean(reflectionTarget)}
+          onClose={() => setReflectionTarget(null)}
+          sailorId={athlete.id}
+          regattaId={reflectionTarget.regattaId}
+          regattaName={reflectionTarget.regattaName}
+          reflections={reflectionsByRegatta.get(reflectionTarget.regattaId) || []}
+          onSaved={handleReflectionSaved}
+          onDeleted={handleReflectionDeleted}
+        />
+      )}
     </div>
   );
 }
@@ -996,34 +841,16 @@ export function AthleteHub({
   initialTab = "results",
   initialAction,
 }: AthleteHubProps) {
-  const { confirm } = useFeedback();
   const [selectedId, setSelectedId] = useState<string>(() => {
     if (currentSailorId && athletes.some((a) => a.id === currentSailorId)) {
       return currentSailorId;
     }
     return athletes[0]?.id || "";
   });
-  // Tab state lives here so it survives athlete switches (workspace remounts)
   const [activeTab, setActiveTab] = useState<WorkspaceTab>(initialTab);
-  // Set by the workspace when its profile form has unsaved edits
-  const dirtyRef = useRef(false);
-  const handleDirtyChange = useCallback((dirty: boolean) => {
-    dirtyRef.current = dirty;
-  }, []);
 
-  const handleSelectAthlete = async (id: string) => {
+  const handleSelectAthlete = (id: string) => {
     if (id === selectedId) return;
-    if (dirtyRef.current) {
-      const ok = await confirm({
-        title: "Discard Unsaved Changes?",
-        message:
-          "You have unsaved edits on the athlete profile. Switching athlete will discard them.",
-        confirmLabel: "Discard & Switch",
-        tone: "danger",
-      });
-      if (!ok) return;
-      dirtyRef.current = false;
-    }
     setSelectedId(id);
     const url = new URL(window.location.href);
     url.searchParams.set("id", id);
@@ -1071,7 +898,7 @@ export function AthleteHub({
               <button
                 key={ath.id}
                 type="button"
-                onClick={() => void handleSelectAthlete(ath.id)}
+                onClick={() => handleSelectAthlete(ath.id)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   ath.id === selectedId
                     ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
@@ -1093,7 +920,6 @@ export function AthleteHub({
         initialTab={activeTab}
         initialAction={initialAction}
         onTabChange={setActiveTab}
-        onDirtyChange={handleDirtyChange}
       />
     </div>
   );

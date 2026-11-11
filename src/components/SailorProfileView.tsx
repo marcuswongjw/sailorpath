@@ -321,9 +321,11 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         </section>
       )}
 
-      {/* Owner editor */}
+      {/* Unified Edit Profile Modal (lazy-loaded only while editing) */}
       {ownerView && editing && (
         <ProfileOwnerEditor
+          isOpen
+          onClose={() => setEditing(false)}
           form={form}
           setForm={setForm}
           publicVisibility={publicVisibility}

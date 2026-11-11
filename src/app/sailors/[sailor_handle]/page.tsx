@@ -92,10 +92,13 @@ function requestMayHaveSession(cookieNames: string[]): boolean {
 
 export default async function SailorProfilePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ sailor_handle: string }>;
+  searchParams?: Promise<{ edit?: string }>;
 }) {
   const { sailor_handle } = await params;
+  const sp = searchParams ? await searchParams : {};
   let sailor;
   try {
     sailor = await loadShareSailor(sailor_handle);
@@ -128,14 +131,15 @@ export default async function SailorProfilePage({
         </section>
       </div>
     }>
-      <SailorProfileDetails sailor_handle={sailor_handle} initialSailor={sailor} />
+      <SailorProfileDetails sailor_handle={sailor_handle} initialSailor={sailor} editIntent={sp.edit === "1"} />
     </Suspense>
   );
 }
 
-async function SailorProfileDetails({ sailor_handle, initialSailor }: {
+async function SailorProfileDetails({ sailor_handle, initialSailor, editIntent = false }: {
   sailor_handle: string;
   initialSailor: NonNullable<Awaited<ReturnType<typeof loadShareSailor>>>;
+  editIntent?: boolean;
 }) {
   let sailor;
   let auth;
@@ -369,6 +373,7 @@ async function SailorProfileDetails({ sailor_handle, initialSailor }: {
       isLoggedIn={Boolean(auth?.userId)}
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}
+      initialEdit={access.isOwner && editIntent}
       followControl={followControl}
     />
     </ErrorBoundary>

@@ -476,6 +476,17 @@ main :where(.overflow-x-auto, .overflow-x-scroll) {
 @media (pointer: coarse) {
   button, a, [role="button"], input, select, textarea { min-height: 2.75rem; }
 }
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgb(15 23 42 / 0.55);
+  backdrop-filter: blur(2px);
+}
 @media print {
   body { background: white !important; color: black !important; }
   header, footer, nav, .no-print, button:not(.print-keep) { display: none !important; }

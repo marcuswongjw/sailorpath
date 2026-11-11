@@ -1,6 +1,6 @@
 import { withUserChangeTracking } from "@/lib/userChanges";
 import { NextResponse } from "next/server";
-import { and, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
@@ -26,6 +26,40 @@ async function assertOwner(sailorId: string, userId: string, isAdmin: boolean) {
     };
   }
   return { sailor };
+}
+
+/** List all observations/reflections for a managed sailor. */
+export async function GET(req: Request) {
+  try {
+    const auth = await getAuthContext();
+    if (!auth) {
+      return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+    }
+    const { searchParams } = new URL(req.url);
+    const sailorId = String(searchParams.get("sailorId") || "").trim();
+    if (!sailorId) {
+      return NextResponse.json({ error: "sailorId is required" }, { status: 400 });
+    }
+
+    const gate = await assertOwner(
+      sailorId,
+      auth.userId,
+      auth.role === "superadmin"
+    );
+    if ("error" in gate && gate.error) {
+      return NextResponse.json({ error: gate.error }, { status: gate.status });
+    }
+
+    const rows = await db
+      .select()
+      .from(raceObservations)
+      .where(eq(raceObservations.sailorId, sailorId))
+      .orderBy(asc(raceObservations.regattaId), asc(raceObservations.raceNumber));
+
+    return NextResponse.json({ observations: rows });
+  } catch (e) {
+    return jsonError(e);
+  }
 }
 
 /** Create or update a race observation */

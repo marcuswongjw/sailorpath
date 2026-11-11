@@ -2,7 +2,7 @@
 
 import type React from "react";
 import Link from "next/link";
-import { X, StickyNote, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ProfileRegattaRow } from "./ProfileRegattaRow";
 import { ProfileJourneyPanel } from "./ProfileJourneyPanel";
 import type {
@@ -97,10 +97,7 @@ export function ProfileResultsTab({
   ilcaTenure,
   primaryIsIlca,
   ownerView,
-  dismissSailorTip,
-  onDismissSailorTip,
   demoMode,
-  demoRole,
   sailorId,
   awards,
   showEquipment,
@@ -195,36 +192,7 @@ export function ProfileResultsTab({
               </div>
             )}
           </div>
-          {ownerView && resultsTab !== "journey" && (
-            <p className="text-[13px] text-slate-soft inline-flex items-center gap-1 font-medium">
-              <StickyNote className="h-3 w-3 text-harbour" />
-              Expand a row for race notes
-            </p>
-          )}
         </div>
-
-        {ownerView &&
-          !dismissSailorTip &&
-          resultsTab !== "journey" &&
-          (demoMode ? demoRole === "sailor" : true) && (
-            <div className="mx-4 sm:mx-5 mb-3 flex items-start gap-2 rounded-xl border border-harbour/20 bg-aqua-mist/50 px-3.5 py-2.5 shadow-2xs">
-              <p className="flex-1 text-[12px] text-charcoal leading-relaxed">
-                <span className="font-bold text-harbour">Tip: </span>
-                Expand any regatta to add race observations (place, wind, notes).
-                Use the{" "}
-                <span className="font-bold text-harbour-shadow">📝 Add note</span>{" "}
-                control on each row.
-              </p>
-              <button
-                type="button"
-                onClick={onDismissSailorTip}
-                className="shrink-0 rounded-md p-1 text-slate-soft hover:text-charcoal cursor-pointer"
-                aria-label="Dismiss tip"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          )}
 
         {resultsTab === "journey" && dualClass ? (
           <ProfileJourneyPanel

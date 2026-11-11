@@ -70,6 +70,7 @@ export function useSailorProfileState({
   demoRole,
   onDemoClaim,
   profileVerified = false,
+  initialEdit = false,
 }: SailorProfileViewProps) {
   const router = useRouter();
   const { toast, confirm } = useFeedback();
@@ -82,7 +83,7 @@ export function useSailorProfileState({
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [claimPanelOpen, setClaimPanelOpen] = useState(false);
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(Boolean(initialEdit && isOwner));
   /** Owner-only: preview the profile as the public sees it (masks private surfaces). */
   const [previewPublic, setPreviewPublic] = useState(false);
   const [saveBusy, setSaveBusy] = useState(false);

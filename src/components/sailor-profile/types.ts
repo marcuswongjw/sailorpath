@@ -133,6 +133,8 @@ export interface SailorProfileViewProps {
   hidePrivacySection?: boolean;
   /** Show "Claimed" vs "Unclaimed" badge in header */
   profileVerified?: boolean;
+  /** Open the unified Edit profile modal on initial render (owner only) */
+  initialEdit?: boolean;
   followControl?: {
     sailorId: string;
     following: boolean;

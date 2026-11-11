@@ -282,198 +282,119 @@ export function HeroAthleteCard({
   );
 
   return (
-    <header className={`${cardClass} overflow-hidden relative shadow-xs`}>
-      {/* LinkedIn-style cover banner */}
-      <div
-        aria-hidden="true"
-        className="relative h-24 sm:h-28 w-full overflow-hidden"
-        style={{
-          backgroundColor: "var(--sp-harbour-shadow)",
-          backgroundImage:
-            "linear-gradient(120deg, var(--sp-harbour-shadow) 0%, var(--sp-harbour) 58%, var(--sp-reef-line) 100%)",
-        }}
-      >
-        <svg
-          className="absolute inset-0 h-full w-full opacity-15"
-          viewBox="0 0 800 120"
-          preserveAspectRatio="none"
-          fill="none"
-        >
-          <path
-            d="M0 78 C 140 42, 280 108, 440 68 C 580 32, 700 88, 800 56 L 800 120 L 0 120 Z"
-            fill="currentColor"
-            className="text-sailcloth"
-          />
-          <path
-            d="M0 96 C 180 68, 340 116, 520 86 C 650 64, 730 98, 800 84"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="text-soft-aqua"
-          />
-        </svg>
-      </div>
-
-      <div className="relative z-10 px-5 pb-5 sm:px-6 sm:pb-6 flex flex-col gap-4">
-        {/* Overlapping round avatar + Class switcher */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="-mt-12 sm:-mt-14 flex flex-col items-center gap-1.5 shrink-0">
-            <div className="relative">
-              <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-full bg-harbour border-4 border-warm-white text-sailcloth flex items-center justify-center overflow-hidden shadow-md">
-                {(() => {
-                  const photoSrc = profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl);
-                  return displaySailor.avatarUrl && (!photoSrc || failedPhotoUrl !== photoSrc) ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={photoSrc || undefined}
-                      alt={displaySailor.name}
-                      onError={() => {
-                        if (photoSrc) setFailedPhotoUrl(photoSrc);
-                      }}
-                      className="h-full w-full object-cover object-top"
-                    />
-                  ) : (
-                    <span className="flex flex-col items-center justify-center leading-none">
-                      <Anchor
-                        className="h-6 w-6 sm:h-7 sm:w-7 opacity-90 mb-0.5 text-soft-aqua"
-                        aria-hidden
+    <header className={`${cardClass} p-5 sm:p-6 overflow-hidden relative shadow-xs`}>
+      <div className="relative z-10 flex flex-col gap-4">
+        {/* Compact Instagram-inspired header: larger circular avatar + identity/class beside it */}
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div className="flex items-start gap-4 sm:gap-5 min-w-0 flex-1">
+            <div className="flex flex-col items-center gap-1.5 shrink-0">
+              <div className="relative">
+                <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-xs">
+                  {(() => {
+                    const photoSrc = profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl);
+                    return displaySailor.avatarUrl && (!photoSrc || failedPhotoUrl !== photoSrc) ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={photoSrc || undefined}
+                        alt={displaySailor.name}
+                        onError={() => {
+                          if (photoSrc) setFailedPhotoUrl(photoSrc);
+                        }}
+                        className="h-full w-full object-cover object-top"
                       />
-                      <span className="text-sm sm:text-base font-black tracking-wide text-sailcloth">
-                        {initials(displaySailor.name)}
+                    ) : (
+                      <span className="flex flex-col items-center justify-center leading-none">
+                        <Anchor
+                          className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
+                          aria-hidden
+                        />
+                        <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
+                          {initials(displaySailor.name)}
+                        </span>
                       </span>
+                    );
+                  })()}
+                  {avatarBusy && (
+                    <span
+                      aria-label="Updating photo"
+                      className="absolute inset-0 bg-charcoal/60 flex items-center justify-center text-sailcloth"
+                    >
+                      <Loader2 className="h-5 w-5 animate-spin" />
                     </span>
-                  );
-                })()}
-                {avatarBusy && (
+                  )}
+                </div>
+
+                {ownerView && !demoMode && onUploadAvatar && (
+                  <>
+                    <button
+                      type="button"
+                      disabled={avatarBusy}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="group absolute inset-0 rounded-full transition-colors hover:bg-charcoal/45 focus-visible:bg-charcoal/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour flex items-center justify-center text-sailcloth cursor-pointer"
+                      aria-label="Upload athlete photo"
+                    >
+                      <Camera className="h-5 w-5 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity" aria-hidden />
+                      <span
+                        aria-hidden
+                        className="absolute bottom-0 right-0 rounded-full bg-warm-white border border-cool-veil p-1.5 text-harbour shadow-sm group-hover:bg-sailcloth transition flex items-center justify-center"
+                      >
+                        <Camera className="h-3.5 w-3.5" />
+                      </span>
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      className="hidden"
+                      onChange={(e) => {
+                        const f = e.target.files?.[0];
+                        if (f) onUploadAvatar(f);
+                        e.target.value = "";
+                      }}
+                    />
+                  </>
+                )}
+              </div>
+              {ownerView && !demoMode && displaySailor.avatarUrl && onRemoveAvatar && (
+                <button
+                  type="button"
+                  disabled={avatarBusy}
+                  onClick={onRemoveAvatar}
+                  className="text-[11px] font-semibold text-slate-soft hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  Remove photo
+                </button>
+              )}
+            </div>
+
+            <div className="min-w-0 flex-1 space-y-1.5 pt-0.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-xl sm:text-2xl font-black text-harbour-shadow tracking-tight">
+                  {displaySailor.name}
+                </h1>
+
+                {!boardSummary && resolvedNatSquad && (
                   <span
-                    aria-label="Updating photo"
-                    className="absolute inset-0 bg-charcoal/60 flex items-center justify-center text-sailcloth"
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${natSquadBadgeClass(
+                      resolvedNatSquad
+                    )}`}
                   >
-                    <Loader2 className="h-5 w-5 animate-spin" />
+                    {resolvedNatSquad}
+                  </span>
+                )}
+
+                {profileClaimed || profileVerified ? (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+                    <BadgeCheck className="h-3 w-3 text-emerald-600" />
+                    Claimed
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                    <ShieldAlert className="h-3 w-3 text-amber-600" />
+                    Unclaimed
                   </span>
                 )}
               </div>
-
-              {ownerView && !demoMode && onUploadAvatar && (
-                <>
-                  <button
-                    type="button"
-                    disabled={avatarBusy}
-                    onClick={() => fileInputRef.current?.click()}
-                    className="group absolute inset-0 rounded-full transition-colors hover:bg-charcoal/45 focus-visible:bg-charcoal/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour flex items-center justify-center text-sailcloth cursor-pointer"
-                    aria-label="Upload athlete photo"
-                  >
-                    <Camera className="h-5 w-5 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity" aria-hidden />
-                    <span
-                      aria-hidden
-                      className="absolute bottom-0.5 right-0.5 rounded-full bg-warm-white border border-cool-veil p-1.5 text-harbour shadow-sm group-hover:bg-sailcloth transition flex items-center justify-center"
-                    >
-                      <Camera className="h-3.5 w-3.5" />
-                    </span>
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    className="hidden"
-                    onChange={(e) => {
-                      const f = e.target.files?.[0];
-                      if (f) onUploadAvatar(f);
-                      e.target.value = "";
-                    }}
-                  />
-                </>
-              )}
-            </div>
-            {ownerView && !demoMode && displaySailor.avatarUrl && onRemoveAvatar && (
-              <button
-                type="button"
-                disabled={avatarBusy}
-                onClick={onRemoveAvatar}
-                className="text-[11px] font-semibold text-slate-soft hover:text-rose-600 transition-colors cursor-pointer disabled:opacity-50"
-              >
-                Remove photo
-              </button>
-            )}
-          </div>
-
-          <div className="pt-3 flex flex-col items-end min-w-0">
-            {showClassSelector ? (
-              <div
-                className="flex rounded-full bg-sailcloth border border-cool-veil p-1 max-w-full overflow-x-auto"
-                role="tablist"
-                aria-label="Sailing class"
-              >
-                {displayChoices.map((choice) => {
-                  const selected = choice.id === singleClass[0];
-                  return (
-                    <button
-                      key={choice.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={selected}
-                      onClick={() => {
-                        if (classChoices?.length) onSelectClass?.(choice.id);
-                        else if (choice.id === "optimist" || isProfileIlcaClass(choice.id)) {
-                          onSelectBoatClass?.(choice.id);
-                        }
-                      }}
-                      aria-label={choice.label}
-                      className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition whitespace-nowrap cursor-pointer ${
-                        selected
-                          ? "bg-harbour text-sailcloth shadow-xs"
-                          : "text-slate-soft hover:text-charcoal"
-                      }`}
-                    >
-                      {choice.label}
-                    </button>
-                  );
-                })}
-              </div>
-            ) : (
-              <p
-                aria-label={singleClass[1]}
-                className="inline-flex items-center rounded-full bg-harbour px-3.5 py-1.5 text-xs font-bold text-sailcloth"
-              >
-                {singleClass[1]}
-              </p>
-            )}
-            {boardSummary?.sharedDivision && (
-              <p className="mt-1 text-[12px] font-semibold text-slate-soft text-right">
-                {boardSummary.sharedDivision}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* LinkedIn-style stacked identity hierarchy */}
-        <div className="min-w-0 space-y-1.5">
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-black text-harbour-shadow tracking-tight">
-              {displaySailor.name}
-            </h1>
-
-            {!boardSummary && resolvedNatSquad && (
-              <span
-                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${natSquadBadgeClass(
-                  resolvedNatSquad
-                )}`}
-              >
-                {resolvedNatSquad}
-              </span>
-            )}
-
-            {profileClaimed || profileVerified ? (
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
-                <BadgeCheck className="h-3 w-3 text-emerald-600" />
-                Claimed
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
-                <ShieldAlert className="h-3 w-3 text-amber-600" />
-                Unclaimed
-              </span>
-            )}
-          </div>
 
           {(() => {
             const headlineParts: ReactNode[] = [];
@@ -635,9 +556,60 @@ export function HeroAthleteCard({
               </div>
             );
           })()}
+            </div>
+          </div>
+
+          {/* Right: Class switcher / pill */}
+          <div className="shrink-0 flex flex-col sm:items-end">
+            {showClassSelector ? (
+              <div
+                className="flex rounded-full bg-sailcloth border border-cool-veil p-0.5 max-w-full overflow-x-auto"
+                role="tablist"
+                aria-label="Sailing class"
+              >
+                {displayChoices.map((choice) => {
+                  const selected = choice.id === singleClass[0];
+                  return (
+                    <button
+                      key={choice.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={selected}
+                      onClick={() => {
+                        if (classChoices?.length) onSelectClass?.(choice.id);
+                        else if (choice.id === "optimist" || isProfileIlcaClass(choice.id)) {
+                          onSelectBoatClass?.(choice.id);
+                        }
+                      }}
+                      aria-label={choice.label}
+                      className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition whitespace-nowrap cursor-pointer ${
+                        selected
+                          ? "bg-harbour text-sailcloth shadow-xs"
+                          : "text-slate-soft hover:text-charcoal"
+                      }`}
+                    >
+                      {choice.label}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <p
+                aria-label={singleClass[1]}
+                className="inline-flex items-center rounded-full bg-harbour px-3.5 py-1.5 text-xs font-bold text-sailcloth"
+              >
+                {singleClass[1]}
+              </p>
+            )}
+            {boardSummary?.sharedDivision && (
+              <p className="mt-1 text-[12px] font-semibold text-slate-soft sm:text-right">
+                {boardSummary.sharedDivision}
+              </p>
+            )}
+          </div>
         </div>
 
-        {/* LinkedIn-style Action Pill Row */}
+        {/* Action Pill Row */}
         <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
           <div className="flex flex-wrap items-center gap-2">
             {followControl ? (
