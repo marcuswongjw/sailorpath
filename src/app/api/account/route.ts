@@ -5,6 +5,8 @@ import { getAuthContext, jsonError } from "@/lib/auth";
 import { db, formatDbError, withDatabaseRetry, withSequentialDatabaseReads } from "@/db";
 import { sailorClaims, sailors, profiles, telegramIdentities } from "@/db/schema";
 import { isGoogleAuthEnabled } from "@/lib/google/auth";
+import { isTelegramBotConfigured } from "@/lib/telegram/bot/config";
+import { getTelegramUpdateStatus } from "@/lib/telegram/bot/store";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { isTelegramLoginConfigured } from "@/lib/telegram/config";
 import { canDisconnectTelegram, contactEmail, isTelegramPlaceholderEmail } from "@/lib/telegram/email";
@@ -154,6 +156,7 @@ export async function GET() {
         enabled: isGoogleAuthEnabled(),
         linked: await googleIdentityLinked(),
       },
+      telegramUpdates: await telegramUpdateStatus(auth.userId),
     });
   } catch (e) {
     return jsonError(e);
@@ -172,6 +175,16 @@ async function googleIdentityLinked(): Promise<boolean> {
     return Boolean(data.user?.identities?.some((identity) => identity.provider === "google"));
   } catch {
     return false;
+  }
+}
+
+async function telegramUpdateStatus(userId: string) {
+  if (!isTelegramBotConfigured()) return { enabled: false, optedIn: false, username: null };
+  try {
+    const status = await getTelegramUpdateStatus(userId);
+    return { enabled: true, ...status };
+  } catch {
+    return { enabled: false, optedIn: false, username: null };
   }
 }
 

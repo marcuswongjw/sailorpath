@@ -13,15 +13,18 @@ export type TelegramAccountStatus = {
 export function TelegramAccountSection({
   status,
   notice,
+  botEnabled = false,
 }: {
   status: TelegramAccountStatus | null;
   notice: string | null;
+  botEnabled?: boolean;
 }) {
   const [linked, setLinked] = useState(status?.linked ?? false);
   const [username, setUsername] = useState(status?.username ?? null);
   const [canDisconnect, setCanDisconnect] = useState(status?.canDisconnect ?? false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(notice);
+  const [allowMessages, setAllowMessages] = useState(false);
 
   if (!status?.enabled) return null;
 
@@ -85,12 +88,25 @@ export function TelegramAccountSection({
             name and username, not your phone number.
           </p>
           <a
-            href={`/auth/telegram?mode=link&next=${encodeURIComponent("/account#settings")}`}
+            href={`/auth/telegram?mode=link&next=${encodeURIComponent("/account#settings")}${
+              allowMessages ? "&updates=1" : ""
+            }`}
             className="inline-flex items-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-shadow)]"
           >
             <TelegramMark className="h-4 w-4" />
             Connect Telegram
           </a>
+          {botEnabled ? (
+            <label className="flex items-start gap-2 text-xs leading-relaxed text-[var(--sp-slate-soft)]">
+              <input
+                type="checkbox"
+                className="mt-0.5 h-4 w-4 accent-[var(--sp-harbour-teal)]"
+                checked={allowMessages}
+                onChange={(event) => setAllowMessages(event.target.checked)}
+              />
+              <span>Also let SailorPath message me on Telegram. Optional.</span>
+            </label>
+          ) : null}
         </>
       )}
     </section>

@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { isTelegramLoginConfigured, readTelegramConfig } from "@/lib/telegram/config";
+import { isTelegramBotConfigured } from "@/lib/telegram/bot/config";
 import {
   TELEGRAM_OIDC_COOKIE,
   TELEGRAM_OIDC_MAX_AGE_SECONDS,
@@ -49,6 +50,8 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  const botAccess =
+    request.nextUrl.searchParams.get("updates") === "1" && isTelegramBotConfigured();
   const { verifier, challenge } = createPkcePair();
   const state = createOidcNonce();
   const nonce = createOidcNonce();
@@ -60,6 +63,7 @@ export async function GET(request: NextRequest) {
     mode,
     userId,
     next,
+    botAccess,
     exp: Math.floor(Date.now() / 1000) + TELEGRAM_OIDC_MAX_AGE_SECONDS,
   };
   const { clientId, clientSecret } = readTelegramConfig();
@@ -79,6 +83,7 @@ export async function GET(request: NextRequest) {
     state,
     codeChallenge: challenge,
     nonce,
+    botAccess,
   });
   return noStore(NextResponse.redirect(authorize));
 }

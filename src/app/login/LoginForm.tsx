@@ -35,9 +35,11 @@ function signInSubtitle(googleEnabled: boolean, telegramEnabled: boolean): strin
 export function LoginForm({
   telegramEnabled,
   googleEnabled,
+  telegramBotEnabled = false,
 }: {
   telegramEnabled: boolean;
   googleEnabled: boolean;
+  telegramBotEnabled?: boolean;
 }) {
   const searchParams = useSearchParams();
   const currentHost = useSyncExternalStore(
@@ -57,7 +59,10 @@ export function LoginForm({
   );
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const telegramHref = `/auth/telegram?next=${encodeURIComponent(nextTarget)}`;
+  const [telegramUpdates, setTelegramUpdates] = useState(false);
+  const telegramHref = `/auth/telegram?next=${encodeURIComponent(nextTarget)}${
+    telegramUpdates ? "&updates=1" : ""
+  }`;
 
   const onGoogle = async () => {
     setBusy(true);
@@ -216,6 +221,19 @@ export function LoginForm({
                 Log in with Telegram
               </a>
             ) : null}
+            {telegramEnabled && telegramBotEnabled ? (
+              <label className="flex items-start gap-2 text-left text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 accent-[var(--sp-harbour-teal)]"
+                  checked={telegramUpdates}
+                  onChange={(event) => setTelegramUpdates(event.target.checked)}
+                />
+                <span>
+                  Let SailorPath message me on Telegram. This is optional, and you can still sign in without it.
+                </span>
+              </label>
+            ) : null}
             <p className="text-center text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">
               {googleEnabled ? "Google uses the email on that account. " : ""}
               {telegramEnabled
@@ -250,6 +268,7 @@ export function LoginFormFallback() {
 export default function LoginFormWithSuspense(props: {
   telegramEnabled: boolean;
   googleEnabled: boolean;
+  telegramBotEnabled?: boolean;
 }) {
   return (
     <Suspense fallback={<LoginFormFallback />}>
