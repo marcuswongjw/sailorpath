@@ -18,6 +18,15 @@ vi.mock("@/lib/news", () => ({
       sourceUrl: null,
       sourceLabel: null,
       tags: ["x-15"],
+      imageUrl: "/news/x15-class-guide.png",
+      imageAlt: "Wingfoil racing",
+      imageCredit: "Photo credit",
+      imageCreditUrl: "https://example.com/photo",
+    },
+    {
+      slug: "no-image", title: "A second update", summary: "More sailing news.", body: "More sailing news.", kind: "result_report",
+      authorDisplayName: "SailorPath", publishedAt: "2026-10-14T00:00:00.000Z", updatedAt: "2026-10-14T00:00:00.000Z",
+      relatedClass: null, relatedRegion: null, sourceUrl: null, sourceLabel: null, tags: [],
     },
   ]),
 }));
@@ -31,5 +40,10 @@ describe("news index", () => {
     expect(html).toContain("What&#x27;s new");
     expect(html).toContain("X-15 pilot opens");
     expect(html).toContain("/news/x-15-pilot-opens-ahead-of-worlds");
+    expect(html).toContain("Latest update");
+    expect(html).toContain("More updates");
+    expect(html).toContain("A second update");
+    expect(html).toContain("Photo credit");
+    expect(html).toContain("https://example.com/photo");
   });
 });
