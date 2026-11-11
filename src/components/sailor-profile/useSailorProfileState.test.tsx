@@ -104,6 +104,38 @@ describe('separate ILCA profile flows', () => {
     );
     expect(result.current.displaySailor.avatarUrl).toBeNull();
   });
+  it('saves updated bio text cleanly via PATCH /api/account/sailor', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        ok: true,
+        sailor: {
+          id: 's1',
+          bio: 'Competitive youth racer.',
+        },
+      }),
+    });
+    global.fetch = fetchMock;
+
+    const { result } = renderHook(() => useSailorProfileState(props));
+    await act(async () => {
+      const ok = await result.current.saveBio('  Competitive youth racer.  ');
+      expect(ok).toBe(true);
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/account/sailor',
+      expect.objectContaining({
+        method: 'PATCH',
+        body: JSON.stringify({
+          sailorId: 's1',
+          bio: 'Competitive youth racer.',
+        }),
+      })
+    );
+    expect(result.current.displaySailor.bio).toBe('Competitive youth racer.');
+    expect(result.current.form.bio).toBe('Competitive youth racer.');
+  });
 });
 
 

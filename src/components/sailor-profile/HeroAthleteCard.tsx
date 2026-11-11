@@ -87,6 +87,7 @@ export interface HeroAthleteCardProps {
   avatarStatus?: "ok" | "error" | null;
   onUploadAvatar?: (file: File) => void;
   onRemoveAvatar?: () => void;
+  onSaveBio?: (bio: string) => Promise<boolean> | boolean | void;
   showWeight?: boolean;
   bornYear?: string | null;
   fullDobLabel?: string | null;
@@ -158,6 +159,7 @@ export function HeroAthleteCard({
   avatarStatus = null,
   onUploadAvatar,
   onRemoveAvatar,
+  onSaveBio,
   showWeight = false,
   bornYear,
   fullDobLabel,
@@ -173,6 +175,10 @@ export function HeroAthleteCard({
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
+  const [failedPhotoUrl, setFailedPhotoUrl] = useState<string | null>(null);
+  const [editingBio, setEditingBio] = useState(false);
+  const [bioDraft, setBioDraft] = useState("");
+  const [bioSaving, setBioSaving] = useState(false);
 
   const activeBoatClass: ProfileBoatClass = selectedBoatClass ||
     (standingIsIlca ? profileIlcaClassOf(activeStanding?.boatClass) || "ilca4" : "optimist");
@@ -283,24 +289,30 @@ export function HeroAthleteCard({
             <div className="flex flex-col items-center gap-1.5 shrink-0">
               <div className="relative">
                 <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-harbour border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
-                  {displaySailor.avatarUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl) || undefined}
-                      alt={displaySailor.name}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <span className="flex flex-col items-center justify-center leading-none">
-                      <Anchor
-                        className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
-                        aria-hidden
+                  {(() => {
+                    const photoSrc = profilePhotoUrl(displaySailor.id, displaySailor.avatarUrl);
+                    return displaySailor.avatarUrl && (!photoSrc || failedPhotoUrl !== photoSrc) ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={photoSrc || undefined}
+                        alt={displaySailor.name}
+                        onError={() => {
+                          if (photoSrc) setFailedPhotoUrl(photoSrc);
+                        }}
+                        className="h-full w-full object-cover object-top"
                       />
-                      <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
-                        {initials(displaySailor.name)}
+                    ) : (
+                      <span className="flex flex-col items-center justify-center leading-none">
+                        <Anchor
+                          className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
+                          aria-hidden
+                        />
+                        <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
+                          {initials(displaySailor.name)}
+                        </span>
                       </span>
-                    </span>
-                  )}
+                    );
+                  })()}
                   {avatarBusy && (
                     <span
                       aria-label="Updating photo"
@@ -604,40 +616,85 @@ export function HeroAthleteCard({
           </div>
         </div>
 
-        {bioParagraph ? (
-          <section
-            aria-label="Bio"
-            className="rounded-xl border border-cool-veil bg-sailcloth/60 p-3.5 sm:p-4"
-          >
+        <section
+          aria-label="Bio"
+          className="rounded-xl border border-cool-veil bg-sailcloth/60 p-3.5 sm:p-4"
+        >
+          <div className="flex items-center justify-between gap-3">
             <p className="text-[11px] font-bold uppercase tracking-wider text-slate-soft">
               Bio
             </p>
+            {ownerView && !editingBio && (onSaveBio || (!demoMode && onToggleEditing)) && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (onSaveBio) {
+                    setBioDraft(bioParagraph);
+                    setEditingBio(true);
+                  } else {
+                    onToggleEditing?.();
+                  }
+                }}
+                className="inline-flex items-center gap-1 text-[12px] font-bold text-harbour hover:underline cursor-pointer"
+              >
+                <Pencil className="h-3 w-3" aria-hidden />
+                {bioParagraph ? "Edit bio" : "Add bio"}
+              </button>
+            )}
+          </div>
+          {editingBio && ownerView && onSaveBio ? (
+            <div className="mt-2 space-y-2">
+              <textarea
+                aria-label="Edit bio"
+                value={bioDraft}
+                onChange={(e) => setBioDraft(e.target.value)}
+                maxLength={500}
+                rows={3}
+                placeholder="Share a short public bio about this sailor (max 500 characters)..."
+                className="w-full rounded-lg border border-cool-veil bg-warm-white px-3 py-2 text-[13px] sm:text-sm text-charcoal focus:border-harbour focus:outline-none"
+              />
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[11px] text-slate-soft tabular-nums">
+                  {bioDraft.trim().length}/500
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={bioSaving}
+                    onClick={() => setEditingBio(false)}
+                    className="rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[12px] font-semibold text-charcoal hover:bg-sailcloth cursor-pointer disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    disabled={bioSaving}
+                    onClick={async () => {
+                      setBioSaving(true);
+                      try {
+                        const result = await onSaveBio(bioDraft);
+                        if (result !== false) setEditingBio(false);
+                      } finally {
+                        setBioSaving(false);
+                      }
+                    }}
+                    className="rounded-lg bg-harbour px-3.5 py-1.5 text-[12px] font-bold text-sailcloth hover:bg-harbour-shadow cursor-pointer disabled:opacity-50"
+                  >
+                    {bioSaving ? "Saving…" : "Save bio"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : bioParagraph ? (
             <p className="mt-1.5 text-[13px] sm:text-sm leading-relaxed text-charcoal max-w-3xl">
               {bioParagraph}
             </p>
-          </section>
-        ) : ownerView && !demoMode && onToggleEditing ? (
-          <section
-            aria-label="Bio"
-            className="rounded-xl border border-dashed border-cool-veil bg-sailcloth/40 p-3.5 sm:p-4 flex items-center justify-between gap-3"
-          >
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-soft">
-                Bio
-              </p>
-              <p className="mt-1 text-[13px] text-slate-soft">
-                Add a short bio to introduce this sailor.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={onToggleEditing}
-              className="shrink-0 text-[12px] font-bold text-harbour hover:underline cursor-pointer"
-            >
-              Add bio
-            </button>
-          </section>
-        ) : null}
+          ) : (
+            <p className="mt-1.5 text-[13px] text-slate-soft">
+              No bio added yet.
+            </p>
+          )}
+        </section>
 
         <div className="space-y-2.5 pt-1">
           {boardSummary ? (

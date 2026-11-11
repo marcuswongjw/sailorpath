@@ -10,7 +10,7 @@ const PositionTrendChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-48 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
+      <div className="h-48 w-full animate-pulse rounded-2xl bg-sailcloth border border-cool-veil" />
     ),
   }
 );

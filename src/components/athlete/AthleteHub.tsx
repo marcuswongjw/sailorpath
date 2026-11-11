@@ -49,6 +49,7 @@ export type AthleteProfile = {
   ownerRelation?: string | null;
   nationalSquadStatus?: string | null;
   dob?: string | Date | null;
+  bio?: string | null;
   instagram?: string | null;
   hullBrand?: string | null;
   sailMake?: string | null;
@@ -69,6 +70,7 @@ function buildProfileForm(a: AthleteProfile) {
     gender: a.gender || "M",
     nationality: a.nationality || "SGP",
     dob: a.dob ? String(a.dob).slice(0, 10) : "",
+    bio: a.bio || "",
     instagram: a.instagram || "",
     avatarUrl: a.avatarUrl || "",
     hullBrand: a.hullBrand || "",
@@ -208,6 +210,7 @@ function AthleteWorkspace({
         gender: profileForm.gender,
         nationality: profileForm.nationality,
         dob: profileForm.dob,
+        bio: profileForm.bio,
         instagram: profileForm.instagram,
         hullBrand: profileForm.hullBrand,
         sailMake: profileForm.sailMake,
@@ -339,7 +342,7 @@ function AthleteWorkspace({
                   <img
                     src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || "/avatar-demo.png"}
                     alt={athlete.name}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover object-top"
                   />
                 ) : (
                   <div className="h-full w-full flex items-center justify-center text-[var(--sp-slate-soft)]">
@@ -851,6 +854,22 @@ function AthleteWorkspace({
                   })
                 }
                 className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Public Bio
+              </label>
+              <textarea
+                value={profileForm.bio}
+                onChange={(e) =>
+                  setProfileForm({ ...profileForm, bio: e.target.value })
+                }
+                maxLength={500}
+                rows={3}
+                placeholder="Share a short public bio (max 500 characters)..."
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
           </div>

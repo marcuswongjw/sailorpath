@@ -117,6 +117,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     showWeight,
     showEquipment,
     saveProfile,
+    saveBio,
     uploadAvatar,
     removeAvatar,
     resetObsForm,
@@ -276,6 +277,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         avatarStatus={avatarStatus}
         onUploadAvatar={(f) => void uploadAvatar(f)}
         onRemoveAvatar={() => void removeAvatar()}
+        onSaveBio={saveBio}
         showWeight={showWeight}
         bornYear={bornYear}
         fullDobLabel={fullDobLabel}
@@ -556,10 +558,10 @@ export function SailorProfileView(props: SailorProfileViewProps) {
               id="profile-equipment-private"
               className={`${cardClass} p-4 sm:p-5`}
             >
-              <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
                 Equipment
               </h2>
-              <p className="mt-2 text-[13px] text-neutral-400 leading-relaxed">
+              <p className="mt-2 text-[13px] text-charcoal leading-relaxed">
                 Gear is private to the sailor and their linked family — not shown
                 on public profiles.
                 {showUnclaimedBanner

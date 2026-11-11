@@ -474,6 +474,48 @@ export function useSailorProfileState({
     }
   };
 
+  const saveBio = async (nextBio: string): Promise<boolean> => {
+    const trimmed = nextBio.trim();
+    if (trimmed.length > 500) {
+      toast.error("Bio must be 500 characters or fewer.");
+      return false;
+    }
+    if (demoMode) {
+      setDisplaySailor((s: SailorRecordProps) => ({
+        ...s,
+        bio: trimmed || null,
+      }));
+      setForm((f) => ({ ...f, bio: trimmed }));
+      toast.info("Updated bio for this demo session (not saved).");
+      return true;
+    }
+    try {
+      const res = await fetch("/api/account/sailor", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          bio: trimmed,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not save bio");
+      const savedBio = data.sailor?.bio ?? (trimmed || null);
+      setDisplaySailor((s: SailorRecordProps) => ({
+        ...s,
+        bio: savedBio,
+      }));
+      setForm((f) => ({ ...f, bio: savedBio || "" }));
+      toast.success("Bio updated");
+      router.refresh();
+      return true;
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Could not save bio"));
+      return false;
+    }
+  };
+
   const resetObsForm = () => {
     setEditingObsId(null);
     setObsForm({
@@ -1342,6 +1384,7 @@ export function useSailorProfileState({
     showWeight,
     showEquipment,
     saveProfile,
+    saveBio,
     uploadAvatar,
     removeAvatar,
     resetObsForm,

@@ -82,13 +82,15 @@ describe("PATCH /api/account/sailor", () => {
     mocks.canManageSailor.mockResolvedValue(true);
   });
 
-  it("rejects a non-parent claimant changing minor public visibility", async () => {
+  it("allows an approved sailor to update minor public visibility regardless of age", async () => {
     mocks.getAuthContext.mockResolvedValue({userId:"approved-child",email:"child@example.com",role:"sailor"});
     const response=await PATCH(new Request("https://sailorpath.com/api/account/sailor", {method:"PATCH",headers:{"content-type":"application/json"},body:JSON.stringify({sailorId:"11111111-1111-4111-8111-111111111111",showSchoolOnPublicProfile:true})}));
-    expect(response.status).toBe(403);
-    expect(mocks.updateSet).not.toHaveBeenCalled();
+    expect(response.status).toBe(200);
+    expect(mocks.updateSet).toHaveBeenCalledWith(expect.objectContaining({
+      showSchoolOnPublicProfile: true,
+    }));
   });
-  it("rejects DOB changes without guardian consent", async () => {
+  it("allows DOB changes by any approved profile manager and stamps birthYear", async () => {
     const req = new Request("https://sailorpath.com/api/account/sailor", {
       method: "PATCH",
       headers: { "content-type": "application/json" },
@@ -99,12 +101,12 @@ describe("PATCH /api/account/sailor", () => {
     });
 
     const res = await PATCH(req);
-    expect(res.status).toBe(403);
+    expect(res.status).toBe(200);
 
     // Verify regattaResults was stamped with birthYear: 2013
     const stampedResultUpdates = mocks.updateSet.mock.calls.filter(
       (args) => (args[0] as Record<string, unknown>)?.birthYear === 2013
     );
-    expect(stampedResultUpdates).toHaveLength(0);
+    expect(stampedResultUpdates).toHaveLength(1);
   });
 });

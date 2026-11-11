@@ -152,7 +152,7 @@ export function ProfileOwnerEditor({
               </label>
             ))}
           </div>
-          <p className="text-xs leading-5 text-slate-soft">Profile pictures are always public when uploaded — remove your photo from the profile header to hide it. Equipment notes, history, exact date of birth and weight are never public. For sailors under 18, a parent or guardian manages these switches.</p>
+          <p className="text-xs leading-5 text-slate-soft">Profile pictures are always public when uploaded — remove your photo from the profile header to hide it. Equipment notes, history, exact date of birth and weight are never public.</p>
         </div>
       </div>
       <div className="flex items-center gap-3 pt-2">

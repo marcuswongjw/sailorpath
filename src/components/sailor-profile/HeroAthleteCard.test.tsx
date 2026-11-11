@@ -436,4 +436,33 @@ describe("HeroAthleteCard", () => {
     expect(screen.queryByRole("img", { name: "Ethan Wong" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Remove photo" })).toBeNull();
   });
+
+  it("always renders the Bio section and lets owners edit bio inline", async () => {
+    const onSaveBio = vi.fn().mockResolvedValue(true);
+    const { rerender } = render(
+      <HeroAthleteCard
+        {...defaultProps}
+        displaySailor={{ ...defaultProps.displaySailor, bio: null }}
+      />
+    );
+
+    const bioRegion = screen.getByRole("region", { name: "Bio" });
+    expect(within(bioRegion).getByText("No bio added yet.")).toBeInTheDocument();
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        ownerView
+        isOwner
+        displaySailor={{ ...defaultProps.displaySailor, bio: null }}
+        onSaveBio={onSaveBio}
+      />
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Add bio" }));
+    const input = screen.getByLabelText("Edit bio");
+    await userEvent.type(input, "Laser & Optimist youth sailor.");
+    await userEvent.click(screen.getByRole("button", { name: "Save bio" }));
+    expect(onSaveBio).toHaveBeenCalledWith("Laser & Optimist youth sailor.");
+  });
 });

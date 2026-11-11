@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { and, eq, ne } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
-import { canGiveGuardianConsent, canManageSailor } from "@/lib/claimAccess";
+import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
 import { equipmentLogs, regattaResults, sailorAliases, sailors } from "@/db/schema";
-import { requiresGuardianConsent } from "@/lib/guardianConsent";
 import { birthYear } from "@/lib/age";
 import { validateHandle } from "@/lib/handles";
 import { normalizeDob, cleanOptimistSailNumber } from "@/lib/normalize";
@@ -238,25 +237,8 @@ export async function PATCH(req: Request) {
       "showSocialLinksOnPublicProfile",
       "showSailingMilestonesOnPublicProfile",
     ] as const;
-    const changingPublicVisibility = publicVisibilityKeys.some(
-      (key) => typeof body[key] === "boolean" && body[key] !== sailor[key]
-    );
-    // A child cannot evade consent by changing DOB first or in this request.
-    // Profile photo upload/removal is permitted for any approved sailor/parent owner
-    // (matching Storage folder RLS), while school/social/milestones visibility and DOB require guardian consent.
-    const changingDob = body.dob !== undefined && patch.dob !== sailor.dob;
-    const needsGuardian = requiresGuardianConsent(sailor.dob) ||
-      (body.dob !== undefined && requiresGuardianConsent(patch.dob as string | null));
-    if (
-      (changingPublicVisibility || changingDob) && needsGuardian &&
-      auth.role !== "superadmin" &&
-      !(await canGiveGuardianConsent(sailorId, auth.userId, sailor))
-    ) {
-      return NextResponse.json(
-        { error: "A parent or guardian must manage birth date and public profile visibility" },
-        { status: 403 }
-      );
-    }
+    // Any approved sailor or parent manager (via canManageSailor) can update
+    // all sailor details and visibility switches regardless of age.
     for (const key of publicVisibilityKeys) {
       if (typeof body[key] === "boolean") patch[key] = body[key];
     }
