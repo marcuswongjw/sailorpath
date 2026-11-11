@@ -239,9 +239,6 @@ export function buildResultTags(
     !overseas &&
     (normalizeGeography(r.geography) === "SGP" ||
       (!geo && r.countsForRanking === true));
-  const isOverseasGeo =
-    overseas ||
-    (Boolean(geo) && normalizeGeography(r.geography) !== "SGP");
 
   const boat = profileBoatClassGroup(r.boatClass);
   const isIlca = isProfileIlcaClass(boat);
@@ -267,7 +264,7 @@ export function buildResultTags(
       });
     } else if (fleet === "Silver") {
       tags.push({
-        label: "Silver fleet",
+        label: "SG Silver",
         className: "bg-neutral-500/15 text-neutral-300 border border-neutral-500/25",
       });
     }
@@ -294,12 +291,6 @@ export function buildResultTags(
     tags.push({
       label: "Non-ranking",
       className: "bg-sky-500/10 text-sky-300 border border-sky-500/25",
-    });
-  }
-  if (isOverseasGeo) {
-    tags.push({
-      label: "Overseas",
-      className: "bg-violet-500/10 text-violet-300 border border-violet-500/25",
     });
   }
 

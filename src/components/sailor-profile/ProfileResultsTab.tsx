@@ -242,7 +242,7 @@ export function ProfileResultsTab({
               className={`hidden sm:grid gap-2 px-4 sm:px-5 py-2.5 border-t border-cool-veil text-[12px] font-bold uppercase tracking-wider text-slate-soft ${
                 primaryIsIlca
                   ? "grid-cols-[1.25rem_2.75rem_1fr_2.5rem_4.25rem]"
-                  : "grid-cols-[1.25rem_2.75rem_1fr_4.5rem_4.25rem]"
+                  : "grid-cols-[1.25rem_2.75rem_1fr_4.5rem]"
               }`}
             >
               <span />
@@ -251,9 +251,9 @@ export function ProfileResultsTab({
               <span className="text-right">
                 {primaryIsIlca ? "Rank" : "Nett Score"}
               </span>
-              <span className="text-right">
-                {primaryIsIlca ? "Class" : "Fleet"}
-              </span>
+              {primaryIsIlca ? (
+                <span className="text-right">Class</span>
+              ) : null}
             </div>
             <div className="divide-y divide-cool-veil">
               {visibleResults.map((res, idx) => (

@@ -68,6 +68,7 @@ export function ProfileRegattaRow({
   currentSailorId,
   idx,
   expandedRegattaId,
+  primaryIsIlca,
   ownerView,
   awards,
   showEquipment,
@@ -90,6 +91,7 @@ export function ProfileRegattaRow({
   const fleet = isIlcaRow
     ? profileIlcaLabel(boatGroup as "ilca4" | "ilca6" | "ilca7")
     : fleetLabelForResult(res, goldEntryDate);
+  const showRightClassColumn = primaryIsIlca;
   const slug = res.regattaSlug || res.id;
   const expanded = expandedRegattaId === regattaId;
   const raceNotes: ObservationItem[] = observations
@@ -190,14 +192,18 @@ export function ProfileRegattaRow({
               }
             : undefined
         }
-        className={`grid gap-2 items-start px-4 sm:px-5 py-3.5 grid-cols-[1.25rem_2.75rem_1fr_auto] ${
+        className={`grid gap-2 items-start px-4 sm:px-5 py-3.5 ${
+          showRightClassColumn
+            ? "grid-cols-[1.25rem_2.75rem_1fr_auto]"
+            : "grid-cols-[1.25rem_2.75rem_1fr]"
+        } ${
           canExpand
             ? "cursor-pointer hover:bg-sailcloth/60 transition-colors"
             : "cursor-default"
         } ${
-          isIlcaRow
+          showRightClassColumn
             ? "sm:grid-cols-[1.25rem_2.75rem_1fr_2.5rem_4.25rem]"
-            : "sm:grid-cols-[1.25rem_2.75rem_1fr_4.5rem_4.25rem]"
+            : "sm:grid-cols-[1.25rem_2.75rem_1fr_4.5rem]"
         }`}
       >
         <span
@@ -415,13 +421,17 @@ export function ProfileRegattaRow({
               </span>
             )}
         </span>
-        <span className="flex items-center justify-end pt-0.5">
-          <span
-            className={`rounded-full px-2 py-0.5 text-[13px] font-bold ${fleetPillClass(fleet)}`}
-          >
-            {fleet === "—" ? "—" : fleet}
+        {showRightClassColumn && (
+          <span className="flex items-center justify-end pt-0.5">
+            {isIlcaRow ? (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[13px] font-bold ${fleetPillClass(fleet)}`}
+              >
+                {fleet === "—" ? "—" : fleet}
+              </span>
+            ) : null}
           </span>
-        </span>
+        )}
       </div>
 
       {ownerView && !demoMode && nonRanking && res.resultId && (

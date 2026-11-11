@@ -60,10 +60,33 @@ describe("public profile access",()=>{
               regattaId: "r1",
               regattaName: "Singapore Nationals",
               regattaDate: "2026-09-01",
+              division: "Gold",
               rank: 4,
               totalFleetSize: 80,
               geography: "SGP",
               countsForRanking: true,
+            },
+            {
+              id: "res-2",
+              regattaId: "r2",
+              regattaName: "Cincapura Silver",
+              regattaDate: "2026-05-01",
+              division: "Silver",
+              rank: 12,
+              totalFleetSize: 60,
+              geography: "SGP",
+              countsForRanking: true,
+            },
+            {
+              id: "res-3",
+              regattaId: "r3",
+              regattaName: "Eastern Seaboard",
+              regattaDate: "2026-10-28",
+              division: "Gold",
+              rank: 44,
+              totalFleetSize: 68,
+              geography: "THA",
+              countsForRanking: false,
             },
           ]}
           initialEquipment={{}}
@@ -91,6 +114,14 @@ describe("public profile access",()=>{
     );
 
     expect(screen.queryByRole("button", { name: /Add note/i })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /Regattas/i }));
+    expect(screen.getByText("SG Gold")).toBeInTheDocument();
+    expect(screen.getByText("SG Silver")).toBeInTheDocument();
+    expect(screen.queryByText("Silver fleet")).not.toBeInTheDocument();
+    expect(screen.queryByText("Overseas")).not.toBeInTheDocument();
+    expect(screen.queryByText("Gold")).not.toBeInTheDocument();
+    expect(screen.queryByText("Silver")).not.toBeInTheDocument();
+    expect(screen.queryByText("Fleet")).not.toBeInTheDocument();
     const dialogTitle = screen.getByText("Edit profile", { selector: "h2" });
     expect(dialogTitle.closest("dialog")).toHaveAttribute("open");
     await user.click(screen.getByRole("button", { name: "Save changes" }));
