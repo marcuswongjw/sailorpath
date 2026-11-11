@@ -241,13 +241,7 @@ export function IlcaSelectionView({
               href="/login?next=%2Fsg%2Filca4%2Fselection"
               className="w-full sm:w-auto sp-btn-primary text-xs font-black uppercase tracking-wider px-6 py-3.5 inline-flex items-center justify-center gap-2 min-h-[44px]"
             >
-              Sign In to View Selection
-            </Link>
-            <Link
-              href="/register?next=%2Fsg%2Filca4%2Fselection"
-              className="w-full sm:w-auto rounded-full bg-sailcloth hover:bg-cool-veil active:scale-[0.98] transition-all text-xs font-bold text-charcoal px-6 py-3.5 border border-cool-veil inline-flex items-center justify-center min-h-[44px]"
-            >
-              Create Free Account
+              Log in or sign up to view selection
             </Link>
           </div>
 

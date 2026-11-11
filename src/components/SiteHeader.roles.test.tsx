@@ -12,9 +12,25 @@ import { SiteHeader } from "./SiteHeader";
 
 describe("account navigation by role", () => {
   beforeEach(() => {
+    state.email = "sailor@example.com";
     state.role = "sailor";
     state.owned = [{ id: "1", name: "Sailor", handle: "sailor", ownerRelation: "sailor" }];
     state.signOut.mockClear();
+  });
+
+  it("offers logged-out visitors one login or sign-up entry on desktop and mobile", async () => {
+    state.email = "";
+    const user = userEvent.setup();
+    render(<SiteHeader />);
+    const desktop = screen.getAllByRole("link", { name: "Log in or sign up" });
+    expect(desktop).toHaveLength(1);
+    expect(desktop[0]).toHaveAttribute("href", "/login");
+    expect(screen.queryByRole("link", { name: "Create account" })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Toggle menu" }));
+    const mobile = screen.getByRole("navigation", { name: "Mobile public" }).parentElement!;
+    expect(within(mobile).getByRole("link", { name: "Log in or sign up" })).toHaveAttribute("href", "/login");
+    expect(within(mobile).queryByRole("link", { name: "Create account" })).not.toBeInTheDocument();
+    state.email = "sailor@example.com";
   });
 
   it("shows a sailor their profile without parent or coach workspaces on desktop and mobile", async () => {

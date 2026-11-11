@@ -64,15 +64,9 @@ export default function ClaimProfilePage() {
             <div className="mt-3 flex flex-wrap gap-2">
               <Link
                 href="/login?next=%2Fsailors"
-                className="sp-secondary inline-flex px-4 py-2 text-sm font-semibold"
+                className="sp-btn-primary inline-flex px-4 py-2 text-sm font-semibold"
               >
-                Sign in
-              </Link>
-              <Link
-                href="/register"
-                className="sp-secondary inline-flex px-4 py-2 text-sm font-semibold"
-              >
-                Create account
+                Log in or sign up
               </Link>
             </div>
           </div>

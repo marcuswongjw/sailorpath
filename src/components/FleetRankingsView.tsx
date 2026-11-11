@@ -417,16 +417,10 @@ export function FleetRankingsView({
               <span>→</span>
             </Link>
             <Link
-              href="/register?next=%2Fsg%2Foptimist%2Fgold"
+              href="/login?next=%2Fsg%2Foptimist%2Fgold"
               className="inline-flex rounded-full bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-500 shadow-sm"
             >
-              Create account
-            </Link>
-            <Link
-              href="/login?next=%2Fsg%2Foptimist%2Fgold"
-              className="text-xs font-semibold text-slate-400 hover:text-white px-1.5 py-1"
-            >
-              Log in
+              Log in or sign up
             </Link>
           </div>
         </div>

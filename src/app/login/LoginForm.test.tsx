@@ -11,9 +11,15 @@ vi.mock("next/navigation", () => ({
 describe("login sign-in buttons", () => {
   it("stays hidden until each method is configured", () => {
     render(<LoginForm telegramEnabled={false} googleEnabled={false} />);
+    expect(screen.getByRole("heading", { name: "Log in or sign up" })).toBeInTheDocument();
+    expect(screen.queryByText(/create your account automatically/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Log in with Telegram" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Continue with Google" })).not.toBeInTheDocument();
     expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "New here? Create an account with email" })).toHaveAttribute(
+      "href",
+      "/register?next=%2Faccount"
+    );
   });
 
   it("offers Telegram beside email login when configured", () => {
@@ -29,6 +35,9 @@ describe("login sign-in buttons", () => {
     render(<LoginForm telegramEnabled googleEnabled />);
     expect(screen.getByRole("button", { name: "Continue with Google" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Log in with Telegram" })).toBeInTheDocument();
+    expect(
+      screen.getByText("New to SailorPath? Google and Telegram create your account automatically.")
+    ).toBeInTheDocument();
     expect(screen.getByText(/A phone number is not requested/)).toBeInTheDocument();
   });
 

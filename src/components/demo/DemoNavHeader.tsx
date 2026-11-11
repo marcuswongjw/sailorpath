@@ -86,15 +86,9 @@ export function DemoNavHeader({
           <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
             <Link
               href="/login"
-              className="text-xs font-bold text-[var(--sp-sailcloth)] hover:text-white px-2 py-1 transition-colors"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/register"
               className="rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] !text-white px-3.5 py-1.5 text-[15px] font-semibold transition-colors shadow-xs"
             >
-              Get started
+              Log in or sign up
             </Link>
           </div>
         </div>

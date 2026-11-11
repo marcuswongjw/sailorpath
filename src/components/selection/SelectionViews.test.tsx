@@ -36,10 +36,11 @@ describe("IlcaSelectionView", () => {
     });
     render(<IlcaSelectionView initialSailors={[]} isAuthenticated={false} />);
 
-    expect(
-      screen.getByText("Sign In to View Selection")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Create Free Account")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Log in or sign up to view selection" })).toHaveAttribute(
+      "href",
+      "/login?next=%2Fsg%2Filca4%2Fselection"
+    );
+    expect(screen.queryByText("Create Free Account")).not.toBeInTheDocument();
     // Trial details stay hidden for signed-out visitors
     expect(screen.queryByText("Eastern Seaboard 2026")).not.toBeInTheDocument();
   });

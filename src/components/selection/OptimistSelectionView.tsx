@@ -142,13 +142,7 @@ export function OptimistSelectionView({
               href="/login?next=%2Fsg%2Foptimist%2Fselection"
               className="w-full sm:w-auto sp-btn-primary text-xs font-black uppercase tracking-wider px-6 py-3.5 inline-flex items-center justify-center gap-2 min-h-[44px]"
             >
-              Sign In to View Selection
-            </Link>
-            <Link
-              href="/register?next=%2Fsg%2Foptimist%2Fselection"
-              className="w-full sm:w-auto rounded-full bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] active:scale-[0.98] transition-all text-xs font-bold text-[var(--sp-harbour-shadow)] px-6 py-3.5 border border-[var(--sp-cool-veil)] inline-flex items-center justify-center min-h-[44px]"
-            >
-              Create Free Account
+              Log in or sign up to view selection
             </Link>
           </div>
 
@@ -504,10 +498,10 @@ export function OptimistSelectionView({
                                   Full rosters, discard calculations, and simulator access are available for free registered accounts.
                                 </p>
                                 <Link
-                                  href="/register?next=%2Fsg%2Foptimist%2Fselection"
+                                  href="/login?next=%2Fsg%2Foptimist%2Fselection"
                                   className="inline-block sp-btn-primary px-4 py-1.5 text-xs font-bold"
                                 >
-                                  Unlock full selection roster
+                                  Log in or sign up to view the roster
                                 </Link>
                               </div>
                             </td>
