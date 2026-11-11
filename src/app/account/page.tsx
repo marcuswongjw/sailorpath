@@ -1028,11 +1028,6 @@ function AccountInner() {
             Contact support
           </Link>
         </p>
-        {!isCoach && !isSuperadmin && (
-          <Link href="/account/coach" className="font-semibold text-harbour hover:underline">
-            Request coach access
-          </Link>
-        )}
       </footer>
     </div>
   );

@@ -235,13 +235,13 @@ export function buildResultTags(
   const nonRanking = !regattaCountsForRanking(r);
   const fleet = fleetLabelForResult(r, goldEntryDate);
   const geo = String(r.geography || "").toUpperCase();
+  const isSingaporeGeo =
+    !overseas &&
+    (normalizeGeography(r.geography) === "SGP" ||
+      (!geo && r.countsForRanking === true));
   const isOverseasGeo =
     overseas ||
-    (geo &&
-      geo !== "SG" &&
-      geo !== "SGP" &&
-      geo !== "SIN" &&
-      geo !== "SINGAPORE");
+    (Boolean(geo) && normalizeGeography(r.geography) !== "SGP");
 
   const boat = profileBoatClassGroup(r.boatClass);
   const isIlca = isProfileIlcaClass(boat);
@@ -258,11 +258,11 @@ export function buildResultTags(
     });
   }
 
-  // Gold/Silver tags are Optimist-only (ILCA is open fleet)
-  if (!isIlca) {
+  // Singapore-only Gold/Silver fleet tags (Optimist-only; ILCA is open fleet).
+  if (isSingaporeGeo && !isIlca) {
     if (fleet === "Gold") {
       tags.push({
-        label: "Gold fleet",
+        label: "SG Gold",
         className: "bg-amber-500/15 text-amber-400 border border-amber-500/25",
       });
     } else if (fleet === "Silver") {
@@ -290,7 +290,7 @@ export function buildResultTags(
     });
   }
 
-  if (nonRanking) {
+  if (isSingaporeGeo && nonRanking) {
     tags.push({
       label: "Non-ranking",
       className: "bg-sky-500/10 text-sky-300 border border-sky-500/25",

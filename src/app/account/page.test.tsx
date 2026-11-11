@@ -32,6 +32,7 @@ describe("account workspace navigation", () => {
     expect(state.signOut).toHaveBeenCalledTimes(1);
     expect(within(sailing).queryByRole("link", { name: /Family dashboard/ })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open logbook" })).toHaveAttribute("href", "/athlete?id=sailor");
+    expect(screen.queryByRole("link", { name: "Request coach access" })).not.toBeInTheDocument();
     const summary = screen.getByText("Account settings", { selector: "summary" });
     const details = summary.closest("details")!;
     expect(sailing.compareDocumentPosition(details) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();

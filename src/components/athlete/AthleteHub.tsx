@@ -31,6 +31,7 @@ import {
 import { EquipmentInventory } from "@/components/equipment/EquipmentInventory";
 import { GeographySelect } from "@/components/CountrySelect";
 import { ProfileIdentityFields } from "@/components/sailor-profile/ProfileIdentityFields";
+import { qualifyingParticipation } from "@/lib/qualifyingParticipation";
 
 export type AthleteProfile = {
   id: string;
@@ -287,7 +288,7 @@ function AthleteWorkspace({
     // Same rule as displayedResultVerificationStatus. Kept inline so the
     // athlete hub does not pull another module into the client bundle.
     if (r.countsForRanking) return true;
-    const slug = r.regattaSlug ?? "";
+    const slug = r.regattaSlug ?? r.slug ?? "";
     const stored = r.verificationStatus;
     if (slug.startsWith("log-")) return stored === "verified";
     if (
@@ -531,6 +532,15 @@ function AthleteWorkspace({
             <ul className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] divide-y divide-[var(--sp-cool-veil)] shadow-xs overflow-hidden">
               {filteredResults.map((r) => {
                 const verified = isResultVerified(r);
+                const regSlug = r.regattaSlug ?? r.slug ?? "";
+                const isPersonalLog = regSlug.startsWith("log-");
+                const showUserEvidenceNotes = Boolean(
+                  r.evidenceNotes &&
+                    r.verificationStatus !== "rejected" &&
+                    (isPersonalLog || !verified)
+                );
+                const effectiveFleetSize =
+                  qualifyingParticipation(regSlug) ?? r.totalFleetSize;
                 return (
                   <li key={r.id} className="p-4 sm:px-6 sm:py-4 space-y-2.5">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
@@ -563,10 +573,10 @@ function AthleteWorkspace({
                             <span className="text-base font-black text-[var(--sp-harbour-shadow)]">
                               {r.rank}
                             </span>
-                            {r.totalFleetSize ? (
+                            {effectiveFleetSize ? (
                               <span className="text-xs font-normal text-[var(--sp-slate-soft)]">
                                 {" "}
-                                / {r.totalFleetSize}
+                                / {effectiveFleetSize}
                               </span>
                             ) : null}
                           </p>
@@ -620,7 +630,7 @@ function AthleteWorkspace({
                       </div>
                     )}
 
-                    {(r.evidenceUrl || r.officialUrl || (r.evidenceNotes && r.verificationStatus !== "rejected") || !verified) && (
+                    {(r.evidenceUrl || r.officialUrl || showUserEvidenceNotes || !verified) && (
                       <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5 text-xs">
                         <div className="flex flex-wrap items-center gap-3 text-[var(--sp-slate-soft)]">
                           {r.evidenceUrl && (
@@ -649,7 +659,7 @@ function AthleteWorkspace({
                               <span>Official results</span>
                             </a>
                           )}
-                          {r.evidenceNotes && r.verificationStatus !== "rejected" && (
+                          {showUserEvidenceNotes && (
                             <span className="italic">“{r.evidenceNotes}”</span>
                           )}
                         </div>
@@ -903,7 +913,11 @@ function AthleteWorkspace({
           </div>
         ) : (
           <ul className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] divide-y divide-[var(--sp-cool-veil)] shadow-xs overflow-hidden">
-            {evidenceDocs.map((r) => (
+            {evidenceDocs.map((r) => {
+              const effectiveFleetSize =
+                qualifyingParticipation(r.regattaSlug ?? r.slug ?? "") ??
+                r.totalFleetSize;
+              return (
               <li
                 key={r.id}
                 className="p-4 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
@@ -914,7 +928,7 @@ function AthleteWorkspace({
                   </p>
                   <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
                     {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
-                    {r.totalFleetSize ? ` / ${r.totalFleetSize}` : ""}
+                    {effectiveFleetSize ? ` / ${effectiveFleetSize}` : ""}
                   </p>
                 </div>
 
@@ -947,7 +961,8 @@ function AthleteWorkspace({
                   )}
                 </div>
               </li>
-            ))}
+              );
+            })}
           </ul>
         )
       )}

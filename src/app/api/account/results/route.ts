@@ -120,6 +120,7 @@ export async function GET(req: Request) {
 
     const mappedRows = rows.map((r) => ({
       ...r,
+      regattaSlug: r.slug,
       evidenceUrl: evidenceDownloadUrl(r.evidenceUrl),
       officialUrl: evidenceDownloadUrl(r.officialUrl),
       verificationStatus: displayedResultVerificationStatus({

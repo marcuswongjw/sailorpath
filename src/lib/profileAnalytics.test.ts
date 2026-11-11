@@ -295,8 +295,8 @@ describe("buildIlcaKeyStats / prefersIlcaFirstProfile", () => {
 });
 
 describe("buildResultTags", () => {
-  it("tags top 10, gold, overseas, non-ranking", () => {
-    const tags = buildResultTags(
+  it("omits SG Gold and Non-ranking from overseas regattas and keeps them on Singapore regattas", () => {
+    const overseasTags = buildResultTags(
       {
         rank: 5,
         division: "Gold",
@@ -306,11 +306,27 @@ describe("buildResultTags", () => {
       },
       "2025-01-01"
     );
-    const labels = tags.map((t) => t.label);
-    expect(labels).toContain("Top 10");
-    expect(labels).toContain("Gold fleet");
-    expect(labels).toContain("Overseas");
-    expect(labels).toContain("Non-ranking");
+    const overseasLabels = overseasTags.map((t) => t.label);
+    expect(overseasLabels).toContain("Top 10");
+    expect(overseasLabels).toContain("Overseas");
+    expect(overseasLabels).not.toContain("Gold fleet");
+    expect(overseasLabels).not.toContain("SG Gold");
+    expect(overseasLabels).not.toContain("Non-ranking");
+
+    const sgTags = buildResultTags(
+      {
+        rank: 8,
+        division: "Gold",
+        geography: "SGP",
+        countsForRanking: false,
+      },
+      "2025-01-01"
+    );
+    const sgLabels = sgTags.map((t) => t.label);
+    expect(sgLabels).toContain("Top 10");
+    expect(sgLabels).toContain("SG Gold");
+    expect(sgLabels).toContain("Non-ranking");
+    expect(sgLabels).not.toContain("Overseas");
   });
 
   it("does not tag ILCA results as Gold/Silver fleet", () => {
@@ -324,6 +340,7 @@ describe("buildResultTags", () => {
       "2025-01-01"
     );
     const labels = tags.map((t) => t.label);
+    expect(labels).not.toContain("SG Gold");
     expect(labels).not.toContain("Gold fleet");
     expect(labels).not.toContain("Silver fleet");
   });

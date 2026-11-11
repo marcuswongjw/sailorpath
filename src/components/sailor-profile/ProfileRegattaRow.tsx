@@ -407,13 +407,6 @@ export function ProfileRegattaRow({
               {raceNotes.length === 1 ? "" : "s"}
             </span>
           )}
-          {officialRaces.length > 0 && (
-            <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
-              <Trophy className="h-3 w-3 text-emerald-600" />
-              {officialRaces.length} race score
-              {officialRaces.length === 1 ? "" : "s"}
-            </span>
-          )}
           {ownerView && (
             <button
               type="button"

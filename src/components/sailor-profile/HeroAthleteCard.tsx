@@ -286,7 +286,12 @@ export function HeroAthleteCard({
       {/* LinkedIn-style cover banner */}
       <div
         aria-hidden="true"
-        className="relative h-24 sm:h-28 w-full overflow-hidden bg-gradient-to-r from-harbour-shadow via-harbour to-aqua-deep"
+        className="relative h-24 sm:h-28 w-full overflow-hidden"
+        style={{
+          backgroundColor: "var(--sp-harbour-shadow)",
+          backgroundImage:
+            "linear-gradient(120deg, var(--sp-harbour-shadow) 0%, var(--sp-harbour) 58%, var(--sp-reef-line) 100%)",
+        }}
       >
         <svg
           className="absolute inset-0 h-full w-full opacity-15"

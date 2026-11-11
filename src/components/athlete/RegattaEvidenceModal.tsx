@@ -30,6 +30,7 @@ export type RegattaResultItem = {
   regattaId: string;
   regattaName: string;
   regattaSlug?: string | null;
+  slug?: string | null;
   regattaDate: string | Date;
   regattaEndDate?: string | Date | null;
   venue?: string | null;
@@ -55,8 +56,6 @@ interface RegattaEvidenceFormProps {
   initialResult?: RegattaResultItem | null;
   onSuccess: () => void;
 }
-
-const DIVISION_OPTIONS = ["Open", "Gold", "Silver", "U12", "U15", "Other"];
 
 function localTodayStr(): string {
   const now = new Date();
@@ -91,10 +90,9 @@ function RegattaEvidenceForm({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadXhrRef = useRef<XMLHttpRequest | null>(null);
 
+  const regSlug = initialResult?.regattaSlug ?? initialResult?.slug;
   // Check if editing a shared/official regatta managed centrally
-  const isSharedRegatta = Boolean(
-    initialResult?.regattaSlug && !initialResult.regattaSlug.startsWith("log-")
-  );
+  const isSharedRegatta = Boolean(regSlug && !regSlug.startsWith("log-"));
 
   const [name, setName] = useState(initialResult?.regattaName || "");
   const [date, setDate] = useState(
@@ -110,7 +108,6 @@ function RegattaEvidenceForm({
   const [venue, setVenue] = useState(initialResult?.venue || "");
   const [geography, setGeography] = useState(initialResult?.geography || "SGP");
   const [boatClass, setBoatClass] = useState(initialResult?.boatClass || "Optimist");
-  const [division, setDivision] = useState(initialResult?.division || "Open");
   const [rank, setRank] = useState(
     initialResult?.rank ? String(initialResult.rank) : ""
   );
@@ -160,17 +157,13 @@ function RegattaEvidenceForm({
   };
 
   const inputCls = (hasError?: string, disabled?: boolean) =>
-    `w-full rounded-xl border px-3.5 py-2 text-xs transition-colors focus:outline-none ${
+    `w-full min-h-11 rounded-xl border px-3.5 py-2.5 text-base sm:text-sm transition-colors focus:outline-none ${
       disabled
         ? "bg-slate-100/90 border-[var(--sp-cool-veil)] text-slate-500 cursor-not-allowed"
         : hasError
         ? "bg-white border-rose-500 focus:border-rose-600 focus:ring-1 focus:ring-rose-500 text-[var(--sp-charcoal)]"
         : "bg-white border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] placeholder:text-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)]"
     }`;
-
-  const divisionOptions = DIVISION_OPTIONS.includes(division)
-    ? DIVISION_OPTIONS
-    : [...DIVISION_OPTIONS, division];
 
   // Background upload via XMLHttpRequest with real-time percentage progress
   const startUpload = (file: File) => {
@@ -367,7 +360,7 @@ function RegattaEvidenceForm({
         venue: venue.trim() || null,
         geography: geography.trim() || "SGP",
         boatClass,
-        division: division.trim() || "Open",
+        division: initialResult?.division || "Open",
         rank: rankNum,
         totalFleetSize: fleetNum,
         nettScore: nettScore.trim() ? parseFloat(nettScore) : null,
@@ -424,8 +417,8 @@ function RegattaEvidenceForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex max-h-[85vh] flex-col bg-[var(--sp-warm-white)] text-[var(--sp-charcoal)]">
-      <div className="flex-1 space-y-6 overflow-y-auto p-5 sm:p-7">
+    <form onSubmit={handleSubmit} className="flex flex-1 min-h-0 flex-col bg-[var(--sp-warm-white)] text-[var(--sp-charcoal)]">
+      <div className="flex-1 min-h-0 space-y-6 overflow-y-auto p-4 sm:p-6">
         {/* Shared / Official Regatta Notice */}
         {isSharedRegatta && (
           <div className="rounded-2xl border border-sky-200 bg-sky-50/80 p-3.5 text-xs text-sky-950 flex items-start gap-3">
@@ -433,7 +426,7 @@ function RegattaEvidenceForm({
             <div>
               <p className="font-bold text-[var(--sp-harbour-shadow)]">Official SailorPath Event</p>
               <p className="text-[var(--sp-slate-soft)] text-xs leading-relaxed mt-0.5">
-                Event details (name, dates, class, venue) are managed centrally by SailorPath. You can edit your personal finish rank, fleet size, division, scores, and official evidence.
+                Event details (name, dates, class, venue) are managed centrally by SailorPath. You can edit your personal finish rank, fleet size, scores, and official evidence.
               </p>
             </div>
           </div>
@@ -556,7 +549,7 @@ function RegattaEvidenceForm({
                 <GeographySelect
                   value={geography}
                   onChange={(val) => setGeography(val || "SGP")}
-                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                  className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               )}
             </div>
@@ -582,8 +575,7 @@ function RegattaEvidenceForm({
           <h4 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
             Results &amp; Scoring
           </h4>
-          {/* Responsive grid: single column on mobile, 3 cols on sm, 5 cols on lg */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div>
               <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Final Rank <span className="text-rose-500">*</span>
@@ -608,7 +600,7 @@ function RegattaEvidenceForm({
 
             <div>
               <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Fleet Size <span className="text-slate-400 font-normal">(Optional)</span>
+                Fleet Size <span className="text-slate-400 font-normal">(Opt.)</span>
               </label>
               <input
                 id="regatta-field-fleet"
@@ -622,30 +614,9 @@ function RegattaEvidenceForm({
                 }}
                 className={inputCls(fieldErrors.fleet)}
               />
-              {fieldErrors.fleet ? (
+              {fieldErrors.fleet && (
                 <p className="mt-1 text-[13px] text-[var(--sp-color-error)] font-semibold">{fieldErrors.fleet}</p>
-              ) : (
-                <p className="mt-1 text-[13px] text-[var(--sp-slate-soft)]">
-                  Total boats in fleet
-                </p>
               )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Division / Fleet
-              </label>
-              <select
-                value={division}
-                onChange={(e) => setDivision(e.target.value)}
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              >
-                {divisionOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div>
@@ -658,7 +629,7 @@ function RegattaEvidenceForm({
                 placeholder="e.g. 18.0"
                 value={nettScore}
                 onChange={(e) => setNettScore(e.target.value)}
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
@@ -672,7 +643,7 @@ function RegattaEvidenceForm({
                 placeholder="e.g. 24.0"
                 value={totalScore}
                 onChange={(e) => setTotalScore(e.target.value)}
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                className="w-full min-h-11 rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-base sm:text-sm text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
           </div>
@@ -880,10 +851,10 @@ export function RegattaEvidenceModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-2xl my-8 overflow-hidden">
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center p-2 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] px-6 py-4 sm:py-5 bg-[var(--sp-sailcloth)]">
+        <div className="flex shrink-0 items-center justify-between border-b border-[var(--sp-cool-veil)] px-4 sm:px-6 py-3.5 sm:py-4 bg-[var(--sp-sailcloth)]">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30 shadow-2xs">
               <Trophy className="h-5 w-5" />
