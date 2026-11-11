@@ -465,4 +465,47 @@ describe("HeroAthleteCard", () => {
     await userEvent.click(screen.getByRole("button", { name: "Save bio" }));
     expect(onSaveBio).toHaveBeenCalledWith("Laser & Optimist youth sailor.");
   });
+
+  it("renders a single owner photo upload button and clean claim/request access labels", async () => {
+    const onUploadAvatar = vi.fn();
+    const onRequestAccess = vi.fn();
+    const onToggleClaimPanel = vi.fn();
+    const { rerender } = render(
+      <HeroAthleteCard
+        {...defaultProps}
+        ownerView
+        isOwner
+        onUploadAvatar={onUploadAvatar}
+      />
+    );
+
+    const uploadButtons = screen.getAllByRole("button", { name: /Upload athlete photo/i });
+    expect(uploadButtons).toHaveLength(1);
+    expect(screen.queryByRole("button", { name: "Upload athlete photo button" })).toBeNull();
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        profileClaimed={false}
+        showUnclaimedBanner
+        onRequestAccess={onRequestAccess}
+      />
+    );
+    expect(screen.getByText(/Your profile or your child’s\?/)).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Request profile access" }));
+    expect(onRequestAccess).toHaveBeenCalledTimes(1);
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        profileClaimed
+        showUnclaimedBanner={false}
+        canClaim
+        onToggleClaimPanel={onToggleClaimPanel}
+      />
+    );
+    expect(screen.queryByRole("button", { name: "Claim this profile" })).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "Request access" }));
+    expect(onToggleClaimPanel).toHaveBeenCalledTimes(1);
+  });
 });

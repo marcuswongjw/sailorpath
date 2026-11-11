@@ -1233,34 +1233,64 @@ export function useSailorProfileState({
   /** Equipment stays family/owner-private (never on public / preview-public). */
   const showEquipmentSection = ownerView || hasPrivateAccess;
 
-  // Default to nationality; an explicit selection compares another host country separately.
+  // Default to nationality when home regattas exist; otherwise show all countries for international sailors.
   const [selectedTrendCountry, setTrendCountry] = useState<string | null>(null);
-  const trendCountry = selectedTrendCountry || normalizeNationality(displaySailor.nationality) || "SGP";
+  const homeTrendCountry = normalizeNationality(displaySailor.nationality) || "SGP";
+  const resultCountryCodes = useMemo(
+    () => results.map((r) => normalizeGeography(r.geography)).filter(Boolean),
+    [results]
+  );
+  const hasHomeResults = useMemo(
+    () => resultsInCountry(results, homeTrendCountry).length > 0,
+    [results, homeTrendCountry]
+  );
+  const trendCountry =
+    selectedTrendCountry ||
+    (hasHomeResults || resultCountryCodes.length === 0 ? homeTrendCountry : "ALL");
   const trendCountryOptions = useMemo(() => {
-    const codes = new Set([trendCountry, ...results.map((r) => normalizeGeography(r.geography)).filter(Boolean)]);
-    return geographySelectOptions().filter((option) => codes.has(option.code));
-  }, [results, trendCountry]);
+    const distinctResultCodes = new Set(resultCountryCodes);
+    const includeAllCountries =
+      trendCountry === "ALL" ||
+      distinctResultCodes.size > 1 ||
+      (!hasHomeResults && distinctResultCodes.size > 0);
+    const codes = new Set([
+      ...(trendCountry === "ALL" ? [] : [trendCountry]),
+      ...distinctResultCodes,
+    ]);
+    const countryOpts = geographySelectOptions().filter((option) => codes.has(option.code));
+    return includeAllCountries
+      ? [{ code: "ALL", name: "All countries" }, ...countryOpts]
+      : countryOpts;
+  }, [resultCountryCodes, trendCountry, hasHomeResults]);
+  const filterByTrendCountry = useMemo(
+    () => (list: ProfileResult[]) =>
+      trendCountry === "ALL" ? list : resultsInCountry(list, trendCountry),
+    [trendCountry]
+  );
   const countryOptimistAnalytics = useMemo(
-    () => buildProfileAnalytics(displaySailor as never, resultsInCountry(classBuckets.optimist, trendCountry)),
-    [displaySailor, classBuckets.optimist, trendCountry]
+    () => buildProfileAnalytics(displaySailor as never, filterByTrendCountry(classBuckets.optimist)),
+    [displaySailor, classBuckets.optimist, filterByTrendCountry]
   );
   const ilcaTrendPoints = useMemo(
-    () => buildIlcaPositionTrend(resultsInCountry(activeIlcaResults as ProfileResult[], trendCountry)),
-    [activeIlcaResults, trendCountry]
+    () => buildIlcaPositionTrend(filterByTrendCountry(activeIlcaResults as ProfileResult[])),
+    [activeIlcaResults, filterByTrendCountry]
   );
   const showIlcaTrend =
     Boolean(selectedIlcaClass);
   const boardTrendPoints = useMemo(
-    () => (onBoardClass ? buildIlcaPositionTrend(resultsInCountry(activeBoardResults, trendCountry)) : []),
-    [onBoardClass, activeBoardResults, trendCountry]
+    () => (onBoardClass ? buildIlcaPositionTrend(filterByTrendCountry(activeBoardResults)) : []),
+    [onBoardClass, activeBoardResults, filterByTrendCountry]
   );
-  // Only merge standing slots whose event location is known to match this country.
+  // Only merge standing slots whose event location matches the active country filter.
   const optimistTrendPoints = useMemo(() => {
-    const localIds = new Set(resultsInCountry(classBuckets.optimist, trendCountry).map((r) => r.regattaId));
-    const scores = initialSeriesStanding?.rScores?.filter((score) => localIds.has(score.regattaId));
+    const localResults = filterByTrendCountry(classBuckets.optimist);
+    const localIds = new Set(localResults.map((r) => r.regattaId));
+    const scores = initialSeriesStanding?.rScores?.filter(
+      (score) => trendCountry === "ALL" || localIds.has(score.regattaId)
+    );
     const fleet = String(initialSeriesStanding?.fleet || "").toLowerCase() === "gold" ? "Gold" : "Silver";
     return mergeStandingScoresIntoTrend(countryOptimistAnalytics.trend, scores, fleet);
-  }, [countryOptimistAnalytics.trend, initialSeriesStanding, classBuckets.optimist, trendCountry]);
+  }, [countryOptimistAnalytics.trend, initialSeriesStanding, classBuckets.optimist, trendCountry, filterByTrendCountry]);
   const trendPoints = onBoardClass
     ? boardTrendPoints
     : showIlcaTrend
@@ -1268,14 +1298,19 @@ export function useSailorProfileState({
       : optimistTrendPoints;
   const trendMode = onBoardClass || showIlcaTrend ? ("other" as const) : countryOptimistAnalytics.mode;
   const trendGoldEntry = onBoardClass || showIlcaTrend ? null : countryOptimistAnalytics.goldEntryDate;
-  const trendCountryName = trendCountryOptions.find((option) => option.code === trendCountry)?.name || trendCountry;
-  const trendCaption = ` · ${trendCountryName} regattas only` + (onBoardClass
-    ? ` · last 10 ${selectedClassLabel} events`
-    : showIlcaTrend
-      ? ` · last 10 ${selectedClassLabel} regattas`
-      : countryOptimistAnalytics.mode === "established_gold"
-        ? " · last 10 gold events"
-        : " · last 10 regattas (incl. DNS)");
+  const trendCountryName =
+    trendCountry === "ALL"
+      ? "All countries"
+      : trendCountryOptions.find((option) => option.code === trendCountry)?.name || trendCountry;
+  const trendCaption =
+    (trendCountry === "ALL" ? " · All countries" : ` · ${trendCountryName} regattas only`) +
+    (onBoardClass
+      ? ` · last 10 ${selectedClassLabel} events`
+      : showIlcaTrend
+        ? ` · last 10 ${selectedClassLabel} regattas`
+        : countryOptimistAnalytics.mode === "established_gold"
+          ? " · last 10 gold events"
+          : " · last 10 regattas (incl. DNS)");
 
   // System + owner journey milestones (Optimist + ILCA results for first ILCA 4)
   const displayJourney = useMemo(() => {

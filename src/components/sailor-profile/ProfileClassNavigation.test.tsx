@@ -70,6 +70,8 @@ describe("ProfileClassNavigation", () => {
     );
 
     const regattasBtn = screen.getByRole("button", { name: /Regattas.*15/ });
+    expect(regattasBtn).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: "Overview" })).toHaveAttribute("aria-pressed", "true");
     await userEvent.click(regattasBtn);
     expect(onSectionTabChange).toHaveBeenCalledWith("results");
 

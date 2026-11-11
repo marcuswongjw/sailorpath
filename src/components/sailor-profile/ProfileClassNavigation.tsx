@@ -26,6 +26,14 @@ type Props = {
   onSectionTabChange?: (tab: ProfileSectionTab) => void;
 };
 
+function sectionButtonClass(active: boolean): string {
+  return `shrink-0 rounded-full px-4 py-2 min-h-11 text-[13px] font-bold touch-manipulation transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour ${
+    active
+      ? "bg-harbour text-sailcloth shadow-xs ring-2 ring-harbour/25 underline decoration-2 underline-offset-4"
+      : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
+  }`;
+}
+
 /** Section strip. Class selection lives once, beside the sailor’s name. */
 export function ProfileClassNavigation({
   activeTab,
@@ -52,12 +60,9 @@ export function ProfileClassNavigation({
       >
         <button
           type="button"
+          aria-pressed={sectionTab === "overview"}
           onClick={() => onSectionTabChange?.("overview")}
-          className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
-            sectionTab === "overview"
-              ? "bg-harbour text-sailcloth shadow-xs"
-              : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
-          }`}
+          className={sectionButtonClass(sectionTab === "overview")}
         >
           Overview
         </button>
@@ -88,12 +93,9 @@ export function ProfileClassNavigation({
         {/* Results / Regattas tab */}
         <button
           type="button"
+          aria-pressed={sectionTab === "results"}
           onClick={() => onSectionTabChange?.("results")}
-          className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
-            sectionTab === "results"
-              ? "bg-harbour text-sailcloth shadow-xs"
-              : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
-          }`}
+          className={sectionButtonClass(sectionTab === "results")}
         >
           Regattas
           {resultsCount > 0 && (
@@ -111,12 +113,9 @@ export function ProfileClassNavigation({
         {awardsCount != null && awardsCount > 0 && (
           <button
             type="button"
+            aria-pressed={sectionTab === "awards"}
             onClick={() => onSectionTabChange?.("awards")}
-            className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
-              sectionTab === "awards"
-                ? "bg-harbour text-sailcloth shadow-xs"
-                : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
-            }`}
+            className={sectionButtonClass(sectionTab === "awards")}
           >
             Awards
             <span
@@ -146,12 +145,9 @@ export function ProfileClassNavigation({
         {milestonesVisible && (
         <button
           type="button"
+          aria-pressed={sectionTab === "journey"}
           onClick={() => onSectionTabChange?.("journey")}
-          className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
-            sectionTab === "journey"
-              ? "bg-harbour text-sailcloth shadow-xs"
-              : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
-          }`}
+          className={sectionButtonClass(sectionTab === "journey")}
         >
           Milestones
           {journeyCount > 0 && (
@@ -187,12 +183,9 @@ export function ProfileClassNavigation({
           <>
             <button
               type="button"
+              aria-pressed={sectionTab === "equipment"}
               onClick={() => onSectionTabChange?.("equipment")}
-              className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
-                sectionTab === "equipment"
-                  ? "bg-harbour text-sailcloth shadow-xs"
-                  : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
-              }`}
+              className={sectionButtonClass(sectionTab === "equipment")}
             >
               Equipment
             </button>

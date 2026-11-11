@@ -72,14 +72,30 @@ export function ProfileOverviewTab({
 
   return (
     <div className="space-y-4">
-      <section aria-label={`${classLabel} results summary`} className={`${cardClass} p-4 sm:p-5`}>
-        <h2 className="text-sm font-semibold text-harbour-shadow">{classLabel} results at a glance</h2>
-        <dl className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
-          <div><dt className="text-xs text-slate-soft">Recorded finishes</dt><dd className="mt-1 text-2xl font-bold tabular-nums text-harbour-shadow">{finishes.length}</dd></div>
-          <div><dt className="text-xs text-slate-soft">Did not start (DNS)</dt><dd className="mt-1 text-2xl font-bold tabular-nums text-harbour-shadow">{dnsCount}</dd></div>
-          <div className="col-span-2 sm:col-span-1 min-w-0"><dt className="text-xs text-slate-soft">Latest recorded finish</dt><dd className="mt-1 text-xl font-bold text-harbour-shadow">{latestPlace}</dd>{latestFinish && <p className="mt-1 break-words text-xs leading-5 text-slate-soft">{latestFinish.regattaName}{latestFinish.regattaDate ? ` · ${formatEventWhen(latestFinish.regattaDate)}` : ""}</p>}</div>
+      <section aria-label={`${classLabel} results summary`} className={`${cardClass} p-3.5 sm:px-5 sm:py-3.5`}>
+        <h2 className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-soft">
+          {classLabel} results at a glance
+        </h2>
+        <dl className="mt-2.5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div>
+            <dt className="text-[12px] text-slate-soft">Recorded finishes</dt>
+            <dd className="mt-0.5 text-lg sm:text-xl font-bold tabular-nums text-harbour-shadow">{finishes.length}</dd>
+          </div>
+          <div>
+            <dt className="text-[12px] text-slate-soft">Did not start (DNS)</dt>
+            <dd className="mt-0.5 text-lg sm:text-xl font-bold tabular-nums text-harbour-shadow">{dnsCount}</dd>
+          </div>
+          <div className="col-span-2 sm:col-span-1 min-w-0">
+            <dt className="text-[12px] text-slate-soft">Latest recorded finish</dt>
+            <dd className="mt-0.5 text-lg sm:text-xl font-bold text-harbour-shadow">{latestPlace}</dd>
+            {latestFinish && (
+              <p className="mt-0.5 break-words text-xs leading-4 text-slate-soft">
+                {latestFinish.regattaName}
+                {latestFinish.regattaDate ? ` · ${formatEventWhen(latestFinish.regattaDate)}` : ""}
+              </p>
+            )}
+          </div>
         </dl>
-        <p className="mt-3 text-xs leading-5 text-slate-soft">For the selected class and results scope. DNS entries are excluded from recorded finishes.</p>
       </section>
       <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
       <div className={`space-y-4 min-w-0 order-2 ${hideStanding ? "" : "lg:order-1"}`}>

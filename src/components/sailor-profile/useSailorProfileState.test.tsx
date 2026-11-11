@@ -136,6 +136,32 @@ describe('separate ILCA profile flows', () => {
     expect(result.current.displaySailor.bio).toBe('Competitive youth racer.');
     expect(result.current.form.bio).toBe('Competitive youth racer.');
   });
+
+  it('defaults international sailors with abroad-only regattas to All countries and lets multi-country sailors aggregate', () => {
+    const { result: intl } = renderHook(() =>
+      useSailorProfileState({
+        ...props,
+        initialSailor: { id: 'pol-1', name: 'Kamil Manowiecki', handle: 'kamil', nationality: 'POL' },
+        initialResults: [
+          { id: 'x15-1', regattaId: 'r1', regattaName: 'Tour Stop 1', boatClass: 'X-15', regattaDate: '2026-06-01', rank: 2, geography: 'BRA' },
+          { id: 'x15-2', regattaId: 'r2', regattaName: 'Worlds 2026', boatClass: 'X-15', regattaDate: '2026-11-04', rank: 1, geography: 'ESP' },
+        ],
+        initialIlcaStandings: undefined,
+      })
+    );
+
+    expect(intl.current.trendCountry).toBe('ALL');
+    expect(intl.current.trendCountryOptions[0]).toEqual({ code: 'ALL', name: 'All countries' });
+    expect(intl.current.trendPoints.map((point) => point.rank)).toEqual([2, 1]);
+    expect(intl.current.trendCaption).toContain('All countries');
+
+    const { result: multi } = renderHook(() => useSailorProfileState(props));
+    act(() => multi.current.setResultsTab('ilca6'));
+    expect(multi.current.trendCountry).toBe('SGP');
+    expect(multi.current.trendCountryOptions[0]).toEqual({ code: 'ALL', name: 'All countries' });
+    act(() => multi.current.setTrendCountry('ALL'));
+    expect(multi.current.trendPoints.map((point) => point.rank)).toEqual([6, 16]);
+  });
 });
 
 

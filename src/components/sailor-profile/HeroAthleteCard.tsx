@@ -73,6 +73,7 @@ export interface HeroAthleteCardProps {
   claimMsg?: string | null;
   claimPanelOpen?: boolean;
   onToggleClaimPanel?: () => void;
+  onRequestAccess?: () => void;
   onDemoClaim?: () => void;
   demoMode?: boolean;
   isLoggedIn?: boolean;
@@ -145,6 +146,7 @@ export function HeroAthleteCard({
   claimMsg = null,
   claimPanelOpen = false,
   onToggleClaimPanel,
+  onRequestAccess,
   onDemoClaim,
   demoMode = false,
   isLoggedIn = false,
@@ -329,21 +331,16 @@ export function HeroAthleteCard({
                       type="button"
                       disabled={avatarBusy}
                       onClick={() => fileInputRef.current?.click()}
-                      className="absolute inset-0 rounded-2xl bg-charcoal/60 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-sailcloth cursor-pointer"
-                      title="Upload athlete photo"
+                      className="group absolute inset-0 rounded-2xl transition-colors hover:bg-charcoal/55 focus-visible:bg-charcoal/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour flex items-center justify-center text-sailcloth cursor-pointer"
                       aria-label="Upload athlete photo"
                     >
-                      <Camera className="h-5 w-5" />
-                    </button>
-                    <button
-                      type="button"
-                      disabled={avatarBusy}
-                      onClick={() => fileInputRef.current?.click()}
-                      className="absolute -bottom-1 -right-1 rounded-full bg-harbour border-2 border-warm-white p-1 text-sailcloth shadow-xs hover:bg-harbour-shadow transition flex items-center justify-center cursor-pointer"
-                      title="Upload athlete photo"
-                      aria-label="Upload athlete photo button"
-                    >
-                      <Camera className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                      <Camera className="h-5 w-5 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity" aria-hidden />
+                      <span
+                        aria-hidden
+                        className="absolute -bottom-1 -right-1 rounded-full bg-harbour border-2 border-warm-white p-1.5 text-sailcloth shadow-xs group-hover:bg-harbour-shadow transition flex items-center justify-center"
+                      >
+                        <Camera className="h-3.5 w-3.5" />
+                      </span>
                     </button>
                     <input
                       ref={fileInputRef}
@@ -838,7 +835,18 @@ export function HeroAthleteCard({
               )}
             </button>
 
-            {/* Claim CTA when banner is not shown */}
+            {/* Single unified claim / access request action */}
+            {showUnclaimedBanner && onRequestAccess && (
+              <button
+                type="button"
+                onClick={onRequestAccess}
+                className="sp-secondary inline-flex min-h-11 items-center gap-1.5 px-4 py-2 text-[13px] font-bold touch-manipulation cursor-pointer"
+              >
+                <UserPlus className="h-3.5 w-3.5" aria-hidden />
+                Request profile access
+              </button>
+            )}
+
             {!showUnclaimedBanner &&
               !demoMode &&
               !isLoggedIn &&
@@ -847,9 +855,9 @@ export function HeroAthleteCard({
                   href={`/login?next=${encodeURIComponent(
                     `/sailors/${displaySailor.handle || ""}`
                   )}`}
-                  className="sp-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white shadow-xs"
+                  className="sp-primary inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 text-[13px] font-bold text-white shadow-xs"
                 >
-                  <UserPlus className="h-3.5 w-3.5" />
+                  <UserPlus className="h-3.5 w-3.5" aria-hidden />
                   Claim this profile
                 </Link>
               )}
@@ -868,19 +876,25 @@ export function HeroAthleteCard({
                     }
                     onToggleClaimPanel();
                   }}
-                  className="sp-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white shadow-xs disabled:opacity-50 cursor-pointer"
+                  className={
+                    profileClaimed && !demoMode
+                      ? "sp-secondary inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 text-[13px] font-bold touch-manipulation disabled:opacity-50 cursor-pointer"
+                      : "sp-primary inline-flex min-h-11 items-center gap-1.5 px-3.5 py-2 text-[13px] font-bold text-white shadow-xs touch-manipulation disabled:opacity-50 cursor-pointer"
+                  }
                 >
-                  <UserPlus className="h-3.5 w-3.5" />
+                  <UserPlus className="h-3.5 w-3.5" aria-hidden />
                   {demoMode
                     ? "Claim profile (demo)"
                     : claimPanelOpen
                       ? "Cancel"
-                      : "Claim this profile"}
+                      : profileClaimed
+                        ? "Request access"
+                        : "Claim this profile"}
                 </button>
               )}
 
             {canClaim && claimStatus === "pending" && (
-              <span className="text-[11px] font-semibold text-amber-800 px-2 py-1 bg-amber-50 rounded-lg border border-amber-200">
+              <span className="text-[12px] font-semibold text-amber-800 px-2.5 py-1.5 bg-amber-50 rounded-lg border border-amber-200">
                 Claim pending review
               </span>
             )}
@@ -926,12 +940,24 @@ export function HeroAthleteCard({
           )}
         </div>
 
-        {followControl && (
-          <p className="text-xs leading-5 text-slate-soft">
-            {followControl.disabled
-              ? "You already manage this sailor. Your account has links to the sailing workspace."
-              : `Follow to keep this sailor’s results in your Following feed.${isLoggedIn ? "" : " Sign in to save your follows."}`}
-          </p>
+        {(followControl || showUnclaimedBanner) && (
+          <div className="space-y-1 text-xs leading-5 text-slate-soft">
+            {followControl && (
+              <p>
+                {followControl.disabled
+                  ? "You already manage this sailor. Your account has links to the sailing workspace."
+                  : `Follow to keep this sailor’s results in your Following feed.${isLoggedIn ? "" : " Sign in to save your follows."}`}
+              </p>
+            )}
+            {showUnclaimedBanner && (
+              <p>
+                <span className="font-semibold text-charcoal">
+                  Your profile or your child’s?
+                </span>{" "}
+                We review requests before granting access.
+              </p>
+            )}
+          </div>
         )}
 
         {/* Feedback messages */}

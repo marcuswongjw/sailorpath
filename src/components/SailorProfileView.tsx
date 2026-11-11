@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
-import { UserPlus } from "lucide-react";
 import dynamic from "next/dynamic";
 import {
   type SailorRecordProps,
@@ -24,7 +23,7 @@ const EquipmentInventory = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-40 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
+      <div className="h-40 w-full animate-pulse rounded-2xl bg-sailcloth border border-cool-veil" />
     ),
   }
 );
@@ -254,6 +253,21 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         claimMsg={claimMsg}
         claimPanelOpen={claimPanelOpen}
         onToggleClaimPanel={() => setClaimPanelOpen((o) => !o)}
+        onRequestAccess={() => {
+          if (demoMode) {
+            onDemoClaim?.();
+            return;
+          }
+          if (!isLoggedIn) {
+            router.push(
+              `/login?next=${encodeURIComponent(
+                `/sailors/${displaySailor.handle || ""}`
+              )}`
+            );
+            return;
+          }
+          setClaimPanelOpen(true);
+        }}
         onDemoClaim={onDemoClaim}
         demoMode={demoMode}
         isLoggedIn={isLoggedIn}
@@ -290,43 +304,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         totalRegattasCount={results.length}
         followControl={props.followControl}
       />
-
-      {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
-      {showUnclaimedBanner && (
-        <div className="rounded-2xl border border-racing-orange/30 bg-warm-white p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-racing-orange" />
-              Your profile or your child’s?
-            </p>
-            <p className="text-[13px] text-slate-soft mt-1 leading-snug">
-              Request sailor or parent access to manage the logbook, privacy controls, race notes and equipment. We review requests before granting access.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              if (demoMode) {
-                onDemoClaim?.();
-                return;
-              }
-              if (!isLoggedIn) {
-                router.push(
-                  `/login?next=${encodeURIComponent(
-                    `/sailors/${displaySailor.handle || ""}`
-                  )}`
-                );
-                return;
-              }
-              setClaimPanelOpen(true);
-            }}
-            className="shrink-0 sp-secondary inline-flex min-h-11 items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-semibold"
-          >
-            <UserPlus className="h-3.5 w-3.5" aria-hidden />
-            Request profile access
-          </button>
-        </div>
-      )}
 
       {/* Claim panel */}
       {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (

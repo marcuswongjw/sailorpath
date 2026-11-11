@@ -960,7 +960,11 @@ function AthleteWorkspace({
               </p>
             </div>
             <Link
-              href={`/sailor/${athlete.id}#profile-journey`}
+              href={
+                athlete.handle
+                  ? `/sailors/${encodeURIComponent(athlete.handle)}#profile-journey`
+                  : `/sailor/${athlete.id}#profile-journey`
+              }
               className="inline-flex items-center gap-1.5 shrink-0 rounded-xl border border-[var(--sp-harbour-teal)]/40 bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-teal)] transition-all shadow-2xs"
             >
               <span>Edit Milestones</span>
