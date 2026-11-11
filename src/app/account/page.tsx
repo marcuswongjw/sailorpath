@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
-import { PhoneLoginSettings } from "@/components/auth/PhoneLoginSettings";
 import { AccountWorkspaces } from "@/components/account/AccountWorkspaces";
 import {
   SailorInviteAccept,
@@ -141,7 +140,6 @@ function AccountInner() {
   const pwErrId = useId();
 
   const [email, setEmail] = useState<string | null>(null);
-  const [phone, setPhone] = useState<string | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [editName, setEditName] = useState("");
@@ -204,7 +202,6 @@ function AccountInner() {
           return;
         }
         setEmail(session.user.email ?? null);
-        setPhone(session.user.phone_confirmed_at ? session.user.phone ?? null : null);
 
         try {
           await fetch("/api/auth/ensure-profile", {
@@ -974,12 +971,6 @@ function AccountInner() {
               </p>
             ) : null}
           </section>
-
-          {process.env.NEXT_PUBLIC_AUTH_PHONE_ENABLED === "true" && (
-            <div className="pt-6">
-              <PhoneLoginSettings initialPhone={phone} />
-            </div>
-          )}
 
           {/* Account security */}
           <section className="pt-6 space-y-4">
