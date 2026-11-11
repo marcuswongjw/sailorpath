@@ -14,10 +14,12 @@ export function TelegramAccountSection({
   status,
   notice,
   botEnabled = false,
+  embedded = false,
 }: {
   status: TelegramAccountStatus | null;
   notice: string | null;
   botEnabled?: boolean;
+  embedded?: boolean;
 }) {
   const [linked, setLinked] = useState(status?.linked ?? false);
   const [username, setUsername] = useState(status?.username ?? null);
@@ -50,10 +52,16 @@ export function TelegramAccountSection({
   };
 
   return (
-    <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+    <section
+      className={
+        embedded
+          ? "pt-6 space-y-2.5 w-full"
+          : "rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs"
+      }
+    >
       <div className="flex items-center gap-2">
         <TelegramMark className="h-5 w-5" />
-        <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+        <h2 className={embedded ? "text-base font-bold text-charcoal" : "text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider"}>
           Telegram
         </h2>
       </div>

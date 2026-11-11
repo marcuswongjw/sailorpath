@@ -144,15 +144,19 @@ describe("account workspace navigation", () => {
     expect(screen.queryByRole("heading", { name: "Claim requests" })).not.toBeInTheDocument();
   });
 
-  it("expands Account settings from workspace link and shows accessible password error and visibility toggle", async () => {
+  it("expands Account settings and shows accessible password error and visibility toggle", async () => {
     const user = userEvent.setup();
     render(<AccountPage />);
-    const sailing = await screen.findByRole("region", { name: "Continue your sailing" });
+    const profileRegion = await screen.findByRole("region", { name: "Your sailor profile" });
+    const sailing = screen.getByRole("region", { name: "Continue your sailing" });
+    expect(within(sailing).queryByRole("link", { name: /My logbook/ })).not.toBeInTheDocument();
+    expect(profileRegion.compareDocumentPosition(sailing) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
     const summary = screen.getByText("Account settings", { selector: "summary" });
     const details = summary.closest("details")!;
     expect(details).not.toHaveAttribute("open");
 
-    await user.click(within(sailing).getByRole("link", { name: "Account settings" }));
+    await user.click(summary);
     expect(details).toHaveAttribute("open");
 
     const newPwInput = screen.getByLabelText("New password");

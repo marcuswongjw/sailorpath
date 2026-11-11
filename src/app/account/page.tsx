@@ -487,9 +487,22 @@ function AccountInner() {
   const displayRole = userProfile?.role || role;
   const isParentWorkspace =
     role === "parent" || owned.some((sailor) => sailor.ownerRelation === "parent");
+  const isIndividualSailor = !isCoach && !isParentWorkspace && !isSuperadmin;
+  const singleOwned = isIndividualSailor && owned.length === 1 ? owned[0] : null;
+
+  const workspacesSection = (
+    <AccountWorkspaces
+      isCoach={isCoach}
+      isParent={isParentWorkspace}
+      isSuperadmin={isSuperadmin}
+      ownedCount={owned.length}
+      primarySailorId={owned[0]?.id}
+      showLogbook={!isIndividualSailor || owned.length > 1}
+    />
+  );
 
   return (
-    <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
+    <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-10 space-y-5 sm:space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2.5">
@@ -552,14 +565,7 @@ function AccountInner() {
         onRespond={respondToInvite}
       />
 
-      <AccountWorkspaces
-        isCoach={isCoach}
-        isParent={isParentWorkspace}
-        isSuperadmin={isSuperadmin}
-        ownedCount={owned.length}
-        primarySailorId={owned[0]?.id}
-        onOpenSettings={() => settingsRef.current?.setAttribute("open", "")}
-      />
+      {!isIndividualSailor && workspacesSection}
 
       {/* Managed profiles / Onboarding */}
       {!isCoach && owned.length === 0 && (
@@ -576,25 +582,10 @@ function AccountInner() {
                 Link your sailor profile
               </h2>
               <p className="mt-1 text-sm text-slate-soft leading-relaxed">
-                Claiming a profile lets you update boat details, upload regatta evidence, and manage your logbook.
+                Search for your name on SailorPath and submit a claim to update boat details, upload regatta evidence, and open your logbook.
               </p>
             </div>
           </div>
-
-          <ol className="grid gap-2 text-xs text-slate-soft sm:grid-cols-3 pt-1">
-            <li className="rounded-2xl border border-cool-veil bg-sailcloth/50 p-3 leading-relaxed">
-              <span className="font-bold text-charcoal block mb-0.5">1. Find the sailor</span>
-              Search by name or sail number on SailorPath.
-            </li>
-            <li className="rounded-2xl border border-cool-veil bg-sailcloth/50 p-3 leading-relaxed">
-              <span className="font-bold text-charcoal block mb-0.5">2. Submit claim</span>
-              Tap <strong className="text-charcoal">Claim this profile</strong> with a short note.
-            </li>
-            <li className="rounded-2xl border border-cool-veil bg-sailcloth/50 p-3 leading-relaxed">
-              <span className="font-bold text-charcoal block mb-0.5">3. Open logbook</span>
-              Once approved, manage results and gear here.
-            </li>
-          </ol>
 
           <div className="flex flex-wrap items-center gap-3 pt-1">
             <Link
@@ -613,7 +604,58 @@ function AccountInner() {
         </section>
       )}
 
-      {!isCoach && owned.length > 0 && (
+      {singleOwned && (
+        <section
+          id="profiles"
+          aria-label="Your sailor profile"
+          className="rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6 space-y-4 w-full shadow-xs"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5 min-w-0">
+              <span
+                aria-hidden="true"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-sm font-bold text-harbour"
+              >
+                {initialsFor(singleOwned.name)}
+              </span>
+              <div className="min-w-0">
+                <h2 className="text-base font-bold text-charcoal truncate">
+                  {singleOwned.name}
+                </h2>
+                <p className="text-xs text-slate-soft truncate mt-0.5">
+                  {singleOwned.sailNumber ? `#${singleOwned.sailNumber}` : "No sail #"} ·{" "}
+                  {singleOwned.club} · /{singleOwned.handle}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Link
+                href={`/athlete?id=${singleOwned.id}`}
+                className="inline-flex min-h-11 flex-1 sm:flex-initial items-center justify-center rounded-full bg-harbour hover:bg-harbour-shadow px-5 py-2 text-xs font-semibold text-white text-center transition-colors shadow-2xs shrink-0"
+              >
+                Open logbook
+              </Link>
+              <Link
+                href={`/sailors/${singleOwned.handle}`}
+                className="inline-flex min-h-11 flex-1 sm:flex-initial items-center justify-center rounded-full border border-cool-veil bg-white hover:bg-sailcloth px-4 py-2 text-xs font-semibold text-harbour text-center transition-colors shadow-2xs shrink-0"
+              >
+                Public profile
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center justify-between gap-2 border-t border-cool-veil/70 pt-3 text-xs text-slate-soft">
+            <span>Manage regatta evidence, boat setup, and profile details.</span>
+            <Link
+              href="/sailors"
+              className="shrink-0 font-semibold text-harbour hover:underline"
+            >
+              + Link another
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {!isCoach && owned.length > 0 && !singleOwned && (
         <section
           id="profiles"
           className="rounded-3xl border border-cool-veil bg-warm-white p-5 sm:p-6 space-y-3 w-full shadow-xs"
@@ -675,6 +717,8 @@ function AccountInner() {
           </ul>
         </section>
       )}
+
+      {isIndividualSailor && workspacesSection}
 
       {/* Claims */}
       {!isCoach && visibleClaims.length > 0 && (
@@ -881,59 +925,59 @@ function AccountInner() {
                 </div>
               </form>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <div className="rounded-2xl border border-cool-veil bg-sailcloth/50 p-3.5 space-y-1">
-                  <div className="flex items-center gap-1.5 text-slate-soft text-xs font-semibold">
+              <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1 text-xs">
+                <div className="space-y-1">
+                  <dt className="flex items-center gap-1.5 text-slate-soft font-semibold">
                     <User className="h-3.5 w-3.5 text-racing-orange" aria-hidden="true" />
                     <span>Full name</span>
-                  </div>
-                  <p className="text-sm font-bold text-charcoal">
+                  </dt>
+                  <dd className="text-sm font-bold text-charcoal">
                     {userProfile?.fullName || "Not set"}
-                  </p>
+                  </dd>
                 </div>
 
-                <div className="rounded-2xl border border-cool-veil bg-sailcloth/50 p-3.5 space-y-1 min-w-0">
-                  <div className="flex items-center gap-1.5 text-slate-soft text-xs font-semibold">
+                <div className="space-y-1 min-w-0">
+                  <dt className="flex items-center gap-1.5 text-slate-soft font-semibold">
                     <Mail className="h-3.5 w-3.5 text-harbour" aria-hidden="true" />
                     <span>Email address</span>
-                  </div>
-                  <p className="text-sm font-bold text-charcoal truncate">
+                  </dt>
+                  <dd className="text-sm font-bold text-charcoal truncate">
                     {userProfile?.email || email || "Not provided"}
-                  </p>
+                  </dd>
                 </div>
 
-                <div className="rounded-2xl border border-cool-veil bg-sailcloth/50 p-3.5 space-y-1">
-                  <div className="flex items-center gap-1.5 text-slate-soft text-xs font-semibold">
+                <div className="space-y-1">
+                  <dt className="flex items-center gap-1.5 text-slate-soft font-semibold">
                     <Calendar className="h-3.5 w-3.5 text-harbour-mid" aria-hidden="true" />
                     <span>Member since</span>
-                  </div>
-                  <p className="text-sm font-bold text-charcoal">
+                  </dt>
+                  <dd className="text-sm font-bold text-charcoal">
                     {userProfile?.createdAt
                       ? new Date(userProfile.createdAt).toLocaleDateString("en-SG", {
                           month: "short",
                           year: "numeric",
                         })
                       : "Active member"}
-                  </p>
+                  </dd>
                 </div>
-              </div>
+              </dl>
             )}
           </section>
 
-          <div className="pt-6 space-y-5">
-            <GoogleAccountSection
-              status={google}
-              notice={GOOGLE_ACCOUNT_NOTICES[searchParams.get("google") || ""] ?? null}
-            />
+          <GoogleAccountSection
+            status={google}
+            notice={GOOGLE_ACCOUNT_NOTICES[searchParams.get("google") || ""] ?? null}
+            embedded
+          />
 
-            <TelegramAccountSection
-              status={telegram}
-              notice={TELEGRAM_ACCOUNT_NOTICES[searchParams.get("telegram") || ""] ?? null}
-              botEnabled={telegramUpdates?.enabled === true}
-            />
+          <TelegramAccountSection
+            status={telegram}
+            notice={TELEGRAM_ACCOUNT_NOTICES[searchParams.get("telegram") || ""] ?? null}
+            botEnabled={telegramUpdates?.enabled === true}
+            embedded
+          />
 
-            <TelegramUpdatesSection status={telegramUpdates} />
-          </div>
+          <TelegramUpdatesSection status={telegramUpdates} embedded />
 
           {/* Follow emails */}
           <section className="pt-6 space-y-3">
@@ -1069,18 +1113,19 @@ function AccountInner() {
         </div>
       </details>
 
-      <section className="rounded-3xl border border-cool-veil bg-sailcloth/60 p-5 sm:p-6 w-full space-y-2">
-        <p className="text-sm font-bold text-harbour">Need help?</p>
-        <p className="text-xs text-slate-soft leading-relaxed">
-          Login issues, claim stuck, transferring a child&apos;s profile, or account deletion — message us anytime.
+      <footer className="border-t border-cool-veil pt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-xs text-slate-soft">
+        <p>
+          Need help with login, claims, transferring a child&apos;s profile, or account deletion?{" "}
+          <Link href="/support" className="font-semibold text-harbour hover:underline">
+            Contact support
+          </Link>
         </p>
-        <Link
-          href="/support"
-          className="inline-flex min-h-11 items-center mt-2 rounded-full bg-harbour hover:bg-harbour-shadow px-4 py-2 text-xs font-semibold text-white transition-colors shadow-xs"
-        >
-          Contact support
-        </Link>
-      </section>
+        {!isCoach && !isSuperadmin && (
+          <Link href="/account/coach" className="font-semibold text-harbour hover:underline">
+            Request coach access
+          </Link>
+        )}
+      </footer>
     </div>
   );
 }
