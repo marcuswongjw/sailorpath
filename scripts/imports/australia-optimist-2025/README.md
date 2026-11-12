@@ -29,3 +29,7 @@ Applied lily-resolution.sql after explicit user approval. Created separate profi
 ## Approved identity resolution — 31 October 2026
 
 Naomi’s two held entries attached to existing profile after explicit approval: 2 results / 21 race scores added. Inventory 374 results / 3,125 race scores; Ayana remains held. Profile attributes and source race values preserved. Audit source identity-review-20261031.
+
+## Approved identity resolution — 12 November 2026
+
+Ayana LILO-HUSSAIN (rank 46, sail 603, SYC) resolved to existing profile `bb408eea-0002-49e2-978a-21e9b17a6b1a` (Ayana Hussain, Savusavu Yacht Club, FIJ) after visual PDF confirmation of the FIJ flag and SYC club on the official Nationals Intermediate results page screenshot alongside teammate Paul Haynes (FIJ / SYC / 602). Added aliases `Ayana Lilo-Hussain` and `Ayana LILO-HUSSAIN`. Added 1 result / 9 race scores via `ayana-resolution.sql`. Intermediate fleet is now 100% complete (50 of 50 entries). Overall 2025 Australian Optimist inventory: 375 results / 3,134 race scores; 0 entries remaining held in `pending.json`.

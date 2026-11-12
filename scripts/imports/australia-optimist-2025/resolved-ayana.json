@@ -1,0 +1,47 @@
+[
+  {
+    "folder": "australia-optimist-2025",
+    "sheet": {
+      "id": "3ff23074-5943-5ec4-bb09-4c0c13447015",
+      "slug": "2025-musto-australian-optimist-championship-optimist-intermediate",
+      "name": "2025 Musto Australian Optimist Championship — Optimist Intermediate",
+      "boatClass": "Optimist",
+      "division": "Intermediate",
+      "raceCount": 9,
+      "totalFleetSize": 50,
+      "status": "published"
+    },
+    "source": {
+      "url": "https://sailingresults.net/sa/results/overall.aspx?ID=82026.2",
+      "title": "2025 Musto Australian Optimist Championship — Optimist Intermediate",
+      "pdfUrl": "https://results.rqys.com.au/ResultsArchive/2025/2025%20Musto%20Australian%20Optimist%20Championship/Overall%20Results%20-%20Intermediate%20Fleet.pdf"
+    },
+    "row": {
+      "event": "nationals",
+      "division": "Intermediate",
+      "rank": 46,
+      "name": "Ayana LILO-HUSSAIN",
+      "sailOrBoardNumber": "603",
+      "club": "SYC",
+      "grossScore": 349.0,
+      "nettScore": 255.0,
+      "races": [
+        {"raceNumber": 1, "raw": "42", "score": 42.0, "code": null, "discarded": false},
+        {"raceNumber": 2, "raw": "(47)", "score": 47.0, "code": null, "discarded": true},
+        {"raceNumber": 3, "raw": "(47)", "score": 47.0, "code": null, "discarded": true},
+        {"raceNumber": 4, "raw": "21", "score": 21.0, "code": null, "discarded": false},
+        {"raceNumber": 5, "raw": "33", "score": 33.0, "code": null, "discarded": false},
+        {"raceNumber": 6, "raw": "46", "score": 46.0, "code": null, "discarded": false},
+        {"raceNumber": 7, "raw": "30", "score": 30.0, "code": null, "discarded": false},
+        {"raceNumber": 8, "raw": "39", "score": 39.0, "code": null, "discarded": false},
+        {"raceNumber": 9, "raw": "44", "score": 44.0, "code": null, "discarded": false}
+      ],
+      "gender": "F",
+      "nationality": "FIJ",
+      "sourceName": "Ayana LILO-HUSSAIN",
+      "matchedProfileId": "bb408eea-0002-49e2-978a-21e9b17a6b1a",
+      "matchedName": "Ayana Hussain",
+      "rationale": "Official host PDF table visually reviewed and confirms FIJ flag, SYC club (Savusavu Yacht Club, Fiji), boat SAQA, and sail 603 alongside teammate Paul Haynes (FIJ / SYC / SAQA / 602). Matches existing profile Ayana Hussain (Savusavu Yacht Club, FIJ). Registered aliases Ayana Lilo-Hussain and Ayana LILO-HUSSAIN."
+    }
+  }
+]
