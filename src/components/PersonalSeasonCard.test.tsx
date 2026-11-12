@@ -147,4 +147,30 @@ describe("PersonalSeasonCard", () => {
     expect(screen.queryByText("This half")).not.toBeInTheDocument();
     expect(screen.getByText(/SG Silver/)).toBeInTheDocument();
   });
+
+  it("omits Guest and Not on this board for sailors outside SG rankings", () => {
+    const season: PersonalSeasonView = {
+      sailorId: "sorawit",
+      sailorName: "Sorawit Naksuk",
+      handle: "sorawit-naksuk",
+      periodLabel: "Jul – Dec 2026",
+      fleet: "Guest",
+      ilcaClass: null,
+      rank: null,
+      fleetSize: null,
+      best3: null,
+      higherIsBetter: false,
+      slots: decorateSeasonSlots([]),
+      nextCountingEvent: null,
+      why: [],
+      resultsHref: "/sailors/sorawit-naksuk#results",
+      lastResultDate: null,
+      tiedWith: 0,
+    };
+
+    render(<PersonalSeasonCard season={season} showExplanation={false} />);
+    expect(screen.getByText("Jul – Dec 2026")).toBeInTheDocument();
+    expect(screen.queryByText(/Guest/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Not on this board/)).not.toBeInTheDocument();
+  });
 });

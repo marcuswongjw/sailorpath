@@ -88,11 +88,15 @@ export function PersonalSeasonCard({
         ? "SG Gold"
         : season.fleet === "Silver"
           ? "SG Silver"
-          : season.fleet;
+          : season.fleet === "Guest"
+            ? null
+            : season.fleet;
   const place =
     season.rank != null && season.fleetSize != null
       ? `#${season.rank} of ${season.fleetSize}`
-      : "Not on this board";
+      : season.fleet === "Guest"
+        ? null
+        : "Not on this board";
   const scoreLabel = season.higherIsBetter ? "Best 3 high points" : "Best 3 of 5";
 
   return (
@@ -104,10 +108,18 @@ export function PersonalSeasonCard({
           </h2>
           <p className="mt-1 text-sm text-[var(--sp-charcoal-slate)]">
             {season.periodLabel}
-            <span className="text-[var(--sp-slate-soft)]"> · </span>
-            {fleetLabel}
-            <span className="text-[var(--sp-slate-soft)]"> · </span>
-            <span className="font-bold text-[var(--sp-harbour-shadow)]">{place}</span>
+            {fleetLabel ? (
+              <>
+                <span className="text-[var(--sp-slate-soft)]"> · </span>
+                {fleetLabel}
+              </>
+            ) : null}
+            {place ? (
+              <>
+                <span className="text-[var(--sp-slate-soft)]"> · </span>
+                <span className="font-bold text-[var(--sp-harbour-shadow)]">{place}</span>
+              </>
+            ) : null}
           </p>
         </div>
         <div className="text-sm text-[var(--sp-charcoal-slate)] sm:text-right">
