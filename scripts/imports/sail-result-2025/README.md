@@ -87,4 +87,36 @@ On explicit user instruction:
     - Created source-faithful profile for unstarted entry `T (Trat DNC)` (`c37db018-8ee6-5fb6-9f82-a0eb82fa9b61`, M, THA, YRAT, rank 25 DNC).
     - Sheet complete at 46/46.
 - All 24 results have 100% exact arithmetic and source-faithful race scores. All 10 sheets across both regattas are now 100% complete (ACDC Cup: 140 results / 1,260 race scores; Trat Regatta: 99 results / 227 race scores). All sheets have `counts_for_ranking = false`.
-- Transaction script: `resolve_acdc_trat_2025.sql`. Archived resolved entries in `resolved-acdc-trat-2025.json`. Remaining held entries in `pending-identities.json`: 27.
+- Transaction script: `resolve_acdc_trat_2025.sql`. Archived resolved entries in `resolved-acdc-trat-2025.json`.
+
+## Thailand Nationals, District & Children's Day 2025 — Resolution of held entries (12 November 2026)
+
+On explicit user instruction:
+- Resolved and imported all 27 held entries, restored 1 previously merged profile (`Torn Rattana`), and recovered 2 results with source arithmetic discrepancies (`Sorawit Naksuk`, `Panudat Polpool`) across 11 sheets (total 30 results imported/restored, 1,709 race scores).
+- **Children's Day Regatta 2025 (13 entries total):**
+  - ILCA 6 (1 entry): Created source-faithful profile for Korean youth competitor `Kim (Jeonbuk)` (`e976db5a-36bb-5fe4-8509-3221ac075841`, sail 215573, rank 8). Sheet complete at 11/11.
+  - Optimist Green (3 entries): `Netchanok Chatawattanasopakun` (`8b594c37-db52-4549-a765-f51fd619238d`, rank 3), `Suwaphak Plumjit` (`a5a0ff6f-0576-4a4c-b583-149f6f6d7304`, rank 8), `Kanthon Khunmuang` (`fe102225-248d-48a9-a92c-683cadcdbda8`, rank 21). Sheet complete at 27/27.
+  - Optimist Gold (5 entries):
+    - Recovered Rank 2 `Sorawit Naksuk` (`5d26c5a2-fefa-462b-9aea-23fc1092f5cf`, sail THA1493, gross 28, nett 18) and Rank 6 `Panudat Polpool` (`2c3a793f-5bb5-531e-9290-5d976898618a`, sail THA1295, gross 52, nett 38) where scoring display parenthesis differed from nett calculation.
+    - Resolved 3 held entries: `Tara Maliah` (`bcb9374d-c256-4add-9abe-98b7832706cc`, HKG, rank 13), `Chananchai Tiathongchai` (`611e949a-fdcf-4727-8dbf-1430097ac813`, rank 26), `Kiitchakhun Somkhanngoen` (`90a471f5-bd58-400f-a995-e115951ee1ed`, rank 29). Sheet complete at 35/35.
+  - Optimist Silver (4 entries):
+    - `Rohan Maliah` (`21fee251-d07b-4f4b-be01-efead0178e57`, HKG, rank 7).
+    - `Liu Qi Heng` (`04d423bc-bd18-47ad-967a-45b1ef44cefd`, HKG, sail HKG 236, Justin Liu, rank 12).
+    - Created source-faithful profile for `Aran Klangmueang` (`07bf0465-389d-5487-b6f7-b248a3cb859b`, M, YRAT, sail THA1903, rank 20; distinct from sister Aranya Klangmueang).
+    - `Anantachai Tiathongchai` (`638fc9a3-1d0e-4e9d-a750-e44f46655473`, rank 21). Sheet complete at 35/35.
+- **Thailand Nationals Long Distance 2025 (6 entries total):**
+  - ILCA 4 (1 entry): `Pumitus Mee-Iamsin` (`4f1eb555-5b44-517d-8d05-9ff0fd18f5ec`, rank 15). Class subset complete at 13/13 (of 34 total PY handicap fleet).
+  - Optimist (5 entries): `Klaochanok Chatawattanasopakun` (`04f1c65e-eeb7-4c89-9f6e-16298c33be02`, rank 27), `Navatawan Jeanjit` (`1c03e3e7-ea29-526f-88b3-fd77ce113868`, rank 44), `Pimpisa Devahastin Na Ayudhya` (`976342b7-69ec-4200-8e46-684855939591`, rank 50), `Nufael Hakimi Izhar` (`1b12d594-107f-40e1-9967-c65f59f6b27a`, rank 50), `Imanina Raisya bt Izhar` (`241af289-a3d3-4054-8f9a-a874c1a62471`, rank 50). Sheet complete at 58/58.
+- **ILCA District Championship 2025 (3 entries total):**
+  - ILCA 4 (2 entries): `Kiitchakhun Somkhanngoen` (`90a471f5-bd58-400f-a995-e115951ee1ed`, rank 15), `Jemima Chang` (`1ba65410-fa86-472d-ad75-bc510bffd07b`, SGP, rank 16). Sheet complete at 42/42.
+  - ILCA 7 (1 entry): `Casey Algra` (`957c49e1-11ff-5bd5-adbe-e59de172eb0c`, rank 11). Sheet complete at 13/13.
+- **ILCA Thailand National Championships 2025 (8 entries total):**
+  - ILCA 4 (3 entries):
+    - Restored unmerged profile for `Torn Rattana` (`efba7d9a-d71a-55b9-90fc-5ec21941baa1`, RVYC/YRAT, sail 221947, DOB 2008-01-01) distinct from `Ton Rattana` (`717ef058-5716-5951-a848-0723f95e8f28`, RVYC, sail 222180), re-assigning 6 historical results and inserting Rank 3 result (gross 55, nett 42).
+    - `Muhammad Adam Aierell Mohd Azizol Amirul` (`5878691c-f01b-4ab4-976c-e6ad27b8782d`, MAS, rank 5).
+    - `Jeongyeon Kim` (`7302a702-2b88-5d53-a946-0bd10f257f43`, KOR, rank 30). Sheet complete at 35/35.
+  - ILCA 6 (4 entries): `Noppassorn Khunboonjan` (`d29da64f-723a-45e0-a4d6-57eb7a1b1e82`, rank 3), `Paranee Muangngam` (`92b23e0a-9b81-518e-b23a-a46fab806ace`, rank 8), `Nana Funazawa` (`5ec2f363-6683-5607-8bd8-b2984890b6c2`, JPN, rank 10), and created source-faithful profile for `Minsol Jeon` (`fb14e7a2-f584-5f21-9486-d242c75a34e0`, KOR, sail 207987, rank 29). Sheet complete at 32/32.
+  - ILCA 7 (1 entry): Created source-faithful profile for `Wonjeong Lee` (`c78219ad-ecf3-529a-9e11-8be4f10a8c22`, KOR, sail 224347, rank 16). Sheet complete at 32/32.
+- All 11 sheets across Thailand Nationals, District, and Children's Day are now 100% complete (313 results / 1,709 race scores). All sheets have `counts_for_ranking = false`.
+- Transaction script: `resolve_cluster3e.sql`. Archived resolved entries in `resolved-nationals-district-childrens-2025.json`.
+- `pending-identities.json` is now empty (`[]`). All regional 2025 regatta held entries across SailorPath are completely resolved!

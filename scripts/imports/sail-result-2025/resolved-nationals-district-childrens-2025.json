@@ -1,0 +1,2021 @@
+[
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128112,
+    "sourcePage": 2,
+    "sourceClass": "ILCA 6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "rank": 8,
+    "name": "Kim",
+    "sailOrBoardNumber": "215573",
+    "club": "Jeun buk",
+    "nationality": "KOR",
+    "gender": "F",
+    "officialBirthYear": 2008,
+    "sourceBirthYear": "2008",
+    "grossScore": 34.0,
+    "nettScore": 34.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "b42c9278-742b-5d1a-a60e-ec352f9c5f0b",
+        "name": "Kim Ji An",
+        "similarity": 0.6
+      },
+      {
+        "id": "066aedea-7cf8-504b-8410-2f5e0cc3b813",
+        "name": "Hwon Kim",
+        "similarity": 0.6
+      },
+      {
+        "id": "0734265d-4f61-5c1e-ae03-6f39847bbd1c",
+        "name": "Iman",
+        "similarity": 0.571
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128117,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Green",
+    "rank": 3,
+    "name": "NETCHANOK CHATAAWATTANASOPAKUN",
+    "sailOrBoardNumber": "THA15",
+    "club": "ACDC.SC",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2015,
+    "sourceBirthYear": "2015",
+    "grossScore": 23.0,
+    "nettScore": 16.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 7.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(7.0)"
+      },
+      {
+        "raceNumber": 4,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "8b594c37-db52-4549-a765-f51fd619238d",
+        "name": "Netchanok Chatawattanasopakun",
+        "similarity": 0.982
+      },
+      {
+        "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+        "name": "Klaochanok Chatawattanasopakun",
+        "similarity": 0.862
+      },
+      {
+        "id": "81fa31a3-0a97-5b9a-82d9-5cb4548be62c",
+        "name": "Chanchai Teerapittayanon",
+        "similarity": 0.577
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128117,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Green",
+    "rank": 8,
+    "name": "Suwaphark Plumjit",
+    "sailOrBoardNumber": "THA1589",
+    "club": "ACDC.SC",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2012,
+    "sourceBirthYear": "2012",
+    "grossScore": 42.0,
+    "nettScore": 33.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 9.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(9.0)"
+      },
+      {
+        "raceNumber": 4,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "a5a0ff6f-0576-4a4c-b583-149f6f6d7304",
+        "name": "Suwaphak Plumjit",
+        "similarity": 0.968
+      },
+      {
+        "id": "8663b84c-2a24-4fc7-ab61-6598b3ff1fa3",
+        "name": "Pacharapol Rumvisai",
+        "similarity": 0.529
+      },
+      {
+        "id": "67ff3eda-7825-5bbc-ade2-611d292a728e",
+        "name": "Haruto Morita",
+        "similarity": 0.5
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128117,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Green",
+    "rank": 21,
+    "name": "Kunthon Khunmuang",
+    "sailOrBoardNumber": "35",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": 2014,
+    "sourceBirthYear": "2014",
+    "grossScore": 129.0,
+    "nettScore": 101.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 28.0,
+        "code": "DNF",
+        "discarded": true,
+        "raw": "(28.0 DNF)"
+      },
+      {
+        "raceNumber": 4,
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+        "name": "Kanthon Khunmuang",
+        "similarity": 0.938
+      },
+      {
+        "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+        "name": "Kanthee Khunmuang",
+        "similarity": 0.812
+      },
+      {
+        "id": "391c7d21-39e1-4cee-80db-377eb4b3f509",
+        "name": "Nathan Chang",
+        "similarity": 0.593
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "rank": 13,
+    "name": "Tara",
+    "sailOrBoardNumber": "HKG184",
+    "club": "RHKYC",
+    "nationality": "HKG",
+    "gender": "F",
+    "officialBirthYear": 2011,
+    "sourceBirthYear": "2011",
+    "grossScore": 88.0,
+    "nettScore": 59.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      },
+      {
+        "raceNumber": 2,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "raceNumber": 3,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5"
+      },
+      {
+        "raceNumber": 4,
+        "score": 29.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(29 )"
+      },
+      {
+        "raceNumber": 5,
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "raceNumber": 6,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "bcb9374d-c256-4add-9abe-98b7832706cc",
+        "name": "Tara Maliah",
+        "similarity": 0.571
+      },
+      {
+        "id": "1b5e6155-88c2-4e32-b173-24e6bfa54c1c",
+        "name": "Taiki Miura",
+        "similarity": 0.571
+      },
+      {
+        "id": "ad2f058a-0396-5b6a-9e82-b5249393fec3",
+        "name": "Sota Kimura",
+        "similarity": 0.571
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "rank": 26,
+    "name": "CHANANCHAI TAITHONGCHAI",
+    "sailOrBoardNumber": "THA1487",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 2015,
+    "sourceBirthYear": "2015",
+    "grossScore": 159.0,
+    "nettScore": 115.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "raceNumber": 2,
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34"
+      },
+      {
+        "raceNumber": 3,
+        "score": 44.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(44 )"
+      },
+      {
+        "raceNumber": 4,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10"
+      },
+      {
+        "raceNumber": 5,
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26"
+      },
+      {
+        "raceNumber": 6,
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+        "name": "Chananchai Tiathongchai",
+        "similarity": 0.955
+      },
+      {
+        "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+        "name": "Anantachai Tiathongchai",
+        "similarity": 0.864
+      },
+      {
+        "id": "182f006d-6103-4990-a289-421c0d94e552",
+        "name": "Itthichai Tiathongchai",
+        "similarity": 0.744
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Gold",
+    "rank": 29,
+    "name": "KITCHAKHUN SOMKHANNGONE",
+    "sailOrBoardNumber": "THA1567",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 2011,
+    "sourceBirthYear": "2011",
+    "grossScore": 155.0,
+    "nettScore": 118.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 37.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(37 )"
+      },
+      {
+        "raceNumber": 2,
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32"
+      },
+      {
+        "raceNumber": 3,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12"
+      },
+      {
+        "raceNumber": 4,
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23"
+      },
+      {
+        "raceNumber": 5,
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27"
+      },
+      {
+        "raceNumber": 6,
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+        "name": "Kiitchakhun Somkhanngoen",
+        "similarity": 0.933
+      },
+      {
+        "id": "8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb",
+        "name": "Kanthee Khunmuang",
+        "similarity": 0.579
+      },
+      {
+        "id": "fe102225-248d-48a9-a92c-683cadcdbda8",
+        "name": "Kanthon Khunmuang",
+        "similarity": 0.579
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Silver",
+    "rank": 7,
+    "name": "Rohan",
+    "sailOrBoardNumber": "HKG173",
+    "club": "RHKYC",
+    "nationality": "HKG",
+    "gender": "M",
+    "officialBirthYear": 2014,
+    "sourceBirthYear": "2014",
+    "grossScore": 172.0,
+    "nettScore": 101.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 42.0,
+        "code": null,
+        "discarded": false,
+        "raw": "42"
+      },
+      {
+        "raceNumber": 2,
+        "score": 71.0,
+        "code": "DSQ",
+        "discarded": true,
+        "raw": "(71 DSQ)"
+      },
+      {
+        "raceNumber": 3,
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "raceNumber": 4,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2"
+      },
+      {
+        "raceNumber": 5,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      },
+      {
+        "raceNumber": 6,
+        "score": 36.0,
+        "code": "UFD",
+        "discarded": false,
+        "raw": "36 UFD"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "5590ae28-9ad5-580b-8b62-f4cd0b6b1c93",
+        "name": "Narahan",
+        "similarity": 0.667
+      },
+      {
+        "id": "50b3e0fd-0917-4cf1-b223-34ee0dcf9574",
+        "name": "Ruoqi Zhang",
+        "similarity": 0.667
+      },
+      {
+        "id": "7c1459ea-9954-48a6-b57b-705a395717df",
+        "name": "Reynold Chan",
+        "similarity": 0.625
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Silver",
+    "rank": 12,
+    "name": "JUSTIN LIU",
+    "sailOrBoardNumber": "HKG236",
+    "club": "RHKYC",
+    "nationality": "HKG",
+    "gender": "M",
+    "officialBirthYear": 2014,
+    "sourceBirthYear": "2014",
+    "grossScore": 175.0,
+    "nettScore": 119.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 56.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(56 )"
+      },
+      {
+        "raceNumber": 2,
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "raceNumber": 3,
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25"
+      },
+      {
+        "raceNumber": 4,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1"
+      },
+      {
+        "raceNumber": 5,
+        "score": 36.0,
+        "code": "UFD",
+        "discarded": false,
+        "raw": "36 UFD"
+      },
+      {
+        "raceNumber": 6,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "8ffa116a-c240-50cf-9829-612d51554520",
+        "name": "Justin",
+        "similarity": 0.8
+      },
+      {
+        "id": "02d40dfa-9b2f-48fd-aefa-9d9058e1ed5a",
+        "name": "Julian Lim",
+        "similarity": 0.667
+      },
+      {
+        "id": "55401544-18e4-5347-9967-69547a3cf03a",
+        "name": "Austin Lee",
+        "similarity": 0.667
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Silver",
+    "rank": 20,
+    "name": "ARAN KLANGMUEANG",
+    "sailOrBoardNumber": "THA1903",
+    "club": "YRAT",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 2011,
+    "sourceBirthYear": "2011",
+    "grossScore": 207.0,
+    "nettScore": 148.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 59.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(59 )"
+      },
+      {
+        "raceNumber": 2,
+        "score": 57.0,
+        "code": null,
+        "discarded": false,
+        "raw": "57"
+      },
+      {
+        "raceNumber": 3,
+        "score": 47.0,
+        "code": null,
+        "discarded": false,
+        "raw": "47"
+      },
+      {
+        "raceNumber": 4,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11"
+      },
+      {
+        "raceNumber": 5,
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24"
+      },
+      {
+        "raceNumber": 6,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96",
+        "name": "Aranya Klangmueang",
+        "similarity": 0.938
+      },
+      {
+        "id": "c7a2f767-ff62-59fc-871a-7d4bea39f6e0",
+        "name": "Yang Meng",
+        "similarity": 0.609
+      },
+      {
+        "id": "ca2bb998-81d7-422c-8603-e37a38d0e518",
+        "name": "Rayson Ng Yee Meng",
+        "similarity": 0.6
+      }
+    ]
+  },
+  {
+    "eventKey": "childrens-day-regatta-2025",
+    "sourceDocument": 128126,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Silver",
+    "rank": 21,
+    "name": "ANANCHAI TAITHONGCHAI",
+    "sailOrBoardNumber": "THA1549",
+    "club": "ACDC.SC",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 2015,
+    "sourceBirthYear": "2015",
+    "grossScore": 210.0,
+    "nettScore": 154.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 54.0,
+        "code": null,
+        "discarded": false,
+        "raw": "54"
+      },
+      {
+        "raceNumber": 2,
+        "score": 56.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(56 )"
+      },
+      {
+        "raceNumber": 3,
+        "score": 49.0,
+        "code": null,
+        "discarded": false,
+        "raw": "49"
+      },
+      {
+        "raceNumber": 4,
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18"
+      },
+      {
+        "raceNumber": 5,
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16"
+      },
+      {
+        "raceNumber": 6,
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "638fc9a3-1d0e-4e9d-a750-e44f46655473",
+        "name": "Anantachai Tiathongchai",
+        "similarity": 0.905
+      },
+      {
+        "id": "611e949a-fdcf-4727-8dbf-1430097ac813",
+        "name": "Chananchai Tiathongchai",
+        "similarity": 0.905
+      },
+      {
+        "id": "182f006d-6103-4990-a289-421c0d94e552",
+        "name": "Itthichai Tiathongchai",
+        "similarity": 0.732
+      }
+    ]
+  },
+  {
+    "eventKey": "thailand-nationals-long-distance-2025",
+    "sourceDocument": 137858,
+    "sourcePage": 1,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 27,
+    "name": "KLAOCHNOK CHTAWATTANASOPAKUN",
+    "sailOrBoardNumber": "THA1246",
+    "club": "ACDC.SC",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2013,
+    "sourceBirthYear": "21/1/2013",
+    "grossScore": 27.0,
+    "nettScore": 27.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "04f1c65e-eeb7-4c89-9f6e-16298c33be02",
+        "name": "Klaochanok Chatawattanasopakun",
+        "similarity": 0.964
+      },
+      {
+        "id": "8b594c37-db52-4549-a765-f51fd619238d",
+        "name": "Netchanok Chatawattanasopakun",
+        "similarity": 0.836
+      },
+      {
+        "id": "6b6f8f4a-3108-5288-af73-f67f3009f4de",
+        "name": "Kanta Takasaki",
+        "similarity": 0.55
+      }
+    ]
+  },
+  {
+    "eventKey": "thailand-nationals-long-distance-2025",
+    "sourceDocument": 137858,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 44,
+    "name": "NAVATAWAN JAEMJIT",
+    "sailOrBoardNumber": "THA1979",
+    "club": "RTFYC",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": 2014,
+    "sourceBirthYear": "17/12/2014",
+    "grossScore": 44.0,
+    "nettScore": 44.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 44.0,
+        "code": null,
+        "discarded": false,
+        "raw": "44.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "1c03e3e7-ea29-526f-88b3-fd77ce113868",
+        "name": "Navatawan Jeanjit",
+        "similarity": 0.875
+      },
+      {
+        "id": "5890ff0d-ad50-4352-84a0-29135867289a",
+        "name": "Nagisa Kawakami",
+        "similarity": 0.6
+      },
+      {
+        "id": "1c5900eb-e05a-4376-a668-e3cd7cf3a2db",
+        "name": "Nathan, Nande Li",
+        "similarity": 0.552
+      }
+    ]
+  },
+  {
+    "eventKey": "thailand-nationals-long-distance-2025",
+    "sourceDocument": 137858,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 50,
+    "name": "PIMPISA DEVAHASTIN NA AYUDHAYA",
+    "sailOrBoardNumber": "THA599",
+    "club": "ACDC.SC",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2016,
+    "sourceBirthYear": "17/3/2016",
+    "grossScore": 59.0,
+    "nettScore": 59.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 59.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "59.0 DNF"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "976342b7-69ec-4200-8e46-684855939591",
+        "name": "Pimpisa Devahastin Na Ayudhya",
+        "similarity": 0.981
+      },
+      {
+        "id": "f90c9f74-fc6a-4ac4-a2ce-74a584e36038",
+        "name": "Prapada Peeranantapanya",
+        "similarity": 0.49
+      },
+      {
+        "id": "652c1835-ecb4-5ee1-8ee0-cdd5bc9e6d55",
+        "name": "Misa Kawashima",
+        "similarity": 0.45
+      }
+    ]
+  },
+  {
+    "eventKey": "thailand-nationals-long-distance-2025",
+    "sourceDocument": 137858,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 50,
+    "name": "NUFAEL HAKIMI BIN IZHAR",
+    "sailOrBoardNumber": "MAS 246",
+    "club": "TSA",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": 2014,
+    "sourceBirthYear": "21/4/2014",
+    "grossScore": 59.0,
+    "nettScore": 59.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 59.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "59.0 DNF"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "1b12d594-107f-40e1-9967-c65f59f6b27a",
+        "name": "Nufael Hakimi Izhar",
+        "similarity": 0.919
+      },
+      {
+        "id": "00e9f759-95f1-4633-88db-b07d7933d248",
+        "name": "Nur Aina Binti Norhazram",
+        "similarity": 0.537
+      },
+      {
+        "id": "ce278b06-d698-5f58-b57b-e901c9f7b859",
+        "name": "Nur Faarihah Binti Abdul Rani",
+        "similarity": 0.533
+      }
+    ]
+  },
+  {
+    "eventKey": "thailand-nationals-long-distance-2025",
+    "sourceDocument": 137858,
+    "sourcePage": 2,
+    "sourceClass": "Optimist",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 50,
+    "name": "IMANINA RAISYA BINTI IZHAR",
+    "sailOrBoardNumber": "MAS 245",
+    "club": "TSA",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2013,
+    "sourceBirthYear": "13/1/2013",
+    "grossScore": 59.0,
+    "nettScore": 59.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 59.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "59.0 DNF"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "241af289-a3d3-4054-8f9a-a874c1a62471",
+        "name": "Imanina Raisya bt Izhar",
+        "similarity": 0.93
+      },
+      {
+        "id": "f7c2b125-af12-5716-98bf-b05bfaa6666b",
+        "name": "Aina Qasrina Binti Yuslizam",
+        "similarity": 0.638
+      },
+      {
+        "id": "00e9f759-95f1-4633-88db-b07d7933d248",
+        "name": "Nur Aina Binti Norhazram",
+        "similarity": 0.591
+      }
+    ]
+  },
+  {
+    "eventKey": "thailand-nationals-long-distance-2025",
+    "sourceDocument": 137882,
+    "sourcePage": 2,
+    "sourceClass": "ILCA 4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "rank": 15,
+    "name": "PUMITUS MEEIMSIN",
+    "sailOrBoardNumber": "22023",
+    "club": "YRAT",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 2010,
+    "sourceBirthYear": "2010",
+    "grossScore": 15.0,
+    "nettScore": 15.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15.0"
+      }
+    ],
+    "handicap": true,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "4f1eb555-5b44-517d-8d05-9ff0fd18f5ec",
+        "name": "Pumitus Mee-Iamsin",
+        "similarity": 0.968
+      },
+      {
+        "id": "c361c7f7-cda6-830f-7e00-60f2bea8df78",
+        "name": "Marius Eiane",
+        "similarity": 0.538
+      },
+      {
+        "id": "13e616ec-def6-49c8-80d9-6fe3d7c41719",
+        "name": "Lucius Chimon",
+        "similarity": 0.519
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-district-championship-2025",
+    "sourceDocument": "html-0",
+    "sourcePage": 1,
+    "sourceClass": "ILCA4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "rank": 15,
+    "name": "KITCHAKHUN",
+    "sailOrBoardNumber": "THA 228917",
+    "club": "YRAT",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 2011,
+    "sourceBirthYear": "2011",
+    "grossScore": 48.0,
+    "nettScore": 48.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 35.0,
+        "code": null,
+        "discarded": false,
+        "raw": "35.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "91555cde-f340-52e6-b977-c3c4aff8abaa",
+        "name": "Im Taehun",
+        "similarity": 0.667
+      },
+      {
+        "id": "90a471f5-bd58-400f-a995-e115951ee1ed",
+        "name": "Kiitchakhun Somkhanngoen",
+        "similarity": 0.606
+      },
+      {
+        "id": "54759e1d-d03f-5791-8e65-fbe552419b49",
+        "name": "Khant Khant",
+        "similarity": 0.6
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-district-championship-2025",
+    "sourceDocument": "html-0",
+    "sourcePage": 1,
+    "sourceClass": "ILCA4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "rank": 16,
+    "name": "JEMIMMA CHANG",
+    "sailOrBoardNumber": "SGP 214636",
+    "club": "PA",
+    "nationality": "SGP",
+    "gender": "F",
+    "officialBirthYear": 2010,
+    "sourceBirthYear": "2010",
+    "grossScore": 50.0,
+    "nettScore": 50.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "1ba65410-fa86-472d-ad75-bc510bffd07b",
+        "name": "Jemima Chang",
+        "similarity": 0.957
+      },
+      {
+        "id": "1aa36e44-2f42-4f33-a30e-81ffaf66337b",
+        "name": "Minkwan Chang",
+        "similarity": 0.667
+      },
+      {
+        "id": "0f21b908-6234-4f3b-a34c-fbe589a75c7c",
+        "name": "Keira Hwang",
+        "similarity": 0.636
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-district-championship-2025",
+    "sourceDocument": "html-0",
+    "sourcePage": 1,
+    "sourceClass": "ILCA7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "rank": 11,
+    "name": "CASEY",
+    "sailOrBoardNumber": "THA 200119",
+    "club": "RVYC",
+    "nationality": "THA",
+    "gender": "M",
+    "officialBirthYear": 1951,
+    "sourceBirthYear": "1951",
+    "grossScore": 43.0,
+    "nettScore": 43.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "9c09287e-3fe4-5157-bb81-7d510c95e166",
+        "name": "An Soe",
+        "similarity": 0.6
+      },
+      {
+        "id": "9b9378aa-37f6-470c-8944-5cf95bd13e04",
+        "name": "Casey Fitness",
+        "similarity": 0.588
+      },
+      {
+        "id": "82f58cc6-5b08-4031-86b8-805aa130d11e",
+        "name": "Lucas Quek",
+        "similarity": 0.571
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "rank": 16,
+    "name": "WONJEONGLEE",
+    "sailOrBoardNumber": "224347",
+    "club": "GYEONGGI-DO YACHT ASSOCIATION",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": 2004,
+    "sourceBirthYear": "2004",
+    "grossScore": 126.0,
+    "nettScore": 107.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 19.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(19.0)"
+      },
+      {
+        "raceNumber": 5,
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 19.0,
+        "code": null,
+        "discarded": false,
+        "raw": "19.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15.0"
+      },
+      {
+        "raceNumber": 9,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "5526abbf-1430-56af-bc56-281233e66d8e",
+        "name": "Bo Jeong",
+        "similarity": 0.667
+      },
+      {
+        "id": "eeca544c-a21b-d700-bea6-c76877f337fe",
+        "name": "Léonie Monleau",
+        "similarity": 0.609
+      },
+      {
+        "id": "d47ce6f3-3597-4e3e-a1d1-de4752793afd",
+        "name": "Wai Yong Le",
+        "similarity": 0.6
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "rank": 3,
+    "name": "NOPPASORN KHUNBOONJAN",
+    "sailOrBoardNumber": "220240",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2006,
+    "sourceBirthYear": "2006",
+    "grossScore": 34.0,
+    "nettScore": 25.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 9.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(9.0)"
+      },
+      {
+        "raceNumber": 5,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "d29da64f-723a-45e0-a4d6-57eb7a1b1e82",
+        "name": "Noppassorn Khunboonjan",
+        "similarity": 0.976
+      },
+      {
+        "id": "5cfe0b90-2ff3-5777-9fdd-9d29aeb5883c",
+        "name": "Thorfun Boonnak",
+        "similarity": 0.529
+      },
+      {
+        "id": "19ec1fe1-4cdb-5ee2-85c1-61bf87a1ee6d",
+        "name": "Chonghao Anson Huang",
+        "similarity": 0.526
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "rank": 8,
+    "name": "BRANEE MUANGNGAM",
+    "sailOrBoardNumber": "210290",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2007,
+    "sourceBirthYear": "2007",
+    "grossScore": 61.0,
+    "nettScore": 47.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 14.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(14.0)"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+        "name": "Paranee Muangngam",
+        "similarity": 0.903
+      },
+      {
+        "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+        "name": "Surapha Muangngam",
+        "similarity": 0.71
+      },
+      {
+        "id": "214e19d2-eca3-4224-a65e-d56249b1e197",
+        "name": "Chiradej Leungthongkam",
+        "similarity": 0.611
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "rank": 10,
+    "name": "NANAFUNAZAWA",
+    "sailOrBoardNumber": "208625",
+    "club": "HIHO BAY YACHT CLUB",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2007,
+    "sourceBirthYear": "2007",
+    "grossScore": 93.0,
+    "nettScore": 60.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 33.0,
+        "code": "UFD",
+        "discarded": true,
+        "raw": "(33.0 UFD)"
+      },
+      {
+        "raceNumber": 7,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "9ca50e97-0c1a-528c-8aee-77d3752d6e9c",
+        "name": "Hana Nakazawa",
+        "similarity": 0.75
+      },
+      {
+        "id": "5f6d71a5-1dc3-599c-b9be-377150d4dd3a",
+        "name": "Nana Muranaka",
+        "similarity": 0.667
+      },
+      {
+        "id": "c6b57c5c-01cc-5e9c-ada6-363a17c702c0",
+        "name": "Fuka Nakagawa",
+        "similarity": 0.583
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA6",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "rank": 29,
+    "name": "JEONMINSOL",
+    "sailOrBoardNumber": "207987",
+    "club": "GANGWON",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": 2010,
+    "sourceBirthYear": "2010",
+    "grossScore": 216.0,
+    "nettScore": 183.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 33.0,
+        "code": "UFD",
+        "discarded": true,
+        "raw": "(33.0 UFD)"
+      },
+      {
+        "raceNumber": 4,
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 27.0,
+        "code": null,
+        "discarded": false,
+        "raw": "27.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "15012e88-24c1-c977-aeff-e60cb97e9daa",
+        "name": "Jonas Aminoff",
+        "similarity": 0.636
+      },
+      {
+        "id": "5fb0c663-a7c4-401c-8a0d-b4f25d49893e",
+        "name": "Hyeonsol Kim",
+        "similarity": 0.571
+      },
+      {
+        "id": "0f1eb283-e53c-533e-8113-55753e658647",
+        "name": "Emma Tomkins",
+        "similarity": 0.571
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "rank": 5,
+    "name": "MUHAMMAD ADAM AIERELL BIN MOHD AZIZOL AMIRUL",
+    "sailOrBoardNumber": "209892",
+    "club": "MSA/MSN",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": 2008,
+    "sourceBirthYear": "2008",
+    "grossScore": 75.0,
+    "nettScore": 49.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 26.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(26.0)"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "5878691c-f01b-4ab4-976c-e6ad27b8782d",
+        "name": "Muhammad Adam Aierell Mohd Azizol Amirul",
+        "similarity": 0.959
+      },
+      {
+        "id": "ef27b01a-10db-4075-b2f3-9a8dc2930392",
+        "name": "Muhammad Adam Aierell / Iqbal Nazham Musmuliadi",
+        "similarity": 0.692
+      },
+      {
+        "id": "9a560745-0f52-4fd7-b4f9-f6409489ae84",
+        "name": "Muhammad Aiman Aqeel Bin Mohd Firdaus",
+        "similarity": 0.686
+      }
+    ]
+  },
+  {
+    "eventKey": "ilca-thailand-nationals-2025",
+    "sourceDocument": "html-1",
+    "sourcePage": 1,
+    "sourceClass": "ILCA4",
+    "boatClass": "ILCA 4",
+    "division": "Open",
+    "rank": 30,
+    "name": "JUNG YEON KIM",
+    "sailOrBoardNumber": "215619",
+    "club": "GANGWON",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": 2010,
+    "sourceBirthYear": "2010",
+    "grossScore": 222.0,
+    "nettScore": 186.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 36.0,
+        "code": "UFD",
+        "discarded": true,
+        "raw": "(36.0 UFD)"
+      },
+      {
+        "raceNumber": 2,
+        "score": 17.0,
+        "code": null,
+        "discarded": false,
+        "raw": "17.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 25.0,
+        "code": null,
+        "discarded": false,
+        "raw": "25.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 33.0,
+        "code": null,
+        "discarded": false,
+        "raw": "33.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "7302a702-2b88-5d53-a946-0bd10f257f43",
+        "name": "Jeongyeon Kim",
+        "similarity": 0.87
+      },
+      {
+        "id": "9a71b922-1236-52ad-83b6-8810421a88ff",
+        "name": "Jung Hyewon",
+        "similarity": 0.762
+      },
+      {
+        "id": "5fb0c663-a7c4-401c-8a0d-b4f25d49893e",
+        "name": "Hyeonsol Kim",
+        "similarity": 0.636
+      }
+    ]
+  }
+]
