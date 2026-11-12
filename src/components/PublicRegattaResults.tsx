@@ -183,7 +183,8 @@ export function PublicRegattaResults({
     ? Array.from({ length: importedRaceCount }, (_, index) => index + 1)
     : [];
 
-  // ── Sort state ───────────────────────────────────────────────────────
+  // ── Search & sort state ──────────────────────────────────────────────
+  const [searchQuery, setSearchQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("rank");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
@@ -208,7 +209,20 @@ export function PublicRegattaResults({
     }
   }
 
-  const sorted = [...results].sort((a, b) => {
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const filtered = normalizedQuery
+    ? results.filter((r) => {
+        if (r.sailorName?.toLowerCase().includes(normalizedQuery)) return true;
+        if (r.entryLabel?.toLowerCase().includes(normalizedQuery)) return true;
+        if (r.sailNumber?.toLowerCase().includes(normalizedQuery)) return true;
+        if (r.nationality?.toLowerCase().includes(normalizedQuery)) return true;
+        return (r.participants || []).some((p) =>
+          (p.sailorName || p.sourceName || "").toLowerCase().includes(normalizedQuery)
+        );
+      })
+    : results;
+
+  const sorted = [...filtered].sort((a, b) => {
     const va = sortValue(a, sortKey);
     const vb = sortValue(b, sortKey);
     const cmp = typeof va === "string" ? va.localeCompare(vb as string) : (va as number) - (vb as number);
@@ -234,18 +248,18 @@ export function PublicRegattaResults({
       aria-label="Scrollable regatta results"
       aria-describedby={results.length ? viewId + "-scroll-help" : undefined}
       tabIndex={0}
-      className="relative w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour"
+      className="sp-regatta-table-wrap relative w-full min-w-0 max-w-full overflow-x-auto overscroll-x-contain rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-harbour"
     >
       <table
-        className={`w-full ${hasRaceResults ? "min-w-[1050px]" : "min-w-[680px]"} text-left text-sm`}
+        className={`sp-regatta-table w-full ${hasRaceResults ? "min-w-[1050px]" : "min-w-[680px]"} text-left text-sm`}
         aria-label="Regatta results"
       >
         <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-charcoal)] font-bold border-b border-[var(--sp-cool-veil)]">
           <tr>
-            <th {...thProps("rank", "Rank", "text-center")}>
+            <th {...thProps("rank", "Rank", "sticky left-0 z-20 w-14 min-w-14 max-w-14 bg-[var(--sp-sailcloth)] text-center")}>
               Rank <SortIcon active={sortKey === "rank"} dir={sortDir} />
             </th>
-            <th {...thProps("name", "Name", "sticky left-0 z-20 min-w-40 max-w-48 bg-[var(--sp-sailcloth)] shadow-[2px_0_0_var(--sp-cool-veil)]")}>
+            <th {...thProps("name", "Name", "sticky left-14 z-20 min-w-40 max-w-52 bg-[var(--sp-sailcloth)] shadow-[2px_0_0_var(--sp-cool-veil)]")}>
               Name <SortIcon active={sortKey === "name"} dir={sortDir} />
             </th>
             <th {...thProps("nationality", "Nationality", "text-center")}>
@@ -287,14 +301,14 @@ export function PublicRegattaResults({
                 key={`${result.sailorId}-${result.regattaId}`}
                 className={`border-t border-[var(--sp-cool-veil)] hover:brightness-95 transition-colors ${podiumTint}`}
               >
-                <td className="px-3 py-3 text-center">
+                <td className={`sp-col-rank sticky left-0 z-10 w-14 min-w-14 max-w-14 px-3 py-3 text-center ${podiumTint || "bg-[var(--sp-warm-white)]"}`}>
                   <RankMedalBadge
                     rank={result.rank}
                     suffix={overseas ? "†" : dns ? "*" : ""}
                     nonPodiumClassName={colors.rank}
                   />
                 </td>
-                <td className={`sticky left-0 z-10 min-w-40 max-w-48 px-3 py-3 break-words shadow-[2px_0_0_var(--sp-cool-veil)] ${podiumTint || "bg-[var(--sp-warm-white)]"}`}>
+                <td className={`sp-col-name sticky left-14 z-10 min-w-40 max-w-52 px-3 py-3 break-words shadow-[2px_0_0_var(--sp-cool-veil)] ${podiumTint || "bg-[var(--sp-warm-white)]"}`}>
                   <Link
                     href={`/sailors/${result.handle}`}
                     prefetch={false}
@@ -334,13 +348,13 @@ export function PublicRegattaResults({
                     </div>
                   )}
                 </td>
-                <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
+                <td className="sp-col-meta px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
                   {result.nationality || "—"}
                 </td>
-                <td className="px-3 py-3 text-center text-[var(--sp-charcoal)]">
+                <td className="sp-col-meta px-3 py-3 text-center text-[var(--sp-charcoal)]">
                   {formatGenderLabel(result.gender)}
                 </td>
-                <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
+                <td className="sp-col-meta px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
                   {result.birthYear ?? "—"}
                 </td>
                 {raceNumbers.map((raceNumber) => {
@@ -348,20 +362,27 @@ export function PublicRegattaResults({
                   return (
                     <td
                       key={raceNumber}
-                      className={`px-2 py-3 text-center font-mono text-xs font-semibold tabular-nums ${raceValueClass(race)}`}
+                      data-mobile-label={`R${raceNumber}`}
+                      className={`sp-col-race px-2 py-3 text-center font-mono text-xs font-semibold tabular-nums ${raceValueClass(race)}`}
                       title={race?.discarded ? "Discarded score" : race?.scoringCode || undefined}
                     >
                       <RaceScore race={race} raceNumber={raceNumber} />
                     </td>
                   );
                 })}
-                <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
+                <td
+                  data-mobile-label="Total"
+                  className="sp-col-total px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]"
+                >
                   {result.totalScore ?? "—"}
                 </td>
-                <td className="px-3 py-3 text-center font-mono font-bold text-[var(--sp-harbour-shadow)]">
+                <td
+                  data-mobile-label="Nett"
+                  className="sp-col-nett px-3 py-3 text-center font-mono font-bold text-[var(--sp-harbour-shadow)]"
+                >
                   {result.nettScore ?? "—"}
                 </td>
-                <td className="px-3 py-3">
+                <td className="sp-col-badge px-3 py-3">
                   <div className="flex flex-wrap items-center gap-1.5">
                     {overseas && (
                       <span className="rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-bold text-sky-800">
@@ -381,6 +402,13 @@ export function PublicRegattaResults({
               </tr>
             );
           })}
+          {results.length > 0 && sorted.length === 0 ? (
+            <tr>
+              <td colSpan={8 + raceNumbers.length} className="px-4 py-8 text-center text-sm font-semibold text-slate-soft">
+                No sailors match “{searchQuery.trim()}”.
+              </td>
+            </tr>
+          ) : null}
         </tbody>
       </table>
     </div>
@@ -399,20 +427,37 @@ export function PublicRegattaResults({
         </p>
       )}
       {results.length > 0 && (
-        <>
-          <ResultScoringGuide codes={results.flatMap((result) => result.raceResults.map((race) => race.scoringCode || ""))} hasDnsEntries={results.some((result) => result.isDns && !result.isOverseasCommitment)} hasOverseasEntries={results.some((result) => result.isOverseasCommitment)} />
-          <div className="sm:hidden flex flex-wrap items-center gap-2">
-            <label htmlFor={viewId + "-sort"} className="text-sm font-semibold text-harbour">Sort results</label>
-            <select id={viewId + "-sort"} value={sortKey} onChange={(event) => { setSortKey(event.target.value as SortKey); setSortDir("asc"); }} className="min-h-11 min-w-0 rounded-xl border border-cool-veil bg-warm-white px-3 text-base text-charcoal">
-              <option value="rank">Rank</option><option value="name">Name</option><option value="nationality">Nationality</option><option value="gender">Gender</option><option value="birthYear">Birth year</option><option value="total">Total</option><option value="nett">Nett</option>
-            </select>
-            <button type="button" onClick={() => setSortDir((direction) => direction === "asc" ? "desc" : "asc")} className="sp-secondary min-h-11 px-3 text-sm font-semibold" aria-label={sortDir === "asc" ? "Change to descending order" : "Change to ascending order"}>{sortDir === "asc" ? "Ascending" : "Descending"}</button>
+        <div className="space-y-2.5">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-1 items-center gap-2 min-w-0">
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Filter by sailor, sail no., or country..."
+                aria-label="Filter sailors"
+                className="min-h-11 w-full sm:max-w-xs rounded-xl border border-cool-veil bg-warm-white px-3 text-base sm:text-sm text-charcoal placeholder:text-slate-soft outline-none focus:border-aqua focus:ring-2 focus:ring-aqua/25"
+              />
+              {normalizedQuery ? (
+                <span className="shrink-0 text-xs font-semibold text-slate-soft">
+                  {sorted.length} of {results.length}
+                </span>
+              ) : null}
+            </div>
+            <div className="sm:hidden flex flex-wrap items-center gap-2">
+              <label htmlFor={viewId + "-sort"} className="text-xs font-bold uppercase tracking-wide text-slate-soft">Sort</label>
+              <select id={viewId + "-sort"} aria-label="Sort results" value={sortKey} onChange={(event) => { setSortKey(event.target.value as SortKey); setSortDir("asc"); }} className="min-h-11 min-w-0 flex-1 rounded-xl border border-cool-veil bg-warm-white px-3 text-base text-charcoal">
+                <option value="rank">Rank</option><option value="name">Name</option><option value="nationality">Nationality</option><option value="gender">Gender</option><option value="birthYear">Birth year</option><option value="total">Total</option><option value="nett">Nett</option>
+              </select>
+              <button type="button" onClick={() => setSortDir((direction) => direction === "asc" ? "desc" : "asc")} className="sp-secondary min-h-11 px-3 text-sm font-semibold" aria-label={sortDir === "asc" ? "Change to descending order" : "Change to ascending order"}>{sortDir === "asc" ? "Ascending" : "Descending"}</button>
+            </div>
           </div>
+          <ResultScoringGuide codes={results.flatMap((result) => result.raceResults.map((race) => race.scoringCode || ""))} hasDnsEntries={results.some((result) => result.isDns && !result.isOverseasCommitment)} hasOverseasEntries={results.some((result) => result.isOverseasCommitment)} />
           <p role="status" className="sr-only">Sorted by {sortKey}, {sortDir === "asc" ? "ascending" : "descending"}.</p>
-          <p id={viewId + "-scroll-help"} className="text-xs leading-5 text-slate-soft">
-            Scroll across to compare {hasRaceResults ? "race scores and totals" : "totals"}. Sailor names stay in view. Missing scores are shown as —.
+          <p id={viewId + "-scroll-help"} className="hidden sm:block text-xs leading-5 text-slate-soft">
+            Scroll across to compare {hasRaceResults ? "race scores and totals" : "totals"}. Rank and sailor names stay in view. Missing scores are shown as —.
           </p>
-        </>
+        </div>
       )}
       {resultsTable}
     </>

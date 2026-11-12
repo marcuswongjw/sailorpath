@@ -505,6 +505,155 @@ details.sp-accordion:not([open])::details-content {
   }
 }
 
+/* Single-row horizontally scrollable tab strips on touch devices */
+.sp-tabs-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: inline proximity;
+  scrollbar-width: none;
+}
+
+.sp-tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.sp-tabs-scroll > * {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+/* Container-responsive regatta results table: compact stacked cards < 640px, full matrix >= 640px */
+.sp-regatta-table-wrap {
+  container-type: inline-size;
+}
+
+@container (width < 640px) {
+  .sp-regatta-table {
+    min-width: 0 !important;
+    width: 100%;
+    display: block;
+  }
+
+  .sp-regatta-table thead {
+    display: none;
+  }
+
+  .sp-regatta-table tbody {
+    display: block;
+  }
+
+  .sp-regatta-table tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.6rem;
+    padding: 0.75rem 0.875rem;
+  }
+
+  /* Line breaks inside the flex row: after row 1 (Rank + Name + Nett) and after row 2 (Meta + Total + Badge) */
+  .sp-regatta-table tbody tr::before {
+    content: "";
+    order: 4;
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  .sp-regatta-table tbody tr::after {
+    content: "";
+    order: 6;
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  .sp-regatta-table tbody td {
+    display: block;
+    padding: 0 !important;
+    border: 0 !important;
+    position: static !important;
+    left: auto !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    text-align: left !important;
+    width: auto !important;
+  }
+
+  .sp-regatta-table .sp-col-rank {
+    order: 1;
+    flex: 0 0 auto;
+  }
+
+  .sp-regatta-table .sp-col-name {
+    order: 2;
+    flex: 1 1 9.5rem;
+  }
+
+  .sp-regatta-table .sp-col-nett {
+    order: 3;
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+    text-align: right !important;
+    font-size: 0.95rem;
+  }
+
+  .sp-regatta-table .sp-col-nett::before {
+    content: attr(data-mobile-label) " ";
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--sp-slate-soft);
+  }
+
+  .sp-regatta-table .sp-col-meta {
+    order: 5;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    color: var(--sp-charcoal-slate);
+  }
+
+  .sp-regatta-table .sp-col-total {
+    order: 5;
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+  }
+
+  .sp-regatta-table .sp-col-total::before {
+    content: attr(data-mobile-label) " ";
+    font-family: var(--font-sans, sans-serif);
+    font-weight: 600;
+    color: var(--sp-slate-soft);
+  }
+
+  .sp-regatta-table .sp-col-badge {
+    order: 5;
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+  }
+
+  .sp-regatta-table .sp-col-race {
+    order: 7;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 0.375rem;
+    background: var(--sp-sailcloth);
+    padding: 0.15rem 0.4rem !important;
+    font-size: 0.75rem;
+  }
+
+  .sp-regatta-table .sp-col-race::before {
+    content: attr(data-mobile-label);
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--sp-slate-soft);
+  }
+}
+
 @media print {
   body { background: white !important; color: black !important; }
   header, footer, nav, .no-print, button:not(.print-keep) { display: none !important; }

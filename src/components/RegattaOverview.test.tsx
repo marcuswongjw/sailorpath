@@ -25,6 +25,20 @@ describe("event overview", () => {
     expect(screen.queryByRole("button", { name: /Add to calendar/ })).toBeNull();
     expect(screen.queryByRole("link", { name: "Entry information" })).toBeNull();
   });
+  it("uses a compact disclosure header for completed regattas with results", () => {
+    const { container } = render(
+      <RegattaOverview
+        {...base}
+        status="Results available"
+        noticeBoardUrl="https://example.org/board"
+        compactForResults
+      />
+    );
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(base.name);
+    expect(screen.queryByRole("region", { name: "Scheduled classes" })).toBeNull();
+    expect(screen.getByText("Official event info & links")).toBeTruthy();
+    expect(container.querySelector("details")?.hasAttribute("open")).toBe(false);
+  });
   it("uses the Singapore date for upcoming, underway and past states", () => {
     const now = new Date("2026-10-24T17:00:00Z");
     expect(regattaTimelineStatus("2026-10-26", null, now)).toBe("Upcoming");

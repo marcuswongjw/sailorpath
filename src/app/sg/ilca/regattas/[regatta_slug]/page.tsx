@@ -105,7 +105,7 @@ export default async function IlcaRegattaDetailPage({
     top3: topFinishers(results),
   });
   return (
-    <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
+    <div className="mx-auto w-full min-w-0 max-w-7xl space-y-4 px-3 py-5 sm:space-y-5 sm:px-4 sm:py-8">
       <JsonLd data={sportsEventJsonLd(sheet)} />
       <RegattaEventHeader
         name={regatta.name}

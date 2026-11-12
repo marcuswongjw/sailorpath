@@ -142,20 +142,17 @@ export function RegattaEventHeader({
           dates={joinDateRange(String(date).slice(0, 10), endDate)}
           venue={venue}
           organiser={organiser}
-          className="mt-1.5 space-y-1 text-[12px] sm:text-xs leading-relaxed"
+          className="mt-1.5 space-y-0.5 text-[12px] sm:text-xs leading-relaxed"
           labelClassName="font-bold text-[var(--sp-charcoal)]"
           valueClassName="text-[var(--sp-charcoal-slate)]"
         />
-        <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
+        <p className="mt-1 text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
           fleet {totalFleetSize}
           {raceCount != null
             ? ` · ${raceCount} race${raceCount === 1 ? "" : "s"}`
             : ""}
         </p>
-        <p className="mt-2 text-[11px] font-semibold text-[var(--sp-slate-soft)]">
-          * = DNS · † = overseas commitment
-        </p>
-        <div className="mt-2"><ResultStatus regatta={{ name, officialResultsSourceName, scheduleNotes }} /></div>
+        <div className="mt-1.5"><ResultStatus regatta={{ name, officialResultsSourceName, scheduleNotes }} /></div>
       </div>
     </div>
   );

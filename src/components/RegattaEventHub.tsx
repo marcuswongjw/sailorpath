@@ -185,12 +185,12 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
     0
   );
   return (
-    <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
-      <table className="w-full min-w-[720px] text-left text-sm">
+    <div className="sp-regatta-table-wrap overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
+      <table className="sp-regatta-table w-full min-w-[720px] text-left text-sm">
         <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-charcoal)] font-bold border-b border-[var(--sp-cool-veil)]">
           <tr>
-            <th className="px-3 py-3 text-center">Rank</th>
-            <th className="px-3 py-3">Name</th>
+            <th className="sticky left-0 z-20 w-14 min-w-14 max-w-14 bg-[var(--sp-sailcloth)] px-3 py-3 text-center">Rank</th>
+            <th className="sticky left-14 z-20 min-w-40 max-w-52 bg-[var(--sp-sailcloth)] px-3 py-3 shadow-[2px_0_0_var(--sp-cool-veil)]">Name</th>
             <th className="px-3 py-3 text-center">Sail no.</th>
             <th className="px-3 py-3">School / Club</th>
             {Array.from({ length: raceCount }, (_, index) => (
@@ -209,19 +209,19 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
               key={`${result.rank}-${result.sailNumber}-${result.name}`}
               className="border-t border-[var(--sp-cool-veil)] hover:bg-[var(--sp-sailcloth)]/50 transition-colors"
             >
-              <td className="px-3 py-3 text-center font-black tabular-nums">
+              <td className="sp-col-rank sticky left-0 z-10 w-14 min-w-14 max-w-14 bg-[var(--sp-warm-white)] px-3 py-3 text-center font-black tabular-nums">
                 <RankMedalBadge
                   rank={result.rank}
                   nonPodiumClassName="font-mono text-[var(--sp-harbour-teal)]"
                 />
               </td>
-              <td className="px-3 py-3 font-bold text-[var(--sp-harbour-shadow)]">
+              <td className="sp-col-name sticky left-14 z-10 min-w-40 max-w-52 bg-[var(--sp-warm-white)] px-3 py-3 font-bold text-[var(--sp-harbour-shadow)] shadow-[2px_0_0_var(--sp-cool-veil)]">
                 {result.name}
               </td>
-              <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
+              <td className="sp-col-meta px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
                 {result.sailNumber}
               </td>
-              <td className="px-3 py-3 text-[var(--sp-charcoal-slate)]">
+              <td className="sp-col-meta px-3 py-3 text-[var(--sp-charcoal-slate)]">
                 {result.schoolName || result.club || "—"}
               </td>
               {Array.from({ length: raceCount }, (_, index) => {
@@ -229,7 +229,8 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
                 return (
                   <td
                     key={index}
-                    className={`px-2 py-3 text-center font-mono text-xs font-semibold tabular-nums ${
+                    data-mobile-label={`R${index + 1}`}
+                    className={`sp-col-race px-2 py-3 text-center font-mono text-xs font-semibold tabular-nums ${
                       !race
                         ? "text-[var(--sp-charcoal-slate)]"
                         : race.isDiscarded
@@ -244,7 +245,10 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
                   </td>
                 );
               })}
-              <td className="px-3 py-3 text-center font-mono font-bold tabular-nums text-[var(--sp-harbour-shadow)]">
+              <td
+                data-mobile-label="Nett"
+                className="sp-col-nett px-3 py-3 text-center font-mono font-bold tabular-nums text-[var(--sp-harbour-shadow)]"
+              >
                 {result.nettScore}
               </td>
             </tr>
@@ -296,18 +300,17 @@ async function DbSlicePanel({
       )}
       {prizeView?.schedule.recordedPodiumPolicy !== "official-categories-only" &&
         !hasOverallPrizeWinners(fleets) && <RegattaFleetPodium results={results} />}
-      <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed">
-        {String(regatta.date)}
-        {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
-        {" · "}
-        {nationalRankingLabel(regatta)}
-      </p>
-      <ResultStatus regatta={regatta} />
-      {regatta.officialResultsUrl && (
-        <div>
-          <EventLinkChip href={regatta.officialResultsUrl} label="Official Results" />
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--sp-charcoal-slate)]">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <span className="font-semibold text-[var(--sp-harbour-shadow)]">
+            {nationalRankingLabel(regatta)}
+          </span>
+          <ResultStatus regatta={regatta} />
         </div>
-      )}
+        {regatta.officialResultsUrl && (
+          <EventLinkChip href={regatta.officialResultsUrl} label="Official Results" />
+        )}
+      </div>
       {results.length === 0 ? (
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 text-center shadow-xs">
           <p className="text-sm font-semibold text-[var(--sp-charcoal-slate)]">
@@ -325,9 +328,8 @@ async function DbSlicePanel({
             ? regatta.scheduleNotes : undefined}
         />
       )}
-      <p className="text-[13px] text-[var(--sp-charcoal)]">
-        Source: published regatta results reviewed before import · Parentheses
-        indicate a discarded race score · * DNS · † Overseas commitment
+      <p className="text-xs text-[var(--sp-slate-soft)]">
+        Parentheses indicate a discarded race score · * DNS · † Overseas commitment
       </p>
     </div>
   );
@@ -371,74 +373,86 @@ export async function RegattaEventHub({ event: sourceEvent, activeFleet, calenda
     staticProfileHandles = prizeWinnerProfileHandles(winners, people);
   }
 
+  const hasPublishedResults = slices.some((slice) =>
+    slice.regatta
+      ? (slice.regatta.raceCount || 0) > 0
+      : Boolean(getStaticBoardRegatta(slice.def)?.results?.length)
+  );
+
   return (
-    <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
+    <div className="mx-auto w-full min-w-0 max-w-7xl space-y-4 px-3 py-5 sm:space-y-5 sm:px-4 sm:py-8">
       <RegattaOverview
         name={event.name}
         dates={event.datesText}
         venue={event.venue}
         organiser={event.organizer}
         classes={event.slices.map((slice) => slice.label)}
-        status={slices.some((slice) => slice.regatta ? (slice.regatta.raceCount || 0) > 0 : Boolean(getStaticBoardRegatta(slice.def)?.results?.length)) ? "Results available" : "Event overview"}
+        status={hasPublishedResults ? "Results available" : "Event overview"}
         registrationUrl={event.registrationUrl}
         noticeBoardUrl={event.officialNoticeBoardUrl}
         noticeOfRaceUrl={event.noticeOfRaceUrl}
         websiteUrl={event.websiteUrl}
         summary={event.scheduleSummary}
         backHref={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
+        compactForResults={hasPublishedResults}
       />
-      <div>
-        {event.seriesLinks && event.seriesLinks.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-            <span className="font-bold text-[var(--sp-slate-soft)]">Series Championship:</span>
-            {event.seriesLinks.map((sl) => (
-              <span
-                key={sl.seriesId}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50/70 px-2.5 py-1 text-amber-900 font-semibold"
-              >
-                <span>{sl.seriesName}</span>
-                <span className="text-amber-700 font-mono text-[11px] font-bold">({sl.roundLabel})</span>
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">Fleet results</h2>
-      <nav
-        aria-label="Classes at this event"
-        className="flex flex-wrap gap-0 border-b border-[var(--sp-cool-veil)]"
-        role="tablist"
-      >
-        {orderedSlices.map((slice) => {
-          const isActive = slice.def.key === active.def.key;
-          return (
-            <Link prefetch={false}
-              key={slice.def.key}
-              href={`/regattas/${encodeURIComponent(event.slug)}/results/${encodeURIComponent(slice.def.key)}`}
-              role="tab"
-              aria-current={isActive ? "page" : undefined}
-              aria-selected={isActive}
-              className={`
-                relative px-4 py-2.5 transition-colors mr-1 last:mr-0
-                border-b-2 -mb-px
-                focus-visible:outline-2 focus-visible:outline-[#2D6A6F] focus-visible:rounded
-                ${isActive
-                  ? "border-b-[#2D6A6F] text-[#2D6A6F]"
-                  : "border-b-transparent text-[var(--sp-charcoal)] hover:text-[#2D6A6F] hover:bg-[var(--sp-sailcloth)]"
-                }
-              `}
+      {event.seriesLinks && event.seriesLinks.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <span className="font-bold text-[var(--sp-slate-soft)]">Series:</span>
+          {event.seriesLinks.map((sl) => (
+            <span
+              key={sl.seriesId}
+              className="inline-flex items-center gap-1 rounded-lg border border-amber-200 bg-amber-50/70 px-2 py-0.5 text-amber-900 font-semibold"
             >
-              <span className={`block text-[13px] leading-tight ${isActive ? "font-black" : "font-semibold"}`}>
-                {slice.def.label}
-              </span>
-              <span className={`block text-[10px] font-semibold leading-tight mt-0.5 ${isActive ? "text-[#2D6A6F]/80" : "text-[var(--sp-charcoal)]"}`}>
-                {sliceStatusText(slice)}
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
+              <span>{sl.seriesName}</span>
+              <span className="text-amber-700 font-mono text-[11px] font-bold">({sl.roundLabel})</span>
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="space-y-2">
+        <nav
+          aria-label="Classes at this event"
+          className="sp-tabs-scroll border-b border-[var(--sp-cool-veil)]"
+          role="tablist"
+        >
+          {orderedSlices.map((slice) => {
+            const isActive = slice.def.key === active.def.key;
+            const fleetCount = slice.regatta?.totalFleetSize;
+            return (
+              <Link prefetch={false}
+                key={slice.def.key}
+                href={`/regattas/${encodeURIComponent(event.slug)}/results/${encodeURIComponent(slice.def.key)}`}
+                role="tab"
+                aria-current={isActive ? "page" : undefined}
+                aria-selected={isActive}
+                className={`
+                  relative inline-flex items-center gap-1.5 whitespace-nowrap px-3.5 py-2.5 transition-colors mr-1 last:mr-0
+                  border-b-2 -mb-px min-h-11
+                  focus-visible:outline-2 focus-visible:outline-[#2D6A6F] focus-visible:rounded
+                  ${isActive
+                    ? "border-b-[#2D6A6F] text-[#2D6A6F] font-black"
+                    : "border-b-transparent text-[var(--sp-charcoal)] font-semibold hover:text-[#2D6A6F] hover:bg-[var(--sp-sailcloth)]"
+                  }
+                `}
+              >
+                <span className="text-[13px] leading-tight">
+                  {slice.def.label}
+                </span>
+                {fleetCount ? (
+                  <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold tabular-nums ${isActive ? "bg-[var(--sp-aqua-mist)] text-[#2D6A6F]" : "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]"}`}>
+                    {fleetCount}
+                  </span>
+                ) : null}
+              </Link>
+            );
+          })}
+        </nav>
+        <p className="text-xs font-semibold text-[var(--sp-slate-soft)]">
+          {sliceStatusText(active)}
+        </p>
+      </div>
 
       {!active.regatta && prizeView && (
         <RegattaPrizeWinners

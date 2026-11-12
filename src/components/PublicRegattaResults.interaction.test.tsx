@@ -37,6 +37,11 @@ describe("public result comparison", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Sort results" }), "name");
     await user.click(screen.getByRole("button", { name: "Change to descending order" }));
     expect(tableNames()).toEqual(["Beta Sailor", "Alpha Sailor"]);
+
+    const search = screen.getByRole("searchbox", { name: "Filter sailors" });
+    await user.type(search, "Alpha");
+    expect(tableNames()).toEqual(["Alpha Sailor"]);
+    expect(screen.getByText("1 of 2")).toBeInTheDocument();
   });
 
   it("keeps penalty notation and exposes both its meaning and discard status", () => {

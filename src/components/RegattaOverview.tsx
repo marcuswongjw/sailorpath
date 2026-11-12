@@ -1,4 +1,4 @@
-import { CalendarDays, MapPin, ExternalLink } from "lucide-react";
+import { CalendarDays, ChevronRight, ExternalLink, MapPin } from "lucide-react";
 import { RegattasBackLink } from "@/components/RegattasBackLink";
 import { EventCalendarDownload } from "@/components/calendar/EventCalendarDownload";
 import { classDisplayLabels } from "@/lib/classPresentation";
@@ -20,6 +20,8 @@ export type RegattaOverviewProps = {
   calendarEvent?: CalendarDownloadEvent;
   backHref?: string;
   summary?: string | null;
+  /** Compact header for completed regattas with results below (hides duplicate class pills and collapses secondary links). */
+  compactForResults?: boolean;
 };
 
 export function regattaTimelineStatus(start: string, end?: string | null, now = new Date()): string {
@@ -40,7 +42,79 @@ function OfficialLink({ href, label, primary = false }: { href: string; label: s
 
 export function RegattaOverview(props: RegattaOverviewProps) {
   const classes = classDisplayLabels(props.classes);
-  const hasActions = props.registrationUrl || props.noticeBoardUrl || props.noticeOfRaceUrl || props.websiteUrl || props.calendarEvent;
+  const hasActions = Boolean(
+    props.registrationUrl ||
+      props.noticeBoardUrl ||
+      props.noticeOfRaceUrl ||
+      props.websiteUrl ||
+      props.calendarEvent
+  );
+
+  if (props.compactForResults) {
+    return (
+      <header className="min-w-0 space-y-3">
+        <RegattasBackLink
+          href={props.backHref || "/calendar"}
+          className="inline-flex min-h-10 items-center text-sm font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+        >
+          ← Back to regattas
+        </RegattasBackLink>
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--sp-charcoal-slate)]">
+            <span className="rounded-full bg-[var(--sp-aqua-mist)] px-2.5 py-0.5 font-bold text-[var(--sp-harbour-shadow)]">
+              {props.status}
+            </span>
+            {props.region ? <span>{props.region}</span> : null}
+          </div>
+          <h1 className="max-w-4xl break-words text-xl font-black leading-snug tracking-tight text-[var(--sp-harbour-shadow)] sm:text-3xl">
+            {props.name}
+          </h1>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--sp-charcoal-slate)]">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--sp-harbour-shadow)]">
+              <CalendarDays className="h-3.5 w-3.5 shrink-0 text-[var(--sp-harbour-teal)]" aria-hidden />
+              {props.dates}
+            </span>
+            {props.venue ? (
+              <span className="inline-flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5 shrink-0 text-[var(--sp-harbour-teal)]" aria-hidden />
+                {props.venue}
+              </span>
+            ) : null}
+          </div>
+        </div>
+        {props.summary ? (
+          <p className="max-w-3xl whitespace-pre-line text-xs sm:text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
+            {props.summary}
+          </p>
+        ) : null}
+        {(hasActions || props.organiser) ? (
+          <details className="sp-accordion group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)]">
+            <summary className="flex min-h-11 list-none [&::-webkit-details-marker]:hidden cursor-pointer items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] select-none">
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--sp-slate-soft)] transition-transform group-open:rotate-90" aria-hidden />
+              Official event info &amp; links
+            </summary>
+            <div className="space-y-3 border-t border-[var(--sp-cool-veil)] p-3.5 text-xs">
+              {props.organiser ? (
+                <p className="text-[var(--sp-charcoal)]">
+                  <span className="font-bold">Organiser:</span> {props.organiser}
+                </p>
+              ) : null}
+              {hasActions ? (
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {props.noticeBoardUrl && <OfficialLink href={props.noticeBoardUrl} label="Official notice board" />}
+                  {props.noticeOfRaceUrl && props.noticeOfRaceUrl !== props.noticeBoardUrl && <OfficialLink href={props.noticeOfRaceUrl} label="Notice of Race" />}
+                  {props.websiteUrl && props.websiteUrl !== props.registrationUrl && <OfficialLink href={props.websiteUrl} label="Official event website" />}
+                  {props.registrationUrl && <OfficialLink href={props.registrationUrl} label="Entry information" />}
+                  {props.calendarEvent && <EventCalendarDownload event={props.calendarEvent} />}
+                </div>
+              ) : null}
+            </div>
+          </details>
+        ) : null}
+      </header>
+    );
+  }
+
   return <header className="min-w-0 space-y-6">
     <RegattasBackLink href={props.backHref || "/calendar"} className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--sp-harbour-teal)] hover:underline">← Back to regattas</RegattasBackLink>
     <div>
