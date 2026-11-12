@@ -48,4 +48,43 @@ On explicit user instruction:
     - `Kanyapat Pisoottiwong` (`6b42e276-4836-4f99-bb40-0542ee7b5dde`, sail THA 1556, rank 31).
     - Optimist sheet updated to 41 of 41 entries (100% complete).
 - All 9 results have 100% exact arithmetic and source-faithful race scores. All 4 fleets now 100% complete (ILCA 4: 14/14, ILCA 6: 3/3, ILCA 7: 5/5, Optimist: 41/41; total 63 results, 512 race scores). All sheets have `counts_for_ranking = false`.
-- Transaction script: `resolve_phuket_kings_cup_2025.sql`. Archived resolved entries in `resolved-phuket-kings-cup-2025.json`. Remaining held entries in `pending-identities.json`: 51.
+- Transaction script: `resolve_phuket_kings_cup_2025.sql`. Archived resolved entries in `resolved-phuket-kings-cup-2025.json`.
+
+## ACDC Cup & Trat Regatta 2025 — Resolution of held entries (12 November 2026)
+
+On explicit user instruction:
+- Resolved and imported all 24 held entries across 10 fleets in ACDC Cup International 2025 (17 entries) and Trat Regatta 2025 (7 entries).
+- **ACDC Cup International 2025 (17 entries resolved):**
+  - ILCA 7: `NITHATSANA RODNUN` (sail 180177, rank 1) $\rightarrow$ `Nithasn Rodhnun` (`0788d794-c84e-5242-9da9-3d51d26e4eb7`). Sheet complete at 3/3.
+  - ILCA 4: `KITCHAKHUN SOMKHANNGONE` (sail 21738, rank 4) $\rightarrow$ `Kiitchakhun Somkhanngoen` (`90a471f5-bd58-400f-a995-e115951ee1ed`). Sheet complete at 16/16.
+  - ILCA 6: `Aueaoangkun jadsanam` (sail 9, rank 1) $\rightarrow$ `Aueangkun Jadsanam` (`2b2f3955-49bf-5a67-8643-70307409f211`). Sheet complete at 3/3.
+  - Optimist Gold:
+    - `Khairul Ilzani Bin Mohd Afendy` (`ff0a1516-6b16-4ba7-a9c5-7959ae9f50e7`, MAS, rank 13).
+    - `Muaz Mujahid Bin Khamarul Azwan` (`2bda4fc0-b72c-4b0b-b21f-597107dc5ca8`, MAS, sail 28, rank 20).
+    - `Chanyachart Ittivorakul` (`863b5d54-6357-50d0-b16e-75e44de37e41`, sail 1887, rank 21).
+    - `Nirada Sasiwattanaporn` (`fd3c4362-b9e5-4fce-bac2-01232f20d014`, sail 1925, rank 36).
+    - `Mia Azrania bt Mohd Azrald` (`796bc25b-e641-4630-8c8d-20241e73f843`, MAS, rank 43).
+    - `Klaochanok Chatawattanasopakun` (`04f1c65e-eeb7-4c89-9f6e-16298c33be02`, sail 3935, rank 59).
+    - Sheet complete at 67/67.
+  - Optimist Silver:
+    - Created source-faithful profile for `Ya Zhang` (`51a8b92d-74d1-52a1-bf87-4328eb92040c`, F, CHN, Qingdao, sail CHN122, rank 10).
+    - `Kulpichet Phanchang` (`97050c23-371f-427e-a571-e20486cbb936`, RNSC, rank 11).
+    - `Kaung Khant Khant Ko` (`611ef739-d28b-57c3-b6fe-183b006a2a38`, YSC, MYA, rank 21).
+    - `Duangdeuen Wichai` (`dfefca66-a570-5f96-bec6-eb566501bdbb`, RNSC, rank 24).
+    - `Navatawan Jeanjit` (`1c03e3e7-ea29-526f-88b3-fd77ce113868`, sail 1979, rank 25).
+    - `Kanthee Khunmuang` (`8953feed-5a7e-4fe1-978c-7ddcb9ac3fbb`, SSA, sail 54, rank 30).
+    - `Charlie Basnet` (`02f7450f-b247-49cf-ba12-2f33a7f0642e`, RNSC, rank 41).
+    - Created source-faithful profile for `Nuttapat Arttapiyapun` (`729acda4-25b3-57df-b11c-2f31f9d45e52`, M, THA, ACDC.SC, sail THA187, rank 50).
+    - Sheet complete at 51/51.
+- **Trat Regatta 2025 (7 entries resolved):**
+  - ILCA 6: `Aueangkun Jadsanam` (`2b2f3955-49bf-5a67-8643-70307409f211`, rank 4). Sheet complete at 9/9.
+  - Optimist Silver:
+    - `Navatawan Jeanjit` (`1c03e3e7-ea29-526f-88b3-fd77ce113868`, sail 1979, rank 3).
+    - `Kittiphat Sachato` (`433063e8-3178-50b1-8b3e-68470a3e8cc6`, sail NZL4529, rank 9).
+    - `Boontarik Bantichat` (`28ed0b2b-49b3-52ff-ad02-f1f260bfac0b`, MRS.SC, rank 19).
+    - `Suthinan Nakpasom` (`f3e4cce1-2a81-4794-ba02-a570d43efb21`, sail 1987, rank 25 DNC).
+    - Created source-faithful profile for unstarted entry `Klaochanok (Trat DNC)` (`f4c93ba2-66ab-5908-99cf-59e3bdc60f4e`, F, THA, YRAT, rank 25 DNC).
+    - Created source-faithful profile for unstarted entry `T (Trat DNC)` (`c37db018-8ee6-5fb6-9f82-a0eb82fa9b61`, M, THA, YRAT, rank 25 DNC).
+    - Sheet complete at 46/46.
+- All 24 results have 100% exact arithmetic and source-faithful race scores. All 10 sheets across both regattas are now 100% complete (ACDC Cup: 140 results / 1,260 race scores; Trat Regatta: 99 results / 227 race scores). All sheets have `counts_for_ranking = false`.
+- Transaction script: `resolve_acdc_trat_2025.sql`. Archived resolved entries in `resolved-acdc-trat-2025.json`. Remaining held entries in `pending-identities.json`: 27.
