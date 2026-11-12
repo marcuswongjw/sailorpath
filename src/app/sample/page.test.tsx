@@ -52,6 +52,8 @@ describe("sample profile page", () => {
     expect(serialized).not.toContain("birthDate");
     expect(serialized).not.toContain("Raffles");
     expect(html).toContain("b. 2013");
+    expect(html).not.toContain("Looking for family tools or squad coach management?");
+    expect(html).toContain("Edit profile &amp; privacy in one modal");
   });
 
   it("sends the parent demo to its own page", async () => {

@@ -1,6 +1,5 @@
 import { getSailorPrizes, mergeSailorPrizes } from "@/lib/sailorPrizes";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { DemoNavHeader } from "@/components/demo/DemoNavHeader";
@@ -64,27 +63,19 @@ export default async function SampleProfilePage({
     <div className="flex flex-1 flex-col bg-sailcloth">
       <JsonLd data={profilePageJsonLd(share)} />
       <DemoNavHeader activeDemo="sailor" />
-      <div className="border-b border-cool-veil bg-warm-white px-4 py-2.5">
-        <div className="mx-auto flex max-w-5xl flex-col justify-between gap-2 text-xs sm:flex-row sm:items-center">
-          <p className="font-medium text-charcoal">Looking for family tools or squad coach management?</p>
-          <div className="flex items-center gap-3">
-            <Link href="/demo/parent" className="font-bold text-harbour hover:underline">Parent Hub Demo</Link>
-            <Link href="/demo/coach" className="font-bold text-racing-orange hover:underline">Coach Hub Demo</Link>
+      <div className="border-b border-cool-veil bg-warm-white py-3">
+        <div className="mx-auto max-w-4xl space-y-2.5 px-3 sm:px-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <h1 className="font-display text-sm font-black tracking-tight text-harbour-shadow truncate">
+                Kimberly Tan · SGP 115 · SailorPath Profile
+              </h1>
+              <p className="text-xs text-slate-soft">
+                b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class SG Gold &amp; ILCA 4
+              </p>
+            </div>
+            <SampleViewControls view={view} />
           </div>
-        </div>
-      </div>
-      <div className="border-b border-cool-veil bg-warm-white py-4">
-        <div className="mx-auto max-w-4xl space-y-3 px-4 sm:px-6">
-          <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-racing-orange">Athlete Profile Demo</p>
-            <h1 className="font-display text-xl font-black tracking-tight text-harbour-shadow sm:text-2xl">
-              Kimberly Tan · SGP 115 · SailorPath Profile
-            </h1>
-            <p className="mt-0.5 text-xs text-charcoal">
-              b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class Optimist Gold &amp; ILCA 4 · Changi Sailing Club
-            </p>
-          </div>
-          <SampleViewControls view={view} />
           <p className="text-xs leading-snug text-slate-soft">
             <span className="font-bold text-harbour-shadow">{copy.who}.</span> {copy.value}
           </p>

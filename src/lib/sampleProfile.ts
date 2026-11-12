@@ -19,7 +19,7 @@ export const DEMO_ROLE_COPY: Record<
     title: "Sailor",
     who: "The athlete who owns this profile",
     value:
-      "Full logbook, race notes, dual-class results, and privacy settings (via Settings).",
+      "Edit profile & privacy in one modal, preview public view, and review dual-class results and reflections.",
   },
   parent: {
     title: "Parent",

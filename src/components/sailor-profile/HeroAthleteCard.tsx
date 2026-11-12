@@ -823,7 +823,7 @@ export function HeroAthleteCard({
                 maxLength={500}
                 rows={3}
                 placeholder="Share a short public bio about this sailor (max 500 characters)..."
-                className="w-full rounded-lg border border-cool-veil bg-warm-white px-3 py-2 text-[13px] sm:text-sm text-charcoal focus:border-harbour focus:outline-none"
+                className="w-full rounded-lg border border-cool-veil bg-warm-white px-3 py-2 text-base sm:text-sm text-charcoal focus:border-harbour focus:outline-none"
               />
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[11px] text-slate-soft tabular-nums">

@@ -262,8 +262,22 @@ export function useSailorProfileState({
 
   const saveProfile = async () => {
     if (demoMode) {
-      setSaveMsg("Demo only — changes are not saved");
-      setTimeout(() => setSaveMsg(null), 2500);
+      setDisplaySailor((s: SailorRecordProps) => ({
+        ...s,
+        bio: form.bio.trim() || null,
+        instagram: form.instagram.trim() || null,
+        handle: form.handle.trim() || s.handle,
+        school: form.school.trim() || null,
+        club: form.club.trim() || s.club,
+        sailNumber: form.sailNumber.trim() || s.sailNumber,
+        sailNumberIlca4: form.sailNumberIlca4.trim() || null,
+        boardNumber: form.boardNumber.trim() || null,
+        dob: form.dob === "" ? null : form.dob,
+        weight: form.weight === "" ? null : Number(form.weight),
+        ...publicVisibility,
+      }));
+      setEditing(false);
+      toast.info("Updated profile for this demo session (not saved).");
       return;
     }
     setSaveBusy(true);
