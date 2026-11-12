@@ -30,4 +30,22 @@ On explicit user instruction:
   - Myanmar: `Aung Sitt Maung` (`3d2fede9-5b4d-444d-9eb1-49d05991d128`).
   - Thailand: `Napabhat Buasuang` (`e4c77476-aeef-45b2-b905-495b594b1353`), `Surapha Muangngam` (`3b9072c4-2980-4557-b1f1-b9993c803824`), `Dhammaporn Aruno` (`b6cda8c3-5a90-4a1d-88d6-b0f52996cab7`), `Suratsayapron Kaewrakum` (`6d6d7dd3-8b95-4230-af00-01321a224c3e`), `Aranya Klangmueang` (`9122c3b5-7b7d-43c1-ab7b-c5d2d2f2fb96`).
 - All 15 results have 100% exact arithmetic and source-faithful race scores. All 7 sheets now 100% complete (Pre-SEA Games: ILCA 4 Girls 8/8, Opti Boys 38/38, Opti Girls 27/27; SEA Games: ILCA 4 Boys 6/6, ILCA 4 Girls 5/5, Opti Boys 7/7, Opti Girls 6/6). Total results imported: 15 results, 140 race scores. All sheets have `counts_for_ranking = false`.
-- Transaction script: `resolve_sea_games_2025.sql`. Archived resolved entries in `resolved-sea-games-2025.json`. Remaining held entries in `pending-identities.json`: 60.
+- Transaction script: `resolve_sea_games_2025.sql`. Archived resolved entries in `resolved-sea-games-2025.json`.
+
+## 37th Phuket King’s Cup Regatta 2025 — Resolution of held entries (12 November 2026)
+
+On explicit user instruction:
+- Corroborated and resolved all 9 held entries across ILCA 7, ILCA 6, and Optimist fleets:
+  - ILCA 7: `CHRISTIAN WIEDMANN` (sail THA 49, rank 6, gross 55, nett 43) corroborated as `Apiwat Christian Wiedmann` (`3b468b8a-579d-5429-8d3f-27db5e17aed2`); aliases registered, sheet updated to 5 of 5 class entries (100% complete).
+  - ILCA 6: Created source-faithful profile for `Marcus Yau` (`07d9bca1-925a-5282-bdae-40fa1878b1d9`, HKG, UWC, sail HKG 195004, rank 10, gross 92, nett 80); sheet updated to 3 of 3 class entries (100% complete).
+  - Optimist: Resolved all 7 held entries:
+    - `Surapha Muangngam` (`3b9072c4-2980-4557-b1f1-b9993c803824`, sail 1941, rank 1, Regatta Champion).
+    - `Thawaree Raksapun` (`efc33f0d-a581-4dd3-99ee-2c245bb1c9cd`, sail 1789, rank 5).
+    - `Amarin Juntajon` (`aa2952d1-ba70-464e-8666-096ff9fef554`, sail THA 1395, rank 9).
+    - `Nirada Sasiwattanaporn` (`fd3c4362-b9e5-4fce-bac2-01232f20d014`, sail 1373, rank 15).
+    - `Nopadol Tokpo` (`d5453895-83cb-4b63-b701-804ce42ce4b2`, sail THA 8884, rank 26).
+    - Created source-faithful profile for `Tanyatip` (`1bfa6741-cb12-58e1-95be-286a073deba3`, F, THA, NAC3.SC., sail 723, rank 28).
+    - `Kanyapat Pisoottiwong` (`6b42e276-4836-4f99-bb40-0542ee7b5dde`, sail THA 1556, rank 31).
+    - Optimist sheet updated to 41 of 41 entries (100% complete).
+- All 9 results have 100% exact arithmetic and source-faithful race scores. All 4 fleets now 100% complete (ILCA 4: 14/14, ILCA 6: 3/3, ILCA 7: 5/5, Optimist: 41/41; total 63 results, 512 race scores). All sheets have `counts_for_ranking = false`.
+- Transaction script: `resolve_phuket_kings_cup_2025.sql`. Archived resolved entries in `resolved-phuket-kings-cup-2025.json`. Remaining held entries in `pending-identities.json`: 51.

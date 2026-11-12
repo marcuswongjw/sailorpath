@@ -1,0 +1,871 @@
+[
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169974,
+    "sourcePage": 1,
+    "sourceClass": "ILCA7",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "rank": 6,
+    "name": "CHRISTIAN WIEDMANN",
+    "sailOrBoardNumber": "THA 49",
+    "club": "",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 55.0,
+    "nettScore": 43.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 12.0,
+        "code": "UFD",
+        "discarded": true,
+        "raw": "(12.0 UFD)"
+      },
+      {
+        "raceNumber": 5,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 9,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      }
+    ],
+    "handicap": true,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "3b468b8a-579d-5429-8d3f-27db5e17aed2",
+        "name": "Apiwat Christian Wiedmann",
+        "similarity": 0.85
+      },
+      {
+        "id": "7b45b76c-075f-4be8-b298-e32f98915016",
+        "name": "Chris Newman",
+        "similarity": 0.714
+      },
+      {
+        "id": "bdcd0461-7642-50c2-9dca-65b6d4d56020",
+        "name": "Henry Wiedmann",
+        "similarity": 0.667
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169974,
+    "sourcePage": 1,
+    "sourceClass": "ILCA6 OPEN",
+    "boatClass": "ILCA 6",
+    "division": "Open",
+    "rank": 10,
+    "name": "MARCUS YAU",
+    "sailOrBoardNumber": "HKG 195004",
+    "club": "UWC",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 92.0,
+    "nettScore": 80.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 12.0,
+        "code": "UFD",
+        "discarded": true,
+        "raw": "(12.0 UFD)"
+      },
+      {
+        "raceNumber": 6,
+        "score": 10.0,
+        "code": null,
+        "discarded": false,
+        "raw": "10.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 9.0,
+        "code": null,
+        "discarded": false,
+        "raw": "9.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 12.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "12.0 DNC"
+      },
+      {
+        "raceNumber": 9,
+        "score": 12.0,
+        "code": "DNC",
+        "discarded": false,
+        "raw": "12.0 DNC"
+      }
+    ],
+    "handicap": true,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "642f9b67-e03c-4cc6-a877-288e4f63ee59",
+        "name": "Marcus Daum",
+        "similarity": 0.842
+      },
+      {
+        "id": "35ddaae9-11d3-457f-ba18-2c96e6df5aac",
+        "name": "Marcus Li",
+        "similarity": 0.706
+      },
+      {
+        "id": "a85ab47f-fbb5-b738-8932-07ae5af6fd1e",
+        "name": "Marcus Durlach",
+        "similarity": 0.636
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 1,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 1,
+    "name": "SURAPA MUANGNGAM",
+    "sailOrBoardNumber": "1941",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 14.0,
+    "nettScore": 10.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 4.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(4.0)"
+      },
+      {
+        "raceNumber": 7,
+        "score": 1.0,
+        "code": null,
+        "discarded": false,
+        "raw": "1.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 2.0,
+        "code": null,
+        "discarded": false,
+        "raw": "2.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "3b9072c4-2980-4557-b1f1-b9993c803824",
+        "name": "Surapha Muangngam",
+        "similarity": 0.968
+      },
+      {
+        "id": "92b23e0a-9b81-518e-b23a-a46fab806ace",
+        "name": "Paranee Muangngam",
+        "similarity": 0.71
+      },
+      {
+        "id": "598f72ed-7c02-4a34-aac2-59f4848e90d3",
+        "name": "Seraphina Kang",
+        "similarity": 0.571
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 1,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 5,
+    "name": "TAWAREE RUKSAPAN",
+    "sailOrBoardNumber": "1789",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 69.0,
+    "nettScore": 54.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 4.0,
+        "code": null,
+        "discarded": false,
+        "raw": "4.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 15.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(15.0)"
+      },
+      {
+        "raceNumber": 8,
+        "score": 3.0,
+        "code": null,
+        "discarded": false,
+        "raw": "3.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "efc33f0d-a581-4dd3-99ee-2c245bb1c9cd",
+        "name": "Thawaree Raksapun",
+        "similarity": 0.839
+      },
+      {
+        "id": "46276ce9-0d69-49d0-8ae0-b56f6a888535",
+        "name": "Arunee Raksapun",
+        "similarity": 0.69
+      },
+      {
+        "id": "b94acf09-7320-da69-90bd-2aacbf0e2308",
+        "name": "Marek Beroun",
+        "similarity": 0.538
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 1,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 9,
+    "name": "AUMMARIN JUNTAJON",
+    "sailOrBoardNumber": "1936",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 102.0,
+    "nettScore": 78.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 5.0,
+        "code": null,
+        "discarded": false,
+        "raw": "5.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 7.0,
+        "code": null,
+        "discarded": false,
+        "raw": "7.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 16.0,
+        "code": null,
+        "discarded": false,
+        "raw": "16.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 6.0,
+        "code": null,
+        "discarded": false,
+        "raw": "6.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 24.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(24.0)"
+      },
+      {
+        "raceNumber": 8,
+        "score": 12.0,
+        "code": null,
+        "discarded": false,
+        "raw": "12.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "aa2952d1-ba70-464e-8666-096ff9fef554",
+        "name": "Amarin Juntajon",
+        "similarity": 0.933
+      },
+      {
+        "id": "b6cda8c3-5a90-4a1d-88d6-b0f52996cab7",
+        "name": "Dhammaporn Aruno",
+        "similarity": 0.581
+      },
+      {
+        "id": "4d39903d-70b0-9df6-9e6f-aef48147d76c",
+        "name": "Amédée Margueron",
+        "similarity": 0.552
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 1,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 15,
+    "name": "NIRADA SASIWUATTANAPORN",
+    "sailOrBoardNumber": "1925",
+    "club": "YRAT",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 128.0,
+    "nettScore": 100.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 14.0,
+        "code": null,
+        "discarded": false,
+        "raw": "14.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 28.0,
+        "code": null,
+        "discarded": true,
+        "raw": "(28.0)"
+      },
+      {
+        "raceNumber": 3,
+        "score": 11.0,
+        "code": null,
+        "discarded": false,
+        "raw": "11.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 8.0,
+        "code": null,
+        "discarded": false,
+        "raw": "8.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 18.0,
+        "code": null,
+        "discarded": false,
+        "raw": "18.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 13.0,
+        "code": null,
+        "discarded": false,
+        "raw": "13.0"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "fd3c4362-b9e5-4fce-bac2-01232f20d014",
+        "name": "Nirada Sasiwattanaporn",
+        "similarity": 0.977
+      },
+      {
+        "id": "6c8addf4-bfba-5b08-8d4c-d9464175ae25",
+        "name": "Apple Asawawatanaporn",
+        "similarity": 0.667
+      },
+      {
+        "id": "dcc276c2-0264-4461-9a77-f98cb1beac28",
+        "name": "Arissara Ratanaarporn",
+        "similarity": 0.571
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 2,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 26,
+    "name": "NOPPADOL TOKPO",
+    "sailOrBoardNumber": "THA 8884",
+    "club": "RNSC",
+    "nationality": null,
+    "gender": "M",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 230.0,
+    "nettScore": 188.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 42.0,
+        "code": "DSQ",
+        "discarded": true,
+        "raw": "(42.0 DSQ)"
+      },
+      {
+        "raceNumber": 3,
+        "score": 15.0,
+        "code": null,
+        "discarded": false,
+        "raw": "15.0"
+      },
+      {
+        "raceNumber": 4,
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 23.0,
+        "code": null,
+        "discarded": false,
+        "raw": "23.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 31.0,
+        "code": null,
+        "discarded": false,
+        "raw": "31.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 42.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "42.0 DNF"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "d5453895-83cb-4b63-b701-804ce42ce4b2",
+        "name": "Nopadol Tokpo",
+        "similarity": 0.96
+      },
+      {
+        "id": "2c3a793f-5bb5-531e-9290-5d976898618a",
+        "name": "Panudat Polpool",
+        "similarity": 0.519
+      },
+      {
+        "id": "10138610-378f-4b31-99c2-075944acabda",
+        "name": "Kongphop Hupkrathoke",
+        "similarity": 0.5
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 2,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 28,
+    "name": "TANYATIP",
+    "sailOrBoardNumber": "723",
+    "club": "NAC3.SC.",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 237.0,
+    "nettScore": 195.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 29.0,
+        "code": null,
+        "discarded": false,
+        "raw": "29.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 20.0,
+        "code": null,
+        "discarded": false,
+        "raw": "20.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 42.0,
+        "code": "BFD",
+        "discarded": true,
+        "raw": "(42.0 BFD)"
+      },
+      {
+        "raceNumber": 4,
+        "score": 24.0,
+        "code": null,
+        "discarded": false,
+        "raw": "24.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 28.0,
+        "code": null,
+        "discarded": false,
+        "raw": "28.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 22.0,
+        "code": null,
+        "discarded": false,
+        "raw": "22.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 42.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "42.0 DNF"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "2fcce3d8-61f0-5947-9ca7-6ec7333ff142",
+        "name": "Anya Lim",
+        "similarity": 0.667
+      },
+      {
+        "id": "b1cf8bb0-2842-62f3-d21f-5d461ae26869",
+        "name": "Tanja Ozretić",
+        "similarity": 0.632
+      },
+      {
+        "id": "6adf9146-b88d-41f9-aa69-43ee63af736b",
+        "name": "Tan Qi",
+        "similarity": 0.615
+      }
+    ]
+  },
+  {
+    "eventKey": "phuket-kings-cup-2025",
+    "sourceDocument": 169977,
+    "sourcePage": 2,
+    "sourceClass": "OPTIMIST",
+    "boatClass": "Optimist",
+    "division": "Open",
+    "rank": 31,
+    "name": "KANYAPAT PISOOTTIWING",
+    "sailOrBoardNumber": "THA 1556",
+    "club": "",
+    "nationality": null,
+    "gender": "F",
+    "officialBirthYear": null,
+    "sourceBirthYear": "",
+    "grossScore": 253.0,
+    "nettScore": 211.0,
+    "races": [
+      {
+        "raceNumber": 1,
+        "score": 32.0,
+        "code": null,
+        "discarded": false,
+        "raw": "32.0"
+      },
+      {
+        "raceNumber": 2,
+        "score": 21.0,
+        "code": null,
+        "discarded": false,
+        "raw": "21.0"
+      },
+      {
+        "raceNumber": 3,
+        "score": 42.0,
+        "code": "BFD",
+        "discarded": true,
+        "raw": "(42.0 BFD)"
+      },
+      {
+        "raceNumber": 4,
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26.0"
+      },
+      {
+        "raceNumber": 5,
+        "score": 26.0,
+        "code": null,
+        "discarded": false,
+        "raw": "26.0"
+      },
+      {
+        "raceNumber": 6,
+        "score": 34.0,
+        "code": null,
+        "discarded": false,
+        "raw": "34.0"
+      },
+      {
+        "raceNumber": 7,
+        "score": 30.0,
+        "code": null,
+        "discarded": false,
+        "raw": "30.0"
+      },
+      {
+        "raceNumber": 8,
+        "score": 42.0,
+        "code": "DNF",
+        "discarded": false,
+        "raw": "42.0 DNF"
+      }
+    ],
+    "handicap": false,
+    "reason": "Identity requires review; no uncertain assignment or duplicate profile created.",
+    "candidates": [
+      {
+        "id": "6b42e276-4836-4f99-bb40-0542ee7b5dde",
+        "name": "Kanyapat Pisoottiwong",
+        "similarity": 0.95
+      },
+      {
+        "id": "f2ffa1e9-e602-431f-a746-dd0cfc70a03c",
+        "name": "Kanari Ishii",
+        "similarity": 0.516
+      },
+      {
+        "id": "9e411259-d0ba-54c8-8ad6-432256bc5770",
+        "name": "Natthapatr Poolklang",
+        "similarity": 0.513
+      }
+    ]
+  }
+]
