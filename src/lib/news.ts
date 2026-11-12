@@ -43,6 +43,20 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: string | null;
   }
 > = {
+  "2026-optimist-worlds-tangier-retrospective": {
+    imageUrl: "/news/optimist-worlds-archive.jpg",
+    imageAlt: "Optimist dinghies at the start of a World Championship race in Uruguay in 2007.",
+    imageCaption: "Archive photograph: Optimist World Championship racing in Uruguay, 2007; not the 2026 event.",
+    imageCredit: "Photo: Manlio Ferrari / Wikimedia Commons, public domain",
+    imageCreditUrl: "https://commons.wikimedia.org/wiki/File:Optimist_race.jpg",
+  },
+  "mussanah-race-week-arab-womens-championship-2026": {
+    imageUrl: "/news/optimist-regatta-archive.jpg",
+    imageAlt: "Optimist dinghies preparing for a regatta on Lake Constance in 2016.",
+    imageCaption: "Archive photograph: Optimist dinghies prepare for a regatta on Lake Constance, 2016; not Mussanah Race Week.",
+    imageCredit: "Photo: PaterMcFly / Wikimedia Commons, CC BY 3.0 (cropped for display)",
+    imageCreditUrl: "https://commons.wikimedia.org/wiki/File:Optimisten-Regatta.jpg",
+  },
   "first-x15-world-championships-ibiza-2026": {
     imageUrl: "/news/x15-worlds-2026-ibiza.jpg",
     imageAlt: "Riders carrying X-15 boards and foils prepare at Port Nàutic Ibiza during the inaugural World Championships.",
