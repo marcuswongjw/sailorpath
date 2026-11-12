@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import type { PersonalSeasonSlot, PersonalSeasonView } from "@/lib/personalSeason";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -77,9 +78,13 @@ function SlotCell({ slot }: { slot: PersonalSeasonSlot }) {
 export function PersonalSeasonCard({
   season,
   showExplanation = true,
+  showSailorName = true,
+  collapsibleExplanation = false,
 }: {
   season: PersonalSeasonView;
   showExplanation?: boolean;
+  showSailorName?: boolean;
+  collapsibleExplanation?: boolean;
 }) {
   const fleetLabel =
     season.fleet === "ILCA"
@@ -99,14 +104,52 @@ export function PersonalSeasonCard({
         : "Not on this board";
   const scoreLabel = season.higherIsBetter ? "Best 3 high points" : "Best 3 of 5";
 
+  const explanationBody = (
+    <div className="space-y-2">
+      {season.why.map((line) => (
+        <p key={line} className="text-sm leading-relaxed text-[var(--sp-charcoal)]">
+          {line}
+        </p>
+      ))}
+      <p className="text-sm text-[var(--sp-charcoal-slate)]">
+        {season.nextCountingEvent ? (
+          <>
+            Next counting event:{" "}
+            {season.nextCountingEvent.href ? (
+              <Link
+                href={season.nextCountingEvent.href}
+                className="font-bold text-[var(--sp-harbour-teal)] hover:underline"
+              >
+                {season.nextCountingEvent.name}
+              </Link>
+            ) : (
+              <span className="font-bold text-[var(--sp-harbour-shadow)]">
+                {season.nextCountingEvent.name}
+              </span>
+            )}{" "}
+            on {formatSeasonDate(season.nextCountingEvent.date)}
+          </>
+        ) : (
+          "No future counting event is on the calendar for this class yet."
+        )}
+      </p>
+    </div>
+  );
+
   return (
-    <section className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs space-y-4">
+    <section className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-6 shadow-xs space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-lg font-black text-[var(--sp-harbour-shadow)]">
-            {season.sailorName}
-          </h2>
-          <p className="mt-1 text-sm text-[var(--sp-charcoal-slate)]">
+          {showSailorName ? (
+            <h2 className="text-lg font-black text-[var(--sp-harbour-shadow)]">
+              {season.sailorName}
+            </h2>
+          ) : (
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
+              Season standings
+            </p>
+          )}
+          <p className={`${showSailorName ? "mt-1" : "mt-1"} text-sm text-[var(--sp-charcoal-slate)]`}>
             {season.periodLabel}
             {fleetLabel ? (
               <>
@@ -144,39 +187,24 @@ export function PersonalSeasonCard({
       </div>
 
       {showExplanation ? (
-        <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-3 space-y-2">
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--sp-harbour-teal)]">
-            Why this place
-          </p>
-          {season.why.map((line) => (
-            <p key={line} className="text-sm leading-relaxed text-[var(--sp-charcoal)]">
-              {line}
+        collapsibleExplanation ? (
+          <details className="group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-3">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-2 text-xs font-bold text-[var(--sp-harbour-teal)] select-none">
+              <span className="text-[11px] uppercase tracking-[0.14em]">
+                Why this place
+              </span>
+              <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="pt-2.5">{explanationBody}</div>
+          </details>
+        ) : (
+          <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-3 space-y-2">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--sp-harbour-teal)]">
+              Why this place
             </p>
-          ))}
-          <p className="text-sm text-[var(--sp-charcoal-slate)]">
-            {season.nextCountingEvent ? (
-              <>
-                Next counting event:{" "}
-                {season.nextCountingEvent.href ? (
-                  <Link
-                    href={season.nextCountingEvent.href}
-                    className="font-bold text-[var(--sp-harbour-teal)] hover:underline"
-                  >
-                    {season.nextCountingEvent.name}
-                  </Link>
-                ) : (
-                  <span className="font-bold text-[var(--sp-harbour-shadow)]">
-                    {season.nextCountingEvent.name}
-                  </span>
-                )}
-                {" "}
-                on {formatSeasonDate(season.nextCountingEvent.date)}
-              </>
-            ) : (
-              "No future counting event is on the calendar for this class yet."
-            )}
-          </p>
-        </div>
+            {explanationBody}
+          </div>
+        )
       ) : null}
 
       <Link

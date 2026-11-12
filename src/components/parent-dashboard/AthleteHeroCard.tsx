@@ -11,6 +11,7 @@ import {
   SECONDARY_BTN,
   MUTED,
   INK,
+  formatSgFleetLabel,
 } from "./styles";
 import { formatAgeCategory, type Athlete } from "./types";
 
@@ -25,21 +26,28 @@ export function AthleteHeroCard({
   const logScoreHref = demoMode
     ? "/sample?view=sailor"
     : `/athlete?id=${athlete.id}&tab=results&action=new`;
+  const fleetLabel = formatSgFleetLabel(athlete.standing?.fleet);
+  const fleetHref =
+    athlete.standing?.fleet === "Gold"
+      ? "/sg/optimist/gold"
+      : athlete.standing?.fleet === "Silver"
+        ? "/sg/optimist/silver"
+        : null;
 
   return (
-    <section className={`${CARD} p-5 sm:p-7`}>
+    <section className={`${CARD} p-4 sm:p-6`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-3.5 sm:gap-4 min-w-0">
           {athlete.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={profilePhotoUrl(athlete.id, athlete.avatarUrl) || undefined}
               alt=""
-              className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover border-2 border-[var(--sp-cool-veil)] shrink-0"
+              className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl object-cover border-2 border-[var(--sp-cool-veil)] shrink-0"
             />
           ) : (
-            <span className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border-2 border-[var(--sp-harbour-teal)]">
-              <User className="h-8 w-8" />
+            <span className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border-2 border-[var(--sp-harbour-teal)]">
+              <User className="h-7 w-7" />
             </span>
           )}
           <div className="min-w-0">
@@ -96,41 +104,37 @@ export function AthleteHeroCard({
                 </span>
               )}
 
-              {athlete.standing?.fleet && (
-                <span
-                  className={`rounded-full border px-2.5 py-1 text-xs font-black uppercase tracking-wider ${fleetPillClass(athlete.standing.fleet)}`}
-                >
-                  {athlete.standing.fleet} Fleet
-                </span>
-              )}
+              {fleetLabel &&
+                (fleetHref ? (
+                  <Link
+                    href={fleetHref}
+                    className={`rounded-full border px-2.5 py-1 text-xs font-black uppercase tracking-wider hover:opacity-85 transition-opacity ${fleetPillClass(athlete.standing?.fleet ?? "")}`}
+                  >
+                    {fleetLabel}
+                  </Link>
+                ) : (
+                  <span
+                    className={`rounded-full border px-2.5 py-1 text-xs font-black uppercase tracking-wider ${fleetPillClass(athlete.standing?.fleet ?? "")}`}
+                  >
+                    {fleetLabel}
+                  </span>
+                ))}
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
           <Link
             href={logScoreHref}
             className={`${SECONDARY_BTN} min-h-11 w-full sm:w-auto`}
           >
             <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-            Log Score &amp; Evidence ↗
+            Log Score ↗
           </Link>
           <Link href={profileHref} className={`${SECONDARY_BTN} min-h-11 w-full sm:w-auto`}>
             Public Profile
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>
-          {athlete.standing?.fleet === "Gold" && (
-            <Link href="/sg/optimist/gold" className={SECONDARY_BTN}>
-              <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-              Gold Leaderboard
-            </Link>
-          )}
-          {athlete.standing?.fleet === "Silver" && (
-            <Link href="/sg/optimist/silver" className={SECONDARY_BTN}>
-              <Trophy className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
-              Silver Leaderboard
-            </Link>
-          )}
         </div>
       </div>
     </section>

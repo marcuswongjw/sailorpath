@@ -1,7 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Search, Sailboat } from "lucide-react";
+import {
+  Search,
+  Sailboat,
+  LayoutGrid,
+  CheckSquare,
+  MessageSquare,
+  AlertTriangle,
+  ChevronRight,
+} from "lucide-react";
 import {
   PrivateNotesPanel,
   PreRaceChecklist,
@@ -20,11 +29,14 @@ import {
 import type { NoteCategory } from "@/components/parent-dashboard/types";
 import {
   CARD,
+  NESTED,
   SECONDARY_BTN,
   MUTED,
   INK,
   BODY,
 } from "@/components/parent-dashboard/styles";
+
+type WorkspaceTab = "overview" | "gear" | "notes";
 
 export function ParentDashboard({
   initialData,
@@ -34,6 +46,7 @@ export function ParentDashboard({
   demoMode?: boolean;
 } = {}) {
   const d = useFamilyDashboard({ initialData, demoMode });
+  const [workspaceTab, setWorkspaceTab] = useState<WorkspaceTab>("overview");
 
   if (d.loading) {
     return (
@@ -118,102 +131,218 @@ export function ParentDashboard({
             demoMode={demoMode}
           />
 
-          {activeAthlete && (
-            <div className="space-y-6 sm:space-y-8">
-              <AthleteHeroCard athlete={activeAthlete} demoMode={demoMode} />
+          {activeAthlete && (() => {
+            const alertCount = activeAthlete.equipmentAlertCount ?? 0;
+            const coachNotesCount =
+              (activeAthlete.coachFeedback?.length ?? 0) +
+              (activeAthlete.notes?.length ?? 0);
 
-              {activeAthlete.season ? (
-                <PersonalSeasonCard season={activeAthlete.season} />
-              ) : null}
+            return (
+              <div className="space-y-4 sm:space-y-6">
+                <AthleteHeroCard athlete={activeAthlete} demoMode={demoMode} />
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                  <AthleteInsightGrid athlete={activeAthlete} demoMode={demoMode} />
+                <div
+                  className="sp-tabs-scroll items-center gap-2 border-b border-[var(--sp-cool-veil)] pb-2"
+                  role="tablist"
+                  aria-label="Athlete workspace sections"
+                >
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={workspaceTab === "overview"}
+                    onClick={() => setWorkspaceTab("overview")}
+                    className={`min-h-11 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-colors whitespace-nowrap ${
+                      workspaceTab === "overview"
+                        ? "bg-harbour text-sailcloth shadow-xs"
+                        : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
+                    }`}
+                  >
+                    <LayoutGrid className="h-3.5 w-3.5" />
+                    Overview
+                  </button>
 
-                  <EquipmentInPlacePanel
-                    activeAthlete={activeAthlete}
-                    demoMode={demoMode}
-                    showAddGearModal={d.showAddGearModal}
-                    addGearTab={d.addGearTab}
-                    addGearBusy={d.addGearBusy}
-                    customGearCategory={d.customGearCategory}
-                    customGearBrand={d.customGearBrand}
-                    customGearModel={d.customGearModel}
-                    customGearLabel={d.customGearLabel}
-                    customGearCondition={d.customGearCondition}
-                    customGearPrimary={d.customGearPrimary}
-                    onOpenAddGear={() => d.setShowAddGearModal(true)}
-                    onCloseAddGear={() => d.setShowAddGearModal(false)}
-                    onSetAddGearTab={(tab) => d.setAddGearTab(tab)}
-                    onSetCustomCategory={(cat) => d.setCustomGearCategory(cat)}
-                    onSetCustomBrand={(val) => d.setCustomGearBrand(val)}
-                    onSetCustomModel={(val) => d.setCustomGearModel(val)}
-                    onSetCustomLabel={(val) => d.setCustomGearLabel(val)}
-                    onSetCustomCondition={(val) => d.setCustomGearCondition(val)}
-                    onSetCustomPrimary={(val) => d.setCustomGearPrimary(val)}
-                    onToggleCondition={(gearId, currentCondition) =>
-                      void d.handleToggleGearCondition(
-                        activeAthlete.id,
-                        gearId,
-                        currentCondition
-                      )
-                    }
-                    onTogglePrimary={(gearId, currentPrimary) =>
-                      void d.handleToggleGearPrimary(
-                        activeAthlete.id,
-                        gearId,
-                        currentPrimary
-                      )
-                    }
-                    onDeleteGear={(gearId) =>
-                      void d.handleDeleteGear(activeAthlete.id, gearId)
-                    }
-                    onAddGearPreset={(preset) =>
-                      void d.handleAddGearPreset(activeAthlete.id, preset)
-                    }
-                    onCreateCustomGear={() =>
-                      void d.handleCreateCustomGear(activeAthlete.id)
-                    }
-                  />
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={workspaceTab === "gear"}
+                    onClick={() => setWorkspaceTab("gear")}
+                    className={`min-h-11 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-colors whitespace-nowrap ${
+                      workspaceTab === "gear"
+                        ? "bg-harbour text-sailcloth shadow-xs"
+                        : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
+                    }`}
+                  >
+                    <CheckSquare className="h-3.5 w-3.5" />
+                    Gear &amp; Prep
+                    {alertCount > 0 && (
+                      <span
+                        className={`rounded-full px-1.5 py-0.5 text-[10px] font-black leading-none ${
+                          workspaceTab === "gear"
+                            ? "bg-rose-500 text-white"
+                            : "bg-rose-100 text-rose-700"
+                        }`}
+                      >
+                        {alertCount}
+                      </span>
+                    )}
+                  </button>
 
-                  <CoachFeedbackPanel athlete={activeAthlete} />
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={workspaceTab === "notes"}
+                    onClick={() => setWorkspaceTab("notes")}
+                    className={`min-h-11 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-colors whitespace-nowrap ${
+                      workspaceTab === "notes"
+                        ? "bg-harbour text-sailcloth shadow-xs"
+                        : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
+                    }`}
+                  >
+                    <MessageSquare className="h-3.5 w-3.5" />
+                    Coach &amp; Notes
+                    {coachNotesCount > 0 && (
+                      <span
+                        className={`rounded-full px-1.5 py-0.5 text-[10px] font-black leading-none ${
+                          workspaceTab === "notes"
+                            ? "bg-white/20 text-sailcloth"
+                            : "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                        }`}
+                      >
+                        {coachNotesCount}
+                      </span>
+                    )}
+                  </button>
                 </div>
 
-                <div className="space-y-6">
-                  <PreRaceChecklist
-                    activeAthlete={activeAthlete}
-                    upcomingRegattas={d.upcomingRegattas}
-                    checklistState={d.checklistState}
-                    customChecklistItems={d.customChecklistItems}
-                    newChecklistText={d.newChecklistText}
-                    onToggleItem={(id, itemId) => d.toggleChecklistItem(id, itemId)}
-                    onAddCustomItem={(id) => d.addCustomChecklistItem(id)}
-                    onRemoveCustomItem={(id, itemId) =>
-                      d.removeCustomChecklistItem(id, itemId)
-                    }
-                    onResetChecklist={(id) => d.resetChecklist(id)}
-                    onNewChecklistTextChange={(v) => d.setNewChecklistText(v)}
-                  />
+                {workspaceTab === "overview" && (
+                  <div className="space-y-4 sm:space-y-6" role="tabpanel">
+                    {alertCount > 0 && (
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3">
+                        <div className="flex items-center gap-2 text-xs font-bold text-[var(--sp-color-error)]">
+                          <AlertTriangle className="h-4 w-4 shrink-0" />
+                          <span>
+                            {alertCount} equipment alert
+                            {alertCount === 1 ? " requires" : "s require"} attention before racing
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setWorkspaceTab("gear")}
+                          className="inline-flex items-center gap-1 self-start sm:self-auto text-xs font-black text-rose-700 hover:underline min-h-8"
+                        >
+                          Review Gear &amp; Prep
+                          <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    )}
 
-                  <PrivateNotesPanel
-                    isParent={activeAthlete.ownerRelation === "parent"}
-                    activeAthlete={activeAthlete}
-                    noteDraft={d.noteDraft}
-                    selectedCategory={d.selectedCategory}
-                    noteBusy={d.noteBusy}
-                    onDraftChange={(id, value) =>
-                      d.setNoteDraft((prev) => ({ ...prev, [id]: value }))
-                    }
-                    onCategoryChange={(cat) =>
-                      d.setSelectedCategory(cat as NoteCategory)
-                    }
-                    onAddNote={(id) => void d.addNote(id)}
-                    onDeleteNote={(id) => void d.deleteNote(id)}
-                  />
-                </div>
+                    {activeAthlete.season ? (
+                      <PersonalSeasonCard
+                        season={activeAthlete.season}
+                        showSailorName={false}
+                        collapsibleExplanation
+                      />
+                    ) : null}
+
+                    <AthleteInsightGrid athlete={activeAthlete} demoMode={demoMode} />
+                  </div>
+                )}
+
+                {workspaceTab === "gear" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6" role="tabpanel">
+                    <div className="lg:col-span-5">
+                      <PreRaceChecklist
+                        activeAthlete={activeAthlete}
+                        upcomingRegattas={d.upcomingRegattas}
+                        checklistState={d.checklistState}
+                        customChecklistItems={d.customChecklistItems}
+                        newChecklistText={d.newChecklistText}
+                        onToggleItem={(id, itemId) => d.toggleChecklistItem(id, itemId)}
+                        onAddCustomItem={(id) => d.addCustomChecklistItem(id)}
+                        onRemoveCustomItem={(id, itemId) =>
+                          d.removeCustomChecklistItem(id, itemId)
+                        }
+                        onResetChecklist={(id) => d.resetChecklist(id)}
+                        onNewChecklistTextChange={(v) => d.setNewChecklistText(v)}
+                      />
+                    </div>
+                    <div className="lg:col-span-7">
+                      <EquipmentInPlacePanel
+                        activeAthlete={activeAthlete}
+                        demoMode={demoMode}
+                        showAddGearModal={d.showAddGearModal}
+                        addGearTab={d.addGearTab}
+                        addGearBusy={d.addGearBusy}
+                        customGearCategory={d.customGearCategory}
+                        customGearBrand={d.customGearBrand}
+                        customGearModel={d.customGearModel}
+                        customGearLabel={d.customGearLabel}
+                        customGearCondition={d.customGearCondition}
+                        customGearPrimary={d.customGearPrimary}
+                        onOpenAddGear={() => d.setShowAddGearModal(true)}
+                        onCloseAddGear={() => d.setShowAddGearModal(false)}
+                        onSetAddGearTab={(tab) => d.setAddGearTab(tab)}
+                        onSetCustomCategory={(cat) => d.setCustomGearCategory(cat)}
+                        onSetCustomBrand={(val) => d.setCustomGearBrand(val)}
+                        onSetCustomModel={(val) => d.setCustomGearModel(val)}
+                        onSetCustomLabel={(val) => d.setCustomGearLabel(val)}
+                        onSetCustomCondition={(val) => d.setCustomGearCondition(val)}
+                        onSetCustomPrimary={(val) => d.setCustomGearPrimary(val)}
+                        onToggleCondition={(gearId, currentCondition) =>
+                          void d.handleToggleGearCondition(
+                            activeAthlete.id,
+                            gearId,
+                            currentCondition
+                          )
+                        }
+                        onTogglePrimary={(gearId, currentPrimary) =>
+                          void d.handleToggleGearPrimary(
+                            activeAthlete.id,
+                            gearId,
+                            currentPrimary
+                          )
+                        }
+                        onDeleteGear={(gearId) =>
+                          void d.handleDeleteGear(activeAthlete.id, gearId)
+                        }
+                        onAddGearPreset={(preset) =>
+                          void d.handleAddGearPreset(activeAthlete.id, preset)
+                        }
+                        onCreateCustomGear={() =>
+                          void d.handleCreateCustomGear(activeAthlete.id)
+                        }
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {workspaceTab === "notes" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6" role="tabpanel">
+                    <div className="lg:col-span-7">
+                      <CoachFeedbackPanel athlete={activeAthlete} />
+                    </div>
+                    <div className="lg:col-span-5">
+                      <PrivateNotesPanel
+                        isParent={activeAthlete.ownerRelation === "parent"}
+                        activeAthlete={activeAthlete}
+                        noteDraft={d.noteDraft}
+                        selectedCategory={d.selectedCategory}
+                        noteBusy={d.noteBusy}
+                        onDraftChange={(id, value) =>
+                          d.setNoteDraft((prev) => ({ ...prev, [id]: value }))
+                        }
+                        onCategoryChange={(cat) =>
+                          d.setSelectedCategory(cat as NoteCategory)
+                        }
+                        onAddNote={(id) => void d.addNote(id)}
+                        onDeleteNote={(id) => void d.deleteNote(id)}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
+            );
+          })()}
         </>
       )}
 
@@ -239,17 +368,9 @@ export function ParentDashboard({
         </div>
       )}
 
-      <p className={`text-center text-xs ${MUTED} pt-4`}>
-        <Link href="/account" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
-          Account Settings
-        </Link>
-        {" · "}
-        <Link href="/sailors" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
-          Find Sailors
-        </Link>
-        {" · "}
+      <p className={`text-center text-xs ${MUTED} pt-2`}>
         <Link href="/support" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
-          Support & Feedback
+          Support &amp; Feedback
         </Link>
       </p>
     </div>

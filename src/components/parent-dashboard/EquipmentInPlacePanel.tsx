@@ -157,8 +157,16 @@ export function EquipmentInPlacePanel({
         )}
 
         {activeAthlete.primaryGear && activeAthlete.primaryGear.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-            {activeAthlete.primaryGear.map((g) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {[...activeAthlete.primaryGear]
+              .sort((a, b) => {
+                const rank = (cond: string) => {
+                  const s = toSimplifiedCondition(cond);
+                  return s === "needs_attention" ? 0 : s === "practice_only" ? 1 : 2;
+                };
+                return rank(a.condition) - rank(b.condition);
+              })
+              .map((g) => (
               <div
                 key={g.id}
                 className={`${NESTED} p-3 flex flex-col justify-between gap-2.5 hover:border-[var(--sp-harbour-teal)] transition group`}

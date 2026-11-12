@@ -163,7 +163,7 @@ export function PreRaceChecklist({
                 <button
                   type="button"
                   onClick={() => onToggleItem(activeAthlete.id, item.id)}
-                  className="flex items-start gap-2.5 flex-1 text-left min-w-0"
+                  className="flex items-start gap-2.5 flex-1 min-h-9 py-0.5 text-left min-w-0"
                 >
                   {isDone ? (
                     <CheckSquare className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />

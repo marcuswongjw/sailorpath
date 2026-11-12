@@ -175,6 +175,7 @@ export async function GET() {
               regattaDate: regattas.date,
               rank: regattaResults.rank,
               boatClass: regattas.boatClass,
+              regattaSlug: regattas.slug,
             })
             .from(regattaResults)
             .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
@@ -274,6 +275,7 @@ export async function GET() {
         regattaDate: string;
         rank: number;
         boatClass: string | null;
+        regattaSlug: string | null;
       }[]
     >();
     for (const r of allRecentResults) {
@@ -284,6 +286,7 @@ export async function GET() {
         regattaDate: String(r.regattaDate).slice(0, 10),
         rank: r.rank,
         boatClass: r.boatClass,
+        regattaSlug: r.regattaSlug ?? null,
       });
       recentBySailor.set(r.sailorId, list);
     }

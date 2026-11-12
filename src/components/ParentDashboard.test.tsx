@@ -189,7 +189,8 @@ describe("ParentDashboard", () => {
     vi.unstubAllGlobals();
   });
 
-  it("renders parent dashboard header, multi-athlete switcher, and athlete overview", async () => {
+  it("renders parent dashboard header, multi-athlete switcher, and tabbed athlete workspace", async () => {
+    const user = userEvent.setup();
     render(
       <FeedbackProvider>
         <ParentDashboard />
@@ -206,33 +207,38 @@ describe("ParentDashboard", () => {
     expect(screen.getAllByText("Lucas Wong").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("Chloe Wong")).toBeInTheDocument();
 
-    // Default view is Lucas Wong (first athlete)
+    // Default view is Lucas Wong (Overview tab active)
     expect(screen.getByText("Opti SIN 4639")).toBeInTheDocument();
     expect(screen.getByText("ILCA 4 SIN 221088")).toBeInTheDocument();
-    expect(screen.getByText("Gold Fleet")).toBeInTheDocument();
+    expect(screen.getByText("SG Gold")).toBeInTheDocument();
 
-    // 3-Column Summary Card (Selection Trial, National Ranking, Recent Results)
+    // Actionable equipment alert jump & Overview cards (Selection Trial + Recent Results)
+    expect(screen.getByText(/1 equipment alert requires attention/i)).toBeInTheDocument();
     expect(screen.getByText("Selection Trial")).toBeInTheDocument();
     expect(screen.getByText("Selected")).toBeInTheDocument();
     expect(screen.getByText(/Asian Games & Perth Camp/i)).toBeInTheDocument();
-    expect(screen.getByText("National Ranking")).toBeInTheDocument();
+    expect(screen.getByText("SG Gold #3")).toBeInTheDocument();
     expect(screen.getByText("Recent Results")).toBeInTheDocument();
-    expect(screen.getAllByText("#3").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("Singapore National Youth Sailing Championships")).toBeInTheDocument();
+    expect(screen.getByText("#2")).toBeInTheDocument();
 
-    // Equipment locker & alerts
+    // Gear & Prep content is hidden on Overview until selected
+    expect(screen.queryByText("Boat Locker & Equipment")).not.toBeInTheDocument();
+
+    // Switch to Gear & Prep via the alert CTA
+    await user.click(screen.getByRole("button", { name: /Review Gear & Prep/i }));
+
     expect(screen.getByText("Boat Locker & Equipment")).toBeInTheDocument();
     expect(screen.getByText(/1 Equipment Alert/i)).toBeInTheDocument();
     expect(screen.getByText("Hull #184491")).toBeInTheDocument();
-
-    // Coach development feedback
-    expect(screen.getByText("Pin end acceleration in chop")).toBeInTheDocument();
-    expect(screen.getByText("Aggressive trigger pull at 8 seconds with clear wind.")).toBeInTheDocument();
-
-    // Pre-race checklist items
     expect(screen.getByText("Official class measurement certificate verified & onboard")).toBeInTheDocument();
     expect(screen.getByText("Spare battens, sail ties (2.5mm / 3.0mm) & wind indicator checked")).toBeInTheDocument();
 
-    // Private notes
+    // Switch to Coach & Notes tab
+    await user.click(screen.getByRole("tab", { name: /Coach & Notes/i }));
+
+    expect(screen.getByText("Pin end acceleration in chop")).toBeInTheDocument();
+    expect(screen.getByText("Aggressive trigger pull at 8 seconds with clear wind.")).toBeInTheDocument();
     expect(screen.getByText("Focused on roll tacks in light air.")).toBeInTheDocument();
   });
 
@@ -272,6 +278,9 @@ describe("ParentDashboard", () => {
         <ParentDashboard />
       </FeedbackProvider>
     );
+
+    const gearTab = await screen.findByRole("tab", { name: /Gear & Prep/i });
+    await user.click(gearTab);
 
     await waitFor(() => {
       expect(screen.getByText("Official class measurement certificate verified & onboard")).toBeInTheDocument();
@@ -315,6 +324,9 @@ describe("ParentDashboard", () => {
         <ParentDashboard />
       </FeedbackProvider>
     );
+
+    const gearTab = await screen.findByRole("tab", { name: /Gear & Prep/i });
+    await user.click(gearTab);
 
     await waitFor(() => {
       expect(screen.getByText("Boat Locker & Equipment")).toBeInTheDocument();

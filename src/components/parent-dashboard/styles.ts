@@ -28,3 +28,13 @@ export const PRIMARY_BTN = "sp-btn-primary";
 
 export const LINK_TEAL =
   "text-[11px] font-bold text-[var(--sp-harbour-teal)] hover:underline";
+
+/** Consistent fleet badge label matching SG fleet boards and profile tags. */
+export function formatSgFleetLabel(fleet?: string | null): string | null {
+  if (!fleet) return null;
+  if (fleet === "Gold") return "SG Gold";
+  if (fleet === "Silver") return "SG Silver";
+  if (fleet === "Series") return "SG Series";
+  if (fleet === "Guest") return null;
+  return fleet;
+}

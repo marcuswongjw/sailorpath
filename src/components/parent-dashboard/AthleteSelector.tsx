@@ -15,6 +15,7 @@ import {
   MUTED,
   INK,
   BODY,
+  formatSgFleetLabel,
 } from "./styles";
 
 export type AthleteSelectorProps = {
@@ -56,6 +57,7 @@ export function AthleteSelector({
 
           {athletes.map((a) => {
             const isSelected = selectedAthleteId === a.id;
+            const fleetLabel = formatSgFleetLabel(a.standing?.fleet);
             return (
               <button
                 key={a.id}
@@ -80,7 +82,7 @@ export function AthleteSelector({
                   <User className="h-3.5 w-3.5" />
                 )}
                 <span>{a.name}</span>
-                {a.standing?.fleet && (
+                {a.standing && (
                   <span
                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-black border ${
                       isSelected
@@ -88,7 +90,7 @@ export function AthleteSelector({
                         : fleetPillClass(a.standing.fleet)
                     }`}
                   >
-                    {a.standing.fleet} #{a.standing.overallRank}
+                    {fleetLabel ? `${fleetLabel} #${a.standing.overallRank}` : `#${a.standing.overallRank}`}
                   </span>
                 )}
                 {(a.equipmentAlertCount ?? 0) > 0 && (
@@ -102,130 +104,135 @@ export function AthleteSelector({
 
       {selectedAthleteId === "all" && athletes.length > 1 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {athletes.map((a) => (
-            <article
-              key={a.id}
-              className={`${CARD} p-5 space-y-4 hover:border-[var(--sp-harbour-teal)] transition-colors`}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  {a.avatarUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={profilePhotoUrl(a.id, a.avatarUrl) || undefined}
-                      alt=""
-                      className="h-12 w-12 rounded-2xl object-cover border border-[var(--sp-cool-veil)] shrink-0"
-                    />
-                  ) : (
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border border-[var(--sp-harbour-teal)]">
-                      <User className="h-6 w-6" />
-                    </span>
-                  )}
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className={`text-base font-black ${INK}`}>{a.name}</h3>
-                      {a.ownerRelation && (
-                        <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)]">
-                          {relationLabel(a.ownerRelation)}
+          {athletes.map((a) => {
+            const fleetLabel = formatSgFleetLabel(a.standing?.fleet);
+            return (
+              <article
+                key={a.id}
+                className={`${CARD} p-5 space-y-4 hover:border-[var(--sp-harbour-teal)] transition-colors`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    {a.avatarUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={profilePhotoUrl(a.id, a.avatarUrl) || undefined}
+                        alt=""
+                        className="h-12 w-12 rounded-2xl object-cover border border-[var(--sp-cool-veil)] shrink-0"
+                      />
+                    ) : (
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border border-[var(--sp-harbour-teal)]">
+                        <User className="h-6 w-6" />
+                      </span>
+                    )}
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className={`text-base font-black ${INK}`}>{a.name}</h3>
+                        {a.ownerRelation && (
+                          <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)]">
+                            {relationLabel(a.ownerRelation)}
+                          </span>
+                        )}
+                      </div>
+                      <p className={`text-xs ${MUTED} mt-0.5`}>
+                        {[a.club, a.sailNumber, formatAgeCategory(a.dob)]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    <Link
+                      href={demoMode ? "/sample?view=sailor" : `/athlete?id=${a.id}`}
+                      className={`${SECONDARY_BTN} px-3 py-1.5 text-xs`}
+                    >
+                      Logbook ↗
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => onSelectAthlete(a.id)}
+                      className={`${PRIMARY_BTN} min-h-10 px-3.5 py-2 text-xs`}
+                    >
+                      Open Dashboard
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  <div className={`${NESTED} p-2.5`}>
+                    <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
+                      Series Rank
+                    </p>
+                    <p className={`text-sm font-black ${INK} mt-0.5`}>
+                      {a.standing ? (
+                        <>
+                          #{a.standing.overallRank}
+                          {fleetLabel && (
+                            <span className={`text-[11px] font-normal ${MUTED}`}>
+                              {" "}({fleetLabel})
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <span className={`${MUTED} text-xs font-normal`}>—</span>
+                      )}
+                    </p>
+                  </div>
+
+                  <div className={`${NESTED} p-2.5`}>
+                    <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
+                      Selection Trials
+                    </p>
+                    <p className={`text-sm font-black ${INK} mt-0.5`}>
+                      {a.selectionTrials ? (
+                        <>
+                          #{a.selectionTrials.rank}{" "}
+                          <span className="text-[11px] font-normal text-[var(--sp-harbour-teal)]">
+                            ({a.selectionTrials.nettScore} pts)
+                          </span>
+                        </>
+                      ) : (
+                        <span className={`${MUTED} text-xs font-normal`}>—</span>
+                      )}
+                    </p>
+                  </div>
+
+                  <div className={`${NESTED} p-2.5 col-span-2 sm:col-span-1`}>
+                    <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
+                      Locker Alerts
+                    </p>
+                    <p className="text-sm font-black mt-0.5">
+                      {(a.equipmentAlertCount ?? 0) > 0 ? (
+                        <span className="text-rose-700 font-bold">
+                          {a.equipmentAlertCount} alert
+                          {a.equipmentAlertCount === 1 ? "" : "s"}
+                        </span>
+                      ) : (
+                        <span className="text-[var(--sp-harbour-teal)] font-semibold text-xs flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3" /> All good
                         </span>
                       )}
+                    </p>
+                  </div>
+                </div>
+
+                {a.coachFeedback && a.coachFeedback.length > 0 && (
+                  <div className="rounded-xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)]/60 p-2.5 text-xs flex items-start gap-2">
+                    <Award className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
+                    <div className="min-w-0 flex-1">
+                      <p className="font-bold text-[11px] text-[var(--sp-harbour-teal)] truncate">
+                        Latest Coach Feedback: {a.coachFeedback[0].title}
+                      </p>
+                      <p className={`${BODY} text-[11px] line-clamp-1 mt-0.5`}>
+                        {a.coachFeedback[0].detail}
+                      </p>
                     </div>
-                    <p className={`text-xs ${MUTED} mt-0.5`}>
-                      {[a.club, a.sailNumber, formatAgeCategory(a.dob)]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </p>
                   </div>
-                </div>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <Link
-                    href={demoMode ? "/sample?view=sailor" : `/athlete?id=${a.id}`}
-                    className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
-                  >
-                    Athlete Hub ↗
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => onSelectAthlete(a.id)}
-                    className={`${PRIMARY_BTN} px-3 py-1.5`}
-                  >
-                    Open Dashboard
-                    <ChevronRight className="h-3 w-3" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                <div className={`${NESTED} p-2.5`}>
-                  <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
-                    Series Rank
-                  </p>
-                  <p className={`text-sm font-black ${INK} mt-0.5`}>
-                    {a.standing ? (
-                      <>
-                        #{a.standing.overallRank}{" "}
-                        <span className={`text-[11px] font-normal ${MUTED}`}>
-                          ({a.standing.fleet})
-                        </span>
-                      </>
-                    ) : (
-                      <span className={`${MUTED} text-xs font-normal`}>—</span>
-                    )}
-                  </p>
-                </div>
-
-                <div className={`${NESTED} p-2.5`}>
-                  <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
-                    Selection Trials
-                  </p>
-                  <p className={`text-sm font-black ${INK} mt-0.5`}>
-                    {a.selectionTrials ? (
-                      <>
-                        #{a.selectionTrials.rank}{" "}
-                        <span className="text-[11px] font-normal text-[var(--sp-harbour-teal)]">
-                          ({a.selectionTrials.nettScore} pts)
-                        </span>
-                      </>
-                    ) : (
-                      <span className={`${MUTED} text-xs font-normal`}>N/A</span>
-                    )}
-                  </p>
-                </div>
-
-                <div className={`${NESTED} p-2.5 col-span-2 sm:col-span-1`}>
-                  <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
-                    Locker Alerts
-                  </p>
-                  <p className="text-sm font-black mt-0.5">
-                    {(a.equipmentAlertCount ?? 0) > 0 ? (
-                      <span className="text-rose-700 font-bold">
-                        {a.equipmentAlertCount} alert
-                        {a.equipmentAlertCount === 1 ? "" : "s"}
-                      </span>
-                    ) : (
-                      <span className="text-[var(--sp-harbour-teal)] font-semibold text-xs flex items-center gap-1">
-                        <CheckCircle2 className="h-3 w-3" /> All good
-                      </span>
-                    )}
-                  </p>
-                </div>
-              </div>
-
-              {a.coachFeedback && a.coachFeedback.length > 0 && (
-                <div className="rounded-xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)]/60 p-2.5 text-xs flex items-start gap-2">
-                  <Award className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
-                  <div className="min-w-0 flex-1">
-                    <p className="font-bold text-[11px] text-[var(--sp-harbour-teal)] truncate">
-                      Latest Coach Feedback: {a.coachFeedback[0].title}
-                    </p>
-                    <p className={`${BODY} text-[11px] line-clamp-1 mt-0.5`}>
-                      {a.coachFeedback[0].detail}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </article>
-          ))}
+                )}
+              </article>
+            );
+          })}
         </div>
       )}
     </>

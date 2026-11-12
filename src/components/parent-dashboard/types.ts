@@ -26,6 +26,7 @@ export type RecentResult = {
   regattaDate: string;
   rank: number;
   boatClass: string | null;
+  regattaSlug?: string | null;
 };
 
 export type PrimaryGearItem = {
