@@ -1,0 +1,881 @@
+{
+  "officialSource": {
+    "url": "https://www.omansail.om/events/mussanah-race-week-2026#results",
+    "title": "Oman Sail Mussanah Race Week 2026 ILCA 7, Day 4, updated 21 October 2026",
+    "visuallyReviewed": false
+  },
+  "event": {
+    "slug": "mussanah-race-week-2026",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-22",
+    "venue": "Barceló Mussanah Resort, Oman",
+    "organizer": "Oman Sail"
+  },
+  "sheet": {
+    "slug": "mussanah-race-week-2026-ilca-7",
+    "name": "Mussanah Race Week 2026 (ILCA 7)",
+    "boatClass": "ILCA 7",
+    "division": "Open",
+    "raceCount": 12,
+    "totalFleetSize": 9,
+    "countsForRanking": false,
+    "status": "published"
+  },
+  "results": [
+    {
+      "rank": 1,
+      "name": "Al Mutasem Humood Al Farsi",
+      "sailOrBoardNumber": "201717",
+      "gender": null,
+      "nationality": "OMA",
+      "grossScore": 33,
+      "nettScore": 27,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 6,
+          "code": null,
+          "discarded": true,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "name": "Dawood Abdullah",
+      "sailOrBoardNumber": "211431",
+      "gender": null,
+      "nationality": "BRN",
+      "grossScore": 37,
+      "nettScore": 27,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 10,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "10.0 DSQ"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "name": "Hamza Al Ali",
+      "sailOrBoardNumber": "200153",
+      "gender": null,
+      "nationality": "UAE",
+      "grossScore": 37,
+      "nettScore": 30,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 7,
+          "code": null,
+          "discarded": true,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "name": "Alsalim Ali Al Hamdani",
+      "sailOrBoardNumber": "202006",
+      "gender": null,
+      "nationality": "OMA",
+      "grossScore": 55,
+      "nettScore": 45,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 10,
+          "code": "DSQ",
+          "discarded": true,
+          "raw": "10.0 DSQ"
+        },
+        {
+          "raceNumber": 8,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "name": "Abdulatif Ziyad Al Qasmi",
+      "sailOrBoardNumber": "212882",
+      "gender": null,
+      "nationality": "OMA",
+      "grossScore": 62,
+      "nettScore": 54,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 8,
+          "code": null,
+          "discarded": true,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 1,
+          "code": null,
+          "discarded": false,
+          "raw": "1.0"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "name": "Yaacoub Shah",
+      "sailOrBoardNumber": "223937",
+      "gender": null,
+      "nationality": "KUW",
+      "grossScore": 64,
+      "nettScore": 55,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 9,
+          "code": null,
+          "discarded": true,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 2,
+          "code": null,
+          "discarded": false,
+          "raw": "2.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 3,
+          "code": null,
+          "discarded": false,
+          "raw": "3.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "name": "Saleh Ali Al Balushi",
+      "sailOrBoardNumber": "205933",
+      "gender": null,
+      "nationality": "OMA",
+      "grossScore": 80,
+      "nettScore": 71,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 9,
+          "code": null,
+          "discarded": true,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "name": "Manef Alwahaib",
+      "sailOrBoardNumber": "223933",
+      "gender": null,
+      "nationality": "KUW",
+      "grossScore": 86,
+      "nettScore": 77,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 9,
+          "code": null,
+          "discarded": true,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "name": "Toprak Caglayan",
+      "sailOrBoardNumber": "217415",
+      "gender": null,
+      "nationality": "UAE",
+      "grossScore": 88,
+      "nettScore": 79,
+      "races": [
+        {
+          "raceNumber": 1,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 2,
+          "score": 9,
+          "code": null,
+          "discarded": true,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 3,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 4,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 5,
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 6,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 7,
+          "score": 6,
+          "code": null,
+          "discarded": false,
+          "raw": "6.0"
+        },
+        {
+          "raceNumber": 8,
+          "score": 5,
+          "code": null,
+          "discarded": false,
+          "raw": "5.0"
+        },
+        {
+          "raceNumber": 9,
+          "score": 8,
+          "code": null,
+          "discarded": false,
+          "raw": "8.0"
+        },
+        {
+          "raceNumber": 10,
+          "score": 9,
+          "code": null,
+          "discarded": false,
+          "raw": "9.0"
+        },
+        {
+          "raceNumber": 11,
+          "score": 7,
+          "code": null,
+          "discarded": false,
+          "raw": "7.0"
+        },
+        {
+          "raceNumber": 12,
+          "score": 4,
+          "code": null,
+          "discarded": false,
+          "raw": "4.0"
+        }
+      ]
+    }
+  ]
+}

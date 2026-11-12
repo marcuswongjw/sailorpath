@@ -1,0 +1,7721 @@
+[
+  {
+    "id": "optimist",
+    "name": "Optimist",
+    "rows": [
+      {
+        "rank": 1,
+        "name": "Khaled Yahya Al Sarihi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "312",
+        "total": 25,
+        "nett": 21,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 4,
+            "code": null,
+            "discarded": true,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Mohammed Ziyad al Gasim",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "315",
+        "total": 46,
+        "nett": 35,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 11,
+            "code": null,
+            "discarded": true,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Theyab Almehairi",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "88",
+        "total": 105,
+        "nett": 58,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 47,
+            "code": "RET",
+            "discarded": true,
+            "raw": "47.0 RET"
+          },
+          {
+            "raceNumber": 5,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Krishna Venkitachalam",
+        "nationality": "IND",
+        "gender": "M",
+        "sail": "1639",
+        "total": 80,
+        "nett": 65,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 15,
+            "code": null,
+            "discarded": true,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Laila Mohamed",
+        "nationality": "EGY",
+        "gender": "F",
+        "sail": "725",
+        "total": 96,
+        "nett": 79,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 17,
+            "code": null,
+            "discarded": true,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Alkhalil Ibrahim Al Fori",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "316",
+        "total": 92,
+        "nett": 79,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 13,
+            "code": null,
+            "discarded": true,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Shringhari Roy",
+        "nationality": "IND",
+        "gender": "F",
+        "sail": "1770",
+        "total": 100,
+        "nett": 81,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 19,
+            "code": null,
+            "discarded": true,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Mohammed Suleiman Al balushi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "308",
+        "total": 116,
+        "nett": 82,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 34,
+            "code": null,
+            "discarded": true,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "name": "Habib Abdulaziz Al Hasani",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "133",
+        "total": 144,
+        "nett": 122,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 22,
+            "code": null,
+            "discarded": true,
+            "raw": "22.0"
+          }
+        ]
+      },
+      {
+        "rank": 10,
+        "name": "Firas Yahya Al Mujaini",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "131",
+        "total": 148,
+        "nett": 123,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 25,
+            "code": null,
+            "discarded": true,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          }
+        ]
+      },
+      {
+        "rank": 11,
+        "name": "Abeer Kalil Al Zakwani",
+        "nationality": "OMA",
+        "gender": "F",
+        "sail": "310",
+        "total": 143,
+        "nett": 123,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 20,
+            "code": null,
+            "discarded": true,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          }
+        ]
+      },
+      {
+        "rank": 12,
+        "name": "Abdullaziz Almansour",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "3354",
+        "total": 165,
+        "nett": 142,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 23,
+            "code": null,
+            "discarded": true,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          }
+        ]
+      },
+      {
+        "rank": 13,
+        "name": "Rashed Alneyadi",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "40",
+        "total": 176,
+        "nett": 152,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 24,
+            "code": null,
+            "discarded": true,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          }
+        ]
+      },
+      {
+        "rank": 14,
+        "name": "Zakaria Bohamad",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "92",
+        "total": 178,
+        "nett": 158,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 20,
+            "code": null,
+            "discarded": true,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 47,
+            "code": "DNE",
+            "discarded": false,
+            "raw": "47.0 DNE"
+          },
+          {
+            "raceNumber": 11,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          }
+        ]
+      },
+      {
+        "rank": 15,
+        "name": "Mohammed Said Al Qurtubi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "306",
+        "total": 217,
+        "nett": 170,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 47,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "47.0 UFD"
+          },
+          {
+            "raceNumber": 3,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          }
+        ]
+      },
+      {
+        "rank": 16,
+        "name": "Ahmed Mohammed Al Majini",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "313",
+        "total": 213,
+        "nett": 177,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 36,
+            "code": null,
+            "discarded": true,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          }
+        ]
+      },
+      {
+        "rank": 17,
+        "name": "Mohamed Nabeel Al Baloshi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "311",
+        "total": 214,
+        "nett": 184,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 30,
+            "code": null,
+            "discarded": true,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          }
+        ]
+      },
+      {
+        "rank": 18,
+        "name": "Ali Ibrahim",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "54",
+        "total": 221,
+        "nett": 186,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 35,
+            "code": null,
+            "discarded": true,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          }
+        ]
+      },
+      {
+        "rank": 19,
+        "name": "Hazza Ibrahim",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "33",
+        "total": 233,
+        "nett": 186,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 8,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          }
+        ]
+      },
+      {
+        "rank": 20,
+        "name": "Salah Almedhen",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "3355",
+        "total": 253,
+        "nett": 206,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 47,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "47.0 UFD"
+          },
+          {
+            "raceNumber": 11,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          }
+        ]
+      },
+      {
+        "rank": 21,
+        "name": "Abdullah Mohamed",
+        "nationality": "BRN",
+        "gender": "M",
+        "sail": "345",
+        "total": 261,
+        "nett": 214,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          }
+        ]
+      },
+      {
+        "rank": 22,
+        "name": "Ghaith Al Mujaini",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "132",
+        "total": 255,
+        "nett": 223,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 32,
+            "code": null,
+            "discarded": true,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          }
+        ]
+      },
+      {
+        "rank": 23,
+        "name": "Hareb Mohsn Al Busaidi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "2013",
+        "total": 266,
+        "nett": 236,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 30,
+            "code": null,
+            "discarded": true,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          }
+        ]
+      },
+      {
+        "rank": 24,
+        "name": "Ali Alremeithi",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "99",
+        "total": 272,
+        "nett": 239,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 33,
+            "code": null,
+            "discarded": true,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          }
+        ]
+      },
+      {
+        "rank": 25,
+        "name": "Dana Abdullah",
+        "nationality": "BRN",
+        "gender": "F",
+        "sail": "455",
+        "total": 299,
+        "nett": 252,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 16,
+            "code": null,
+            "discarded": false,
+            "raw": "16.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          }
+        ]
+      },
+      {
+        "rank": 26,
+        "name": "Nouh Alblooshi",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "36",
+        "total": 301,
+        "nett": 268,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 33,
+            "code": null,
+            "discarded": true,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 18,
+            "code": null,
+            "discarded": false,
+            "raw": "18.0"
+          }
+        ]
+      },
+      {
+        "rank": 27,
+        "name": "Juma Musa Al Fadili",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "209",
+        "total": 300,
+        "nett": 271,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 29,
+            "code": null,
+            "discarded": true,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          }
+        ]
+      },
+      {
+        "rank": 28,
+        "name": "Al Waleed Khalid Al Musharfi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "314",
+        "total": 310,
+        "nett": 279,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 31,
+            "code": null,
+            "discarded": true,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 47,
+            "code": "DNE",
+            "discarded": false,
+            "raw": "47.0 DNE"
+          }
+        ]
+      },
+      {
+        "rank": 29,
+        "name": "Ahmed Hamed Al Yahmadi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "200",
+        "total": 311,
+        "nett": 279,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 32,
+            "code": null,
+            "discarded": true,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          }
+        ]
+      },
+      {
+        "rank": 30,
+        "name": "Manelle Mohammed Rekik",
+        "nationality": "TUN",
+        "gender": "F",
+        "sail": "63",
+        "total": 338,
+        "nett": 291,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 19,
+            "code": null,
+            "discarded": false,
+            "raw": "19.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 17,
+            "code": null,
+            "discarded": false,
+            "raw": "17.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 47,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "47.0 UFD"
+          }
+        ]
+      },
+      {
+        "rank": 31,
+        "name": "Ilyas Maher Al Khdori",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "305",
+        "total": 342,
+        "nett": 305,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 20,
+            "code": null,
+            "discarded": false,
+            "raw": "20.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 37,
+            "code": null,
+            "discarded": true,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 23,
+            "code": null,
+            "discarded": false,
+            "raw": "23.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          }
+        ]
+      },
+      {
+        "rank": 32,
+        "name": "Yusef Saleh al balushi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "201",
+        "total": 345,
+        "nett": 310,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 29,
+            "code": null,
+            "discarded": false,
+            "raw": "29.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 22,
+            "code": null,
+            "discarded": false,
+            "raw": "22.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 35,
+            "code": null,
+            "discarded": true,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 27,
+            "code": null,
+            "discarded": false,
+            "raw": "27.0"
+          }
+        ]
+      },
+      {
+        "rank": 33,
+        "name": "Rakan Ahmed Al Omeir",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "57",
+        "total": 361,
+        "nett": 323,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 38,
+            "code": null,
+            "discarded": true,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 26,
+            "code": null,
+            "discarded": false,
+            "raw": "26.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 21,
+            "code": null,
+            "discarded": false,
+            "raw": "21.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 28,
+            "code": null,
+            "discarded": false,
+            "raw": "28.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          }
+        ]
+      },
+      {
+        "rank": 34,
+        "name": "Albaraa Younis Al Ameri",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "18",
+        "total": 395,
+        "nett": 352,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 43,
+            "code": null,
+            "discarded": true,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 24,
+            "code": null,
+            "discarded": false,
+            "raw": "24.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 30,
+            "code": null,
+            "discarded": false,
+            "raw": "30.0"
+          }
+        ]
+      },
+      {
+        "rank": 35,
+        "name": "Al-Yazid Khamis Al Buloshi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "47",
+        "total": 413,
+        "nett": 374,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 39,
+            "code": null,
+            "discarded": true,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          }
+        ]
+      },
+      {
+        "rank": 36,
+        "name": "Ali Adel Al-Tarshi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "8",
+        "total": 435,
+        "nett": 394,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 41,
+            "code": null,
+            "discarded": true,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          }
+        ]
+      },
+      {
+        "rank": 37,
+        "name": "Mulham Haitham Al-Bariki",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "2014",
+        "total": 440,
+        "nett": 398,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 31,
+            "code": null,
+            "discarded": false,
+            "raw": "31.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 42,
+            "code": null,
+            "discarded": true,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          }
+        ]
+      },
+      {
+        "rank": 38,
+        "name": "Dima Khalfan Al Balushi",
+        "nationality": "OMA",
+        "gender": "F",
+        "sail": "210",
+        "total": 453,
+        "nett": 406,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 33,
+            "code": null,
+            "discarded": false,
+            "raw": "33.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 47,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "47.0 UFD"
+          },
+          {
+            "raceNumber": 5,
+            "score": 47,
+            "code": "UFD",
+            "discarded": false,
+            "raw": "47.0 UFD"
+          },
+          {
+            "raceNumber": 6,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 25,
+            "code": null,
+            "discarded": false,
+            "raw": "25.0"
+          }
+        ]
+      },
+      {
+        "rank": 39,
+        "name": "Alkhalil Ibrahim Al Amri",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "1",
+        "total": 462,
+        "nett": 418,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 44,
+            "code": null,
+            "discarded": true,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 32,
+            "code": null,
+            "discarded": false,
+            "raw": "32.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          }
+        ]
+      },
+      {
+        "rank": 40,
+        "name": "Mohammed Hamad Al Mukhaini",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "73",
+        "total": 461,
+        "nett": 418,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 34,
+            "code": null,
+            "discarded": false,
+            "raw": "34.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 43,
+            "code": null,
+            "discarded": true,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          }
+        ]
+      },
+      {
+        "rank": 41,
+        "name": "Ali bin Salem Al Shu'aibi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "91",
+        "total": 476,
+        "nett": 429,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 47,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "47.0 UFD"
+          },
+          {
+            "raceNumber": 11,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          }
+        ]
+      },
+      {
+        "rank": 42,
+        "name": "Mohammed Talal Alomari",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "666",
+        "total": 486,
+        "nett": 439,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 45,
+            "code": null,
+            "discarded": false,
+            "raw": "45.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 38,
+            "code": null,
+            "discarded": false,
+            "raw": "38.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 47,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "47.0 UFD"
+          },
+          {
+            "raceNumber": 11,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 37,
+            "code": null,
+            "discarded": false,
+            "raw": "37.0"
+          }
+        ]
+      },
+      {
+        "rank": 43,
+        "name": "Abdullah bin Saleh Al Salmani",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "66",
+        "total": 495,
+        "nett": 448,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 9,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 35,
+            "code": null,
+            "discarded": false,
+            "raw": "35.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 36,
+            "code": null,
+            "discarded": false,
+            "raw": "36.0"
+          }
+        ]
+      },
+      {
+        "rank": 44,
+        "name": "Abdulrahman Mohammed Al Mughairefi",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "3",
+        "total": 519,
+        "nett": 472,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 4,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 47,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 9,
+            "score": 45,
+            "code": null,
+            "discarded": false,
+            "raw": "45.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 40,
+            "code": null,
+            "discarded": false,
+            "raw": "40.0"
+          }
+        ]
+      },
+      {
+        "rank": 45,
+        "name": "Alyazen Hmood Al Hseini",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "6",
+        "total": 523,
+        "nett": 476,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 44,
+            "code": null,
+            "discarded": false,
+            "raw": "44.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 5,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 45,
+            "code": null,
+            "discarded": false,
+            "raw": "45.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 46,
+            "code": null,
+            "discarded": false,
+            "raw": "46.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 42,
+            "code": null,
+            "discarded": false,
+            "raw": "42.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 45,
+            "code": null,
+            "discarded": false,
+            "raw": "45.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 47,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "47.0 DNC"
+          }
+        ]
+      },
+      {
+        "rank": 46,
+        "name": "Said Bin Abdullah Al Mukhaini",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "80",
+        "total": 533,
+        "nett": 486,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 46,
+            "code": null,
+            "discarded": false,
+            "raw": "46.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 47,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 3,
+            "score": 45,
+            "code": null,
+            "discarded": false,
+            "raw": "45.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 43,
+            "code": null,
+            "discarded": false,
+            "raw": "43.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 45,
+            "code": null,
+            "discarded": false,
+            "raw": "45.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 46,
+            "code": null,
+            "discarded": false,
+            "raw": "46.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 47,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 8,
+            "score": 47,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "47.0 DNC"
+          },
+          {
+            "raceNumber": 9,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 39,
+            "code": null,
+            "discarded": false,
+            "raw": "39.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 46,
+            "code": null,
+            "discarded": false,
+            "raw": "46.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 41,
+            "code": null,
+            "discarded": false,
+            "raw": "41.0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ilca-4",
+    "name": "ILCA 4",
+    "rows": [
+      {
+        "rank": 1,
+        "name": "Karma Waleed",
+        "nationality": "EGY",
+        "gender": "F",
+        "sail": "2150",
+        "total": 38,
+        "nett": 30,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 8,
+            "code": null,
+            "discarded": true,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Abdulrahman Albahri",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "4",
+        "total": 52,
+        "nett": 45,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 7,
+            "code": null,
+            "discarded": true,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Hood Saad Al Nofli",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "209",
+        "total": 65,
+        "nett": 50,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 15,
+            "code": null,
+            "discarded": true,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Tarteel Zaid Al Hasani",
+        "nationality": "OMA",
+        "gender": "F",
+        "sail": "201",
+        "total": 67,
+        "nett": 51,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 16,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "16.0 UFD"
+          },
+          {
+            "raceNumber": 11,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Hamad Almasour",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "223933",
+        "total": 70,
+        "nett": 54,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 16,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "16.0 UFD"
+          },
+          {
+            "raceNumber": 8,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 16,
+            "code": "DSQ",
+            "discarded": false,
+            "raw": "16.0 DSQ"
+          },
+          {
+            "raceNumber": 11,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Malak Al Doeiri",
+        "nationality": "BRN",
+        "gender": "F",
+        "sail": "2",
+        "total": 80,
+        "nett": 64,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 16,
+            "code": "UFD",
+            "discarded": true,
+            "raw": "16.0 UFD"
+          },
+          {
+            "raceNumber": 11,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Mudhr Talal ALfaliti",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "219504",
+        "total": 86,
+        "nett": 74,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 12,
+            "code": null,
+            "discarded": true,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Rashed Aldhaheri",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "207897",
+        "total": 87,
+        "nett": 75,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 12,
+            "code": null,
+            "discarded": true,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "name": "Hadeel Yousuf Almushaifri",
+        "nationality": "OMA",
+        "gender": "F",
+        "sail": "206",
+        "total": 94,
+        "nett": 78,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 16,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "16.0 DNC"
+          }
+        ]
+      },
+      {
+        "rank": 10,
+        "name": "Ameena Mohamed",
+        "nationality": "BRN",
+        "gender": "F",
+        "sail": "51",
+        "total": 95,
+        "nett": 79,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 16,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "16.0 DNC"
+          }
+        ]
+      },
+      {
+        "rank": 11,
+        "name": "Khalil Ibrahim",
+        "nationality": "BRN",
+        "gender": "M",
+        "sail": "5",
+        "total": 134,
+        "nett": 118,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 16,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "16.0 DNC"
+          }
+        ]
+      },
+      {
+        "rank": 12,
+        "name": "Sultan Almarzooki",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "1",
+        "total": 134,
+        "nett": 119,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 15,
+            "code": null,
+            "discarded": true,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          }
+        ]
+      },
+      {
+        "rank": 13,
+        "name": "Jasam Mohamed",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "207889",
+        "total": 140,
+        "nett": 124,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 16,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "16.0 DNC"
+          },
+          {
+            "raceNumber": 4,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          }
+        ]
+      },
+      {
+        "rank": 14,
+        "name": "Abdullah AlNeyadi",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "217889",
+        "total": 156,
+        "nett": 141,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 15,
+            "code": null,
+            "discarded": true,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 15,
+            "code": null,
+            "discarded": false,
+            "raw": "15.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          }
+        ]
+      },
+      {
+        "rank": 15,
+        "name": "Hoor Khaleefoh",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "180888",
+        "total": 157,
+        "nett": 141,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 16,
+            "code": "DNS",
+            "discarded": true,
+            "raw": "16.0 DNS"
+          },
+          {
+            "raceNumber": 3,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 13,
+            "code": null,
+            "discarded": false,
+            "raw": "13.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 14,
+            "code": null,
+            "discarded": false,
+            "raw": "14.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 12,
+            "code": null,
+            "discarded": false,
+            "raw": "12.0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ilca-6",
+    "name": "ILCA 6",
+    "rows": [
+      {
+        "rank": 1,
+        "name": "Ines Gmati",
+        "nationality": "TUN",
+        "gender": "F",
+        "sail": "22",
+        "total": 25,
+        "nett": 20,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 5,
+            "code": null,
+            "discarded": true,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Simeon Hristov",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "220677",
+        "total": 44,
+        "nett": 35,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Kholoud Mostafa",
+        "nationality": "EGY",
+        "gender": "F",
+        "sail": "223052",
+        "total": 43,
+        "nett": 35,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 8,
+            "code": null,
+            "discarded": true,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Mohamed Al Hamadi",
+        "nationality": "UAE",
+        "gender": "M",
+        "sail": "2",
+        "total": 52,
+        "nett": 45,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 7,
+            "code": null,
+            "discarded": true,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Maryam Ihab",
+        "nationality": "EGY",
+        "gender": "F",
+        "sail": "222333",
+        "total": 62,
+        "nett": 55,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 7,
+            "code": null,
+            "discarded": true,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Ameena Shah",
+        "nationality": "KUW",
+        "gender": "F",
+        "sail": "226025",
+        "total": 68,
+        "nett": 59,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Waleed Tawfik",
+        "nationality": "BRN",
+        "gender": "M",
+        "sail": "NN",
+        "total": 73,
+        "nett": 65,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 8,
+            "code": null,
+            "discarded": true,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Elyas Badar Al Fadhali",
+        "nationality": "OMA",
+        "gender": "M",
+        "sail": "229540",
+        "total": 83,
+        "nett": 71,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 12,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "12.0 DNC"
+          },
+          {
+            "raceNumber": 7,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "name": "Ibtisam Al Salmi",
+        "nationality": "OMA",
+        "gender": "F",
+        "sail": "87",
+        "total": 93,
+        "nett": 84,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          }
+        ]
+      },
+      {
+        "rank": 10,
+        "name": "Ali Bouhamad",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "189642",
+        "total": 125,
+        "nett": 114,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 11,
+            "code": null,
+            "discarded": true,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          }
+        ]
+      },
+      {
+        "rank": 11,
+        "name": "Ali Enki",
+        "nationality": "KUW",
+        "gender": "M",
+        "sail": "211811",
+        "total": 129,
+        "nett": 117,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 12,
+            "code": "DNC",
+            "discarded": true,
+            "raw": "12.0 DNC"
+          },
+          {
+            "raceNumber": 2,
+            "score": 12,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "12.0 DNC"
+          },
+          {
+            "raceNumber": 3,
+            "score": 12,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "12.0 DNC"
+          },
+          {
+            "raceNumber": 4,
+            "score": 12,
+            "code": "DNC",
+            "discarded": false,
+            "raw": "12.0 DNC"
+          },
+          {
+            "raceNumber": 5,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 11,
+            "code": null,
+            "discarded": false,
+            "raw": "11.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 10,
+            "code": null,
+            "discarded": false,
+            "raw": "10.0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ilca-7",
+    "name": "ILCA 7",
+    "rows": [
+      {
+        "rank": 1,
+        "name": "Al Mutasem Humood Al Farsi",
+        "nationality": "OMA",
+        "gender": null,
+        "sail": "201717",
+        "total": 33,
+        "nett": 27,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 6,
+            "code": null,
+            "discarded": true,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "Dawood Abdullah",
+        "nationality": "BRN",
+        "gender": null,
+        "sail": "211431",
+        "total": 37,
+        "nett": 27,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 10,
+            "code": "DSQ",
+            "discarded": true,
+            "raw": "10.0 DSQ"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Hamza Al Ali",
+        "nationality": "UAE",
+        "gender": null,
+        "sail": "200153",
+        "total": 37,
+        "nett": 30,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 7,
+            "code": null,
+            "discarded": true,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Alsalim Ali Al Hamdani",
+        "nationality": "OMA",
+        "gender": null,
+        "sail": "202006",
+        "total": 55,
+        "nett": 45,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 10,
+            "code": "DSQ",
+            "discarded": true,
+            "raw": "10.0 DSQ"
+          },
+          {
+            "raceNumber": 8,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "name": "Abdulatif Ziyad Al Qasmi",
+        "nationality": "OMA",
+        "gender": null,
+        "sail": "212882",
+        "total": 62,
+        "nett": 54,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 8,
+            "code": null,
+            "discarded": true,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 1,
+            "code": null,
+            "discarded": false,
+            "raw": "1.0"
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "name": "Yaacoub Shah",
+        "nationality": "KUW",
+        "gender": null,
+        "sail": "223937",
+        "total": 64,
+        "nett": 55,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 2,
+            "code": null,
+            "discarded": false,
+            "raw": "2.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 3,
+            "code": null,
+            "discarded": false,
+            "raw": "3.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "name": "Saleh Ali Al Balushi",
+        "nationality": "OMA",
+        "gender": null,
+        "sail": "205933",
+        "total": 80,
+        "nett": 71,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "name": "Manef Alwahaib",
+        "nationality": "KUW",
+        "gender": null,
+        "sail": "223933",
+        "total": 86,
+        "nett": 77,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "name": "Toprak Caglayan",
+        "nationality": "UAE",
+        "gender": null,
+        "sail": "217415",
+        "total": 88,
+        "nett": 79,
+        "race": [
+          {
+            "raceNumber": 1,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 2,
+            "score": 9,
+            "code": null,
+            "discarded": true,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 3,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 4,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 5,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 6,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 7,
+            "score": 6,
+            "code": null,
+            "discarded": false,
+            "raw": "6.0"
+          },
+          {
+            "raceNumber": 8,
+            "score": 5,
+            "code": null,
+            "discarded": false,
+            "raw": "5.0"
+          },
+          {
+            "raceNumber": 9,
+            "score": 8,
+            "code": null,
+            "discarded": false,
+            "raw": "8.0"
+          },
+          {
+            "raceNumber": 10,
+            "score": 9,
+            "code": null,
+            "discarded": false,
+            "raw": "9.0"
+          },
+          {
+            "raceNumber": 11,
+            "score": 7,
+            "code": null,
+            "discarded": false,
+            "raw": "7.0"
+          },
+          {
+            "raceNumber": 12,
+            "score": 4,
+            "code": null,
+            "discarded": false,
+            "raw": "4.0"
+          }
+        ]
+      }
+    ]
+  }
+]
