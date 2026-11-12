@@ -22,7 +22,7 @@ export const BODY = "text-[var(--sp-charcoal-slate)]";
 export const INK = "text-[var(--sp-harbour-shadow)]";
 
 export const SECONDARY_BTN =
-  "inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors";
+  "inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors";
 
 export const PRIMARY_BTN = "sp-btn-primary";
 

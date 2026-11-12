@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ChevronRight, GitCompareArrows, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
+import { useModalDialog } from "@/components/ui/useModalDialog";
 import type { CoachSquadDashboard } from "@/lib/coachDashboard";
 import { SquadPulseCards, AthleteDevelopmentDrawer } from "@/components/coach";
 import { fleetPillClass } from "@/components/sailor-profile/helpers";
@@ -54,6 +55,7 @@ export function CoachDashboard({
   const [activeSailorId, setActiveSailorId] = useState<string | null>(null);
   const [manageOpen, setManageOpen] = useState(false);
   const [sortKey, setSortKey] = useState<"ranking" | "name" | "movement" | "best3">("ranking");
+  const manageDialogRef = useModalDialog(manageOpen, () => setManageOpen(false));
 
   useEffect(() => {
     const trimmed = query.trim();
@@ -88,20 +90,6 @@ export function CoachDashboard({
       window.clearTimeout(timer);
     };
   }, [query, demoMode]);
-
-  useEffect(() => {
-    if (!manageOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setManageOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [manageOpen]);
 
   const averageBest = useMemo(() => {
     const scores = data.members.map((member) => member.bestThreeOfFive).filter((score): score is number => score != null);
@@ -532,19 +520,19 @@ export function CoachDashboard({
   }
 
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:py-12">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mx-auto flex max-w-6xl flex-col gap-5 px-3 sm:px-4 py-5 sm:py-8">
+      <header className="flex flex-col gap-3.5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--sp-racing-orange)]">Coach workspace</p>
-          <h1 className="mt-1 text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)] sm:text-4xl">Squad dashboard</h1>
-          <p className="mt-2 text-sm text-[var(--sp-charcoal-slate)]">Live rankings, development priorities, and follow-up for your sailors.</p>
+          <h1 className="mt-1 text-2xl sm:text-4xl font-black tracking-tight text-[var(--sp-harbour-shadow)]">Squad dashboard</h1>
+          <p className="mt-1.5 text-sm text-[var(--sp-charcoal-slate)]">Live rankings, development priorities, and follow-up for your sailors.</p>
           <p className="mt-1 text-[13px] font-semibold text-[var(--sp-slate-soft)]">Ranking results through {data.updatedThrough || "no published event yet"}</p>
         </div>
-        <div className="flex gap-2">
-          <button type="button" onClick={() => setManageOpen(true)} className="sp-btn-primary">
+        <div className="flex flex-wrap items-center gap-2">
+          <button type="button" onClick={() => setManageOpen(true)} className="sp-btn-primary min-h-11">
             <Settings2 className="h-3.5 w-3.5" /> Manage sailors
           </button>
-          <Link href="/rankings" className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2.5 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors">
+          <Link href="/rankings" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2.5 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors">
             Rankings <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -559,18 +547,18 @@ export function CoachDashboard({
           <div className="mt-3 grid gap-2 md:grid-cols-2">
             {actions.map((action) => (
               <div key={action.key} className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3">
-                <button type="button" onClick={() => openSailor(action.sailorId)} className="flex w-full items-center gap-3 text-left">
+                <button type="button" onClick={() => openSailor(action.sailorId)} className="flex min-h-11 w-full items-center gap-3 text-left">
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{action.sailor}</span>
                     <span className="block text-[13px] text-[var(--sp-charcoal-slate)]">{action.text}</span>
                   </span>
-                  <ChevronRight className="h-4 w-4 text-[var(--sp-slate-soft)]" />
+                  <ChevronRight className="h-4 w-4 text-[var(--sp-slate-soft)] shrink-0" />
                 </button>
-                <div className="mt-2 flex gap-2">
-                  <button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="rounded-md bg-[var(--sp-racing-mist)]/50 px-2 py-1 text-[11px] font-bold text-[var(--sp-racing-deep)] disabled:opacity-50">
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="min-h-9 rounded-lg bg-[var(--sp-racing-mist)]/50 px-3 py-1.5 text-[11px] font-bold text-[var(--sp-racing-deep)] disabled:opacity-50">
                     Mark reviewed
                   </button>
-                  <button type="button" onClick={() => reviewAction(action, "dismissed")} disabled={busyId === action.key} className="rounded-md px-2 py-1 text-[11px] font-bold text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)]">
+                  <button type="button" onClick={() => reviewAction(action, "dismissed")} disabled={busyId === action.key} className="min-h-9 rounded-lg px-3 py-1.5 text-[11px] font-bold text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)]">
                     Dismiss
                   </button>
                 </div>
@@ -623,7 +611,7 @@ export function CoachDashboard({
                   id="squad-sort"
                   value={sortKey}
                   onChange={(event) => setSortKey(event.target.value as typeof sortKey)}
-                  className="sp-select font-bold"
+                  className="sp-select min-h-11 text-base sm:text-sm font-bold"
                 >
                   <option value="ranking">Fleet rank</option>
                   <option value="name">Name</option>
@@ -639,11 +627,11 @@ export function CoachDashboard({
                     : "Select two sailors"}
                 </span>
                 {compareHref ? (
-                  <Link href={compareHref} className="sp-btn-primary px-3 py-1.5">
+                  <Link href={compareHref} className="sp-btn-primary min-h-11 px-3.5 py-2">
                     <GitCompareArrows className="h-3.5 w-3.5" /> Compare
                   </Link>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-sailcloth)] px-3 py-1.5 text-xs font-bold text-[var(--sp-slate-soft)]">
+                  <span className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[var(--sp-sailcloth)] px-3.5 py-2 text-xs font-bold text-[var(--sp-slate-soft)]">
                     <GitCompareArrows className="h-3.5 w-3.5" /> Compare
                   </span>
                 )}
@@ -652,13 +640,27 @@ export function CoachDashboard({
           </div>
 
           {demoMode && compareHref && (
-            <section id="demo-comparison" aria-label="Sample sailor comparison" className="scroll-mt-40 border-b border-[var(--sp-cool-veil)] p-4">
+            <section id="demo-comparison" aria-label="Sample sailor comparison" className="scroll-mt-40 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/35 p-4">
               <h2 className="font-bold text-[var(--sp-harbour-shadow)]">Sample sailor comparison</h2>
               <p className="mt-1 text-xs text-[var(--sp-slate-soft)]">Demonstration data for the selected sailors.</p>
-              <div className="mt-3 overflow-x-auto">
+              <div className="mt-3 overflow-x-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)]">
                 <table className="w-full text-left text-sm">
-                  <thead><tr><th scope="col" className="p-2">Sailor</th><th scope="col" className="p-2">Fleet rank</th><th scope="col" className="p-2">Best 3 score</th></tr></thead>
-                  <tbody>{selectedMembers.map((member) => member && <tr key={member.sailorId}><th scope="row" className="p-2">{member.name}</th><td className="p-2">{member.ranking ?? "—"}</td><td className="p-2">{member.bestThreeOfFive ?? "—"}</td></tr>)}</tbody>
+                  <thead className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-slate-soft)]">
+                    <tr>
+                      <th scope="col" className="px-3 py-2">Sailor</th>
+                      <th scope="col" className="px-3 py-2 text-right">Fleet rank</th>
+                      <th scope="col" className="px-3 py-2 text-right">Best 3 score</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--sp-cool-veil)]">
+                    {selectedMembers.map((member) => member && (
+                      <tr key={member.sailorId}>
+                        <th scope="row" className="px-3 py-2.5 font-bold text-[var(--sp-harbour-shadow)]">{member.name}</th>
+                        <td className="px-3 py-2.5 text-right tabular-nums">{member.ranking ?? "—"}</td>
+                        <td className="px-3 py-2.5 text-right font-bold tabular-nums">{member.bestThreeOfFive ?? "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </div>
             </section>
@@ -724,9 +726,11 @@ export function CoachDashboard({
           ) : (
             <div className="divide-y divide-[var(--sp-cool-veil)]">
               {sortedMembers.map((member) => (
-                <article key={member.id} className="grid gap-3 p-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
-                  <input type="checkbox" checked={selected.includes(member.sailorId)} onChange={() => toggleCompare(member.sailorId)}
-                    aria-label={`Select ${member.name} for comparison`} className="h-4 w-4 accent-[var(--sp-racing-orange)]" />
+                <article key={member.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-start sm:items-center gap-2 sm:gap-3 p-3.5 sm:p-4">
+                  <label className="flex min-h-11 min-w-11 -ml-2 -mt-1 sm:m-0 items-center justify-center cursor-pointer">
+                    <input type="checkbox" checked={selected.includes(member.sailorId)} onChange={() => toggleCompare(member.sailorId)}
+                      aria-label={`Select ${member.name} for comparison`} className="h-5 w-5 accent-[var(--sp-racing-orange)]" />
+                  </label>
                   <div className="min-w-0 text-left">
                     <div className="flex flex-wrap items-center gap-2">
                       {demoMode ? (
@@ -748,7 +752,7 @@ export function CoachDashboard({
                     </button>
                   </div>
                   <button type="button" onClick={() => removeSailor(member.sailorId)} disabled={busyId === member.sailorId}
-                    aria-label={`Remove ${member.name} from squad`} className="justify-self-end rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50">
+                    aria-label={`Remove ${member.name} from squad`} className="justify-self-end inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </article>
@@ -758,20 +762,25 @@ export function CoachDashboard({
         </div>
 
         {manageOpen && (
-          <aside role="dialog" aria-modal="true" aria-label="Manage sailors" className="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/60 backdrop-blur-xs p-4 sm:pt-20" onMouseDown={(event) => { if (event.target === event.currentTarget) setManageOpen(false); }}>
-            <div className="w-full max-w-lg rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-2xl">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Add a sailor</h2>
-                  <p className="mt-1 text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">Search by name, sail number, club, school, or profile handle.</p>
-                </div>
-                <button type="button" onClick={() => setManageOpen(false)} aria-label="Close manage sailors" className="rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] hover:text-[var(--sp-harbour-shadow)]"><X className="h-4 w-4" /></button>
+          <dialog
+            ref={manageDialogRef}
+            aria-label="Manage sailors"
+            {...({ closedby: "any" } as Record<string, string>)}
+            className="m-auto w-[calc(100%-1.5rem)] max-w-lg max-h-[92dvh] flex flex-col overflow-hidden rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-0 shadow-2xl"
+          >
+            <div className="flex items-start justify-between border-b border-[var(--sp-cool-veil)] px-5 py-4 shrink-0">
+              <div>
+                <h2 className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Add a sailor</h2>
+                <p className="mt-1 text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">Search by name, sail number, club, school, or profile handle.</p>
               </div>
+              <button type="button" onClick={() => setManageOpen(false)} aria-label="Close manage sailors" className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] hover:text-[var(--sp-harbour-shadow)]"><X className="h-4 w-4" /></button>
+            </div>
 
+            <div className="flex-1 overflow-y-auto p-5">
               {message && (
                 <div
                   aria-live="polite"
-                  className="mt-3 flex items-center justify-between rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs font-semibold text-[var(--sp-charcoal-slate)]"
+                  className="mb-3 flex items-center justify-between rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs font-semibold text-[var(--sp-charcoal-slate)]"
                 >
                   <span>{message}</span>
                   <button
@@ -785,7 +794,7 @@ export function CoachDashboard({
                 </div>
               )}
 
-              <div className="relative mt-4">
+              <div className="relative">
                 <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--sp-slate-soft)]" />
                 <input
                   value={query}
@@ -796,7 +805,7 @@ export function CoachDashboard({
                   }}
                   placeholder="Type name, sail number, or club..."
                   aria-label="Search sailors to add"
-                  className="sp-input w-full py-2.5 !pl-10 pr-3 text-sm"
+                  className="sp-input w-full min-h-11 py-2.5 !pl-10 pr-3 text-base sm:text-sm"
                 />
               </div>
               <div className="mt-3 space-y-1.5" aria-live="polite">
@@ -831,7 +840,7 @@ export function CoachDashboard({
                           type="button"
                           onClick={() => !isMember && addSailor(sailor.id)}
                           disabled={busyId === sailor.id || isMember}
-                          className={`rounded-lg px-2 py-1.5 text-[10px] font-bold transition-all ${
+                          className={`min-h-10 rounded-lg px-2 py-1.5 text-xs font-bold transition-all ${
                             isMember
                               ? "bg-[var(--sp-cool-veil)]/50 text-[var(--sp-slate-soft)] cursor-not-allowed"
                               : "sp-btn-primary disabled:opacity-50"
@@ -844,7 +853,7 @@ export function CoachDashboard({
                            type="button"
                            onClick={() => !isFollowing && !isMember && followSailor(sailor.id)}
                            disabled={busyId === sailor.id || isFollowing || isMember}
-                           className={`rounded-lg border px-2 py-1.5 text-[10px] font-bold transition-all ${
+                           className={`min-h-10 rounded-lg border px-2 py-1.5 text-xs font-bold transition-all ${
                              isFollowing || isMember
                                ? "border-[var(--sp-cool-veil)] bg-[var(--sp-cool-veil)]/30 text-[var(--sp-slate-soft)] cursor-not-allowed"
                                : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] disabled:opacity-50"
@@ -864,7 +873,7 @@ export function CoachDashboard({
                 )}
               </div>
             </div>
-          </aside>
+          </dialog>
         )}
       </section>
 

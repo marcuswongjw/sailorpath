@@ -163,7 +163,10 @@ describe("CoachDashboard", () => {
     const details = screen.getAllByRole("button", { name: /Open .* details/ });
     expect(details[0]).toHaveAccessibleName("Open Alyssa Wong details");
     await user.click(screen.getByRole("button", { name: "Manage sailors" }));
-    expect(screen.getByRole("dialog", { name: "Manage sailors" })).toBeInTheDocument();
+    const manageDialog = screen.getByRole("dialog", { name: "Manage sailors" });
+    expect(manageDialog.tagName).toBe("DIALOG");
+    expect(manageDialog).toHaveAttribute("closedby", "any");
+    expect(manageDialog).not.toHaveAttribute("aria-modal");
   });
 
   it("adds a structured coaching observation", async () => {

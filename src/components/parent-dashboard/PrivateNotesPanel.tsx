@@ -74,7 +74,7 @@ export function PrivateNotesPanel({
               key={cat}
               type="button"
               onClick={() => onCategoryChange(cat)}
-              className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-colors border ${
+              className={`min-h-9 px-2.5 py-1 rounded-full text-xs font-bold transition-colors border ${
                 selectedCategory === cat
                   ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border-[var(--sp-harbour-teal)]/30"
                   : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)]`
@@ -90,7 +90,7 @@ export function PrivateNotesPanel({
             value={noteDraft[activeAthlete.id] || ""}
             onChange={(e) => onDraftChange(activeAthlete.id, e.target.value)}
             placeholder={`Add a private ${selectedCategory.toLowerCase()} note…`}
-            className="sp-input flex-1 min-w-0 text-xs"
+            className="sp-input flex-1 min-w-0 min-h-11 text-base sm:text-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter") void onAddNote(activeAthlete.id);
             }}
@@ -102,7 +102,7 @@ export function PrivateNotesPanel({
               !(noteDraft[activeAthlete.id] || "").trim()
             }
             onClick={() => void onAddNote(activeAthlete.id)}
-            className={`${PRIMARY_BTN} px-3 py-2 disabled:opacity-40 shrink-0`}
+            className={`${PRIMARY_BTN} min-h-11 px-3.5 py-2 disabled:opacity-40 shrink-0`}
           >
             <Plus className="h-4 w-4" />
             Save

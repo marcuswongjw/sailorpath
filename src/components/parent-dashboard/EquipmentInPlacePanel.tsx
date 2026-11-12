@@ -9,6 +9,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { useModalDialog } from "@/components/ui/useModalDialog";
 import {
   YOUTH_EQUIPMENT_PRESETS,
   SIMPLIFIED_CONDITION_META,
@@ -105,6 +106,7 @@ export function EquipmentInPlacePanel({
   onAddGearPreset,
   onCreateCustomGear,
 }: EquipmentInPlacePanelProps) {
+  const dialogRef = useModalDialog(showAddGearModal, onCloseAddGear);
   return (
     <>
       <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
@@ -271,41 +273,38 @@ export function EquipmentInPlacePanel({
       </section>
 
       {showAddGearModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 backdrop-blur-xs p-4 sm:pt-20"
-          role="dialog"
-          aria-modal="true"
+        <dialog
+          ref={dialogRef}
           aria-labelledby="add-gear-title"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) onCloseAddGear();
-          }}
+          {...({ closedby: "any" } as Record<string, string>)}
+          className="m-auto w-[calc(100%-1.5rem)] max-w-lg max-h-[92dvh] flex flex-col overflow-hidden rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-0 shadow-2xl"
         >
-          <div className="w-full max-w-lg rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 shadow-2xl relative my-8">
-            <div className="flex items-center justify-between pb-2 border-b border-[var(--sp-cool-veil)]">
-              <div>
-                <h3 id="add-gear-title" className={`text-sm font-bold ${INK} flex items-center gap-1.5`}>
-                  <Plus className="h-4 w-4 text-[var(--sp-racing-orange)]" />
-                  Add Equipment to Locker
-                </h3>
-                <p className={`text-xs ${MUTED}`}>
-                  For {activeAthlete.name} ({activeAthlete.currentFleet || "Optimist"} Fleet)
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={onCloseAddGear}
-                aria-label="Close add equipment"
-                className={`rounded-lg p-1.5 ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] transition`}
-              >
-                <X className="h-4 w-4" />
-              </button>
+          <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--sp-cool-veil)] shrink-0">
+            <div>
+              <h3 id="add-gear-title" className={`text-sm font-bold ${INK} flex items-center gap-1.5`}>
+                <Plus className="h-4 w-4 text-[var(--sp-racing-orange)]" />
+                Add Equipment to Locker
+              </h3>
+              <p className={`text-xs ${MUTED}`}>
+                For {activeAthlete.name} ({activeAthlete.currentFleet || "Optimist"} Fleet)
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={onCloseAddGear}
+              aria-label="Close add equipment"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] transition`}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
 
+          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
             <div className={`flex rounded-xl ${NESTED} p-1`}>
               <button
                 type="button"
                 onClick={() => onSetAddGearTab("presets")}
-                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                className={`min-h-10 flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                   addGearTab === "presets"
                     ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
                     : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
@@ -316,7 +315,7 @@ export function EquipmentInPlacePanel({
               <button
                 type="button"
                 onClick={() => onSetAddGearTab("custom")}
-                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                className={`min-h-10 flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                   addGearTab === "custom"
                     ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
                     : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
@@ -327,7 +326,7 @@ export function EquipmentInPlacePanel({
             </div>
 
             {addGearTab === "presets" ? (
-              <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
+              <div className="space-y-2">
                 <p className={`text-[13px] ${MUTED}`}>
                   Select standard youth equipment packages to add immediately:
                 </p>
@@ -354,7 +353,7 @@ export function EquipmentInPlacePanel({
                         type="button"
                         disabled={addGearBusy}
                         onClick={() => onAddGearPreset(preset)}
-                        className="shrink-0 sp-btn-primary px-3 py-1.5 disabled:opacity-50"
+                        className="shrink-0 sp-btn-primary min-h-10 px-3 py-1.5 disabled:opacity-50"
                       >
                         {addGearBusy ? "Adding…" : "+ Add"}
                       </button>
@@ -376,7 +375,7 @@ export function EquipmentInPlacePanel({
                       const presets = brandsForCategory(cat);
                       onSetCustomBrand(presets[0] || "");
                     }}
-                    className="sp-select w-full text-xs"
+                    className="sp-select w-full min-h-11 text-base sm:text-sm"
                   >
                     {(
                       [
@@ -397,7 +396,7 @@ export function EquipmentInPlacePanel({
                   </select>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
                     <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
                       Brand / Maker
@@ -406,7 +405,7 @@ export function EquipmentInPlacePanel({
                       value={customGearBrand}
                       onChange={(e) => onSetCustomBrand(e.target.value)}
                       placeholder="e.g. Winner, OneSails, Optimax"
-                      className="sp-input w-full text-xs"
+                      className="sp-input w-full min-h-11 text-base sm:text-sm"
                     />
                   </div>
                   <div>
@@ -417,7 +416,7 @@ export function EquipmentInPlacePanel({
                       value={customGearModel}
                       onChange={(e) => onSetCustomModel(e.target.value)}
                       placeholder="e.g. CD Cut, Mk3 Flex"
-                      className="sp-input w-full text-xs"
+                      className="sp-input w-full min-h-11 text-base sm:text-sm"
                     />
                   </div>
                 </div>
@@ -430,7 +429,7 @@ export function EquipmentInPlacePanel({
                     value={customGearLabel}
                     onChange={(e) => onSetCustomLabel(e.target.value)}
                     placeholder="e.g. SIN 4639 or Hull #184491"
-                    className="sp-input w-full text-xs"
+                    className="sp-input w-full min-h-11 text-base sm:text-sm"
                   />
                 </div>
 
@@ -454,7 +453,7 @@ export function EquipmentInPlacePanel({
                             key={key}
                             type="button"
                             onClick={() => onSetCustomCondition(key)}
-                            className={`rounded-xl px-2 py-2 text-center border transition flex flex-col items-center gap-1 ${
+                            className={`min-h-11 rounded-xl px-2 py-2 text-center border transition flex flex-col items-center justify-center gap-1 ${
                               active
                                 ? lightActive
                                 : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)]`
@@ -467,7 +466,7 @@ export function EquipmentInPlacePanel({
                                 ? "bg-[var(--sp-racing-orange)]"
                                 : "bg-rose-600"
                             }`} />
-                            <span className="text-[10px] font-bold leading-tight">
+                            <span className="text-[11px] font-bold leading-tight">
                               {meta.shortLabel}
                             </span>
                           </button>
@@ -477,12 +476,12 @@ export function EquipmentInPlacePanel({
                   </div>
                 </div>
 
-                <label className={`flex items-center gap-2.5 text-xs ${BODY} ${NESTED} px-3 py-2 cursor-pointer`}>
+                <label className={`min-h-11 flex items-center gap-2.5 text-xs ${BODY} ${NESTED} px-3 py-2 cursor-pointer`}>
                   <input
                     type="checkbox"
                     checked={customGearPrimary}
                     onChange={(e) => onSetCustomPrimary(e.target.checked)}
-                    className="rounded border-[var(--sp-cool-veil)] accent-[var(--sp-racing-orange)]"
+                    className="h-4 w-4 rounded border-[var(--sp-cool-veil)] accent-[var(--sp-racing-orange)]"
                   />
                   <span className={`font-semibold ${INK}`}>Set as Primary Race-Day Gear</span>
                 </label>
@@ -491,14 +490,14 @@ export function EquipmentInPlacePanel({
                   type="button"
                   disabled={addGearBusy}
                   onClick={onCreateCustomGear}
-                  className="w-full sp-btn-primary py-2.5 disabled:opacity-50"
+                  className="w-full min-h-11 sp-btn-primary py-2.5 disabled:opacity-50"
                 >
                   {addGearBusy ? "Saving…" : "Save to Equipment Locker"}
                 </button>
               </div>
             )}
           </div>
-        </div>
+        </dialog>
       )}
     </>
   );

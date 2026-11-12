@@ -54,18 +54,18 @@ export function ParentDashboard({
   const { activeAthlete } = d;
 
   return (
-    <div className="mx-auto max-w-6xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mx-auto max-w-6xl w-full px-3 sm:px-4 py-5 sm:py-8 space-y-5 sm:space-y-7">
+      <header className="flex flex-col gap-3.5 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
           <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--sp-racing-orange)]">
             {d.isParentStyle ? "Parent workspace" : "Sailor workspace"}
           </p>
-          <h1 className="mt-1 text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)] sm:text-4xl">
+          <h1 className="mt-1 text-2xl sm:text-4xl font-black tracking-tight text-[var(--sp-harbour-shadow)]">
             {d.title}
           </h1>
-          <p className={`mt-2 text-sm ${BODY} max-w-2xl`}>{d.subtitle}</p>
+          <p className={`mt-1.5 text-sm ${BODY} max-w-2xl`}>{d.subtitle}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Link href="/following" className={SECONDARY_BTN}>
             Following
           </Link>

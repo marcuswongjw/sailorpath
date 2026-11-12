@@ -329,8 +329,13 @@ describe("ParentDashboard", () => {
     expect(addGearBtn).toBeInTheDocument();
     await user.click(addGearBtn);
 
-    // Modal opens with youth gear presets
-    expect(screen.getByText("Add Equipment to Locker")).toBeInTheDocument();
+    // Modal opens with youth gear presets in a native <dialog>
+    const gearTitle = screen.getByText("Add Equipment to Locker");
+    const dialog = gearTitle.closest("dialog")!;
+    expect(dialog).toHaveAttribute("open");
+    expect(dialog).toHaveAttribute("closedby", "any");
+    expect(dialog).not.toHaveAttribute("role");
+    expect(dialog).not.toHaveAttribute("aria-modal");
     expect(screen.getByText(/1-Click Popular Presets/i)).toBeInTheDocument();
     expect(screen.getByText(/Optimax Mk3 Rig/i)).toBeInTheDocument();
 

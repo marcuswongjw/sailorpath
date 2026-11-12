@@ -107,15 +107,15 @@ export function AthleteHeroCard({
           </div>
         </div>
 
-        <div className="flex flex-wrap sm:flex-col gap-2 shrink-0">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
           <Link
             href={logScoreHref}
-            className={SECONDARY_BTN}
+            className={`${SECONDARY_BTN} min-h-11 w-full sm:w-auto`}
           >
             <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-            Log Score & Evidence ↗
+            Log Score &amp; Evidence ↗
           </Link>
-          <Link href={profileHref} className={SECONDARY_BTN}>
+          <Link href={profileHref} className={`${SECONDARY_BTN} min-h-11 w-full sm:w-auto`}>
             Public Profile
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>

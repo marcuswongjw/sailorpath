@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useModalDialog } from "@/components/ui/useModalDialog";
 import {
   X,
   Lock,
@@ -122,6 +123,7 @@ export function AthleteDevelopmentDrawer({
   const [recordDate, setRecordDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [targetDate, setTargetDate] = useState("");
   const [recordStatus, setRecordStatus] = useState("present");
+  const dialogRef = useModalDialog(true, onClose);
 
   const [prevNote, setPrevNote] = useState(sailor.coachNote);
   const [prevVisibility, setPrevVisibility] = useState(sailor.coachNoteVisibility);
@@ -131,19 +133,6 @@ export function AthleteDevelopmentDrawer({
     setNoteDraft(sailor.coachNote || "");
     setNoteVisibility(sailor.coachNoteVisibility || "coach_only");
   }
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [onClose]);
 
   async function handleAddRecord(e: React.FormEvent) {
     e.preventDefault();
@@ -203,17 +192,13 @@ export function AthleteDevelopmentDrawer({
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs transition-opacity"
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
       aria-label={`${sailor.name} coach details`}
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      {...({ closedby: "any" } as Record<string, string>)}
+      className="ml-auto mr-0 my-0 h-dvh max-h-dvh w-full max-w-xl flex flex-col overflow-hidden border-l border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-0 text-[var(--sp-harbour-shadow)] shadow-2xl"
     >
-      <div className="flex h-full w-full max-w-xl flex-col border-l border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-harbour-shadow)] shadow-2xl">
-        <div className="flex items-start justify-between border-b border-[var(--sp-cool-veil)] p-5 sm:p-6 bg-[var(--sp-warm-white)] shrink-0">
+      <div className="flex items-start justify-between border-b border-[var(--sp-cool-veil)] p-4 sm:p-6 bg-[var(--sp-warm-white)] shrink-0">
           <div className="min-w-0 pr-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
@@ -277,14 +262,14 @@ export function AthleteDevelopmentDrawer({
           </div>
         )}
 
-        <div className="flex items-center gap-2 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2.5 sm:px-6 overflow-x-auto shrink-0">
-          <button type="button" onClick={() => scrollToSection("drawer-scores")} className={JUMP_PILL}>
+        <div className="sp-tabs-scroll items-center gap-2 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2 sm:px-6 shrink-0">
+          <button type="button" onClick={() => scrollToSection("drawer-scores")} className={`${JUMP_PILL} min-h-10`}>
             <Trophy className="h-3 w-3 text-[var(--sp-racing-orange)]" /> Scores & Races
           </button>
-          <button type="button" onClick={() => scrollToSection("drawer-coaching-log")} className={JUMP_PILL}>
+          <button type="button" onClick={() => scrollToSection("drawer-coaching-log")} className={`${JUMP_PILL} min-h-10`}>
             <Target className="h-3 w-3 text-[var(--sp-harbour-teal)]" /> Coaching Log ({sailor.developmentRecords.length})
           </button>
-          <button type="button" onClick={() => scrollToSection("drawer-note")} className={JUMP_PILL}>
+          <button type="button" onClick={() => scrollToSection("drawer-note")} className={`${JUMP_PILL} min-h-10`}>
             <FileText className="h-3 w-3 text-[var(--sp-harbour-teal)]" /> Coach Note
           </button>
         </div>
@@ -578,12 +563,12 @@ export function AthleteDevelopmentDrawer({
               </div>
 
               <form onSubmit={handleAddRecord} className="mt-4 space-y-3">
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <select
                     aria-label="Record type"
                     value={recordType}
                     onChange={(e) => setRecordType(e.target.value as typeof recordType)}
-                    className="sp-select text-xs"
+                    className="sp-select min-h-11 text-base sm:text-sm"
                   >
                     <option value="observation">Observation</option>
                     <option value="goal">Development goal</option>
@@ -595,7 +580,7 @@ export function AthleteDevelopmentDrawer({
                     type="date"
                     value={recordDate}
                     onChange={(e) => setRecordDate(e.target.value)}
-                    className="sp-input text-xs"
+                    className="sp-input min-h-11 text-base sm:text-sm"
                   />
                 </div>
 
@@ -605,7 +590,7 @@ export function AthleteDevelopmentDrawer({
                       aria-label="Skill category"
                       value={recordCategory}
                       onChange={(e) => setRecordCategory(e.target.value)}
-                      className="sp-select w-full text-xs"
+                      className="sp-select w-full min-h-11 text-base sm:text-sm"
                     >
                       {OBSERVATION_CATEGORIES.map((c) => (
                         <option key={c} value={c}>
@@ -618,7 +603,7 @@ export function AthleteDevelopmentDrawer({
                       <button
                         type="button"
                         onClick={() => setRecordSentiment("strength")}
-                        className={`flex-1 rounded-lg border py-1.5 text-[10px] font-bold transition ${
+                        className={`min-h-10 flex-1 rounded-lg border py-1.5 text-xs font-bold transition ${
                           recordSentiment === "strength"
                             ? "border-[var(--sp-harbour-teal)]/40 bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
                             : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)]`
@@ -629,7 +614,7 @@ export function AthleteDevelopmentDrawer({
                       <button
                         type="button"
                         onClick={() => setRecordSentiment("focus")}
-                        className={`flex-1 rounded-lg border py-1.5 text-[10px] font-bold transition ${
+                        className={`min-h-10 flex-1 rounded-lg border py-1.5 text-xs font-bold transition ${
                           recordSentiment === "focus"
                             ? "border-[var(--sp-racing-orange)]/40 bg-[var(--sp-racing-mist)]/50 text-[var(--sp-racing-deep)]"
                             : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)]`
@@ -647,7 +632,7 @@ export function AthleteDevelopmentDrawer({
                     type="date"
                     value={targetDate}
                     onChange={(e) => setTargetDate(e.target.value)}
-                    className="sp-input w-full text-xs"
+                    className="sp-input w-full min-h-11 text-base sm:text-sm"
                   />
                 )}
 
@@ -656,7 +641,7 @@ export function AthleteDevelopmentDrawer({
                     aria-label="Attendance status"
                     value={recordStatus}
                     onChange={(e) => setRecordStatus(e.target.value)}
-                    className="sp-select w-full text-xs"
+                    className="sp-select w-full min-h-11 text-base sm:text-sm"
                   >
                     <option value="present">Present</option>
                     <option value="absent">Absent</option>
@@ -676,7 +661,7 @@ export function AthleteDevelopmentDrawer({
                       ? "Measurable development goal"
                       : "What did you observe?"
                   }
-                  className="sp-input w-full text-xs"
+                  className="sp-input w-full min-h-11 text-base sm:text-sm"
                 />
 
                 <textarea
@@ -686,13 +671,13 @@ export function AthleteDevelopmentDrawer({
                   maxLength={4000}
                   rows={3}
                   placeholder="Context, success measure, or follow-up"
-                  className="sp-input w-full text-xs"
+                  className="sp-input w-full text-base sm:text-sm"
                 />
 
                 <button
                   type="submit"
                   disabled={!recordTitle.trim() || busyId === "development"}
-                  className="w-full sp-btn-primary py-2.5 disabled:opacity-40"
+                  className="w-full min-h-11 sp-btn-primary py-2.5 disabled:opacity-40"
                 >
                   {busyId === "development" ? "Saving…" : "Add coaching record"}
                 </button>
@@ -703,7 +688,7 @@ export function AthleteDevelopmentDrawer({
           <hr className="border-[var(--sp-cool-veil)]" />
 
           <div id="drawer-note" className="space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <label
                   htmlFor="coach-note"
@@ -727,7 +712,7 @@ export function AthleteDevelopmentDrawer({
               maxLength={4000}
               rows={5}
               placeholder="Focus areas, training observations, or follow-up…"
-              className="sp-input w-full text-sm"
+              className="sp-input w-full text-base sm:text-sm"
             />
 
             <div className="flex items-center justify-between">
@@ -738,14 +723,13 @@ export function AthleteDevelopmentDrawer({
                 type="button"
                 onClick={handleSaveNote}
                 disabled={busyId === "note"}
-                className="sp-btn-primary disabled:opacity-50"
+                className="sp-btn-primary min-h-11 disabled:opacity-50"
               >
                 {busyId === "note" ? "Saving…" : "Save note"}
               </button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    </dialog>
   );
 }

@@ -34,7 +34,7 @@ export function AthleteSelector({
     <>
       {athletes.length > 1 && (
         <div
-          className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[var(--sp-cool-veil)]"
+          className="sp-tabs-scroll items-center gap-2 pb-2 border-b border-[var(--sp-cool-veil)]"
           role="tablist"
           aria-label="Linked athletes"
         >
@@ -44,7 +44,7 @@ export function AthleteSelector({
             aria-selected={selectedAthleteId === "all"}
             data-testid="tab-all-summary"
             onClick={() => onSelectAthlete("all")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`min-h-11 flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
               selectedAthleteId === "all"
                 ? "bg-harbour text-sailcloth shadow-xs"
                 : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
@@ -63,7 +63,7 @@ export function AthleteSelector({
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => onSelectAthlete(a.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
+                className={`min-h-11 flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
                   isSelected
                     ? "bg-harbour text-sailcloth shadow-xs"
                     : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`

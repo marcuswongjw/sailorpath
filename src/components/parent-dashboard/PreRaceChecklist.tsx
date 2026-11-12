@@ -204,13 +204,13 @@ export function PreRaceChecklist({
               }
             }}
             placeholder="Add race prep item…"
-            className="sp-input flex-1 text-xs"
+            className="sp-input flex-1 min-w-0 min-h-11 text-base sm:text-sm"
           />
           <button
             type="button"
             onClick={() => onAddCustomItem(activeAthlete.id)}
             disabled={!newChecklistText.trim()}
-            className={`${PRIMARY_BTN} px-3 py-1.5 disabled:opacity-40 shrink-0`}
+            className={`${PRIMARY_BTN} min-h-11 px-3.5 py-2 disabled:opacity-40 shrink-0`}
           >
             <Plus className="h-3.5 w-3.5" />
             Add

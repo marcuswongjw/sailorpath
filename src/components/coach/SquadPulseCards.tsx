@@ -12,7 +12,7 @@ type SquadPulseCardsProps = {
 };
 
 const CARD =
-  "flex flex-col justify-between rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] transition-colors";
+  "min-w-0 flex flex-col justify-between rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3.5 sm:p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] transition-colors";
 
 export function SquadPulseCards({
   members,
