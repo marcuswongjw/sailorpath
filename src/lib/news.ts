@@ -43,6 +43,20 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: string | null;
   }
 > = {
+  "singapore-sailing-medals-asian-beach-games-2026": {
+    imageUrl: "/news/asian-beach-games-sanya-2026.jpg",
+    imageAlt: "China’s Cheng Wenyu sailing an Optimist at the 2026 Asian Beach Games in Sanya.",
+    imageCaption: "Cheng Wenyu of China in the girls’ Optimist competition at Sanya 2026. The photograph shows the event, rather than Singapore’s medallists.",
+    imageCredit: "Photo: Xinhua / Zhang Fan, via the Olympic Council of Asia",
+    imageCreditUrl: "https://oca.asia/news/7248-china-sails-to-five-more-gold-medals-at-sanya-2026.html",
+  },
+  "rsyc-optimist-gold-knockout-2026-recap": {
+    imageUrl: "/news/rsyc-optimist-gold-knockout-2026.jpg",
+    imageAlt: "Optimist sailors racing beside the marina at the RSYC Gold Fleet Knockout Championship in October 2026.",
+    imageCaption: "Racing on the opening day of the RSYC Optimist Gold Fleet Knockout Championship, 3 October 2026.",
+    imageCredit: "Photo: RSYC official event album",
+    imageCreditUrl: "https://photos.app.goo.gl/huykMdmuE9MvES9K9",
+  },
   "2026-optimist-worlds-tangier-retrospective": {
     imageUrl: "/news/optimist-worlds-archive.jpg",
     imageAlt: "Optimist dinghies at the start of a World Championship race in Uruguay in 2007.",
