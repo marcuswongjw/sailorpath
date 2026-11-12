@@ -90,28 +90,28 @@ export function AccountWorkspaces({
           Continue your sailing
         </h2>
       )}
-      <div className={isSingleRow ? "grid gap-3" : "grid gap-3 sm:grid-cols-2"}>
+      <div className={isSingleRow ? "grid min-w-0 gap-3" : "grid min-w-0 gap-3 sm:grid-cols-2"}>
         {workspaces.map(({ href, title, description, icon: Icon }) => (
           <Link
             key={href}
             href={href}
-            className={`group rounded-2xl border border-cool-veil bg-warm-white transition hover:border-harbour hover:shadow-xs focus-visible:outline-2 focus-visible:outline-harbour ${
+            className={`group min-w-0 w-full rounded-2xl border border-cool-veil bg-warm-white transition hover:border-harbour hover:shadow-xs focus-visible:outline-2 focus-visible:outline-harbour ${
               isSingleRow
-                ? "flex items-center justify-between gap-4 px-5 py-4"
-                : "p-5"
+                ? "flex items-center justify-between gap-3 px-4 py-4 sm:px-5"
+                : "block p-5"
             }`}
           >
             {isSingleRow ? (
               <>
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-sailcloth text-racing-orange">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <span className="block text-sm font-bold text-harbour">
                       {title}
                     </span>
-                    <span className="block text-xs text-slate-soft truncate">
+                    <span className="block text-xs text-slate-soft leading-snug">
                       {description}
                     </span>
                   </div>

@@ -81,7 +81,14 @@ export function PersonalSeasonCard({
   season: PersonalSeasonView;
   showExplanation?: boolean;
 }) {
-  const fleetLabel = season.fleet === "ILCA" ? season.ilcaClass || "ILCA" : season.fleet;
+  const fleetLabel =
+    season.fleet === "ILCA"
+      ? season.ilcaClass || "ILCA"
+      : season.fleet === "Gold"
+        ? "SG Gold"
+        : season.fleet === "Silver"
+          ? "SG Silver"
+          : season.fleet;
   const place =
     season.rank != null && season.fleetSize != null
       ? `#${season.rank} of ${season.fleetSize}`
@@ -92,10 +99,7 @@ export function PersonalSeasonCard({
     <section className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
-            This half
-          </p>
-          <h2 className="mt-1 text-lg font-black text-[var(--sp-harbour-shadow)]">
+          <h2 className="text-lg font-black text-[var(--sp-harbour-shadow)]">
             {season.sailorName}
           </h2>
           <p className="mt-1 text-sm text-[var(--sp-charcoal-slate)]">

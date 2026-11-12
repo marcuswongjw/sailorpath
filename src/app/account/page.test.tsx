@@ -31,6 +31,8 @@ describe("account workspace navigation", () => {
     await user.click(screen.getByRole("button", { name: "Log out" }));
     expect(state.signOut).toHaveBeenCalledTimes(1);
     expect(within(sailing).queryByRole("link", { name: /Family dashboard/ })).not.toBeInTheDocument();
+    const followingLink = within(sailing).getByRole("link", { name: /Following/ });
+    expect(followingLink).toHaveClass("min-w-0", "w-full");
     expect(screen.getByRole("link", { name: "Open logbook" })).toHaveAttribute("href", "/athlete?id=sailor");
     expect(screen.queryByRole("link", { name: "Request coach access" })).not.toBeInTheDocument();
     const summary = screen.getByText("Account settings", { selector: "summary" });

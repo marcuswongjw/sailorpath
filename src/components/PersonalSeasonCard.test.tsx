@@ -118,6 +118,33 @@ describe("PersonalSeasonCard", () => {
         "Follow their performance over the last 6 months. You will also get an email when their results publish."
       )
     ).toBeInTheDocument();
+    expect(screen.queryByText("This half")).not.toBeInTheDocument();
+    expect(screen.getByText(/SG Gold/)).toBeInTheDocument();
     expect(screen.queryByText("Why this place")).not.toBeInTheDocument();
+  });
+
+  it("displays SG Silver for Silver fleet sailors", () => {
+    const season: PersonalSeasonView = {
+      sailorId: "ben",
+      sailorName: "Ben Lim",
+      handle: "ben-lim",
+      periodLabel: "Jul – Dec 2026",
+      fleet: "Silver",
+      ilcaClass: null,
+      rank: 8,
+      fleetSize: 60,
+      best3: 24,
+      higherIsBetter: false,
+      slots: decorateSeasonSlots([]),
+      nextCountingEvent: null,
+      why: [],
+      resultsHref: "/sailors/ben-lim#results",
+      lastResultDate: null,
+      tiedWith: 0,
+    };
+
+    render(<PersonalSeasonCard season={season} showExplanation={false} />);
+    expect(screen.queryByText("This half")).not.toBeInTheDocument();
+    expect(screen.getByText(/SG Silver/)).toBeInTheDocument();
   });
 });
