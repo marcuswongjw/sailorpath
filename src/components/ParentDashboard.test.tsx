@@ -214,6 +214,7 @@ describe("ParentDashboard", () => {
 
     // Actionable equipment alert jump & Overview cards (Selection Trial + Recent Results)
     expect(screen.getByText(/1 equipment alert requires attention/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Why this place/i)).not.toBeInTheDocument();
     expect(screen.getByText("Selection Trial")).toBeInTheDocument();
     expect(screen.getByText("Selected")).toBeInTheDocument();
     expect(screen.getByText(/Asian Games & Perth Camp/i)).toBeInTheDocument();
@@ -223,16 +224,17 @@ describe("ParentDashboard", () => {
     expect(screen.getByText("#2")).toBeInTheDocument();
 
     // Gear & Prep content is hidden on Overview until selected
-    expect(screen.queryByText("Boat Locker & Equipment")).not.toBeInTheDocument();
+    expect(screen.queryByText("Boat Locker")).not.toBeInTheDocument();
 
     // Switch to Gear & Prep via the alert CTA
     await user.click(screen.getByRole("button", { name: /Review Gear & Prep/i }));
 
-    expect(screen.getByText("Boat Locker & Equipment")).toBeInTheDocument();
+    expect(screen.getByText("Boat Locker")).toBeInTheDocument();
     expect(screen.getByText(/1 Equipment Alert/i)).toBeInTheDocument();
     expect(screen.getByText("Hull #184491")).toBeInTheDocument();
-    expect(screen.getByText("Official class measurement certificate verified & onboard")).toBeInTheDocument();
-    expect(screen.getByText("Spare battens, sail ties (2.5mm / 3.0mm) & wind indicator checked")).toBeInTheDocument();
+    expect(screen.getByText("Winner 3D Star")).toBeInTheDocument();
+    expect(screen.getByText("Measurement certificate & sail numbers checked")).toBeInTheDocument();
+    expect(screen.getByText("Spares kit (battens, sail ties, wind indicator)")).toBeInTheDocument();
 
     // Switch to Coach & Notes tab
     await user.click(screen.getByRole("tab", { name: /Coach & Notes/i }));
@@ -283,18 +285,18 @@ describe("ParentDashboard", () => {
     await user.click(gearTab);
 
     await waitFor(() => {
-      expect(screen.getByText("Official class measurement certificate verified & onboard")).toBeInTheDocument();
+      expect(screen.getByText("Measurement certificate & sail numbers checked")).toBeInTheDocument();
     });
 
-    // Initially 0/2 ready (only 1st and 5th items kept by default)
-    expect(screen.getByText("0/2 ready")).toBeInTheDocument();
+    // Initially 0/4 ready
+    expect(screen.getByText("0/4 ready")).toBeInTheDocument();
 
     // Click first checklist item
-    const checkBtn = screen.getByText("Official class measurement certificate verified & onboard");
+    const checkBtn = screen.getByText("Measurement certificate & sail numbers checked");
     await user.click(checkBtn);
 
-    // Now 1/2 ready
-    expect(screen.getByText("1/2 ready")).toBeInTheDocument();
+    // Now 1/4 ready
+    expect(screen.getByText("1/4 ready")).toBeInTheDocument();
 
     // Add a custom checklist item
     const customInput = screen.getByPlaceholderText(/add race prep item/i);
@@ -303,17 +305,17 @@ describe("ParentDashboard", () => {
     await user.click(addBtn);
 
     expect(screen.getByText("Extra electrolyte bottle")).toBeInTheDocument();
-    expect(screen.getByText("1/3 ready")).toBeInTheDocument();
+    expect(screen.getByText("1/5 ready")).toBeInTheDocument();
 
     // Check off the newly added item
     const customItemBtn = screen.getByText("Extra electrolyte bottle");
     await user.click(customItemBtn);
-    expect(screen.getByText("2/3 ready")).toBeInTheDocument();
+    expect(screen.getByText("2/5 ready")).toBeInTheDocument();
 
     // Reset checklist
     const resetBtn = screen.getByTitle("Reset checklist");
     await user.click(resetBtn);
-    expect(screen.getByText("0/3 ready")).toBeInTheDocument();
+    expect(screen.getByText("0/5 ready")).toBeInTheDocument();
   });
 
   it("supports in-place equipment management and opens preset modal in Card B", async () => {
@@ -329,7 +331,7 @@ describe("ParentDashboard", () => {
     await user.click(gearTab);
 
     await waitFor(() => {
-      expect(screen.getByText("Boat Locker & Equipment")).toBeInTheDocument();
+      expect(screen.getByText("Boat Locker")).toBeInTheDocument();
     });
 
     // Verify gear item and condition are rendered

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   Plus,
   Sailboat,
@@ -23,13 +22,13 @@ import {
 import {
   CARD,
   NESTED,
-  SECONDARY_BTN,
   PRIMARY_BTN,
   SECTION_KICKER,
   SECTION_TITLE,
   MUTED,
   BODY,
   INK,
+  formatSgFleetLabel,
 } from "./styles";
 
 type GearItem = {
@@ -81,7 +80,6 @@ export type EquipmentInPlacePanelProps = {
 
 export function EquipmentInPlacePanel({
   activeAthlete,
-  demoMode = false,
   showAddGearModal,
   addGearTab,
   addGearBusy,
@@ -107,58 +105,53 @@ export function EquipmentInPlacePanel({
   onCreateCustomGear,
 }: EquipmentInPlacePanelProps) {
   const dialogRef = useModalDialog(showAddGearModal, onCloseAddGear);
+  const gearItems = activeAthlete.primaryGear ?? [];
+  const fleetSubtitle = formatSgFleetLabel(activeAthlete.currentFleet);
+
   return (
     <>
-      <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
-        <div className="flex items-start justify-between gap-3 flex-wrap">
+      <section className={`${CARD} p-5 space-y-4`}>
+        <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>
             <p className={SECTION_KICKER}>Boat locker</p>
             <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
               <Sailboat className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-              Boat Locker & Equipment
+              Boat Locker
+              {gearItems.length > 0 && (
+                <span className={`text-xs font-semibold ${MUTED}`}>
+                  ({gearItems.length})
+                </span>
+              )}
             </h3>
-            <p className={`text-xs ${MUTED} mt-0.5`}>
-              Track hull condition, sails, spars, measurement certificates, and race-day gear.
-            </p>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onOpenAddGear}
-              className={PRIMARY_BTN}
-            >
-              <Plus className="h-3.5 w-3.5" />
-              Add Equipment
-            </button>
-            <Link
-              href={demoMode ? "/sample#profile-equipment" : `/sailors/${activeAthlete.handle}#profile-equipment`}
-              className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
-            >
-              Full Profile →
-            </Link>
-          </div>
+          <button
+            type="button"
+            onClick={onOpenAddGear}
+            className={`${PRIMARY_BTN} min-h-10 px-3.5 py-2 text-xs`}
+          >
+            <Plus className="h-3.5 w-3.5" />
+            Add Equipment
+          </button>
         </div>
 
         {(activeAthlete.equipmentAlertCount ?? 0) > 0 && (
-          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3.5 space-y-2">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 space-y-1">
             <p className="text-xs font-bold text-[var(--sp-color-error)] flex items-center gap-1.5">
-              <AlertTriangle className="h-4 w-4 shrink-0" />
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
               {activeAthlete.equipmentAlertCount} Equipment Alert
-              {activeAthlete.equipmentAlertCount === 1 ? "" : "s"} Require Action
+              {activeAthlete.equipmentAlertCount === 1 ? "" : "s"}
             </p>
-            <div className="space-y-1 pl-5">
-              {(activeAthlete.equipmentAlerts || []).map((al, idx) => (
-                <p key={idx} className="text-xs text-[var(--sp-color-error)]">
-                  <span className="font-bold">{al.label}:</span> {al.reason}
-                </p>
-              ))}
-            </div>
+            {(activeAthlete.equipmentAlerts || []).map((al, idx) => (
+              <p key={idx} className="text-xs text-[var(--sp-color-error)] pl-5">
+                <span className="font-bold">{al.label}:</span> {al.reason}
+              </p>
+            ))}
           </div>
         )}
 
-        {activeAthlete.primaryGear && activeAthlete.primaryGear.length > 0 ? (
+        {gearItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {[...activeAthlete.primaryGear]
+            {[...gearItems]
               .sort((a, b) => {
                 const rank = (cond: string) => {
                   const s = toSimplifiedCondition(cond);
@@ -166,58 +159,61 @@ export function EquipmentInPlacePanel({
                 };
                 return rank(a.condition) - rank(b.condition);
               })
-              .map((g) => (
-              <div
-                key={g.id}
-                className={`${NESTED} p-3 flex flex-col justify-between gap-2.5 hover:border-[var(--sp-harbour-teal)] transition group`}
-              >
-                <div className="flex items-start justify-between gap-1.5">
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
-                        {g.category}
-                      </span>
-                      {g.isPrimary && (
-                        <span className="text-[9px] font-bold text-[var(--sp-racing-orange)] bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/25 px-1.5 py-0.5 rounded-full">
-                          Primary
-                        </span>
-                      )}
-                    </div>
-                    <p className={`text-xs font-bold ${INK} mt-0.5 truncate`}>
-                      {g.label || [g.brand, g.model].filter(Boolean).join(" ") || "Equipment Item"}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button
-                      type="button"
-                      title={g.isPrimary ? "Primary race gear (click to unset)" : "Make primary race gear"}
-                      onClick={() => onTogglePrimary(g.id, g.isPrimary)}
-                      className={`p-1 rounded-lg hover:bg-[var(--sp-warm-white)] transition ${
-                        g.isPrimary ? "text-[var(--sp-racing-orange)]" : `${MUTED} hover:text-[var(--sp-racing-orange)]`
-                      }`}
-                    >
-                      <Star className={`h-3.5 w-3.5 ${g.isPrimary ? "fill-[var(--sp-racing-orange)]" : ""}`} />
-                    </button>
-                    <button
-                      type="button"
-                      title="Remove gear from locker"
-                      onClick={() => onDeleteGear(g.id)}
-                      className={`p-1 rounded-lg ${MUTED} hover:text-rose-600 hover:bg-rose-50 transition`}
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </div>
+              .map((g) => {
+                const brandModel = [g.brand, g.model].filter(Boolean).join(" ");
+                const title = g.label || brandModel || "Equipment Item";
+                const subtitle = g.label && brandModel && g.label !== brandModel ? brandModel : null;
+                const simplified = toSimplifiedCondition(g.condition);
 
-                <div className="flex items-center justify-between pt-1.5 border-t border-[var(--sp-cool-veil)]">
-                  {(() => {
-                    const simplified = toSimplifiedCondition(g.condition);
-                    return (
+                return (
+                  <div
+                    key={g.id}
+                    className={`${NESTED} p-3 flex flex-col justify-between gap-2.5 hover:border-[var(--sp-harbour-teal)] transition`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <span className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
+                          {categoryLabel(g.category as EquipmentCategory)}
+                        </span>
+                        <p className={`text-sm font-bold ${INK} mt-0.5 truncate`}>
+                          {title}
+                        </p>
+                        {subtitle && (
+                          <p className={`text-xs ${MUTED} truncate`}>{subtitle}</p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-0.5 shrink-0">
+                        <button
+                          type="button"
+                          title={g.isPrimary ? "Primary race gear (click to unset)" : "Set as primary race gear"}
+                          onClick={() => onTogglePrimary(g.id, g.isPrimary)}
+                          className={`min-h-8 px-2 rounded-full text-[10px] font-bold inline-flex items-center gap-1 transition ${
+                            g.isPrimary
+                              ? "text-[var(--sp-racing-deep)] bg-[var(--sp-racing-mist)]/60 border border-[var(--sp-racing-orange)]/25"
+                              : `${MUTED} hover:text-[var(--sp-racing-orange)] hover:bg-[var(--sp-warm-white)]`
+                          }`}
+                        >
+                          <Star className={`h-3 w-3 ${g.isPrimary ? "fill-[var(--sp-racing-orange)] text-[var(--sp-racing-orange)]" : ""}`} />
+                          {g.isPrimary ? "Primary" : ""}
+                        </button>
+                        <button
+                          type="button"
+                          title="Remove gear from locker"
+                          aria-label={`Remove ${title}`}
+                          onClick={() => onDeleteGear(g.id)}
+                          className={`inline-flex h-8 w-8 items-center justify-center rounded-lg ${MUTED} hover:text-rose-600 hover:bg-rose-50 transition`}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-1.5 border-t border-[var(--sp-cool-veil)]">
                       <button
                         type="button"
                         onClick={() => onToggleCondition(g.id, g.condition)}
-                        title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
-                        className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-full border transition flex items-center gap-1 touch-manipulation ${
+                        title="Click to cycle condition: Race Ready, Practice Only, Needs Repair"
+                        className={`text-[11px] font-bold px-2.5 py-1 rounded-full border transition inline-flex items-center gap-1.5 touch-manipulation ${
                           simplified === "race_ready"
                             ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/30 text-[var(--sp-harbour-teal)]"
                             : simplified === "practice_only"
@@ -232,27 +228,19 @@ export function EquipmentInPlacePanel({
                           ? "Practice Only"
                           : "Needs Repair"}
                       </button>
-                    );
-                  })()}
-                  <span className={`text-[13px] ${MUTED} font-medium`}>
-                    Tap to toggle
-                  </span>
-                </div>
-              </div>
-            ))}
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-6 text-center space-y-3">
-            <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/20">
-              <Sailboat className="h-5 w-5 text-[var(--sp-racing-orange)]" />
-            </div>
-            <div className="space-y-1">
-              <p className={`text-xs font-bold ${INK}`}>No equipment registered yet</p>
-              <p className={`text-[13px] ${MUTED} max-w-sm mx-auto`}>
-                Add your sailor&apos;s hull, spars, sails, and foils to track safety checks, condition, and race-day readiness.
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-center gap-2 pt-1">
+          <div className="rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-5 text-center space-y-2.5">
+            <Sailboat className={`h-6 w-6 ${MUTED} mx-auto`} />
+            <p className={`text-xs font-bold ${INK}`}>No equipment logged yet</p>
+            <p className={`text-xs ${MUTED} max-w-xs mx-auto`}>
+              Track hull, sails, spars, and foils to spot worn gear before regattas.
+            </p>
+            <div className="pt-1">
               <button
                 type="button"
                 onClick={onOpenAddGear}
@@ -260,20 +248,6 @@ export function EquipmentInPlacePanel({
               >
                 <Plus className="h-3.5 w-3.5" />
                 Add Equipment
-              </button>
-              <button
-                type="button"
-                onClick={() => onAddGearPreset(YOUTH_EQUIPMENT_PRESETS[0])}
-                className={SECONDARY_BTN}
-              >
-                + Optimax Rig Set
-              </button>
-              <button
-                type="button"
-                onClick={() => onAddGearPreset(YOUTH_EQUIPMENT_PRESETS[6])}
-                className={SECONDARY_BTN}
-              >
-                + OneSails Racing Sail
               </button>
             </div>
           </div>
@@ -294,7 +268,8 @@ export function EquipmentInPlacePanel({
                 Add Equipment to Locker
               </h3>
               <p className={`text-xs ${MUTED}`}>
-                For {activeAthlete.name} ({activeAthlete.currentFleet || "Optimist"} Fleet)
+                For {activeAthlete.name}
+                {fleetSubtitle ? ` (${fleetSubtitle})` : ""}
               </p>
             </div>
             <button

@@ -240,7 +240,7 @@ export function ParentDashboard({
                       <PersonalSeasonCard
                         season={activeAthlete.season}
                         showSailorName={false}
-                        collapsibleExplanation
+                        showExplanation={false}
                       />
                     ) : null}
 
