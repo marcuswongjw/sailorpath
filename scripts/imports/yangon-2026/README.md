@@ -43,9 +43,20 @@ Reproduce manifests with `python3 scripts/imports/yangon-2026/prepare.py`. The g
 
 Code-only DNS/DNF/DNC/OCS/DSQ values use tentative Appendix A fleet size + 1. Multiple failures involve only numeric scores and therefore do not depend on penalty assumptions (e.g. rank 13: 148/114 calculated versus 146/112 published).
 
-## Remaining work
+## Identity resolution and complete import — 12 November 2026
 
-Resolve the seven held identities before importing those entries. Publication review passed and all three sheets are live. Public notes retain provisional status, assumed dates, partial coverage and source discrepancies.
+All seven previously held entries were resolved and imported live on explicit user approval via `resolution.sql`:
+- **Thurain Lin (CFC Rank 5, sail MYA2)** and **Thuyein Lin (Olympic Day Rank 7, sail MYA2)**: Phonetic Burmese transliterations (သူရိန်) mapped to canonical profile `Thurein Lin` (`293148bf-0533-5e0f-934a-6567b089996a`), with registered aliases `Thurain Lin` and `Thuyein Lin`.
+- **Myat Toe Khant (CFC Rank 26, sail MYA400)** and **Myat Toe Khant (Olympic Day Rank 21, sail MYA2(400))**: Linked to existing profile `Myat Toe Khant` (`a98245bb-cdc1-5316-b2fb-a3a3b6abe97a`, Yangon Sailing Club). Following user instruction, the 1-point arithmetic discrepancy on Olympic Day (published gross 256 / nett 192) was preserved verbatim.
+- **Lucas (CFC Rank 22, sail MYA354)**: Created source-faithful profile `Lucas` (`93ad80e2-dd33-5f0d-8f66-f2bf251aaff0`, nationality MYA, club Yangon Sailing Club, sail MYA354).
+- **Thein Thuyein Myint (Olympic Day ILCA 4 Rank 4)**: Linked to existing profile `Thein Thurain Myint` (`5d1cab86-4cd9-41da-875e-ffe63608a3dd`), updated nationality to MYA and registered alias `Thein Thuyein Myint`.
+- **Suu Labb Lin Tun (Olympic Day ILCA 4 Rank 5)**: Linked to existing profile `Su Latt Lin Tun` (`ba1644c5-63ee-5037-bed9-a6621cdf326a`), registering alias `Suu Labb Lin Tun`.
+
+All three sheets are now 100% complete:
+- CFC Optimist: 31 of 31 entries (0 held)
+- Olympic Day ILCA 4: 7 of 7 entries (0 held)
+- Olympic Day Optimist: 31 of 31 entries (0 held)
+Aggregate Yangon inventory: 69 results / 759 race scores.
 
 ## Live publication review
 
