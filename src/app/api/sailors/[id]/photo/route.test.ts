@@ -47,6 +47,9 @@ describe("consent checked photo reader", () => {
     expect(m.download).toHaveBeenCalledTimes(2);
     expect(m.execute).not.toHaveBeenCalled();
     expect(m.fetch).not.toHaveBeenCalled();
+    const denied = await call();
+    expect(denied.headers.get("X-Photo-Existing")).toBeNull();
+    expect(denied.headers.get("X-Photo-Attempts")).toBeNull();
   });
   it("does not fetch arbitrary external URLs or accept invalid IDs", async () => {
     expect((await call("invalid")).status).toBe(404); expect(m.load).not.toHaveBeenCalled();
