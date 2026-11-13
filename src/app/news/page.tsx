@@ -31,8 +31,9 @@ function UpdateCard({ update, featured = false }: { update: PublishedNewsArticle
               className={`aspect-[16/9] w-full ${update.imageUrl.startsWith("/news/ui-") ? "object-contain" : "object-cover"} ${featured ? "sm:h-full sm:min-h-64" : ""}`}
             />
           </Link>
-          {update.imageCredit ? (
+          {update.imageCaption || update.imageCredit ? (
             <figcaption className="border-t border-cool-veil px-4 py-2 text-[11px] leading-4 text-slate-soft">
+              {update.imageCaption ? <span>{update.imageCaption} </span> : null}
               {update.imageCreditUrl ? <a href={update.imageCreditUrl} target="_blank" rel="noreferrer" className="hover:text-harbour hover:underline">{update.imageCredit}</a> : update.imageCredit}
             </figcaption>
           ) : null}
