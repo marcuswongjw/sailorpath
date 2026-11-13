@@ -115,8 +115,8 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
   },
   "easier-browsing-for-race-results-and-sailor-awards": {
     imageUrl: "/news/ui-race-scores-desktop.jpg",
-    imageAlt: "SailorPath mobile results displaying competitors and individual race scores.",
-    imageCaption: "A mobile view of race scores on SailorPath.",
+    imageAlt: "SailorPath desktop results displaying competitors and individual race scores.",
+    imageCaption: "A desktop view of race scores on SailorPath.",
     imageCredit: "Screenshot: SailorPath",
     imageCreditUrl: "https://sailorpath.com/regattas/kaohsiung-lotus-pond-optimist-regatta-2026",
   },
