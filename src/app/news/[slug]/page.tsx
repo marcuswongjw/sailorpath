@@ -1,12 +1,28 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import { formatNewsDate, getPublishedNewsArticle } from "@/lib/news";
 import { parseNewsBody } from "@/lib/newsBody";
 
 type NewsArticlePageProps = {
   params: Promise<{ slug: string }>;
+};
+
+const ARTICLE_SCREENSHOTS: Record<string, { heading: string; src: string; alt: string; caption: string }> = {
+  "parent-workspace-gear-coach-notes": {
+    heading: "Start with the overview",
+    src: "/news/ui-parent-workspace-desktop.jpg",
+    alt: "Desktop parent workspace demo showing a sample sailor and the workspace tabs.",
+    caption: "The parent workspace demo uses sample data.",
+  },
+  "connected-records-for-helm-and-crew": {
+    heading: "See the sailors behind an entry",
+    src: "/news/ui-crew-results-desktop.jpg",
+    alt: "Desktop Hong Kong Race Week 29er results showing both sailors in each boat.",
+    caption: "SailorPath’s Hong Kong Race Week 2026 29er results show sailors together.",
+  },
 };
 
 function labelForKind(kind: string): string {
@@ -105,9 +121,26 @@ export default async function NewsArticlePage({
           {blocks.map((block, index) =>
             block.type === "heading" ? (
               block.level === 2 ? (
-                <h2 key={index} className="pt-3 text-2xl font-extrabold tracking-tight text-harbour-shadow">
-                  {block.text}
-                </h2>
+                <Fragment key={index}>
+                  <h2 className="pt-3 text-2xl font-extrabold tracking-tight text-harbour-shadow">
+                    {block.text}
+                  </h2>
+                  {ARTICLE_SCREENSHOTS[article.slug]?.heading === block.text ? (
+                    <figure className="overflow-hidden rounded-2xl border border-cool-veil bg-sailcloth">
+                      <Image
+                        src={ARTICLE_SCREENSHOTS[article.slug].src}
+                        alt={ARTICLE_SCREENSHOTS[article.slug].alt}
+                        width={1272}
+                        height={716}
+                        unoptimized
+                        className="h-auto w-full"
+                      />
+                      <figcaption className="border-t border-cool-veil bg-warm-white px-4 py-3 text-xs leading-5 text-slate-soft">
+                        {ARTICLE_SCREENSHOTS[article.slug].caption} Screenshot: SailorPath.
+                      </figcaption>
+                    </figure>
+                  ) : null}
+                </Fragment>
               ) : (
                 <h3 key={index} className="pt-2 text-xl font-extrabold text-harbour-shadow">
                   {block.text}

@@ -48,6 +48,18 @@ describe("published news article route", () => {
     expect(html).toContain('href="/classes/x15"');
   });
 
+  it("places the parent demo screenshot beneath the overview heading", async () => {
+    mocks.getArticle.mockResolvedValue({ ...article, slug: "parent-workspace-gear-coach-notes", relatedClass: null, body: "Introduction.\n\n## Start with the overview\n\nOverview details." });
+    const html = renderToStaticMarkup(await NewsArticlePage({ params: Promise.resolve({ slug: "parent-workspace-gear-coach-notes" }) }));
+    const heading = html.indexOf("Start with the overview");
+    const screenshot = html.indexOf("/news/ui-parent-workspace-desktop.jpg");
+    const text = html.indexOf("Overview details.");
+    expect(heading).toBeGreaterThan(-1);
+    expect(screenshot).toBeGreaterThan(heading);
+    expect(text).toBeGreaterThan(screenshot);
+    expect(html).toContain("uses sample data");
+  });
+
   it("returns a real not-found boundary for an unknown or unpublished article", async () => {
     mocks.getArticle.mockResolvedValue(null);
 
