@@ -43,6 +43,34 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: string | null;
   }
 > = {
+  "parent-workspace-gear-coach-notes": {
+    imageUrl: "/news/public-sailing-record.png",
+    imageAlt: "Illustration of connected sailing records and activity cards.",
+    imageCaption: "Illustration of connected sailing records and activities; not a screenshot of the parent workspace.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "sailor-profiles-and-logbooks": {
+    imageUrl: "/news/profile-sharing.png",
+    imageAlt: "Illustration of a sailing profile and private information.",
+    imageCaption: "Illustration of a sailor profile and private information.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "more-ways-to-join-sailorpath": {
+    imageUrl: "/news/profile-sharing.png",
+    imageAlt: "Illustration of a sailor profile beside a private panel.",
+    imageCaption: "Illustration of a SailorPath profile and private information.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
+  "connected-records-for-helm-and-crew": {
+    imageUrl: "/news/public-sailing-record.png",
+    imageAlt: "Illustrated sailing results and connected sailor records.",
+    imageCaption: "Illustration of connected sailing results and sailor records.",
+    imageCredit: "Illustration by SailorPath",
+    imageCreditUrl: null,
+  },
   "singapore-sailing-medals-asian-beach-games-2026": {
     imageUrl: "/news/asian-beach-games-sanya-2026.jpg",
     imageAlt: "China’s Cheng Wenyu sailing an Optimist at the 2026 Asian Beach Games in Sanya.",
