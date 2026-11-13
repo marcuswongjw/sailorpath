@@ -26,7 +26,7 @@ describe("account navigation by role", () => {
     expect(desktop).toHaveLength(1);
     expect(desktop[0]).toHaveAttribute("href", "/login");
     expect(screen.queryByRole("link", { name: "Create account" })).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Toggle menu" }));
+    await user.click(screen.getByRole("button", { name: "Open menu" }));
     const mobile = screen.getByRole("navigation", { name: "Mobile public" }).parentElement!;
     expect(within(mobile).getByRole("link", { name: "Log in or sign up" })).toHaveAttribute("href", "/login");
     expect(within(mobile).queryByRole("link", { name: "Create account" })).not.toBeInTheDocument();
@@ -36,19 +36,16 @@ describe("account navigation by role", () => {
   it("shows a sailor their profile without parent or coach workspaces on desktop and mobile", async () => {
     const user = userEvent.setup();
     render(<SiteHeader />);
-    const headerLogOutButtons = screen.getAllByRole("button", { name: "Log out" });
-    expect(headerLogOutButtons.length).toBeGreaterThanOrEqual(2);
-    await user.click(headerLogOutButtons[1]);
-    expect(state.signOut).toHaveBeenCalledTimes(1);
+    expect(screen.getAllByRole("button", { name: "Log out" })).toHaveLength(1);
     await user.click(screen.getByRole("button", { name: "Account" }));
     expect(screen.getByRole("link", { name: "My profile" })).toHaveAttribute("href", "/sailors/sailor");
     expect(screen.queryByRole("link", { name: /workspace/i })).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Toggle menu" }));
+    await user.click(screen.getByRole("button", { name: "Open menu" }));
     const mobile = screen.getByRole("navigation", { name: "Mobile public" }).parentElement!;
     expect(within(mobile).getByRole("link", { name: "My profile" })).toHaveAttribute("href", "/sailors/sailor");
     expect(within(mobile).queryByRole("link", { name: /workspace/i })).not.toBeInTheDocument();
     await user.click(within(mobile).getByRole("button", { name: "Log out" }));
-    expect(state.signOut).toHaveBeenCalledTimes(2);
+    expect(state.signOut).toHaveBeenCalledTimes(1);
   });
 
   it.each([
