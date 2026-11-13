@@ -44,11 +44,11 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
   }
 > = {
   "parent-workspace-gear-coach-notes": {
-    imageUrl: "/news/ui-parent-workspace-desktop.jpg",
-    imageAlt: "SailorPath parent workspace demo showing a sample sailor and workspace tabs.",
-    imageCaption: "The parent workspace demo uses sample data.",
-    imageCredit: "Screenshot: SailorPath",
-    imageCreditUrl: "https://sailorpath.com/demo/parent",
+    imageUrl: "/news/illustration-parent-workspace.jpg",
+    imageAlt: "Illustration of family sailing information, equipment preparation and coach notes.",
+    imageCaption: "An illustration of the parent workspace’s overview, preparation and coaching sections.",
+    imageCredit: "AI-assisted illustration for SailorPath",
+    imageCreditUrl: null,
   },
   "sailor-profiles-and-logbooks": {
     imageUrl: "/news/ui-sailor-profile-desktop.jpg",
@@ -65,11 +65,11 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: "https://sailorpath.com/login",
   },
   "connected-records-for-helm-and-crew": {
-    imageUrl: "/news/ui-crew-results-desktop.jpg",
-    imageAlt: "Hong Kong Race Week 29er results showing two sailors for each boat.",
-    imageCaption: "SailorPath’s Hong Kong Race Week 2026 29er results show sailors together.",
-    imageCredit: "Screenshot: SailorPath",
-    imageCreditUrl: "https://sailorpath.com/regattas/hong-kong-race-week-2026",
+    imageUrl: "/news/illustration-helm-crew.jpg",
+    imageAlt: "Illustration of two sailor profiles connected to a shared boat.",
+    imageCaption: "A shared result connects the sailors in a double-handed entry.",
+    imageCredit: "AI-assisted illustration for SailorPath",
+    imageCreditUrl: null,
   },
   "singapore-sailing-medals-asian-beach-games-2026": {
     imageUrl: "/news/asian-beach-games-sanya-2026.jpg",
@@ -107,11 +107,11 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: "https://drive.google.com/file/d/1WVoXt-Z9Uu4JsYsJwvSftH4PNqE1wQ2w/view",
   },
   "more-racing-from-taiwan-and-japan": {
-    imageUrl: "/news/ui-taiwan-results-desktop.jpg",
-    imageAlt: "Kaohsiung Lotus Pond Optimist Regatta results on SailorPath.",
-    imageCaption: "The Kaohsiung Lotus Pond event page on SailorPath.",
-    imageCredit: "Screenshot: SailorPath",
-    imageCreditUrl: "https://sailorpath.com/regattas/kaohsiung-lotus-pond-optimist-regatta-2026",
+    imageUrl: "/news/illustration-taiwan-japan.jpg",
+    imageAlt: "Illustration of sailing results from Taiwan and Japan.",
+    imageCaption: "An illustration of SailorPath’s Taiwan and Japan results coverage.",
+    imageCredit: "AI-assisted illustration for SailorPath",
+    imageCreditUrl: null,
   },
   "easier-browsing-for-race-results-and-sailor-awards": {
     imageUrl: "/news/ui-race-scores-desktop.jpg",
