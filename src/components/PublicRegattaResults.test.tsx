@@ -83,6 +83,9 @@ describe("PublicRegattaResults", () => {
       />
     );
 
+    expect(html).toContain("Nationality: ");
+    expect(html).toContain("Gender: ");
+    expect(html).toContain("Born: ");
     expect(html).toContain("R1");
     expect(html).toContain("R6");
     expect(html).not.toContain("<article");

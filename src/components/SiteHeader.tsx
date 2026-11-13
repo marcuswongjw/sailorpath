@@ -191,33 +191,20 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-1.5 lg:hidden">
-          {ready && email && (
-            <button
-              type="button"
-              onClick={() => {
-                closeMobile();
-                void signOut();
-              }}
-              className="inline-flex h-9 shrink-0 items-center gap-1 whitespace-nowrap rounded-lg border border-soft-aqua/50 px-2.5 text-xs font-semibold text-sailcloth transition-colors hover:bg-harbour-mid hover:text-white"
-            >
-              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
-              Log out
-            </button>
-          )}
           <button
             type="button"
             aria-label="Search SailorPath"
             onClick={() => setQuickSearchOpen(true)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid sm:h-10 sm:w-10"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid"
           >
             <Search className="h-5 w-5" />
           </button>
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((open) => !open)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid sm:h-10 sm:w-10"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-sailcloth hover:bg-harbour-mid"
           >
             {mobileOpen ? (
               <X className="h-5 w-5" />

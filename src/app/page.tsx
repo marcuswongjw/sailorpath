@@ -100,8 +100,8 @@ export default async function HomePage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="border-b border-cool-veil">
-        <div className="mx-auto max-w-5xl px-4 py-10 text-center sm:px-6 sm:py-14 lg:py-16">
-          <div className="mx-auto mb-6 inline-block max-w-full rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-balance text-harbour-shadow shadow-xs">
+        <div className="mx-auto max-w-5xl px-4 py-7 text-center sm:px-6 sm:py-14 lg:py-16">
+          <div className="mx-auto mb-4 inline-block max-w-full rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-balance text-harbour-shadow shadow-xs">
             Sailing results, class standings &amp; sailor profiles
           </div>
 
@@ -112,12 +112,12 @@ export default async function HomePage() {
             </span>
           </h1>
 
-          <p className="mx-auto mt-5 max-w-xl text-[15px] sm:text-lg leading-relaxed text-slate-soft">
+          <p className="mx-auto mt-3 max-w-xl text-[15px] sm:text-lg leading-relaxed text-slate-soft">
             International race results, Singapore standings and your sailing
             record in one place. Find your next regatta and follow every finish.
           </p>
 
-          <search className="mx-auto mt-7 max-w-xl rounded-2xl border border-cool-veil bg-warm-white p-4 text-left shadow-xs sm:p-5">
+          <search className="mx-auto mt-5 max-w-xl rounded-2xl border border-cool-veil bg-warm-white p-4 text-left shadow-xs sm:p-5">
             <form action="/sailors" method="GET">
               <label htmlFor="home-sailor-search" className="block text-sm font-semibold text-harbour-shadow">Find a sailor profile</label>
               <p id="home-sailor-search-hint" className="mt-1 mb-2.5 text-xs leading-5 text-slate-soft">Browse results and public profiles for free. No account needed.</p>
@@ -142,14 +142,14 @@ export default async function HomePage() {
             </form>
           </search>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-harbour">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-0 text-sm font-semibold text-harbour">
             <Link href="/results" className="inline-flex min-h-11 items-center gap-2 hover:underline"><Trophy className="h-4 w-4" aria-hidden="true" />Browse published results<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             <Link href="/rankings" className="inline-flex min-h-11 items-center gap-2 hover:underline">View rankings<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
           </div>
 
-          <dl className="mt-10 grid grid-cols-2 gap-3 text-left sm:gap-4 lg:grid-cols-4">
+          <dl className="mt-6 grid grid-cols-2 gap-2 text-left sm:mt-10 sm:gap-4 lg:grid-cols-4">
             {stats.map(({ value, label }) => (
-              <div key={label} className="sp-card px-4 py-4 sm:px-5 sm:py-5">
+              <div key={label} className="sp-card px-3 py-2 sm:px-5 sm:py-5">
                 <dt className="text-2xl font-bold tabular-nums text-harbour-shadow sm:text-3xl">
                   {value}
                 </dt>

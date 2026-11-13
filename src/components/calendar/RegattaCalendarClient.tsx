@@ -209,6 +209,7 @@ export function RegattaCalendarClient({
 
   const [rankingFilter, setRankingFilter] = useState(initialRanking);
   const [selectedYear, setSelectedYear] = useState(initialYear);
+  const activeFilterCount = [selectedClass !== "all", selectedRegion !== "all", filterTrialOnly, selectedYear !== "all", rankingFilter !== "all"].filter(Boolean).length;
   const canFilterRanking = selectedRegion === "Singapore" && ["optimist", "ilca4", "ilca6"].includes(selectedClass);
 
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -330,7 +331,8 @@ export function RegattaCalendarClient({
             <button
               type="button"
               onClick={() => setTimelineTab("upcoming")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              aria-pressed={timelineTab === "upcoming"}
+              className={`flex items-center gap-2 min-h-11 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 timelineTab === "upcoming"
                   ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
                   : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
@@ -342,7 +344,8 @@ export function RegattaCalendarClient({
             <button
               type="button"
               onClick={() => setTimelineTab("past")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              aria-pressed={timelineTab === "past"}
+              className={`flex items-center gap-2 min-h-11 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 timelineTab === "past"
                   ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
                   : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
@@ -353,11 +356,22 @@ export function RegattaCalendarClient({
             </button>
           </div>
 
-          {/* Selection trials highlight filter button */}
+        </div>
+
+        <div className="relative w-full">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--sp-slate-soft)]" aria-hidden="true" />
+          <input type="search" aria-label="Search regattas or venues" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search regattas or venues…" className="sp-input min-h-11 w-full !pl-10 text-base" />
+        </div>
+
+        <details className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3">
+          <summary className="cursor-pointer min-h-11 flex items-center justify-between font-bold text-sm text-[var(--sp-harbour-shadow)]"><span>Filters{activeFilterCount > 0 ? ` (${activeFilterCount} active)` : ""}</span><span aria-hidden="true">⌄</span></summary>
+          <div className="space-y-4 pt-2">
+        {/* Selection trials highlight filter button */}
           <button
             type="button"
             onClick={() => setFilterTrialOnly((prev) => !prev)}
-            className={`rounded-xl px-3.5 py-2 text-xs font-bold border inline-flex items-center gap-1.5 transition-all ${
+            aria-pressed={filterTrialOnly}
+            className={`min-h-11 rounded-xl px-3.5 py-2 text-xs font-bold border inline-flex items-center gap-1.5 transition-all ${
               filterTrialOnly
                 ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/40 text-[var(--sp-harbour-teal)] shadow-xs"
                 : "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
@@ -366,10 +380,8 @@ export function RegattaCalendarClient({
             <ShieldCheck className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
             Selection Trials Only
           </button>
-        </div>
-
         {/* Region Filter Bar */}
-        <div className="flex min-w-0 max-w-full items-center gap-2 overflow-x-auto pb-1">
+        <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2 pb-1">
           <span className="text-[11px] font-black text-[var(--sp-slate-soft)] uppercase tracking-wider shrink-0 flex items-center gap-1">
             <Globe className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
             Region:
@@ -387,7 +399,8 @@ export function RegattaCalendarClient({
                 key={reg.id}
                 type="button"
                 onClick={() => setSelectedRegion(reg.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                aria-pressed={isSelected}
+                className={`min-h-11 px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   isSelected
                     ? "bg-[var(--sp-harbour-teal)] !text-white border border-[var(--sp-harbour-teal)] shadow-xs"
                     : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
@@ -411,7 +424,7 @@ export function RegattaCalendarClient({
 
         {/* Class Filter Pills & Search */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-          <div className="flex min-w-0 max-w-full items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+          <div className="flex min-w-0 max-w-full flex-wrap items-center gap-1.5 pb-1 sm:pb-0">
             {[
               { id: "all", label: "All Classes" },
               { id: "optimist", label: "Optimist", icon: Sailboat },
@@ -432,7 +445,8 @@ export function RegattaCalendarClient({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedClass(cat.id)}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  aria-pressed={isSelected}
+                  className={`flex items-center gap-1.5 min-h-11 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                     isSelected
                       ? "bg-[var(--sp-harbour-teal)] !text-white border border-[var(--sp-harbour-teal)] shadow-xs"
                       : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
@@ -445,18 +459,10 @@ export function RegattaCalendarClient({
             })}
           </div>
 
-          {/* Search bar */}
-          <div className="relative w-full sm:w-64">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--sp-slate-soft)]" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search regattas or venues…"
-              className="sp-input w-full !pl-10 !py-2 text-xs"
-            />
-          </div>
         </div>
+            {activeFilterCount > 0 && <button type="button" onClick={() => { setSelectedClass("all"); setSelectedRegion("all"); setFilterTrialOnly(false); setSelectedYear("all"); setRankingFilter("all"); }} className="min-h-11 text-sm font-semibold text-[var(--sp-harbour-teal)] underline">Clear filters</button>}
+          </div>
+        </details>
       </div>
 
       {selectedEvent && <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[var(--sp-cool-veil)] px-4 py-3 text-sm text-[var(--sp-charcoal)]">

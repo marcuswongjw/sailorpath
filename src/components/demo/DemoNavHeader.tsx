@@ -62,7 +62,7 @@ export function DemoNavHeader({
               }`}
             >
               <User className="h-3.5 w-3.5 shrink-0" />
-              <span>Sailor Profile</span>
+              <span>Sailor</span>
             </Link>
 
             <Link
@@ -74,7 +74,7 @@ export function DemoNavHeader({
               }`}
             >
               <Heart className="h-3.5 w-3.5 shrink-0" />
-              <span>Parent Hub</span>
+              <span>Parent</span>
             </Link>
 
             <Link
@@ -86,7 +86,7 @@ export function DemoNavHeader({
               }`}
             >
               <ClipboardList className="h-3.5 w-3.5 shrink-0" />
-              <span>Coach Hub</span>
+              <span>Coach</span>
             </Link>
           </nav>
 

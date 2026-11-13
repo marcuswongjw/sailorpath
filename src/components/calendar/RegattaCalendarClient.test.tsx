@@ -128,6 +128,19 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
   });
 
+  it("shows active filters and clears them without clearing the search", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} />);
+    fireEvent.change(screen.getByRole("searchbox", { name: "Search regattas or venues" }), { target: { value: "Singapore" } });
+    fireEvent.click(screen.getByText("Filters"));
+    const singapore = screen.getByRole("button", { name: /Singapore/ });
+    fireEvent.click(singapore);
+    expect(singapore).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Filters (1 active)")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect(singapore).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("searchbox", { name: "Search regattas or venues" })).toHaveValue("Singapore");
+  });
+
   it("normalizes calendar chips and accepts a legacy class label without mixing board disciplines", () => {
     render(<RegattaCalendarClient initialClass="WingFoil" regattas={[
       { ...mockEvents[0], id: "wing", name: "Wing showcase", slug: "wing-showcase", boatClass: "Wingfoil", classes: ["Wingfoil", "WingFoil"] },

@@ -349,13 +349,13 @@ export function PublicRegattaResults({
                   )}
                 </td>
                 <td className="sp-col-meta px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
-                  {result.nationality || "—"}
+                  <span className="sp-mobile-meta-label">Nationality: </span>{result.nationality || "—"}
                 </td>
                 <td className="sp-col-meta px-3 py-3 text-center text-[var(--sp-charcoal)]">
-                  {formatGenderLabel(result.gender)}
+                  <span className="sp-mobile-meta-label">Gender: </span>{formatGenderLabel(result.gender)}
                 </td>
                 <td className="sp-col-meta px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
-                  {result.birthYear ?? "—"}
+                  <span className="sp-mobile-meta-label">Born: </span>{result.birthYear ?? "—"}
                 </td>
                 {raceNumbers.map((raceNumber) => {
                   const race = races.get(raceNumber);
