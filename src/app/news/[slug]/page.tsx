@@ -77,7 +77,7 @@ export default async function NewsArticlePage({
               width={800}
               height={534}
               unoptimized
-              className="aspect-video w-full object-cover"
+              className={`w-full ${article.imageUrl.startsWith("/news/ui-") ? "max-h-[640px] object-contain" : "aspect-video object-cover"}`}
             />
             {article.imageCaption || article.imageCredit ? (
               <figcaption className="border-t border-cool-veil bg-warm-white px-4 py-3 text-xs leading-5 text-slate-soft">

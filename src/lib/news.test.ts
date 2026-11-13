@@ -26,6 +26,6 @@ it("attaches the same media when an article comes from the published database", 
   rows.published = [{ slug: "a-clearer-public-sailing-record", title: "Saved title", summary: "Saved summary", body: "Saved copy", kind: "product_update", authorDisplayName: "SailorPath", publishedAt: new Date("2026-10-15T00:00:00+08:00"), updatedAt: new Date("2026-11-03T00:00:00+08:00"), tags: [] }];
   const articles = await listPublishedNews();
   const article = articles.find((item) => item.slug === "a-clearer-public-sailing-record");
-  expect(article).toMatchObject({ title: "Saved title", summary: "Saved summary", body: "Saved copy", imageUrl: "/news/public-sailing-record.png" });
+  expect(article).toMatchObject({ title: "Saved title", summary: "Saved summary", body: "Saved copy", imageUrl: "/news/ui-public-records.jpg" });
   expect(articles.filter((item) => item.slug === article!.slug)).toHaveLength(1);
 });

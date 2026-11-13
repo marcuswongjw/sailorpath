@@ -28,7 +28,7 @@ function UpdateCard({ update, featured = false }: { update: PublishedNewsArticle
               width={800}
               height={534}
               unoptimized
-              className={`aspect-[16/9] w-full object-cover ${featured ? "sm:h-full sm:min-h-64" : ""}`}
+              className={`aspect-[16/9] w-full ${update.imageUrl.startsWith("/news/ui-") ? "object-contain" : "object-cover"} ${featured ? "sm:h-full sm:min-h-64" : ""}`}
             />
           </Link>
           {update.imageCredit ? (
