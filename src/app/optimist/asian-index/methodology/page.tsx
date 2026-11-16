@@ -122,7 +122,7 @@ export default function AsianOptimistIndexMethodologyPage() {
           </h1>
           <p className="mt-4 text-base leading-7 text-sailcloth">
             Version {ASIAN_INDEX_BETA_VERSION} · {ASIAN_INDEX_BETA_DRAFT_DATE}. The methodology governs the live
-            rolling 12-month Index published on SailorPath. Organisers, juries and national authorities remain the
+            Index published on SailorPath. Organisers, juries and national authorities remain the
             authority for official results.
           </p>
         </div>
@@ -158,7 +158,7 @@ export default function AsianOptimistIndexMethodologyPage() {
             hosted in Asia or Oceania (Section 4). IODA Worlds and continental championships count wherever they are held.
           </p>
           <p>
-            The Index adds a sailor&apos;s best eligible results over a rolling 12-month window, subject to event-grade
+            The Index adds a sailor&apos;s best eligible results from the current event editions, subject to event-grade
             and country limits. It measures finishing position within designated premier competitions. It limits the advantage
             of attending more events, although more starts still provide more opportunities to improve a score.
           </p>
@@ -204,7 +204,7 @@ export default function AsianOptimistIndexMethodologyPage() {
           <p>
             <strong>Basis of the list.</strong> Eligibility covers recognized MNAs across East Asia, South Asia, Southeast Asia,
             Central Asia, West Asia, and Oceania. Sailors representing an eligible MNA appear in the Index when they have at least one
-            verified scoring result in the 12-month window. Sailors from other regions (e.g. Europe, the Americas) are outside the Index cohort,
+            verified scoring result in the current window. Sailors from other regions (e.g. Europe, the Americas) are outside the Index cohort,
             although their participation is preserved in fleet denominators (N) to accurately reflect finishing percentiles.
           </p>
           <p>
@@ -438,14 +438,15 @@ export default function AsianOptimistIndexMethodologyPage() {
             race date remain pending.
           </p>
           <p>
-            For a ranking date D and final race date F, a result is in the window when{" "}
-            <strong>F ≤ D &lt; F + 12 calendar months</strong>. It ceases to count on its anniversary date. A result
-            dated 18 October 2025 is therefore expired for the ranking dated 18 October 2026. For a 29 February result,
-            use 28 February in a non-leap anniversary year.
+            A qualifying annual result remains eligible until the next matching edition concludes and its final
+            classification is verified, even if this takes more than 12 months. The next verified edition replaces
+            the previous one. For example, the 2025 Asian &amp; Oceanian Championship remains eligible until the 2026
+            edition concludes and its final classification is verified.
           </p>
           <p>
-            Every ranking snapshot records its ranking date and data cut-off timestamp. Only sources verified by that
-            cut-off are included; later corrections produce a new recorded revision. There is no 24-month exception.
+            The Asian &amp; Oceanian championship exception is applied in the current beta. Automatic matching and
+            rollover for other annual competitions is being implemented and reviewed; until then, other results may
+            follow the existing 12-month calculation. The displayed standings remain a beta while this is resolved.
           </p>
         </Section>
 
@@ -613,7 +614,7 @@ export default function AsianOptimistIndexMethodologyPage() {
             exception only if it meets the Grade 150, Grade 75 or Grade 40 criteria and gates applying to its grade and
             host location. Publish the complete list, the criteria check for each event, grades, sources and
             designation date together. The baseline is defined by this rule rather than by hand-picked inclusion. Only
-            results still inside the 12-month window count. Do not add later historical events under this exception.
+            current editions count under the rollover policy above. Do not add later historical events under this exception.
             After launch, every new designation must meet the advance deadline.
           </p>
         </Section>
@@ -626,10 +627,11 @@ export default function AsianOptimistIndexMethodologyPage() {
             denominator.
           </p>
           <p>
-            Each public ledger entry records the source URL, retrieval date, archived evidence reference, event and
+            The intended public ledger should record the source URL, retrieval date, archived evidence reference, event and
             competition identity, methodology version, designation record, N, completed race count, official place,
             Index P, any adjustment, result points, expiry, and whether the result is selected or excluded and why.
-            Archive only the evidence needed to audit the result, avoiding unnecessary personal information.
+            The full public ledger and independent verification are still under review. Archive only the evidence
+            needed to audit the result, avoiding unnecessary personal information.
           </p>
           <p>
             When an organiser or jury amends the official result, verify the amended source and recalculate affected

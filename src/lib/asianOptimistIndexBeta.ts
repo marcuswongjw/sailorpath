@@ -48,7 +48,7 @@ export const ASIAN_INDEX_GRADES: readonly {
     label: "National championship",
     events: "Designated national championships recognised by the national class association or sailing authority",
     host: "Asia & Oceania, and the host MNA's own championship",
-    gates: "At least 30 valid starters; at least 4 completed races",
+    gates: "At least 25 valid starters; at least 4 completed races",
   },
 ] as const;
 
@@ -240,18 +240,6 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     note: "68 Gold + 67 Silver starters published on SailorPath across THA, SGP, MAS, HKG, CHN, and TPE (8 completed races). Shares the Thailand host cap with the Thailand International.",
   },
   {
-    id: "asaf-cup-optimist-open-2026",
-    name: "2026 ASAF Cup Optimist Open Championships",
-    host: "TPE",
-    dates: "5–10 Aug 2026 · Guanyinting, Penghu",
-    grade: 75,
-    starters: 55,
-    verifiedMnas: 6,
-    races: 8,
-    check: "meets",
-    note: "Sanctioned by ASAF and CTSA. Meets Grade 75 criteria with 55 starters across 6 verified MNAs (TPE, KOR, THA, JPN, PHI, HKG) and 8 completed races.",
-  },
-  {
     id: "phuket-kings-cup",
     name: "Phuket King's Cup",
     host: "THA",
@@ -297,7 +285,7 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     verifiedMnas: null,
     races: null,
     check: "unverified",
-    note: "No result data in SailorPath yet. Needs a final classification showing at least 30 starters and 4 races.",
+    note: "No result data in SailorPath yet. Needs a final classification showing at least 25 starters and 4 races.",
   },
   {
     id: "youth-thailand-national-2026",

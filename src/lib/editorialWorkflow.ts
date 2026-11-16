@@ -67,7 +67,7 @@ The Index groups competitions into four distinct tiers:
 
 • Grade 75 — Designated Major International Opens (Max 2 results, at most 1 per host country): Pre-designated major international Optimist regattas in Asia and Oceania. Requires published advance evidence of at least 50 registered sailors from at least 4 verified MNAs, confirmed post-race by at least 40 valid starters from at least 4 MNAs and 4 completed races. A limited number of premier non-regional opens (such as Lake Garda) may be designated by published exception.
 
-• Grade 40 — Designated National Championships (Max 2 results, at most 1 per host country per calendar year): Pre-designated premier national championships hosted in Asia and Oceania by the relevant national class association or sailing authority. Requires an open final classification with at least 30 valid starters and 4 completed races.
+• Grade 40 — Designated National Championships (Max 2 results, at most 1 per host country per calendar year): Pre-designated premier national championships hosted in Asia and Oceania by the relevant national class association or sailing authority. Requires an open final classification with at least 25 valid starters and 4 completed races.
 
 • Grade 0 — Verified Competition History (Unscored): Club regattas, clinics, team racing, development fleets, non-regional national championships, and events failing minimum gates remain visible on sailor profiles as verified competition history without scoring Index points.
 
@@ -174,7 +174,7 @@ Similarly, a sailor who does not attend the World Championship is never penalize
 To keep the Index completely objective, event grading is divided into two strict stages:
 
 1. Advance Designation: Before racing starts, an event must be pre-designated with its grade and primary classification. For Grade 75, the Notice of Race and entry statistics must show at least 50 registered sailors representing at least 4 verified MNAs. We never designate or upgrade an event after seeing who won.
-2. Post-Race Confirmation: Once racing concludes, official result sheets are verified against minimum gates (Grade 150: 5 races; Grade 75: 40 starters, 4 MNAs, 4 races; Grade 40: 30 starters, 4 races). If an event fails its gates, it is not downgraded on the fly; it remains unscored with the failure reason publicly documented.
+2. Post-Race Confirmation: Once racing concludes, official result sheets are verified against minimum gates (Grade 150: 5 races; Grade 75: 40 starters, 4 MNAs, 4 races; Grade 40: 25 starters, 4 races). If an event fails its gates, it is not downgraded on the fly; it remains unscored with the failure reason publicly documented.
 
 ## Expiry and the Year-End Cohort
 
