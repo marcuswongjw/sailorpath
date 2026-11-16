@@ -70,7 +70,7 @@ function Bullets({ items }: { items: readonly React.ReactNode[] }) {
 const fmt = (value: number) => value.toFixed(2);
 
 const EXAMPLE_1 = [
-  ["Worlds", 150, 284, 40, "Count"],
+  ["Worlds", 200, 284, 40, "Count"],
   ["Asian & Oceanian Championship", 150, 170, 25, "Count"],
   ["Malaysia Open B", 75, 50, 5, "Count"],
   ["Malaysia Open A", 75, 59, 8, "Excluded by Grade 75 host cap"],
@@ -85,12 +85,12 @@ const EXAMPLE_2 = [
   ["Thailand Open", 75, 65, 9, "Count"],
   ["Singapore Open", 75, 106, 15, "Count"],
   ["Hong Kong Open", 75, 77, 30, "Count"],
-  ["Japan Open", 75, 45, 20, "Excluded by combined Grade 150/75 cap"],
+  ["Japan Open", 75, 45, 20, "Excluded by combined Grade 200/150/75 cap"],
   ["Singapore Nationals", 40, 83, 2, "Count"],
   ["Thailand Nationals", 40, 70, 10, "Outside the best permitted five"],
 ] as const;
 
-function exampleRows(rows: readonly (readonly [string, 150 | 75 | 40, number, number, string])[]) {
+function exampleRows(rows: readonly (readonly [string, 200 | 150 | 75 | 40, number, number, string])[]) {
   return rows.map(([name, grade, n, p, treatment]) => [
     name,
     grade,
@@ -170,8 +170,9 @@ export default function AsianOptimistIndexMethodologyPage() {
             formats also limit comparability.
           </p>
           <p>
-            A strong result at a Grade 150 championship is treated as good evidence of sailor quality. Equal grading of
-            Worlds and continental championships is a deliberate policy choice (Section 4).
+            A strong result at a Grade 200 World Championship or a Grade 150 continental or invite-only championship
+            is treated as strong evidence of sailor quality. Separating Worlds (Grade 200) from continental and
+            invitational championships (Grade 150) is a deliberate policy choice (Section 4).
           </p>
         </Section>
 
@@ -411,9 +412,10 @@ export default function AsianOptimistIndexMethodologyPage() {
             The Grade 40 country/year cap uses the year of the competition&apos;s final race day.
           </p>
           <p>
-            All eligible IODA continental fleet-racing championships share Grade 150 with Worlds. Equal grading is a
-            policy choice intended to recognise performances across championship pathways; it does not assert equal
-            field strength. Team-racing championships are excluded.
+            The IODA World Championship sits in its own Grade 200 tier (maximum one counted). Eligible IODA continental
+            fleet-racing championships and designated invite-only championships (such as the Regatta of Champions)
+            share Grade 150 (maximum two counted). This grading is a policy choice intended to recognise performances
+            across championship pathways; it does not assert equal field strength. Team-racing championships are excluded.
           </p>
         </Section>
 
@@ -456,10 +458,10 @@ export default function AsianOptimistIndexMethodologyPage() {
           </ol>
           <p>
             There are no reserved grade slots and no requirement to count a result merely because it has a higher
-            grade. Five Grade 40 results can count if they satisfy the country/year cap. A sailor with no Grade 150
-            results can count up to four Grade 75 results and one Grade 40 result, or fewer Grade 75 and more Grade 40
-            results. The four-result upper-grade limit also means a sailor with no eligible Grade 40 result can count at
-            most four results.
+            grade. Five Grade 40 results can count if they satisfy the country/year cap. A sailor with no Grade 200 or
+            Grade 150 results can count up to four Grade 75 results and one Grade 40 result, or fewer Grade 75 and more
+            Grade 40 results. The four-result upper-grade limit also means a sailor with no eligible Grade 40 result can
+            count at most four results.
           </p>
           <p>To calculate the Index:</p>
           <ol className="list-decimal space-y-1.5 pl-5">
@@ -509,10 +511,10 @@ export default function AsianOptimistIndexMethodologyPage() {
             numericColumns={[1, 2, 3, 4]}
           />
           <p>
-            The sum of the unrounded selected scores is 428.777913…; the displayed Index is <strong>428.78</strong>.
+            The sum of the unrounded selected scores is 471.911716…; the displayed Index is <strong>471.91</strong>.
           </p>
 
-          <Sub title="Example 2: five results without Grade 150 access" />
+          <Sub title="Example 2: five results without Grade 200 or Grade 150 access" />
           <AsianIndexTable
             caption="Example 2 results and treatment"
             headers={["Result", "E", "N", "P", "Points", "Treatment"]}
@@ -534,14 +536,15 @@ export default function AsianOptimistIndexMethodologyPage() {
           <Sub title="Comparing grades" />
           <AsianIndexTable
             caption="Points by place in a 100-starter competition"
-            headers={["Place in a 100-starter competition", "Grade 150", "Grade 75", "Grade 40"]}
+            headers={["Place in a 100-starter competition", "Grade 200", "Grade 150", "Grade 75", "Grade 40"]}
             rows={COMPARISON_PLACES.map((place) => [
               place,
+              fmt(asianIndexPoints(200, 100, place)),
               fmt(asianIndexPoints(150, 100, place)),
               fmt(asianIndexPoints(75, 100, place)),
               fmt(asianIndexPoints(40, 100, place)),
             ])}
-            numericColumns={[1, 2, 3]}
+            numericColumns={[1, 2, 3, 4]}
           />
           <p>
             A Grade 75 win is approximately equivalent to a mid-fleet Grade 150 finish. A Grade 40 win is approximately
@@ -691,6 +694,11 @@ export default function AsianOptimistIndexMethodologyPage() {
                 "V1 (Beta)",
                 "18 October 2026",
                 "Expanded scope to include Oceanian national authorities (AUS, NZL, etc.) alongside Asian MNAs. Renamed index to SailorPath Asian and Oceania Optimist Index. Transitioned live calculation to V1 (Beta) points formula with canonical URL /optimist/asian-index.",
+              ],
+              [
+                "V1.1 (Beta)",
+                "16 November 2026",
+                "Introduced 4-tier grading (200 / 150 / 75 / 40): promoted IODA World Championship to Grade 200 (max 1), retained Continental Championships and added invite-only Regatta of Champions at Grade 150 (max 2), designated R.O.C. Kosmos (combined Gold + Silver qualifying-split fleet) at Grade 75, and moved standings to live database calculation.",
               ],
             ]}
           />

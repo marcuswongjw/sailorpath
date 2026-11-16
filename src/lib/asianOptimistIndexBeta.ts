@@ -7,8 +7,8 @@
  * unless a note says otherwise.
  */
 
-export const ASIAN_INDEX_BETA_VERSION = "V1 (Beta)";
-export const ASIAN_INDEX_BETA_DRAFT_DATE = "3 November 2026";
+export const ASIAN_INDEX_BETA_VERSION = "V1.1 (Beta)";
+export const ASIAN_INDEX_BETA_DRAFT_DATE = "16 November 2026";
 export const ASIAN_INDEX_NAME = "SailorPath Asian and Oceania Optimist Index";
 export const ASIAN_INDEX_PATH = "/optimist/asian-index";
 export const ASIAN_INDEX_METHODOLOGY_PATH = `${ASIAN_INDEX_PATH}/methodology`;
