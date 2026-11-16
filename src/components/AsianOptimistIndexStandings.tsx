@@ -78,6 +78,7 @@ export function AsianOptimistIndexStandings({
   const g150Cols = qualifierColumns.filter((col) => col.grade === 150);
   const g75Cols = qualifierColumns.filter((col) => col.grade === 75);
   const g40Cols = qualifierColumns.filter((col) => col.grade === 40);
+  const nonG200Cols = qualifierColumns.filter((col) => col.grade !== 200);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
@@ -290,17 +291,17 @@ export function AsianOptimistIndexStandings({
                 Score
               </th>
               {g200Cols.length > 0 ? (
-                <th colSpan={g200Cols.length} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-[#e3eaf0] px-4 py-2 text-center text-harbour">
+                <th colSpan={g200Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#e3eaf0] px-3 py-2 text-center text-harbour">
                   Grade 200 · Worlds <span className="normal-case font-medium text-slate-soft">(max 1)</span>
                 </th>
               ) : null}
-              <th colSpan={1 + g150Cols.length} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-[#edf2f4] px-4 py-2 text-center text-harbour">
+              <th colSpan={1 + g150Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#edf2f4] px-4 py-2 text-center text-harbour">
                 Grade 150 · Championships <span className="normal-case font-medium text-slate-soft">(max 2)</span>
               </th>
-              <th colSpan={g75Cols.length} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-[#e6f3f4] px-4 py-2 text-center text-harbour">
+              <th colSpan={g75Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#e6f3f4] px-4 py-2 text-center text-harbour">
                 Grade 75 · Opens <span className="normal-case font-medium text-slate-soft">(max 1/host)</span>
               </th>
-              <th colSpan={Math.max(g40Cols.length, 1)} className="sticky top-0 z-20 border-b border-cool-veil bg-[#faf3e6] px-4 py-2 text-center text-harbour">
+              <th colSpan={Math.max(g40Cols.length, 1)} className="sticky top-0 z-20 whitespace-nowrap border-b border-cool-veil bg-[#faf3e6] px-4 py-2 text-center text-harbour">
                 Grade 40 · Nationals <span className="normal-case font-medium text-slate-soft">(max 1/country/yr)</span>
               </th>
             </tr>
@@ -311,14 +312,18 @@ export function AsianOptimistIndexStandings({
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">Sex</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour">YOB</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-4 py-2.5 text-right font-extrabold text-harbour">Points</th>
+              {g200Cols.map((qualifier) => (
+                <th key={qualifier.id} scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#e7eef3] px-2.5 py-2.5 text-center font-extrabold text-harbour">
+                  <div>{qualifier.shortName}</div>
+                </th>
+              ))}
               <th scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#f0f4f4] px-2.5 py-2.5 text-center font-extrabold text-harbour">
                 <div>2025 Asians</div>
               </th>
-              {qualifierColumns.map((qualifier) => {
-                const isG200 = qualifier.grade === 200;
+              {nonG200Cols.map((qualifier) => {
                 const isG150 = qualifier.grade === 150;
                 const isG75 = qualifier.grade === 75;
-                const bg = isG200 ? "bg-[#e7eef3]" : isG150 ? "bg-[#f0f4f4]" : isG75 ? "bg-[#ebf5f6]" : "bg-[#faf5eb]";
+                const bg = isG150 ? "bg-[#f0f4f4]" : isG75 ? "bg-[#ebf5f6]" : "bg-[#faf5eb]";
 
                 return (
                   <th key={qualifier.id} scope="col" className={`sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil ${bg} px-2.5 py-2.5 text-center font-extrabold text-harbour`}>
@@ -367,6 +372,30 @@ export function AsianOptimistIndexStandings({
                     {sailor.countedResultsCount} counted · {sailor.eligibleStarts} {sailor.eligibleStarts === 1 ? "start" : "starts"}
                   </div>
                 </td>
+                {g200Cols.map((qualifier) => {
+                  const res = sailor.qualifierResults.find(
+                    (q) => q.qualifier.id === qualifier.id || q.qualifier.id.startsWith(qualifier.id)
+                  );
+                  const tooltip = res
+                    ? `${sailor.displayName} · ${qualifier.shortName}: ${res.rank} of ${res.qualifier.fleetSize} starters (${res.points.toFixed(2)} pts)${res.counted ? " · Counted" : res.dropReason ? ` · Capped (${res.dropReason})` : " · Capped by selection limits"}`
+                    : undefined;
+
+                  return (
+                    <td
+                      key={qualifier.id}
+                      title={tooltip}
+                      className="border-b border-cool-veil bg-harbour/[0.03] px-2.5 py-3 text-center text-xs tabular-nums"
+                    >
+                      {res ? (
+                        <span className={res.counted ? "inline-flex items-center rounded-md bg-aqua-mist/60 px-1.5 py-0.5 font-extrabold text-harbour ring-1 ring-harbour/15" : "font-medium text-slate-soft/70"}>
+                          {res.rank}/{res.qualifier.fleetSize}
+                        </span>
+                      ) : (
+                        <span className="text-slate-soft/50">—</span>
+                      )}
+                    </td>
+                  );
+                })}
                 <td
                   title={sailor.overallPlace != null ? `${sailor.displayName} · 2025 Asians: ${sailor.overallPlace} of ${totalFleetSize}${anchorCounted ? " · Counted" : ""}` : "No finish recorded"}
                   className="border-b border-cool-veil bg-harbour/[0.02] px-2.5 py-3 text-center text-xs tabular-nums"
@@ -379,8 +408,8 @@ export function AsianOptimistIndexStandings({
                     <span className="text-slate-soft/50">—</span>
                   )}
                 </td>
-                {qualifierColumns.map((qualifier) => {
-                  const isG150 = qualifier.grade === 150 || qualifier.grade === 200;
+                {nonG200Cols.map((qualifier) => {
+                  const isG150 = qualifier.grade === 150;
                   const isG75 = qualifier.grade === 75;
                   const bg = isG150 ? "bg-harbour/[0.02]" : isG75 ? "bg-aqua/[0.02]" : "bg-amber-500/[0.02]";
                   const res = sailor.qualifierResults.find(
