@@ -137,7 +137,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
 
   const allSlugs = [...new Set(scoredEvents.flatMap((e) => e.regattaSlugs))];
 
-  const regattaRows =
+  const designatedRegattaRows =
     allSlugs.length > 0
       ? await withDatabaseRetry(() =>
           db
@@ -159,6 +159,38 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
         )
       : [];
 
+  // Also fetch Singapore national ranking Optimist regattas (counts_for_ranking = true)
+  // within the rolling 12-month window to calibrate Elo Power Rating & 90-day Momentum (K = 16).
+  const cutoff12Date = new Date(now);
+  cutoff12Date.setUTCFullYear(cutoff12Date.getUTCFullYear() - 1);
+  const cutoff12Str = cutoff12Date.toISOString().slice(0, 10);
+
+  const sgpRankingRows = await withDatabaseRetry(() =>
+    db
+      .select({
+        id: regattas.id,
+        slug: regattas.slug,
+        name: regattas.name,
+        totalFleetSize: regattas.totalFleetSize,
+        endDate: regattas.endDate,
+        date: regattas.date,
+      })
+      .from(regattas)
+      .where(
+        and(
+          eq(regattas.boatClass, "Optimist"),
+          eq(regattas.countsForRanking, true),
+          eq(regattas.status, "published")
+        )
+      )
+  );
+
+  const designatedSlugSet = new Set(allSlugs);
+  const extraSgpRegattas = sgpRankingRows.filter(
+    (r) => !designatedSlugSet.has(r.slug) && (r.endDate ?? r.date) >= cutoff12Str
+  );
+
+  const regattaRows = [...designatedRegattaRows, ...extraSgpRegattas];
   const regattaBySlug = new Map(regattaRows.map((r) => [r.slug, r]));
   const regattaIds = regattaRows.map((r) => r.id);
 
@@ -222,8 +254,34 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       a.startDate.localeCompare(b.startDate)
   );
 
-  // Chronological Elo Power Rating + 90-day Momentum pass across all verified regattas
-  const chronoEvents = [...scoredEvents].sort(
+  // Chronological Elo Power Rating + 90-day Momentum pass across all designated events
+  // plus Singapore ranking regattas (counts_for_ranking = true, K = 16).
+  type EloEvent = {
+    id: string;
+    startDate: string;
+    endDate: string;
+    kFactor: number;
+    regattaSlugs: string[];
+  };
+  const chronoEvents: EloEvent[] = [
+    ...scoredEvents.map((e) => {
+      const g = (e.grade ?? 75) as AsianIndexGrade;
+      return {
+        id: e.id,
+        startDate: e.startDate,
+        endDate: e.endDate,
+        kFactor: g === 200 ? 48 : g === 150 ? 40 : g === 75 ? 32 : 24,
+        regattaSlugs: e.regattaSlugs,
+      };
+    }),
+    ...extraSgpRegattas.map((r) => ({
+      id: `sgp-rank:${r.slug}`,
+      startDate: r.date,
+      endDate: r.endDate ?? r.date,
+      kFactor: 16,
+      regattaSlugs: [r.slug],
+    })),
+  ].sort(
     (a, b) => a.endDate.localeCompare(b.endDate) || a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id)
   );
   const cutoff90Days = new Date(now);
@@ -239,8 +297,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       .filter((r): r is NonNullable<typeof r> => Boolean(r));
     if (linkedRegattas.length === 0) continue;
 
-    const grade = (ev.grade ?? 75) as AsianIndexGrade;
-    const kFactor = grade === 200 ? 48 : grade === 150 ? 40 : grade === 75 ? 32 : 24;
+    const kFactor = ev.kFactor;
 
     // Combine split fleets of the same event (e.g. Gold + Silver) into one field
     const participants: { sailorId: string; rank: number }[] = [];
