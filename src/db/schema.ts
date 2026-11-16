@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import {
   pgTable,
   pgView,
@@ -850,7 +850,7 @@ export const asianOptimistIndexEvents = pgTable(
     officialResultsSourceName: text("official_results_source_name").notNull(),
     /** Present only when this source is read directly from SailorPath tables. */
     sailorpathRegattaSlug: text("sailorpath_regatta_slug"),
-    regattaSlugs: text("regatta_slugs").array().default([]).notNull(),
+    regattaSlugs: text("regatta_slugs").array().default(sql`'{}'::text[]`).notNull(),
     resultStatus: text("result_status", {
       enum: ["verified", "awaiting_final", "scheduled"],
     })
