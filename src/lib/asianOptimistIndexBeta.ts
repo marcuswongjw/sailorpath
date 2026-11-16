@@ -13,7 +13,7 @@ export const ASIAN_INDEX_NAME = "SailorPath Asian and Oceania Optimist Index";
 export const ASIAN_INDEX_PATH = "/optimist/asian-index";
 export const ASIAN_INDEX_METHODOLOGY_PATH = `${ASIAN_INDEX_PATH}/methodology`;
 
-export type AsianIndexGrade = 150 | 75 | 40;
+export type AsianIndexGrade = 200 | 150 | 75 | 40;
 
 export const ASIAN_INDEX_GRADES: readonly {
   grade: AsianIndexGrade;
@@ -23,9 +23,16 @@ export const ASIAN_INDEX_GRADES: readonly {
   gates: string;
 }[] = [
   {
+    grade: 200,
+    label: "World Championship",
+    events: "IODA Optimist World Championship",
+    host: "Anywhere",
+    gates: "Official final individual classification; at least 5 completed races",
+  },
+  {
     grade: 150,
-    label: "Championship",
-    events: "IODA World Championship and official IODA continental fleet-racing championships",
+    label: "Continental & Invitational Championship",
+    events: "Official IODA continental fleet-racing championships and designated invite-only championships (e.g. Regatta of Champions)",
     host: "Anywhere",
     gates: "Official final individual classification; at least 5 completed races",
   },
@@ -47,9 +54,9 @@ export const ASIAN_INDEX_GRADES: readonly {
 
 export const ASIAN_INDEX_SELECTION_LIMITS: readonly string[] = [
   "At most five results overall.",
+  "At most one Grade 200 (World Championship) result.",
   "At most two Grade 150 results.",
-  "At most one World Championship result.",
-  "At most four Grade 150 and Grade 75 results combined.",
+  "At most four Grade 200, Grade 150, and Grade 75 results combined.",
   "At most one Grade 75 result per host MNA jurisdiction.",
   "At most one Grade 40 result per host MNA jurisdiction per calendar year.",
 ];
@@ -129,12 +136,12 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     name: "2026 IODA World Championship",
     host: "MAR",
     dates: "18–28 Jun 2026 · Tangier",
-    grade: 150,
+    grade: 200,
     starters: 284,
     verifiedMnas: null,
     races: 12,
     check: "meets",
-    note: "Baseline candidate. Counts until 28 Jun 2027. At most one World result per sailor.",
+    note: "World Championship Grade 200. Counts until 28 Jun 2027. At most one Grade 200 result per sailor.",
   },
   {
     id: "2026-iod-europeans",

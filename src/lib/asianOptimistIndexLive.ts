@@ -243,13 +243,15 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       });
     }
 
+    const eventStarters = Math.max(
+      ev.fleetSize ?? 0,
+      linkedRegattas.reduce((sum, r) => sum + (r.totalFleetSize ?? 0), 0)
+    );
+    if (eventStarters < 1) continue;
+
     for (const reg of linkedRegattas) {
       const regResults = resultsByRegattaId.get(reg.id) ?? [];
-      const starters = Math.max(
-        reg.totalFleetSize ?? 0,
-        ev.fleetSize ?? 0,
-        regResults.length
-      );
+      const starters = Math.max(eventStarters, regResults.length);
       if (starters < 1) continue;
 
       for (const row of regResults) {
@@ -352,10 +354,10 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       .sort((a, b) => a.qualifier.id.localeCompare(b.qualifier.id) || a.rank - b.rank);
 
     const championshipPoints = optimalSubset
-      .filter((r) => r.grade === 150)
+      .filter((r) => r.grade === 200 || r.grade === 150)
       .reduce((sum, r) => sum + r.points, 0);
     const qualifierPoints = optimalSubset
-      .filter((r) => r.grade !== 150)
+      .filter((r) => r.grade !== 200 && r.grade !== 150)
       .reduce((sum, r) => sum + r.points, 0);
     const preciseScore = optimalSubset.reduce((sum, r) => sum + r.points, 0);
     const hostCountryCount = new Set(optimalSubset.map((r) => r.hostCountry)).size;

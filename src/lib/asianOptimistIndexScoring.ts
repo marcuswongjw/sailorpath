@@ -1493,13 +1493,16 @@ export type CandidateScoredResult = {
 function isValidSubset(subset: CandidateScoredResult[]): boolean {
   if (subset.length > 5) return false;
 
+  const g200 = subset.filter((r) => r.grade === 200).length;
+  if (g200 > 1) return false;
+
   const g150 = subset.filter((r) => r.grade === 150).length;
   if (g150 > 2) return false;
 
   const worlds = subset.filter((r) => r.isWorlds).length;
   if (worlds > 1) return false;
 
-  const upper = subset.filter((r) => r.grade === 150 || r.grade === 75).length;
+  const upper = subset.filter((r) => r.grade === 200 || r.grade === 150 || r.grade === 75).length;
   if (upper > 4) return false;
 
   const g75Hosts = new Set<string>();
@@ -1647,12 +1650,12 @@ export function createAsianOptimistIndexProvisionalEntries(
       };
     });
 
-    const championshipCandidates = optimalSubset.filter((r) => r.grade === 150);
+    const championshipCandidates = optimalSubset.filter((r) => r.grade === 200 || r.grade === 150);
     const championshipPoints = championshipCandidates.reduce((sum, r) => sum + r.points, 0);
 
     const scoredQualifiers = markedQualifiers.filter((q) => q.counted);
     const qualifierPoints = optimalSubset
-      .filter((r) => r.grade !== 150)
+      .filter((r) => r.grade !== 200 && r.grade !== 150)
       .reduce((sum, r) => sum + r.points, 0);
 
     const preciseScore = optimalSubset.reduce((sum, r) => sum + r.points, 0);

@@ -74,6 +74,7 @@ export function AsianOptimistIndexStandings({
   const pageEntries = filteredEntries.slice((page - 1) * 30, page * 30);
   const filtersActive = country !== "all" || gender !== "all" || birthYear !== "all";
 
+  const g200Cols = qualifierColumns.filter((col) => col.grade === 200);
   const g150Cols = qualifierColumns.filter((col) => col.grade === 150);
   const g75Cols = qualifierColumns.filter((col) => col.grade === 75);
   const g40Cols = qualifierColumns.filter((col) => col.grade === 40);
@@ -270,6 +271,11 @@ export function AsianOptimistIndexStandings({
               <th className="sticky top-0 z-20 border-b border-r border-cool-veil bg-warm-white px-4 py-2 text-right text-harbour">
                 Score
               </th>
+              {g200Cols.length > 0 ? (
+                <th colSpan={g200Cols.length} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-[#e3eaf0] px-4 py-2 text-center text-harbour">
+                  Grade 200 · Worlds <span className="normal-case font-medium text-slate-soft">(max 1)</span>
+                </th>
+              ) : null}
               <th colSpan={1 + g150Cols.length} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-[#edf2f4] px-4 py-2 text-center text-harbour">
                 Grade 150 · Championships <span className="normal-case font-medium text-slate-soft">(max 2)</span>
               </th>
@@ -294,14 +300,17 @@ export function AsianOptimistIndexStandings({
                 </div>
               </th>
               {qualifierColumns.map((qualifier) => {
+                const isG200 = qualifier.grade === 200;
                 const isG150 = qualifier.grade === 150;
                 const isG75 = qualifier.grade === 75;
-                const bg = isG150 ? "bg-[#f0f4f4]" : isG75 ? "bg-[#ebf5f6]" : "bg-[#faf5eb]";
-                const badgeBg = isG150
-                  ? "bg-harbour/20 text-harbour"
-                  : isG75
-                    ? "bg-aqua/20 text-harbour"
-                    : "bg-amber-500/20 text-amber-900";
+                const bg = isG200 ? "bg-[#e7eef3]" : isG150 ? "bg-[#f0f4f4]" : isG75 ? "bg-[#ebf5f6]" : "bg-[#faf5eb]";
+                const badgeBg = isG200
+                  ? "bg-harbour text-white"
+                  : isG150
+                    ? "bg-harbour/20 text-harbour"
+                    : isG75
+                      ? "bg-aqua/20 text-harbour"
+                      : "bg-amber-500/20 text-amber-900";
                 const gradeLabel = qualifier.grade ? `G${qualifier.grade}` : "";
 
                 return (
