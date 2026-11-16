@@ -43,6 +43,20 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: string | null;
   }
 > = {
+  "singapore-youth-olympics-windsurfing-dakar-2026": {
+    imageUrl: "/news/dakar-2026-kate-teo.jpg",
+    imageAlt: "Singapore's Kate Teo windsurfing at the Dakar 2026 Youth Olympic Games.",
+    imageCaption: "Kate Teo racing at the Dakar 2026 Youth Olympic Games in Saly.",
+    imageCredit: "Photo: Nic Bothma / OIS / IOC, via Team Singapore",
+    imageCreditUrl: "https://www.activesgcircle.gov.sg/read/youth-olympic-games-2026-singapore-sailors-leave-dakar-2026-eager-for-more",
+  },
+  "regatta-of-champions-2022-2026-and-kosmos-results-live": {
+    imageUrl: "/news/optimist-racing-loctudy-2012.jpg",
+    imageAlt: "An Optimist fleet rounds a mark during a 2012 regatta in Loctudy, France.",
+    imageCaption: "Archive photograph: Optimist racing in Loctudy, France, in 2012; not the 2026 R.O.C.",
+    imageCredit: "Photo: jakez29120 / Wikimedia Commons, CC BY-SA 2.0 (cropped for display)",
+    imageCreditUrl: "https://commons.wikimedia.org/wiki/File:005-_Optimist_(Loctudy_2012).jpg",
+  },
   "parent-workspace-gear-coach-notes": {
     imageUrl: "/news/illustration-parent-workspace.jpg",
     imageAlt: "Illustration of family sailing information, equipment preparation and coach notes.",
