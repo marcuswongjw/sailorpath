@@ -51,7 +51,7 @@ export function AsianOptimistIndexBetaSummary() {
             </div>
             <div className="rounded-xl bg-sailcloth p-3.5">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Rolling window</p>
-              <p className="mt-1">Best 5 results in 12 months.</p>
+              <p className="mt-1">Best 5 eligible results; annual events roll over at the next verified edition.</p>
             </div>
             <div className="rounded-xl bg-sailcloth p-3.5">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Eligibility</p>
