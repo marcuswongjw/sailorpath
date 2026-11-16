@@ -78,7 +78,7 @@ export default function RankingsHubPage() {
               Asian &amp; Oceania Index
             </h3>
             <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
-              Rolling 12-month regional Optimist benchmark (Beta).
+              Rolling 12-month 4-tier Season Points &amp; Elo Power Rating (V1.1 Beta).
             </p>
           </Link>
         </div>

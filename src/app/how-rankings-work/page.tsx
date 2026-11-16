@@ -132,13 +132,14 @@ export default function HowRankingsWorkPage() {
 
       <section className="space-y-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs">
         <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">
-          Asian &amp; Oceania Optimist Index (Beta)
+          Asian &amp; Oceania Optimist Index (V1.1 Beta)
         </h2>
         <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
-          The Asian &amp; Oceania Optimist Index compares sailors across tier-weighted
-          regional championships and qualifying open regattas in a rolling 12-month
-          window using placement percentiles, field-depth multipliers, and recency
-          weights. It is separate from the Singapore national series above.
+          The Asian &amp; Oceania Optimist Index scores age-eligible Asian and Oceanian
+          sailors across four designated event tiers (Grade 200, 150, 75, and 40) in a
+          rolling 12-month window with selection caps, alongside a symmetric Power Rating
+          (Elo) across all published Optimist regattas, 90-day Form, and a U13 Next-Gen
+          board. It is separate from the Singapore national series above.
         </p>
         <div className="flex flex-wrap gap-4 text-xs pt-2">
           <Link

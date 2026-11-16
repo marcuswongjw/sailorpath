@@ -29,7 +29,7 @@ const sailorPathLinks = [
   ["/sg/optimist/gold", "Singapore Optimist Gold, Best 3 of 5"],
   ["/sg/optimist/silver", "Singapore Optimist Silver, Best 3 of 5"],
   ["/sg/optimist/selection", "2026 Singapore Optimist selection trials"],
-  ["/optimist/asian-index", "Asian and Oceania Optimist Index, V1 (Beta)"],
+  ["/optimist/asian-index", "Asian and Oceania Optimist Index, V1.1 (Beta)"],
   ["/optimist/asian-index/methodology", "Index methodology"],
 ] as const;
 

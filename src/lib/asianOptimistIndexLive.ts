@@ -578,7 +578,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
           pointsContribution: isCounted ? q.points : 0,
           dropReason: isCounted
             ? undefined
-            : "Dropped by V1 (Beta) selection limits (host cap or 5-result cap)",
+            : "Dropped by V1.1 (Beta) selection limits (host cap or 5-result cap)",
         };
       })
       .sort((a, b) => a.qualifier.id.localeCompare(b.qualifier.id) || a.rank - b.rank);

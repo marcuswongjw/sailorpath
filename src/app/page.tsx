@@ -367,10 +367,10 @@ export default async function HomePage() {
       <section className="border-b border-cool-veil bg-warm-white px-4 py-12 sm:px-6 sm:py-16 lg:px-8" aria-labelledby="asian-index-heading">
         <div className="mx-auto grid max-w-7xl gap-6 rounded-2xl border border-cool-veil bg-sailcloth p-6 shadow-xs sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Independent index · V1 beta</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Independent index · V1.1 (Beta)</p>
             <h2 id="asian-index-heading" className="mt-2 text-2xl font-semibold text-harbour-shadow">Asian &amp; Oceania Optimist Index</h2>
             <p className="mt-3 text-sm leading-6 text-slate-soft">
-              Explore an independent analytical index built from verified results, with live beta standings and a published methodology. It is not an official IODA or national-federation ranking.
+              Explore an independent analytical index built from verified results, featuring 4-tier Season Points, symmetric Power Rating (Elo), and U13 Next-Gen standings. It is not an official IODA or national-federation ranking.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link href="/optimist/asian-index" className="sp-primary inline-flex min-h-10 items-center gap-2 px-4 text-sm font-semibold">
@@ -381,16 +381,20 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid gap-2.5 rounded-xl border border-cool-veil bg-warm-white p-4 text-xs sm:grid-cols-3 lg:grid-cols-1">
-            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-3 sm:flex-col lg:flex-row lg:items-center">
-              <span className="inline-flex w-fit items-center rounded-md bg-aqua-mist px-2 py-0.5 font-bold text-harbour">Grade 150</span>
-              <span className="text-slate-soft">IODA World &amp; Continental Championships</span>
+          <div className="grid gap-2.5 rounded-xl border border-cool-veil bg-warm-white p-4 text-xs sm:grid-cols-2 lg:grid-cols-1">
+            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-2.5 sm:flex-col lg:flex-row lg:items-center">
+              <span className="inline-flex w-fit items-center rounded-md bg-aqua-mist px-2 py-0.5 font-bold text-harbour">Grade 200</span>
+              <span className="text-slate-soft">IODA World Championship</span>
             </div>
-            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-3 sm:flex-col lg:flex-row lg:items-center">
+            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-2.5 sm:flex-col lg:flex-row lg:items-center">
+              <span className="inline-flex w-fit items-center rounded-md bg-aqua-mist px-2 py-0.5 font-bold text-harbour">Grade 150</span>
+              <span className="text-slate-soft">Continental &amp; Invitational Championships</span>
+            </div>
+            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-2.5 sm:flex-col lg:flex-row lg:items-center">
               <span className="inline-flex w-fit items-center rounded-md bg-aqua-mist px-2 py-0.5 font-bold text-harbour">Grade 75</span>
               <span className="text-slate-soft">Designated Major International Opens</span>
             </div>
-            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-3 sm:flex-col lg:flex-row lg:items-center">
+            <div className="flex flex-col justify-between gap-1.5 rounded-lg border border-cool-veil/60 bg-sailcloth/50 px-3.5 py-2.5 sm:flex-col lg:flex-row lg:items-center">
               <span className="inline-flex w-fit items-center rounded-md bg-aqua-mist px-2 py-0.5 font-bold text-harbour">Grade 40</span>
               <span className="text-slate-soft">Designated National Championships</span>
             </div>
