@@ -19,6 +19,7 @@ type AsianOptimistIndexPageProps = {
     country?: string;
     gender?: string;
     birthYear?: string;
+    view?: string;
   }>;
 };
 

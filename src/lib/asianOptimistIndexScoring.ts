@@ -1442,6 +1442,12 @@ export type AsianOptimistIndexProvisionalEntry = AsianOptimistIndexEntry & {
   qualifierResults: AsianOptimistIndexQualifierScore[];
   /** The subset of qualifierResults that contributes to the current score. */
   scoredQualifiers: AsianOptimistIndexQualifierScore[];
+  /** Prototype head-to-head Elo power rating across designated events. */
+  powerRating?: number;
+  /** Rank by head-to-head Elo power rating. */
+  powerRank?: number;
+  /** Elo change over the sailor's recent 90-day window (momentum/form). */
+  momentumDelta?: number;
 };
 
 function identityKey(name: string, nationality: string): string {

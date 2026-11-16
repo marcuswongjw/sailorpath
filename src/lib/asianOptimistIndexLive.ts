@@ -222,6 +222,69 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       a.startDate.localeCompare(b.startDate)
   );
 
+  // Chronological Elo Power Rating + 90-day Momentum pass across all verified regattas
+  const chronoEvents = [...scoredEvents].sort(
+    (a, b) => a.endDate.localeCompare(b.endDate) || a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id)
+  );
+  const cutoff90Days = new Date(now);
+  cutoff90Days.setUTCDate(cutoff90Days.getUTCDate() - 90);
+  const cutoff90Str = cutoff90Days.toISOString().slice(0, 10);
+
+  const eloRatings = new Map<string, number>();
+  const eloBefore90 = new Map<string, number>();
+
+  for (const ev of chronoEvents) {
+    const linkedRegattas = ev.regattaSlugs
+      .map((slug) => regattaBySlug.get(slug))
+      .filter((r): r is NonNullable<typeof r> => Boolean(r));
+    if (linkedRegattas.length === 0) continue;
+
+    const grade = (ev.grade ?? 75) as AsianIndexGrade;
+    const kFactor = grade === 200 ? 48 : grade === 150 ? 40 : grade === 75 ? 32 : 24;
+
+    // Combine split fleets of the same event (e.g. Gold + Silver) into one field
+    const participants: { sailorId: string; rank: number }[] = [];
+    const seenInEvent = new Set<string>();
+    for (const reg of linkedRegattas) {
+      for (const row of resultsByRegattaId.get(reg.id) ?? []) {
+        if (row.rank == null || row.rank < 1 || seenInEvent.has(row.sailorId)) continue;
+        seenInEvent.add(row.sailorId);
+        participants.push({ sailorId: row.sailorId, rank: row.rank });
+      }
+    }
+    const n = participants.length;
+    if (n < 2) continue;
+
+    // Snapshot ratings before this event
+    const snap = new Map<string, number>();
+    for (const p of participants) {
+      const cur = eloRatings.get(p.sailorId) ?? 1500;
+      snap.set(p.sailorId, cur);
+      if (ev.endDate >= cutoff90Str && !eloBefore90.has(p.sailorId)) {
+        eloBefore90.set(p.sailorId, cur);
+      }
+    }
+
+    for (let i = 0; i < n; i++) {
+      const pi = participants[i];
+      const ri = snap.get(pi.sailorId)!;
+      let deltaSum = 0;
+      for (let j = 0; j < n; j++) {
+        if (i === j) continue;
+        const pj = participants[j];
+        const rj = snap.get(pj.sailorId)!;
+        const expected = 1 / (1 + Math.pow(10, (rj - ri) / 400));
+        const actual = pi.rank < pj.rank ? 1 : pi.rank === pj.rank ? 0.5 : 0;
+        deltaSum += actual - expected;
+      }
+      const nextRating = ri + kFactor * (deltaSum / (n - 1));
+      eloRatings.set(pi.sailorId, nextRating);
+      if (ev.endDate < cutoff90Str) {
+        eloBefore90.set(pi.sailorId, nextRating);
+      }
+    }
+  }
+
   for (const ev of sortedScoredEvents) {
     const linkedRegattas = ev.regattaSlugs
       .map((slug) => regattaBySlug.get(slug))
@@ -383,6 +446,10 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       profileReview: null,
     };
 
+    const powerRating = Math.round(eloRatings.get(acc.sailorId) ?? 1500);
+    const prevElo = eloBefore90.get(acc.sailorId);
+    const momentumDelta = prevElo != null ? Math.round((eloRatings.get(acc.sailorId) ?? 1500) - prevElo) : 0;
+
     return {
       ...baseEntry,
       provisionalRank: 0,
@@ -395,9 +462,22 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       hostCountryCount,
       qualifierResults,
       scoredQualifiers: qualifierResults.filter((q) => q.counted),
+      powerRating,
+      powerRank: 0,
+      momentumDelta,
       preciseScore,
     };
   });
+
+  // Assign powerRank by Elo descending
+  const byPower = [...scoredEntries].sort(
+    (a, b) =>
+      (b.powerRating ?? 1500) - (a.powerRating ?? 1500) ||
+      b.preciseScore - a.preciseScore ||
+      a.name.localeCompare(b.name)
+  );
+  const powerRankById = new Map<string, number>();
+  byPower.forEach((e, idx) => powerRankById.set(e.identityKey, idx + 1));
 
   scoredEntries.sort(
     (a, b) =>
@@ -411,7 +491,11 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     (entry, idx) => {
       const { preciseScore, ...rest } = entry;
       void preciseScore;
-      return { ...rest, provisionalRank: idx + 1 };
+      return {
+        ...rest,
+        provisionalRank: idx + 1,
+        powerRank: powerRankById.get(entry.identityKey) ?? idx + 1,
+      };
     }
   );
 

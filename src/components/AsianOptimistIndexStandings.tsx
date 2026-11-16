@@ -3,11 +3,14 @@ import { ChevronRight } from "lucide-react";
 import { Pagination, pageNumber } from "./Pagination";
 import type { AsianOptimistIndexProvisionalEntry } from "@/lib/asianOptimistIndexScoring";
 
+export type AsianOptimistIndexViewMode = "points" | "power" | "u13";
+
 export type AsianOptimistIndexFilterState = {
   page?: string;
   country?: string;
   gender?: string;
   birthYear?: string;
+  view?: string;
 };
 
 export type QualifierColumn = {
@@ -56,11 +59,33 @@ export function AsianOptimistIndexStandings({
   totalFleetSize: number;
   filters?: AsianOptimistIndexFilterState;
 }) {
-  const countries = [...new Set(entries.map((entry) => entry.nationality))].sort((a, b) =>
+  const viewMode: AsianOptimistIndexViewMode =
+    filters.view === "power" || filters.view === "u13" ? filters.view : "points";
+
+  const baseEntries =
+    viewMode === "u13"
+      ? entries
+          .filter((e) => e.birthYear != null && e.birthYear >= 2014)
+          .sort(
+            (a, b) =>
+              (b.powerRating ?? 1500) - (a.powerRating ?? 1500) ||
+              b.provisionalScore - a.provisionalScore ||
+              a.name.localeCompare(b.name)
+          )
+      : viewMode === "power"
+        ? [...entries].sort(
+            (a, b) =>
+              (b.powerRating ?? 1500) - (a.powerRating ?? 1500) ||
+              b.provisionalScore - a.provisionalScore ||
+              a.name.localeCompare(b.name)
+          )
+        : entries;
+
+  const countries = [...new Set(baseEntries.map((entry) => entry.nationality))].sort((a, b) =>
     a.localeCompare(b)
   );
   const birthYears = [
-    ...new Set(entries.map((entry) => entry.birthYear).filter((year): year is number => year != null)),
+    ...new Set(baseEntries.map((entry) => entry.birthYear).filter((year): year is number => year != null)),
   ].sort((a, b) => b - a);
 
   const country = countries.includes(filters.country ?? "") ? filters.country! : "all";
@@ -69,10 +94,62 @@ export function AsianOptimistIndexStandings({
     filters.birthYear === "unknown" || birthYears.includes(Number(filters.birthYear))
       ? filters.birthYear!
       : "all";
-  const filteredEntries = filterAsianOptimistIndexEntries(entries, country, gender, birthYear);
+  const filteredEntries = filterAsianOptimistIndexEntries(baseEntries, country, gender, birthYear);
   const page = pageNumber(filters.page, filteredEntries.length);
   const pageEntries = filteredEntries.slice((page - 1) * 30, page * 30);
   const filtersActive = country !== "all" || gender !== "all" || birthYear !== "all";
+
+  function viewHref(nextView: AsianOptimistIndexViewMode): string {
+    const params = new URLSearchParams();
+    if (nextView !== "points") params.set("view", nextView);
+    if (country !== "all") params.set("country", country);
+    if (gender !== "all") params.set("gender", gender);
+    if (birthYear !== "all") params.set("birthYear", birthYear);
+    const qs = params.toString();
+    return qs ? `/optimist/asian-index?${qs}#standings` : "/optimist/asian-index#standings";
+  }
+
+  function displayRank(sailor: AsianOptimistIndexProvisionalEntry, idxInPage: number): number {
+    if (viewMode === "power") return sailor.powerRank ?? (page - 1) * 30 + idxInPage + 1;
+    if (viewMode === "u13") {
+      // Rank within U13 cohort (before country/gender filters)
+      const u13Idx = baseEntries.findIndex((e) => e.identityKey === sailor.identityKey);
+      return u13Idx >= 0 ? u13Idx + 1 : (page - 1) * 30 + idxInPage + 1;
+    }
+    return sailor.provisionalRank;
+  }
+
+  function momentumPill(delta: number | undefined) {
+    if (delta == null) return <span className="text-slate-soft/50">—</span>;
+    if (delta >= 5) {
+      return (
+        <span
+          title={`Elo +${delta} over last 90 days`}
+          className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-extrabold tabular-nums text-emerald-700 ring-1 ring-emerald-200"
+        >
+          ▲ +{delta}
+        </span>
+      );
+    }
+    if (delta <= -5) {
+      return (
+        <span
+          title={`Elo ${delta} over last 90 days`}
+          className="inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-bold tabular-nums text-rose-700 ring-1 ring-rose-200"
+        >
+          ▼ {delta}
+        </span>
+      );
+    }
+    return (
+      <span
+        title="Steady form over last 90 days"
+        className="inline-flex items-center rounded-full bg-sailcloth px-2 py-0.5 text-[11px] font-semibold tabular-nums text-slate-soft"
+      >
+        • {delta > 0 ? `+${delta}` : delta}
+      </span>
+    );
+  }
 
   const g200Cols = qualifierColumns.filter((col) => col.grade === 200);
   const g150Cols = qualifierColumns.filter((col) => col.grade === 150);
@@ -90,12 +167,49 @@ export function AsianOptimistIndexStandings({
           </p>
         </div>
 
+        <nav aria-label="Index ranking view" className="flex flex-wrap gap-1.5">
+          <Link
+            href={viewHref("points")}
+            className={`inline-flex min-h-9 items-center rounded-lg px-3 py-1.5 text-xs font-extrabold transition-colors ${
+              viewMode === "points"
+                ? "bg-harbour text-white shadow-xs"
+                : "border border-cool-veil bg-white text-harbour hover:bg-sailcloth"
+            }`}
+          >
+            Season Points
+          </Link>
+          <Link
+            href={viewHref("power")}
+            className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-extrabold transition-colors ${
+              viewMode === "power"
+                ? "bg-harbour text-white shadow-xs"
+                : "border border-cool-veil bg-white text-harbour hover:bg-sailcloth"
+            }`}
+          >
+            Power Rating (Elo)
+            <span className={`rounded px-1 py-0.2 text-[10px] font-black uppercase ${viewMode === "power" ? "bg-white/20 text-white" : "bg-aqua-mist text-harbour"}`}>
+              Beta
+            </span>
+          </Link>
+          <Link
+            href={viewHref("u13")}
+            className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-extrabold transition-colors ${
+              viewMode === "u13"
+                ? "bg-harbour text-white shadow-xs"
+                : "border border-cool-veil bg-white text-harbour hover:bg-sailcloth"
+            }`}
+          >
+            U13 / Next-Gen (2014+)
+          </Link>
+        </nav>
+
         <form
           action="/optimist/asian-index"
           method="get"
           className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:items-end"
           aria-label="Filter standings"
         >
+          {viewMode !== "points" ? <input type="hidden" name="view" value={viewMode} /> : null}
           <label className="grid gap-1 text-[11px] font-bold uppercase tracking-wide text-slate-soft">
             Country
             <select
@@ -161,7 +275,8 @@ export function AsianOptimistIndexStandings({
             No sailors match the selected filters.
           </p>
         ) : (
-          pageEntries.map((sailor) => {
+          pageEntries.map((sailor, idxInPage) => {
+            const shownRank = displayRank(sailor, idxInPage);
             const eventFinishes = [
               ...(sailor.overallPlace != null
                 ? [
@@ -189,9 +304,9 @@ export function AsianOptimistIndexStandings({
               <article key={sailor.identityKey} className="px-4 py-3.5">
                 <div className="flex items-start gap-3">
                   <span
-                    className={`mt-0.5 inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(sailor.provisionalRank)}`}
+                    className={`mt-0.5 inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(shownRank)}`}
                   >
-                    {sailor.provisionalRank}
+                    {shownRank}
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-baseline justify-between gap-2">
@@ -205,7 +320,9 @@ export function AsianOptimistIndexStandings({
                         )}
                       </p>
                       <p className="shrink-0 text-base font-black tabular-nums text-harbour">
-                        {sailor.provisionalScore.toFixed(2)}
+                        {viewMode === "points"
+                          ? sailor.provisionalScore.toFixed(2)
+                          : `${sailor.powerRating ?? 1500}`}
                       </p>
                     </div>
                     <div className="mt-0.5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-soft">
@@ -213,8 +330,14 @@ export function AsianOptimistIndexStandings({
                         {sailor.nationality} · {sailor.sailNumber} · {genderCode(sailor.gender)}
                         {sailor.birthYear ? ` · ${sailor.birthYear}` : ""}
                       </span>
-                      <span className="font-medium">
-                        {sailor.countedResultsCount} counted
+                      <span className="flex items-center gap-1.5 font-medium">
+                        {sailor.powerRating != null && viewMode === "points" ? (
+                          <span>Elo {sailor.powerRating}</span>
+                        ) : null}
+                        {viewMode !== "points" ? (
+                          <span>{sailor.provisionalScore.toFixed(1)} pts</span>
+                        ) : null}
+                        {momentumPill(sailor.momentumDelta)}
                       </span>
                     </div>
                     {sailor.profileReview ? (
@@ -287,8 +410,8 @@ export function AsianOptimistIndexStandings({
               <th colSpan={3} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-warm-white px-4 py-2 text-left text-slate-soft">
                 Details
               </th>
-              <th className="sticky top-0 z-20 border-b border-r border-cool-veil bg-warm-white px-4 py-2 text-right text-harbour">
-                Score
+              <th colSpan={3} className="sticky top-0 z-20 border-b border-r border-cool-veil bg-warm-white px-4 py-2 text-right text-harbour">
+                Rating &amp; Form
               </th>
               {g200Cols.length > 0 ? (
                 <th colSpan={g200Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#e3eaf0] px-3 py-2 text-center text-harbour">
@@ -311,7 +434,9 @@ export function AsianOptimistIndexStandings({
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">MNA</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">Sex</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour">YOB</th>
-              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-4 py-2.5 text-right font-extrabold text-harbour">Points</th>
+              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour">Points</th>
+              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour" title="Head-to-head multi-player Elo rating (starts at 1500)">Elo</th>
+              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour" title="90-day Elo momentum">Form</th>
               {g200Cols.map((qualifier) => (
                 <th key={qualifier.id} scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#e7eef3] px-2.5 py-2.5 text-center font-extrabold text-harbour">
                   <div>{qualifier.shortName}</div>
@@ -334,13 +459,14 @@ export function AsianOptimistIndexStandings({
             </tr>
           </thead>
           <tbody>
-            {pageEntries.map((sailor) => {
+            {pageEntries.map((sailor, idxInPage) => {
+              const shownRank = displayRank(sailor, idxInPage);
               const anchorCounted = sailor.overallPlace != null && sailor.countedResultsCount > sailor.scoredQualifiers.length;
               return (
               <tr key={sailor.identityKey} className="group transition-colors hover:bg-sailcloth/70">
                 <td className="sticky left-0 z-10 w-14 min-w-14 max-w-14 border-b border-cool-veil bg-warm-white px-3 py-3 group-hover:bg-sailcloth">
-                  <span className={`inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(sailor.provisionalRank)}`}>
-                    {sailor.provisionalRank}
+                  <span className={`inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(shownRank)}`}>
+                    {shownRank}
                   </span>
                 </td>
                 <th scope="row" className="sticky left-14 z-10 min-w-48 border-b border-r border-cool-veil bg-warm-white px-4 py-3 text-left font-normal shadow-[4px_0_8px_-4px_rgba(11,37,69,0.12)] group-hover:bg-sailcloth">
@@ -366,11 +492,20 @@ export function AsianOptimistIndexStandings({
                 <td className="border-b border-cool-veil px-3 py-3 text-xs font-semibold text-charcoal">{sailor.nationality}</td>
                 <td className="border-b border-cool-veil px-3 py-3 text-xs font-semibold text-charcoal">{genderCode(sailor.gender)}</td>
                 <td className="border-b border-cool-veil px-3 py-3 text-center text-xs font-semibold text-charcoal">{sailor.birthYear ?? "—"}</td>
-                <td className="border-b border-r border-cool-veil px-4 py-3 text-right">
+                <td className="border-b border-cool-veil px-3 py-3 text-right">
                   <div className="text-base font-extrabold tabular-nums text-harbour">{sailor.provisionalScore.toFixed(2)}</div>
                   <div className="text-[11px] font-medium text-slate-soft">
                     {sailor.countedResultsCount} counted · {sailor.eligibleStarts} {sailor.eligibleStarts === 1 ? "start" : "starts"}
                   </div>
+                </td>
+                <td className="border-b border-cool-veil px-3 py-3 text-right">
+                  <div className="text-sm font-extrabold tabular-nums text-harbour">{sailor.powerRating ?? "—"}</div>
+                  {sailor.powerRank ? (
+                    <div className="text-[11px] font-medium text-slate-soft">#{sailor.powerRank}</div>
+                  ) : null}
+                </td>
+                <td className="border-b border-r border-cool-veil px-3 py-3 text-center">
+                  {momentumPill(sailor.momentumDelta)}
                 </td>
                 {g200Cols.map((qualifier) => {
                   const res = sailor.qualifierResults.find(
