@@ -214,6 +214,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
   const sailorMap = new Map<string, SailorAccumulator>();
   const activeColumns: QualifierColumn[] = [];
   let latestEventDate = "";
+  let anchorFleetSize = 170;
 
   const sortedScoredEvents = [...scoredEvents].sort(
     (a, b) =>
@@ -235,19 +236,21 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     const year = Number(ev.endDate.slice(0, 4)) || rankingYear;
     const shortName = ev.shortName ?? ev.name;
 
-    if (ev.indexRole !== "championship_anchor") {
+    const eventStarters = Math.max(
+      ev.fleetSize ?? 0,
+      linkedRegattas.reduce((sum, r) => sum + (r.totalFleetSize ?? 0), 0)
+    );
+    if (eventStarters < 1) continue;
+
+    if (ev.indexRole === "championship_anchor") {
+      anchorFleetSize = eventStarters;
+    } else {
       activeColumns.push({
         id: ev.id,
         shortName,
         grade,
       });
     }
-
-    const eventStarters = Math.max(
-      ev.fleetSize ?? 0,
-      linkedRegattas.reduce((sum, r) => sum + (r.totalFleetSize ?? 0), 0)
-    );
-    if (eventStarters < 1) continue;
 
     for (const reg of linkedRegattas) {
       const regResults = resultsByRegattaId.get(reg.id) ?? [];
@@ -437,7 +440,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     qualifiers,
     qualifierColumns: activeColumns,
     asOf,
-    totalFleetSize: entries.length,
+    totalFleetSize: anchorFleetSize,
   };
 }
 

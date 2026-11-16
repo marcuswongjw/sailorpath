@@ -295,34 +295,16 @@ export function AsianOptimistIndexStandings({
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-4 py-2.5 text-right font-extrabold text-harbour">Points</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-[#f0f4f4] px-4 py-2.5 text-center font-extrabold text-harbour">
                 <div>2025 Asians</div>
-                <div className="mt-0.5">
-                  <span className="inline-block rounded bg-harbour/20 px-1.5 py-0.5 text-[10px] font-black text-harbour">G150</span>
-                </div>
               </th>
               {qualifierColumns.map((qualifier) => {
                 const isG200 = qualifier.grade === 200;
                 const isG150 = qualifier.grade === 150;
                 const isG75 = qualifier.grade === 75;
                 const bg = isG200 ? "bg-[#e7eef3]" : isG150 ? "bg-[#f0f4f4]" : isG75 ? "bg-[#ebf5f6]" : "bg-[#faf5eb]";
-                const badgeBg = isG200
-                  ? "bg-harbour text-white"
-                  : isG150
-                    ? "bg-harbour/20 text-harbour"
-                    : isG75
-                      ? "bg-aqua/20 text-harbour"
-                      : "bg-amber-500/20 text-amber-900";
-                const gradeLabel = qualifier.grade ? `G${qualifier.grade}` : "";
 
                 return (
                   <th key={qualifier.id} scope="col" className={`sticky top-[34px] z-20 border-b-2 border-cool-veil ${bg} px-4 py-2.5 text-center font-extrabold text-harbour`}>
                     <div>{qualifier.shortName}</div>
-                    {gradeLabel ? (
-                      <div className="mt-0.5">
-                        <span className={`inline-block rounded ${badgeBg} px-1.5 py-0.5 text-[10px] font-black`}>
-                          {gradeLabel}
-                        </span>
-                      </div>
-                    ) : null}
                   </th>
                 );
               })}
