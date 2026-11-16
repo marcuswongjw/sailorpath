@@ -17,6 +17,7 @@ export type QualifierColumn = {
   readonly id: string;
   readonly shortName: string;
   readonly grade?: number;
+  readonly regattaSlug?: string | null;
 };
 
 function genderCode(gender: AsianOptimistIndexProvisionalEntry["gender"]): "M" | "F" {
@@ -448,11 +449,19 @@ export function AsianOptimistIndexStandings({
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour" title="90-day Elo momentum">Form</th>
               {g200Cols.map((qualifier) => (
                 <th key={qualifier.id} scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#e7eef3] px-2.5 py-2.5 text-center font-extrabold text-harbour">
-                  <div>{qualifier.shortName}</div>
+                  {qualifier.regattaSlug ? (
+                    <Link href={`/sg/optimist/regattas/${qualifier.regattaSlug}`} className="hover:text-racing-deep hover:underline">
+                      {qualifier.shortName}
+                    </Link>
+                  ) : (
+                    <div>{qualifier.shortName}</div>
+                  )}
                 </th>
               ))}
               <th scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#f0f4f4] px-2.5 py-2.5 text-center font-extrabold text-harbour">
-                <div>2025 Asians</div>
+                <Link href="/sg/optimist/regattas/2025-optimist-asian-oceanian-championship-overall" className="hover:text-racing-deep hover:underline">
+                  2025 Asians
+                </Link>
               </th>
               {nonG200Cols.map((qualifier) => {
                 const isG150 = qualifier.grade === 150;
@@ -461,7 +470,13 @@ export function AsianOptimistIndexStandings({
 
                 return (
                   <th key={qualifier.id} scope="col" className={`sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil ${bg} px-2.5 py-2.5 text-center font-extrabold text-harbour`}>
-                    <div>{qualifier.shortName}</div>
+                    {qualifier.regattaSlug ? (
+                      <Link href={`/sg/optimist/regattas/${qualifier.regattaSlug}`} className="hover:text-racing-deep hover:underline">
+                        {qualifier.shortName}
+                      </Link>
+                    ) : (
+                      <div>{qualifier.shortName}</div>
+                    )}
                   </th>
                 );
               })}

@@ -299,15 +299,27 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
 
     const kFactor = ev.kFactor;
 
-    // Combine split fleets of the same event (e.g. Gold + Silver) into one field
+    // Combine split fleets of the same event (e.g. Gold + Silver) into one field,
+    // offsetting Silver ranks if the source sheet restarted numbering at 1.
     const participants: { sailorId: string; rank: number }[] = [];
     const seenInEvent = new Set<string>();
+    let eloFleetOffset = 0;
     for (const reg of linkedRegattas) {
-      for (const row of resultsByRegattaId.get(reg.id) ?? []) {
+      const regRows = resultsByRegattaId.get(reg.id) ?? [];
+      const minRank = regRows.reduce(
+        (m, r) => (r.rank != null && r.rank >= 1 && r.rank < m ? r.rank : m),
+        Infinity
+      );
+      const needsOffset = eloFleetOffset > 0 && minRank <= eloFleetOffset;
+      for (const row of regRows) {
         if (row.rank == null || row.rank < 1 || seenInEvent.has(row.sailorId)) continue;
         seenInEvent.add(row.sailorId);
-        participants.push({ sailorId: row.sailorId, rank: row.rank });
+        participants.push({
+          sailorId: row.sailorId,
+          rank: needsOffset ? eloFleetOffset + row.rank : row.rank,
+        });
       }
+      eloFleetOffset += Math.max(reg.totalFleetSize ?? 0, regRows.length);
     }
     const n = participants.length;
     if (n < 2) continue;
@@ -369,23 +381,33 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
         id: ev.id,
         shortName,
         grade,
+        regattaSlug: ev.regattaSlugs[0] ?? ev.sailorpathRegattaSlug ?? null,
       });
     }
 
+    let fleetOffset = 0;
     for (const reg of linkedRegattas) {
       const regResults = resultsByRegattaId.get(reg.id) ?? [];
       const starters = Math.max(eventStarters, regResults.length);
       if (starters < 1) continue;
 
+      const minRank = regResults.reduce(
+        (m, r) => (r.rank != null && r.rank >= 1 && r.rank < m ? r.rank : m),
+        Infinity
+      );
+      const needsOffset = fleetOffset > 0 && minRank <= fleetOffset;
+
       for (const row of regResults) {
-        if (row.rank == null || row.rank < 1 || row.rank > starters) continue;
+        if (row.rank == null || row.rank < 1) continue;
+        const effectiveRank = needsOffset ? fleetOffset + row.rank : row.rank;
+        if (effectiveRank > starters) continue;
         const mna = normalizeMna(row.resultNationality ?? row.sailorNationality);
         if (!ASIAN_OCEANIA_MNAS.has(mna)) continue;
 
         const birthYear = birthYearFromSailor(row.sailorDob, row.resultBirthYear);
         if (!isOptimistAgeEligible(birthYear, rankingYear)) continue;
 
-        const points = asianIndexPoints(grade, starters, row.rank);
+        const points = asianIndexPoints(grade, starters, effectiveRank);
         const gender = normalizeGender(row.resultGender ?? row.sailorGender);
         const sailNumber =
           (row.entrySailNumber ?? row.sailorSailNumber ?? "").trim() || mna;
@@ -409,7 +431,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
         }
 
         if (ev.indexRole === "championship_anchor") {
-          acc.anchorPlace = row.rank;
+          acc.anchorPlace = effectiveRank;
           acc.anchorTotalPoints = row.totalScore;
           acc.anchorNetPoints = row.nettScore;
         }
@@ -430,7 +452,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
                   isWorlds: ev.isWorlds,
                   scoreCap: grade,
                 },
-                rank: row.rank,
+                rank: effectiveRank,
                 points,
                 rawScore: points,
                 cappedScore: points,
@@ -444,7 +466,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
           shortName,
           grade,
           starters,
-          rank: row.rank,
+          rank: effectiveRank,
           points,
           hostMna,
           hostCountry: ev.hostCountry,
@@ -453,6 +475,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
           qualifierScore,
         });
       }
+      fleetOffset += Math.max(reg.totalFleetSize ?? 0, regResults.length);
     }
   }
 
