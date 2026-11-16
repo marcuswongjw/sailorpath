@@ -1448,7 +1448,7 @@ function identityKey(name: string, nationality: string): string {
   return `${nationality.toUpperCase()}:${name.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
 }
 
-function roundScore(value: number): number {
+export function roundScore(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
@@ -1466,7 +1466,7 @@ export function normalisedFleetScore(rank: number, fleetSize: number): number {
   return (100 * (fleetSize - rank)) / (fleetSize - 1);
 }
 
-type CandidateScoredResult = {
+export type CandidateScoredResult = {
   id: string;
   name: string;
   shortName: string;
@@ -1526,7 +1526,7 @@ function isValidSubset(subset: CandidateScoredResult[]): boolean {
  * Finds the subset of candidate results that maximizes total points while
  * strictly honoring the 6 selection rules.
  */
-function selectOptimalResults(results: CandidateScoredResult[]): CandidateScoredResult[] {
+export function selectOptimalResults(results: CandidateScoredResult[]): CandidateScoredResult[] {
   let bestSubset: CandidateScoredResult[] = [];
   let bestSum = -1;
 

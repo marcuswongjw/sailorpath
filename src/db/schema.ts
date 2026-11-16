@@ -835,7 +835,7 @@ export const asianOptimistIndexEvents = pgTable(
     id: text("id").primaryKey().notNull(),
     name: text("name").notNull(),
     indexRole: text("index_role", {
-      enum: ["championship_anchor", "regional_qualifier"],
+      enum: ["championship_anchor", "championship", "regional_qualifier", "national_championship"],
     }).notNull(),
     sourceKind: text("source_kind", {
       enum: ["official_result", "sailorpath_regatta"],
@@ -850,8 +850,9 @@ export const asianOptimistIndexEvents = pgTable(
     officialResultsSourceName: text("official_results_source_name").notNull(),
     /** Present only when this source is read directly from SailorPath tables. */
     sailorpathRegattaSlug: text("sailorpath_regatta_slug"),
+    regattaSlugs: text("regatta_slugs").array().default([]).notNull(),
     resultStatus: text("result_status", {
-      enum: ["verified", "awaiting_final"],
+      enum: ["verified", "awaiting_final", "scheduled"],
     })
       .default("awaiting_final")
       .notNull(),
@@ -859,6 +860,11 @@ export const asianOptimistIndexEvents = pgTable(
     raceCount: integer("race_count"),
     discardCount: integer("discard_count"),
     isEligible: boolean("is_eligible").default(true).notNull(),
+    grade: integer("grade"),
+    shortName: text("short_name"),
+    isWorlds: boolean("is_worlds").default(false).notNull(),
+    verifiedMnas: integer("verified_mnas"),
+    notes: text("notes"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { AsianOptimistIndexView } from "@/components/AsianOptimistIndexView";
-import { createAsianOptimistIndexProvisionalEntries } from "@/lib/asianOptimistIndexScoring";
-import { ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS } from "@/lib/asianOptimistIndexQualifiers";
+import { getLiveAsianOptimistIndexData } from "@/lib/asianOptimistIndexLive";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Asian and Oceania Optimist Index | SailorPath",
@@ -25,11 +26,15 @@ export default async function AsianOptimistIndexPage(
   props: AsianOptimistIndexPageProps
 ) {
   const filters = props.searchParams ? await props.searchParams : undefined;
+  const liveData = await getLiveAsianOptimistIndexData();
 
   return (
     <AsianOptimistIndexView
-      entries={createAsianOptimistIndexProvisionalEntries()}
-      qualifiers={[...ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS]}
+      entries={liveData.entries}
+      qualifiers={liveData.qualifiers}
+      qualifierColumns={liveData.qualifierColumns}
+      asOf={liveData.asOf}
+      totalFleetSize={liveData.totalFleetSize}
       filters={filters}
     />
   );

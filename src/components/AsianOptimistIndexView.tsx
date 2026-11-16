@@ -3,6 +3,7 @@ import { ExternalLink } from "lucide-react";
 import {
   AsianOptimistIndexStandings,
   type AsianOptimistIndexFilterState,
+  type QualifierColumn,
 } from "@/components/AsianOptimistIndexStandings";
 import { AsianOptimistIndexBetaSummary } from "@/components/AsianOptimistIndexBetaSummary";
 import { ASIAN_INDEX_METHODOLOGY_PATH } from "@/lib/asianOptimistIndexBeta";
@@ -29,10 +30,16 @@ const INDEX_QUALIFIER_COLUMNS = ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS;
 export function AsianOptimistIndexView({
   entries,
   qualifiers,
+  qualifierColumns = INDEX_QUALIFIER_COLUMNS,
+  asOf = ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf,
+  totalFleetSize = ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize,
   filters,
 }: {
   entries: AsianOptimistIndexProvisionalEntry[];
   qualifiers: AsianOptimistIndexQualifierSource[];
+  qualifierColumns?: readonly QualifierColumn[];
+  asOf?: string;
+  totalFleetSize?: number;
   filters?: AsianOptimistIndexFilterState;
 }) {
   const leaders = entries.slice(0, 3);
@@ -48,7 +55,7 @@ export function AsianOptimistIndexView({
             An independent index of verified Optimist results for sailors representing Asian and Oceanian national authorities.
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-semibold text-soft-aqua">
-            <span>{entries.length} sailors · Updated {ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf}</span>
+            <span>{entries.length} sailors · Updated {asOf}</span>
             <Link
               href={ASIAN_INDEX_METHODOLOGY_PATH}
               className="underline underline-offset-4 hover:text-white"
@@ -97,9 +104,9 @@ export function AsianOptimistIndexView({
       <section id="standings" aria-label="Index standings" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AsianOptimistIndexStandings
           entries={entries}
-          qualifierColumns={INDEX_QUALIFIER_COLUMNS}
-          asOf={ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf}
-          totalFleetSize={ASIAN_OPTIMIST_INDEX_EVENT.totalFleetSize}
+          qualifierColumns={qualifierColumns}
+          asOf={asOf}
+          totalFleetSize={totalFleetSize}
           filters={filters}
         />
       </section>
