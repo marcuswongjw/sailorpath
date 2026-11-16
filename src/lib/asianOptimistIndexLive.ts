@@ -159,13 +159,13 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
         )
       : [];
 
-  // Also fetch Singapore national ranking Optimist regattas (counts_for_ranking = true)
-  // within the rolling 12-month window to calibrate Elo Power Rating & 90-day Momentum (K = 16).
+  // Fetch all published Optimist regattas within the rolling 12-month window
+  // so Elo Power Rating & 90-day Momentum treat every country symmetrically (K = 16 for domestic/club regattas).
   const cutoff12Date = new Date(now);
   cutoff12Date.setUTCFullYear(cutoff12Date.getUTCFullYear() - 1);
   const cutoff12Str = cutoff12Date.toISOString().slice(0, 10);
 
-  const sgpRankingRows = await withDatabaseRetry(() =>
+  const allOptiRows = await withDatabaseRetry(() =>
     db
       .select({
         id: regattas.id,
@@ -173,6 +173,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
         slug: regattas.slug,
         name: regattas.name,
         division: regattas.division,
+        raceCount: regattas.raceCount,
         totalFleetSize: regattas.totalFleetSize,
         endDate: regattas.endDate,
         date: regattas.date,
@@ -181,20 +182,27 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       .where(
         and(
           eq(regattas.boatClass, "Optimist"),
-          eq(regattas.countsForRanking, true),
           eq(regattas.status, "published")
         )
       )
   );
 
   const designatedSlugSet = new Set(allSlugs);
-  const extraSgpRegattas = sgpRankingRows.filter(
-    (r) => !designatedSlugSet.has(r.slug) && (r.endDate ?? r.date) >= cutoff12Str
+  const extraDomesticRegattas = allOptiRows.filter(
+    (r) =>
+      !designatedSlugSet.has(r.slug) &&
+      (r.endDate ?? r.date) >= cutoff12Str &&
+      (r.raceCount ?? 0) >= 3
   );
 
   const regattaRows = [
-    ...designatedRegattaRows.map((r) => ({ ...r, eventId: null as string | null, division: null as string | null })),
-    ...extraSgpRegattas,
+    ...designatedRegattaRows.map((r) => ({
+      ...r,
+      eventId: null as string | null,
+      division: null as string | null,
+      raceCount: null as number | null,
+    })),
+    ...extraDomesticRegattas,
   ];
   const regattaBySlug = new Map(regattaRows.map((r) => [r.slug, r]));
   const regattaIds = regattaRows.map((r) => r.id);
@@ -260,8 +268,9 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
   );
 
   // Chronological Elo Power Rating + 90-day Momentum pass across all designated events
-  // plus Singapore ranking regattas (pairing Gold + Silver into one field so Silver sailors
-  // are ranked below Gold rather than in an isolated Silver Elo bubble).
+  // plus all published Optimist regattas across all countries symmetrically (K = 16 for non-designated).
+  // Split fleets (Gold+Silver+Bronze, Open+Intermediate+Green, Class A+B+C) are paired into one field
+  // per eventId, while separate Boys/Girls divisions remain independent fields.
   type EloEvent = {
     id: string;
     startDate: string;
@@ -270,35 +279,71 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     regattaSlugs: string[];
   };
 
-  // Group Singapore ranking regattas (Gold + Silver) by eventId (or rsyc-2026)
-  const sgpByGroup = new Map<string, typeof sgpRankingRows>();
-  for (const r of sgpRankingRows) {
-    if ((r.endDate ?? r.date) < cutoff12Str) continue;
-    const gKey = r.slug.startsWith("rsyc-2026-") ? "rsyc-2026" : (r.eventId ?? r.slug);
-    const list = sgpByGroup.get(gKey);
-    if (list) list.push(r);
-    else sgpByGroup.set(gKey, [r]);
+  function divisionTierOrder(slug: string, division: string | null): number {
+    const s = `${slug} ${division ?? ""}`.toLowerCase();
+    if (/\b(gold|open|main|class[- ]?a|optimist-a)\b/.test(s)) return 0;
+    if (/\b(silver|intermediate|class[- ]?b|optimist-b)\b/.test(s)) return 1;
+    if (/\b(bronze|green|novice|class[- ]?c|optimist-c)\b/.test(s)) return 2;
+    return 0;
   }
 
-  const sgpEloEvents: EloEvent[] = [];
-  const syscSnscHandled = new Set<string>();
-  for (const [gKey, grp] of sgpByGroup.entries()) {
-    // Order Gold before Silver
-    const ordered = [...grp].sort((a, b) => {
-      const aSil = /silver/i.test(a.slug) || /silver/i.test(a.division ?? "") ? 1 : 0;
-      const bSil = /silver/i.test(b.slug) || /silver/i.test(b.division ?? "") ? 1 : 0;
-      return aSil - bSil || a.date.localeCompare(b.date);
-    });
+  function isSexSplit(slug: string, division: string | null): "boys" | "girls" | null {
+    const s = `${slug} ${division ?? ""}`.toLowerCase();
+    if (/\b(boys|men)\b|-b-/.test(s)) return "boys";
+    if (/\b(girls|women)\b|-g-/.test(s)) return "girls";
+    return null;
+  }
+
+  const recentAllOpti = allOptiRows.filter(
+    (r) => (r.endDate ?? r.date) >= cutoff12Str && (r.raceCount ?? 0) >= 3
+  );
+
+  const domesticByGroup = new Map<string, typeof recentAllOpti>();
+  for (const r of recentAllOpti) {
+    // Skip regattas already covered by a designated event (unless part of a Gold+Silver split with a designated Gold)
+    const sex = isSexSplit(r.slug, r.division);
+    const baseKey = r.slug.startsWith("rsyc-2026-") ? "rsyc-2026" : (r.eventId ?? r.slug);
+    const gKey = sex ? `${baseKey}:${sex}` : baseKey;
+    const list = domesticByGroup.get(gKey);
+    if (list) list.push(r);
+    else domesticByGroup.set(gKey, [r]);
+  }
+
+  // Map designated slugs to their event metadata so we preserve designated K-factors
+  const designatedEventBySlug = new Map<string, (typeof scoredEvents)[number]>();
+  for (const e of scoredEvents) {
+    for (const sl of e.regattaSlugs) designatedEventBySlug.set(sl, e);
+  }
+
+  const domesticEloEvents: EloEvent[] = [];
+  const handledDesignatedIds = new Set<string>();
+
+  for (const [gKey, grp] of domesticByGroup.entries()) {
+    // If an event has an Overall sheet alongside Gold/Silver (e.g. Thailand Series 3), prefer Overall only
+    const overallOnly = grp.filter((r) => /\boverall\b/i.test(r.slug) || /\boverall\b/i.test(r.division ?? ""));
+    const activeGrp = overallOnly.length > 0 && grp.length > overallOnly.length ? overallOnly : grp;
+
+    const ordered = [...activeGrp].sort(
+      (a, b) => divisionTierOrder(a.slug, a.division) - divisionTierOrder(b.slug, b.division) || a.date.localeCompare(b.date)
+    );
     const slugs = ordered.map((r) => r.slug);
-    const hasSysc = slugs.includes("sysc-2026-gold");
-    const hasSnsc = slugs.includes("singapore-national-sailing-championships-2026-gold");
-    if (hasSysc) syscSnscHandled.add("sysc-2026-gold");
-    if (hasSnsc) syscSnscHandled.add("snsc-gold-sep-26-2026-09-11");
-    const kFactor = hasSysc ? 32 : hasSnsc ? 24 : 16;
+
+    // Check if any slug in this group belongs to a designated event
+    let kFactor = 16;
+    for (const sl of slugs) {
+      const des = designatedEventBySlug.get(sl);
+      if (des) {
+        handledDesignatedIds.add(des.id);
+        const g = (des.grade ?? 75) as AsianIndexGrade;
+        const desK = g === 200 ? 48 : g === 150 ? 40 : g === 75 ? 32 : 24;
+        if (desK > kFactor) kFactor = desK;
+      }
+    }
+
     const maxEnd = ordered.reduce((m, r) => ((r.endDate ?? r.date) > m ? (r.endDate ?? r.date) : m), "");
     const minStart = ordered.reduce((m, r) => (r.date < m ? r.date : m), ordered[0].date);
-    sgpEloEvents.push({
-      id: `sgp-grp:${gKey}`,
+    domesticEloEvents.push({
+      id: `grp:${gKey}`,
       startDate: minStart,
       endDate: maxEnd,
       kFactor,
@@ -308,7 +353,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
 
   const chronoEvents: EloEvent[] = [
     ...scoredEvents
-      .filter((e) => !syscSnscHandled.has(e.id))
+      .filter((e) => !handledDesignatedIds.has(e.id))
       .map((e) => {
         const g = (e.grade ?? 75) as AsianIndexGrade;
         return {
@@ -319,7 +364,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
           regattaSlugs: e.regattaSlugs,
         };
       }),
-    ...sgpEloEvents,
+    ...domesticEloEvents,
   ].sort(
     (a, b) => a.endDate.localeCompare(b.endDate) || a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id)
   );
