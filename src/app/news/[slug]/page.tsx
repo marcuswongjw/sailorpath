@@ -158,6 +158,14 @@ export default async function NewsArticlePage({
           )}
         </div>
 
+        {article.slug === "regatta-of-champions-2022-2026-and-kosmos-results-live" ? (
+          <p className="mt-8">
+            <Link href="/regattas/regatta-of-champions-2026?fleet=optimist" className="font-semibold text-harbour hover:underline">
+              View the complete R.O.C. results on SailorPath →
+            </Link>
+          </p>
+        ) : null}
+
         {article.relatedClass === "X-15" ? (
           <p className="mt-8">
             <Link href="/classes/x15" className="font-semibold text-harbour hover:underline">
