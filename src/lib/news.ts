@@ -51,11 +51,11 @@ const ARTICLE_MEDIA_BY_SLUG: Record<
     imageCreditUrl: "https://www.activesgcircle.gov.sg/read/youth-olympic-games-2026-singapore-sailors-leave-dakar-2026-eager-for-more",
   },
   "regatta-of-champions-2022-2026-and-kosmos-results-live": {
-    imageUrl: "/news/optimist-racing-loctudy-2012.jpg",
-    imageAlt: "An Optimist fleet rounds a mark during a 2012 regatta in Loctudy, France.",
-    imageCaption: "Archive photograph: Optimist racing in Loctudy, France, in 2012; not the 2026 R.O.C.",
-    imageCredit: "Photo: jakez29120 / Wikimedia Commons, CC BY-SA 2.0 (cropped for display)",
-    imageCreditUrl: "https://commons.wikimedia.org/wiki/File:005-_Optimist_(Loctudy_2012).jpg",
+    imageUrl: "/news/roc-2026-day-four.jpg",
+    imageAlt: "Optimist sailors rounding a mark at the 2026 Regatta of Champions in Cyprus.",
+    imageCaption: "A scene from the organiser's 2026 R.O.C. Optimist day-four highlights.",
+    imageCredit: "Video still: Regatta of Champions — The R.O.C.",
+    imageCreditUrl: "https://www.youtube.com/watch?v=_zvMpKriuLs",
   },
   "parent-workspace-gear-coach-notes": {
     imageUrl: "/news/illustration-parent-workspace.jpg",
