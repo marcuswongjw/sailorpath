@@ -111,7 +111,16 @@ export function AsianOptimistIndexBetaSummary() {
         </summary>
         <div className="border-t border-cool-veil px-5 py-4 space-y-5">
           <div>
-            <p className="mb-2 text-xs font-extrabold uppercase tracking-wide text-slate-soft">Grade 150 · Championships</p>
+            <p className="mb-2 text-xs font-extrabold uppercase tracking-wide text-slate-soft">Grade 200 · World Championship (max 1)</p>
+            <AsianIndexTable
+              caption="Proposed Grade 200 world championship"
+              headers={REGISTER_HEADERS}
+              rows={registerRows(200)}
+              numericColumns={[3, 4]}
+            />
+          </div>
+          <div>
+            <p className="mb-2 text-xs font-extrabold uppercase tracking-wide text-slate-soft">Grade 150 · Championships (max 2)</p>
             <AsianIndexTable
               caption="Proposed Grade 150 championships"
               headers={REGISTER_HEADERS}

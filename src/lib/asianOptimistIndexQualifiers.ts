@@ -13,6 +13,7 @@ export type AsianOptimistIndexQualifierSource = {
   /** Published fleet size, before the primary data store is available. */
   resultCount: number | null;
   resultStatus: "verified" | "awaiting_final" | "scheduled";
+  grade?: number;
 };
 
 /**

@@ -71,7 +71,7 @@ export function AsianOptimistIndexView({
         <div className="grid gap-2.5 sm:grid-cols-3">
           {leaders.map((sailor) => (
             <article
-              key={sailor.sailNumber}
+              key={sailor.identityKey}
               className="flex items-center gap-3 rounded-xl border border-cool-veil bg-warm-white px-4 py-3 shadow-xs"
             >
               <span
@@ -125,8 +125,13 @@ export function AsianOptimistIndexView({
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-bold text-harbour">{qualifier.name}</h3>
+                    {qualifier.grade ? (
+                      <span className="rounded-full bg-sailcloth px-2 py-0.5 text-[11px] font-bold text-harbour">
+                        Grade {qualifier.grade}
+                      </span>
+                    ) : null}
                     {qualifier.resultStatus === "scheduled" ? (
-                      <span className="rounded-full bg-sailcloth px-2 py-0.5 text-[11px] font-bold text-slate-soft">
+                      <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-900">
                         Scheduled
                       </span>
                     ) : null}

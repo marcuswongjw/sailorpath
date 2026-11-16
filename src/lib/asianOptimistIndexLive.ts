@@ -429,6 +429,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
       usesSailorPathResults: ev.regattaSlugs.some((slug) => regattaBySlug.has(slug)),
       resultCount: ev.fleetSize,
       resultStatus: ev.resultStatus as "verified" | "awaiting_final" | "scheduled",
+      grade: ev.grade ?? undefined,
     }));
 
   const asOf = latestEventDate

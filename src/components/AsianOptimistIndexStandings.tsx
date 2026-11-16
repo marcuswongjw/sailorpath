@@ -167,7 +167,9 @@ export function AsianOptimistIndexStandings({
                     {
                       key: "asians-2025",
                       name: "2025 Asians",
+                      grade: 150,
                       finish: `${sailor.overallPlace}/${totalFleetSize}`,
+                      points: totalFleetSize > 0 ? (150 * (totalFleetSize - sailor.overallPlace + 1)) / totalFleetSize : null,
                       counted: sailor.countedResultsCount > sailor.scoredQualifiers.length,
                     },
                   ]
@@ -175,13 +177,15 @@ export function AsianOptimistIndexStandings({
               ...sailor.qualifierResults.map((res) => ({
                 key: res.qualifier.id,
                 name: res.qualifier.shortName,
+                grade: res.qualifier.grade,
                 finish: `${res.rank}/${res.qualifier.fleetSize}`,
+                points: res.points,
                 counted: Boolean(res.counted),
               })),
             ];
 
             return (
-              <article key={sailor.sailNumber} className="px-4 py-3.5">
+              <article key={sailor.identityKey} className="px-4 py-3.5">
                 <div className="flex items-start gap-3">
                   <span
                     className={`mt-0.5 inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(sailor.provisionalRank)}`}
@@ -236,11 +240,21 @@ export function AsianOptimistIndexStandings({
                               : "border-cool-veil bg-sailcloth/60 text-slate-soft"
                           }`}
                         >
-                          <p className="truncate font-semibold">{item.name}</p>
-                          <p className="font-extrabold tabular-nums">
-                            {item.finish}
-                            {item.counted ? " ✓" : ""}
-                          </p>
+                          <div className="flex items-center justify-between gap-1">
+                            <p className="truncate font-semibold">{item.name}</p>
+                            <span className="shrink-0 text-[10px] font-bold text-slate-soft">G{item.grade}</span>
+                          </div>
+                          <div className="mt-0.5 flex items-baseline justify-between gap-1">
+                            <p className="font-extrabold tabular-nums">
+                              {item.finish}
+                              {item.counted ? " ✓" : ""}
+                            </p>
+                            {item.points != null ? (
+                              <p className="text-[11px] font-semibold tabular-nums">
+                                {item.points.toFixed(1)} pts
+                              </p>
+                            ) : null}
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -253,6 +267,10 @@ export function AsianOptimistIndexStandings({
       </div>
 
       {/* Desktop semantic sticky matrix */}
+      <div className="hidden items-center justify-between border-t border-cool-veil bg-sailcloth/40 px-4 py-1.5 text-[11px] font-medium text-slate-soft md:flex">
+        <span>Highlighted pills indicate counted top-5 results.</span>
+        <span>Scroll table horizontally for all events →</span>
+      </div>
       <div
         role="region"
         aria-label="Asian and Oceania Optimist Index standings"
@@ -288,12 +306,12 @@ export function AsianOptimistIndexStandings({
             </tr>
             <tr className="font-bold">
               <th scope="col" className="sticky left-0 top-[34px] z-30 w-14 min-w-14 max-w-14 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">#</th>
-              <th scope="col" className="sticky left-14 top-[34px] z-30 min-w-48 border-b-2 border-r border-cool-veil bg-sailcloth px-4 py-2.5 font-extrabold text-harbour">Sailor</th>
+              <th scope="col" className="sticky left-14 top-[34px] z-30 min-w-48 border-b-2 border-r border-cool-veil bg-sailcloth px-4 py-2.5 font-extrabold text-harbour shadow-[4px_0_8px_-4px_rgba(11,37,69,0.12)]">Sailor</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">MNA</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">Sex</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour">YOB</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-4 py-2.5 text-right font-extrabold text-harbour">Points</th>
-              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-[#f0f4f4] px-4 py-2.5 text-center font-extrabold text-harbour">
+              <th scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#f0f4f4] px-2.5 py-2.5 text-center font-extrabold text-harbour">
                 <div>2025 Asians</div>
               </th>
               {qualifierColumns.map((qualifier) => {
@@ -303,7 +321,7 @@ export function AsianOptimistIndexStandings({
                 const bg = isG200 ? "bg-[#e7eef3]" : isG150 ? "bg-[#f0f4f4]" : isG75 ? "bg-[#ebf5f6]" : "bg-[#faf5eb]";
 
                 return (
-                  <th key={qualifier.id} scope="col" className={`sticky top-[34px] z-20 border-b-2 border-cool-veil ${bg} px-4 py-2.5 text-center font-extrabold text-harbour`}>
+                  <th key={qualifier.id} scope="col" className={`sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil ${bg} px-2.5 py-2.5 text-center font-extrabold text-harbour`}>
                     <div>{qualifier.shortName}</div>
                   </th>
                 );
@@ -311,14 +329,16 @@ export function AsianOptimistIndexStandings({
             </tr>
           </thead>
           <tbody>
-            {pageEntries.map((sailor) => (
-              <tr key={sailor.sailNumber} className="group transition-colors hover:bg-sailcloth/70">
+            {pageEntries.map((sailor) => {
+              const anchorCounted = sailor.overallPlace != null && sailor.countedResultsCount > sailor.scoredQualifiers.length;
+              return (
+              <tr key={sailor.identityKey} className="group transition-colors hover:bg-sailcloth/70">
                 <td className="sticky left-0 z-10 w-14 min-w-14 max-w-14 border-b border-cool-veil bg-warm-white px-3 py-3 group-hover:bg-sailcloth">
                   <span className={`inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs font-extrabold ${rankClass(sailor.provisionalRank)}`}>
                     {sailor.provisionalRank}
                   </span>
                 </td>
-                <th scope="row" className="sticky left-14 z-10 min-w-48 border-b border-r border-cool-veil bg-warm-white px-4 py-3 text-left font-normal group-hover:bg-sailcloth">
+                <th scope="row" className="sticky left-14 z-10 min-w-48 border-b border-r border-cool-veil bg-warm-white px-4 py-3 text-left font-normal shadow-[4px_0_8px_-4px_rgba(11,37,69,0.12)] group-hover:bg-sailcloth">
                   <div className="font-bold text-harbour">
                     {sailor.profileHref ? (
                       <Link prefetch={false} href={sailor.profileHref} className="hover:text-racing-deep hover:underline">
@@ -348,13 +368,19 @@ export function AsianOptimistIndexStandings({
                   </div>
                 </td>
                 <td
-                  title={sailor.overallPlace != null ? `${sailor.displayName} · 2025 Asians: ${sailor.overallPlace} of ${totalFleetSize} (${sailor.championshipPoints?.toFixed(2) ?? "—"} pts)` : "No finish recorded"}
-                  className="border-b border-cool-veil bg-harbour/[0.02] px-4 py-3 text-center font-bold tabular-nums text-harbour"
+                  title={sailor.overallPlace != null ? `${sailor.displayName} · 2025 Asians: ${sailor.overallPlace} of ${totalFleetSize}${anchorCounted ? " · Counted" : ""}` : "No finish recorded"}
+                  className="border-b border-cool-veil bg-harbour/[0.02] px-2.5 py-3 text-center text-xs tabular-nums"
                 >
-                  {sailor.overallPlace != null ? `${sailor.overallPlace}/${totalFleetSize}` : "—"}
+                  {sailor.overallPlace != null ? (
+                    <span className={anchorCounted ? "inline-flex items-center rounded-md bg-aqua-mist/60 px-1.5 py-0.5 font-extrabold text-harbour ring-1 ring-harbour/15" : "font-medium text-slate-soft/70"}>
+                      {sailor.overallPlace}/{totalFleetSize}
+                    </span>
+                  ) : (
+                    <span className="text-slate-soft/50">—</span>
+                  )}
                 </td>
                 {qualifierColumns.map((qualifier) => {
-                  const isG150 = qualifier.grade === 150;
+                  const isG150 = qualifier.grade === 150 || qualifier.grade === 200;
                   const isG75 = qualifier.grade === 75;
                   const bg = isG150 ? "bg-harbour/[0.02]" : isG75 ? "bg-aqua/[0.02]" : "bg-amber-500/[0.02]";
                   const res = sailor.qualifierResults.find(
@@ -368,10 +394,10 @@ export function AsianOptimistIndexStandings({
                     <td
                       key={qualifier.id}
                       title={tooltip}
-                      className={`border-b border-cool-veil ${bg} px-4 py-3 text-center text-xs font-semibold tabular-nums text-charcoal`}
+                      className={`border-b border-cool-veil ${bg} px-2.5 py-3 text-center text-xs tabular-nums`}
                     >
                       {res ? (
-                        <span className={res.counted ? "font-bold text-harbour" : "font-medium text-slate-soft/70"}>
+                        <span className={res.counted ? "inline-flex items-center rounded-md bg-aqua-mist/60 px-1.5 py-0.5 font-extrabold text-harbour ring-1 ring-harbour/15" : "font-medium text-slate-soft/70"}>
                           {res.rank}/{res.qualifier.fleetSize}
                         </span>
                       ) : (
@@ -381,7 +407,8 @@ export function AsianOptimistIndexStandings({
                   );
                 })}
               </tr>
-            ))}
+              );
+            })}
             {filteredEntries.length === 0 ? (
               <tr>
                 <td colSpan={7 + qualifierColumns.length} className="border-b border-cool-veil px-4 py-10 text-center text-sm font-semibold text-slate-soft">
