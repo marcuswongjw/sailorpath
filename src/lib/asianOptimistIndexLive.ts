@@ -169,8 +169,10 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     db
       .select({
         id: regattas.id,
+        eventId: regattas.eventId,
         slug: regattas.slug,
         name: regattas.name,
+        division: regattas.division,
         totalFleetSize: regattas.totalFleetSize,
         endDate: regattas.endDate,
         date: regattas.date,
@@ -190,7 +192,10 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     (r) => !designatedSlugSet.has(r.slug) && (r.endDate ?? r.date) >= cutoff12Str
   );
 
-  const regattaRows = [...designatedRegattaRows, ...extraSgpRegattas];
+  const regattaRows = [
+    ...designatedRegattaRows.map((r) => ({ ...r, eventId: null as string | null, division: null as string | null })),
+    ...extraSgpRegattas,
+  ];
   const regattaBySlug = new Map(regattaRows.map((r) => [r.slug, r]));
   const regattaIds = regattaRows.map((r) => r.id);
 
@@ -255,7 +260,8 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
   );
 
   // Chronological Elo Power Rating + 90-day Momentum pass across all designated events
-  // plus Singapore ranking regattas (counts_for_ranking = true, K = 16).
+  // plus Singapore ranking regattas (pairing Gold + Silver into one field so Silver sailors
+  // are ranked below Gold rather than in an isolated Silver Elo bubble).
   type EloEvent = {
     id: string;
     startDate: string;
@@ -263,24 +269,57 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     kFactor: number;
     regattaSlugs: string[];
   };
+
+  // Group Singapore ranking regattas (Gold + Silver) by eventId (or rsyc-2026)
+  const sgpByGroup = new Map<string, typeof sgpRankingRows>();
+  for (const r of sgpRankingRows) {
+    if ((r.endDate ?? r.date) < cutoff12Str) continue;
+    const gKey = r.slug.startsWith("rsyc-2026-") ? "rsyc-2026" : (r.eventId ?? r.slug);
+    const list = sgpByGroup.get(gKey);
+    if (list) list.push(r);
+    else sgpByGroup.set(gKey, [r]);
+  }
+
+  const sgpEloEvents: EloEvent[] = [];
+  const syscSnscHandled = new Set<string>();
+  for (const [gKey, grp] of sgpByGroup.entries()) {
+    // Order Gold before Silver
+    const ordered = [...grp].sort((a, b) => {
+      const aSil = /silver/i.test(a.slug) || /silver/i.test(a.division ?? "") ? 1 : 0;
+      const bSil = /silver/i.test(b.slug) || /silver/i.test(b.division ?? "") ? 1 : 0;
+      return aSil - bSil || a.date.localeCompare(b.date);
+    });
+    const slugs = ordered.map((r) => r.slug);
+    const hasSysc = slugs.includes("sysc-2026-gold");
+    const hasSnsc = slugs.includes("singapore-national-sailing-championships-2026-gold");
+    if (hasSysc) syscSnscHandled.add("sysc-2026-gold");
+    if (hasSnsc) syscSnscHandled.add("snsc-gold-sep-26-2026-09-11");
+    const kFactor = hasSysc ? 32 : hasSnsc ? 24 : 16;
+    const maxEnd = ordered.reduce((m, r) => ((r.endDate ?? r.date) > m ? (r.endDate ?? r.date) : m), "");
+    const minStart = ordered.reduce((m, r) => (r.date < m ? r.date : m), ordered[0].date);
+    sgpEloEvents.push({
+      id: `sgp-grp:${gKey}`,
+      startDate: minStart,
+      endDate: maxEnd,
+      kFactor,
+      regattaSlugs: slugs,
+    });
+  }
+
   const chronoEvents: EloEvent[] = [
-    ...scoredEvents.map((e) => {
-      const g = (e.grade ?? 75) as AsianIndexGrade;
-      return {
-        id: e.id,
-        startDate: e.startDate,
-        endDate: e.endDate,
-        kFactor: g === 200 ? 48 : g === 150 ? 40 : g === 75 ? 32 : 24,
-        regattaSlugs: e.regattaSlugs,
-      };
-    }),
-    ...extraSgpRegattas.map((r) => ({
-      id: `sgp-rank:${r.slug}`,
-      startDate: r.date,
-      endDate: r.endDate ?? r.date,
-      kFactor: 16,
-      regattaSlugs: [r.slug],
-    })),
+    ...scoredEvents
+      .filter((e) => !syscSnscHandled.has(e.id))
+      .map((e) => {
+        const g = (e.grade ?? 75) as AsianIndexGrade;
+        return {
+          id: e.id,
+          startDate: e.startDate,
+          endDate: e.endDate,
+          kFactor: g === 200 ? 48 : g === 150 ? 40 : g === 75 ? 32 : 24,
+          regattaSlugs: e.regattaSlugs,
+        };
+      }),
+    ...sgpEloEvents,
   ].sort(
     (a, b) => a.endDate.localeCompare(b.endDate) || a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id)
   );
