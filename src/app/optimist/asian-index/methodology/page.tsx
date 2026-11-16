@@ -31,6 +31,7 @@ const SECTIONS = [
   ["register", "8. Register, nominations and baseline"],
   ["governance", "9. Verification, corrections, governance"],
   ["launch", "10. Publication checklist"],
+  ["power-rating", "11. Power Rating (Elo), Momentum & U13 Next-Gen"],
   ["revisions", "Revision log"],
 ] as const;
 
@@ -676,6 +677,60 @@ export default function AsianOptimistIndexMethodologyPage() {
           />
         </Section>
 
+        <Section id="power-rating" title="11. Power Rating (Elo), Momentum & U13 Next-Gen (Beta)">
+          <p>
+            Alongside the primary <strong>Season Points</strong> leaderboard, the Asian Index hub includes two
+            complementary analytical views designed to surface per-start skill and emerging younger talent without
+            altering Season Points:
+          </p>
+
+          <Sub title="Power Rating (Elo)" />
+          <p>
+            While Season Points rewards cumulative championship finishes under host-country caps, the{" "}
+            <strong>Power Rating (Elo)</strong> measures head-to-head performance per start. It adjusts automatically
+            for field strength and removes travel-volume bias, allowing sailors with fewer international trips to be
+            compared on the same scale as high-volume travellers.
+          </p>
+          <Bullets
+            items={[
+              <>
+                <strong>Baseline &amp; chronology:</strong> Every sailor starts the rolling 12-month window at{" "}
+                <strong>1500</strong>. Verified events—including designated Grade 200/150/75/40 events and verified
+                national ranking regattas—are processed chronologically by final race day.
+              </>,
+              <>
+                <strong>Pairwise multi-player update:</strong> Within each event of N finishers (combining split
+                Gold and Silver fleets where applicable), each sailor is compared pairwise against every other finisher
+                using the logistic expectation <code>1 / (1 + 10^((R_j − R_i) / 400))</code>, normalized by{" "}
+                <code>N − 1</code>.
+              </>,
+              <>
+                <strong>Tier sensitivity (K-factor):</strong> <strong>K = 48</strong> (Grade 200 Worlds),{" "}
+                <strong>K = 40</strong> (Grade 150 Continentals &amp; R.O.C.), <strong>K = 32</strong> (Grade 75
+                Opens), <strong>K = 24</strong> (Grade 40 Nationals), and <strong>K = 16</strong> (domestic ranking
+                regattas).
+              </>,
+            ]}
+          />
+
+          <Sub title="90-Day Momentum (Form)" />
+          <p>
+            <strong>Form</strong> tracks the net change in a sailor&apos;s Elo rating over the trailing 90 days (
+            <code>Δ_90 = round(R_current − R_90_days_ago)</code>), highlighting sailors in rising form (
+            <code>≥ +5</code>) or cooling form (<code>≤ −5</code>).
+          </p>
+
+          <Sub title="U13 / Next-Gen Index" />
+          <p>
+            Optimist fleets are naturally dominated by 14- and 15-year-olds competing in their final seasons. The{" "}
+            <strong>U13 / Next-Gen</strong> tab filters the same Elo pool to verified Asian and Oceanian sailors aged{" "}
+            <strong>13 or under in the current calendar year</strong> (for 2026: sailors with a verified birth year of{" "}
+            <strong>2014 or later</strong>) and ranks them by <strong>Power Rating (Elo)</strong> descending, with
+            Season Points and 90-day Momentum shown alongside. Sailors without a recorded birth year are excluded from
+            U13 / Next-Gen until verified.
+          </p>
+        </Section>
+
         <Section id="revisions" title="Revision log">
           <AsianIndexTable
             caption="Methodology revision log"
@@ -700,7 +755,7 @@ export default function AsianOptimistIndexMethodologyPage() {
               [
                 "V1.1 (Beta)",
                 "16 November 2026",
-                "Introduced 4-tier grading (200 / 150 / 75 / 40): promoted IODA World Championship to Grade 200 (max 1), retained Continental Championships and added invite-only Regatta of Champions at Grade 150 (max 2), designated R.O.C. Kosmos (combined Gold + Silver qualifying-split fleet) at Grade 75, and moved standings to live database calculation.",
+                "Introduced 4-tier grading (200 / 150 / 75 / 40): promoted IODA World Championship to Grade 200 (max 1), retained Continental Championships and added invite-only Regatta of Champions at Grade 150 (max 2), designated R.O.C. Kosmos (combined Gold + Silver qualifying-split fleet) at Grade 75, moved standings to live database calculation, and added Power Rating (Elo), 90-day Momentum, and U13 / Next-Gen (2014+) views.",
               ],
             ]}
           />

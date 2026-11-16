@@ -434,8 +434,17 @@ export function AsianOptimistIndexStandings({
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">MNA</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">Sex</th>
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour">YOB</th>
-              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour">Points</th>
-              <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour" title="Head-to-head multi-player Elo rating (starts at 1500)">Elo</th>
+              {viewMode === "points" ? (
+                <>
+                  <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour">Points ↓</th>
+                  <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour" title="Head-to-head multi-player Elo rating (starts at 1500)">Elo</th>
+                </>
+              ) : (
+                <>
+                  <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour" title="Head-to-head multi-player Elo rating (starts at 1500)">Elo ↓</th>
+                  <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 text-right font-extrabold text-harbour">Points</th>
+                </>
+              )}
               <th scope="col" className="sticky top-[34px] z-20 border-b-2 border-r border-cool-veil bg-sailcloth px-3 py-2.5 text-center font-extrabold text-harbour" title="90-day Elo momentum">Form</th>
               {g200Cols.map((qualifier) => (
                 <th key={qualifier.id} scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#e7eef3] px-2.5 py-2.5 text-center font-extrabold text-harbour">
@@ -492,18 +501,37 @@ export function AsianOptimistIndexStandings({
                 <td className="border-b border-cool-veil px-3 py-3 text-xs font-semibold text-charcoal">{sailor.nationality}</td>
                 <td className="border-b border-cool-veil px-3 py-3 text-xs font-semibold text-charcoal">{genderCode(sailor.gender)}</td>
                 <td className="border-b border-cool-veil px-3 py-3 text-center text-xs font-semibold text-charcoal">{sailor.birthYear ?? "—"}</td>
-                <td className="border-b border-cool-veil px-3 py-3 text-right">
-                  <div className="text-base font-extrabold tabular-nums text-harbour">{sailor.provisionalScore.toFixed(2)}</div>
-                  <div className="text-[11px] font-medium text-slate-soft">
-                    {sailor.countedResultsCount} counted · {sailor.eligibleStarts} {sailor.eligibleStarts === 1 ? "start" : "starts"}
-                  </div>
-                </td>
-                <td className="border-b border-cool-veil px-3 py-3 text-right">
-                  <div className="text-sm font-extrabold tabular-nums text-harbour">{sailor.powerRating ?? "—"}</div>
-                  {sailor.powerRank ? (
-                    <div className="text-[11px] font-medium text-slate-soft">#{sailor.powerRank}</div>
-                  ) : null}
-                </td>
+                {viewMode === "points" ? (
+                  <>
+                    <td className="border-b border-cool-veil px-3 py-3 text-right">
+                      <div className="text-base font-extrabold tabular-nums text-harbour">{sailor.provisionalScore.toFixed(2)}</div>
+                      <div className="text-[11px] font-medium text-slate-soft">
+                        {sailor.countedResultsCount} counted · {sailor.eligibleStarts} {sailor.eligibleStarts === 1 ? "start" : "starts"}
+                      </div>
+                    </td>
+                    <td className="border-b border-cool-veil px-3 py-3 text-right">
+                      <div className="text-sm font-extrabold tabular-nums text-harbour">{sailor.powerRating ?? "—"}</div>
+                      {sailor.powerRank ? (
+                        <div className="text-[11px] font-medium text-slate-soft">#{sailor.powerRank}</div>
+                      ) : null}
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="border-b border-cool-veil px-3 py-3 text-right">
+                      <div className="text-base font-extrabold tabular-nums text-harbour">{sailor.powerRating ?? "—"}</div>
+                      {sailor.powerRank ? (
+                        <div className="text-[11px] font-medium text-slate-soft">Overall #{sailor.powerRank}</div>
+                      ) : null}
+                    </td>
+                    <td className="border-b border-cool-veil px-3 py-3 text-right">
+                      <div className="text-sm font-bold tabular-nums text-harbour">{sailor.provisionalScore.toFixed(2)}</div>
+                      <div className="text-[11px] font-medium text-slate-soft">
+                        {sailor.countedResultsCount} counted
+                      </div>
+                    </td>
+                  </>
+                )}
                 <td className="border-b border-r border-cool-veil px-3 py-3 text-center">
                   {momentumPill(sailor.momentumDelta)}
                 </td>
