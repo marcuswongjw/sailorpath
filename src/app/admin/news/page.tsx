@@ -7,64 +7,8 @@ import { db, withDatabaseRetry } from "@/db";
 import { newsArticles } from "@/db/schema";
 import { getAuthContext } from "@/lib/auth";
 import { adminLoginOrigin, adminReturnUrl, isAdminHost } from "@/lib/adminHost";
-import { SEEDED_EDITORIAL_DRAFTS } from "@/lib/editorialWorkflow";
 
 export const dynamic = "force-dynamic";
-
-async function ensureSeededDraftsInDatabase() {
-  try {
-    for (const draft of SEEDED_EDITORIAL_DRAFTS) {
-      await db
-        .insert(newsArticles)
-        .values({
-          id: draft.id,
-          slug: draft.slug,
-          status: draft.status,
-          kind: draft.kind,
-          title: draft.title,
-          summary: draft.summary,
-          body: draft.body,
-          authorDisplayName: draft.authorDisplayName,
-          relatedClass: draft.relatedClass,
-          relatedRegion: draft.relatedRegion,
-          sourceUrl: draft.sourceUrl,
-          sourceLabel: draft.sourceLabel,
-          tags: draft.tags,
-          reviewedAt: draft.status === "published" ? draft.createdAt : null,
-          publishedAt: draft.status === "published" ? draft.createdAt : null,
-          updatedAt: draft.createdAt,
-        })
-        .onConflictDoNothing();
-    }
-  } catch (error) {
-    console.warn("[admin/news] Skipping automatic draft seed:", error);
-  }
-}
-
-function mergeSeededFallback(rows: AdminNewsWorkflowArticle[]): AdminNewsWorkflowArticle[] {
-  const existingIds = new Set(rows.map((row) => row.id));
-  const existingSlugs = new Set(rows.map((row) => row.slug));
-  const missingSeeds: AdminNewsWorkflowArticle[] = SEEDED_EDITORIAL_DRAFTS.filter(
-    (seed) => !existingIds.has(seed.id) && !existingSlugs.has(seed.slug)
-  ).map((seed) => ({
-    id: seed.id,
-    slug: seed.slug,
-    status: seed.status,
-    kind: seed.kind,
-    title: seed.title,
-    summary: seed.summary,
-    body: seed.body,
-    authorDisplayName: seed.authorDisplayName,
-    relatedClass: seed.relatedClass,
-    relatedRegion: seed.relatedRegion,
-    sourceUrl: seed.sourceUrl,
-    sourceLabel: seed.sourceLabel,
-    tags: [...seed.tags],
-    updatedAt: seed.createdAt,
-    publishedAt: seed.status === "published" ? seed.createdAt : null,
-  }));
-  return [...missingSeeds, ...rows];
-}
 
 export default async function AdminNewsPage({
   searchParams,
@@ -89,7 +33,6 @@ export default async function AdminNewsPage({
   let articles: AdminNewsWorkflowArticle[] = [];
   let loadError: string | null = null;
   try {
-    await ensureSeededDraftsInDatabase();
     const rows = await withDatabaseRetry(
       () =>
         db
@@ -115,16 +58,13 @@ export default async function AdminNewsPage({
           .limit(100),
       { label: "admin.news.page" }
     );
-    articles = mergeSeededFallback(
-      rows.map((row) => ({
+    articles = rows.map((row) => ({
         ...row,
         tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === "string") : [],
-      }))
-    );
+      }));
   } catch (error) {
     console.error("[admin/news] Failed to load editorial articles from database", error);
-    articles = mergeSeededFallback([]);
-    loadError = "Database connection was temporarily unavailable; showing seeded editorial drafts.";
+    loadError = "Database connection was temporarily unavailable. Please try again.";
   }
 
   const selected =

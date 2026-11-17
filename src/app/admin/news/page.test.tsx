@@ -4,6 +4,7 @@ const mocks = vi.hoisted(() => ({
   host: "admin.sailorpath.com",
   auth: null as { userId: string; email: string; role: string } | null,
   workflowProps: null as Record<string, unknown> | null,
+  failLoad: false,
 }));
 
 vi.mock("next/headers", () => ({ headers: async () => new Headers({ host: mocks.host }) }));
@@ -27,7 +28,10 @@ vi.mock("@/db", () => ({
     select: () => ({
       from: () => ({
         orderBy: () => ({
-          limit: async () => [],
+          limit: async () => {
+            if (mocks.failLoad) throw new Error("database unavailable");
+            return [];
+          },
         }),
       }),
     }),
@@ -50,20 +54,26 @@ describe("admin editorial workflow route", () => {
     await expect(AdminNewsPage({ searchParams: Promise.resolve({}) })).resolves.toBeTruthy();
   });
 
-  it("loads the seeded Asian Optimist Index draft for superadmin users", async () => {
+  it("does not recreate deleted drafts when the database has no articles", async () => {
     mocks.auth = { userId: "admin-1", email: "admin@sailorpath.com", role: "superadmin" };
     const element = await AdminNewsPage({ searchParams: Promise.resolve({}) });
 
     expect(element).toBeTruthy();
     const props = (element as { props?: { articles?: Array<{ slug: string; status: string }>; selected?: { slug: string } | null } }).props;
     expect(props?.articles).toBeDefined();
-    expect(
-      props?.articles?.some(
-        (article) =>
-          article.slug === "asian-optimist-index-beta-methodology-and-event-register" &&
-          article.status === "draft"
-      )
-    ).toBe(true);
-    expect(props?.selected?.slug).toBe("asian-optimist-index-beta-methodology-and-event-register");
+    expect(props?.articles).toEqual([]);
+    expect(props?.selected).toBeNull();
+  });
+
+  it("reports a database failure without presenting stale seeded drafts", async () => {
+    mocks.auth = { userId: "admin-1", email: "admin@sailorpath.com", role: "superadmin" };
+    mocks.failLoad = true;
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const element = await AdminNewsPage({ searchParams: Promise.resolve({}) });
+    const props = (element as { props: { articles: unknown[]; errorMessage: string } }).props;
+    expect(props.articles).toEqual([]);
+    expect(props.errorMessage).toContain("unavailable");
+    mocks.failLoad = false;
+    log.mockRestore();
   });
 });
