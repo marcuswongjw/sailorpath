@@ -16,7 +16,12 @@ import { ASIAN_OPTIMIST_INDEX_SOURCE_PDF_URL } from "@/lib/asianOptimistIndex";
 function registerRows(grade: AsianIndexGrade) {
   return ASIAN_INDEX_PROPOSED_REGISTER.filter((entry) => entry.grade === grade).map(
     (entry: AsianIndexRegisterEntry) => [
-      entry.name,
+      <span key="event">
+        {entry.name}
+        {entry.id === "lysc-2026-gold" || entry.id === "youth-thailand-national-2026" ? (
+          <span className="mt-1 block text-xs font-normal text-slate-soft">{entry.note}</span>
+        ) : null}
+      </span>,
       entry.host,
       entry.dates,
       entry.starters ?? "—",
@@ -51,7 +56,7 @@ export function AsianOptimistIndexBetaSummary() {
             </div>
             <div className="rounded-xl bg-sailcloth p-3.5">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Rolling window</p>
-              <p className="mt-1">Best 5 eligible results. The 2025 Asian &amp; Oceanian Championship is retained until its next verified edition; broader annual rollover is under review.</p>
+              <p className="mt-1">Best 5 eligible results. Recognised annual events remain until the next verified edition with published scorecards; other events use a 12-month window.</p>
             </div>
             <div className="rounded-xl bg-sailcloth p-3.5">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Eligibility</p>

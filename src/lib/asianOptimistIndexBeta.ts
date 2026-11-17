@@ -193,8 +193,8 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     starters: 50,
     verifiedMnas: 6,
     races: 10,
-    check: "meets",
-    note: "Meets the criteria at exactly 50 starters. Same host as LIRP, so only a sailor's better Malaysian Grade 75 result counts.",
+    check: "meets_pending_verification",
+    note: "Recorded fleet and race counts meet the numerical criteria, but the linked Gold scorecard is not currently published in SailorPath, so this edition is not included in the live calculation. Source and eligibility remain under review.",
   },
   {
     id: "thailand-international-2026",
@@ -301,8 +301,8 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     starters: 58,
     verifiedMnas: 1,
     races: 3,
-    check: "meets",
-    note: "Meets Grade 40 criteria with 58 starters. Scored for Asian & Oceania Index.",
+    check: "unverified",
+    note: "The recorded scorecard has 58 entries and 3 races, below the 4-race Grade 40 minimum. Excluded from Season Points pending an authoritative final result.",
   },
   {
     id: "australian-optimist-championship-2026",

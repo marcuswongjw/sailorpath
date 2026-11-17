@@ -204,12 +204,12 @@ export default function AsianOptimistIndexMethodologyPage() {
                 for display.
               </>,
               <>
-                <strong>Rolling window &amp; Championship anchor:</strong> The intended policy is to retain an annual
-                event until its next matching edition concludes and its final results are verified, even if that takes
-                more than 12 months. The current calculation applies that rollover to the{" "}
-                <strong>Asian &amp; Oceanian Championship</strong> anchor, retaining <code>2025 Asians</code> until
-                the next edition (<code>2026 Asians</code>, Colombo) publishes verified final results. Other events
-                currently use a rolling 12-month window while broader annual rollover is implemented and reviewed.
+                <strong>Rolling window &amp; annual events:</strong> Recognised annual series remain eligible until a
+                matching edition has concluded, its final results are verified, and its linked scorecards are published,
+                even if that takes more than 12 months. The calculation matches reviewed event series and keeps separate
+                boys&apos; and girls&apos; classifications apart. Newly designated annual series must be added to that
+                matching register; unrecognised events use a 12-month window. Recorded fleet, race and nationality
+                thresholds must be met before a result scores.
               </>,
             ]}
           />
@@ -274,8 +274,8 @@ export default function AsianOptimistIndexMethodologyPage() {
           <p>
             Alongside <strong>Season Points</strong>, the Index hub provides two complementary views calculated live
             across designated events and other published Optimist regattas with at least 3 completed races in the
-            rolling 12-month window. Events explicitly excluded in the Index register are omitted. The retained 2025
-            Asian &amp; Oceanian anchor is also included:
+            rolling 12-month window. Events explicitly excluded in the Index register are omitted. Retained designated
+            annual events are also included:
           </p>
 
           <Sub title="Power Rating (Elo)" />
