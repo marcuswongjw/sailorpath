@@ -871,6 +871,7 @@ export function RegattaEvidenceModal({
           <button
             type="button"
             onClick={onClose}
+            aria-label="Close regatta form"
             className="rounded-full p-2 text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)] hover:text-[var(--sp-charcoal)] transition-colors"
           >
             <X className="h-5 w-5" />

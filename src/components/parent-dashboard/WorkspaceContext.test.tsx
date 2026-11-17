@@ -22,4 +22,11 @@ describe("workspace relationship and event context",()=>{
   const url=new URL(link.getAttribute("href")!,"https://sailorpath.com");
   expect(url.searchParams.get("event")).toBe("eastern-seaboard-regatta-2026");expect(url.searchParams.has("q")).toBe(false);expect(url.searchParams.get("year")).toBe("2026");
  });
+ it("explains where the checklist is saved and exposes checked status",()=>{
+  const html=renderToStaticMarkup(<PreRaceChecklist activeAthlete={athlete} upcomingRegattas={[]} checklistState={{sailor:{measurement_cert:true}}} customChecklistItems={{}} newChecklistText="" onToggleItem={vi.fn()} onAddCustomItem={vi.fn()} onRemoveCustomItem={vi.fn()} onResetChecklist={vi.fn()} onNewChecklistTextChange={vi.fn()}/>);
+  const document=new DOMParser().parseFromString(html,"text/html");
+  const selected=[...document.querySelectorAll("button")].find(button=>button.textContent?.includes("Measurement certificate"));
+  expect(selected?.getAttribute("aria-pressed")).toBe("true");
+  expect(html).toContain("Saved in this browser on this device.");
+ });
 });

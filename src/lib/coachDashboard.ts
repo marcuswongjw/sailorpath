@@ -15,6 +15,7 @@ import {
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { getCachedFleetRankings, getCachedPreviousFleetRankings } from "@/lib/queries";
 import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { coachWorkspaceResultsCondition } from "@/lib/workspaceVisibility";
 
 export type CoachSquadMember = {
   id: string;
@@ -150,7 +151,7 @@ export async function getCoachSquadDashboard(
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .where(inArray(regattaResults.sailorId, sailorIds))
+      .where(coachWorkspaceResultsCondition(sailorIds))
       .orderBy(desc(regattas.date))
       .catch(() => []),
     db.select({ sailorId: coachSailorNotes.sailorId, note: coachSailorNotes.note, visibility: coachSailorNotes.visibility })

@@ -126,4 +126,25 @@ describe("AthleteHub logbook & reflections", () => {
     ).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: "Reflections (1)" })).toBeInTheDocument();
   });
+
+  it("consumes a new-regatta link after dismissal, including when switching sailors", async () => {
+    window.history.replaceState(null, "", "/athlete?id=sailor-1&tab=results&action=new#logbook");
+    const user = userEvent.setup();
+    const athletes = [
+      { id: "sailor-1", name: "First Sailor", handle: "first", sailNumber: "1", club: "Club" },
+      { id: "sailor-2", name: "Second Sailor", handle: "second", sailNumber: "2", club: "Club" },
+    ];
+    const view = render(<AthleteHub athletes={athletes} initialAction="new" />);
+    expect(screen.getByRole("button", { name: "Close regatta form" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Close regatta form" }));
+    expect(new URL(window.location.href).searchParams.has("action")).toBe(false);
+    expect(window.location.hash).toBe("#logbook");
+    expect(new URL(window.location.href).searchParams.get("tab")).toBe("results");
+    await user.click(screen.getByRole("button", { name: "Second Sailor" }));
+    expect(screen.queryByRole("button", { name: "Close regatta form" })).not.toBeInTheDocument();
+    view.unmount();
+    render(<AthleteHub athletes={athletes} currentSailorId="sailor-2" />);
+    expect(screen.queryByRole("button", { name: "Close regatta form" })).not.toBeInTheDocument();
+    window.history.replaceState(null, "", "/");
+  });
 });

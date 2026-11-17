@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { and, asc, desc, eq, gte, inArray, or } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db, withSequentialDatabaseReads } from "@/db";
 import {
@@ -26,6 +26,7 @@ import {
 } from "@/lib/ranking";
 import { normalizeSgSeriesMembership } from "@/lib/seriesMembership";
 import { loadPersonalSeasons } from "@/lib/followedSailorsQuery";
+import { workspaceUpcomingRegattasCondition } from "@/lib/workspaceVisibility";
 
 type StandingSummary = {
   periodLabel: string;
@@ -256,12 +257,7 @@ export async function GET() {
           slug: regattas.slug,
         })
         .from(regattas)
-        .where(
-          or(
-            gte(regattas.date, new Date().toISOString().slice(0, 10)),
-            gte(regattas.endDate, new Date().toISOString().slice(0, 10))
-          )
-        )
+        .where(workspaceUpcomingRegattasCondition(new Date().toISOString().slice(0, 10)))
         .orderBy(asc(regattas.date))
         .limit(10)
         .catch(() => []),
