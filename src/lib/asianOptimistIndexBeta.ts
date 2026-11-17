@@ -193,8 +193,8 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     starters: 50,
     verifiedMnas: 6,
     races: 10,
-    check: "meets",
-    note: "Meets the criteria at exactly 50 starters. Same host as LIRP, so only a sailor's better Malaysian Grade 75 result counts.",
+    check: "meets_pending_verification",
+    note: "Recorded fleet and race counts meet the numerical criteria, but the linked Gold scorecard is not currently published in SailorPath, so this edition is not included in the live calculation. Source and eligibility remain under review.",
   },
   {
     id: "thailand-international-2026",
