@@ -86,6 +86,7 @@ export function PreRaceChecklist({
             <Calendar className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
             Race-Day Checklist
           </h3>
+          <p className={`mt-1 text-xs ${MUTED}`}>Saved in this browser on this device.</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <span className="rounded-full bg-[var(--sp-aqua-mist)] border border-[var(--sp-harbour-teal)]/20 px-2.5 py-1 text-[11px] font-bold text-[var(--sp-harbour-teal)]">
@@ -155,6 +156,7 @@ export function PreRaceChecklist({
               >
                 <button
                   type="button"
+                  aria-pressed={isDone}
                   onClick={() => onToggleItem(activeAthlete.id, item.id)}
                   className="flex items-start gap-2.5 flex-1 min-h-9 py-1 text-left min-w-0"
                 >

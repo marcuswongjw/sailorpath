@@ -67,6 +67,7 @@ interface AthleteWorkspaceProps {
   initialTab?: WorkspaceTab;
   initialAction?: string;
   onTabChange?: (tab: WorkspaceTab) => void;
+  onInitialActionConsumed?: () => void;
 }
 
 function AthleteWorkspace({
@@ -74,6 +75,7 @@ function AthleteWorkspace({
   initialTab = "results",
   initialAction,
   onTabChange,
+  onInitialActionConsumed,
 }: AthleteWorkspaceProps) {
   const router = useRouter();
   const { toast, confirm } = useFeedback();
@@ -804,6 +806,7 @@ function AthleteWorkspace({
         onClose={() => {
           setEvidenceModalOpen(false);
           setEditingResult(null);
+          onInitialActionConsumed?.();
         }}
         sailorId={athlete.id}
         sailorName={athlete.name}
@@ -848,6 +851,17 @@ export function AthleteHub({
     return athletes[0]?.id || "";
   });
   const [activeTab, setActiveTab] = useState<WorkspaceTab>(initialTab);
+  const [pendingInitialAction, setPendingInitialAction] = useState(initialAction);
+
+  const consumeInitialAction = () => {
+    if (pendingInitialAction !== "new") return;
+    setPendingInitialAction(undefined);
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("action") === "new") {
+      url.searchParams.delete("action");
+      window.history.replaceState(null, "", url.toString());
+    }
+  };
 
   const handleSelectAthlete = (id: string) => {
     if (id === selectedId) return;
@@ -918,7 +932,8 @@ export function AthleteHub({
         key={activeAthlete.id}
         athlete={activeAthlete}
         initialTab={activeTab}
-        initialAction={initialAction}
+        initialAction={pendingInitialAction}
+        onInitialActionConsumed={consumeInitialAction}
         onTabChange={setActiveTab}
       />
     </div>
