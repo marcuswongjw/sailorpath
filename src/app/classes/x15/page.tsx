@@ -340,10 +340,10 @@ export default async function X15ClassHub() {
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-harbour">International circuit</p>
             <h2 id="x15-calendar-heading" className="mt-1 text-xl font-black text-harbour-shadow sm:text-2xl">
-              Upcoming X-15 events (2026–2027)
+              X-15 event calendar (2026–2027)
             </h2>
             <p className="mt-1 text-sm text-slate-soft">
-              Synced from the official International X-15 Class calendar. Events with confirmed dates link directly to full SailorPath regatta pages.
+              Based on the International X-15 Class calendar checked on 8 November 2026. Check the official calendar for changes; events with confirmed dates link to SailorPath event pages.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">

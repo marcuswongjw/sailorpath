@@ -3,10 +3,15 @@ import {
   ASIAN_INDEX_GRADE_75_CRITERIA,
   ASIAN_INDEX_MNA_REGIONS,
   ASIAN_INDEX_PROPOSED_REGISTER,
+  asianIndexUnder13BirthYear,
   asianIndexPoints,
 } from "./asianOptimistIndexBeta";
 
 describe("Asian Optimist Index (Beta) scoring", () => {
+  it("advances the under-13 birth-year cutoff with the ranking year", () => {
+    expect(asianIndexUnder13BirthYear(2026)).toBe(2014);
+    expect(asianIndexUnder13BirthYear(2027)).toBe(2015);
+  });
   it("gives the winner the full grade and last place E/N", () => {
     expect(asianIndexPoints(150, 100, 1)).toBe(150);
     expect(asianIndexPoints(75, 100, 100)).toBeCloseTo(0.75, 10);

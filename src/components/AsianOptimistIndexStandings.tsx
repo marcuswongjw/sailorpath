@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Pagination, pageNumber } from "./Pagination";
 import type { AsianOptimistIndexProvisionalEntry } from "@/lib/asianOptimistIndexScoring";
+import { asianIndexUnder13BirthYear } from "@/lib/asianOptimistIndexBeta";
 
 export type AsianOptimistIndexViewMode = "points" | "power" | "u13";
 
@@ -62,11 +63,12 @@ export function AsianOptimistIndexStandings({
 }) {
   const viewMode: AsianOptimistIndexViewMode =
     filters.view === "power" || filters.view === "u13" ? filters.view : "points";
+  const u13BirthYear = asianIndexUnder13BirthYear(new Date().getUTCFullYear());
 
   const baseEntries =
     viewMode === "u13"
       ? entries
-          .filter((e) => e.birthYear != null && e.birthYear >= 2014)
+          .filter((e) => e.birthYear != null && e.birthYear >= u13BirthYear)
           .sort(
             (a, b) =>
               (b.powerRating ?? 1500) - (a.powerRating ?? 1500) ||
@@ -200,7 +202,7 @@ export function AsianOptimistIndexStandings({
                 : "border border-cool-veil bg-white text-harbour hover:bg-sailcloth"
             }`}
           >
-            U13 / Next-Gen (2014+)
+            U13 / Next-Gen ({u13BirthYear}+)
           </Link>
         </nav>
 

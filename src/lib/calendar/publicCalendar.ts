@@ -83,6 +83,16 @@ export function dedupeEventSheets(sheets: RegattaRecord[]): RegattaRecord[] {
   return Array.from(map.values());
 }
 
+/** Infer only from recognisable venue information; an unknown venue is not Singapore. */
+export function savedEventRegion(venue: string | null | undefined): string | undefined {
+  const location = (venue ?? "").toLowerCase();
+  if (/\bsingapore\b/.test(location)) return "Singapore";
+  if (/\b(japan|thailand|sri lanka|hong kong|china)\b/.test(location)) return "Asia";
+  if (/\b(spain|greece|great britain|united kingdom|france|italy|portugal|poland|norway)\b/.test(location)) return "Europe";
+  if (/\b(australia|queensland|port phillip bay)\b/.test(location)) return "International";
+  return undefined;
+}
+
 /** The shared calendar inventory, including saved overrides and deletions. */
 export async function getPublicCalendarData() {
   let dbRegattas: RegattaRecord[] = [];
@@ -143,7 +153,7 @@ export async function getPublicCalendarData() {
       prizesSummary: item.prizesSummary,
       boatClass: item.boatClass,
       classes: item.classes,
-      geography: item.geography || "SG",
+      geography: item.geography || (item.region === "Singapore" ? "SG" : undefined),
     });
   }
 
@@ -219,7 +229,7 @@ export async function getPublicCalendarData() {
       totalFleetSize: 0,
       division: "Open",
       venue: saved.venue || undefined,
-      region: "Singapore",
+      region: savedEventRegion(saved.venue),
       organizer: saved.organizer || undefined,
       countsForRanking: saved.countsForRanking !== false,
       isSelectionTrial: Boolean(saved.isSelectionTrial),
@@ -228,7 +238,7 @@ export async function getPublicCalendarData() {
       registrationUrl: saved.registrationUrl || undefined,
       boatClass: saved.classes?.[0] || "Optimist",
       classes: saved.classes || [],
-      geography: "SG",
+      geography: savedEventRegion(saved.venue) === "Singapore" ? "SG" : undefined,
     });
   }
 
@@ -243,7 +253,7 @@ export async function getPublicCalendarData() {
     resultSheetsByEvent[event.slug] = sheets;
     const existing = publicEvents.get(event.slug);
     if (existing) {
-      publicEvents.set(event.slug, { ...existing, classes: [...new Set([...(existing.classes || []), ...sheets.map((sheet) => sheet.boatClass || "Optimist")])] });
+      publicEvents.set(event.slug, { ...existing, region: existing.region || sheets[0]?.region || (["SG", "SGP"].includes(sheets[0]?.geography || "") ? "Singapore" : undefined), classes: [...new Set([...(existing.classes || []), ...sheets.map((sheet) => sheet.boatClass || "Optimist")])] });
     } else if (sheets.length) {
       publicEvents.set(event.slug, { ...sheets[0], id: event.slug, slug: event.slug, name: event.name,
         date: event.startDate, endDate: event.endDate, classes: sheets.map((sheet) => sheet.boatClass || "Optimist"),

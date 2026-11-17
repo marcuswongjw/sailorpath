@@ -33,6 +33,7 @@ import {
   type CandidateScoredResult,
 } from "@/lib/asianOptimistIndexScoring";
 import type { QualifierColumn } from "@/components/AsianOptimistIndexStandings";
+import { selectPowerPool } from "@/lib/asianOptimistIndexPool";
 
 const ASIAN_OCEANIA_MNAS = new Set<string>(
   ASIAN_INDEX_MNA_REGIONS.flatMap((r) => r.codes)
@@ -99,11 +100,14 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
   const now = new Date();
   const rankingYear = now.getUTCFullYear();
 
-  const events = await withDatabaseRetry(() =>
+  const eventRegister = await withDatabaseRetry(() =>
     db
       .select()
       .from(asianOptimistIndexEvents)
-      .where(eq(asianOptimistIndexEvents.isEligible, true))
+  );
+  const events = eventRegister.filter((event) => event.isEligible);
+  const excludedSlugs = new Set(
+    eventRegister.filter((event) => !event.isEligible).flatMap((event) => event.regattaSlugs)
   );
 
   if (events.length === 0) {
@@ -188,12 +192,8 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
   );
 
   const designatedSlugSet = new Set(allSlugs);
-  const extraDomesticRegattas = allOptiRows.filter(
-    (r) =>
-      !designatedSlugSet.has(r.slug) &&
-      (r.endDate ?? r.date) >= cutoff12Str &&
-      (r.raceCount ?? 0) >= 3
-  );
+  const recentAllOpti = selectPowerPool(allOptiRows, excludedSlugs, cutoff12Str);
+  const extraDomesticRegattas = recentAllOpti.filter((r) => !designatedSlugSet.has(r.slug));
 
   const regattaRows = [
     ...designatedRegattaRows.map((r) => ({
@@ -293,10 +293,6 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     if (/\b(girls|women)\b|-g-/.test(s)) return "girls";
     return null;
   }
-
-  const recentAllOpti = allOptiRows.filter(
-    (r) => (r.endDate ?? r.date) >= cutoff12Str && (r.raceCount ?? 0) >= 3
-  );
 
   const domesticByGroup = new Map<string, typeof recentAllOpti>();
   for (const r of recentAllOpti) {

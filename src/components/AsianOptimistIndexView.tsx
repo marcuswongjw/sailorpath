@@ -52,7 +52,7 @@ export function AsianOptimistIndexView({
             Asian and Oceania Optimist Index
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-sailcloth sm:text-base">
-            An independent index of verified Optimist results for sailors representing Asian and Oceanian national authorities.
+            An independent beta index of Optimist results for sailors representing Asian and Oceanian national authorities. Event and sailor details remain under review.
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-semibold text-soft-aqua">
             <span>{entries.length} sailors · Updated {asOf}</span>
