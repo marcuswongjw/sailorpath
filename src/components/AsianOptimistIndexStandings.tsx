@@ -66,7 +66,7 @@ function ScoreBreakdown({ sailor, qualifiers, totalFleetSize, anchorName, anchor
         {results.map((result) => (
           <li key={result.id} className="rounded-lg border border-cool-veil bg-white p-2">
             <p className="font-bold text-harbour">{result.name}</p>
-            <p>Grade {result.grade} · {result.rank} of {result.fleet} · {result.points.toFixed(2)} points · {result.counted ? "Counted" : "Not counted (selection limits)"}</p>
+            <p>Grade {result.grade} · Index place {result.rank} of {result.fleet} · {result.points.toFixed(2)} points · {result.counted ? "Counted" : "Not counted (selection limits)"}</p>
             <p className="mt-1 flex flex-wrap gap-x-3">
               {result.slug ? <Link prefetch={false} href={`/sg/optimist/regattas/${result.slug}`} className="font-bold underline">SailorPath results</Link> : null}
               {result.officialUrl ? <a href={result.officialUrl} target="_blank" rel="noreferrer" className="font-bold underline">Source</a> : null}
