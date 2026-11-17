@@ -17,7 +17,7 @@ describe("AsianOptimistIndexView", () => {
 
     expect(
       screen.getByText(
-        "An independent index of verified Optimist results for sailors representing Asian and Oceanian national authorities."
+        "An independent beta index of Optimist results for sailors representing Asian and Oceanian national authorities. Event and sailor details remain under review."
       )
     ).toBeInTheDocument();
     expect(screen.queryByText(/Optimist · V1 \(Beta\) methodology/i)).not.toBeInTheDocument();

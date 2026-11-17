@@ -116,8 +116,8 @@ export default function AsianOptimistIndexMethodologyPage() {
             Asian &amp; Oceania Optimist Index: Methodology
           </h1>
           <p className="mt-3 text-base leading-7 text-sailcloth">
-            Updated {ASIAN_INDEX_BETA_DRAFT_DATE}. Governs the live Index published on SailorPath. Not an official
-            IODA or national federation ranking.
+            V1.1 (Beta), dated {ASIAN_INDEX_BETA_DRAFT_DATE}. The live calculation and source evidence remain under
+            review. This is not an official IODA or national federation ranking.
           </p>
         </div>
       </header>
@@ -142,18 +142,22 @@ export default function AsianOptimistIndexMethodologyPage() {
         <Section id="purpose" title="1. Overview & eligibility">
           <p>
             The <strong>SailorPath Asian and Oceania Optimist Index</strong> is an independent analytical index of
-            verified Optimist results. It is not an official IODA or national federation ranking and must not be used
+            published Optimist results. It is not an official IODA or national federation ranking and must not be used
             as a team-selection tool. Event organisers, juries, and national authorities remain the authority for
             official results.
           </p>
           <p id="eligibility">A sailor appears in the live Index when:</p>
           <Bullets
             items={[
-              "their verified MNA representation belongs to Asia or Oceania (listed below);",
-              "they are Optimist age-eligible (15 or under in the current calendar year); and",
+              "their recorded MNA representation belongs to Asia or Oceania (listed below);",
+              "their recorded birth year, when available, indicates Optimist age eligibility (15 or under in the current calendar year); and",
               "they have at least one verified, positive-point result in a designated event within the active window.",
             ]}
           />
+          <p>
+            The current beta can include sailors whose birth year is not recorded. Their age eligibility is not yet
+            confirmed. Representation, ages, fleet sizes and source evidence remain subject to review.
+          </p>
           <AsianIndexTable
             caption="Eligible Asian and Oceanian MNA codes by region"
             headers={["Region", "Eligible MNA codes"]}
@@ -176,10 +180,11 @@ export default function AsianOptimistIndexMethodologyPage() {
           <p>
             When an event runs a qualifying series before splitting into Gold and Silver fleets (for example{" "}
             <strong>Eastern Seaboard</strong> or <strong>R.O.C. Kosmos</strong>), the Index scores the{" "}
-            <strong>combined starter count</strong> (<code>N = Gold + Silver</code>) with Silver finishers placed
+            <strong>combined recorded fleet size</strong> (<code>N = Gold + Silver</code>) with Silver finishers placed
             continuously behind Gold (<code>Gold 1..G</code>, <code>Silver G+1..G+S</code>). Separate Boys and Girls
-            divisions (for example Europeans, ASAF Cup, and Taiwan President&apos;s Cup) are scored within their own
-            division starter count.
+            divisions (for example Europeans and Taiwan President&apos;s Cup) use their own division fleet size. The
+            2026 ASAF Cup boys&apos; and girls&apos; fleets do not meet the Grade 75 fleet-size gate and are excluded
+            from both Season Points and the separate Power Rating pool.
           </p>
         </Section>
 
@@ -191,7 +196,7 @@ export default function AsianOptimistIndexMethodologyPage() {
             items={[
               <>
                 <strong>Variables:</strong> <code>E</code> is the event grade (200, 150, 75, or 40), <code>N</code> is
-                the total fleet size, and <code>P</code> is the sailor&apos;s final overall place. First place earns{" "}
+                the fleet size used by the calculation, and <code>P</code> is the place used for the Index. First place earns{" "}
                 <code>E</code>; last place earns <code>E ÷ N</code>.
               </>,
               <>
@@ -199,10 +204,12 @@ export default function AsianOptimistIndexMethodologyPage() {
                 for display.
               </>,
               <>
-                <strong>Rolling 12-month window &amp; Championship anchor:</strong> Events remain active for 12
-                calendar months from their final race date. The current{" "}
-                <strong>Asian &amp; Oceanian Championship</strong> anchor (<code>2025 Asians</code>) is retained until
-                the next edition (<code>2026 Asians</code>, Colombo) publishes verified final results.
+                <strong>Rolling window &amp; Championship anchor:</strong> The intended policy is to retain an annual
+                event until its next matching edition concludes and its final results are verified, even if that takes
+                more than 12 months. The current calculation applies that rollover to the{" "}
+                <strong>Asian &amp; Oceanian Championship</strong> anchor, retaining <code>2025 Asians</code> until
+                the next edition (<code>2026 Asians</code>, Colombo) publishes verified final results. Other events
+                currently use a rolling 12-month window while broader annual rollover is implemented and reviewed.
               </>,
             ]}
           />
@@ -266,23 +273,25 @@ export default function AsianOptimistIndexMethodologyPage() {
         <Section id="power-rating" title="6. Power Rating (Elo), Form & U13 Next-Gen">
           <p>
             Alongside <strong>Season Points</strong>, the Index hub provides two complementary views calculated live
-            across <strong>all published Optimist regattas</strong> (with at least 3 completed races) in the rolling
-            12-month window:
+            across designated events and other published Optimist regattas with at least 3 completed races in the
+            rolling 12-month window. Events explicitly excluded in the Index register are omitted. The retained 2025
+            Asian &amp; Oceanian anchor is also included:
           </p>
 
           <Sub title="Power Rating (Elo)" />
           <p>
-            Measures head-to-head skill per start across borders, removing travel-volume bias and adjusting
-            automatically for field strength. Every sailor starts at <strong>1500</strong>, and events are processed
+            Estimates head-to-head performance across the available results, taking opponents&apos; ratings into
+            account. Participation opportunities and the coverage of results can still affect the rating. Every sailor starts at <strong>1500</strong>, and events are processed
             chronologically by end date:
           </p>
           <Bullets
             items={[
               <>
                 <strong>Symmetric regatta pool:</strong> Includes both designated Index events and all published
-                national/regional regattas across all countries. Split fleets (Gold + Silver + Bronze, Open +
-                Intermediate, Class A + B) sharing an event are combined into one ordered field so Gold finishers are
-                ranked ahead of Silver finishers.
+                national/regional regattas available in SailorPath across countries. Split fleets (Gold + Silver + Bronze, Open +
+                Intermediate, Class A + B) sharing an event can be combined into one ordered field, placing the higher
+                division ahead of the lower one. This is a calculation assumption and is not necessarily an official
+                combined classification.
               </>,
               <>
                 <strong>Pairwise update:</strong> For each event of <code>N</code> finishers, expected score{" "}
@@ -304,20 +313,21 @@ export default function AsianOptimistIndexMethodologyPage() {
             cooling form (<code>≤ −5</code>).
           </p>
 
-          <Sub title="U13 / Next-Gen (2014+)" />
+          <Sub title="U13 / Next-Gen" />
           <p>
-            Filters the same calibrated Elo pool to verified Asian and Oceanian sailors aged{" "}
-            <strong>13 or under in the current calendar year</strong> (for 2026: recorded birth year{" "}
-            <strong>2014 or later</strong>) and ranks them by <strong>Power Rating (Elo)</strong> descending. Sailors
-            without a recorded birth year are excluded until verified.
+            Filters Index sailors with a recorded birth year to those aged{" "}
+            <strong>under 13 in the current calendar year</strong> (for 2026: recorded birth year{" "}
+            <strong>2014 or later</strong>; for 2027: 2015 or later) and ranks them by <strong>Power Rating (Elo)</strong> descending. Sailors
+            without a recorded birth year are excluded from this view until a year is recorded.
           </p>
         </Section>
 
         <Section id="revisions" title="7. Governance & revision log">
           <p>
-            Standings, event registers, and Elo ratings recompute automatically from SailorPath&apos;s verified regatta
-            database. Corrections to official results or sailor birth years/MNAs update the live Index on the next
-            revalidation cycle.
+            Standings, event registers, and Elo ratings recompute from SailorPath&apos;s published regatta records.
+            Corrections to results or sailor birth years/MNAs can update the live Index on a subsequent revalidation
+            cycle. Event gates, starter counts, identity matching and source evidence remain under review; the Index
+            should not be used for team selection.
           </p>
           <AsianIndexTable
             caption="Methodology revision log"

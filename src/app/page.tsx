@@ -370,7 +370,7 @@ export default async function HomePage() {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-harbour">Independent index · V1.1 (Beta)</p>
             <h2 id="asian-index-heading" className="mt-2 text-2xl font-semibold text-harbour-shadow">Asian &amp; Oceania Optimist Index</h2>
             <p className="mt-3 text-sm leading-6 text-slate-soft">
-              Explore an independent analytical index built from verified results, featuring 4-tier Season Points, symmetric Power Rating (Elo), and U13 Next-Gen standings. It is not an official IODA or national-federation ranking.
+              Explore an independent beta index built from published results, featuring Season Points, Power Rating (Elo), and U13 standings. It is not an official IODA or national-federation ranking.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link href="/optimist/asian-index" className="sp-primary inline-flex min-h-10 items-center gap-2 px-4 text-sm font-semibold">

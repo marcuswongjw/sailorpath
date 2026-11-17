@@ -11,7 +11,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Regattas and results | SailorPath",
   description:
-    "Official schedule of Singapore youth sailing regattas, Asian Games & Perth selection trials, National Ranking Series dates, Notice of Race (NOR) downloads, and entry registration.",
+    "Find Singapore and international sailing regattas, dates, venues, and available Notices of Race and registration links.",
 };
 
 type CalendarPageProps = {

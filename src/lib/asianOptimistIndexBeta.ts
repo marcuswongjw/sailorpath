@@ -13,6 +13,11 @@ export const ASIAN_INDEX_NAME = "SailorPath Asian and Oceania Optimist Index";
 export const ASIAN_INDEX_PATH = "/optimist/asian-index";
 export const ASIAN_INDEX_METHODOLOGY_PATH = `${ASIAN_INDEX_PATH}/methodology`;
 
+/** Birth years for sailors who are under 13 at the end of the ranking year. */
+export function asianIndexUnder13BirthYear(rankingYear: number): number {
+  return rankingYear - 12;
+}
+
 export type AsianIndexGrade = 200 | 150 | 75 | 40;
 
 export const ASIAN_INDEX_GRADES: readonly {

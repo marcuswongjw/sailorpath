@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dedupeEventSheets } from "./publicCalendar";
+import { dedupeEventSheets, savedEventRegion } from "./publicCalendar";
 import type { RegattaRecord } from "@/lib/ranking";
 
 describe("dedupeEventSheets", () => {
@@ -55,5 +55,15 @@ describe("dedupeEventSheets", () => {
 
     const deduped = dedupeEventSheets([goldSheet, silverSheet]);
     expect(deduped).toHaveLength(2);
+  });
+});
+
+describe("saved event regions", () => {
+  it("does not label Australian events or unknown venues as Singapore", () => {
+    expect(savedEventRegion("Royal Brighton Yacht Club, Port Phillip Bay, Victoria")).toBe("International");
+    expect(savedEventRegion("Port Denison Sailing Club, Bowen, Queensland")).toBe("International");
+    expect(savedEventRegion("Royal Queensland Yacht Squadron, Manly, Queensland")).toBe("International");
+    expect(savedEventRegion(null)).toBeUndefined();
+    expect(savedEventRegion("Changi Sailing Club, Singapore")).toBe("Singapore");
   });
 });

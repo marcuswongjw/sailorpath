@@ -152,7 +152,7 @@ function downloadIcs(regatta: RegattaRecord) {
     .filter(Boolean)
     .join("\\n");
 
-  const location = (regatta.venue || "Singapore").replace(/[,;]/g, " ");
+  const location = (regatta.venue || "Location not specified").replace(/[,;]/g, " ");
 
   const icsContent = [
     "BEGIN:VCALENDAR",
@@ -255,7 +255,7 @@ export function RegattaCalendarClient({
       }
       // Region filter
       if (selectedRegion !== "all") {
-        const reg = r.region || "Singapore";
+        const reg = r.region || "";
         if (reg.toLowerCase() !== selectedRegion.toLowerCase()) {
           return false;
         }
@@ -570,7 +570,9 @@ export function RegattaCalendarClient({
                               ? "🌏 Asia"
                               : regatta.region === "International"
                               ? "🌐 International"
-                              : "🇸🇬 Singapore"}
+                              : regatta.region === "Singapore"
+                              ? "🇸🇬 Singapore"
+                              : regatta.region}
                           </span>
                         )}
 

@@ -455,7 +455,7 @@ export function Techno293View({
               Techno 293 One Design Class Overview
             </h2>
             <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed max-w-3xl">
-              The Bic Techno 293 is the World Sailing recognized international youth windsurfing class and former Youth Olympic Games equipment. Known for its strict one-design hull and progressive rig sizes, the class offers close tactical racing from light wind pumping up to 30 knots.
+              The Techno 293 is a World Sailing recognised international youth windsurfing class. It was used for the windsurfing events at the Dakar 2026 Youth Olympic Games. Its one-design board and age-appropriate rigs support racing across a range of conditions.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[var(--sp-cool-veil)]">

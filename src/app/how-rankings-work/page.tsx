@@ -137,8 +137,8 @@ export default function HowRankingsWorkPage() {
         <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
           The Asian &amp; Oceania Optimist Index scores age-eligible Asian and Oceanian
           sailors across four designated event tiers (Grade 200, 150, 75, and 40) in a
-          rolling 12-month window with selection caps, alongside a symmetric Power Rating
-          (Elo) across all published Optimist regattas, 90-day Form, and a U13 Next-Gen
+          rolling 12-month window and retained championship anchor, with selection caps. It also shows a Power Rating
+          (Elo) based on designated events and other published Optimist regattas, 90-day Form, and a U13 Next-Gen
           board. It is separate from the Singapore national series above.
         </p>
         <div className="flex flex-wrap gap-4 text-xs pt-2">

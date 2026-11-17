@@ -18,7 +18,7 @@ describe("X-15 class hub", () => {
     expect(html).toContain("Follow the X-15 class");
     expect(html).toContain("2026 championship");
     expect(html).not.toContain("2026 championship &amp; clinic guide");
-    expect(html).toContain("Upcoming X-15 events (2026–2027)");
+    expect(html).toContain("X-15 event calendar (2026–2027)");
     expect(html).toContain("Official X-15 equipment &amp; division setup");
     expect(html).toContain("What is X-15?");
 

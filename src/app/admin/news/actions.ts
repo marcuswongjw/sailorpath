@@ -9,7 +9,6 @@ import { requireSuperadmin } from "@/lib/auth";
 import {
   parseEditorialAction,
   parseEditorialFields,
-  SEEDED_EDITORIAL_DRAFTS,
   transitionEditorialStatus,
   type EditorialStatus,
 } from "@/lib/editorialWorkflow";
@@ -125,7 +124,7 @@ export async function updateEditorialArticle(formData: FormData) {
     const action = parseEditorialAction(formData.get("action"));
     const fields = parseEditorialFields(valuesFromForm(formData));
 
-    let [existing] = await withDatabaseRetry(
+    const [existing] = await withDatabaseRetry(
       () =>
         db
           .select()
@@ -134,36 +133,6 @@ export async function updateEditorialArticle(formData: FormData) {
           .limit(1),
       { label: "admin.news.lookup" }
     );
-    if (!existing) {
-      const seeded = SEEDED_EDITORIAL_DRAFTS.find((item) => item.id === id);
-      if (seeded) {
-        const [inserted] = await withDatabaseRetry(
-          () =>
-            db
-              .insert(newsArticles)
-              .values({
-                id: seeded.id,
-                slug: seeded.slug,
-                status: seeded.status,
-                kind: seeded.kind,
-                title: seeded.title,
-                summary: seeded.summary,
-                body: seeded.body,
-                authorDisplayName: seeded.authorDisplayName,
-                relatedClass: seeded.relatedClass,
-                relatedRegion: seeded.relatedRegion,
-                sourceUrl: seeded.sourceUrl,
-                sourceLabel: seeded.sourceLabel,
-                tags: seeded.tags,
-                updatedAt: seeded.createdAt,
-              })
-              .onConflictDoNothing()
-              .returning(),
-          { label: "admin.news.seed" }
-        );
-        existing = inserted;
-      }
-    }
     if (!existing) throw new Error("editorial article not found");
     const current = existing.status as EditorialStatus;
     const status = transitionEditorialStatus(current, action);
