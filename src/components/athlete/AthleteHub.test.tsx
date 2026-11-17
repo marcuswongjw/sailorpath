@@ -142,6 +142,12 @@ describe("AthleteHub logbook & reflections", () => {
     expect(new URL(window.location.href).searchParams.get("tab")).toBe("results");
     await user.click(screen.getByRole("button", { name: "Second Sailor" }));
     expect(screen.queryByRole("button", { name: "Close regatta form" })).not.toBeInTheDocument();
+    const openButton = screen.getByRole("button", { name: "Log regatta" });
+    await user.click(openButton);
+    expect(screen.getByRole("dialog", { name: "Log Regatta Score & Evidence" })).toBeInTheDocument();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(openButton).toHaveFocus();
     view.unmount();
     render(<AthleteHub athletes={athletes} currentSailorId="sailor-2" />);
     expect(screen.queryByRole("button", { name: "Close regatta form" })).not.toBeInTheDocument();

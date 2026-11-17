@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useEffect, useId, useState, useRef } from "react";
 import {
   X,
   UploadCloud,
@@ -848,11 +848,49 @@ export function RegattaEvidenceModal({
   initialResult,
   onSuccess,
 }: RegattaEvidenceModalProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  const titleId = useId();
+  useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
+  useEffect(() => {
+    if (!isOpen) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const focusable = () => Array.from(panel.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter((item) => item.offsetParent !== null);
+    (focusable()[0] ?? panel).focus();
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onCloseRef.current();
+      } else if (event.key === "Tab") {
+        const items = focusable();
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (!first || !last) { event.preventDefault(); panel.focus(); }
+        else if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+          event.preventDefault(); last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+          event.preventDefault(); first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", handleKey);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [isOpen]);
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center p-2 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-2xl overflow-hidden">
+      <div ref={panelRef} role="dialog" aria-modal="true" aria-labelledby={titleId} tabIndex={-1} className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b border-[var(--sp-cool-veil)] px-4 sm:px-6 py-3.5 sm:py-4 bg-[var(--sp-sailcloth)]">
           <div className="flex items-center gap-3">
@@ -860,7 +898,7 @@ export function RegattaEvidenceModal({
               <Trophy className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
+              <h3 id={titleId} className="text-base font-bold text-[var(--sp-harbour-shadow)]">
                 {initialResult ? "Edit Regatta Score & Evidence" : "Log Regatta Score & Evidence"}
               </h3>
               <p className="text-xs text-[var(--sp-slate-soft)]">
