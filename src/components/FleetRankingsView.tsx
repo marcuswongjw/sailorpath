@@ -336,14 +336,6 @@ export function FleetRankingsView({
 
   const carryCount = eventSlots.filter((s) => s.isCarryForward && s.regattaName).length;
   const currentCount = eventSlots.filter((s) => !s.isCarryForward && s.regattaName).length;
-  const latestResultDate = useMemo(() => {
-    const dates = ranked
-      .flatMap((s) => s.regattaScores || [])
-      .map((score) => String(score.regattaDate || ""))
-      .filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date))
-      .sort();
-    return dates.at(-1) || null;
-  }, [ranked]);
 
   const toggleExclude = (regattaId: string) => {
     if (!regattaId || regattaId.startsWith("slot-")) return;
@@ -439,7 +431,7 @@ export function FleetRankingsView({
               {fleet} Fleet Rankings
             </h1>
             <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
-              Best 3 of 5 · lower score is better · highlighted scores count · * DNS · † overseas
+              Best 3 of 5 · highlighted scores count · * DNS · † overseas
               {carryCount > 0 && (
                 <span className="ml-1.5 text-sky-400/90 font-semibold">
                   · {carryCount} carry-forward
@@ -528,13 +520,6 @@ export function FleetRankingsView({
           </div>
         </div>
       </div>
-
-      {!loading && ranked.length > 0 && (
-        <p className="text-[11px] font-medium text-slate-500">
-          {latestResultDate ? `Results through ${latestResultDate} · ` : ""}
-          Source: published regatta results reviewed before import
-        </p>
-      )}
 
       {(genderFilter !== "all" || squadFilter !== "all") && !loading && (
         <p className="text-[11px] text-harbour-shadow font-semibold no-print">
