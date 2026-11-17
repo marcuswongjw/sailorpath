@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { Pagination, pageNumber } from "./Pagination";
 import type { AsianOptimistIndexProvisionalEntry } from "@/lib/asianOptimistIndexScoring";
 import { asianIndexUnder13BirthYear } from "@/lib/asianOptimistIndexBeta";
+import type { AsianOptimistIndexQualifierSource } from "@/lib/asianOptimistIndexQualifiers";
 
 export type AsianOptimistIndexViewMode = "points" | "power" | "u13";
 
@@ -32,6 +32,53 @@ function rankClass(rank: number): string {
   return "bg-sailcloth text-harbour";
 }
 
+function ScoreBreakdown({ sailor, qualifiers, totalFleetSize, anchorName, anchorSlug }: {
+  sailor: AsianOptimistIndexProvisionalEntry;
+  qualifiers: readonly AsianOptimistIndexQualifierSource[];
+  totalFleetSize: number;
+  anchorName: string;
+  anchorSlug: string;
+}) {
+  const anchor = qualifiers.find((source) => source.sailorPathRegattaSlug === anchorSlug);
+  const results = [
+    ...(sailor.overallPlace != null && totalFleetSize > 0 ? [{
+      id: "anchor", name: anchorName, grade: 150, rank: sailor.overallPlace,
+      fleet: totalFleetSize, points: 150 * (totalFleetSize - sailor.overallPlace + 1) / totalFleetSize,
+      counted: sailor.countedResultsCount > sailor.scoredQualifiers.length,
+      slug: anchorSlug, officialUrl: anchor?.officialResultsUrl,
+    }] : []),
+    ...sailor.qualifierResults.map((result) => {
+      const source = qualifiers.find((item) => item.id === result.qualifier.id);
+      return {
+        id: result.qualifier.id, name: source?.name ?? result.qualifier.shortName,
+        grade: result.qualifier.grade, rank: result.rank, fleet: result.qualifier.fleetSize,
+        points: result.points, counted: result.counted,
+        slug: result.regattaSlug ?? source?.sailorPathRegattaSlug, officialUrl: source?.officialResultsUrl,
+      };
+    }),
+  ];
+  if (!results.length) return null;
+  return (
+    <details className="mt-2 text-left text-xs font-normal text-charcoal">
+      <summary className="cursor-pointer font-bold text-harbour">Score breakdown ({results.length})</summary>
+      <p className="mt-2 text-slate-soft">Points = grade × (fleet − place + 1) ÷ fleet. The total uses unrounded points.</p>
+      <ul className="mt-2 space-y-2">
+        {results.map((result) => (
+          <li key={result.id} className="rounded-lg border border-cool-veil bg-white p-2">
+            <p className="font-bold text-harbour">{result.name}</p>
+            <p>Grade {result.grade} · {result.rank} of {result.fleet} · {result.points.toFixed(2)} points · {result.counted ? "Counted" : "Not counted (selection limits)"}</p>
+            <p className="mt-1 flex flex-wrap gap-x-3">
+              {result.slug ? <Link prefetch={false} href={`/sg/optimist/regattas/${result.slug}`} className="font-bold underline">SailorPath results</Link> : null}
+              {result.officialUrl ? <a href={result.officialUrl} target="_blank" rel="noreferrer" className="font-bold underline">Source</a> : null}
+            </p>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-2 font-bold">Season Points: {sailor.provisionalScore.toFixed(2)}</p>
+    </details>
+  );
+}
+
 export function filterAsianOptimistIndexEntries(
   entries: AsianOptimistIndexProvisionalEntry[],
   country: string,
@@ -53,14 +100,22 @@ export function AsianOptimistIndexStandings({
   qualifierColumns,
   asOf,
   totalFleetSize,
+  qualifiers = [],
   filters = {},
 }: {
   entries: AsianOptimistIndexProvisionalEntry[];
   qualifierColumns: readonly QualifierColumn[];
   asOf: string;
   totalFleetSize: number;
+  qualifiers?: readonly AsianOptimistIndexQualifierSource[];
   filters?: AsianOptimistIndexFilterState;
 }) {
+  const anchorSource = qualifiers.find((event) =>
+    event.resultStatus === "verified" && /asian\s*(?:&|and)\s*oceanian championship/i.test(event.name)
+  );
+  const hasAnchor = entries.some((entry) => entry.overallPlace != null);
+  const anchorName = anchorSource?.name ?? "2025 Asians";
+  const anchorSlug = anchorSource?.sailorPathRegattaSlug ?? "2025-optimist-asian-oceanian-championship-overall";
   const viewMode: AsianOptimistIndexViewMode =
     filters.view === "power" || filters.view === "u13" ? filters.view : "points";
   const u13BirthYear = asianIndexUnder13BirthYear(new Date().getUTCFullYear());
@@ -280,28 +335,7 @@ export function AsianOptimistIndexStandings({
         ) : (
           pageEntries.map((sailor, idxInPage) => {
             const shownRank = displayRank(sailor, idxInPage);
-            const eventFinishes = [
-              ...(sailor.overallPlace != null
-                ? [
-                    {
-                      key: "asians-2025",
-                      name: "2025 Asians",
-                      grade: 150,
-                      finish: `${sailor.overallPlace}/${totalFleetSize}`,
-                      points: totalFleetSize > 0 ? (150 * (totalFleetSize - sailor.overallPlace + 1)) / totalFleetSize : null,
-                      counted: sailor.countedResultsCount > sailor.scoredQualifiers.length,
-                    },
-                  ]
-                : []),
-              ...sailor.qualifierResults.map((res) => ({
-                key: res.qualifier.id,
-                name: res.qualifier.shortName,
-                grade: res.qualifier.grade,
-                finish: `${res.rank}/${res.qualifier.fleetSize}`,
-                points: res.points,
-                counted: Boolean(res.counted),
-              })),
-            ];
+
 
             return (
               <article key={sailor.identityKey} className="px-4 py-3.5">
@@ -351,42 +385,7 @@ export function AsianOptimistIndexStandings({
                   </div>
                 </div>
 
-                {eventFinishes.length > 0 ? (
-                  <details className="sp-accordion group mt-2 pl-10">
-                    <summary className="inline-flex list-none [&::-webkit-details-marker]:hidden items-center gap-1 text-xs font-bold text-harbour cursor-pointer select-none py-1">
-                      <ChevronRight className="h-3.5 w-3.5 shrink-0 transition-transform group-open:rotate-90" aria-hidden="true" />
-                      Results ({eventFinishes.length})
-                    </summary>
-                    <div className="mt-2 grid grid-cols-2 gap-1.5">
-                      {eventFinishes.map((item) => (
-                        <div
-                          key={item.key}
-                          className={`rounded-lg border px-2.5 py-1.5 text-xs ${
-                            item.counted
-                              ? "border-harbour/25 bg-aqua-mist/40 text-harbour"
-                              : "border-cool-veil bg-sailcloth/60 text-slate-soft"
-                          }`}
-                        >
-                          <div className="flex items-center justify-between gap-1">
-                            <p className="truncate font-semibold">{item.name}</p>
-                            <span className="shrink-0 text-[10px] font-bold text-slate-soft">G{item.grade}</span>
-                          </div>
-                          <div className="mt-0.5 flex items-baseline justify-between gap-1">
-                            <p className="font-extrabold tabular-nums">
-                              {item.finish}
-                              {item.counted ? " ✓" : ""}
-                            </p>
-                            {item.points != null ? (
-                              <p className="text-[11px] font-semibold tabular-nums">
-                                {item.points.toFixed(1)} pts
-                              </p>
-                            ) : null}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </details>
-                ) : null}
+                <div className="pl-10"><ScoreBreakdown sailor={sailor} qualifiers={qualifiers} totalFleetSize={totalFleetSize} anchorName={anchorName} anchorSlug={anchorSlug} /></div>
               </article>
             );
           })
@@ -421,15 +420,15 @@ export function AsianOptimistIndexStandings({
                   Grade 200 · Worlds <span className="normal-case font-medium text-slate-soft">(max 1)</span>
                 </th>
               ) : null}
-              <th colSpan={1 + g150Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#edf2f4] px-4 py-2 text-center text-harbour">
+              {hasAnchor || g150Cols.length > 0 ? <th colSpan={(hasAnchor ? 1 : 0) + g150Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#edf2f4] px-4 py-2 text-center text-harbour">
                 Grade 150 · Championships <span className="normal-case font-medium text-slate-soft">(max 2)</span>
-              </th>
-              <th colSpan={g75Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#e6f3f4] px-4 py-2 text-center text-harbour">
+              </th> : null}
+              {g75Cols.length > 0 ? <th colSpan={g75Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-r border-cool-veil bg-[#e6f3f4] px-4 py-2 text-center text-harbour">
                 Grade 75 · Opens <span className="normal-case font-medium text-slate-soft">(max 1/host)</span>
-              </th>
-              <th colSpan={Math.max(g40Cols.length, 1)} className="sticky top-0 z-20 whitespace-nowrap border-b border-cool-veil bg-[#faf3e6] px-4 py-2 text-center text-harbour">
+              </th> : null}
+              {g40Cols.length > 0 ? <th colSpan={g40Cols.length} className="sticky top-0 z-20 whitespace-nowrap border-b border-cool-veil bg-[#faf3e6] px-4 py-2 text-center text-harbour">
                 Grade 40 · Nationals <span className="normal-case font-medium text-slate-soft">(max 1/country/yr)</span>
-              </th>
+              </th> : null}
             </tr>
             <tr className="font-bold">
               <th scope="col" className="sticky left-0 top-[34px] z-30 w-14 min-w-14 max-w-14 border-b-2 border-cool-veil bg-sailcloth px-3 py-2.5 font-extrabold text-harbour">#</th>
@@ -460,11 +459,11 @@ export function AsianOptimistIndexStandings({
                   )}
                 </th>
               ))}
-              <th scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#f0f4f4] px-2.5 py-2.5 text-center font-extrabold text-harbour">
-                <Link href="/sg/optimist/regattas/2025-optimist-asian-oceanian-championship-overall" className="hover:text-racing-deep hover:underline">
-                  2025 Asians
-                </Link>
-              </th>
+              {hasAnchor ? (
+                <th scope="col" className="sticky top-[34px] z-20 min-w-[82px] whitespace-nowrap border-b-2 border-cool-veil bg-[#f0f4f4] px-2.5 py-2.5 text-center font-extrabold text-harbour">
+                  <Link href={`/sg/optimist/regattas/${anchorSlug}`} className="hover:text-racing-deep hover:underline">{anchorName}</Link>
+                </th>
+              ) : null}
               {nonG200Cols.map((qualifier) => {
                 const isG150 = qualifier.grade === 150;
                 const isG75 = qualifier.grade === 75;
@@ -506,6 +505,7 @@ export function AsianOptimistIndexStandings({
                   <div className="mt-0.5 text-xs text-slate-soft">
                     {sailor.nationality} · {sailor.sailNumber}
                   </div>
+                  <ScoreBreakdown sailor={sailor} qualifiers={qualifiers} totalFleetSize={totalFleetSize} anchorName={anchorName} anchorSlug={anchorSlug} />
                   {sailor.profileReview ? (
                     <span
                       title={sailor.profileReview.reason}
@@ -576,8 +576,9 @@ export function AsianOptimistIndexStandings({
                     </td>
                   );
                 })}
+                {hasAnchor ? (
                 <td
-                  title={sailor.overallPlace != null ? `${sailor.displayName} · 2025 Asians: ${sailor.overallPlace} of ${totalFleetSize}${anchorCounted ? " · Counted" : ""}` : "No finish recorded"}
+                  title={sailor.overallPlace != null ? `${sailor.displayName} · ${anchorName}: ${sailor.overallPlace} of ${totalFleetSize}${anchorCounted ? " · Counted" : ""}` : "No finish recorded"}
                   className="border-b border-cool-veil bg-harbour/[0.02] px-2.5 py-3 text-center text-xs tabular-nums"
                 >
                   {sailor.overallPlace != null ? (
@@ -588,6 +589,7 @@ export function AsianOptimistIndexStandings({
                     <span className="text-slate-soft/50">—</span>
                   )}
                 </td>
+                ) : null}
                 {nonG200Cols.map((qualifier) => {
                   const isG150 = qualifier.grade === 150;
                   const isG75 = qualifier.grade === 75;
@@ -620,7 +622,7 @@ export function AsianOptimistIndexStandings({
             })}
             {filteredEntries.length === 0 ? (
               <tr>
-                <td colSpan={7 + qualifierColumns.length} className="border-b border-cool-veil px-4 py-10 text-center text-sm font-semibold text-slate-soft">
+                <td colSpan={8 + qualifierColumns.length + (hasAnchor ? 1 : 0)} className="border-b border-cool-veil px-4 py-10 text-center text-sm font-semibold text-slate-soft">
                   No sailors match the selected filters.
                 </td>
               </tr>

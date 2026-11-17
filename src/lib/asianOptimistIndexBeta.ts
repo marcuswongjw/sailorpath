@@ -301,8 +301,8 @@ export const ASIAN_INDEX_PROPOSED_REGISTER: readonly AsianIndexRegisterEntry[] =
     starters: 58,
     verifiedMnas: 1,
     races: 3,
-    check: "meets",
-    note: "Meets Grade 40 criteria with 58 starters. Scored for Asian & Oceania Index.",
+    check: "unverified",
+    note: "The recorded scorecard has 58 entries and 3 races, below the 4-race Grade 40 minimum. Excluded from Season Points pending an authoritative final result.",
   },
   {
     id: "australian-optimist-championship-2026",

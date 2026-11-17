@@ -34,10 +34,14 @@ import {
 } from "@/lib/asianOptimistIndexScoring";
 import type { QualifierColumn } from "@/components/AsianOptimistIndexStandings";
 import { selectPowerPool } from "@/lib/asianOptimistIndexPool";
+import { annualSeriesKey, meetsRecordedIndexGates, selectActiveIndexEvents } from "@/lib/asianOptimistIndexRollover";
 
 const ASIAN_OCEANIA_MNAS = new Set<string>(
   ASIAN_INDEX_MNA_REGIONS.flatMap((r) => r.codes)
 );
+const FALLBACK_EXCLUDED_THAILAND = "youth-thailand-national-sailing-championship-2026-optimist";
+const fallbackQualifiers = ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.filter((event) => event.id !== FALLBACK_EXCLUDED_THAILAND);
+const fallbackColumns = ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS.filter((event) => event.id !== FALLBACK_EXCLUDED_THAILAND);
 
 export type LiveAsianOptimistIndexData = {
   entries: AsianOptimistIndexProvisionalEntry[];
@@ -79,14 +83,6 @@ function birthYearFromSailor(
   return null;
 }
 
-function isWithinRolling12Months(endDateStr: string, refDate: Date): boolean {
-  const end = new Date(`${endDateStr}T00:00:00Z`);
-  if (Number.isNaN(end.getTime())) return false;
-  const cutoff = new Date(refDate);
-  cutoff.setUTCFullYear(cutoff.getUTCFullYear() - 1);
-  return end >= cutoff;
-}
-
 function formatAsOfDate(date: Date): string {
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
@@ -113,30 +109,33 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
   if (events.length === 0) {
     return {
       entries: createAsianOptimistIndexProvisionalEntries(),
-      qualifiers: [...ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS],
-      qualifierColumns: [...ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS],
+      qualifiers: [...fallbackQualifiers],
+      qualifierColumns: [...fallbackColumns],
       asOf: ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf,
       totalFleetSize: 170,
     };
   }
 
-  const hasVerifiedNewAnchor = events.some(
-    (e) =>
-      e.id !== "2025-asian-oceanian" &&
-      e.grade === 150 &&
-      e.shortName?.includes("Asians") &&
-      e.resultStatus === "verified"
-  );
-
-  const activeEvents = events.filter((e) => {
-    if (e.resultStatus === "scheduled") return true;
-    if (e.grade == null) return false;
-    if (e.indexRole === "championship_anchor" && !hasVerifiedNewAnchor) return true;
-    return isWithinRolling12Months(e.endDate, now);
-  });
+  // A successor must actually have its linked published scorecards before it
+  // can replace an older edition, even if its register status says verified.
+  const registeredSlugs = [...new Set(events.flatMap((event) => event.regattaSlugs))];
+  const publishedSlugs = registeredSlugs.length ? await withDatabaseRetry(() =>
+    db.select({ id: regattas.id, slug: regattas.slug }).from(regattas).where(and(
+      inArray(regattas.slug, registeredSlugs), eq(regattas.status, "published")
+    ))
+  ) : [];
+  const populatedSheets = publishedSlugs.length ? await withDatabaseRetry(() =>
+    db.selectDistinct({ id: regattaResults.regattaId }).from(regattaResults)
+      .where(inArray(regattaResults.regattaId, publishedSlugs.map((row) => row.id)))
+  ) : [];
+  const populatedIds = new Set(populatedSheets.map((row) => row.id));
+  const publishedSlugSet = new Set(publishedSlugs.filter((row) => populatedIds.has(row.id)).map((row) => row.slug));
+  const availableEvents = events.filter((event) => event.resultStatus === "scheduled" ||
+    (event.regattaSlugs.length > 0 && event.regattaSlugs.every((slug) => publishedSlugSet.has(slug))));
+  const activeEvents = selectActiveIndexEvents(availableEvents, now);
 
   const scoredEvents = activeEvents.filter(
-    (e) => e.resultStatus === "verified" && e.grade != null && e.regattaSlugs.length > 0
+    (e) => e.resultStatus === "verified" && e.grade != null && e.regattaSlugs.length > 0 && meetsRecordedIndexGates(e)
   );
 
   const allSlugs = [...new Set(scoredEvents.flatMap((e) => e.regattaSlugs))];
@@ -454,7 +453,8 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     );
     if (eventStarters < 1) continue;
 
-    if (ev.indexRole === "championship_anchor") {
+    const isAnchor = annualSeriesKey(ev) === "asian-oceanian:overall";
+    if (isAnchor) {
       anchorFleetSize = eventStarters;
     } else {
       activeColumns.push({
@@ -510,14 +510,14 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
           sailorMap.set(row.sailorId, acc);
         }
 
-        if (ev.indexRole === "championship_anchor") {
+        if (isAnchor) {
           acc.anchorPlace = effectiveRank;
           acc.anchorTotalPoints = row.totalScore;
           acc.anchorNetPoints = row.nettScore;
         }
 
         const qualifierScore: AsianOptimistIndexQualifierScore | undefined =
-          ev.indexRole === "championship_anchor"
+          isAnchor
             ? undefined
             : {
                 qualifier: {
@@ -533,6 +533,7 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
                   scoreCap: grade,
                 },
                 rank: effectiveRank,
+                regattaSlug: reg.slug,
                 points,
                 rawScore: points,
                 cappedScore: points,
@@ -659,7 +660,8 @@ async function computeLiveAsianOptimistIndexData(): Promise<LiveAsianOptimistInd
     }
   );
 
-  const qualifiers: AsianOptimistIndexQualifierSource[] = [...activeEvents]
+  const qualifiers: AsianOptimistIndexQualifierSource[] = activeEvents
+    .filter((event) => event.resultStatus === "scheduled" || scoredEvents.includes(event))
     .sort((a, b) => (b.grade ?? 0) - (a.grade ?? 0) || a.startDate.localeCompare(b.startDate))
     .map((ev) => ({
       id: ev.id,
@@ -704,8 +706,8 @@ export async function getLiveAsianOptimistIndexData(): Promise<LiveAsianOptimist
   } catch {
     return {
       entries: createAsianOptimistIndexProvisionalEntries(),
-      qualifiers: [...ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS],
-      qualifierColumns: [...ASIAN_OPTIMIST_INDEX_DISPLAY_COLUMNS],
+      qualifiers: [...fallbackQualifiers],
+      qualifierColumns: [...fallbackColumns],
       asOf: ASIAN_OPTIMIST_INDEX_PROVISIONAL_RELEASE.asOf,
       totalFleetSize: 170,
     };

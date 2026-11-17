@@ -7,9 +7,15 @@ import {
 } from "@/lib/asianOptimistIndexScoring";
 import { createAsianOptimistIndexBaseline } from "@/lib/asianOptimistIndex";
 
+// The historical fixture deliberately includes the previously scored Thailand
+// result so its original calculations remain regression-tested.
+const historicalEntries = () => createAsianOptimistIndexProvisionalEntries(
+  createAsianOptimistIndexBaseline(), ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS
+);
+
 describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => {
   it("connects Ilzani’s confirmed identity to both Malaysian finishes and scores only the strongest country result", () => {
-    const entries = createAsianOptimistIndexProvisionalEntries();
+    const entries = historicalEntries();
     const ilzani = entries.find((entry) => entry.name === "Khairulilzani Afendy")!;
     // Lyric Li Yuxuan is one Singapore entry at rank 14, so later ranks move down one.
     expect(ilzani).toMatchObject({
@@ -30,7 +36,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
   });
 
   it("scores the 161 age-eligible Asian and Oceania sailors under the V1 (Beta) methodology", () => {
-    const entries = createAsianOptimistIndexProvisionalEntries();
+    const entries = historicalEntries();
 
     expect(entries).toHaveLength(161);
 
@@ -149,7 +155,7 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
   });
 
   it("backfills and scores Elijah Ong across all his verified regional and championship events", () => {
-    const entries = createAsianOptimistIndexProvisionalEntries();
+    const entries = historicalEntries();
     const elijah = entries.find((entry) => entry.name === "Elijah Ong")!;
 
     expect(elijah).toMatchObject({
@@ -179,6 +185,13 @@ describe("SailorPath Asian and Oceania Optimist Index V1 (Beta) scoring", () => 
         `${result.nationality}:${result.name.toLowerCase().replace(/[^a-z0-9]/g, "")}`
       );
     }
+  });
+
+  it("excludes the three-race Thailand result from current fallback standings", () => {
+    const entries = createAsianOptimistIndexProvisionalEntries();
+    expect(entries.flatMap((entry) => entry.qualifierResults).some(
+      (score) => score.qualifier.id === "youth-thailand-national-sailing-championship-2026-optimist"
+    )).toBe(false);
   });
 
   it("keeps the release configuration versioned as V1 (Beta)", () => {

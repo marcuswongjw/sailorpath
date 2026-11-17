@@ -51,7 +51,7 @@ export function AsianOptimistIndexBetaSummary() {
             </div>
             <div className="rounded-xl bg-sailcloth p-3.5">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Rolling window</p>
-              <p className="mt-1">Best 5 eligible results. The 2025 Asian &amp; Oceanian Championship is retained until its next verified edition; broader annual rollover is under review.</p>
+              <p className="mt-1">Best 5 eligible results. Recognised annual events remain until the next verified edition with published scorecards; other events use a 12-month window.</p>
             </div>
             <div className="rounded-xl bg-sailcloth p-3.5">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-soft">Eligibility</p>

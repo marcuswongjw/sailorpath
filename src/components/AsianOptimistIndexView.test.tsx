@@ -27,4 +27,18 @@ describe("AsianOptimistIndexView", () => {
     expect(container.querySelector("table")).not.toBeNull();
     expect(container.querySelector("summary h1, summary h2, summary h3")).toBeNull();
   });
+
+  it("shows the score calculation, selection status and the sailor's actual split-fleet scorecard", () => {
+    const entry = createAsianOptimistIndexProvisionalEntries()[0];
+    const result = entry.qualifierResults[0];
+    const source = ASIAN_OPTIMIST_INDEX_2026_QUALIFIERS.find((item) => item.id === result.qualifier.id);
+    const sailor = { ...entry, qualifierResults: [{ ...result, regattaSlug: "test-silver-scorecard" }] };
+    render(<AsianOptimistIndexView entries={[sailor]} qualifiers={source ? [source] : []} />);
+    expect(screen.getAllByText(/Score breakdown/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Points = grade/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Season Points:/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "SailorPath results", hidden: true }).some(
+      (link) => link.getAttribute("href") === "/sg/optimist/regattas/test-silver-scorecard"
+    )).toBe(true);
+  });
 });

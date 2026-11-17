@@ -107,14 +107,15 @@ export function AsianOptimistIndexView({
           qualifierColumns={qualifierColumns}
           asOf={asOf}
           totalFleetSize={totalFleetSize}
+          qualifiers={qualifiers}
           filters={filters}
         />
       </section>
 
-      <section id="qualifiers" aria-label="2026 qualifying events" className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
+      <section id="qualifiers" aria-label="Qualifying events" className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl border border-cool-veil bg-warm-white shadow-sm">
           <div className="border-b border-cool-veil px-4 py-4 sm:px-6">
-            <h2 className="text-lg font-extrabold text-harbour">2026 qualifying events</h2>
+            <h2 className="text-lg font-extrabold text-harbour">Qualifying events</h2>
           </div>
           <div className="divide-y divide-cool-veil">
             {qualifiers.map((qualifier) => (

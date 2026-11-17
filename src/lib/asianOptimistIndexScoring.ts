@@ -1416,6 +1416,8 @@ export const ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS = [
 
 export type AsianOptimistIndexQualifierScore = {
   qualifier: AsianOptimistIndexScoredQualifier;
+  /** Scorecard containing this sailor's result (including split fleets). */
+  regattaSlug?: string;
   rank: number;
   points: number;
   counted: boolean;
@@ -1571,7 +1573,9 @@ export function selectOptimalResults(results: CandidateScoredResult[]): Candidat
 export function createAsianOptimistIndexProvisionalEntries(
   baseline: AsianOptimistIndexEntry[] = createAsianOptimistIndexBaseline(),
   qualifierInputs: readonly AsianOptimistIndexQualifierResultInput[] =
-    ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS
+    ASIAN_OPTIMIST_INDEX_PROVISIONAL_QUALIFIER_RESULTS.filter(
+      (result) => result.qualifierId !== "youth-thailand-national-sailing-championship-2026-optimist"
+    )
 ): AsianOptimistIndexProvisionalEntry[] {
   const qualifiersBySailor = new Map<string, AsianOptimistIndexQualifierScore[]>();
 
