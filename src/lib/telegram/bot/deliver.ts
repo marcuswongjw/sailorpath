@@ -13,17 +13,22 @@ import {
 
 export const TELEGRAM_BROADCAST_BATCH = 15;
 
+export type TelegramReplyMarkup =
+  | { keyboard: { text: string }[][]; resize_keyboard: boolean; input_field_placeholder?: string }
+  | { inline_keyboard: { text: string; url: string }[][] };
+
 export async function postTelegramMessage(input: {
   token: string;
   chatId: string;
   html: string;
   buttonLabel?: string | null;
   buttonUrl?: string | null;
+  replyMarkup?: TelegramReplyMarkup;
 }): Promise<{ ok: true } | { ok: false; blocked: boolean; description: string }> {
-  const replyMarkup =
+  const replyMarkup = input.replyMarkup ?? (
     input.buttonLabel && input.buttonUrl
       ? { inline_keyboard: [[{ text: input.buttonLabel, url: input.buttonUrl }]] }
-      : undefined;
+      : undefined);
   const response = await fetch(`https://api.telegram.org/bot${input.token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -8,6 +8,7 @@ vi.mock("@/lib/search", () => ({ unifiedSearch: mocks.search }));
 vi.mock("@/lib/rateLimit", () => ({ rateLimitAsync: mocks.limit }));
 
 import { POST } from "./route";
+import { menuLabels } from "@/lib/telegram/bot/discovery";
 
 const request = (text: string, chatType = "private", secret = "secret") => new Request("https://sailorpath.com/api/telegram/webhook", {
   method: "POST",
@@ -33,6 +34,26 @@ describe("Telegram webhook discovery", () => {
     expect(mocks.subscribe).not.toHaveBeenCalled();
   });
 
+  it("shows a reusable menu and handles each button without subscribing", async () => {
+    await POST(request("/menu"));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ replyMarkup: expect.objectContaining({ keyboard: expect.any(Array), resize_keyboard: true }) }));
+    await POST(request(menuLabels.find));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ html: expect.stringContaining("Type a sailor's name") }));
+    await POST(request(menuLabels.rankings));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ replyMarkup: expect.objectContaining({ inline_keyboard: expect.any(Array) }) }));
+    await POST(request(menuLabels.regattas));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ html: expect.stringContaining("Regattas"), replyMarkup: expect.objectContaining({ inline_keyboard: expect.any(Array) }) }));
+    await POST(request(menuLabels.claim));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ replyMarkup: { inline_keyboard: [[expect.objectContaining({ url: "https://sailorpath.com/claim-profile" })]] } }));
+    await POST(request(menuLabels.settings));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ replyMarkup: { inline_keyboard: [[expect.objectContaining({ url: "https://sailorpath.com/account" })]] } }));
+    await POST(request(menuLabels.help));
+    expect(mocks.send).toHaveBeenLastCalledWith(expect.objectContaining({ replyMarkup: expect.objectContaining({ keyboard: expect.any(Array) }) }));
+    expect(mocks.search).not.toHaveBeenCalled();
+    expect(mocks.subscribe).not.toHaveBeenCalled();
+    expect(mocks.unsubscribe).not.toHaveBeenCalled();
+  });
+
   it("keeps account linking and unsubscribe working", async () => {
     mocks.consume.mockResolvedValue("user-1");
     mocks.subscribe.mockResolvedValue("subscribed");
@@ -45,6 +66,7 @@ describe("Telegram webhook discovery", () => {
 
   it("ignores groups and unauthenticated webhooks", async () => {
     await POST(request("/start token123", "group"));
+    await POST(request(menuLabels.rankings, "group"));
     expect((await POST(request("/start", "private", "wrong"))).status).toBe(401);
     expect(mocks.send).not.toHaveBeenCalled();
     expect(mocks.consume).not.toHaveBeenCalled();

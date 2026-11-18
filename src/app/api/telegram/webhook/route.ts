@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { isTelegramBotConfigured, readTelegramBotConfig } from "@/lib/telegram/bot/config";
 import { telegramWebhookAuthorized } from "@/lib/telegram/bot/message";
-import { postTelegramMessage } from "@/lib/telegram/bot/deliver";
+import { postTelegramMessage, type TelegramReplyMarkup } from "@/lib/telegram/bot/deliver";
 import { parseTelegramUpdate } from "@/lib/telegram/bot/update";
-import { rankingsMessage, regattasMessage, sailorSearchMessage, welcomeMessage } from "@/lib/telegram/bot/discovery";
+import { claimKeyboard, menuKeyboard, rankingsKeyboard, rankingsMessage, regattasKeyboard, regattasMessage, sailorSearchMessage, settingsKeyboard, welcomeMessage } from "@/lib/telegram/bot/discovery";
 import { unifiedSearch } from "@/lib/search";
 import { rateLimitAsync } from "@/lib/rateLimit";
 import {
@@ -33,12 +33,14 @@ export async function POST(request: Request) {
         token,
         chatId: event.chatId,
         html: "SailorPath updates are off. You can turn them on again from Account settings.",
+        replyMarkup: menuKeyboard,
       });
     }
     return NextResponse.json({ ok: true });
   }
-  if (event.type === "welcome" || event.type === "rankings" || event.type === "regattas" || event.type === "find") {
+  if (event.type === "welcome" || event.type === "rankings" || event.type === "regattas" || event.type === "find" || event.type === "claim" || event.type === "settings") {
     let html: string;
+    let replyMarkup: TelegramReplyMarkup | undefined;
     if (event.type === "find") {
       if (!event.query || event.query.length > 100) {
         html = sailorSearchMessage(event.query, []);
@@ -52,10 +54,23 @@ export async function POST(request: Request) {
           html = "Sailor search is temporarily unavailable. Please try again later.";
         }
       }
+    } else if (event.type === "rankings") {
+      html = rankingsMessage;
+      replyMarkup = rankingsKeyboard;
+    } else if (event.type === "regattas") {
+      html = regattasMessage;
+      replyMarkup = regattasKeyboard;
+    } else if (event.type === "claim") {
+      html = "Claim your sailor profile on SailorPath to connect it to your account.";
+      replyMarkup = claimKeyboard;
+    } else if (event.type === "settings") {
+      html = "Manage Telegram updates in your SailorPath account. To turn updates off here, send /stop.";
+      replyMarkup = settingsKeyboard;
     } else {
-      html = event.type === "welcome" ? welcomeMessage : event.type === "rankings" ? rankingsMessage : regattasMessage;
+      html = welcomeMessage;
+      replyMarkup = menuKeyboard;
     }
-    await postTelegramMessage({ token, chatId: event.chatId, html });
+    await postTelegramMessage({ token, chatId: event.chatId, html, replyMarkup });
     return NextResponse.json({ ok: true });
   }
   if (event.type !== "start") return NextResponse.json({ ok: true });
@@ -82,6 +97,7 @@ export async function POST(request: Request) {
       result === "subscribed"
         ? "SailorPath updates are on. Send /stop any time to turn them off."
         : "This Telegram chat is already connected to another SailorPath account.",
+    replyMarkup: menuKeyboard,
   });
   return NextResponse.json({ ok: true });
 }
