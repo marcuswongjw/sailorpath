@@ -1,53 +1,37 @@
 export type TelegramBotEvent =
-  | {
-      type: "start";
-      token: string;
-      chatId: string;
-      telegramUserId: string;
-      username: string | null;
-      displayName: string | null;
-    }
-  | { type: "stop"; chatId: string }
-  | { type: "blocked"; chatId: string }
+  | { type: "start"; token: string; chatId: string; telegramUserId: string; username: string | null; displayName: string | null }
+  | { type: "welcome" | "rankings" | "regattas" | "stop" | "blocked"; chatId: string }
+  | { type: "find"; chatId: string; query: string }
   | { type: "ignore" };
 
 export function parseTelegramUpdate(update: unknown): TelegramBotEvent {
   if (!update || typeof update !== "object") return { type: "ignore" };
   const body = update as {
-    message?: {
-      text?: string;
-      chat?: { id?: number | string };
-      from?: { id?: number | string; username?: string; first_name?: string; last_name?: string };
-    };
-    my_chat_member?: {
-      chat?: { id?: number | string };
-      new_chat_member?: { status?: string };
-    };
+    message?: { text?: string; chat?: { id?: number | string; type?: string }; from?: { id?: number | string; is_bot?: boolean; username?: string; first_name?: string; last_name?: string } };
+    my_chat_member?: { chat?: { id?: number | string; type?: string }; new_chat_member?: { status?: string } };
   };
   const member = body.my_chat_member;
-  if (member?.chat?.id !== undefined) {
-    const status = member.new_chat_member?.status;
-    if (status === "kicked" || status === "left") {
-      return { type: "blocked", chatId: String(member.chat.id) };
-    }
+  if (member?.chat?.type === "private" && member.chat.id !== undefined && ["kicked", "left"].includes(member.new_chat_member?.status || "")) {
+    return { type: "blocked", chatId: String(member.chat.id) };
   }
   const message = body.message;
-  const chatId = message?.chat?.id;
-  if (chatId === undefined || typeof message?.text !== "string") return { type: "ignore" };
+  if (message?.chat?.type !== "private" || message.chat.id === undefined || message.from?.is_bot || typeof message.text !== "string") return { type: "ignore" };
+  const chatId = String(message.chat.id);
   const text = message.text.trim();
-  if (/^\/stop(?:@\w+)?$/i.test(text)) return { type: "stop", chatId: String(chatId) };
-  const start = /^\/start(?:@\w+)?(?:\s+(\S+))?/i.exec(text);
-  if (!start) return { type: "ignore" };
-  const token = start[1]?.trim() ?? "";
-  if (!token || token.length > 64) return { type: "ignore" };
-  const from = message.from;
-  const displayName = [from?.first_name, from?.last_name].filter(Boolean).join(" ").trim();
-  return {
-    type: "start",
-    token,
-    chatId: String(chatId),
-    telegramUserId: from?.id !== undefined ? String(from.id) : String(chatId),
-    username: from?.username?.replace(/^@/, "") || null,
-    displayName: displayName || null,
-  };
+  if (!text) return { type: "ignore" };
+  const command = /^\/(\w+)(?:@\w+)?(?:\s+([\s\S]*))?$/i.exec(text);
+  if (text.startsWith("/") && !command) return { type: "ignore" };
+  if (command) {
+    const name = command[1].toLowerCase();
+    const argument = (command[2] || "").trim();
+    if (name === "stop") return { type: "stop", chatId };
+    if (name === "help" || (name === "start" && !argument)) return { type: "welcome", chatId };
+    if (name === "rankings" || name === "regattas") return { type: name, chatId };
+    if (name === "find") return { type: "find", chatId, query: argument };
+    if (name !== "start") return { type: "ignore" };
+    const from = message.from;
+    const displayName = [from?.first_name, from?.last_name].filter(Boolean).join(" ").trim();
+    return { type: "start", token: argument, chatId, telegramUserId: from?.id !== undefined ? String(from.id) : chatId, username: from?.username?.replace(/^@/, "") || null, displayName: displayName || null };
+  }
+  return { type: "find", chatId, query: text };
 }

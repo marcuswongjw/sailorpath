@@ -3,6 +3,9 @@ import { isTelegramBotConfigured, readTelegramBotConfig } from "@/lib/telegram/b
 import { telegramWebhookAuthorized } from "@/lib/telegram/bot/message";
 import { postTelegramMessage } from "@/lib/telegram/bot/deliver";
 import { parseTelegramUpdate } from "@/lib/telegram/bot/update";
+import { rankingsMessage, regattasMessage, sailorSearchMessage, welcomeMessage } from "@/lib/telegram/bot/discovery";
+import { unifiedSearch } from "@/lib/search";
+import { rateLimitAsync } from "@/lib/rateLimit";
 import {
   consumeTelegramStartToken,
   subscribeChat,
@@ -34,7 +37,29 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({ ok: true });
   }
-  const userId = await consumeTelegramStartToken(event.token);
+  if (event.type === "welcome" || event.type === "rankings" || event.type === "regattas" || event.type === "find") {
+    let html: string;
+    if (event.type === "find") {
+      if (!event.query || event.query.length > 100) {
+        html = sailorSearchMessage(event.query, []);
+      } else if (!(await rateLimitAsync(`telegram-search:${event.chatId}`, 20, 60_000)).ok) {
+        html = "Please wait a little before searching again.";
+      } else {
+        try {
+          const results = await unifiedSearch(event.query, { type: "sailors", limit: 5 });
+          html = sailorSearchMessage(event.query, results.sailors);
+        } catch {
+          html = "Sailor search is temporarily unavailable. Please try again later.";
+        }
+      }
+    } else {
+      html = event.type === "welcome" ? welcomeMessage : event.type === "rankings" ? rankingsMessage : regattasMessage;
+    }
+    await postTelegramMessage({ token, chatId: event.chatId, html });
+    return NextResponse.json({ ok: true });
+  }
+  if (event.type !== "start") return NextResponse.json({ ok: true });
+  const userId = event.token.length <= 64 && !/\s/.test(event.token) ? await consumeTelegramStartToken(event.token) : null;
   if (!userId) {
     await postTelegramMessage({
       token,
