@@ -16,6 +16,7 @@ import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { getCachedFleetRankings, getCachedPreviousFleetRankings } from "@/lib/queries";
 import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import { coachWorkspaceResultsCondition } from "@/lib/workspaceVisibility";
+import { createSquadClaimToken } from "@/lib/squadClaimToken";
 
 export type CoachSquadMember = {
   id: string;
@@ -58,7 +59,7 @@ export type CoachSquadMember = {
 };
 
 export type CoachSquadDashboard = {
-  squad: { id: string; name: string } | null;
+  squad: { id: string; name: string; claimShareToken?: string } | null;
   members: CoachSquadMember[];
   following: CoachSquadMember[];
   updatedThrough: string | null;
@@ -313,7 +314,12 @@ export async function getCoachSquadDashboard(
     };
 
   return {
-    squad,
+    squad: squad
+      ? {
+          ...squad,
+          claimShareToken: createSquadClaimToken(squad.id),
+        }
+      : null,
     period,
     updatedThrough: [...gold, ...silver].flatMap((sailor) => sailor.regattaScores.map((score) => score.regattaDate || "")).sort().at(-1) || null,
     actionReviews: actionReviewRows,

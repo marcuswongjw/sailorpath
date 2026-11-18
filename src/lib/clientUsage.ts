@@ -131,6 +131,22 @@ export type ClientUsageMeta = Record<
 >;
 
 /**
+ * Extract a sanitized `ref` attribution tag from a path or URL (e.g. `?ref=pattaya-2026`).
+ */
+export function extractRefFromUrl(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  try {
+    const queryIndex = raw.indexOf("?");
+    if (queryIndex < 0) return null;
+    const params = new URLSearchParams(raw.slice(queryIndex + 1));
+    const val = params.get("ref")?.trim();
+    return val ? val.slice(0, 80) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Fire-and-forget usage event (beacon preferred). Never throws / blocks UX.
  */
 export function trackClientUsage(

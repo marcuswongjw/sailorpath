@@ -323,6 +323,7 @@ async function DbSlicePanel({
           totalFleetSize={regatta.totalFleetSize}
           raceCount={regatta.raceCount}
           accent={accent}
+          eventRef={regatta.slug}
           pendingIdentityReview={regatta.scheduleNotes?.includes("awaiting identity review")}
           importNotice={regatta.scheduleNotes && /Partial import:|combined PY/i.test(regatta.scheduleNotes)
             ? regatta.scheduleNotes : undefined}

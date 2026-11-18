@@ -135,6 +135,10 @@ export interface SailorProfileViewProps {
   profileVerified?: boolean;
   /** Open the unified Edit profile modal on initial render (owner only) */
   initialEdit?: boolean;
+  /** Open the claim form on initial render (e.g. from ?claim=1 deep link) */
+  initialClaimOpen?: boolean;
+  /** Attribution ref from ?ref=<event> deep link */
+  claimRef?: string | null;
   followControl?: {
     sailorId: string;
     following: boolean;

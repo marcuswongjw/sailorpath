@@ -136,6 +136,7 @@ export default async function IlcaRegattaDetailPage({
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount}
         accent="sky"
+        eventRef={regatta.slug}
       />
       <p className="text-[13px] text-[var(--sp-slate-soft)]">
         Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment

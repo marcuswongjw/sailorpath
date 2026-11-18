@@ -30,6 +30,7 @@ export type ClaimSubmitInput = {
   vid?: string;
   source?: string;
   device?: string;
+  ref?: string;
 };
 
 export type ClaimSubmitBody = {
@@ -41,6 +42,7 @@ export type ClaimSubmitBody = {
   vid?: string;
   source?: string;
   device?: string;
+  ref?: string;
 };
 
 /**
@@ -69,6 +71,7 @@ export function buildClaimSubmitBody(
   if (input.device === "mobile" || input.device === "desktop") {
     body.device = input.device;
   }
+  if (input.ref?.trim()) body.ref = input.ref.trim().slice(0, 80);
   return body;
 }
 

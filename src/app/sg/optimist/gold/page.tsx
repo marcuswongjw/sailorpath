@@ -6,11 +6,13 @@ import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { DbUnavailableError } from "@/db";
 import type { RankedSailor } from "@/lib/ranking";
 import type { Metadata } from "next";
+import { shareMetadata } from "@/lib/publicSeo";
 
-export const metadata: Metadata = {
-  title: "Optimist Gold standings | SailorPath",
-  description: "Current Singapore Optimist Gold Fleet best-3-of-5 series standings.",
-};
+export const metadata: Metadata = shareMetadata({
+  title: "Singapore Optimist Gold Fleet Rankings | SailorPath",
+  description: "Current Singapore Optimist Gold Fleet best-3-of-5 series standings and regatta points.",
+  canonicalPath: "/sg/optimist/gold",
+});
 
 /** ISR — rankings are cached and busted when an admin publishes results. */
 export const revalidate = 3600;

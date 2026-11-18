@@ -95,10 +95,12 @@ export default async function SailorProfilePage({
   searchParams,
 }: {
   params: Promise<{ sailor_handle: string }>;
-  searchParams?: Promise<{ edit?: string }>;
+  searchParams?: Promise<{ edit?: string; claim?: string; ref?: string }>;
 }) {
   const { sailor_handle } = await params;
   const sp = searchParams ? await searchParams : {};
+  const claimIntent = sp.claim === "1";
+  const claimRef = typeof sp.ref === "string" && sp.ref.trim() ? sp.ref.trim().slice(0, 80) : null;
   let sailor;
   try {
     sailor = await loadShareSailor(sailor_handle);
@@ -131,15 +133,23 @@ export default async function SailorProfilePage({
         </section>
       </div>
     }>
-      <SailorProfileDetails sailor_handle={sailor_handle} initialSailor={sailor} editIntent={sp.edit === "1"} />
+      <SailorProfileDetails
+        sailor_handle={sailor_handle}
+        initialSailor={sailor}
+        editIntent={sp.edit === "1"}
+        claimIntent={claimIntent}
+        claimRef={claimRef}
+      />
     </Suspense>
   );
 }
 
-async function SailorProfileDetails({ sailor_handle, initialSailor, editIntent = false }: {
+async function SailorProfileDetails({ sailor_handle, initialSailor, editIntent = false, claimIntent = false, claimRef = null }: {
   sailor_handle: string;
   initialSailor: NonNullable<Awaited<ReturnType<typeof loadShareSailor>>>;
   editIntent?: boolean;
+  claimIntent?: boolean;
+  claimRef?: string | null;
 }) {
   let sailor;
   let auth;
@@ -374,6 +384,8 @@ async function SailorProfileDetails({ sailor_handle, initialSailor, editIntent =
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}
       initialEdit={access.isOwner && editIntent}
+      initialClaimOpen={access.canClaim && claimIntent}
+      claimRef={claimRef}
       followControl={followControl}
     />
     </ErrorBoundary>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
+import { trackClientUsage } from "@/lib/clientUsage";
 import dynamic from "next/dynamic";
 import {
   type SailorRecordProps,
@@ -173,6 +174,19 @@ export function SailorProfileView(props: SailorProfileViewProps) {
   } = useSailorProfileState(props);
 
   const pendingResultFocus = useRef<string | null>(null);
+  const trackedClaimOpen = useRef(false);
+
+  useEffect(() => {
+    const isOpen = claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending";
+    if (isOpen && !trackedClaimOpen.current) {
+      trackedClaimOpen.current = true;
+      trackClientUsage("claim_form_open", null, {
+        ref: props.claimRef || null,
+      });
+    } else if (!isOpen) {
+      trackedClaimOpen.current = false;
+    }
+  }, [claimPanelOpen, canClaim, demoMode, claimStatus, props.claimRef]);
 
   useEffect(() => {
     if (sectionTab !== "results" || !pendingResultFocus.current) return;
@@ -312,6 +326,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
             sailorId={initialSailor.id}
             sailorName={displaySailor.name}
             sailNumber={displaySailor.sailNumber}
+            claimRef={props.claimRef}
             onClose={() => setClaimPanelOpen(false)}
             onResult={(status, msg) => {
               setClaimStatus(status);

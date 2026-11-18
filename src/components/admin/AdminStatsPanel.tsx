@@ -808,6 +808,99 @@ export function AdminStatsPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               require complete request history.
             </p>
           </section>
+          {stats.claimGrowth ? (
+            <section
+              aria-label="Claim growth and retention"
+              className="rounded-xl border border-slate-200 bg-white p-4 space-y-4"
+            >
+              <div>
+                <h2 className="text-base font-bold text-slate-900">
+                  Claim growth &amp; retention (30d)
+                </h2>
+                <p className="text-xs text-slate-600">
+                  End-to-end claim funnel, attribution by event/ref, and D+7 / D+30 visitor retention.
+                </p>
+              </div>
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+                <Metric
+                  label="CTA clicks"
+                  value={number(stats.claimGrowth.funnel30d.claimCtaClicks)}
+                  hint="claim_cta_click"
+                />
+                <Metric
+                  label="Login starts"
+                  value={number(stats.claimGrowth.funnel30d.loginStarts)}
+                  hint="login_start"
+                />
+                <Metric
+                  label="Registrations"
+                  value={number(stats.claimGrowth.funnel30d.registers)}
+                  hint="register"
+                />
+                <Metric
+                  label="Form opens"
+                  value={number(stats.claimGrowth.funnel30d.claimFormOpens)}
+                  hint="claim_form_open"
+                />
+                <Metric
+                  label="Claim submits"
+                  value={number(stats.claimGrowth.funnel30d.claimSubmits)}
+                  hint="claim_submit"
+                />
+                <Metric
+                  label="Approved"
+                  value={number(stats.claimGrowth.funnel30d.claimApproved)}
+                  hint="claim_approved"
+                />
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Metric
+                  label="D+7 retention"
+                  value={pctFormat(
+                    stats.claimGrowth.retention.retainedD7,
+                    stats.claimGrowth.retention.eligibleD7
+                  )}
+                  hint={`${number(stats.claimGrowth.retention.retainedD7)} of ${number(stats.claimGrowth.retention.eligibleD7)} eligible`}
+                />
+                <Metric
+                  label="D+30 retention"
+                  value={pctFormat(
+                    stats.claimGrowth.retention.retainedD30,
+                    stats.claimGrowth.retention.eligibleD30
+                  )}
+                  hint={`${number(stats.claimGrowth.retention.retainedD30)} of ${number(stats.claimGrowth.retention.eligibleD30)} eligible`}
+                />
+              </div>
+              {stats.claimGrowth.byRef30d.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <caption className="mb-2 text-left font-semibold text-slate-700">
+                      Claims by event / ref (30d)
+                    </caption>
+                    <thead>
+                      <tr className="border-b border-slate-200 text-slate-600">
+                        <th className="p-2">Ref / Event</th>
+                        <th className="p-2 text-right">CTA clicks</th>
+                        <th className="p-2 text-right">Submits</th>
+                        <th className="p-2 text-right">Approved</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stats.claimGrowth.byRef30d.map((item) => (
+                        <tr key={item.ref} className="border-b border-slate-100">
+                          <td className="p-2 font-mono text-xs">{item.ref}</td>
+                          <td className="p-2 text-right tabular-nums">{number(item.clicks)}</td>
+                          <td className="p-2 text-right tabular-nums">{number(item.submits)}</td>
+                          <td className="p-2 text-right tabular-nums">{number(item.approved)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+          ) : null}
+
           <details className="rounded-xl border border-slate-200 bg-white p-4">
             <summary className="min-h-11 text-sm font-semibold text-slate-800">
               Diagnostics & account activity

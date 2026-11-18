@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { POST } from "@/app/api/usage/route";
-import { sanitizeUsageMeta } from "@/lib/usage";
+import { extractRefFromUrl } from "@/lib/clientUsage";
+import { sanitizeUsageMeta, USAGE_EVENT_TYPES } from "@/lib/usage";
 
 describe("POST /api/usage", () => {
   it("rejects custom event names before any analytics write", async () => {
@@ -59,5 +60,18 @@ describe("sanitizeUsageMeta", () => {
   it("returns null for empty / non-objects", () => {
     expect(sanitizeUsageMeta(null)).toBeNull();
     expect(sanitizeUsageMeta({ email: "x" })).toBeNull();
+  });
+
+  it("keeps ref and supports funnel event types", () => {
+    expect(sanitizeUsageMeta({ ref: "pattaya-2026" })).toEqual({
+      ref: "pattaya-2026",
+    });
+    expect(USAGE_EVENT_TYPES).toContain("claim_cta_click");
+    expect(USAGE_EVENT_TYPES).toContain("claim_form_open");
+    expect(USAGE_EVENT_TYPES).toContain("login_start");
+    expect(extractRefFromUrl("/sailors/alex?claim=1&ref=pattaya-2026")).toBe(
+      "pattaya-2026"
+    );
+    expect(extractRefFromUrl("/sailors/alex")).toBeNull();
   });
 });

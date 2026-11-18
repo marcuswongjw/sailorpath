@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FileText, ExternalLink } from "lucide-react";
 import { EventFacts, joinDateRange } from "@/components/EventFacts";
 import { ResultStatus } from "@/components/ResultStatus";
+import { ShareResultBar } from "@/components/ShareResultBar";
 
 export type RegattaEventHeaderProps = {
   name: string;
@@ -153,6 +154,10 @@ export function RegattaEventHeader({
             : ""}
         </p>
         <div className="mt-1.5"><ResultStatus regatta={{ name, officialResultsSourceName, scheduleNotes }} /></div>
+        <ShareResultBar
+          title={name}
+          subtitle={`${classLabel}${divisionIsNonRanking ? "" : ` ${divLabel}`} · ${totalFleetSize} boats`}
+        />
       </div>
     </div>
   );

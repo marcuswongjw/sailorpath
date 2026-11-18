@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Search, UserPlus, Link2 } from "lucide-react";
 import type { Metadata } from "next";
+import { ClaimProfileSearch } from "@/components/ClaimProfileSearch";
 
 export const metadata: Metadata = {
   title: "Claim a sailor profile | SailorPath",
@@ -31,20 +32,22 @@ export default function ClaimProfilePage() {
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-aqua-mist text-harbour text-xs font-black">
             1
           </span>
-          <div>
+          <div className="w-full min-w-0">
             <p className="text-sm font-bold text-harbour-shadow flex items-center gap-2">
               <Search className="h-4 w-4 text-harbour" aria-hidden="true" />
               Find your profile
             </p>
             <p className="text-xs text-slate-soft mt-1 leading-relaxed">
-              Search by sailor name, sail number, or club in the public directory
-              and open your sailor profile page.
+              Search by sailor name or sail number right here, or browse the
+              public directory. Parents can claim and manage one or more kids’
+              profiles under a single account.
             </p>
+            <ClaimProfileSearch />
             <Link
               href="/sailors"
-              className="sp-primary inline-flex mt-3 px-4 py-2 text-sm font-semibold"
+              className="mt-3 inline-flex text-xs font-semibold text-harbour hover:underline"
             >
-              Search sailors
+              Browse full sailor directory →
             </Link>
           </div>
         </li>

@@ -129,7 +129,7 @@ describe("PublicRegattaResults", () => {
     expect(html).toContain("Total Only Sailor");
     expect(html).toContain("Total");
     expect(html).toContain("Nett");
-    expect(html).not.toContain("Is this you? Claim profile");
+    expect(html).not.toContain("Is this you or your child? Claim profile");
   });
 
   it("links an unclaimed sailor to claim, and skips a claimed sailor", () => {
@@ -137,6 +137,7 @@ describe("PublicRegattaResults", () => {
       <PublicRegattaResults
         accent="orange"
         totalFleetSize={12}
+        eventRef="pattaya-2026"
         results={[
           {
             resultId: "open-result",
@@ -172,10 +173,39 @@ describe("PublicRegattaResults", () => {
       />
     );
 
-    expect(html).toContain("Is this you? Claim profile");
-    expect(html).toContain('href="/login?next=%2Fsailors%2Fopen-sailor"');
+    expect(html).toContain("Is this you or your child? Claim profile");
+    expect(html).toContain('href="/login?next=%2Fsailors%2Fopen-sailor%3Fclaim%3D1%26ref%3Dpattaya-2026"');
     expect(html).toContain('href="/sailors/claimed-sailor"');
+    expect(html).toContain("Claimed");
+    expect(html).toContain("1 of 2 sailors has claimed");
     expect(html).not.toContain("next=%2Fsailors%2Fclaimed-sailor");
+
+    const loggedInHtml = renderToStaticMarkup(
+      <PublicRegattaResults
+        accent="orange"
+        totalFleetSize={12}
+        isLoggedIn
+        eventRef="pattaya-2026"
+        results={[
+          {
+            resultId: "open-result",
+            sailorId: "sailor-open",
+            regattaId: "regatta-1",
+            rank: 2,
+            nettScore: 8,
+            totalScore: 10,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Open Sailor",
+            sailNumber: "SGP 1",
+            handle: "open-sailor",
+            profileClaimed: false,
+            raceResults: [],
+          },
+        ]}
+      />
+    );
+    expect(loggedInHtml).toContain('href="/sailors/open-sailor?claim=1&amp;ref=pattaya-2026"');
   });
 
   it("labels a crewed boat entry without duplicating its score row", () => {

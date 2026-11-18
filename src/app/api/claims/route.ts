@@ -208,6 +208,8 @@ async function handlePOST(req: Request) {
         : null;
     const vid =
       body.vid != null ? String(body.vid).trim().slice(0, 64) : null;
+    const ref =
+      body.ref != null ? String(body.ref).trim().slice(0, 80) : null;
 
     void trackUsage({
       eventType: "claim_submit",
@@ -221,6 +223,7 @@ async function handlePOST(req: Request) {
         source: source || null,
         device: device || null,
         vid: vid || null,
+        ref: ref || null,
       },
     });
 

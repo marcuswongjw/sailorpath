@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { TelegramMark } from "@/components/TelegramMark";
 import { GoogleMark } from "@/components/GoogleMark";
-import { trackClientUsage } from "@/lib/clientUsage";
+import { extractRefFromUrl, trackClientUsage } from "@/lib/clientUsage";
 import { startGoogleSignIn } from "@/lib/google/auth";
 import { GOOGLE_LOGIN_ERRORS } from "@/lib/google/messages";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
@@ -54,6 +54,7 @@ export function LoginForm({
     "/account",
     currentHost
   );
+  const ref = extractRefFromUrl(nextTarget);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(
@@ -71,6 +72,7 @@ export function LoginForm({
     setBusy(true);
     setError(null);
     setMessage(null);
+    trackClientUsage("login_start", "/login", { mode: "google", ref });
     try {
       await startGoogleSignIn(createBrowserSupabase(), window.location.origin, nextTarget);
     } catch (googleError) {
@@ -88,6 +90,7 @@ export function LoginForm({
     setBusy(true);
     setError(null);
     setMessage(null);
+    trackClientUsage("login_start", "/login", { mode: "email", ref });
     try {
       const supabase = createBrowserSupabase();
       const cleanEmail = email.trim().toLowerCase();
@@ -220,6 +223,9 @@ export function LoginForm({
             {telegramEnabled ? (
               <a
                 href={telegramHref}
+                onClick={() =>
+                  trackClientUsage("login_start", "/login", { mode: "telegram", ref })
+                }
                 className="flex w-full items-center justify-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white py-3 text-sm font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
               >
                 <TelegramMark className="h-5 w-5" />

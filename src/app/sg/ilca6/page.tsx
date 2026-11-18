@@ -7,11 +7,13 @@ import {
 } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import type { Metadata } from "next";
+import { shareMetadata } from "@/lib/publicSeo";
 
-export const metadata: Metadata = {
-  title: "ILCA 6 national standings | SailorPath",
+export const metadata: Metadata = shareMetadata({
+  title: "Singapore ILCA 6 National Rankings | SailorPath",
   description: "Current Singapore ILCA 6 national standings using high ranking points and the best 3 of 5 events.",
-};
+  canonicalPath: "/sg/ilca6",
+});
 
 export const revalidate = 3600;
 

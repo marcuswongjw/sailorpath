@@ -74,6 +74,29 @@ export type TrafficBreakdown = {
   }>;
 };
 
+export type ClaimGrowth = {
+  funnel30d: {
+    claimCtaClicks: number;
+    loginStarts: number;
+    registers: number;
+    claimFormOpens: number;
+    claimSubmits: number;
+    claimApproved: number;
+  };
+  byRef30d: Array<{
+    ref: string;
+    clicks: number;
+    submits: number;
+    approved: number;
+  }>;
+  retention: {
+    eligibleD7: number;
+    retainedD7: number;
+    eligibleD30: number;
+    retainedD30: number;
+  };
+};
+
 export type FeatureAdoption = {
   claims: {
     approved: number;
@@ -143,6 +166,7 @@ export type AdminStatsPayload = {
     adminOpens: number;
   };
   trafficBreakdown?: TrafficBreakdown;
+  claimGrowth?: ClaimGrowth;
   dataTrust: {
     sailorsTotal: number;
     missingDob: number;
@@ -781,6 +805,88 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
     }
   }
 
+  let claimGrowth: ClaimGrowth | undefined;
+  if (usageEventsOk) {
+    try {
+      const cgRows = await withStatsQueryTimeout(pgSql`
+        with events_30d as (
+          select
+            event_type,
+            case
+              when meta is not null and left(trim(meta), 1) = '{' and right(trim(meta), 1) = '}'
+              then meta::jsonb
+              else '{}'::jsonb
+            end as m
+          from public.usage_events
+          where created_at >= now() - interval '30 days'
+        ),
+        by_ref as (
+          select
+            coalesce(nullif(trim(m->>'ref'), ''), 'direct') as ref,
+            count(*) filter (where event_type = 'claim_cta_click')::int as clicks,
+            count(*) filter (where event_type = 'claim_submit')::int as submits,
+            count(*) filter (where event_type = 'claim_approved')::int as approved
+          from events_30d
+          where event_type in ('claim_cta_click', 'claim_submit', 'claim_approved')
+          group by coalesce(nullif(trim(m->>'ref'), ''), 'direct')
+          order by submits desc, clicks desc
+          limit 10
+        ),
+        cohorts as (
+          select
+            case
+              when meta is not null and left(trim(meta), 1) = '{' and right(trim(meta), 1) = '}'
+              then nullif(trim((meta::jsonb)->>'vid'), '')
+              else null
+            end as vid,
+            min(created_at) filter (where event_type in ('register', 'claim_submit')) as first_cohort_at,
+            max(created_at) as last_seen_at
+          from public.usage_events
+          where meta is not null and meta <> ''
+          group by 1
+        )
+        select
+          (select count(*) filter (where event_type = 'claim_cta_click')::int from events_30d) as claim_cta_clicks,
+          (select count(*) filter (where event_type = 'login_start')::int from events_30d) as login_starts,
+          (select count(*) filter (where event_type = 'register')::int from events_30d) as registers,
+          (select count(*) filter (where event_type = 'claim_form_open')::int from events_30d) as claim_form_opens,
+          (select count(*) filter (where event_type = 'claim_submit')::int from events_30d) as claim_submits,
+          (select count(*) filter (where event_type = 'claim_approved')::int from events_30d) as claim_approved,
+          coalesce((select json_agg(row_to_json(by_ref)) from by_ref), '[]'::json) as by_ref_30d,
+          (select count(*) filter (where first_cohort_at is not null and first_cohort_at <= now() - interval '7 days')::int from cohorts where vid is not null) as eligible_d7,
+          (select count(*) filter (where first_cohort_at is not null and first_cohort_at <= now() - interval '7 days' and last_seen_at >= first_cohort_at + interval '7 days')::int from cohorts where vid is not null) as retained_d7,
+          (select count(*) filter (where first_cohort_at is not null and first_cohort_at <= now() - interval '30 days')::int from cohorts where vid is not null) as eligible_d30,
+          (select count(*) filter (where first_cohort_at is not null and first_cohort_at <= now() - interval '30 days' and last_seen_at >= first_cohort_at + interval '30 days')::int from cohorts where vid is not null) as retained_d30
+      `);
+      const cg = cgRows[0] ?? {};
+      const rawRefs = Array.isArray(cg.by_ref_30d) ? cg.by_ref_30d : [];
+      claimGrowth = {
+        funnel30d: {
+          claimCtaClicks: num(cg.claim_cta_clicks),
+          loginStarts: num(cg.login_starts),
+          registers: num(cg.registers),
+          claimFormOpens: num(cg.claim_form_opens),
+          claimSubmits: num(cg.claim_submits),
+          claimApproved: num(cg.claim_approved),
+        },
+        byRef30d: rawRefs.map((r: Record<string, unknown>) => ({
+          ref: String(r.ref || "direct"),
+          clicks: num(r.clicks),
+          submits: num(r.submits),
+          approved: num(r.approved),
+        })),
+        retention: {
+          eligibleD7: num(cg.eligible_d7),
+          retainedD7: num(cg.retained_d7),
+          eligibleD30: num(cg.eligible_d30),
+          retainedD30: num(cg.retained_d30),
+        },
+      };
+    } catch {
+      /* optional in minimal test schemas */
+    }
+  }
+
   let featureAdoption: FeatureAdoption = {
     claims: {
       approved: 0,
@@ -935,6 +1041,7 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
       adminOpens,
     },
     trafficBreakdown,
+    claimGrowth,
     dataTrust: {
       sailorsTotal: num(row.sailors_total),
       missingDob: num(row.missing_dob),

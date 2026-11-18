@@ -20,6 +20,7 @@ type Props = {
   sailorId: string;
   sailorName: string;
   sailNumber?: string | null;
+  claimRef?: string | null;
   /** Close the panel (parent owns open/close state). */
   onClose: () => void;
   /** Report submit outcome so the parent can render status/message. */
@@ -34,6 +35,7 @@ export function ClaimPanel({
   sailorId,
   sailorName,
   sailNumber,
+  claimRef,
   onClose,
   onResult,
 }: Props) {
@@ -67,6 +69,7 @@ export function ClaimPanel({
         vid: getVisitorId() || undefined,
         source: acq.source,
         device: acq.device,
+        ref: claimRef || undefined,
       });
       onResult(result.status, result.message);
       if (result.ok) onClose();

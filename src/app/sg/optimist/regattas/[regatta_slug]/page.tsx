@@ -129,6 +129,7 @@ export default async function RegattaDetailPage({
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount}
         accent="orange"
+        eventRef={regatta.slug}
       />
       <p className="text-[13px] text-[var(--sp-slate-soft)]">
         Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment

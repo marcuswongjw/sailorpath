@@ -1,12 +1,15 @@
 "use client";
 
 import { useId, useState } from "react";
+import { BadgeCheck } from "lucide-react";
 import { ResultScoringGuide } from "@/components/ResultScoringGuide";
 import { describeRaceScore } from "@/lib/raceScorePresentation";
 import Link from "next/link";
 import { formatGenderLabel } from "@/lib/gender";
 import { getPercentileBadge } from "@/lib/ranking";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { trackClientUsage } from "@/lib/clientUsage";
+import { useAccountOptional } from "@/components/AccountProvider";
 import type { getResultsForRegatta } from "@/lib/queries";
 import type { OfficialRaceResultInput } from "@/types/raceResult";
 
@@ -21,6 +24,8 @@ type Props = {
   accent: "orange" | "sky";
   pendingIdentityReview?: boolean;
   importNotice?: string;
+  isLoggedIn?: boolean;
+  eventRef?: string | null;
 };
 
 type SortKey = "rank" | "name" | "nationality" | "gender" | "birthYear" | "total" | "nett";
@@ -67,8 +72,15 @@ function RaceScore({ race, raceNumber }: { race: OfficialRaceResultInput | undef
   );
 }
 
-function claimProfileHref(handle: string): string {
-  return `/login?next=${encodeURIComponent(`/sailors/${handle}`)}`;
+function claimProfileHref(
+  handle: string,
+  options?: { isLoggedIn?: boolean; eventRef?: string | null }
+): string {
+  const params = new URLSearchParams({ claim: "1" });
+  const ref = options?.eventRef?.trim();
+  if (ref) params.set("ref", ref.slice(0, 80));
+  const target = `/sailors/${handle}?${params.toString()}`;
+  return options?.isLoggedIn ? target : `/login?next=${encodeURIComponent(target)}`;
 }
 
 function unclaimedSailors(result: PublicRegattaResult): { handle: string; name: string }[] {
@@ -91,7 +103,15 @@ function unclaimedSailors(result: PublicRegattaResult): { handle: string; name: 
   return links;
 }
 
-function ClaimProfileLinks({ result }: { result: PublicRegattaResult }) {
+function ClaimProfileLinks({
+  result,
+  isLoggedIn,
+  eventRef,
+}: {
+  result: PublicRegattaResult;
+  isLoggedIn?: boolean;
+  eventRef?: string | null;
+}) {
   const links = unclaimedSailors(result);
   if (!links.length) return null;
   return (
@@ -99,15 +119,20 @@ function ClaimProfileLinks({ result }: { result: PublicRegattaResult }) {
       {links.map((link) => (
         <Link prefetch={false}
           key={link.handle}
-          href={claimProfileHref(link.handle)}
+          href={claimProfileHref(link.handle, { isLoggedIn, eventRef })}
+          onClick={() =>
+            trackClientUsage("claim_cta_click", null, {
+              ref: eventRef?.trim() || null,
+            })
+          }
           className="text-[11px] font-semibold leading-snug text-[var(--sp-harbour-teal)] hover:underline"
           aria-label={
             links.length > 1
-              ? `Is this you? Claim profile for ${link.name}`
-              : "Is this you? Claim profile"
+              ? `Is this you or your child? Claim profile for ${link.name}`
+              : "Is this you or your child? Claim profile"
           }
         >
-          Is this you? Claim profile
+          Is this you or your child? Claim profile
         </Link>
       ))}
     </div>
@@ -169,9 +194,13 @@ export function PublicRegattaResults({
   accent,
   pendingIdentityReview = false,
   importNotice,
+  isLoggedIn = false,
+  eventRef = null,
 }: Props) {
   const colors = accentClasses[accent];
   const viewId = useId();
+  const account = useAccountOptional();
+  const effectiveIsLoggedIn = isLoggedIn || Boolean(account?.email);
 
   const importedRaceCount = results.reduce(
     (max, result) =>
@@ -228,6 +257,26 @@ export function PublicRegattaResults({
     const cmp = typeof va === "string" ? va.localeCompare(vb as string) : (va as number) - (vb as number);
     return sortDir === "asc" ? cmp : -cmp;
   });
+
+  const { claimedCount, totalSailorCount } = (() => {
+    const seen = new Map<string, boolean>();
+    for (const r of results) {
+      if (r.participants && r.participants.length > 0) {
+        for (const m of r.participants) {
+          const key = m.id || m.handle || "";
+          if (key && !seen.has(key)) seen.set(key, Boolean(m.profileClaimed));
+        }
+      } else {
+        const key = r.sailorId || r.handle || "";
+        if (key && !seen.has(key)) seen.set(key, Boolean(r.profileClaimed));
+      }
+    }
+    let claimed = 0;
+    for (const v of seen.values()) {
+      if (v) claimed += 1;
+    }
+    return { claimedCount: claimed, totalSailorCount: seen.size || results.length };
+  })();
 
   function thProps(key: SortKey, label: string, extraClass = "") {
     const isActive = sortKey === key;
@@ -309,22 +358,34 @@ export function PublicRegattaResults({
                   />
                 </td>
                 <td className={`sp-col-name sticky left-14 z-10 min-w-40 max-w-52 px-3 py-3 break-words shadow-[2px_0_0_var(--sp-cool-veil)] ${podiumTint || "bg-[var(--sp-warm-white)]"}`}>
-                  <Link
-                    href={`/sailors/${result.handle}`}
-                    prefetch={false}
-                    className={`${colors.link} inline-flex flex-col items-start font-bold text-[var(--sp-harbour-shadow)]`}
-                  >
-                    <span>{result.sailorName}</span>
-                    {secondary && (
-                      <span
-                        lang={secondary.lang}
-                        className="text-xs font-normal leading-tight text-[var(--sp-charcoal)] opacity-75"
-                      >
-                        {secondary.text}
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <Link
+                      href={`/sailors/${result.handle}`}
+                      prefetch={false}
+                      className={`${colors.link} inline-flex flex-col items-start font-bold text-[var(--sp-harbour-shadow)]`}
+                    >
+                      <span>{result.sailorName}</span>
+                      {secondary && (
+                        <span
+                          lang={secondary.lang}
+                          className="text-xs font-normal leading-tight text-[var(--sp-charcoal)] opacity-75"
+                        >
+                          {secondary.text}
+                        </span>
+                      )}
+                    </Link>
+                    {result.profileClaimed === true && (
+                      <span className="inline-flex items-center gap-0.5 rounded-full border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                        <BadgeCheck className="h-3 w-3 shrink-0" aria-hidden="true" />
+                        Claimed
                       </span>
                     )}
-                  </Link>
-                  <ClaimProfileLinks result={result} />
+                  </div>
+                  <ClaimProfileLinks
+                    result={result}
+                    isLoggedIn={effectiveIsLoggedIn}
+                    eventRef={eventRef}
+                  />
                   {crew && (
                     <p className="mt-0.5 text-[11px] font-semibold text-[var(--sp-harbour-teal)]">
                       Crew · {crew}
@@ -444,6 +505,12 @@ export function PublicRegattaResults({
                 </span>
               ) : null}
             </div>
+            {claimedCount > 0 && (
+              <span className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-full border border-emerald-200 bg-emerald-50/80 px-3 py-1 text-xs font-semibold text-emerald-800">
+                <BadgeCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
+                {claimedCount} of {totalSailorCount} {totalSailorCount === 1 ? "sailor" : "sailors"} {claimedCount === 1 ? "has" : "have"} claimed
+              </span>
+            )}
             <div className="sm:hidden flex flex-wrap items-center gap-2">
               <label htmlFor={viewId + "-sort"} className="text-xs font-bold uppercase tracking-wide text-slate-soft">Sort</label>
               <select id={viewId + "-sort"} aria-label="Sort results" value={sortKey} onChange={(event) => { setSortKey(event.target.value as SortKey); setSortDir("asc"); }} className="min-h-11 min-w-0 flex-1 rounded-xl border border-cool-veil bg-warm-white px-3 text-base text-charcoal">

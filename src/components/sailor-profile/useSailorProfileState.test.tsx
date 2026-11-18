@@ -176,3 +176,17 @@ describe('X-15 rider profiles', () => {
     expect(result.current.activeStanding).toBeNull();
   });
 });
+
+describe('claim deep link', () => {
+  it('auto-opens the claim panel when initialClaimOpen and canClaim are true', () => {
+    const { result } = renderHook(() =>
+      useSailorProfileState({ ...props, canClaim: true, initialClaimOpen: true })
+    );
+    expect(result.current.claimPanelOpen).toBe(true);
+
+    const { result: denied } = renderHook(() =>
+      useSailorProfileState({ ...props, canClaim: false, initialClaimOpen: true })
+    );
+    expect(denied.current.claimPanelOpen).toBe(false);
+  });
+});

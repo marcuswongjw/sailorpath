@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, ChevronRight, GitCompareArrows, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
+import { ArrowRight, ChevronRight, GitCompareArrows, Link2, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
 import { useModalDialog } from "@/components/ui/useModalDialog";
 import type { CoachSquadDashboard } from "@/lib/coachDashboard";
 import { SquadPulseCards, AthleteDevelopmentDrawer } from "@/components/coach";
@@ -600,6 +600,23 @@ export function CoachDashboard({
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
+              {!demoMode && data.squad?.claimShareToken && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const url = `${window.location.origin}/squads/${data.squad!.claimShareToken}/claim`;
+                    void navigator.clipboard?.writeText(url).then(() => {
+                      setMessage("Squad claim link copied.");
+                    }).catch(() => {
+                      setMessage(`Shareable squad claim link: ${url}`);
+                    });
+                  }}
+                  className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-1.5 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)]/50 transition-colors cursor-pointer"
+                >
+                  <Link2 className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" aria-hidden="true" />
+                  Copy claim link
+                </button>
+              )}
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="squad-sort"

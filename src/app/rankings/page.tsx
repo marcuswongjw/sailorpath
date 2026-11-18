@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { Trophy, Sailboat, Medal, Globe } from "lucide-react";
 import type { Metadata } from "next";
+import { shareMetadata } from "@/lib/publicSeo";
 
-export const metadata: Metadata = {
-  title: "Current sailing rankings & race results | SailorPath",
+export const metadata: Metadata = shareMetadata({
+  title: "Singapore Sailing Rankings & Race Results | SailorPath",
   description:
     "View Singapore Optimist Gold and Silver, ILCA 4 and ILCA 6 rankings, and the Asian & Oceania Optimist Index.",
-};
+  canonicalPath: "/rankings",
+});
 
 export const revalidate = 3600;
 
