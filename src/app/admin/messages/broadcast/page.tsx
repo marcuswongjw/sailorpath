@@ -54,6 +54,7 @@ export default function AdminBroadcastPage() {
   };
 
   const send = async () => {
+    if (!preview) return;
     setBusy(true);
     setError(null);
     try {
@@ -61,7 +62,7 @@ export default function AdminBroadcastPage() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload, confirm: true }),
+        body: JSON.stringify({ text: preview.text, buttonLabel: preview.buttonLabel, buttonUrl: preview.buttonUrl, audience: preview.audience, audienceValue: preview.audienceValue, confirm: true }),
       });
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || "Could not send");
@@ -105,7 +106,8 @@ export default function AdminBroadcastPage() {
           Message
           <textarea
             value={text}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => { setText(event.target.value); setPreview(null); }}
+            disabled={busy}
             rows={6}
             className="sp-input mt-1 w-full font-normal"
             placeholder="Plain text, or **bold** and [a link](https://sailorpath.com)"
@@ -114,17 +116,17 @@ export default function AdminBroadcastPage() {
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block text-xs font-bold text-slate-500">
             Button label
-            <input value={buttonLabel} onChange={(event) => setButtonLabel(event.target.value)} className="sp-input mt-1 w-full font-normal" />
+            <input value={buttonLabel} disabled={busy} onChange={(event) => { setButtonLabel(event.target.value); setPreview(null); }} className="sp-input mt-1 w-full font-normal" />
           </label>
           <label className="block text-xs font-bold text-slate-500">
             Button link
-            <input value={buttonUrl} onChange={(event) => setButtonUrl(event.target.value)} className="sp-input mt-1 w-full font-normal" placeholder="https://sailorpath.com" />
+            <input value={buttonUrl} disabled={busy} onChange={(event) => { setButtonUrl(event.target.value); setPreview(null); }} className="sp-input mt-1 w-full font-normal" placeholder="https://sailorpath.com" />
           </label>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block text-xs font-bold text-slate-500">
             Audience
-            <select value={audience} onChange={(event) => setAudience(event.target.value)} className="sp-input mt-1 w-full font-normal">
+            <select value={audience} disabled={busy} onChange={(event) => { setAudience(event.target.value); setPreview(null); }} className="sp-input mt-1 w-full font-normal">
               <option value="all">Everyone opted in</option>
               <option value="class">By class</option>
               <option value="country">By country</option>
@@ -135,7 +137,8 @@ export default function AdminBroadcastPage() {
               {audience === "class" ? "Class" : "Country"}
               <input
                 value={audienceValue}
-                onChange={(event) => setAudienceValue(event.target.value)}
+                disabled={busy}
+                onChange={(event) => { setAudienceValue(event.target.value); setPreview(null); }}
                 className="sp-input mt-1 w-full font-normal"
                 placeholder={audience === "class" ? "ILCA 4" : "SGP"}
               />
@@ -153,10 +156,12 @@ export default function AdminBroadcastPage() {
             <p className="whitespace-pre-wrap text-sm text-[var(--sp-charcoal)]">{preview.text}</p>
             {preview.buttonLabel && preview.buttonUrl ? (
               <p className="text-sm font-semibold text-[var(--sp-harbour-teal)]">
-                Button: {preview.buttonLabel}
+                Button: {preview.buttonLabel} ({preview.buttonUrl})
               </p>
             ) : null}
             <p className="text-sm text-slate-600">
+              Audience: {preview.audience === "all" ? "Everyone opted in" : `${preview.audience}: ${preview.audienceValue}`}.
+              {" "}
               This will go to {preview.targeted} opted-in {preview.targeted === 1 ? "person" : "people"}.
             </p>
             <button type="button" className="sp-btn-primary text-sm" disabled={busy || preview.targeted === 0} onClick={() => void send()}>

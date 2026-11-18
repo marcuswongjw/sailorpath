@@ -8,6 +8,7 @@ import {
   validateBroadcastDraft,
 } from "@/lib/telegram/bot/message";
 import { parseTelegramUpdate } from "@/lib/telegram/bot/update";
+import { sailorSearchMessage } from "@/lib/telegram/bot/discovery";
 
 describe("Telegram bot configuration", () => {
   const previous = {
@@ -71,7 +72,7 @@ describe("Telegram webhook commands", () => {
       parseTelegramUpdate({
         message: {
           text: "/start abc123",
-          chat: { id: 42 },
+          chat: { id: 42, type: "private" },
           from: { id: 42, username: "marina", first_name: "Marina" },
         },
       })
@@ -82,15 +83,38 @@ describe("Telegram webhook commands", () => {
       username: "marina",
       displayName: "Marina",
     });
-    expect(parseTelegramUpdate({ message: { text: "/stop", chat: { id: 42 } } })).toEqual({
+    expect(parseTelegramUpdate({ message: { text: "/stop", chat: { id: 42, type: "private" } } })).toEqual({
       type: "stop",
       chatId: "42",
     });
     expect(
       parseTelegramUpdate({
-        my_chat_member: { chat: { id: 42 }, new_chat_member: { status: "kicked" } },
+        my_chat_member: { chat: { id: 42, type: "private" }, new_chat_member: { status: "kicked" } },
       })
     ).toEqual({ type: "blocked", chatId: "42" });
+  });
+
+  it("offers private discovery without treating it as a subscription", () => {
+    const message = (text: string, type = "private") => ({ message: { text, chat: { id: 42, type } } });
+    expect(parseTelegramUpdate(message("/start"))).toEqual({ type: "welcome", chatId: "42" });
+    expect(parseTelegramUpdate(message("/help@SailorPathBot"))).toEqual({ type: "welcome", chatId: "42" });
+    expect(parseTelegramUpdate(message("/rankings"))).toEqual({ type: "rankings", chatId: "42" });
+    expect(parseTelegramUpdate(message("/regattas"))).toEqual({ type: "regattas", chatId: "42" });
+    expect(parseTelegramUpdate(message("/find SGP 4652"))).toEqual({ type: "find", chatId: "42", query: "SGP 4652" });
+    expect(parseTelegramUpdate(message("SGP 4652"))).toEqual({ type: "find", chatId: "42", query: "SGP 4652" });
+    expect(parseTelegramUpdate(message("/find"))).toEqual({ type: "find", chatId: "42", query: "" });
+    expect(parseTelegramUpdate(message("/unknown"))).toEqual({ type: "ignore" });
+    expect(parseTelegramUpdate(message("/start secret", "group"))).toEqual({ type: "ignore" });
+    expect(parseTelegramUpdate(message("SGP 4652", "supergroup"))).toEqual({ type: "ignore" });
+  });
+
+  it("escapes public sailor details in Telegram HTML and limits results", () => {
+    const result = sailorSearchMessage("name", Array(6).fill({ name: "A <B> & C", handle: 'a"b', sailNumber: "SGP & 1" }));
+    expect(result).toContain('href="https://sailorpath.com/sailors/a%22b"');
+    expect(result).toContain("A &lt;B&gt; &amp; C");
+    expect(result.match(/SGP &amp; 1/g)).toHaveLength(5);
+    expect(sailorSearchMessage("nothing", [])).toContain("No matching sailors");
+    expect(sailorSearchMessage("x".repeat(101), [])).toContain("100 characters");
   });
 });
 

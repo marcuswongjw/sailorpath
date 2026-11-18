@@ -51,18 +51,23 @@ export async function deliverBroadcastBatch(broadcastId: string) {
     let status: "sent" | "failed" | "blocked" = "failed";
     let error: string | undefined;
     try {
-      const result = await postTelegramMessage({
-        token,
-        chatId: delivery.chatId,
-        html,
-        buttonLabel: batch.broadcast.buttonLabel,
-        buttonUrl: batch.broadcast.buttonUrl,
-      });
-      if (result.ok) status = "sent";
-      else if (result.blocked) {
-        status = "blocked";
-        error = result.description;
-      } else error = result.description;
+      const [subscription] = await db.select({ optedIn: telegramSubscriptions.optedIn, blockedAt: telegramSubscriptions.blockedAt, chatId: telegramSubscriptions.chatId }).from(telegramSubscriptions).where(eq(telegramSubscriptions.userId, delivery.userId)).limit(1);
+      if (!shouldSendTelegramAlert(subscription ?? null) || subscription?.chatId !== delivery.chatId) {
+        error = "Subscription no longer active for this chat";
+      } else {
+        const result = await postTelegramMessage({
+          token,
+          chatId: delivery.chatId,
+          html,
+          buttonLabel: batch.broadcast.buttonLabel,
+          buttonUrl: batch.broadcast.buttonUrl,
+        });
+        if (result.ok) status = "sent";
+        else if (result.blocked) {
+          status = "blocked";
+          error = result.description;
+        } else error = result.description;
+      }
     } catch (sendError) {
       error = sendError instanceof Error ? sendError.message : "send failed";
     }
