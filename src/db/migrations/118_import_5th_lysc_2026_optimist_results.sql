@@ -346,7 +346,7 @@ INSERT INTO public.regatta_result_participants (
   ranking_credit, created_at, updated_at
 )
 SELECT
-  gen_random_uuid(), result.id, p.sailor_id, p.source_name, 0, 'solo', 'matched',
+  gen_random_uuid(), result.id, p.sailor_id, p.source_name, 1, 'solo', 'matched',
   false, now(), now()
 FROM _lysc_2026_payload p
 JOIN public.regattas r
