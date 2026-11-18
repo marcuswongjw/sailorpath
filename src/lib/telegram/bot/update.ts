@@ -1,6 +1,6 @@
 export type TelegramBotEvent =
   | { type: "start"; token: string; chatId: string; telegramUserId: string; username: string | null; displayName: string | null }
-  | { type: "welcome" | "rankings" | "regattas" | "stop" | "blocked"; chatId: string }
+  | { type: "welcome" | "rankings" | "regattas" | "claim" | "settings" | "stop" | "blocked"; chatId: string }
   | { type: "find"; chatId: string; query: string }
   | { type: "ignore" };
 
@@ -19,13 +19,19 @@ export function parseTelegramUpdate(update: unknown): TelegramBotEvent {
   const chatId = String(message.chat.id);
   const text = message.text.trim();
   if (!text) return { type: "ignore" };
+  if (text === menuLabels.find) return { type: "find", chatId, query: "" };
+  if (text === menuLabels.rankings) return { type: "rankings", chatId };
+  if (text === menuLabels.regattas) return { type: "regattas", chatId };
+  if (text === menuLabels.claim) return { type: "claim", chatId };
+  if (text === menuLabels.settings) return { type: "settings", chatId };
+  if (text === menuLabels.help) return { type: "welcome", chatId };
   const command = /^\/(\w+)(?:@\w+)?(?:\s+([\s\S]*))?$/i.exec(text);
   if (text.startsWith("/") && !command) return { type: "ignore" };
   if (command) {
     const name = command[1].toLowerCase();
     const argument = (command[2] || "").trim();
     if (name === "stop") return { type: "stop", chatId };
-    if (name === "help" || (name === "start" && !argument)) return { type: "welcome", chatId };
+    if (name === "help" || name === "menu" || (name === "start" && !argument)) return { type: "welcome", chatId };
     if (name === "rankings" || name === "regattas") return { type: name, chatId };
     if (name === "find") return { type: "find", chatId, query: argument };
     if (name !== "start") return { type: "ignore" };
@@ -35,3 +41,5 @@ export function parseTelegramUpdate(update: unknown): TelegramBotEvent {
   }
   return { type: "find", chatId, query: text };
 }
+import { menuLabels } from "@/lib/telegram/bot/discovery";
+
