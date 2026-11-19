@@ -80,7 +80,7 @@ export function toPublicSailorProps(
     dob: null,
     bio: sailor.bio && sailor.bio.length <= 500 ? sailor.bio : null,
     school: sailor.showSchoolOnPublicProfile ? sailor.school : null,
-    avatarUrl: profilePhotoUrl(sailor.id, sailor.avatarUrl),
+    avatarUrl: sailor.showProfilePhotoOnPublicProfile ? profilePhotoUrl(sailor.id, sailor.avatarUrl) : null,
     instagram: sailor.showSocialLinksOnPublicProfile ? sailor.instagram : null,
     sailingJourney: sailor.showSailingMilestonesOnPublicProfile
       ? sailor.sailingJourney
