@@ -180,6 +180,13 @@ const AdminGoldAnalysisPanel = dynamic(
     ),
   { loading: () => <PanelLoading /> },
 );
+const AdminGoldFormPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminGoldFormPanel").then(
+      (m) => m.AdminGoldFormPanel,
+    ),
+  { loading: () => <PanelLoading /> },
+);
 const AdminSelectionPanel = dynamic(
   () =>
     import("@/components/admin/AdminSelectionPanel").then(
@@ -497,8 +504,11 @@ function AdminDashboardInner({
     (row) => row.id === data.selectedRegattaIdForResultEdit,
   );
   const openSailorInDirectory = useCallback(
-    (sailorId: string) => {
-      if (!sailors.openSailor(sailorId)) return;
+    (sailorId: string, sailorName?: string) => {
+      if (!sailors.openSailor(sailorId)) {
+        if (!sailorName) return;
+        sailors.panelProps.setDbSearch(sailorName);
+      }
       setActiveTab("edit");
       setEditSubTab("sailors");
     },
@@ -1038,6 +1048,15 @@ function AdminDashboardInner({
                 sailors={data.sailorList}
                 regattas={data.regattaList}
                 results={data.resultsList}
+              />
+            </div>
+          )}
+
+          {activeTab === "gold-form" && (
+            <div className="w-full min-w-0">
+              <AdminGoldFormPanel
+                isSuperadmin={isSuperadmin}
+                onOpenSailor={openSailorInDirectory}
               />
             </div>
           )}

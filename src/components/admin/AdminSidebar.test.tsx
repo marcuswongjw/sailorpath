@@ -32,6 +32,9 @@ describe("AdminSidebar", () => {
       "aria-current",
       "page",
     );
+    expect(
+      screen.getByRole("link", { name: "Gold form & watchlist" }),
+    ).toHaveAttribute("href", "/admin?area=insights&view=gold-form");
   });
   it("uses one vertical navigation with contextual workspace tools", () => {
     const { container } = render(

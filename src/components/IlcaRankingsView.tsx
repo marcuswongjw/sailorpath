@@ -213,29 +213,33 @@ export function IlcaRankingsView({
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="text-sm font-bold text-charcoal leading-snug">
-                  Projected National Squad &amp; 2026 Selection Trials
+                  {boatClass === "ILCA 6"
+                    ? "2027 ILCA 6 Selection Policies & National Squad"
+                    : "Projected National Squad & 2026 Selection Trials"}
                 </p>
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold text-harbour bg-harbour/10 px-2 py-0.5 rounded-full border border-harbour/20">
                   Sign in required
                 </span>
               </div>
               <p className="text-[12px] text-slate-soft mt-0.5 leading-snug">
-                Signed-in accounts can access projected Nat squad status and the 2026 Eastern Seaboard &amp; Asian Open Selection Trials leaderboards.
+                {boatClass === "ILCA 6"
+                  ? "View official 2027 SSF ILCA 6 selection criteria for Langkawi, China Camp, Kieler Woche, Youth Worlds, and Eastern Seaboard, or sign in for full squad tools."
+                  : "Signed-in accounts can access projected Nat squad status and the 2026 Eastern Seaboard & Asian Open Selection Trials leaderboards, plus 2027 selection policies."}
               </p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:shrink-0 pl-10 md:pl-0">
             <Link
-              href="/sg/ilca4/selection"
+              href={boatClass === "ILCA 6" ? "/sg/ilca6/selection" : "/sg/ilca4/selection"}
               prefetch
               className="inline-flex items-center gap-1 rounded-full bg-sailcloth border border-cool-veil px-3 py-1.5 text-xs font-bold text-charcoal hover:bg-aqua-mist transition-colors"
             >
               <Trophy className="h-3 w-3 text-harbour" />
-              <span>Selection Trials</span>
+              <span>{boatClass === "ILCA 6" ? "2027 Selection Policies" : "Selection Trials"}</span>
               <span>→</span>
             </Link>
             <Link
-              href="/login?next=%2Fsg%2Filca4"
+              href={boatClass === "ILCA 6" ? "/login?next=%2Fsg%2Filca6" : "/login?next=%2Fsg%2Filca4"}
               className="inline-flex rounded-full bg-harbour px-3.5 py-1.5 text-xs font-bold text-white hover:bg-harbour-deep shadow-xs"
             >
               Log in or sign up
@@ -309,7 +313,7 @@ export function IlcaRankingsView({
                   className="inline-flex items-center gap-1.5 rounded-full border border-harbour/30 bg-harbour/10 px-3 py-1 text-[11px] font-bold text-harbour hover:bg-harbour/20 transition-colors shadow-xs"
                 >
                   <Trophy className="h-3 w-3 text-harbour" />
-                  <span>Selection trials &amp; Nat squad policy</span>
+                  <span>Selection trials &amp; 2027 policies</span>
                   <span>→</span>
                 </Link>
                 {projectedSquad.length > 0 && (
@@ -317,6 +321,19 @@ export function IlcaRankingsView({
                     <span>{projectedSquad.length} Projected Nat Squad</span>
                   </span>
                 )}
+              </div>
+            )}
+            {boatClass === "ILCA 6" && (
+              <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                <Link
+                  href="/sg/ilca6/selection"
+                  prefetch
+                  className="inline-flex items-center gap-1.5 rounded-full border border-harbour/30 bg-harbour/10 px-3 py-1 text-[11px] font-bold text-harbour hover:bg-harbour/20 transition-colors shadow-xs"
+                >
+                  <Trophy className="h-3 w-3 text-harbour" />
+                  <span>2027 Selection Policies</span>
+                  <span>→</span>
+                </Link>
               </div>
             )}
           </div>

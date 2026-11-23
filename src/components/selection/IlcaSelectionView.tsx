@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Trophy,
@@ -24,8 +24,18 @@ import {
   getAsianProvisionalLeaders,
   getNjtsProjectedSquad,
 } from "@/lib/ilcaSelection";
+import { ILCA4_2027_SELECTION_POLICY } from "@/lib/selectionPolicies2027";
+import { SelectionPolicy2027Panel } from "@/components/selection/SelectionPolicy2027Panel";
 
-type SelectionTab = "eastern" | "asian" | "njts" | "scoreboard" | "policy";
+type SelectionTab = "eastern" | "asian" | "njts" | "scoreboard" | "policy" | "policies2027";
+const ILCA4_TABS: readonly SelectionTab[] = [
+  "eastern",
+  "asian",
+  "njts",
+  "scoreboard",
+  "policy",
+  "policies2027",
+];
 
 export interface IlcaSelectionViewProps {
   initialSailors?: IlcaTrialSailor[];
@@ -77,10 +87,26 @@ export function IlcaSelectionView({
   }, [isLoggedIn, sailorList.length, reloadTick]);
 
   const [activeTab, setActiveTab] = useState<SelectionTab>("eastern");
+  const tabRefs = useRef<Partial<Record<SelectionTab, HTMLButtonElement | null>>>({});
   const [selectedSailorId, setSelectedSailorId] = useState<string | null>(null);
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [eligibilityFilter, setEligibilityFilter] = useState<"u14" | "qualified" | "all">("u14");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const handleTabKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const idx = ILCA4_TABS.indexOf(activeTab);
+    if (idx === -1) return;
+    let nextIdx = idx;
+    if (e.key === "ArrowRight") nextIdx = (idx + 1) % ILCA4_TABS.length;
+    else if (e.key === "ArrowLeft") nextIdx = (idx - 1 + ILCA4_TABS.length) % ILCA4_TABS.length;
+    else if (e.key === "Home") nextIdx = 0;
+    else if (e.key === "End") nextIdx = ILCA4_TABS.length - 1;
+    else return;
+    e.preventDefault();
+    const nextTab = ILCA4_TABS[nextIdx];
+    setActiveTab(nextTab);
+    tabRefs.current[nextTab]?.focus();
+  };
 
   const easternCampaign = ILCA4_INTERNATIONAL_CAMPAIGNS.find(
     (c) => c.id === "eastern-seaboard"
@@ -330,19 +356,27 @@ export function IlcaSelectionView({
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-12 sm:pt-6 sm:pb-16 space-y-6">
       {/* ── Breadcrumb & Top Actions ── */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
           href="/sg/ilca4"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-soft hover:text-charcoal transition-colors"
         >
           <span>← Back to ILCA 4 National Standings</span>
         </Link>
-        <Link
-          href="/sg/optimist/selection"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-soft hover:text-charcoal transition-colors"
-        >
-          <span>Optimist Selection Trials →</span>
-        </Link>
+        <div className="flex flex-wrap items-center gap-4">
+          <Link
+            href="/sg/ilca6/selection"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-soft hover:text-charcoal transition-colors"
+          >
+            <span>ILCA 6 Selection Policies →</span>
+          </Link>
+          <Link
+            href="/sg/optimist/selection"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-soft hover:text-charcoal transition-colors"
+          >
+            <span>Optimist Selection Trials →</span>
+          </Link>
+        </div>
       </div>
 
       {/* ── Hero Header ── */}
@@ -437,66 +471,113 @@ export function IlcaSelectionView({
         </div>
 
         {/* ── Tab Navigation ── */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pt-2 border-t border-cool-veil no-scrollbar">
+        <div
+          role="tablist"
+          aria-label="ILCA 4 selection sections"
+          onKeyDown={handleTabKeyDown}
+          className="flex items-center gap-1.5 overflow-x-auto pt-2 border-t border-cool-veil no-scrollbar"
+        >
           <button
+            ref={(el) => { tabRefs.current.eastern = el; }}
+            id="ilca4-tab-eastern"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "eastern"}
+            tabIndex={activeTab === "eastern" ? 0 : -1}
             onClick={() => setActiveTab("eastern")}
-            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl border-b-2 px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === "eastern"
-                ? "bg-sky-500 text-white shadow-xs"
-                : "bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
+                ? "bg-sky-500 border-sky-700 text-white shadow-xs"
+                : "border-transparent bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
             }`}
           >
-            <Trophy className="h-3.5 w-3.5" />
+            <Trophy className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Eastern Seaboard 2026</span>
           </button>
           <button
+            ref={(el) => { tabRefs.current.asian = el; }}
+            id="ilca4-tab-asian"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "asian"}
+            tabIndex={activeTab === "asian" ? 0 : -1}
             onClick={() => setActiveTab("asian")}
-            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl border-b-2 px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === "asian"
-                ? "bg-sky-500 text-white shadow-xs"
-                : "bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
+                ? "bg-sky-500 border-sky-700 text-white shadow-xs"
+                : "border-transparent bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
             }`}
           >
-            <Award className="h-3.5 w-3.5" />
+            <Award className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Asian Open Champs 2026</span>
           </button>
           <button
+            ref={(el) => { tabRefs.current.njts = el; }}
+            id="ilca4-tab-njts"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "njts"}
+            tabIndex={activeTab === "njts" ? 0 : -1}
             onClick={() => setActiveTab("njts")}
-            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl border-b-2 px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === "njts"
-                ? "bg-sky-500 text-white shadow-xs"
-                : "bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
+                ? "bg-sky-500 border-sky-700 text-white shadow-xs"
+                : "border-transparent bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
             }`}
           >
-            <Users className="h-3.5 w-3.5" />
+            <Users className="h-3.5 w-3.5" aria-hidden="true" />
             <span>NJTS Squad Policy</span>
           </button>
           <button
+            ref={(el) => { tabRefs.current.scoreboard = el; }}
+            id="ilca4-tab-scoreboard"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "scoreboard"}
+            tabIndex={activeTab === "scoreboard" ? 0 : -1}
             onClick={() => setActiveTab("scoreboard")}
-            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl border-b-2 px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === "scoreboard"
-                ? "bg-sky-500 text-white shadow-xs"
-                : "bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
+                ? "bg-sky-500 border-sky-700 text-white shadow-xs"
+                : "border-transparent bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
             }`}
           >
-            <Compass className="h-3.5 w-3.5" />
+            <Compass className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Complete Matrix (81 Sailors)</span>
           </button>
           <button
+            ref={(el) => { tabRefs.current.policy = el; }}
+            id="ilca4-tab-policy"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "policy"}
+            tabIndex={activeTab === "policy" ? 0 : -1}
             onClick={() => setActiveTab("policy")}
-            className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+            className={`flex items-center gap-1.5 rounded-xl border-b-2 px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === "policy"
-                ? "bg-sky-500 text-white shadow-xs"
-                : "bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
+                ? "bg-sky-500 border-sky-700 text-white shadow-xs"
+                : "border-transparent bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
             }`}
           >
-            <FileText className="h-3.5 w-3.5" />
+            <FileText className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Policy Guidelines</span>
+          </button>
+          <button
+            ref={(el) => { tabRefs.current.policies2027 = el; }}
+            id="ilca4-tab-policies2027"
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "policies2027"}
+            tabIndex={activeTab === "policies2027" ? 0 : -1}
+            onClick={() => setActiveTab("policies2027")}
+            className={`flex items-center gap-1.5 rounded-xl border-b-2 px-3.5 py-2 text-xs font-bold transition-all shrink-0 cursor-pointer ${
+              activeTab === "policies2027"
+                ? "bg-sky-500 border-sky-700 text-white shadow-xs"
+                : "border-transparent bg-sailcloth text-slate-soft hover:text-charcoal hover:bg-cool-veil/50"
+            }`}
+          >
+            <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>2027 Policies (4)</span>
           </button>
         </div>
       </div>
@@ -1336,6 +1417,14 @@ export function IlcaSelectionView({
               </p>
             </div>
           </div>
+        </div>
+      )}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* TAB 6: 2027 SELECTION POLICIES                                        */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {activeTab === "policies2027" && (
+        <div role="tabpanel" aria-labelledby="ilca4-tab-policies2027">
+          <SelectionPolicy2027Panel policy={ILCA4_2027_SELECTION_POLICY} />
         </div>
       )}
     </div>

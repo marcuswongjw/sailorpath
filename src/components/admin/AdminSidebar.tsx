@@ -249,6 +249,8 @@ export function AdminSidebar({
             ? (
                 [
                   ["metrics", "Platform metrics"],
+                  ["gold-form", "Gold form & watchlist"],
+                  ["optimist", "Gold post-promo"],
                   ["user-changes", "User changes"],
                 ] as const
               ).map(([view, label]) => ({
@@ -429,6 +431,7 @@ export function adminPageTitle(area: AdminArea, view: string): string {
     return "Claims";
   }
   if (area === "insights") {
+    if (view === "gold-form") return "Gold fleet form & watchlist";
     if (view === "user-changes") return "User changes";
     if (view === "metrics") return "Platform metrics";
     return "Optimist analysis";

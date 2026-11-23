@@ -15,6 +15,7 @@ export type CalendarEventOverride = {
   countsForRanking?: boolean | null;
   isSelectionTrial?: boolean | null;
   keyDeadlines?: string | null;
+  scheduleSummary?: string | null;
 };
 
 export function canonicalCalendarEventSlug(slug: string): string {
@@ -46,6 +47,10 @@ export function applyCalendarEventOverride(
     countsForRanking: saved.countsForRanking ?? entry.countsForRanking,
     isSelectionTrial: saved.isSelectionTrial ?? entry.isSelectionTrial,
     keyDeadlines: saved.keyDeadlines || undefined,
+    scheduleNotes:
+      saved.scheduleSummary !== undefined
+        ? saved.scheduleSummary || undefined
+        : entry.scheduleNotes,
     classes: primary && classes.length > 0 ? classes : entry.classes,
     boatClass: primary && classes.length > 0 ? classes[0] : entry.boatClass,
   };

@@ -18,4 +18,5 @@ export const adminQueryKeys = {
   duplicates: () => ["admin", "duplicate-count"] as const,
   recentChanges: () => ["admin", "overview-changes"] as const,
   regattaSuggestions: () => ["admin", "regatta-suggestions"] as const,
+  goldForm: () => ["admin", "gold-form"] as const,
 };

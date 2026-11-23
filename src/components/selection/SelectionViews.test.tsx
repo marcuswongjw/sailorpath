@@ -2,6 +2,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { IlcaSelectionView } from "./IlcaSelectionView";
+import { Ilca6SelectionView } from "./Ilca6SelectionView";
 import { WingfoilSelectionView } from "./WingfoilSelectionView";
 import { ILCA4_SELECTION_SAILORS } from "@/lib/ilcaSelectionData";
 
@@ -89,6 +90,53 @@ describe("IlcaSelectionView", () => {
     expect(
       screen.getByText(/16-Athlete Selection Matrix/i)
     ).toBeInTheDocument();
+
+    // Click 2027 Policies tab
+    fireEvent.click(screen.getByRole("tab", { name: /2027 Policies/i }));
+    expect(screen.getByText("2027 Selection Policy for ILCA 4")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "23rd Langkawi International Regatta 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "ILCA 4 China Training Camp 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "ILCA 4 Youth World Championships 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Eastern Seaboard Regatta 2027" })
+    ).toBeInTheDocument();
+  });
+});
+
+describe("Ilca6SelectionView", () => {
+  it("renders all 5 ILCA 6 2027 selection campaigns and class cross-links", () => {
+    render(<Ilca6SelectionView />);
+
+    expect(screen.getByText("ILCA 6 Selection Policies 2027")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "23rd Langkawi International Regatta 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "ILCA 6 China Training Camp 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Kieler Woche 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "ILCA 6 Youth World Championships 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Eastern Seaboard Regatta 2027" })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /ILCA 4 Selection/i })).toHaveAttribute(
+      "href",
+      "/sg/ilca4/selection"
+    );
+    expect(screen.getByRole("link", { name: /Optimist Selection/i })).toHaveAttribute(
+      "href",
+      "/sg/optimist/selection"
+    );
   });
 });
 

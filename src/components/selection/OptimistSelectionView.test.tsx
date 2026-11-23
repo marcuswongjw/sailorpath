@@ -226,4 +226,39 @@ describe("OptimistSelectionView", () => {
     expect(screen.getByText(/Your Claimed Sailor: Lucas Wong/)).toBeInTheDocument();
     expect(screen.getByText("Rank #1 of 2")).toBeInTheDocument();
   });
+
+  it("renders all 6 Optimist 2027 selection campaigns when clicking the 2027 Policies tab", () => {
+    mockUseAccount.mockReturnValue({
+      email: "member@example.com",
+      owned: [],
+      ready: true,
+    });
+
+    render(<OptimistSelectionView initialData={mockPayload} />);
+
+    fireEvent.click(screen.getByRole("tab", { name: /2027 Policies/i }));
+
+    expect(screen.getByText("2027 Selection Policy for Optimist")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "23rd Langkawi International Regatta 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 3,
+        name: "15th Bodrum International Optimist Regatta (Europe Training Camp)",
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "IODA Optimist World Championship 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "IODA Optimist European Championship 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "ROC Kosmos 2027" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Perth Training Camp 2027" })
+    ).toBeInTheDocument();
+  });
 });

@@ -35,6 +35,7 @@ const quickLinks = [
   ["/admin?area=events&view=card", "Find an event"],
   ["/admin?area=sailors&view=directory", "Find a sailor"],
   ["/admin/news", "Write an update"],
+  ["/admin?area=insights&view=gold-form", "Gold form & watchlist"],
   ["/admin?area=insights&view=metrics", "View insights"],
 ];
 const panel = "rounded-xl border border-slate-200 bg-white p-4";

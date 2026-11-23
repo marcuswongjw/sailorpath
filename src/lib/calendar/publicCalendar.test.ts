@@ -63,6 +63,10 @@ describe("saved event regions", () => {
     expect(savedEventRegion("Royal Brighton Yacht Club, Port Phillip Bay, Victoria")).toBe("International");
     expect(savedEventRegion("Port Denison Sailing Club, Bowen, Queensland")).toBe("International");
     expect(savedEventRegion("Royal Queensland Yacht Squadron, Manly, Queensland")).toBe("International");
+    expect(savedEventRegion("Langkawi, Malaysia")).toBe("Asia");
+    expect(savedEventRegion("Kiel, Germany")).toBe("Europe");
+    expect(savedEventRegion("Bodrum, Turkey")).toBe("Europe");
+    expect(savedEventRegion("Weymouth, UK")).toBe("Europe");
     expect(savedEventRegion(null)).toBeUndefined();
     expect(savedEventRegion("Changi Sailing Club, Singapore")).toBe("Singapore");
   });

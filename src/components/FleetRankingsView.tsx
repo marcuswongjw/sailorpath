@@ -451,7 +451,7 @@ export function FleetRankingsView({
                   className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[11px] font-bold text-[var(--sp-racing-deep)] hover:bg-orange-500/20 transition-colors"
                 >
                   <Trophy className="h-3 w-3 text-[var(--sp-racing-deep)]" />
-                  <span>2026 Selection Trials (Asian &amp; Perth)</span>
+                  <span>2026 &amp; 2027 Selection Trials</span>
                   <span>→</span>
                 </Link>
               </div>

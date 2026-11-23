@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Trophy,
@@ -11,11 +11,15 @@ import {
   AlertCircle,
   Calendar,
   MapPin,
+  FileText,
 } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import type { OptimistSelectionPayload } from "@/lib/selectionQueries";
+import { OPTIMIST_2027_SELECTION_POLICY } from "@/lib/selectionPolicies2027";
+import { SelectionPolicy2027Panel } from "@/components/selection/SelectionPolicy2027Panel";
 
-type Tab = "asian" | "perth" | "combined";
+type Tab = "asian" | "perth" | "combined" | "policies2027";
+const OPTIMIST_TABS: readonly Tab[] = ["asian", "perth", "combined", "policies2027"];
 
 export function OptimistSelectionView({
   initialData,
@@ -26,9 +30,25 @@ export function OptimistSelectionView({
   const isLoggedIn = Boolean(email);
 
   const [activeTab, setActiveTab] = useState<Tab>("asian");
+  const tabRefs = useRef<Partial<Record<Tab, HTMLButtonElement | null>>>({});
   const [selectedSailorId, setSelectedSailorId] = useState<string | null>(null);
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [perthBucketFilter, setPerthBucketFilter] = useState<string>("all");
+
+  const handleTabKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const idx = OPTIMIST_TABS.indexOf(activeTab);
+    if (idx === -1) return;
+    let nextIdx = idx;
+    if (e.key === "ArrowRight") nextIdx = (idx + 1) % OPTIMIST_TABS.length;
+    else if (e.key === "ArrowLeft") nextIdx = (idx - 1 + OPTIMIST_TABS.length) % OPTIMIST_TABS.length;
+    else if (e.key === "Home") nextIdx = 0;
+    else if (e.key === "End") nextIdx = OPTIMIST_TABS.length - 1;
+    else return;
+    e.preventDefault();
+    const nextTab = OPTIMIST_TABS[nextIdx];
+    setActiveTab(nextTab);
+    tabRefs.current[nextTab]?.focus();
+  };
 
   const {
     matched,
@@ -199,8 +219,8 @@ export function OptimistSelectionView({
       {/* ── Header ── */}
       <div className="space-y-2">
         <div className="inline-flex items-center gap-2 rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/30 px-3 py-1 text-xs font-bold text-[var(--sp-racing-orange)]">
-          <Trophy className="h-3.5 w-3.5" />
-          <span>2026 Selection Campaigns</span>
+          <Trophy className="h-3.5 w-3.5" aria-hidden="true" />
+          <span>2026 &amp; 2027 Selection Campaigns</span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
@@ -209,15 +229,23 @@ export function OptimistSelectionView({
             </h1>
             <p className="text-xs sm:text-sm text-[var(--sp-slate-soft)] mt-1 max-w-2xl leading-relaxed">
               Combined race score series across official Singapore trials for
-              the 2026 Asian &amp; Oceania Championship and Perth Training Camp.
+              the 2026 Asian &amp; Oceania Championship and Perth Training Camp, plus the 2027 SSF selection policies.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => setActiveTab("policies2027")}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[var(--sp-harbour-teal)]/30 bg-[var(--sp-aqua-mist)] px-3 py-1.5 font-semibold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] shadow-xs transition-colors"
+            >
+              <FileText className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" aria-hidden="true" />
+              <span>2027 Selection Policies →</span>
+            </button>
             <Link
               href="/sg/optimist/gold"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-3 py-1.5 font-semibold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] shadow-xs transition-colors"
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-3 py-1.5 font-semibold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] shadow-xs transition-colors"
             >
-              <Compass className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
+              <Compass className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" aria-hidden="true" />
               Gold Standings
             </Link>
           </div>
@@ -225,6 +253,7 @@ export function OptimistSelectionView({
       </div>
 
       {/* ── Selection Events Status ── */}
+      {activeTab !== "policies2027" && (
       <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 space-y-3 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-[12px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
@@ -296,9 +325,10 @@ export function OptimistSelectionView({
           </div>
         )}
       </div>
+      )}
 
       {/* ── Claimed Sailor Spotlight Banner (Logged-In User) ── */}
-      {mySailor && mySailorAsianRank && (
+      {activeTab !== "policies2027" && mySailor && mySailorAsianRank && (
         <div className="rounded-2xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
           <div className="flex items-start gap-3 min-w-0">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-black text-sm border bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border-[var(--sp-racing-orange)]/30">
@@ -343,45 +373,83 @@ export function OptimistSelectionView({
 
       {/* ── Campaign Tabs & Controls ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--sp-cool-veil)] pb-3">
-        <div className="flex items-center gap-1.5 bg-[var(--sp-sailcloth)] p-1 rounded-xl border border-[var(--sp-cool-veil)]">
+        <div
+          role="tablist"
+          aria-label="Optimist selection campaigns"
+          onKeyDown={handleTabKeyDown}
+          className="flex items-center gap-1.5 overflow-x-auto bg-[var(--sp-sailcloth)] p-1 rounded-xl border border-[var(--sp-cool-veil)]"
+        >
           <button
+            ref={(el) => { tabRefs.current.asian = el; }}
+            id="opti-tab-asian"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "asian"}
+            tabIndex={activeTab === "asian" ? 0 : -1}
             onClick={() => setActiveTab("asian")}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+            className={`shrink-0 flex items-center gap-2 rounded-lg border-b-2 px-3 py-1.5 text-xs font-bold transition-colors ${
               activeTab === "asian"
-                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+                ? "bg-[var(--sp-harbour-teal)] border-[var(--sp-racing-orange)] text-white shadow-xs"
+                : "border-transparent text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             }`}
           >
-            <Trophy className="h-3.5 w-3.5" />
+            <Trophy className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Asian &amp; Oceania (Top 10)</span>
           </button>
           <button
+            ref={(el) => { tabRefs.current.perth = el; }}
+            id="opti-tab-perth"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "perth"}
+            tabIndex={activeTab === "perth" ? 0 : -1}
             onClick={() => setActiveTab("perth")}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+            className={`shrink-0 flex items-center gap-2 rounded-lg border-b-2 px-3 py-1.5 text-xs font-bold transition-colors ${
               activeTab === "perth"
-                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+                ? "bg-[var(--sp-harbour-teal)] border-[var(--sp-racing-orange)] text-white shadow-xs"
+                : "border-transparent text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             }`}
           >
-            <Award className="h-3.5 w-3.5" />
+            <Award className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Perth Camp (Age Buckets)</span>
           </button>
           <button
+            ref={(el) => { tabRefs.current.combined = el; }}
+            id="opti-tab-combined"
             type="button"
+            role="tab"
+            aria-selected={activeTab === "combined"}
+            tabIndex={activeTab === "combined" ? 0 : -1}
             onClick={() => setActiveTab("combined")}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+            className={`shrink-0 flex items-center gap-2 rounded-lg border-b-2 px-3 py-1.5 text-xs font-bold transition-colors ${
               activeTab === "combined"
-                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+                ? "bg-[var(--sp-harbour-teal)] border-[var(--sp-racing-orange)] text-white shadow-xs"
+                : "border-transparent text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             }`}
           >
-            <Users className="h-3.5 w-3.5" />
+            <Users className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Full Scoreboard ({combinedScores.length})</span>
+          </button>
+          <button
+            ref={(el) => { tabRefs.current.policies2027 = el; }}
+            id="opti-tab-policies2027"
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "policies2027"}
+            tabIndex={activeTab === "policies2027" ? 0 : -1}
+            onClick={() => setActiveTab("policies2027")}
+            className={`shrink-0 flex items-center gap-2 rounded-lg border-b-2 px-3 py-1.5 text-xs font-bold transition-colors ${
+              activeTab === "policies2027"
+                ? "bg-[var(--sp-harbour-teal)] border-[var(--sp-racing-orange)] text-white shadow-xs"
+                : "border-transparent text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+            }`}
+          >
+            <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>2027 Policies (6)</span>
           </button>
         </div>
 
+        {activeTab !== "policies2027" && (
         <div className="flex items-center gap-2 flex-wrap">
           {/* Gender Filter */}
           <div className="flex items-center rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-0.5 text-xs">
@@ -428,6 +496,7 @@ export function OptimistSelectionView({
             </select>
           )}
         </div>
+        )}
       </div>
 
       {/* ── TAB 1: Asian & Oceania Championship ── */}
@@ -768,6 +837,13 @@ export function OptimistSelectionView({
               </table>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ── TAB 4: 2027 Selection Policies ── */}
+      {activeTab === "policies2027" && (
+        <div role="tabpanel" aria-labelledby="opti-tab-policies2027">
+          <SelectionPolicy2027Panel policy={OPTIMIST_2027_SELECTION_POLICY} />
         </div>
       )}
     </div>

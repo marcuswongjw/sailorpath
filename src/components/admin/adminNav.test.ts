@@ -329,4 +329,11 @@ describe("canonical admin areas", () => {
       )
     ).toEqual({ area: "events", view: "attention", event: null, sheet: null });
   });
+
+  it("preserves Gold form & watchlist under Insights", () => {
+    const params = new URLSearchParams("area=insights&view=gold-form");
+    const nav = parseAdminNav(params);
+    expect(nav.tab).toBe("gold-form");
+    expect(serializeAdminNav(nav)).toBe("area=insights&view=gold-form");
+  });
 });

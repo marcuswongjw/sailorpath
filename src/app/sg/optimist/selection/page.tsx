@@ -4,9 +4,9 @@ import { getCachedOptimistSelectionData } from "@/lib/selectionQueries";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Optimist Selection Trials 2026 | SailorPath",
+  title: "Optimist Selection Trials & 2027 Policies | SailorPath",
   description:
-    "Official Singapore Optimist multi-event selection trials, combined series scores, and provisional team rosters for Asian & Oceania 2026 and Perth Camp.",
+    "Official Singapore Optimist multi-event selection trials, combined series scores, provisional 2026 team rosters, and 2027 selection policies.",
 };
 
 /** Selection scores refresh when results are published; hourly backstop. */

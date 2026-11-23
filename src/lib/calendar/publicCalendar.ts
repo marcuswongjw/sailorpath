@@ -35,10 +35,11 @@ const getCachedCalendarEvents = unstable_cache(
           countsForRanking: regattaEvents.countsForRanking,
           isSelectionTrial: regattaEvents.isSelectionTrial,
           keyDeadlines: regattaEvents.keyDeadlines,
+          scheduleSummary: regattaEvents.scheduleSummary,
         })
         .from(regattaEvents)
     ),
-  ["calendar-events-v2-2027-official-details"],
+  ["calendar-events-v3-2027-selection-events"],
   {
     revalidate: PUBLIC_DATA_REVALIDATE_SECONDS,
     tags: [CACHE_TAG_PUBLIC_REGATTAS],
@@ -87,8 +88,8 @@ export function dedupeEventSheets(sheets: RegattaRecord[]): RegattaRecord[] {
 export function savedEventRegion(venue: string | null | undefined): string | undefined {
   const location = (venue ?? "").toLowerCase();
   if (/\bsingapore\b/.test(location)) return "Singapore";
-  if (/\b(japan|thailand|sri lanka|hong kong|china)\b/.test(location)) return "Asia";
-  if (/\b(spain|greece|great britain|united kingdom|france|italy|portugal|poland|norway)\b/.test(location)) return "Europe";
+  if (/\b(japan|thailand|sri lanka|hong kong|china|malaysia)\b/.test(location)) return "Asia";
+  if (/\b(spain|greece|great britain|united kingdom|uk|france|italy|portugal|poland|norway|germany|turkey|türkiye)\b/.test(location)) return "Europe";
   if (/\b(australia|queensland|port phillip bay)\b/.test(location)) return "International";
   return undefined;
 }
@@ -121,6 +122,7 @@ export async function getPublicCalendarData() {
       countsForRanking: row.countsForRanking,
       isSelectionTrial: row.isSelectionTrial,
       keyDeadlines: row.keyDeadlines,
+      scheduleSummary: row.scheduleSummary,
     }));
   } catch {
     // Do not fall back to built-in entries when deletion state cannot be checked.
@@ -234,6 +236,7 @@ export async function getPublicCalendarData() {
       countsForRanking: saved.countsForRanking !== false,
       isSelectionTrial: Boolean(saved.isSelectionTrial),
       keyDeadlines: saved.keyDeadlines || undefined,
+      scheduleNotes: saved.scheduleSummary || undefined,
       norUrl: saved.norUrl || undefined,
       registrationUrl: saved.registrationUrl || undefined,
       boatClass: saved.classes?.[0] || "Optimist",

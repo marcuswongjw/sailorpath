@@ -643,9 +643,9 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     venue: "Changi Sailing Club, 32 Netheravon Road, Singapore 508508",
     organizer: "Changi Sailing Club",
     countsForRanking: true,
-    isSelectionTrial: false,
+    isSelectionTrial: true,
     registrationUrl: "https://www.csc.org.sg/events/csc-optimist-championship-gold-2025/var/ri-1.l-L1/",
-    scheduleNotes: "23–24 January 2027, as published by Changi Sailing Club and the Singapore Sailing Federation. Gold Fleet ranking event; no results published yet.",
+    scheduleNotes: "23–24 January 2027, as published by Changi Sailing Club and the Singapore Sailing Federation. Gold Fleet ranking event and official 2027 SSF Optimist selection event; no results published yet.",
     totalFleetSize: 0,
   },
   {

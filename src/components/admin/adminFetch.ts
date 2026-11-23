@@ -162,3 +162,10 @@ export function fetchAdminDuplicateCount(options?: AdminFetchOptions) {
     options,
   );
 }
+
+export function fetchAdminGoldForm(options?: AdminFetchOptions) {
+  return adminJson<import("@/app/api/admin/gold-form/route").AdminGoldFormResponse>(
+    "/api/admin/gold-form",
+    options,
+  );
+}

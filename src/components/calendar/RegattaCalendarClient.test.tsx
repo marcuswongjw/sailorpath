@@ -334,4 +334,29 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByText("Past Regatta 2020")).toBeInTheDocument();
     expect(screen.queryByText("Singapore National Sailing Championships 2099")).not.toBeInTheDocument();
   });
+
+  it("filters multi-class pending 2027 regattas across ILCA 4, ILCA 6, and Selection Trials Only", () => {
+    render(
+      <RegattaCalendarClient
+        regattas={mockEvents}
+        pendingRegattas={pending}
+        initialSearch="Pesta Sukan Regatta 2027"
+      />
+    );
+
+    expect(screen.getByText("Pesta Sukan Regatta 2027")).toBeInTheDocument();
+    expect(screen.getByText("Official Selection Trial")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /^ILCA 4$/i }));
+    expect(screen.getByText("Pesta Sukan Regatta 2027")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /^ILCA 6$/i }));
+    expect(screen.getByText("Pesta Sukan Regatta 2027")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /selection trials only/i }));
+    expect(screen.getByText("Pesta Sukan Regatta 2027")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /^Optimist$/i }));
+    expect(screen.queryByText("Pesta Sukan Regatta 2027")).not.toBeInTheDocument();
+  });
 });

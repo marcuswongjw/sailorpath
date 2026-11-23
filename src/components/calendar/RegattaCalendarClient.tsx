@@ -241,9 +241,10 @@ export function RegattaCalendarClient({
     !regattas.some((dated) => dated.slug === event.slug) &&
     (!selectedEvent || selectedEvent === event.slug) &&
     (selectedRegion === "all" || selectedRegion.toLowerCase() === event.region.toLowerCase()) &&
-    matchesRegattaClass(event.boatClass, selectedClass) &&
+    (event.classes?.length ? event.classes : [event.boatClass]).some((cls) => matchesRegattaClass(cls, selectedClass)) &&
     (selectedYear === "all" || selectedYear === event.year) &&
-    !filterTrialOnly && !(canFilterRanking && rankingFilter !== "all") &&
+    (!filterTrialOnly || Boolean(event.isSelectionTrial)) &&
+    !(canFilterRanking && rankingFilter !== "all") &&
     eventMatchesQuery(event, searchQuery)
   );
 

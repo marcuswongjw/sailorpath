@@ -12,6 +12,7 @@ export type AdminActiveTab =
   | "edit"
   | "ops"
   | "analysis"
+  | "gold-form"
   | "ilca"
   | "wingfoil"
   | "techno293"
@@ -84,7 +85,7 @@ export type AdminSailorsView =
   | "selection"
   | "ilca";
 export type AdminInboxView = "suggestions" | "claims" | "coaches" | "support";
-export type AdminInsightsView = "optimist" | "ilca" | "wingfoil" | "techno293" | "metrics" | "user-changes";
+export type AdminInsightsView = "gold-form" | "optimist" | "ilca" | "wingfoil" | "techno293" | "metrics" | "user-changes";
 export type AdminSettingsView = "audit" | "changelog" | "tools";
 
 export type AdminAreaState = {
@@ -129,6 +130,7 @@ const INBOX_VIEWS: readonly AdminInboxView[] = [
   "support",
 ];
 const INSIGHTS_VIEWS: readonly AdminInsightsView[] = [
+  "gold-form",
   "user-changes",
   "optimist",
   "ilca",
@@ -159,6 +161,7 @@ const PRIMARY_TABS: readonly AdminActiveTab[] = [
   "edit",
   "ops",
   "analysis",
+  "gold-form",
   "ilca",
   "wingfoil",
   "techno293",
@@ -247,6 +250,8 @@ export function legacyToArea(state: AdminNavState): AdminAreaState {
       return blankArea("inbox", "claims");
     case "analysis":
       return blankArea("insights", "optimist");
+    case "gold-form":
+      return blankArea("insights", "gold-form");
     case "ilca":
       return blankArea("sailors", "ilca");
     case "wingfoil":
@@ -302,6 +307,9 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       return { tab: "ops", sub, regattaId: null };
     }
     case "insights":
+      if (state.view === "gold-form") {
+        return { tab: "gold-form", sub: "sailors", regattaId: null };
+      }
       if (state.view === "ilca") return { tab: "ilca", sub: "sailors", regattaId: null };
       if (state.view === "wingfoil") {
         return { tab: "wingfoil", sub: "sailors", regattaId: null };
