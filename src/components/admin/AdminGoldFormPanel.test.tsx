@@ -76,6 +76,7 @@ function buildMockPayload(): AdminGoldFormResponse {
       scope: "all_gold",
       asOfYmd: "2026-11-23",
     }),
+    snapshots: [],
     generatedAt: "2026-11-23T12:00:00.000Z",
   };
 }

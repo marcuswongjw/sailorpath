@@ -1,10 +1,14 @@
 import { birthYear as parseBirthYear } from "@/lib/age";
 import { currentPeriodFromSgToday, periodHalfFromYmd, toYmd, todayYmdSg } from "@/lib/datesSg";
 import {
+  calculateRankings,
+  periodLabel,
   regattaCountsForRanking,
   regattaMatchesSeriesClass,
   resolveSailorFleet,
+  sharedOverallRanks,
   type RegattaRecord,
+  type RegattaResultRecord,
   type SailorRecord,
 } from "@/lib/ranking";
 
@@ -111,6 +115,18 @@ export type GoldSailorFormEntry = {
   projectedRank: number | null;
   /** Positive = projected climb in places vs current weighted rank */
   projectedRankGain: number | null;
+  /** Current Singapore Gold National Ranking (Best 3 of 5 in current half) */
+  currentNationalRank: number | null;
+  /** Current half Best-3-of-5 national ranking score */
+  currentBest3of5: number | null;
+  /** True if born <= 2011 (ages out of Optimist after 2026) */
+  agingOut2027: boolean;
+  /** Composite Best-3-of-5-adjusted score used to rank 30 Jun 2027 projections */
+  projectedJun2027Score: number;
+  /** Projected Singapore Gold National Ranking by 30 Jun 2027 (null if aging out) */
+  projectedNationalRankJun2027: number | null;
+  /** Positive = projected climb in National Ranking places by 30 Jun 2027 */
+  projectedNationalRankDelta: number | null;
   tier: GoldFormTier;
   confidence: "high" | "medium" | "low";
   tags: string[];
@@ -122,8 +138,11 @@ export type GoldFormIndexSummary = {
   referenceYmd: string;
   recentCutoffYmd: string;
   priorCutoffYmd: string;
+  currentPeriodLabel: string;
+  projectionTargetDate: string;
   scope: GoldFormScope;
   activeGoldCount: number;
+  eligible2027Count: number;
   qualifiedCount: number;
   regattaCount: number;
   recentRegattaCount: number;
@@ -137,11 +156,45 @@ export type GoldFormIndexSummary = {
   entries: GoldSailorFormEntry[];
 };
 
+export type SnapshotEntrySummary = {
+  sailorId: string;
+  name: string;
+  birthYear: number | null;
+  currentNationalRank: number | null;
+  projectedNationalRankJun2027: number | null;
+  formIndex: number;
+  watchlistIndex: number;
+  projectedPercentile: number;
+  agingOut2027: boolean;
+};
+
+export type SnapshotComparisonRow = {
+  sailorId: string;
+  name: string;
+  birthYear: number | null;
+  predictedRank: number;
+  baselineRank: number | null;
+  actualRank: number | null;
+  /** predictedRank - actualRank (+ means finished better than predicted) */
+  errorRanks: number | null;
+};
+
+export type SnapshotComparisonResult = {
+  evaluatedCount: number;
+  maeRanks: number | null;
+  top10Hits: number;
+  top10Total: number;
+  top20Hits: number;
+  top20Total: number;
+  rows: SnapshotComparisonRow[];
+};
+
 const RECENT_WINDOW_DAYS = 180;
 const PRIOR_WINDOW_DAYS = 420;
 const SLOPE_WINDOW_DAYS = 450;
 const FORM_HALF_LIFE_DAYS = 110;
 const MS_PER_DAY = 86_400_000;
+export const PROJECTION_TARGET_DATE = "2027-06-30";
 
 function clamp(min: number, max: number, value: number): number {
   return Math.min(max, Math.max(min, value));
@@ -393,6 +446,49 @@ export function buildGoldFormIndex(input: {
     });
     return resolved?.active === true && resolved.fleet === "Gold";
   });
+
+  // Official Singapore Gold National Ranking for the current series half
+  const currentNationalRankById = new Map<string, number>();
+  const currentBest3ById = new Map<string, number>();
+  try {
+    const rankingRegattas: RegattaRecord[] = input.regattas
+      .filter((r) => isGoldRegattaEligible(r, "sg_ranking", asOfYmd))
+      .map((r) => ({
+        id: r.id,
+        name: r.name,
+        slug: r.slug || r.id,
+        date: toYmd(r.date) || "",
+        totalFleetSize: r.totalFleetSize ?? 0,
+        division: r.division ?? "Gold",
+        boatClass: r.boatClass ?? "Optimist",
+        countsForRanking: r.countsForRanking !== false,
+      }));
+    const rankingResults: RegattaResultRecord[] = input.results.map((r) => ({
+      sailorId: r.sailorId,
+      regattaId: r.regattaId,
+      rank: r.rank,
+      nettScore: r.nettScore,
+      isDns: r.isDns,
+      isOverseasCommitment: r.isOverseasCommitment,
+    }));
+    const rankedGold = calculateRankings(
+      period,
+      activeGoldSailors.map(toSailorRecord),
+      rankingRegattas,
+      rankingResults,
+      "Optimist",
+    ).filter((x) => x.fleet === "Gold");
+    const boardRanks = sharedOverallRanks(rankedGold);
+    rankedGold.forEach((row, idx) => {
+      const rank = boardRanks[idx];
+      if (rank != null) currentNationalRankById.set(row.id, rank);
+      if (Number.isFinite(row.overallScore) && row.overallScore < 9000) {
+        currentBest3ById.set(row.id, row.overallScore);
+      }
+    });
+  } catch {
+    // Graceful fallback if regatta input lacks ranking metadata
+  }
 
   const eligibleRegattas = input.regattas
     .filter((r) => isGoldRegattaEligible(r, scope, asOfYmd))
@@ -646,7 +742,7 @@ export function buildGoldFormIndex(input: {
       sampleGate;
     const watchlistIndex = history.length === 0 ? 0 : round1(clamp(0, 100, rawWatchlist));
 
-    // Damped next-half projection constrained smoothly under the 100th percentile ceiling
+    // Damped projection to 30 Jun 2027 constrained smoothly under the 100th percentile ceiling
     const anchorPct =
       recentAvgPercentile != null
         ? 0.62 * weightedPercentile + 0.38 * recentAvgPercentile
@@ -657,8 +753,13 @@ export function buildGoldFormIndex(input: {
         : momentumDelta != null
           ? momentumDelta * 0.9
           : 0;
-    const ageTailWind = Math.max(0, yearsYoungerThanMedian) * 1.6;
-    const rawProjectedGain = trendSignal * 0.42 + ageTailWind;
+    const horizonHalves = clamp(
+      0.5,
+      1.5,
+      daysBetween(referenceYmd, PROJECTION_TARGET_DATE) / 182.625,
+    );
+    const ageTailWind = clamp(-1.0, 4.5, yearsYoungerThanMedian * 1.4) * horizonHalves;
+    const rawProjectedGain = trendSignal * 0.38 * horizonHalves + ageTailWind;
     const headroomScale =
       rawProjectedGain >= 0
         ? Math.sqrt(clamp(0.02, 1, (100 - anchorPct) / 100))
@@ -676,6 +777,20 @@ export function buildGoldFormIndex(input: {
       currentApproxRank != null && projectedRank != null
         ? currentApproxRank - projectedRank
         : null;
+
+    // Best-3-of-5 national board projection score (rewards demonstrated top-3 ceiling + domestic activity)
+    const ceilingLift = Math.max(0, recentPeakScore - anchorPct);
+    const projectedCeiling = clamp(0, 99.5, projectedPercentile + ceilingLift * 0.5);
+    const activityReliability =
+      recentPts.length >= 3 ? 1 : recentPts.length === 2 ? 0.96 : recentPts.length === 1 ? 0.88 : 0.72;
+    const projectedJun2027Score =
+      history.length === 0
+        ? 0
+        : round1((0.78 * projectedPercentile + 0.22 * projectedCeiling) * activityReliability);
+
+    const currentNationalRank = currentNationalRankById.get(sailor.id) ?? null;
+    const currentBest3of5 = currentBest3ById.get(sailor.id) ?? null;
+    const agingOut2027 = bYear != null && bYear <= 2011;
 
     const confidence: "high" | "medium" | "low" =
       recentPts.length >= 3 && history.length >= 6
@@ -744,11 +859,33 @@ export function buildGoldFormIndex(input: {
       projectedPercentile,
       projectedRank,
       projectedRankGain,
+      currentNationalRank,
+      currentBest3of5,
+      agingOut2027,
+      projectedJun2027Score,
+      projectedNationalRankJun2027: null,
+      projectedNationalRankDelta: null,
       tier,
       confidence,
       tags,
       history,
     };
+  });
+
+  // Assign projected 30 Jun 2027 National Ranking (1..M) across 2027-eligible sailors
+  const eligible2027 = entries
+    .filter((e) => !e.agingOut2027)
+    .sort(
+      (a, b) =>
+        b.projectedJun2027Score - a.projectedJun2027Score ||
+        b.formIndex - a.formIndex ||
+        b.weightedPercentile - a.weightedPercentile,
+    );
+  eligible2027.forEach((entry, idx) => {
+    const projNatRank = idx + 1;
+    entry.projectedNationalRankJun2027 = projNatRank;
+    entry.projectedNationalRankDelta =
+      entry.currentNationalRank != null ? entry.currentNationalRank - projNatRank : null;
   });
 
   entries.sort((a, b) => b.formIndex - a.formIndex || b.watchlistIndex - a.watchlistIndex);
@@ -766,8 +903,11 @@ export function buildGoldFormIndex(input: {
     referenceYmd,
     recentCutoffYmd,
     priorCutoffYmd,
+    currentPeriodLabel: periodLabel(period),
+    projectionTargetDate: PROJECTION_TARGET_DATE,
     scope,
     activeGoldCount: entries.length,
+    eligible2027Count: eligible2027.length,
     qualifiedCount: entries.filter((e) => e.confidence !== "low").length,
     regattaCount: eligibleRegattas.length,
     recentRegattaCount: recentRegattas.length,
@@ -775,5 +915,58 @@ export function buildGoldFormIndex(input: {
     medianBirthYear,
     cohortAverages,
     entries,
+  };
+}
+
+/**
+ * Compare a saved prediction snapshot (e.g. from Nov 2026) against live
+ * actual National Rankings (e.g. on 30 Jun 2027).
+ */
+export function compareSnapshotWithActuals(
+  snapshotEntries: SnapshotEntrySummary[],
+  liveEntries: GoldSailorFormEntry[],
+): SnapshotComparisonResult {
+  const liveById = new Map(liveEntries.map((e) => [e.sailorId, e]));
+  const rows: SnapshotComparisonRow[] = [];
+
+  for (const snap of snapshotEntries) {
+    if (snap.projectedNationalRankJun2027 == null) continue;
+    const live = liveById.get(snap.sailorId);
+    const actualRank = live?.currentNationalRank ?? null;
+    rows.push({
+      sailorId: snap.sailorId,
+      name: snap.name,
+      birthYear: snap.birthYear,
+      predictedRank: snap.projectedNationalRankJun2027,
+      baselineRank: snap.currentNationalRank,
+      actualRank,
+      errorRanks: actualRank != null ? snap.projectedNationalRankJun2027 - actualRank : null,
+    });
+  }
+
+  rows.sort((a, b) => a.predictedRank - b.predictedRank);
+
+  const evaluated = rows.filter((r) => r.actualRank != null && r.errorRanks != null);
+  const maeRanks =
+    evaluated.length > 0
+      ? round1(
+          evaluated.reduce((sum, r) => sum + Math.abs(r.errorRanks!), 0) /
+            evaluated.length,
+        )
+      : null;
+
+  const predTop10 = evaluated.filter((r) => r.predictedRank <= 10);
+  const top10Hits = predTop10.filter((r) => (r.actualRank ?? 999) <= 10).length;
+  const predTop20 = evaluated.filter((r) => r.predictedRank <= 20);
+  const top20Hits = predTop20.filter((r) => (r.actualRank ?? 999) <= 20).length;
+
+  return {
+    evaluatedCount: evaluated.length,
+    maeRanks,
+    top10Hits,
+    top10Total: predTop10.length,
+    top20Hits,
+    top20Total: predTop20.length,
+    rows,
   };
 }

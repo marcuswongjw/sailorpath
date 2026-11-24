@@ -169,3 +169,17 @@ export function fetchAdminGoldForm(options?: AdminFetchOptions) {
     options,
   );
 }
+
+export function saveAdminGoldFormSnapshot(
+  label?: string,
+  options?: AdminFetchOptions,
+) {
+  return adminJson<{
+    snapshot: import("@/app/api/admin/gold-form/route").GoldFormSnapshotRecord;
+  }>("/api/admin/gold-form", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ label }),
+    ...options,
+  });
+}

@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
+  BookmarkCheck,
   ExternalLink,
   RefreshCw,
   Sparkles,
@@ -14,18 +15,21 @@ import {
   Users,
 } from "lucide-react";
 import {
+  compareSnapshotWithActuals,
   type GoldFormIndexSummary,
   type GoldFormScope,
   type GoldSailorFormEntry,
 } from "@/lib/admin/goldFormIndex";
 import type { AdminGoldFormResponse } from "@/app/api/admin/gold-form/route";
-import { fetchAdminGoldForm } from "./adminFetch";
+import { fetchAdminGoldForm, saveAdminGoldFormSnapshot } from "./adminFetch";
 import { adminQueryKeys } from "./adminQueryKeys";
 
 type FocusPreset = "best_form" | "up_and_coming" | "all";
 type SortColumn =
   | "name"
   | "birthYear"
+  | "currentNationalRank"
+  | "projectedNationalRankJun2027"
   | "totalStarts"
   | "formIndex"
   | "watchlistIndex"
@@ -482,14 +486,42 @@ function SailorTrajectoryChart({
         ) : null}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
         <div className="rounded-lg bg-slate-50 px-2.5 py-2">
-          <span className="text-slate-500">Form Index</span>
-          <p className="font-bold text-slate-900 tabular-nums text-sm">{entry.formIndex}</p>
+          <span className="text-slate-500">Current Nat Rank</span>
+          <p className="font-bold text-slate-900 tabular-nums text-sm">
+            {entry.currentNationalRank != null ? `#${entry.currentNationalRank}` : "—"}{" "}
+            {entry.currentBest3of5 != null ? (
+              <span className="font-normal text-slate-500">(B3: {entry.currentBest3of5})</span>
+            ) : null}
+          </p>
         </div>
         <div className="rounded-lg bg-slate-50 px-2.5 py-2">
-          <span className="text-slate-500">Watchlist</span>
-          <p className="font-bold text-slate-900 tabular-nums text-sm">{entry.watchlistIndex}</p>
+          <span className="text-slate-500">Proj 30 Jun 27</span>
+          <p className="font-bold text-slate-900 tabular-nums text-sm">
+            {entry.agingOut2027
+              ? "Ages out (2011)"
+              : entry.projectedNationalRankJun2027 != null
+                ? `#${entry.projectedNationalRankJun2027}`
+                : "—"}{" "}
+            {!entry.agingOut2027 && entry.projectedNationalRankDelta != null && entry.projectedNationalRankDelta !== 0 ? (
+              <span
+                className={
+                  entry.projectedNationalRankDelta > 0
+                    ? "text-teal-700 font-semibold"
+                    : "text-rose-700 font-semibold"
+                }
+              >
+                ({entry.projectedNationalRankDelta > 0 ? `+${entry.projectedNationalRankDelta}` : entry.projectedNationalRankDelta})
+              </span>
+            ) : null}
+          </p>
+        </div>
+        <div className="rounded-lg bg-slate-50 px-2.5 py-2">
+          <span className="text-slate-500">Form / Watchlist</span>
+          <p className="font-bold text-slate-900 tabular-nums text-sm">
+            {entry.formIndex} / <span className="text-orange-700">{entry.watchlistIndex}</span>
+          </p>
         </div>
         <div className="rounded-lg bg-slate-50 px-2.5 py-2">
           <span className="text-slate-500">Momentum Δ</span>
@@ -498,10 +530,16 @@ function SailorTrajectoryChart({
           </p>
         </div>
         <div className="rounded-lg bg-slate-50 px-2.5 py-2">
-          <span className="text-slate-500">6m Projection</span>
+          <span className="text-slate-500">Event Projection</span>
           <p className="font-bold text-slate-900 tabular-nums text-sm">
             {entry.projectedRank != null ? `~#${entry.projectedRank}` : "—"}{" "}
             <span className="font-normal text-slate-500">({entry.projectedPercentile}%)</span>
+          </p>
+        </div>
+        <div className="rounded-lg bg-slate-50 px-2.5 py-2">
+          <span className="text-slate-500">Vs Cohort</span>
+          <p className="font-bold text-slate-900 tabular-nums text-sm">
+            {formatSigned(entry.cohortPeerEdge, " pts")}
           </p>
         </div>
       </div>
@@ -660,6 +698,7 @@ function SailorTrajectoryChart({
 }
 
 export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
+  const queryClient = useQueryClient();
   const [scope, setScope] = useState<GoldFormScope>("sg_ranking");
   const [preset, setPreset] = useState<FocusPreset>("best_form");
   const [search, setSearch] = useState("");
@@ -670,6 +709,7 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
   const [sortDir, setSortDir] = useState<SortDirection>("descending");
   const [selectedSailorId, setSelectedSailorId] = useState<string | null>(null);
   const [hoveredSailorId, setHoveredSailorId] = useState<string | null>(null);
+  const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
 
   const query = useQuery<AdminGoldFormResponse>({
@@ -677,6 +717,15 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
     queryFn: ({ signal }) => fetchAdminGoldForm({ signal }),
     enabled: isSuperadmin,
     retry: false,
+  });
+
+  const saveSnapshotMutation = useMutation({
+    mutationFn: () => saveAdminGoldFormSnapshot(),
+    onSuccess: async (res) => {
+      setSelectedSnapshotId(res.snapshot.id);
+      setAnnouncement(`Saved baseline snapshot ${res.snapshot.label}`);
+      await queryClient.invalidateQueries({ queryKey: adminQueryKeys.goldForm() });
+    },
   });
 
   const summary = query.data
@@ -735,6 +784,10 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
           return COLLATOR.compare(a.name, b.name) * factor;
         case "birthYear":
           return numCompare(a.birthYear, b.birthYear);
+        case "currentNationalRank":
+          return numCompare(a.currentNationalRank, b.currentNationalRank);
+        case "projectedNationalRankJun2027":
+          return numCompare(a.projectedNationalRankJun2027, b.projectedNationalRankJun2027);
         case "totalStarts":
           return numCompare(a.totalStarts, b.totalStarts);
         case "watchlistIndex":
@@ -1204,6 +1257,34 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
                 </th>
                 <th
                   scope="col"
+                  aria-sort={sortCol === "currentNationalRank" ? sortDir : undefined}
+                  className="font-semibold"
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleSort("currentNationalRank", "Current National Rank", false)}
+                    className="inline-flex min-h-9 w-full items-center gap-1 px-2.5 py-2 text-left font-semibold hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600"
+                  >
+                    <span>Nat Rank</span>
+                    {sortIcon("currentNationalRank")}
+                  </button>
+                </th>
+                <th
+                  scope="col"
+                  aria-sort={sortCol === "projectedNationalRankJun2027" ? sortDir : undefined}
+                  className="font-semibold"
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleSort("projectedNationalRankJun2027", "Projected 30 Jun 2027 Rank", false)}
+                    className="inline-flex min-h-9 w-full items-center gap-1 px-2.5 py-2 text-left font-semibold hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600"
+                  >
+                    <span>Proj 30 Jun 27</span>
+                    {sortIcon("projectedNationalRankJun2027")}
+                  </button>
+                </th>
+                <th
+                  scope="col"
                   aria-sort={sortCol === "formIndex" ? sortDir : undefined}
                   className="font-semibold"
                 >
@@ -1308,7 +1389,7 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
             <tbody className="divide-y divide-slate-100">
               {filteredEntries.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-4 py-8 text-center text-sm text-slate-500">
+                  <td colSpan={12} className="px-4 py-8 text-center text-sm text-slate-500">
                     No active Gold sailors match the current filters.
                   </td>
                 </tr>
@@ -1353,6 +1434,51 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
                       </th>
                       <td data-value={entry.birthYear ?? ""} className="px-2.5 py-2.5 tabular-nums text-slate-700">
                         {entry.birthYear ?? "—"}
+                      </td>
+                      <td
+                        data-value={entry.currentNationalRank ?? 999}
+                        className="px-2.5 py-2.5 tabular-nums whitespace-nowrap"
+                      >
+                        <span className="font-bold text-slate-900">
+                          {entry.currentNationalRank != null ? `#${entry.currentNationalRank}` : "—"}
+                        </span>
+                        {entry.currentBest3of5 != null ? (
+                          <span className="block text-[10px] text-slate-500">
+                            Best 3: {entry.currentBest3of5}
+                          </span>
+                        ) : null}
+                      </td>
+                      <td
+                        data-value={entry.projectedNationalRankJun2027 ?? 999}
+                        className="px-2.5 py-2.5 tabular-nums whitespace-nowrap"
+                      >
+                        {entry.agingOut2027 ? (
+                          <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600">
+                            Ages out (2011)
+                          </span>
+                        ) : (
+                          <>
+                            <span className="font-bold text-slate-900">
+                              {entry.projectedNationalRankJun2027 != null
+                                ? `#${entry.projectedNationalRankJun2027}`
+                                : "—"}
+                            </span>
+                            {entry.projectedNationalRankDelta != null &&
+                            entry.projectedNationalRankDelta !== 0 ? (
+                              <span
+                                className={`block text-[10px] font-semibold ${
+                                  entry.projectedNationalRankDelta > 0
+                                    ? "text-teal-700"
+                                    : "text-rose-700"
+                                }`}
+                              >
+                                {entry.projectedNationalRankDelta > 0
+                                  ? `↑ +${entry.projectedNationalRankDelta}`
+                                  : `↓ ${entry.projectedNationalRankDelta}`}
+                              </span>
+                            ) : null}
+                          </>
+                        )}
                       </td>
                       <td data-value={entry.formIndex} className="px-2.5 py-2.5 tabular-nums">
                         <span className="font-bold text-slate-900">{entry.formIndex}</span>
@@ -1454,6 +1580,160 @@ export function AdminGoldFormPanel({ isSuperadmin, onOpenSailor }: Props) {
           </table>
         </div>
       </div>
+
+      {/* Baseline Snapshots & 30 Jun 2027 Accuracy Review */}
+      {(() => {
+        const snapshots = query.data?.snapshots ?? [];
+        const activeSnapshot =
+          snapshots.find((s) => s.id === selectedSnapshotId) ?? snapshots[0] ?? null;
+        const comparison =
+          activeSnapshot && query.data
+            ? compareSnapshotWithActuals(
+                activeSnapshot.summary.entries ?? [],
+                query.data.sgRanking.entries,
+              )
+            : null;
+        return (
+          <div className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 space-y-4">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900">
+                  30 Jun 2027 Prediction Snapshots &amp; Accuracy Review
+                </h3>
+                <p className="mt-0.5 text-xs text-slate-600 max-w-2xl">
+                  Freeze today&apos;s National Ranking predictions so we can compare
+                  predicted vs. actual 30 Jun 2027 Gold National Rankings side-by-side.
+                </p>
+              </div>
+              <button
+                type="button"
+                disabled={saveSnapshotMutation.isPending}
+                onClick={() => saveSnapshotMutation.mutate()}
+                className="inline-flex min-h-10 items-center gap-1.5 rounded-lg bg-slate-900 px-3 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600"
+              >
+                <BookmarkCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                {saveSnapshotMutation.isPending
+                  ? "Saving snapshot…"
+                  : "Save Snapshot for 30 Jun 2027 Review"}
+              </button>
+            </div>
+
+            {saveSnapshotMutation.isError ? (
+              <p role="alert" className="text-xs text-rose-700">
+                Could not save snapshot: {saveSnapshotMutation.error?.message || "Unknown error"}
+              </p>
+            ) : null}
+
+            {snapshots.length === 0 ? (
+              <p className="text-xs text-slate-500">
+                No frozen snapshots saved yet. Save a baseline snapshot to lock in current
+                30 Jun 2027 projections.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <label
+                    htmlFor="gold-form-snapshot-select"
+                    className="text-xs font-semibold text-slate-700"
+                  >
+                    Compare snapshot:
+                  </label>
+                  <select
+                    id="gold-form-snapshot-select"
+                    value={activeSnapshot?.id ?? ""}
+                    onChange={(e) => setSelectedSnapshotId(e.target.value)}
+                    className="min-h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600"
+                  >
+                    {snapshots.map((snap) => (
+                      <option key={snap.id} value={snap.id}>
+                        {snap.label} (saved {snap.baselineDate})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {comparison ? (
+                  <>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                      <div className="rounded-lg bg-slate-50 px-3 py-2">
+                        <span className="text-slate-500">Evaluated</span>
+                        <p className="font-bold text-slate-900 tabular-nums text-sm">
+                          {comparison.evaluatedCount} sailors
+                        </p>
+                      </div>
+                      <div className="rounded-lg bg-slate-50 px-3 py-2">
+                        <span className="text-slate-500">Mean Abs Error</span>
+                        <p className="font-bold text-slate-900 tabular-nums text-sm">
+                          {comparison.maeRanks != null ? `${comparison.maeRanks} ranks` : "—"}
+                        </p>
+                      </div>
+                      <div className="rounded-lg bg-slate-50 px-3 py-2">
+                        <span className="text-slate-500">Top-10 Hit Rate</span>
+                        <p className="font-bold text-slate-900 tabular-nums text-sm">
+                          {comparison.top10Hits} / {comparison.top10Total}
+                        </p>
+                      </div>
+                      <div className="rounded-lg bg-slate-50 px-3 py-2">
+                        <span className="text-slate-500">Top-20 Hit Rate</span>
+                        <p className="font-bold text-slate-900 tabular-nums text-sm">
+                          {comparison.top20Hits} / {comparison.top20Total}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="overflow-x-auto rounded-lg border border-slate-200">
+                      <table className="min-w-[540px] w-full border-collapse text-left text-xs">
+                        <caption className="px-3 py-1.5 text-left text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-200">
+                          Top 15 predicted 30 Jun 2027 Gold rankings vs. current/actual National Rank
+                        </caption>
+                        <thead className="bg-slate-50 text-slate-700 border-b border-slate-200">
+                          <tr>
+                            <th scope="col" className="px-3 py-2 font-semibold">Sailor</th>
+                            <th scope="col" className="px-2.5 py-2 font-semibold">Baseline</th>
+                            <th scope="col" className="px-2.5 py-2 font-semibold">Pred Jun 27</th>
+                            <th scope="col" className="px-2.5 py-2 font-semibold">Actual/Curr</th>
+                            <th scope="col" className="px-2.5 py-2 font-semibold">Diff</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {comparison.rows.slice(0, 15).map((row) => (
+                            <tr key={row.sailorId}>
+                              <th scope="row" className="px-3 py-2 font-semibold text-slate-900">
+                                {row.name}{" "}
+                                {row.birthYear ? (
+                                  <span className="font-normal text-slate-500">({row.birthYear})</span>
+                                ) : null}
+                              </th>
+                              <td className="px-2.5 py-2 tabular-nums text-slate-600">
+                                {row.baselineRank != null ? `#${row.baselineRank}` : "—"}
+                              </td>
+                              <td className="px-2.5 py-2 tabular-nums font-bold text-slate-900">
+                                #{row.predictedRank}
+                              </td>
+                              <td className="px-2.5 py-2 tabular-nums text-slate-800">
+                                {row.actualRank != null ? `#${row.actualRank}` : "—"}
+                              </td>
+                              <td className="px-2.5 py-2 tabular-nums">
+                                {row.errorRanks != null
+                                  ? row.errorRanks === 0
+                                    ? "Exact"
+                                    : row.errorRanks > 0
+                                      ? `+${row.errorRanks} ahead`
+                                      : `${row.errorRanks}`
+                                  : "—"}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                ) : null}
+              </div>
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }

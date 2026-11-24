@@ -1300,3 +1300,25 @@ export const techno293Regattas = pgTable("techno293_regattas", {
     .defaultNow()
     .notNull(),
 }).enableRLS();
+
+/**
+ * Superadmin-only frozen baseline snapshots of Gold form & 30 Jun 2027
+ * National Ranking projections for retrospective accuracy review.
+ */
+export const adminGoldPredictionSnapshots = pgTable(
+  "admin_gold_prediction_snapshots",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    label: text("label").notNull(),
+    baselineDate: date("baseline_date").notNull(),
+    targetDate: date("target_date").default("2027-06-30").notNull(),
+    scope: text("scope").default("sg_ranking").notNull(),
+    summary: jsonb("summary").$type<JsonValue>().notNull(),
+    createdBy: uuid("created_by").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+).enableRLS();

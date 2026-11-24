@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildGoldFormIndex,
+  compareSnapshotWithActuals,
   percentileFromRank,
   rankFromPercentile,
   type GoldFormRegattaInput,
@@ -304,5 +305,61 @@ describe("buildGoldFormIndex", () => {
     expect(
       all.entries.find((e) => e.sailorId === "same-cohort")!.history.some((h) => h.regattaId === "os1"),
     ).toBe(true);
+  });
+
+  it("computes current National Ranking, excludes <=2011 age-outs from 30 Jun 2027 rankings, and compares snapshots", () => {
+    const withAgeOut: GoldFormSailorInput[] = [
+      ...SAILORS,
+      {
+        id: "ageout-2011",
+        name: "Senior 2011",
+        gender: "F",
+        dob: "2011-06-15",
+        goldEntryDate: "2022-01-01",
+        currentFleet: "Series",
+      },
+    ];
+    const withResults: GoldFormResultInput[] = [
+      ...RESULTS,
+      { sailorId: "ageout-2011", regattaId: "r4", rank: 2 },
+      { sailorId: "ageout-2011", regattaId: "r5", rank: 1 },
+      { sailorId: "ageout-2011", regattaId: "r6", rank: 2 },
+      { sailorId: "ageout-2011", regattaId: "r7", rank: 1 },
+    ];
+
+    const summary = buildGoldFormIndex({
+      sailors: withAgeOut,
+      regattas: REGATTAS,
+      results: withResults,
+      scope: "sg_ranking",
+      asOfYmd: "2026-11-24",
+    });
+
+    const senior = summary.entries.find((e) => e.sailorId === "ageout-2011")!;
+    expect(senior.currentNationalRank).toBe(1);
+    expect(senior.agingOut2027).toBe(true);
+    expect(senior.projectedNationalRankJun2027).toBeNull();
+
+    const leader = summary.entries.find((e) => e.sailorId === "leader")!;
+    expect(leader.currentNationalRank).toBe(2);
+    expect(leader.agingOut2027).toBe(false);
+    expect(leader.projectedNationalRankJun2027).toBe(1);
+
+    const comparison = compareSnapshotWithActuals(
+      summary.entries.map((e) => ({
+        sailorId: e.sailorId,
+        name: e.name,
+        birthYear: e.birthYear,
+        currentNationalRank: e.currentNationalRank,
+        projectedNationalRankJun2027: e.projectedNationalRankJun2027,
+        formIndex: e.formIndex,
+        watchlistIndex: e.watchlistIndex,
+        projectedPercentile: e.projectedPercentile,
+        agingOut2027: e.agingOut2027,
+      })),
+      summary.entries,
+    );
+    expect(comparison.evaluatedCount).toBe(4);
+    expect(comparison.maeRanks).toBeGreaterThanOrEqual(0);
   });
 });

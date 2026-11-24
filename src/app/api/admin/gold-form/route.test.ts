@@ -23,9 +23,13 @@ function chainSelect(rows: unknown[]) {
   const result = Promise.resolve(rows) as Promise<unknown[]> & {
     from: () => typeof result;
     where: () => typeof result;
+    orderBy: () => typeof result;
+    limit: () => typeof result;
   };
   result.from = () => result;
   result.where = () => result;
+  result.orderBy = () => result;
+  result.limit = () => result;
   return result;
 }
 
@@ -96,7 +100,8 @@ describe("admin Gold Form API", () => {
             isOverseasCommitment: false,
           },
         ]),
-      );
+      )
+      .mockReturnValueOnce(chainSelect([]));
 
     const res = await GET(new Request("https://admin.sailorpath.com/api/admin/gold-form"));
     expect(res.status).toBe(200);
@@ -105,5 +110,6 @@ describe("admin Gold Form API", () => {
     expect(body.sgRanking.activeGoldCount).toBe(1);
     expect(body.sgRanking.entries[0].name).toBe("Gold Leader");
     expect(body.allGold.regattaCount).toBe(1);
+    expect(body.snapshots).toEqual([]);
   });
 });
